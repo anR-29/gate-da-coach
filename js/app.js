@@ -624,6 +624,28 @@ setInterval(() => {
   if (session.activeMs % 60000 === 0) renderTimer();
 }, 1000);
 
+// ---------- theme ----------
+
+const THEMES = ['auto', 'light', 'dark'];
+
+function setupTheme() {
+  const btn = document.getElementById('themebtn');
+  let mode = 'auto';
+  try { mode = localStorage.getItem('gdc.theme') || 'auto'; } catch {}
+  const apply = () => {
+    if (mode === 'auto') delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = mode;
+    btn.title = `Theme: ${mode}`;
+    btn.querySelector('use').setAttribute('href', mode === 'light' ? '#i-sun' : mode === 'dark' ? '#i-moon' : '#i-auto');
+  };
+  btn.onclick = () => {
+    mode = THEMES[(THEMES.indexOf(mode) + 1) % THEMES.length];
+    try { localStorage.setItem('gdc.theme', mode); } catch {}
+    apply();
+  };
+  apply();
+}
+
 // ---------- boot ----------
 
 async function boot() {
@@ -634,6 +656,7 @@ async function boot() {
   onChange(() => { renderSync(); renderChrome(); });
   renderSync();
   document.getElementById('syncbtn').onclick = () => sync();
+  setupTheme();
   window.addEventListener('hashchange', route);
   route();
   await sync();
