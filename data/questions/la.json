@@ -1,0 +1,3884 @@
+{
+ "area": "la",
+ "skills": {
+  "la.subspace": {
+   "title": "Subspace tests",
+   "subject": "Linear Algebra",
+   "days": [
+    15,
+    21
+   ],
+   "theory": "la-spaces",
+   "check": "Check 0 is in the set, then closure under + and scalar multiples; span and null spaces always pass, affine sets (=b≠0) never do."
+  },
+  "la.independence": {
+   "title": "Linear independence",
+   "subject": "Linear Algebra",
+   "days": [
+    15,
+    21
+   ],
+   "theory": "la-spaces",
+   "check": "Put the vectors as columns; independent iff rank = number of vectors (square case: det ≠ 0)."
+  },
+  "la.basis-dim": {
+   "title": "Basis and dimension",
+   "subject": "Linear Algebra",
+   "days": [
+    15,
+    21
+   ],
+   "theory": "la-spaces",
+   "check": "dim = number of pivots after row reduction; for a solution set, dim = n − (number of independent constraints)."
+  },
+  "la.special-matrices": {
+   "title": "Special matrices: symmetric, skew, idempotent, nilpotent",
+   "subject": "Linear Algebra",
+   "days": [
+    16,
+    21
+   ],
+   "theory": "la-matrices",
+   "check": "Use the defining identity (Aᵀ=±A, A²=A, Aᵏ=0) to pin eigenvalues, det and trace; test claims with a 2×2 counterexample."
+  },
+  "la.block-matrix": {
+   "title": "Block and partitioned products",
+   "subject": "Linear Algebra",
+   "days": [
+    16,
+    21
+   ],
+   "theory": "la-matrices",
+   "check": "Multiply blocks like scalars but keep the order; check every block size matches."
+  },
+  "la.transpose-inverse": {
+   "title": "Transpose and inverse rules",
+   "subject": "Linear Algebra",
+   "days": [
+    16,
+    21
+   ],
+   "theory": "la-matrices",
+   "check": "(AB)ᵀ=BᵀAᵀ, (AB)⁻¹=B⁻¹A⁻¹, (cA)⁻¹=A⁻¹/c; never distribute an inverse over a sum."
+  },
+  "la.rank-rref": {
+   "title": "Rank by row reduction",
+   "subject": "Linear Algebra",
+   "days": [
+    17,
+    21
+   ],
+   "theory": "la-systems",
+   "check": "Row reduce fully, then count pivots. A row that is a combination of others (not just a multiple) also vanishes."
+  },
+  "la.rank-nullity": {
+   "title": "Rank–nullity",
+   "subject": "Linear Algebra",
+   "days": [
+    17,
+    21
+   ],
+   "theory": "la-systems",
+   "check": "For m×n A: rank + nullity = n (columns). Nullity of Aᵀ = m − rank."
+  },
+  "la.solvability": {
+   "title": "Existence and uniqueness of Ax = b; Gaussian elimination",
+   "subject": "Linear Algebra",
+   "days": [
+    17,
+    21
+   ],
+   "theory": "la-systems",
+   "check": "Consistent iff rank A = rank [A|b]; unique iff also rank = n. Shape: rank = m ⇒ always solvable, rank = n ⇒ at most one solution."
+  },
+  "la.det-props": {
+   "title": "Determinant properties",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-det",
+   "check": "det(cA)=cⁿdet A, det(A⁻¹)=1/det A, det(Aᵀ)=det A; row swap flips sign, row addition changes nothing."
+  },
+  "la.det-poly": {
+   "title": "Determinant of p(A) via eigenvalues",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-det",
+   "check": "det p(A) = product of p(λᵢ) over all eigenvalues; never plug det A into p."
+  },
+  "la.eig-trace-det": {
+   "title": "Eigenvalues from trace and determinant",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-eigen",
+   "check": "Sum of eigenvalues = trace, product = det. Diagonal entries are eigenvalues only for triangular matrices."
+  },
+  "la.eig-transform": {
+   "title": "Eigenvalues of Aᵏ, A⁻¹, A + cI, cA",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-eigen",
+   "check": "Same eigenvector; λ becomes λᵏ, 1/λ, λ + c, cλ. Transform every eigenvalue, then answer."
+  },
+  "la.rank-one": {
+   "title": "Rank-one matrices uvᵀ",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-eigen",
+   "check": "uvᵀ has eigenvalues vᵀu and 0 (n−1 times); I + xxᵀ has 1 + xᵀx and 1s."
+  },
+  "la.rank-gm": {
+   "title": "Algebraic vs geometric multiplicity",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-eigen",
+   "check": "Row reduce A − λI, count pivots; GM = n − rank. Diagonalizable iff GM = AM for every eigenvalue."
+  },
+  "la.eigvec-check": {
+   "title": "Checking eigenvectors",
+   "subject": "Linear Algebra",
+   "days": [
+    18,
+    21
+   ],
+   "theory": "la-eigen",
+   "check": "Compute Av and see if it is a multiple of v; scaled eigenvectors still count. Equal row sums s ⇒ A·1 = s·1."
+  },
+  "la.projection": {
+   "title": "Projection matrices",
+   "subject": "Linear Algebra",
+   "days": [
+    19,
+    21
+   ],
+   "theory": "la-orth",
+   "check": "P² = P ⇒ eigenvalues 0/1 and rank = trace; orthogonal projection also has Pᵀ = P. Onto a line: P = aaᵀ/(aᵀa)."
+  },
+  "la.orthogonal": {
+   "title": "Orthogonal matrices",
+   "subject": "Linear Algebra",
+   "days": [
+    19,
+    21
+   ],
+   "theory": "la-orth",
+   "check": "QᵀQ = I: preserves length, det = ±1, every (complex) eigenvalue has |λ| = 1."
+  },
+  "la.definiteness": {
+   "title": "Quadratic forms, definiteness and Gram matrices",
+   "subject": "Linear Algebra",
+   "days": [
+    19,
+    21
+   ],
+   "theory": "la-orth",
+   "check": "Halve the cross terms to build the symmetric matrix, then check eigenvalue signs (or leading minors). AᵀA is PD iff columns independent."
+  },
+  "la.rayleigh": {
+   "title": "Rayleigh quotient extremes",
+   "subject": "Linear Algebra",
+   "days": [
+    19,
+    21
+   ],
+   "theory": "la-orth",
+   "check": "For symmetric A, max/min of xᵀAx on ‖x‖ = 1 are λmax/λmin, attained at eigenvectors."
+  },
+  "la.lu": {
+   "title": "LU decomposition",
+   "subject": "Linear Algebra",
+   "days": [
+    20,
+    21
+   ],
+   "theory": "la-lu-svd",
+   "check": "Eliminate column by column; multipliers lᵢⱼ = (entry)/(pivot) fill L, the reduced rows form U. det A = product of U's diagonal."
+  },
+  "la.svd": {
+   "title": "Singular values and SVD",
+   "subject": "Linear Algebra",
+   "days": [
+    20,
+    21
+   ],
+   "theory": "la-lu-svd",
+   "check": "σᵢ = √(eigenvalues of AᵀA); rank = number of non-zero σ; uvᵀ has σ = ‖u‖‖v‖; symmetric PSD ⇒ σ = λ."
+  }
+ },
+ "questions": [
+  {
+   "id": "la-subspace-01",
+   "skill": "la.subspace",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which of the following subsets of $\\mathbb{R}^3$ are subspaces?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{(x,y,z): xy=0\\}$",
+     "correct": false,
+     "why": "Union of two planes. $(1,0,0)+(0,1,0)=(1,1,0)$ has $xy=1$, so it is not closed under addition."
+    },
+    {
+     "text": "$\\{(x,y,z): x+2y-z=0\\}$",
+     "correct": true,
+     "why": "It is the null space of the $1\\times 3$ matrix $(1\\;2\\;-1)$; null spaces always contain $0$ and are closed under $+$ and scaling."
+    },
+    {
+     "text": "$\\operatorname{span}\\{(1,0,1),(2,1,0)\\}$",
+     "correct": true,
+     "why": "A span is always a subspace: it contains $0$ and every combination of combinations is a combination."
+    },
+    {
+     "text": "$\\{(x,y,z): x+y+z=1\\}$",
+     "correct": false,
+     "why": "Affine plane: $(0,0,0)$ gives $0\\neq 1$, so the zero vector is missing."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Test $0$ first: the plane $x+y+z=1$ fails.\n2. Nonlinear conditions ($xy=0$) usually fail closure; find two members whose sum leaves the set.\n3. Null spaces and spans pass automatically."
+  },
+  {
+   "id": "la-subspace-02",
+   "skill": "la.subspace",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ be a real $3\\times 4$ matrix and $b\\neq 0$. Which of the following are subspaces (of the stated space)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The set of all $2\\times 2$ real symmetric matrices, in $\\mathbb{R}^{2\\times 2}$",
+     "correct": true,
+     "why": "$0$ is symmetric, and $(A+B)^T=A+B$, $(cA)^T=cA$ for symmetric $A,B$."
+    },
+    {
+     "text": "$\\{x\\in\\mathbb{R}^4: Ax=b\\}$",
+     "correct": false,
+     "why": "$A0=0\\neq b$, so $0$ is not a solution. Solution sets of $Ax=b$ with $b\\neq0$ are shifted (affine) sets."
+    },
+    {
+     "text": "$\\{x\\in\\mathbb{R}^4: x_1\\ge 0\\}$",
+     "correct": false,
+     "why": "Closed under addition but not under scaling: $(-1)\\cdot(1,0,0,0)$ has $x_1=-1$."
+    },
+    {
+     "text": "The set of all invertible $2\\times 2$ matrices, in $\\mathbb{R}^{2\\times 2}$",
+     "correct": false,
+     "why": "The zero matrix is not invertible; also $I+(-I)=0$ leaves the set."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Only the symmetric matrices pass all three checks: contains $0$, closed under $+$, closed under scalar multiples (including negative scalars)."
+  },
+  {
+   "id": "la-subspace-03",
+   "skill": "la.subspace",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ be a real $3\\times 4$ matrix and $b\\in\\mathbb{R}^3$ a non-zero vector. Which set is always a subspace of $\\mathbb{R}^4$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{x: Ax=0\\}$",
+     "correct": true,
+     "why": "The null space: if $Ax=0$ and $Ay=0$ then $A(x+cy)=0$."
+    },
+    {
+     "text": "$\\{x: \\lVert x\\rVert\\le 1\\}$",
+     "correct": false,
+     "why": "Contains $0$ but is not closed under scaling: $e_1$ is in the set, $2e_1$ is not."
+    },
+    {
+     "text": "$\\{x: Ax=b\\}\\cup\\{0\\}$",
+     "correct": false,
+     "why": "Adding $0$ by hand does not give closure: if $Ax=b$ then $A(2x)=2b\\neq b$."
+    },
+    {
+     "text": "$\\{x: Ax=b\\}$",
+     "correct": false,
+     "why": "Contains no zero vector since $A0=0\\ne b$; it is a translate of the null space."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Only the null space satisfies all three tests. Patching in $0$ does not repair an affine set."
+  },
+  {
+   "id": "la-subspace-04",
+   "skill": "la.subspace",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For a real constant $k$ let $W_k=\\{(x,y,z)\\in\\mathbb{R}^3: x+y=k,\\; z=2x\\}$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\dim W_0 = 1$",
+     "correct": true,
+     "why": "Two independent equations in 3 unknowns leave $3-2=1$ free variable: $W_0=\\operatorname{span}\\{(1,-1,2)\\}$."
+    },
+    {
+     "text": "$W_k$ is a subspace for every $k$, because it is defined by linear equations",
+     "correct": false,
+     "why": "Linear equations with a non-zero right side give an affine set: $(0,0,0)$ fails $x+y=k$ when $k\\neq 0$."
+    },
+    {
+     "text": "$W_3$ is a line in $\\mathbb{R}^3$ that does not pass through the origin",
+     "correct": true,
+     "why": "$W_3=(3,0,6)+t(1,-1,2)$: a line parallel to $W_0$, shifted off the origin."
+    },
+    {
+     "text": "$W_0$ is a subspace of $\\mathbb{R}^3$",
+     "correct": true,
+     "why": "For $k=0$ both conditions are homogeneous linear equations, so $W_0$ is a null space."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $W_k$ contains $0$ only when $k=0$.\n2. $W_0$: $y=-x$, $z=2x$, so $W_0=\\operatorname{span}\\{(1,-1,2)\\}$, dimension 1.\n3. $W_3$ is $W_0$ shifted by the particular point $(3,0,6)$."
+  },
+  {
+   "id": "la-subspace-05",
+   "skill": "la.subspace",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $P_2$ be the space of real polynomials of degree at most 2. Which subsets are subspaces of $P_2$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{p: \\deg p = 2 \\text{ exactly}\\}$",
+     "correct": false,
+     "why": "The zero polynomial is missing, and $x^2+(-x^2+x)=x$ has degree 1."
+    },
+    {
+     "text": "$\\{p: p'(x)=0 \\text{ for all } x\\}$",
+     "correct": true,
+     "why": "This is the set of constant polynomials, the null space of the linear map $p\\mapsto p'$."
+    },
+    {
+     "text": "$\\{p: p(1)=0\\}$",
+     "correct": true,
+     "why": "$(p+cq)(1)=p(1)+cq(1)=0$, and the zero polynomial satisfies it."
+    },
+    {
+     "text": "$\\{p: p(0)=1\\}$",
+     "correct": false,
+     "why": "The zero polynomial has $p(0)=0\\ne1$; the sum of two members has value $2$ at $0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Conditions of the form $L(p)=0$ with $L$ linear (evaluation, derivative) give subspaces. $L(p)=1$ or a degree condition does not."
+  },
+  {
+   "id": "la-independence-01",
+   "skill": "la.independence",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "For what value of $k$ are the vectors $(1,1,0)^T$, $(0,1,1)^T$ and $(1,0,k)^T$ linearly dependent?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Sign slip in the cofactor expansion: the determinant is $k+1$, not $k-1$."
+    },
+    {
+     "value": 0,
+     "why": "Assumed a zero entry makes the set dependent; with $k=0$ the determinant is $1\\neq0$."
+    }
+   ],
+   "solution": "1. Put the vectors as columns: $\\det\\begin{pmatrix}1&0&1\\\\1&1&0\\\\0&1&k\\end{pmatrix}=1\\cdot(k-0)-0+1\\cdot(1-0)=k+1$.\n2. Dependent iff $k+1=0$, so $k=-1$.\n3. Check: $(1,0,-1)=(1,1,0)-(0,1,1)$."
+  },
+  {
+   "id": "la-independence-02",
+   "skill": "la.independence",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which statements about vectors in $\\mathbb{R}^3$ are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Any set of 4 vectors in $\\mathbb{R}^3$ is linearly dependent",
+     "correct": true,
+     "why": "At most 3 pivots exist in a $3\\times4$ matrix, so at least one column is free."
+    },
+    {
+     "text": "If $v_1,v_2$ are independent and $v_3\\notin\\operatorname{span}\\{v_1,v_2\\}$, then $\\{v_1,v_2,v_3\\}$ is independent",
+     "correct": true,
+     "why": "A dependency with $c_3\\neq0$ would put $v_3$ in the span; with $c_3=0$ it would be a dependency of $v_1,v_2$. (Merely pairwise non-parallel would not be enough: $(1,0,0),(0,1,0),(1,1,0)$.)"
+    },
+    {
+     "text": "Every non-empty subset of a linearly independent set is linearly independent",
+     "correct": true,
+     "why": "A dependency among the subset would also be a dependency of the full set (pad with zero coefficients)."
+    },
+    {
+     "text": "Any set containing the zero vector is linearly dependent",
+     "correct": true,
+     "why": "$1\\cdot 0=0$ is a non-trivial combination giving zero."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "All four hold. Independence is about the whole set: adding a vector outside the current span keeps it independent; pairwise checks alone are not enough."
+  },
+  {
+   "id": "la-independence-03",
+   "skill": "la.independence",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Vectors $v_1, v_2, v_3$ are linearly independent. Which of the following sets is linearly **dependent**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{v_1-v_2,\\; v_2-v_3,\\; v_3-v_1\\}$",
+     "correct": true,
+     "why": "The three vectors add to $0$: a non-trivial dependency. The coefficient matrix has determinant $0$."
+    },
+    {
+     "text": "$\\{v_1+v_2,\\; v_2+v_3,\\; v_3+v_1\\}$",
+     "correct": false,
+     "why": "Coefficient matrix has determinant $2\\neq0$, so this set is independent (true over the reals)."
+    },
+    {
+     "text": "$\\{2v_1,\\; 3v_2,\\; v_1+v_3\\}$",
+     "correct": false,
+     "why": "Coefficient matrix determinant $2\\cdot3\\cdot1=6\\neq0$; scaling does not create a dependency."
+    },
+    {
+     "text": "$\\{v_1,\\; v_1+v_2,\\; v_1+v_2+v_3\\}$",
+     "correct": false,
+     "why": "Triangular coefficient matrix with determinant $1$; you can recover each $v_i$ by subtraction."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Write each new vector in terms of $v_1,v_2,v_3$; the new set is independent iff the coefficient matrix is invertible.\n2. Determinants: sums $2$, differences $0$, cumulative sums $1$, scaled set $6$.\n3. Only the cyclic differences fail: $(v_1-v_2)+(v_2-v_3)+(v_3-v_1)=0$."
+  },
+  {
+   "id": "la-independence-04",
+   "skill": "la.independence",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ be a real $5\\times 3$ matrix with $\\operatorname{rank}(A)=3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The columns of $A$ are linearly independent",
+     "correct": true,
+     "why": "3 columns and rank 3: every column holds a pivot."
+    },
+    {
+     "text": "$A^TA$ is invertible",
+     "correct": true,
+     "why": "$\\operatorname{rank}(A^TA)=\\operatorname{rank}(A)=3$, and $A^TA$ is $3\\times3$."
+    },
+    {
+     "text": "The rows of $A$ are linearly independent",
+     "correct": false,
+     "why": "5 rows in a row space of dimension 3: at least 2 rows depend on the others."
+    },
+    {
+     "text": "$Ax=0$ has only the solution $x=0$",
+     "correct": true,
+     "why": "Independent columns mean the only combination giving $0$ is the trivial one (nullity $=3-3=0$)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Rank 3 equals the number of columns, so the columns are independent and the null space is $\\{0\\}$. Rank 3 is less than the number of rows, so the rows are dependent."
+  },
+  {
+   "id": "la-basis-dim-01",
+   "skill": "la.basis-dim",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the dimension of the subspace of $\\mathbb{R}^4$ spanned by $$(1,2,0,1),\\;(2,4,1,3),\\;(0,0,1,1),\\;(3,6,1,4).$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Found $(2,4,1,3)=2(1,2,0,1)+(0,0,1,1)$ but missed that $(3,6,1,4)=3(1,2,0,1)+(0,0,1,1)$ too."
+    },
+    {
+     "value": 4,
+     "why": "Counted the vectors (or non-zero rows) without row reducing."
+    }
+   ],
+   "solution": "1. Stack as rows and reduce: $R_2-2R_1=(0,0,1,1)=R_3$; $R_4-3R_1=(0,0,1,1)$.\n2. After elimination only two non-zero rows remain.\n3. Dimension $=2$, basis $\\{(1,2,0,1),(0,0,1,1)\\}$."
+  },
+  {
+   "id": "la-basis-dim-02",
+   "skill": "la.basis-dim",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the dimension of $W=\\{x\\in\\mathbb{R}^5: x_1+x_2+x_3=0,\\; x_4=x_5\\}$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Reported the number of constraints instead of $n$ minus the number of constraints."
+    },
+    {
+     "value": 4,
+     "why": "Counted only one of the two independent constraints."
+    }
+   ],
+   "solution": "1. $W$ is the null space of a $2\\times5$ matrix with 2 independent rows.\n2. $\\dim W = 5-2 = 3$ (free: $x_2, x_3, x_5$)."
+  },
+  {
+   "id": "la-basis-dim-03",
+   "skill": "la.basis-dim",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which of the following dimension statements about spaces of real $3\\times 3$ matrices are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Upper-triangular matrices form a space of dimension 6",
+     "correct": true,
+     "why": "Entries on or above the diagonal: $3+2+1=6$."
+    },
+    {
+     "text": "Symmetric matrices form a space of dimension 6",
+     "correct": true,
+     "why": "Free entries: 3 diagonal + 3 above the diagonal."
+    },
+    {
+     "text": "Matrices with trace $0$ form a space of dimension 6",
+     "correct": false,
+     "why": "Trace $0$ is one linear constraint on 9 entries, so the dimension is $9-1=8$."
+    },
+    {
+     "text": "Skew-symmetric matrices form a space of dimension 6",
+     "correct": false,
+     "why": "Counted the diagonal as free, as for symmetric matrices; $a_{ii}=-a_{ii}$ forces it to $0$, leaving 3 free entries."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Count free entries. Symmetric $n(n+1)/2=6$, skew $n(n-1)/2=3$, upper triangular $6$, trace-zero $n^2-1=8$."
+  },
+  {
+   "id": "la-basis-dim-04",
+   "skill": "la.basis-dim",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $V$ be a vector space of dimension $n$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Some spanning set of $V$ has fewer than $n$ vectors",
+     "correct": false,
+     "why": "Every spanning set has at least $\\dim V$ vectors; fewer vectors span a space of dimension less than $n$."
+    },
+    {
+     "text": "Any $n$ vectors that span $V$ form a basis",
+     "correct": true,
+     "why": "A spanning set of size $\\dim V$ cannot contain a redundant vector, so it is independent."
+    },
+    {
+     "text": "Any $n$ linearly independent vectors in $V$ form a basis",
+     "correct": true,
+     "why": "An independent set of size $\\dim V$ automatically spans."
+    },
+    {
+     "text": "A 4-dimensional subspace of $\\mathbb{R}^4$ equals $\\mathbb{R}^4$",
+     "correct": true,
+     "why": "A basis of the subspace is 4 independent vectors in $\\mathbb{R}^4$, hence a basis of $\\mathbb{R}^4$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "With the right count ($n$), either independence or spanning is enough for a basis. Spanning sets have at least $n$ vectors; independent sets have at most $n$."
+  },
+  {
+   "id": "la-basis-dim-05",
+   "skill": "la.basis-dim",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$W_1$ and $W_2$ are subspaces of $\\mathbb{R}^5$ with $\\dim W_1=3$ and $\\dim W_2=4$. The smallest possible value of $\\dim(W_1\\cap W_2)$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$2$",
+     "correct": true,
+     "why": "$\\dim(W_1\\cap W_2)=3+4-\\dim(W_1+W_2)\\ge 7-5=2$, and 2 is attained (e.g. coordinate subspaces)."
+    },
+    {
+     "text": "$1$",
+     "correct": false,
+     "why": "Arithmetic slip in $3+4-5$, or used $\\dim(W_1+W_2)=6$, which exceeds 5."
+    },
+    {
+     "text": "$0$",
+     "correct": false,
+     "why": "Ignored that both live in $\\mathbb{R}^5$: $\\dim(W_1+W_2)\\le5$ forces overlap."
+    },
+    {
+     "text": "$3$",
+     "correct": false,
+     "why": "That is the largest possible value (when $W_1\\subseteq W_2$), not the smallest."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\dim(W_1\\cap W_2)=\\dim W_1+\\dim W_2-\\dim(W_1+W_2)$.\n2. $W_1+W_2\\subseteq\\mathbb{R}^5$, so the intersection has dimension at least $7-5=2$.\n3. Example: $W_1=\\operatorname{span}\\{e_1,e_2,e_3\\}$, $W_2=\\operatorname{span}\\{e_2,e_3,e_4,e_5\\}$."
+  },
+  {
+   "id": "la-special-matrices-01",
+   "skill": "la.special-matrices",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ be an $n\\times n$ real matrix with $A^2=A$, $A\\neq 0$ and $A\\neq I$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A$ must be symmetric",
+     "correct": false,
+     "why": "$\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ satisfies $A^2=A$ but is not symmetric (an oblique projection)."
+    },
+    {
+     "text": "$A$ is singular",
+     "correct": true,
+     "why": "If $A$ were invertible, multiplying $A^2=A$ by $A^{-1}$ gives $A=I$, which is excluded."
+    },
+    {
+     "text": "$2A$ is idempotent",
+     "correct": false,
+     "why": "$(2A)^2=4A^2=4A\\neq2A$; scaling breaks idempotence. (It is $I-A$ that is again idempotent.)"
+    },
+    {
+     "text": "Every eigenvalue of $A$ is $0$ or $1$",
+     "correct": true,
+     "why": "$Av=\\lambda v\\Rightarrow A^2v=\\lambda^2v=\\lambda v$, so $\\lambda^2=\\lambda$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Idempotent means projection: eigenvalues 0/1, $\\operatorname{rank}=\\operatorname{trace}$, singular unless $A=I$. Symmetry is an extra property (orthogonal projection)."
+  },
+  {
+   "id": "la-special-matrices-02",
+   "skill": "la.special-matrices",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $N$ be a non-zero $n\\times n$ real matrix with $N^k=0$ for some $k\\ge2$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$I+N$ is invertible",
+     "correct": true,
+     "why": "Eigenvalues of $I+N$ are all $1$, so $\\det(I+N)=1$. Explicitly $(I+N)^{-1}=I-N+N^2-\\dots$"
+    },
+    {
+     "text": "$N$ cannot be symmetric",
+     "correct": true,
+     "why": "A symmetric matrix is diagonalizable; with all eigenvalues $0$ it would equal $0$, but $N\\neq0$."
+    },
+    {
+     "text": "Every eigenvalue of $N$ is $0$",
+     "correct": true,
+     "why": "$Nv=\\lambda v\\Rightarrow 0=N^kv=\\lambda^kv$, so $\\lambda=0$."
+    },
+    {
+     "text": "$\\operatorname{rank}(N)=0$ because all eigenvalues are $0$",
+     "correct": false,
+     "why": "Zero eigenvalues do not make a matrix zero: $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ has rank 1."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Nilpotent $\\Rightarrow$ all eigenvalues $0$, so trace $0$ and det $0$.\n2. Rank is not determined by eigenvalues alone.\n3. Symmetric + nilpotent forces $N=0$."
+  },
+  {
+   "id": "la-special-matrices-03",
+   "skill": "la.special-matrices",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $3\\times 3$ skew-symmetric matrix ($A^T=-A$). Then $\\det(A)$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "the sum of squares of the entries above the diagonal",
+     "correct": false,
+     "why": "Generalised from the $2\\times2$ case $\\det\\begin{pmatrix}0&a\\\\-a&0\\end{pmatrix}=a^2$; for odd $n$ the sign argument forces $0$."
+    },
+    {
+     "text": "always $0$",
+     "correct": true,
+     "why": "$\\det A=\\det A^T=\\det(-A)=(-1)^3\\det A$, so $\\det A=0$. Works for every odd $n$."
+    },
+    {
+     "text": "any real number, depending on the entries",
+     "correct": false,
+     "why": "Used $\\det(-A)=-\\det A$ without the power: the correct rule is $\\det(-A)=(-1)^n\\det A$."
+    },
+    {
+     "text": "always $\\pm1$",
+     "correct": false,
+     "why": "Confused skew-symmetric with orthogonal ($\\det=\\pm1$)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\det(A^T)=\\det A$.\n2. $\\det(-A)=(-1)^n\\det A=-\\det A$ for $n=3$.\n3. So $\\det A=-\\det A$, i.e. $\\det A=0$."
+  },
+  {
+   "id": "la-special-matrices-04",
+   "skill": "la.special-matrices",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ and $B$ be real $n\\times n$ matrices. Which statements are always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If $A$ is skew-symmetric, $A^2$ is symmetric",
+     "correct": true,
+     "why": "$(A^2)^T=(A^T)^2=(-A)^2=A^2$."
+    },
+    {
+     "text": "$A+A^T$ is symmetric",
+     "correct": true,
+     "why": "$(A+A^T)^T=A^T+A$."
+    },
+    {
+     "text": "$A-A^T$ is skew-symmetric",
+     "correct": true,
+     "why": "$(A-A^T)^T=A^T-A=-(A-A^T)$."
+    },
+    {
+     "text": "If $A$ and $B$ are symmetric, $AB$ is symmetric",
+     "correct": false,
+     "why": "$(AB)^T=BA$, which equals $AB$ only if they commute. Example: $A=\\begin{pmatrix}1&1\\\\1&0\\end{pmatrix}$, $B=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$ give $AB=\\begin{pmatrix}1&0\\\\1&0\\end{pmatrix}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Transpose each expression and use $(XY)^T=Y^TX^T$. Products of symmetric matrices are symmetric only when they commute."
+  },
+  {
+   "id": "la-special-matrices-05",
+   "skill": "la.special-matrices",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For which value of $k$ is $A=\\begin{pmatrix}3&k\\\\-2&-2\\end{pmatrix}$ idempotent ($A^2=A$)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": -3,
+     "why": "Sign slip in $\\det A=3(-2)-k(-2)=-6+2k$; wrote $-6-2k=0$."
+    },
+    {
+     "value": 1,
+     "why": "Used rank $=$ trace $=1$ and stopped; trace is $1$ for every $k$, so it does not fix $k$."
+    }
+   ],
+   "solution": "1. A non-trivial idempotent $2\\times2$ matrix has eigenvalues $0,1$: trace $1$ (true for all $k$) and $\\det=0$.\n2. $\\det A=-6+2k=0\\Rightarrow k=3$.\n3. Check: $A^2=\\begin{pmatrix}9-2k&k\\\\-2&4-2k\\end{pmatrix}=A$ at $k=3$."
+  },
+  {
+   "id": "la-block-matrix-01",
+   "skill": "la.block-matrix",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $M=\\begin{pmatrix}I_2&B\\\\0&I_2\\end{pmatrix}$ with $B=\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}$. Find the $(1,4)$ entry of $M^5$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Read the $(1,4)$ entry of $M$ itself; forgot that the off-diagonal block grows with the power."
+    },
+    {
+     "value": 32,
+     "why": "Raised the entry to the 5th power ($2^5$) instead of multiplying the block by 5."
+    }
+   ],
+   "solution": "1. Block multiply: $M^2=\\begin{pmatrix}I&2B\\\\0&I\\end{pmatrix}$, and by induction $M^k=\\begin{pmatrix}I&kB\\\\0&I\\end{pmatrix}$.\n2. The $(1,4)$ entry of $M^5$ is $5B_{12}=5\\cdot2=10$."
+  },
+  {
+   "id": "la-block-matrix-02",
+   "skill": "la.block-matrix",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ ($p\\times p$) and $D$ ($q\\times q$) are invertible and $B$ is $p\\times q$. The inverse of $\\begin{pmatrix}A&B\\\\0&D\\end{pmatrix}$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\begin{pmatrix}A^{-1}&-B\\\\0&D^{-1}\\end{pmatrix}$",
+     "correct": false,
+     "why": "Copied the scalar rule for $\\begin{pmatrix}1&b\\\\0&1\\end{pmatrix}$; top-right gives $-AB+BD^{-1}\\neq0$ in general."
+    },
+    {
+     "text": "$\\begin{pmatrix}A^{-1}&A^{-1}BD^{-1}\\\\0&D^{-1}\\end{pmatrix}$",
+     "correct": false,
+     "why": "Sign error: the top-right block becomes $2BD^{-1}$, not $0$."
+    },
+    {
+     "text": "$\\begin{pmatrix}A^{-1}&-A^{-1}BD^{-1}\\\\0&D^{-1}\\end{pmatrix}$",
+     "correct": true,
+     "why": "Multiply out: top-right block $A(-A^{-1}BD^{-1})+BD^{-1}=0$."
+    },
+    {
+     "text": "$\\begin{pmatrix}A^{-1}&-D^{-1}BA^{-1}\\\\0&D^{-1}\\end{pmatrix}$",
+     "correct": false,
+     "why": "Wrong order: $D^{-1}BA^{-1}$ is not even defined unless $p=q$; block products keep their order."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Solve $\\begin{pmatrix}A&B\\\\0&D\\end{pmatrix}\\begin{pmatrix}X&Y\\\\0&Z\\end{pmatrix}=I$: $X=A^{-1}$, $Z=D^{-1}$, $AY+BZ=0\\Rightarrow Y=-A^{-1}BD^{-1}$."
+  },
+  {
+   "id": "la-block-matrix-03",
+   "skill": "la.block-matrix",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find $\\det\\begin{pmatrix}2&1&7&-1\\\\1&3&5&9\\\\0&0&4&1\\\\0&0&2&1\\end{pmatrix}$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Added the block determinants ($5+2$) instead of multiplying."
+    },
+    {
+     "value": 5,
+     "why": "Used only the top-left block."
+    }
+   ],
+   "solution": "1. Block upper triangular: $\\det=\\det\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}\\det\\begin{pmatrix}4&1\\\\2&1\\end{pmatrix}$.\n2. $=5\\cdot2=10$. The top-right block does not matter."
+  },
+  {
+   "id": "la-block-matrix-04",
+   "skill": "la.block-matrix",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ be $m\\times n$ with columns $a_1,\\dots,a_n$ and $B$ be $n\\times p$ with rows $b_1^T,\\dots,b_n^T$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The $i$-th row of $AB$ is the $i$-th row of $A$ times $B$",
+     "correct": true,
+     "why": "Each row of the product is a combination of the rows of $B$."
+    },
+    {
+     "text": "$AB=\\sum_{i=1}^n b_i a_i^T$",
+     "correct": false,
+     "why": "Order reversed: $b_ia_i^T$ is $p\\times m$, the shape of $(AB)^T$; in fact $\\sum b_ia_i^T=(AB)^T$."
+    },
+    {
+     "text": "The $j$-th column of $AB$ is $A$ times the $j$-th column of $B$",
+     "correct": true,
+     "why": "Each column of the product is a combination of the columns of $A$."
+    },
+    {
+     "text": "$AB=\\sum_{i=1}^n a_i b_i^T$",
+     "correct": true,
+     "why": "Column-times-row expansion: a sum of $n$ outer products, each $m\\times p$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Three views of $AB$: entries (row·column), columns ($A\\cdot$column of $B$), rows (row of $A\\cdot B$), plus outer products $\\sum a_ib_i^T$."
+  },
+  {
+   "id": "la-block-matrix-05",
+   "skill": "la.block-matrix",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is $3\\times2$, $B$ is $2\\times4$, $C$ is $4\\times3$. Which expression is **not** defined?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$CAB$",
+     "correct": false,
+     "why": "$(4\\times3)(3\\times2)(2\\times4)$ gives a $4\\times4$ matrix."
+    },
+    {
+     "text": "$ABC$",
+     "correct": false,
+     "why": "$(3\\times2)(2\\times4)(4\\times3)$ gives a $3\\times3$ matrix."
+    },
+    {
+     "text": "$ACB$",
+     "correct": true,
+     "why": "$(3\\times2)(4\\times3)$: inner sizes $2\\neq4$, so $AC$ is undefined."
+    },
+    {
+     "text": "$BCA$",
+     "correct": false,
+     "why": "$(2\\times4)(4\\times3)(3\\times2)$ gives a $2\\times2$ matrix."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Check adjacent inner dimensions. Cyclic shifts of $ABC$ are all defined here; $ACB$ breaks at $A\\cdot C$."
+  },
+  {
+   "id": "la-transpose-inverse-01",
+   "skill": "la.transpose-inverse",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ and $B$ be invertible $n\\times n$ matrices. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(A^T)^{-1}=(A^{-1})^T$",
+     "correct": true,
+     "why": "Transpose $AA^{-1}=I$ to get $(A^{-1})^TA^T=I$."
+    },
+    {
+     "text": "$(A+B)^{-1}=A^{-1}+B^{-1}$ whenever $A+B$ is invertible",
+     "correct": false,
+     "why": "$A=B=I$: $(2I)^{-1}=\\tfrac12I$ but $A^{-1}+B^{-1}=2I$."
+    },
+    {
+     "text": "$(AB)^{-1}=A^{-1}B^{-1}$",
+     "correct": false,
+     "why": "Order must reverse: $(AB)^{-1}=B^{-1}A^{-1}$, since $AB\\,B^{-1}A^{-1}=I$."
+    },
+    {
+     "text": "$(AB^T)^T=BA^T$",
+     "correct": true,
+     "why": "$(XY)^T=Y^TX^T$ with $X=A$, $Y=B^T$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Transpose and inverse both reverse the order of a product. Neither distributes the way you want over a sum, and inverse not at all."
+  },
+  {
+   "id": "la-transpose-inverse-02",
+   "skill": "la.transpose-inverse",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $2\\times2$ matrix with $A^{-1}=\\begin{pmatrix}4&2\\\\2&3\\end{pmatrix}$. Find the $(1,1)$ entry of $(2A)^{-1}$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Used $(2A)^{-1}=2A^{-1}$: multiplied instead of dividing."
+    },
+    {
+     "value": 0.125,
+     "why": "Took the reciprocal of a single entry, $1/(2\\cdot4)$; entries of an inverse are not reciprocals of entries."
+    },
+    {
+     "value": 0.75,
+     "why": "Computed $A$ and reported the $(1,1)$ entry of $2A$, not of its inverse."
+    }
+   ],
+   "solution": "1. $(cA)^{-1}=\\tfrac1c A^{-1}$.\n2. $(2A)^{-1}=\\tfrac12\\begin{pmatrix}4&2\\\\2&3\\end{pmatrix}$, so the $(1,1)$ entry is $2$."
+  },
+  {
+   "id": "la-transpose-inverse-03",
+   "skill": "la.transpose-inverse",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For invertible $n\\times n$ matrices $A$ and $B$, the matrix $\\big((AB)^T\\big)^{-1}$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A^{-1}B^{-1}$",
+     "correct": false,
+     "why": "Dropped the transpose. This is $(BA)^{-1}$, not related to $(AB)^T$."
+    },
+    {
+     "text": "$B^{-1}A^{-1}$",
+     "correct": false,
+     "why": "This is $(AB)^{-1}$; the transpose was ignored."
+    },
+    {
+     "text": "$(B^{-1})^T(A^{-1})^T$",
+     "correct": false,
+     "why": "Reversed the order only once; transpose and inverse each reverse, so the net order is $A$ then $B$."
+    },
+    {
+     "text": "$(A^{-1})^T(B^{-1})^T$",
+     "correct": true,
+     "why": "$(AB)^T=B^TA^T$; its inverse is $(A^T)^{-1}(B^T)^{-1}=(A^{-1})^T(B^{-1})^T$. Two reversals restore the order."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $(AB)^T=B^TA^T$.\n2. $(B^TA^T)^{-1}=(A^T)^{-1}(B^T)^{-1}$.\n3. $(A^T)^{-1}=(A^{-1})^T$. Numerical check with $A=\\begin{pmatrix}1&2\\\\0&1\\end{pmatrix}$, $B=\\begin{pmatrix}1&0\\\\3&1\\end{pmatrix}$ confirms only $(A^{-1})^T(B^{-1})^T$."
+  },
+  {
+   "id": "la-transpose-inverse-04",
+   "skill": "la.transpose-inverse",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A square matrix $A$ satisfies $A^2-3A+2I=0$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A$ must equal $I$ or $2I$",
+     "correct": false,
+     "why": "$A=\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$ also satisfies the equation; only the eigenvalues are restricted to $\\{1,2\\}$."
+    },
+    {
+     "text": "$A^{-1}=\\tfrac12(A-3I)$",
+     "correct": false,
+     "why": "Sign slip when moving terms: $A(A-3I)=-2I$, so this is $-A^{-1}$."
+    },
+    {
+     "text": "$A^{-1}=\\tfrac12(3I-A)$",
+     "correct": true,
+     "why": "Directly from $A(3I-A)=2I$."
+    },
+    {
+     "text": "$A$ is invertible",
+     "correct": true,
+     "why": "Rearrange: $A(3I-A)=2I$, so $A\\cdot\\tfrac12(3I-A)=I$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $A^2-3A=-2I\\Rightarrow A(3I-A)=2I$.\n2. Hence $A^{-1}=\\tfrac12(3I-A)$.\n3. Eigenvalues satisfy $\\lambda^2-3\\lambda+2=0$, so each is 1 or 2, but they may be mixed."
+  },
+  {
+   "id": "la-transpose-inverse-05",
+   "skill": "la.transpose-inverse",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A$ be an invertible $n\\times n$ real matrix and $c\\neq0,1$ a scalar. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(A^TA)^{-1}=A^{-1}(A^T)^{-1}$",
+     "correct": true,
+     "why": "Reverse the order of the product $A^T\\cdot A$: $(A^TA)^{-1}=A^{-1}(A^T)^{-1}$. Valid because $A$ is square and invertible."
+    },
+    {
+     "text": "$(A^2)^{-1}=(A^{-1})^2$",
+     "correct": true,
+     "why": "$A^2(A^{-1})^2=AAA^{-1}A^{-1}=I$."
+    },
+    {
+     "text": "$(cA)^{-1}=cA^{-1}$",
+     "correct": false,
+     "why": "$(cA)(cA^{-1})=c^2I\\neq I$; the correct inverse is $\\tfrac1cA^{-1}$."
+    },
+    {
+     "text": "If $A$ is symmetric, so is $A^{-1}$",
+     "correct": true,
+     "why": "$(A^{-1})^T=(A^T)^{-1}=A^{-1}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Inverse of a product reverses order; a scalar factor inverts to $1/c$. Symmetry passes to the inverse."
+  },
+  {
+   "id": "la-rank-rref-01",
+   "skill": "la.rank-rref",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the rank of $$A=\\begin{pmatrix}1&2&0&1\\\\2&4&0&2\\\\0&1&1&0\\\\1&3&1&1\\end{pmatrix}.$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Counted non-zero rows without row reducing."
+    },
+    {
+     "value": 3,
+     "why": "Spotted $R_2=2R_1$ but missed $R_4=R_1+R_3$."
+    },
+    {
+     "value": 1,
+     "why": "After spotting $R_2=2R_1$, also discarded the independent row $R_3$."
+    }
+   ],
+   "solution": "1. $R_2-2R_1=0$.\n2. $R_4-R_1=(0,1,1,0)=R_3$, so $R_4-R_1-R_3=0$.\n3. Rows $R_1,R_3$ remain and are independent: rank $2$."
+  },
+  {
+   "id": "la-rank-rref-02",
+   "skill": "la.rank-rref",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the rank of $$A=\\begin{pmatrix}1&2&1&0\\\\2&5&3&1\\\\3&7&4&2\\end{pmatrix}.$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Assumed $R_3=R_1+R_2$ from the first three columns; $R_1+R_2=(3,7,4,1)$ differs from $R_3$ in the last entry."
+    }
+   ],
+   "solution": "1. $R_2-2R_1=(0,1,1,1)$, $R_3-3R_1=(0,1,1,2)$.\n2. Subtract: $(0,0,0,1)$, a third pivot.\n3. Rank $3$. Near-miss patterns must be checked on every entry."
+  },
+  {
+   "id": "la-rank-rref-03",
+   "skill": "la.rank-rref",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For the matrix $A=\\begin{pmatrix}1&1&1\\\\1&2&3\\\\1&3&k\\end{pmatrix}$, which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\operatorname{rank}A=1$ when $k=5$",
+     "correct": false,
+     "why": "Dropped an independent row: rows 1 and 2 are not multiples, so rank is at least 2."
+    },
+    {
+     "text": "$\\operatorname{rank}A=2$ exactly when $k=5$",
+     "correct": true,
+     "why": "Reduction leaves $(0,0,k-5)$ in row 3; it vanishes only at $k=5$, while rows 1 and 2 always give two pivots."
+    },
+    {
+     "text": "$\\operatorname{rank}A=2$ exactly when $k=4$",
+     "correct": false,
+     "why": "Arithmetic slip: wrote $R_3-R_1$ as $(0,2,k)$ instead of $(0,2,k-1)$, giving $k-4$."
+    },
+    {
+     "text": "$\\operatorname{rank}A=3$ for every $k$",
+     "correct": false,
+     "why": "Counted three non-zero rows without reducing; for $k=5$ the third row is $2R_2-R_1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $R_2-R_1=(0,1,2)$, $R_3-R_1=(0,2,k-1)$.\n2. $R_3-2R_2=(0,0,k-5)$.\n3. Rank 2 iff $k=5$; otherwise rank 3."
+  },
+  {
+   "id": "la-rank-rref-04",
+   "skill": "la.rank-rref",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "For real matrices of compatible sizes, which statements are always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\operatorname{rank}(A+B)=\\operatorname{rank}A+\\operatorname{rank}B$",
+     "correct": false,
+     "why": "Only $\\le$ holds. $A=I$, $B=-I$: rank of the sum is $0$, not $2n$."
+    },
+    {
+     "text": "$\\operatorname{rank}(A)=\\operatorname{rank}(A^T)$",
+     "correct": true,
+     "why": "Row rank equals column rank."
+    },
+    {
+     "text": "$\\operatorname{rank}(A^TA)=\\operatorname{rank}A$",
+     "correct": true,
+     "why": "$A^TAx=0\\Rightarrow\\lVert Ax\\rVert^2=0\\Rightarrow Ax=0$, so the null spaces agree."
+    },
+    {
+     "text": "$\\operatorname{rank}(AB)=\\operatorname{rank}A$ whenever $B$ is square",
+     "correct": false,
+     "why": "Needs $B$ invertible: $B=0$ gives $\\operatorname{rank}(AB)=0$. In general only $\\operatorname{rank}(AB)\\le\\min\\{\\operatorname{rank}A,\\operatorname{rank}B\\}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Rank is subadditive and submultiplicative, never additive in general. $A^TA$ and $A$ share the null space, hence the rank."
+  },
+  {
+   "id": "la-rank-rref-05",
+   "skill": "la.rank-rref",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is the $4\\times4$ matrix with entries $a_{ij}=i+j$. Find $\\operatorname{rank}A$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Counted non-zero rows without reducing."
+    },
+    {
+     "value": 1,
+     "why": "Saw that consecutive rows differ by $(1,1,1,1)$ and concluded all rows are multiples of one row; they are not, e.g. $(2,3,4,5)$ and $(3,4,5,6)$ are not proportional."
+    },
+    {
+     "value": 3,
+     "why": "Removed only one dependent row."
+    }
+   ],
+   "solution": "1. Each row is $(i+1,i+2,i+3,i+4)=(i)(1,1,1,1)+(1,2,3,4)$.\n2. Every row lies in $\\operatorname{span}\\{(1,1,1,1),(1,2,3,4)\\}$, and two rows are independent.\n3. Rank $2$."
+  },
+  {
+   "id": "la-rank-nullity-01",
+   "skill": "la.rank-nullity",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $5\\times7$ real matrix with $\\operatorname{rank}A=3$. Find the dimension of the null space of $A$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Used the number of rows: $5-3$. Rank–nullity counts columns ($n=7$)."
+    },
+    {
+     "value": 3,
+     "why": "Equated nullity with rank."
+    }
+   ],
+   "solution": "$A$ maps $\\mathbb{R}^7\\to\\mathbb{R}^5$. Rank–nullity: $\\text{nullity}=7-3=4$."
+  },
+  {
+   "id": "la-rank-nullity-02",
+   "skill": "la.rank-nullity",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $4\\times6$ real matrix whose null space has dimension 3. Find the dimension of the null space of $A^T$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Assumed $A$ and $A^T$ have the same nullity; only their ranks agree."
+    },
+    {
+     "value": 2,
+     "why": "Used $6-4$: subtracted the shape instead of going through the rank."
+    }
+   ],
+   "solution": "1. $\\operatorname{rank}A=6-3=3$.\n2. $A^T$ is $6\\times4$ with rank 3, so nullity $(A^T)=4-3=1$."
+  },
+  {
+   "id": "la-rank-nullity-03",
+   "skill": "la.rank-nullity",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $3\\times5$ matrix, viewed as a map $T:\\mathbb{R}^5\\to\\mathbb{R}^3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$T$ can be one-to-one",
+     "correct": false,
+     "why": "One-to-one needs nullity $0$, impossible since nullity $\\ge2$."
+    },
+    {
+     "text": "If $\\operatorname{rank}A=3$ then $\\dim N(A)=2$",
+     "correct": true,
+     "why": "Rank–nullity: $5-3=2$."
+    },
+    {
+     "text": "$\\dim N(A)\\ge 3$",
+     "correct": false,
+     "why": "Used $5-2$ or assumed rank $\\le2$; rank can be 3, so the guaranteed bound is only nullity $\\ge5-3=2$."
+    },
+    {
+     "text": "$T$ can be onto $\\mathbb{R}^3$",
+     "correct": true,
+     "why": "Onto needs rank 3, which a $3\\times5$ matrix can have."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "A wide matrix (more columns than rows) always has a non-trivial null space; it can still have full row rank and be onto."
+  },
+  {
+   "id": "la-rank-nullity-04",
+   "skill": "la.rank-nullity",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}1&2&0&-1\\\\0&0&1&3\\end{pmatrix}$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(-2,1,0,0)^T\\in N(A)$",
+     "correct": true,
+     "why": "Row 1: $-2+2=0$; row 2: $0$."
+    },
+    {
+     "text": "$\\dim N(A)=2$",
+     "correct": true,
+     "why": "Two pivots (columns 1 and 3) out of 4 columns: nullity $4-2=2$."
+    },
+    {
+     "text": "$(1,0,3,1)^T\\in N(A)$",
+     "correct": false,
+     "why": "Sign slip with free variable $x_4=1$: $x_3=-3x_4=-3$, not $3$. Row 2 gives $3+3=6\\neq0$."
+    },
+    {
+     "text": "The columns of $A$ are linearly independent",
+     "correct": false,
+     "why": "Four vectors in $\\mathbb{R}^2$ are always dependent; nullity $2>0$ confirms it."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pivots in columns 1, 3; free $x_2,x_4$.\n2. $x_1=-2x_2+x_4$, $x_3=-3x_4$.\n3. Basis of $N(A)$: $(-2,1,0,0)$, $(1,0,-3,1)$."
+  },
+  {
+   "id": "la-rank-nullity-05",
+   "skill": "la.rank-nullity",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a non-zero real $3\\times3$ matrix with $A^2=0$. Find $\\dim N(A)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Treated $A^2=0$ as if $A=0$."
+    },
+    {
+     "value": 1,
+     "why": "Found $\\operatorname{rank}A=1$ and reported the rank instead of $3-\\operatorname{rank}$."
+    }
+   ],
+   "solution": "1. $A^2=0$ means $A(Ax)=0$: the column space of $A$ lies inside $N(A)$.\n2. So $\\operatorname{rank}A\\le 3-\\operatorname{rank}A$, giving $\\operatorname{rank}A\\le1$; $A\\neq0$ gives rank 1.\n3. Nullity $=3-1=2$."
+  },
+  {
+   "id": "la-solvability-01",
+   "skill": "la.solvability",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $3\\times5$ matrix with $\\operatorname{rank}A=3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$Ax=b$ has a solution for every $b\\in\\mathbb{R}^3$",
+     "correct": true,
+     "why": "Rank equals the number of rows, so the columns span $\\mathbb{R}^3$."
+    },
+    {
+     "text": "$Ax=b$ has a unique solution for some $b$",
+     "correct": false,
+     "why": "Nullity is $5-3=2$; whenever a solution exists, adding null-space vectors gives infinitely many."
+    },
+    {
+     "text": "$Ax=0$ has a non-zero solution",
+     "correct": true,
+     "why": "Nullity $2>0$."
+    },
+    {
+     "text": "$A^Ty=c$ has at most one solution for each $c\\in\\mathbb{R}^5$",
+     "correct": true,
+     "why": "$A^T$ is $5\\times3$ with rank 3 = number of its columns, so $N(A^T)=\\{0\\}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Full row rank ($r=m$) gives existence for every $b$. Uniqueness needs $r=n$, which fails here. For $A^T$ the roles swap."
+  },
+  {
+   "id": "la-solvability-02",
+   "skill": "la.solvability",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $5\\times3$ matrix with $\\operatorname{rank}A=3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A^TAx=A^Tb$ has exactly one solution for every $b$",
+     "correct": true,
+     "why": "$A^TA$ is $3\\times3$ of rank 3, hence invertible: the least-squares solution is unique."
+    },
+    {
+     "text": "If $Ax=b$ has a solution, it is unique",
+     "correct": true,
+     "why": "Rank equals the number of columns, so $N(A)=\\{0\\}$."
+    },
+    {
+     "text": "$Ax=b$ has a solution for every $b\\in\\mathbb{R}^5$",
+     "correct": false,
+     "why": "The column space is 3-dimensional inside $\\mathbb{R}^5$; most $b$ lie outside it."
+    },
+    {
+     "text": "$Ax=0$ has only the trivial solution",
+     "correct": true,
+     "why": "Nullity $3-3=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Full column rank ($r=n$) gives uniqueness but not existence. The normal equations always have a unique solution in that case."
+  },
+  {
+   "id": "la-solvability-03",
+   "skill": "la.solvability",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "The system $$x+y+z=6,\\quad x+2y+3z=14,\\quad x+3y+5z=m$$ has infinitely many solutions. Find $m$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 22,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 34,
+     "why": "Combined right sides as $2\\cdot14+6$ instead of $2\\cdot14-6$; the left sides satisfy $R_3=2R_2-R_1$."
+    },
+    {
+     "value": 14,
+     "why": "Assumed the third equation must copy the second right side."
+    }
+   ],
+   "solution": "1. Eliminate: $R_2-R_1:(0,1,2\\,|\\,8)$, $R_3-R_1:(0,2,4\\,|\\,m-6)$.\n2. $R_3-2R_2$ gives $(0,0,0\\,|\\,m-22)$.\n3. Consistent (and then infinitely many solutions, rank $2<3$) iff $m=22$."
+  },
+  {
+   "id": "la-solvability-04",
+   "skill": "la.solvability",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Consider $x+2y=3$, $2x+ky=6$. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Unique solution for $k\\neq4$; infinitely many solutions for $k=4$",
+     "correct": true,
+     "why": "$\\det=k-4$. At $k=4$ the second equation is exactly twice the first (including the right side), so rank $A=$ rank $[A|b]=1$."
+    },
+    {
+     "text": "Unique solution for every $k$",
+     "correct": false,
+     "why": "Ignored that the coefficient matrix is singular at $k=4$."
+    },
+    {
+     "text": "Unique solution for $k\\neq4$; no solution for $k=4$",
+     "correct": false,
+     "why": "Assumed singular means inconsistent without checking the right side: $6=2\\cdot3$, so it is consistent."
+    },
+    {
+     "text": "Infinitely many solutions for every $k\\neq4$",
+     "correct": false,
+     "why": "Reversed the cases: $\\det\\neq0$ gives exactly one solution."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\det\\begin{pmatrix}1&2\\\\2&k\\end{pmatrix}=k-4$.\n2. $k\\neq4$: unique.\n3. $k=4$: compare ranks of $A$ and $[A|b]$; both are 1, so infinitely many."
+  },
+  {
+   "id": "la-solvability-05",
+   "skill": "la.solvability",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Gaussian elimination on a system of 3 equations in $x,y,z$ ends with the augmented matrix $$\\left(\\begin{array}{ccc|c}1&0&2&3\\\\0&1&-1&1\\\\0&0&0&0\\end{array}\\right).$$ Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(x,y,z)=(3,1,0)$ is a solution",
+     "correct": true,
+     "why": "Set the free variable $z=0$: $x=3$, $y=1$. The obvious particular solution counts."
+    },
+    {
+     "text": "$(x,y,z)=(1,0,1)$ is a solution",
+     "correct": false,
+     "why": "With $z=1$: $x=3-2=1$ but $y=1+1=2$, not $0$ (sign slip in $y-z=1$)."
+    },
+    {
+     "text": "The system has infinitely many solutions",
+     "correct": true,
+     "why": "Rank 2 $<3$ unknowns: $z$ is free."
+    },
+    {
+     "text": "The system is consistent",
+     "correct": true,
+     "why": "No row of the form $(0\\;0\\;0\\,|\\,c)$ with $c\\neq0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pivots in columns 1 and 2; $z$ free.\n2. $x=3-2z$, $y=1+z$.\n3. $z=0$ gives $(3,1,0)$; $z=1$ gives $(1,2,1)$."
+  },
+  {
+   "id": "la-solvability-06",
+   "skill": "la.solvability",
+   "type": "NAT",
+   "marks": 2,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Solve by Gaussian elimination and report $z$: $$2x+y-z=1,\\quad 4x+3y+z=13,\\quad -2x+y+4z=12.$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Reported $y$ instead of $z$ (back-substitution order mixed up)."
+    },
+    {
+     "value": 1,
+     "why": "Reported $x$; the question asks for $z$."
+    }
+   ],
+   "solution": "1. $R_2-2R_1$: $y+3z=11$. $R_3+R_1$: $2y+3z=13$.\n2. $(R_3+R_1)-2(R_2-2R_1)$: $-3z=-9$, so $z=3$.\n3. Back-substitute: $y=2$, $x=1$. Check: $2+2-3=1$."
+  },
+  {
+   "id": "la-rank-rref-06",
+   "skill": "la.rank-rref",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $$A=\\begin{pmatrix}1&0&2&1\\\\0&1&1&-1\\\\1&1&3&0\\\\1&-1&1&2\\end{pmatrix}.$$ Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\dim N(A)=2$",
+     "correct": true,
+     "why": "Rank–nullity: $4-2=2$."
+    },
+    {
+     "text": "The columns of $A$ are linearly independent",
+     "correct": false,
+     "why": "Rank $2<4$ columns."
+    },
+    {
+     "text": "$\\operatorname{rank}A=2$",
+     "correct": true,
+     "why": "$R_3=R_1+R_2$ and $R_4=R_1-R_2$; $R_1,R_2$ are independent."
+    },
+    {
+     "text": "$\\operatorname{rank}A=3$, because rows 3 and 4 are not multiples of each other",
+     "correct": false,
+     "why": "Pairwise non-proportional rows can still be dependent; both are combinations of $R_1,R_2$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $R_3-R_1-R_2=0$, $R_4-R_1+R_2=0$.\n2. Two pivots remain: rank 2, nullity 2."
+  },
+  {
+   "id": "la-det-props-01",
+   "skill": "la.det-props",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $3\\times3$ matrix with $\\det A=4$. Find $\\det(2A^{-1})$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.5,
+     "why": "Used $\\det(2A^{-1})=2\\det(A^{-1})$; the scalar must be raised to $n=3$."
+    },
+    {
+     "value": 32,
+     "why": "Forgot the inverse: computed $2^3\\det A$."
+    },
+    {
+     "value": 0.03125,
+     "why": "Computed $\\det\\big((2A)^{-1}\\big)=1/(8\\cdot4)$ instead of $\\det(2A^{-1})$."
+    }
+   ],
+   "solution": "$\\det(2A^{-1})=2^3\\det(A^{-1})=8\\cdot\\tfrac14=2$."
+  },
+  {
+   "id": "la-det-props-02",
+   "skill": "la.det-props",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $4\\times4$ matrix with $\\det A=-2$. Find $\\det(-3A^T)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -162,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Used $c$ instead of $c^n$: $(-3)(-2)$."
+    },
+    {
+     "value": 54,
+     "why": "Used the wrong size: $(-3)^3(-2)$."
+    },
+    {
+     "value": 162,
+     "why": "Assumed $\\det(A^T)=-\\det A$; transposing does not change the determinant."
+    }
+   ],
+   "solution": "1. $\\det(A^T)=\\det A=-2$.\n2. $\\det(-3A^T)=(-3)^4(-2)=81\\cdot(-2)=-162$."
+  },
+  {
+   "id": "la-det-props-03",
+   "skill": "la.det-props",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A,B$ be real $n\\times n$ matrices. Which statements are always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Swapping two rows of $A$ multiplies $\\det A$ by $-1$",
+     "correct": true,
+     "why": "Each transposition flips the sign of the determinant."
+    },
+    {
+     "text": "$\\det(A+B)=\\det A+\\det B$",
+     "correct": false,
+     "why": "$A=B=I_2$: $\\det(2I)=4\\neq2$."
+    },
+    {
+     "text": "$\\det(AB)=\\det(BA)$",
+     "correct": true,
+     "why": "Both equal $\\det A\\det B$, even when $AB\\neq BA$."
+    },
+    {
+     "text": "Adding $3\\times$ row 1 to row 2 multiplies $\\det A$ by $3$",
+     "correct": false,
+     "why": "Adding a multiple of one row to another leaves the determinant unchanged; only scaling a row scales it."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Determinant is multiplicative, not additive. Row swap: $\\times(-1)$; row scaling by $c$: $\\times c$; row replacement: no change."
+  },
+  {
+   "id": "la-det-props-04",
+   "skill": "la.det-props",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is $3\\times3$ with $\\det A=5$. Matrix $B$ is obtained from $A$ by: (i) multiplying row 1 by 3, (ii) swapping rows 2 and 3, (iii) adding twice the new row 1 to row 3. Then $\\det B=$",
+   "figure": null,
+   "options": [
+    {
+     "text": "$-135$",
+     "correct": false,
+     "why": "Applied $c^n=3^3$ for scaling a single row; $c^n$ is only for scaling the whole matrix."
+    },
+    {
+     "text": "$-30$",
+     "correct": false,
+     "why": "Treated the row addition as multiplying the determinant by 2."
+    },
+    {
+     "text": "$15$",
+     "correct": false,
+     "why": "Forgot the sign change from the row swap."
+    },
+    {
+     "text": "$-15$",
+     "correct": true,
+     "why": "Scaling one row: $\\times3$; swap: $\\times(-1)$; row addition: no change. $5\\cdot3\\cdot(-1)=-15$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Track each operation: $5\\to15\\to-15\\to-15$."
+  },
+  {
+   "id": "la-det-props-05",
+   "skill": "la.det-props",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $3\\times3$ matrix with $\\det A=3$. Find $\\det(\\operatorname{adj}A)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Assumed $\\det(\\operatorname{adj}A)=\\det A$."
+    },
+    {
+     "value": 27,
+     "why": "Used $(\\det A)^n$ instead of $(\\det A)^{n-1}$."
+    }
+   ],
+   "solution": "1. $A\\operatorname{adj}A=(\\det A)I$, so $\\det A\\cdot\\det(\\operatorname{adj}A)=(\\det A)^3$.\n2. $\\det(\\operatorname{adj}A)=(\\det A)^{2}=9$."
+  },
+  {
+   "id": "la-det-poly-01",
+   "skill": "la.det-poly",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $3\\times3$ matrix $A$ has eigenvalues $1, 2, -1$. Find $\\det(A^2+I)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 20,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Plugged $\\det A$ into the polynomial: $(\\det A)^2+1=4+1$."
+    },
+    {
+     "value": 9,
+     "why": "Added the transformed eigenvalues $2+5+2$ instead of multiplying."
+    }
+   ],
+   "solution": "1. Eigenvalues of $A^2+I$: $\\lambda^2+1=2,5,2$.\n2. $\\det=2\\cdot5\\cdot2=20$."
+  },
+  {
+   "id": "la-det-poly-02",
+   "skill": "la.det-poly",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $2\\times2$ matrix $A$ has eigenvalues $2$ and $3$. Find $\\det(A^2-5A+6I)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Plugged $\\det A=6$ into the polynomial: $36-30+6$."
+    },
+    {
+     "value": -78,
+     "why": "Split the determinant over the sum: $\\det(A^2)-\\det(5A)+\\det(6I)=36-150+36$."
+    }
+   ],
+   "solution": "1. $p(\\lambda)=\\lambda^2-5\\lambda+6=(\\lambda-2)(\\lambda-3)$.\n2. $p(2)=p(3)=0$, so $\\det p(A)=0\\cdot0=0$ (indeed $p(A)=0$ by Cayley–Hamilton)."
+  },
+  {
+   "id": "la-det-poly-03",
+   "skill": "la.det-poly",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $3\\times3$ matrix $A$ has eigenvalues $1, -2, 3$. Find $\\det(A^{-1}+2I)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10.5,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1.833,
+     "why": "Plugged the determinant in: $1/\\det A+2=-\\tfrac16+2$."
+    },
+    {
+     "value": -4,
+     "why": "Used $-\\lambda$ for the eigenvalues of $A^{-1}$ instead of $1/\\lambda$: $(1)(4)(-1)$."
+    }
+   ],
+   "solution": "1. Eigenvalues of $A^{-1}$: $1,-\\tfrac12,\\tfrac13$.\n2. Add 2: $3,\\tfrac32,\\tfrac73$.\n3. Product $=3\\cdot\\tfrac32\\cdot\\tfrac73=10.5$."
+  },
+  {
+   "id": "la-det-poly-04",
+   "skill": "la.det-poly",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $2\\times2$ matrix $A$ has trace $5$ and determinant $6$. Then $\\det(A-I)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "$1$",
+     "correct": false,
+     "why": "Computed $\\det A-\\operatorname{tr}A$, dropping the $t^2$ term."
+    },
+    {
+     "text": "$12$",
+     "correct": false,
+     "why": "Sign slip: evaluated $t^2+5t+6$ at $t=1$."
+    },
+    {
+     "text": "$2$",
+     "correct": true,
+     "why": "$\\det(A-tI)=t^2-5t+6$; at $t=1$: $1-5+6=2$. Equivalently eigenvalues $2,3$ give $(1)(2)$."
+    },
+    {
+     "text": "$5$",
+     "correct": false,
+     "why": "Used $\\det A-\\det I=6-1$; determinant is not linear."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "$\\det(A-I)=\\prod(\\lambda_i-1)=\\chi(1)$ where $\\chi(t)=t^2-(\\operatorname{tr}A)t+\\det A$. So $1-5+6=2$."
+  },
+  {
+   "id": "la-det-poly-05",
+   "skill": "la.det-poly",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $3\\times3$ matrix $A$ has eigenvalues $1, -2, 2$. Find $\\det(A^2+A)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 24,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Plugged the determinant in: $(\\det A)^2+\\det A=16-4$."
+    },
+    {
+     "value": 10,
+     "why": "Added $\\lambda^2+\\lambda$ over the eigenvalues ($2+2+6$) instead of multiplying."
+    }
+   ],
+   "solution": "1. $p(\\lambda)=\\lambda^2+\\lambda$: $p(1)=2$, $p(-2)=2$, $p(2)=6$.\n2. $\\det p(A)=2\\cdot2\\cdot6=24$."
+  },
+  {
+   "id": "la-eig-trace-det-01",
+   "skill": "la.eig-trace-det",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A=\\begin{pmatrix}4&1&1\\\\1&4&1\\\\1&1&4\\end{pmatrix}$ has the eigenvalue $3$ with algebraic multiplicity 2. Find the third eigenvalue.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 9,
+     "why": "Subtracted 3 only once from the trace: $12-3$."
+    },
+    {
+     "value": 4,
+     "why": "Read a diagonal entry as an eigenvalue; $A$ is not triangular."
+    }
+   ],
+   "solution": "1. Trace $=12$.\n2. $3+3+\\lambda=12\\Rightarrow\\lambda=6$.\n3. Cross-check: row sums are 6, so $(1,1,1)^T$ is an eigenvector with eigenvalue 6; $\\det A=3\\cdot3\\cdot6=54$."
+  },
+  {
+   "id": "la-eig-trace-det-02",
+   "skill": "la.eig-trace-det",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "The eigenvalues of $\\begin{pmatrix}1&2\\\\3&2\\end{pmatrix}$ are",
+   "figure": null,
+   "options": [
+    {
+     "text": "$4$ and $-1$",
+     "correct": true,
+     "why": "$\\lambda^2-3\\lambda-4=0$. Check: sum $3=$ trace, product $-4=$ det."
+    },
+    {
+     "text": "$1$ and $2$",
+     "correct": false,
+     "why": "Read the diagonal entries; that only works for triangular matrices."
+    },
+    {
+     "text": "$-4$ and $1$",
+     "correct": false,
+     "why": "Sign slip in the quadratic: sum would be $-3\\neq$ trace."
+    },
+    {
+     "text": "$3$ and $-4$",
+     "correct": false,
+     "why": "Reported the trace and determinant themselves."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Trace $3$, det $2-6=-4$. Solve $\\lambda^2-3\\lambda-4=0$: $\\lambda=4,-1$."
+  },
+  {
+   "id": "la-eig-trace-det-03",
+   "skill": "la.eig-trace-det",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}2&0&0\\\\5&3&0\\\\-1&4&3\\end{pmatrix}$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\det A=18$",
+     "correct": true,
+     "why": "Product of eigenvalues $2\\cdot3\\cdot3$."
+    },
+    {
+     "text": "The eigenvalues of $A$ are $2, 3, 3$",
+     "correct": true,
+     "why": "$A$ is lower triangular, so its eigenvalues are its diagonal entries."
+    },
+    {
+     "text": "$A$ is diagonalizable",
+     "correct": false,
+     "why": "$\\lambda=3$ has AM 2, but $A-3I=\\begin{pmatrix}-1&0&0\\\\5&0&0\\\\-1&4&0\\end{pmatrix}$ has rank 2, so GM $=1$."
+    },
+    {
+     "text": "$A+A^T$ has eigenvalues $4, 6, 6$",
+     "correct": false,
+     "why": "$A+A^T$ is symmetric but not triangular; its diagonal $4,6,6$ is not its spectrum (for example $\\det(A+A^T-4I)\\neq0$)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Triangular: eigenvalues on the diagonal. The sum $A+A^T$ loses the triangular shape, so the diagonal shortcut no longer applies."
+  },
+  {
+   "id": "la-eig-trace-det-04",
+   "skill": "la.eig-trace-det",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A real $3\\times3$ matrix $A$ has $\\operatorname{tr}A=3$, $\\det A=-12$, and $2$ is one of its eigenvalues. Find the smallest eigenvalue of $A$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": -6,
+     "why": "Took $\\det A/2=-6$ as an eigenvalue; it is the product of the other two."
+    },
+    {
+     "value": 1,
+     "why": "Took $\\operatorname{tr}A-2=1$ as an eigenvalue; it is the sum of the other two."
+    }
+   ],
+   "solution": "1. Other two: $\\lambda_2+\\lambda_3=1$, $\\lambda_2\\lambda_3=-6$.\n2. $t^2-t-6=0\\Rightarrow t=3,-2$.\n3. Eigenvalues $2,3,-2$; smallest $-2$. Check: $2\\cdot3\\cdot(-2)=-12$."
+  },
+  {
+   "id": "la-eig-trace-det-05",
+   "skill": "la.eig-trace-det",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $B=\\begin{pmatrix}5&4\\\\1&2\\end{pmatrix}$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(4,1)^T$ is an eigenvector of $B$",
+     "correct": true,
+     "why": "$B(4,1)^T=(24,6)^T=6(4,1)^T$."
+    },
+    {
+     "text": "The eigenvalues of $B$ are $5$ and $2$",
+     "correct": false,
+     "why": "Diagonal entries of a non-triangular matrix; check: product $10\\neq\\det B=6$."
+    },
+    {
+     "text": "The eigenvalues of $B$ are $1$ and $6$",
+     "correct": true,
+     "why": "Trace $7$, det $6$: $\\lambda^2-7\\lambda+6=(\\lambda-1)(\\lambda-6)$."
+    },
+    {
+     "text": "$B-I$ is singular",
+     "correct": true,
+     "why": "$1$ is an eigenvalue, so $\\det(B-I)=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Always cross-check a candidate pair with trace and det: $1+6=7$, $1\\cdot6=6$."
+  },
+  {
+   "id": "la-eig-transform-01",
+   "skill": "la.eig-transform",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $3\\times3$ matrix $A$ has eigenvalues $1, 2, -3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A^{-1}$ has eigenvalues $1, \\tfrac12, -\\tfrac13$",
+     "correct": true,
+     "why": "$\\lambda\\mapsto1/\\lambda$; all $\\lambda\\neq0$ so $A$ is invertible."
+    },
+    {
+     "text": "$A+2I$ has eigenvalues $3, 4, -1$",
+     "correct": true,
+     "why": "$\\lambda\\mapsto\\lambda+2$."
+    },
+    {
+     "text": "$3A$ has eigenvalues $3, 6, -9$, so $\\det(3A)=-162$",
+     "correct": true,
+     "why": "$\\lambda\\mapsto3\\lambda$; the product $3\\cdot6\\cdot(-9)=-162=3^3\\det A$ (not $3\\det A=-18$)."
+    },
+    {
+     "text": "$A^2$ has eigenvalues $1, 4, 9$",
+     "correct": true,
+     "why": "$\\lambda\\mapsto\\lambda^2$ with the same eigenvectors."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "All four hold. Eigenvalues transform one by one under polynomials, inverses and scaling; for $cA$ all $n$ eigenvalues scale, so the determinant scales by $c^n$."
+  },
+  {
+   "id": "la-eig-transform-02",
+   "skill": "la.eig-transform",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $3\\times3$ matrix $A$ has eigenvalues $2, -1, 3$. Find $\\operatorname{tr}(A^3)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 34,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 64,
+     "why": "Cubed the trace: $(2-1+3)^3$; trace is not multiplicative."
+    },
+    {
+     "value": 36,
+     "why": "Sign slip: used $(-1)^3=+1$."
+    }
+   ],
+   "solution": "$\\operatorname{tr}(A^3)=\\sum\\lambda_i^3=8-1+27=34$."
+  },
+  {
+   "id": "la-eig-transform-03",
+   "skill": "la.eig-transform",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $2\\times2$ matrix $A$ has eigenvalues $2$ and $4$. Find $\\operatorname{tr}(A^{-1})$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.75,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.1667,
+     "why": "Inverted the trace: $1/(2+4)$."
+    },
+    {
+     "value": 0.125,
+     "why": "Inverted the determinant: $1/8$."
+    }
+   ],
+   "solution": "Eigenvalues of $A^{-1}$ are $\\tfrac12,\\tfrac14$; trace $=0.75$."
+  },
+  {
+   "id": "la-eig-transform-04",
+   "skill": "la.eig-transform",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$Av=\\lambda v$ with $v\\neq0$, and $A-2I$ is invertible. Which statement about $B=(A-2I)^{-1}$ is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$Bv=\\left(\\dfrac1\\lambda-2\\right)v$",
+     "correct": false,
+     "why": "Inverted before shifting: that is the eigenvalue of $A^{-1}-2I$."
+    },
+    {
+     "text": "$v$ need not be an eigenvector of $B$",
+     "correct": false,
+     "why": "Polynomials and inverses of $A$ keep the eigenvectors of $A$."
+    },
+    {
+     "text": "$Bv=(\\lambda-2)\\,v$",
+     "correct": false,
+     "why": "Forgot the inverse: that is the eigenvalue of $A-2I$."
+    },
+    {
+     "text": "$Bv=\\dfrac{1}{\\lambda-2}\\,v$",
+     "correct": true,
+     "why": "$(A-2I)v=(\\lambda-2)v$; apply $B$ to both sides and divide by $\\lambda-2\\neq0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $(A-2I)v=(\\lambda-2)v$.\n2. Multiply by $B$: $v=(\\lambda-2)Bv$, so $Bv=\\tfrac{1}{\\lambda-2}v$."
+  },
+  {
+   "id": "la-eig-transform-05",
+   "skill": "la.eig-transform",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $3\\times3$ matrix $A$ has eigenvalues $1, 2, 3$. Find the largest eigenvalue of $(A-4I)^2$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Transformed only the largest eigenvalue of $A$: $(3-4)^2=1$. The map $\\lambda\\mapsto(\\lambda-4)^2$ is not increasing here."
+    },
+    {
+     "value": 4,
+     "why": "Arithmetic slip or picked the middle value $(2-4)^2$."
+    }
+   ],
+   "solution": "1. Eigenvalues of $(A-4I)^2$: $(1-4)^2=9$, $(2-4)^2=4$, $(3-4)^2=1$.\n2. Largest is $9$, coming from the smallest $\\lambda$."
+  },
+  {
+   "id": "la-rank-one-01",
+   "skill": "la.rank-one",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $u=(1,2,2)^T$, $v=(2,-1,1)^T$ and $A=uv^T$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The eigenvalues of $A$ are $2, 0, 0$",
+     "correct": true,
+     "why": "$Au=u(v^Tu)=2u$; vectors orthogonal to $v$ give eigenvalue $0$ (a 2-dimensional space)."
+    },
+    {
+     "text": "$A^2=2A$",
+     "correct": true,
+     "why": "$A^2=u(v^Tu)v^T=2uv^T$."
+    },
+    {
+     "text": "The non-zero eigenvalue of $A$ is $\\lVert u\\rVert^2=9$",
+     "correct": false,
+     "why": "The non-zero eigenvalue is $v^Tu=2$, not $u^Tu$; $\\lVert u\\rVert\\lVert v\\rVert=3\\sqrt6$ is the singular value, also different."
+    },
+    {
+     "text": "$\\operatorname{rank}A=1$",
+     "correct": true,
+     "why": "Every column of $A$ is a multiple of $u$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $v^Tu=2-2+2=2$.\n2. $A^2=(v^Tu)A$, eigenvalues $v^Tu$ and $0$ (multiplicity $n-1$).\n3. Trace check: $\\operatorname{tr}A=v^Tu=2$."
+  },
+  {
+   "id": "la-rank-one-02",
+   "skill": "la.rank-one",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $x=(1,1,2)^T$. Find $\\det(I_3+xx^T)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Took the eigenvalue of $xx^T$ ($x^Tx=6$) and forgot the $+1$ from $I$."
+    },
+    {
+     "value": 343,
+     "why": "Assumed all three eigenvalues equal $1+x^Tx=7$; two of them are $1$."
+    }
+   ],
+   "solution": "1. $xx^T$ has eigenvalues $x^Tx=6$, $0$, $0$.\n2. $I+xx^T$ has eigenvalues $7,1,1$; determinant $7$."
+  },
+  {
+   "id": "la-rank-one-03",
+   "skill": "la.rank-one",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $u=(1,1,0)^T$, $v=(1,-1,3)^T$ and $A=uv^T$. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The eigenvalues of $A$ are $1, 0, 0$",
+     "correct": false,
+     "why": "Assumed a rank-1 matrix always has a non-zero eigenvalue; it is $v^Tu$, which is $0$ here."
+    },
+    {
+     "text": "$A$ is diagonalizable because it has rank 1",
+     "correct": false,
+     "why": "GM of $0$ is $3-1=2<3=$ AM, so $A$ is not diagonalizable."
+    },
+    {
+     "text": "$A$ has eigenvalue $\\lVert u\\rVert\\lVert v\\rVert=\\sqrt{22}$",
+     "correct": false,
+     "why": "$\\lVert u\\rVert\\lVert v\\rVert$ is the non-zero singular value, not an eigenvalue."
+    },
+    {
+     "text": "All eigenvalues of $A$ are $0$, and $A^2=0$",
+     "correct": true,
+     "why": "$v^Tu=1-1+0=0$, so $A^2=u(v^Tu)v^T=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $v^Tu=0$ makes $uv^T$ nilpotent.\n2. Rank 1 gives GM$(0)=2$, but AM$(0)=3$: not diagonalizable."
+  },
+  {
+   "id": "la-rank-one-04",
+   "skill": "la.rank-one",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$J$ is the $5\\times5$ matrix with every entry equal to 1. Find $\\det(J+2I)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 112,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 32,
+     "why": "Ignored $J$: used $\\det(2I)=2^5$."
+    },
+    {
+     "value": 16807,
+     "why": "Assumed every eigenvalue of $J+2I$ is $5+2=7$; four of them are $0+2=2$."
+    },
+    {
+     "value": 7,
+     "why": "Multiplied only the eigenvalue coming from the all-ones direction."
+    }
+   ],
+   "solution": "1. $J=\\mathbf{1}\\mathbf{1}^T$ has eigenvalues $5,0,0,0,0$.\n2. $J+2I$: $7,2,2,2,2$.\n3. $\\det=7\\cdot2^4=112$."
+  },
+  {
+   "id": "la-rank-one-05",
+   "skill": "la.rank-one",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $u=(1,2,2)^T$, $v=(2,-1,1)^T$ and $A=uv^T$. Find $\\operatorname{tr}(A^{10})$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1024,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 512,
+     "why": "Used $A^{10}=2^9A$ and forgot that $\\operatorname{tr}A=2$ multiplies in."
+    },
+    {
+     "value": 20,
+     "why": "Multiplied instead of powering: $10\\cdot v^Tu$."
+    }
+   ],
+   "solution": "1. $A^k=(v^Tu)^{k-1}A$ with $v^Tu=2$.\n2. $\\operatorname{tr}(A^{10})=2^9\\cdot\\operatorname{tr}A=2^9\\cdot2=1024$ (the only non-zero eigenvalue is $2$, and $2^{10}=1024$)."
+  },
+  {
+   "id": "la-rank-gm-01",
+   "skill": "la.rank-gm",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "For $A=\\begin{pmatrix}2&1&0\\\\0&2&0\\\\0&0&2\\end{pmatrix}$, find the geometric multiplicity of the eigenvalue $2$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Reported $\\operatorname{rank}(A-2I)$; GM is $n-\\operatorname{rank}(A-2I)=3-1$."
+    },
+    {
+     "value": 3,
+     "why": "Equated GM with the algebraic multiplicity."
+    }
+   ],
+   "solution": "1. $A-2I=\\begin{pmatrix}0&1&0\\\\0&0&0\\\\0&0&0\\end{pmatrix}$ has rank 1.\n2. GM $=3-1=2$, while AM $=3$: not diagonalizable."
+  },
+  {
+   "id": "la-rank-gm-02",
+   "skill": "la.rank-gm",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which of the following matrices are diagonalizable over $\\mathbb{R}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\begin{pmatrix}2&1\\\\0&2\\end{pmatrix}$",
+     "correct": false,
+     "why": "$\\lambda=2$ with AM 2, but $A-2I$ has rank 1, so GM $=1$."
+    },
+    {
+     "text": "$\\begin{pmatrix}1&1\\\\0&2\\end{pmatrix}$",
+     "correct": true,
+     "why": "Distinct eigenvalues $1,2$ always give independent eigenvectors."
+    },
+    {
+     "text": "$\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$",
+     "correct": false,
+     "why": "$\\lambda=0$ with AM 2, GM $=2-1=1$."
+    },
+    {
+     "text": "$\\begin{pmatrix}2&0\\\\0&2\\end{pmatrix}$",
+     "correct": true,
+     "why": "Already diagonal; GM $=2-0=2=$ AM."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Repeated eigenvalue: compute GM $=n-\\operatorname{rank}(A-\\lambda I)$ and compare with AM."
+  },
+  {
+   "id": "la-rank-gm-03",
+   "skill": "la.rank-gm",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For $A=\\begin{pmatrix}3&1&1\\\\1&3&1\\\\1&1&3\\end{pmatrix}$, $\\lambda=2$ is an eigenvalue. Find its geometric multiplicity.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Reported $\\operatorname{rank}(A-2I)$ (all-ones matrix, rank 1) instead of $3-1$."
+    },
+    {
+     "value": 3,
+     "why": "Counted the non-zero rows of $A-2I$ without reducing; they are all equal."
+    }
+   ],
+   "solution": "1. $A-2I$ is the all-ones matrix, rank 1.\n2. GM $=3-1=2$. (The third eigenvalue is $9-4=5$ from the trace.)"
+  },
+  {
+   "id": "la-rank-gm-04",
+   "skill": "la.rank-gm",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}2&-1\\\\1&0\\end{pmatrix}$. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Eigenvalues $2$ and $0$, so $A$ is diagonalizable",
+     "correct": false,
+     "why": "Read the diagonal of a non-triangular matrix; product $0\\neq\\det A=1$."
+    },
+    {
+     "text": "Eigenvalues $1$ and $-1$, so $A$ is diagonalizable",
+     "correct": false,
+     "why": "Dropped the trace term and solved $\\lambda^2-1=0$; check: sum $0\\neq$ trace $2$."
+    },
+    {
+     "text": "$\\lambda=1$ with AM 2 and GM 2, so $A$ is diagonalizable",
+     "correct": false,
+     "why": "Assumed GM $=$ AM; row reducing $A-I$ leaves one pivot, so GM is 1."
+    },
+    {
+     "text": "$\\lambda=1$ with AM 2 and GM 1, so $A$ is not diagonalizable",
+     "correct": true,
+     "why": "$\\lambda^2-2\\lambda+1=0$; $A-I=\\begin{pmatrix}1&-1\\\\1&-1\\end{pmatrix}$ has rank 1, GM $=2-1=1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Trace 2, det 1: $(\\lambda-1)^2=0$.\n2. $\\operatorname{rank}(A-I)=1\\Rightarrow$ GM $=1<2$: not diagonalizable."
+  },
+  {
+   "id": "la-rank-gm-05",
+   "skill": "la.rank-gm",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $4\\times4$ matrix $A$ has characteristic polynomial $(\\lambda-1)^2(\\lambda-3)^2$, with $\\operatorname{rank}(A-I)=2$ and $\\operatorname{rank}(A-3I)=3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The geometric multiplicity of $\\lambda=3$ is 3",
+     "correct": false,
+     "why": "Equated GM with $\\operatorname{rank}(A-3I)$; GM $=n-\\operatorname{rank}=1$ (and GM can never exceed AM $=2$)."
+    },
+    {
+     "text": "$A$ is invertible",
+     "correct": true,
+     "why": "$0$ is not a root of the characteristic polynomial; $\\det A=1\\cdot1\\cdot3\\cdot3=9$."
+    },
+    {
+     "text": "The geometric multiplicity of $\\lambda=1$ is 2",
+     "correct": true,
+     "why": "GM $=4-\\operatorname{rank}(A-I)=4-2=2$."
+    },
+    {
+     "text": "$A$ is diagonalizable",
+     "correct": false,
+     "why": "GM of $\\lambda=3$ is $4-3=1<2=$ AM."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "GM $=n-\\operatorname{rank}(A-\\lambda I)$: GM(1) $=2$, GM(3) $=1$. Diagonalizable needs GM $=$ AM for every eigenvalue."
+  },
+  {
+   "id": "la-rank-gm-06",
+   "skill": "la.rank-gm",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the geometric multiplicity of $\\lambda=4$ for $$A=\\begin{pmatrix}4&1&0&0&0\\\\0&4&0&0&0\\\\0&0&4&0&0\\\\0&0&0&4&0\\\\0&0&0&0&9\\end{pmatrix}.$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Reported $\\operatorname{rank}(A-4I)=2$; GM is $5-2$."
+    },
+    {
+     "value": 4,
+     "why": "Equated GM with AM $=4$; the $1$ above the diagonal removes one eigenvector."
+    }
+   ],
+   "solution": "1. $A-4I$ has non-zero rows $(0,1,0,0,0)$ and $(0,0,0,0,5)$: rank 2.\n2. GM $=5-2=3<4=$ AM."
+  },
+  {
+   "id": "la-eigvec-check-01",
+   "skill": "la.eigvec-check",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}2&1&1\\\\1&2&1\\\\1&1&2\\end{pmatrix}$. Which vectors are eigenvectors of $A$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(1,1,1)^T$",
+     "correct": true,
+     "why": "Every row sums to 4, so $A(1,1,1)^T=4(1,1,1)^T$."
+    },
+    {
+     "text": "$(1,2,0)^T$",
+     "correct": false,
+     "why": "$A(1,2,0)^T=(4,5,3)^T$, not a multiple of $(1,2,0)^T$."
+    },
+    {
+     "text": "$(1,-1,0)^T$",
+     "correct": true,
+     "why": "$A(1,-1,0)^T=(1,-1,0)^T$: eigenvalue 1."
+    },
+    {
+     "text": "$(2,2,2)^T$",
+     "correct": true,
+     "why": "A non-zero multiple of an eigenvector is an eigenvector: $A(2,2,2)^T=8(1,1,1)^T=4(2,2,2)^T$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Compute $Av$ and test proportionality. Don't skip the scaled vector: scaling preserves the eigenvector property."
+  },
+  {
+   "id": "la-eigvec-check-02",
+   "skill": "la.eigvec-check",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the smallest eigenvalue of $$A=\\begin{pmatrix}1&2&3\\\\3&2&1\\\\2&2&2\\end{pmatrix}.$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Found $\\det A=0$ (so $0$ is an eigenvalue) and stopped; the third eigenvalue is $5-6-0=-1$."
+    },
+    {
+     "value": 1,
+     "why": "Sign slip: used trace $-$ row sum as $6-5$."
+    }
+   ],
+   "solution": "1. Row sums are all 6: eigenvalue 6 with $(1,1,1)^T$.\n2. $\\det A=1(4-2)-2(6-2)+3(6-4)=0$: eigenvalue 0.\n3. Trace $5$: third eigenvalue $5-6-0=-1$."
+  },
+  {
+   "id": "la-eigvec-check-03",
+   "skill": "la.eigvec-check",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which vector is an eigenvector of $\\begin{pmatrix}4&1\\\\2&3\\end{pmatrix}$ for the eigenvalue $2$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(2,-1)^T$",
+     "correct": false,
+     "why": "Swapped the components: $A(2,-1)^T=(7,1)^T$."
+    },
+    {
+     "text": "$(1,2)^T$",
+     "correct": false,
+     "why": "Sign slip in $(A-2I)x=0$: $A(1,2)^T=(6,8)^T$, not a multiple."
+    },
+    {
+     "text": "$(1,-2)^T$",
+     "correct": true,
+     "why": "$A(1,-2)^T=(2,-4)^T=2(1,-2)^T$."
+    },
+    {
+     "text": "$(1,1)^T$",
+     "correct": false,
+     "why": "This is the eigenvector for $\\lambda=5$ (equal row sums 5), not 2."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "$A-2I=\\begin{pmatrix}2&1\\\\2&1\\end{pmatrix}$, so $2x+y=0$: $(1,-2)^T$. Verify with $Av$."
+  },
+  {
+   "id": "la-eigvec-check-04",
+   "skill": "la.eigvec-check",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is an invertible $n\\times n$ matrix in which every row sums to $3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Every row of $A^2$ sums to $9$",
+     "correct": true,
+     "why": "$A^2\\mathbf{1}=A(3\\mathbf{1})=9\\mathbf{1}$."
+    },
+    {
+     "text": "Every column of $A$ sums to $3$",
+     "correct": false,
+     "why": "Row sums say nothing about column sums: $\\begin{pmatrix}1&2\\\\3&0\\end{pmatrix}$ has row sums $3,3$ but column sums $4,2$."
+    },
+    {
+     "text": "$3$ is an eigenvalue of $A$",
+     "correct": true,
+     "why": "$A\\mathbf{1}=3\\mathbf{1}$ where $\\mathbf{1}$ is the all-ones vector."
+    },
+    {
+     "text": "Every row of $A^{-1}$ sums to $\\tfrac13$",
+     "correct": true,
+     "why": "From $A\\mathbf{1}=3\\mathbf{1}$: $A^{-1}\\mathbf{1}=\\tfrac13\\mathbf{1}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Equal row sums $s$ means $\\mathbf{1}$ is an eigenvector with eigenvalue $s$; powers and inverses keep it with $s^k$, $1/s$."
+  },
+  {
+   "id": "la-eigvec-check-05",
+   "skill": "la.eigvec-check",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For what value of $k$ is $(2,1)^T$ an eigenvector of $A=\\begin{pmatrix}2&k\\\\1&4\\end{pmatrix}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Set $4+k=6$, using the eigenvalue as the first component; the first component must be $\\lambda\\cdot2=12$."
+    },
+    {
+     "value": -8,
+     "why": "Sign slip solving $4+k=12$."
+    }
+   ],
+   "solution": "1. $A(2,1)^T=(4+k,\\,6)^T$.\n2. Second component: $6=\\lambda\\cdot1\\Rightarrow\\lambda=6$.\n3. First: $4+k=6\\cdot2=12\\Rightarrow k=8$."
+  },
+  {
+   "id": "la-det-props-06",
+   "skill": "la.det-props",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a $3\\times3$ matrix with $\\det A=2$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\det(-A)=-2$",
+     "correct": true,
+     "why": "$(-1)^3\\det A=-2$; for odd $n$ the sign flips."
+    },
+    {
+     "text": "$\\det(A^{-1})=\\tfrac12$",
+     "correct": true,
+     "why": "$\\det(A^{-1})=1/\\det A$."
+    },
+    {
+     "text": "$\\det(A^2A^T)=4$",
+     "correct": false,
+     "why": "Dropped the transpose factor: $\\det(A^T)=\\det A$, so $\\det(A^2A^T)=2^3=8$."
+    },
+    {
+     "text": "$\\det(2A)=16$",
+     "correct": true,
+     "why": "$2^3\\cdot2=16$; every one of the 3 rows is scaled."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Use $\\det(cA)=c^n\\det A$, $\\det(A^{-1})=1/\\det A$, $\\det(A^T)=\\det A$ and multiplicativity."
+  },
+  {
+   "id": "la-det-poly-06",
+   "skill": "la.det-poly",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A $2\\times2$ matrix $A$ has eigenvalues $1$ and $3$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\det(A^3)=27$",
+     "correct": true,
+     "why": "$1^3\\cdot3^3=27=(\\det A)^3$."
+    },
+    {
+     "text": "$\\det(A-2I)=-1$",
+     "correct": true,
+     "why": "$(1-2)(3-2)=-1$."
+    },
+    {
+     "text": "$A^2-4A+3I=0$",
+     "correct": true,
+     "why": "Cayley–Hamilton: $A$ satisfies its characteristic polynomial $(\\lambda-1)(\\lambda-3)$."
+    },
+    {
+     "text": "$\\det(A+I)=\\det A+1=4$",
+     "correct": false,
+     "why": "Determinant is not additive: $\\det(A+I)=(1+1)(3+1)=8$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Evaluate the polynomial at each eigenvalue and multiply; never add $\\det$'s."
+  },
+  {
+   "id": "la-projection-01",
+   "skill": "la.projection",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$P$ is a real $n\\times n$ matrix with $P^2=P$, $P^T=P$ and $\\operatorname{rank}P=r$, where $0<r<n$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\det P=1$",
+     "correct": false,
+     "why": "$r<n$ means eigenvalue 0 is present, so $\\det P=0$. Only $P=I$ has determinant 1."
+    },
+    {
+     "text": "$\\operatorname{tr}P=r$",
+     "correct": true,
+     "why": "Eigenvalue 1 appears $r$ times (the column space), 0 appears $n-r$ times; trace sums them."
+    },
+    {
+     "text": "Every eigenvalue of $P$ is $0$ or $1$",
+     "correct": true,
+     "why": "$\\lambda^2=\\lambda$ from $P^2=P$."
+    },
+    {
+     "text": "$\\lVert Px\\rVert\\le\\lVert x\\rVert$ for every $x$",
+     "correct": true,
+     "why": "$x=Px+(I-P)x$ with orthogonal parts, so $\\lVert x\\rVert^2=\\lVert Px\\rVert^2+\\lVert(I-P)x\\rVert^2$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "An orthogonal projection splits $\\mathbb{R}^n$ into its column space (eigenvalue 1) and the orthogonal complement (eigenvalue 0). Rank $=$ trace; never shrinks to more than length."
+  },
+  {
+   "id": "la-projection-02",
+   "skill": "la.projection",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $P$ be the orthogonal projection onto the line spanned by $a=(1,2,2)^T$. For $x=(3,0,3)^T$, find the third component of $Px$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 18,
+     "why": "Used $aa^Tx$ without dividing by $a^Ta=9$."
+    },
+    {
+     "value": 6,
+     "why": "Divided by $\\lVert a\\rVert=3$ instead of $\\lVert a\\rVert^2=9$."
+    }
+   ],
+   "solution": "1. $Px=\\dfrac{a^Tx}{a^Ta}a=\\dfrac{3+0+6}{9}a=a$.\n2. $Px=(1,2,2)^T$; third component $2$."
+  },
+  {
+   "id": "la-projection-03",
+   "skill": "la.projection",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}1&0\\\\1&1\\\\1&-1\\end{pmatrix}$ and $b=(1,2,4)^T$. Let $p$ be the orthogonal projection of $b$ onto the column space of $A$. Find $\\lVert b-p\\rVert^2$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.667,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 70,
+     "why": "Projected with $(b^Ta_i)a_i$ without dividing by $a_i^Ta_i$ ($3$ and $2$)."
+    },
+    {
+     "value": 18.33,
+     "why": "Reported $\\lVert p\\rVert^2$ instead of the residual $\\lVert b-p\\rVert^2$."
+    }
+   ],
+   "solution": "1. Columns $a_1=(1,1,1)$, $a_2=(0,1,-1)$ are orthogonal, so $p=\\frac{7}{3}a_1+\\frac{-2}{2}a_2=(\\tfrac73,\\tfrac43,\\tfrac{10}3)$.\n2. $b-p=(-\\tfrac43,\\tfrac23,\\tfrac23)$, orthogonal to both columns.\n3. $\\lVert b-p\\rVert^2=\\tfrac{16+4+4}{9}=\\tfrac83\\approx2.667$."
+  },
+  {
+   "id": "la-projection-04",
+   "skill": "la.projection",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which matrix is an **orthogonal** projection?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\begin{pmatrix}\\tfrac12&\\tfrac12\\\\-\\tfrac12&-\\tfrac12\\end{pmatrix}$",
+     "correct": false,
+     "why": "Its square is $0$ (nilpotent), not itself; trace 0 already rules it out as a rank-1 projection."
+    },
+    {
+     "text": "$\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$",
+     "correct": false,
+     "why": "Symmetric and orthogonal, but its square is $I$: a reflection, eigenvalues $\\pm1$."
+    },
+    {
+     "text": "$\\begin{pmatrix}\\tfrac12&\\tfrac12\\\\\\tfrac12&\\tfrac12\\end{pmatrix}$",
+     "correct": true,
+     "why": "Symmetric and $P^2=P$: projection onto the line through $(1,1)$."
+    },
+    {
+     "text": "$\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$",
+     "correct": false,
+     "why": "Idempotent but not symmetric: an oblique projection."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Orthogonal projection $\\iff P^2=P$ and $P^T=P$. Test both."
+  },
+  {
+   "id": "la-projection-05",
+   "skill": "la.projection",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $5\\times2$ matrix with independent columns and $P=A(A^TA)^{-1}A^T$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$P$ has eigenvalue 1 with multiplicity 3 and eigenvalue 0 with multiplicity 2",
+     "correct": false,
+     "why": "Swapped the counts: eigenvalue 1 lives on the 2-dim column space, 0 on its 3-dim complement; trace $=2=$ rank confirms."
+    },
+    {
+     "text": "$P=I_5$, since $(A^TA)^{-1}=A^{-1}(A^T)^{-1}$",
+     "correct": false,
+     "why": "$A$ is not square, so $A^{-1}$ does not exist and the inverse cannot be split. $P=I$ only when $A$ is square and invertible."
+    },
+    {
+     "text": "$PA=A$",
+     "correct": true,
+     "why": "$A(A^TA)^{-1}A^TA=A$; vectors already in the column space are unchanged."
+    },
+    {
+     "text": "$\\operatorname{rank}P=2$",
+     "correct": true,
+     "why": "$P$ projects onto the 2-dimensional column space of $A$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "$P$ is symmetric and idempotent with rank equal to $\\operatorname{rank}A=2$. It equals $I$ only if the columns span $\\mathbb{R}^5$."
+  },
+  {
+   "id": "la-orthogonal-01",
+   "skill": "la.orthogonal",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$Q$ is a real orthogonal $n\\times n$ matrix. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\det Q=\\pm1$",
+     "correct": true,
+     "why": "$\\det(Q^TQ)=(\\det Q)^2=1$."
+    },
+    {
+     "text": "$Q^{-1}=Q^T$",
+     "correct": true,
+     "why": "Definition: $Q^TQ=I$."
+    },
+    {
+     "text": "Every eigenvalue of $Q$ is $1$ or $-1$",
+     "correct": false,
+     "why": "Rotation by $90^\\circ$, $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$, has eigenvalues $\\pm i$. Only $|\\lambda|=1$ is guaranteed."
+    },
+    {
+     "text": "$\\lVert Qx\\rVert=\\lVert x\\rVert$ for every $x$",
+     "correct": true,
+     "why": "$\\lVert Qx\\rVert^2=x^TQ^TQx=x^Tx$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Orthogonal: $Q^TQ=I$. Length preserving, $|\\det|=1$, eigenvalues on the unit circle (real ones are $\\pm1$)."
+  },
+  {
+   "id": "la-orthogonal-02",
+   "skill": "la.orthogonal",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "For which $(a,b)$ is $Q=\\begin{pmatrix}0.6&a\\\\0.8&b\\end{pmatrix}$ orthogonal?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(a,b)=(-8,\\,6)$",
+     "correct": false,
+     "why": "Orthogonal to the first column but length 10, not 1."
+    },
+    {
+     "text": "$(a,b)=(-0.8,\\,0.6)$",
+     "correct": true,
+     "why": "Second column is a unit vector orthogonal to $(0.6,0.8)$: $-0.48+0.48=0$."
+    },
+    {
+     "text": "$(a,b)=(0.8,\\,0.6)$",
+     "correct": false,
+     "why": "Unit length but not orthogonal: $0.48+0.48\\neq0$."
+    },
+    {
+     "text": "$(a,b)=(0.6,\\,0.8)$",
+     "correct": false,
+     "why": "Repeats the first column; $\\det Q=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Columns must be orthonormal: unit length and mutually orthogonal."
+  },
+  {
+   "id": "la-orthogonal-03",
+   "skill": "la.orthogonal",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$Q$ is a real $4\\times4$ orthogonal matrix. Find $|\\det(3Q)|$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 81,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Used $c$ instead of $c^n$: $3\\cdot|\\det Q|$."
+    },
+    {
+     "value": 12,
+     "why": "Multiplied $3$ by $n=4$ instead of raising it to the 4th power."
+    }
+   ],
+   "solution": "$|\\det(3Q)|=3^4|\\det Q|=81\\cdot1=81$."
+  },
+  {
+   "id": "la-orthogonal-04",
+   "skill": "la.orthogonal",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$Q_1$ and $Q_2$ are real orthogonal $n\\times n$ matrices. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$Q_1+Q_2$ is orthogonal",
+     "correct": false,
+     "why": "$Q_1=Q_2=I$ gives $2I$, which stretches lengths by 2."
+    },
+    {
+     "text": "$Q_1^T$ is orthogonal",
+     "correct": true,
+     "why": "$Q_1^T=Q_1^{-1}$, and the inverse of an orthogonal matrix is orthogonal."
+    },
+    {
+     "text": "If $Q_1$ is also symmetric then $Q_1^2=I$",
+     "correct": true,
+     "why": "$Q_1^2=Q_1^TQ_1=I$: a symmetric orthogonal matrix is a reflection (eigenvalues $\\pm1$)."
+    },
+    {
+     "text": "$Q_1Q_2$ is orthogonal",
+     "correct": true,
+     "why": "$(Q_1Q_2)^T(Q_1Q_2)=Q_2^TQ_1^TQ_1Q_2=I$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Orthogonal matrices form a group under multiplication (products, inverses, transposes), not under addition."
+  },
+  {
+   "id": "la-orthogonal-05",
+   "skill": "la.orthogonal",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $u=\\tfrac13(1,2,2)^T$ and $H=I_3-2uu^T$. Find $\\operatorname{tr}H$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Ignored the $-2uu^T$ term or assumed $\\operatorname{tr}(uu^T)=0$."
+    },
+    {
+     "value": -1,
+     "why": "Reported $\\det H$; $H$ is a reflection with eigenvalues $-1,1,1$."
+    }
+   ],
+   "solution": "1. $u$ is a unit vector, so $\\operatorname{tr}(uu^T)=u^Tu=1$.\n2. $\\operatorname{tr}H=3-2=1$. Eigenvalues: $-1$ (along $u$), $1,1$; $H$ is orthogonal and symmetric."
+  },
+  {
+   "id": "la-definiteness-01",
+   "skill": "la.definiteness",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "The quadratic form $Q(x,y)=3x^2+4xy+2y^2$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "positive definite",
+     "correct": true,
+     "why": "Matrix $\\begin{pmatrix}3&2\\\\2&2\\end{pmatrix}$: leading minors $3>0$, $6-4=2>0$."
+    },
+    {
+     "text": "positive semidefinite but not positive definite",
+     "correct": false,
+     "why": "That needs $\\det=0$; here $\\det=2>0$."
+    },
+    {
+     "text": "negative definite",
+     "correct": false,
+     "why": "Diagonal entries are positive, so $Q(1,0)=3>0$."
+    },
+    {
+     "text": "indefinite",
+     "correct": false,
+     "why": "Put the full coefficient 4 off the diagonal: $\\begin{pmatrix}3&4\\\\4&2\\end{pmatrix}$ has $\\det=-10$. The cross term must be halved."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Symmetric matrix: $\\begin{pmatrix}3&2\\\\2&2\\end{pmatrix}$ (cross coefficient split as $2+2$).\n2. Minors $3$, $2$: positive definite. Eigenvalues $(5\\pm\\sqrt{17})/2>0$."
+  },
+  {
+   "id": "la-definiteness-02",
+   "skill": "la.definiteness",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "For $k>0$, the form $Q(x,y)=x^2+2kxy+4y^2$ is positive semidefinite but not positive definite. Find $k$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Did not halve the cross term: used $\\begin{pmatrix}1&2k\\\\2k&4\\end{pmatrix}$, giving $4-4k^2=0$."
+    },
+    {
+     "value": 4,
+     "why": "Solved $k^2=4$ as $k=4$, forgetting the square root."
+    }
+   ],
+   "solution": "1. Matrix $\\begin{pmatrix}1&k\\\\k&4\\end{pmatrix}$.\n2. PSD but singular: $\\det=4-k^2=0\\Rightarrow k=2$.\n3. Then $Q=(x+2y)^2\\ge0$, zero along $x=-2y$."
+  },
+  {
+   "id": "la-definiteness-03",
+   "skill": "la.definiteness",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $m\\times n$ matrix and $G=A^TA$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$G$ is positive definite if and only if the columns of $A$ are linearly independent",
+     "correct": true,
+     "why": "$x^TGx=0\\iff Ax=0$, which forces $x=0$ exactly when the columns are independent."
+    },
+    {
+     "text": "$G$ is symmetric positive semidefinite",
+     "correct": true,
+     "why": "$x^TGx=\\lVert Ax\\rVert^2\\ge0$."
+    },
+    {
+     "text": "$AA^T$ and $A^TA$ have the same non-zero eigenvalues",
+     "correct": true,
+     "why": "If $A^TAv=\\lambda v$ with $\\lambda\\neq0$, then $AA^T(Av)=\\lambda(Av)$ and $Av\\neq0$."
+    },
+    {
+     "text": "If $m<n$, then $G$ is positive definite",
+     "correct": false,
+     "why": "$\\operatorname{rank}G\\le m<n$, so the $n\\times n$ matrix $G$ is singular. E.g. $A=\\begin{pmatrix}1&2&3\\\\0&1&1\\end{pmatrix}$ gives $\\det G=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Gram matrices are always PSD; PD exactly when $A$ has full column rank, which needs $m\\ge n$."
+  },
+  {
+   "id": "la-definiteness-04",
+   "skill": "la.definiteness",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}2&-1&0\\\\-1&2&-1\\\\0&-1&2\\end{pmatrix}$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A$ is positive definite",
+     "correct": true,
+     "why": "Leading principal minors $2$, $3$, $4$ are all positive."
+    },
+    {
+     "text": "$\\det A=8$",
+     "correct": false,
+     "why": "Multiplied the diagonal entries; $A$ is not triangular. $\\det A=4$."
+    },
+    {
+     "text": "$x^TAx<0$ for some $x$, because of the negative off-diagonal entries",
+     "correct": false,
+     "why": "Signs of off-diagonal entries do not decide definiteness; $x^TAx=x_1^2+(x_1-x_2)^2+(x_2-x_3)^2+x_3^2>0$ for $x\\ne0$."
+    },
+    {
+     "text": "All eigenvalues of $A$ are positive",
+     "correct": true,
+     "why": "Equivalent to positive definiteness for a symmetric matrix (they are $2-\\sqrt2,\\,2,\\,2+\\sqrt2$)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Minors: $2$; $4-1=3$; $\\det A=2(4-1)+1(-2-0)=4$. All positive, so PD."
+  },
+  {
+   "id": "la-definiteness-05",
+   "skill": "la.definiteness",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which matrix is positive definite?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$",
+     "correct": false,
+     "why": "Eigenvalue 0: only positive semidefinite."
+    },
+    {
+     "text": "$\\begin{pmatrix}4&3\\\\3&2\\end{pmatrix}$",
+     "correct": false,
+     "why": "Positive diagonal is necessary, not sufficient: $\\det=8-9=-1<0$, indefinite."
+    },
+    {
+     "text": "$\\begin{pmatrix}2&-1\\\\-1&2\\end{pmatrix}$",
+     "correct": true,
+     "why": "Minors $2>0$, $4-1=3>0$; eigenvalues $1,3$."
+    },
+    {
+     "text": "$\\begin{pmatrix}1&2\\\\2&1\\end{pmatrix}$",
+     "correct": false,
+     "why": "Positive entries do not imply PD: eigenvalues $3,-1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "For $2\\times2$ symmetric: PD iff $a_{11}>0$ and $\\det>0$."
+  },
+  {
+   "id": "la-rayleigh-01",
+   "skill": "la.rayleigh",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the maximum of $x^TAx$ over unit vectors $x\\in\\mathbb{R}^2$, where $A=\\begin{pmatrix}3&1\\\\1&3\\end{pmatrix}$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Took the largest diagonal entry; that is only $x^TAx$ at $x=e_1$."
+    },
+    {
+     "value": 8,
+     "why": "Plugged in $x=(1,1)^T$ without normalising: $\\lVert x\\rVert^2=2$."
+    }
+   ],
+   "solution": "1. Eigenvalues: $3\\pm1$, i.e. $4,2$.\n2. Max of the Rayleigh quotient $=\\lambda_{\\max}=4$, at $x=\\tfrac1{\\sqrt2}(1,1)^T$."
+  },
+  {
+   "id": "la-rayleigh-02",
+   "skill": "la.rayleigh",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the minimum of $5x^2+4xy+2y^2$ subject to $x^2+y^2=1$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Took the smaller diagonal coefficient (value at $(0,1)$), not the smallest eigenvalue."
+    },
+    {
+     "value": -0.772,
+     "why": "Did not halve the cross term: used $\\begin{pmatrix}5&4\\\\4&2\\end{pmatrix}$."
+    }
+   ],
+   "solution": "1. Matrix $\\begin{pmatrix}5&2\\\\2&2\\end{pmatrix}$: trace 7, det 6, eigenvalues $6,1$.\n2. Minimum on the unit circle $=\\lambda_{\\min}=1$, at $x\\propto(1,-2)$."
+  },
+  {
+   "id": "la-rayleigh-03",
+   "skill": "la.rayleigh",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real symmetric $3\\times3$ matrix with eigenvalues $-2, 1, 5$, and $R(x)=\\dfrac{x^TAx}{x^Tx}$ for $x\\neq0$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\min_{x\\neq0}R(x)=-2$",
+     "correct": true,
+     "why": "Minimum is $\\lambda_{\\min}$."
+    },
+    {
+     "text": "$\\max_{x\\neq0}R(x)=5$",
+     "correct": true,
+     "why": "Rayleigh quotient maximum is $\\lambda_{\\max}$, attained at its eigenvector."
+    },
+    {
+     "text": "The maximum of $x^TAx$ over $\\lVert x\\rVert\\le2$ is $10$",
+     "correct": false,
+     "why": "$x^TAx$ scales with $\\lVert x\\rVert^2$, not $\\lVert x\\rVert$: the maximum is $4\\cdot5=20$."
+    },
+    {
+     "text": "$R(x)=1$ for some $x$",
+     "correct": true,
+     "why": "Take $x$ an eigenvector for $\\lambda=1$; $R$ takes every value in $[-2,5]$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "$\\lambda_{\\min}\\le R(x)\\le\\lambda_{\\max}$. On a sphere of radius $r$, multiply by $r^2$."
+  },
+  {
+   "id": "la-rayleigh-04",
+   "skill": "la.rayleigh",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\operatorname{diag}(2,-3,1)$. The maximum of $x^TAx$ over unit vectors $x\\in\\mathbb{R}^3$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$3$",
+     "correct": false,
+     "why": "Took the largest eigenvalue in absolute value (spectral norm), but $x^TAx$ keeps the sign."
+    },
+    {
+     "text": "$2$",
+     "correct": true,
+     "why": "$x^TAx=2x_1^2-3x_2^2+x_3^2\\le2(x_1^2+x_2^2+x_3^2)=2$, attained at $e_1$."
+    },
+    {
+     "text": "$0$",
+     "correct": false,
+     "why": "Averaged the eigenvalues; that is $\\operatorname{tr}A/3$, not the maximum."
+    },
+    {
+     "text": "$-3$",
+     "correct": false,
+     "why": "That is the minimum, $\\lambda_{\\min}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "For symmetric $A$, $\\max_{\\lVert x\\rVert=1}x^TAx=\\lambda_{\\max}=2$."
+  },
+  {
+   "id": "la-rayleigh-05",
+   "skill": "la.rayleigh",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}2&1\\\\1&2\\end{pmatrix}$ and consider $f(x)=x^TAx$ on the unit circle $\\lVert x\\rVert=1$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The maximum is attained at $x=\\tfrac1{\\sqrt2}(1,-1)^T$",
+     "correct": false,
+     "why": "That is the eigenvector for $\\lambda=1$, where the minimum occurs; the maximum is at $\\tfrac1{\\sqrt2}(1,1)^T$ (row sums equal 3)."
+    },
+    {
+     "text": "The minimum of $f$ is $2$, the smallest diagonal entry",
+     "correct": false,
+     "why": "Diagonal entries are values of $f$, not its minimum; the minimum is $\\lambda_{\\min}=1$ at $\\tfrac1{\\sqrt2}(1,-1)^T$."
+    },
+    {
+     "text": "$f(e_1)=2$ lies between the minimum and maximum",
+     "correct": true,
+     "why": "$f(e_1)=a_{11}=2\\in[1,3]$; diagonal entries always lie in $[\\lambda_{\\min},\\lambda_{\\max}]$."
+    },
+    {
+     "text": "The maximum of $f$ is $3$",
+     "correct": true,
+     "why": "Eigenvalues $3$ and $1$; maximum is $\\lambda_{\\max}=3$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Extremes of $x^TAx$ on the unit sphere are the extreme eigenvalues; diagonal entries sit between them."
+  },
+  {
+   "id": "la-lu-01",
+   "skill": "la.lu",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Write $A=\\begin{pmatrix}2&1\\\\6&5\\end{pmatrix}=LU$ with $L$ unit lower triangular and $U$ upper triangular. Find $u_{22}$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Copied $a_{22}$ without eliminating."
+    },
+    {
+     "value": 8,
+     "why": "Added instead of subtracting: $5+3\\cdot1$."
+    }
+   ],
+   "solution": "1. Multiplier $l_{21}=6/2=3$.\n2. $u_{22}=5-3\\cdot1=2$. Check: $\\det A=10-6=4=2\\cdot2$."
+  },
+  {
+   "id": "la-lu-02",
+   "skill": "la.lu",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find $u_{33}$ in the Doolittle factorization $A=LU$ ($L$ unit lower triangular) of $$A=\\begin{pmatrix}1&2&0\\\\2&5&1\\\\0&3&4\\end{pmatrix}.$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Copied $a_{33}$; row 3 still has to be reduced by $3\\times$ the new row 2."
+    },
+    {
+     "value": 7,
+     "why": "Added instead of subtracting: $4+3\\cdot1$."
+    }
+   ],
+   "solution": "1. $R_2-2R_1=(0,1,1)$; $l_{21}=2$, $l_{31}=0$.\n2. $l_{32}=3/1=3$: $R_3-3R_2=(0,0,4-3)=(0,0,1)$.\n3. $u_{33}=1$. Check $\\det A=1\\cdot1\\cdot1=1$."
+  },
+  {
+   "id": "la-lu-03",
+   "skill": "la.lu",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which matrix has **no** LU factorization (unit lower $L$, upper $U$) without row exchanges?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$",
+     "correct": false,
+     "why": "Singular but already upper triangular: $L=I$, $U=A$."
+    },
+    {
+     "text": "$\\begin{pmatrix}0&1\\\\1&1\\end{pmatrix}$",
+     "correct": true,
+     "why": "First pivot is 0 and the entry below is non-zero: $l_{21}u_{11}=1$ is impossible with $u_{11}=a_{11}=0$."
+    },
+    {
+     "text": "$\\begin{pmatrix}2&4\\\\1&3\\end{pmatrix}$",
+     "correct": false,
+     "why": "Pivot 2, $l_{21}=\\tfrac12$, $u_{22}=3-2=1$."
+    },
+    {
+     "text": "$\\begin{pmatrix}1&1\\\\1&1\\end{pmatrix}$",
+     "correct": false,
+     "why": "Assumed singular means no LU; $L=\\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}$, $U=\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ works."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "LU without pivoting fails when a zero pivot meets a non-zero entry below it. Singularity alone is not the obstacle."
+  },
+  {
+   "id": "la-lu-04",
+   "skill": "la.lu",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A=LU$ where $L$ is unit lower triangular and $U$ is upper triangular, all $n\\times n$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Every invertible matrix has such a factorization without row exchanges",
+     "correct": false,
+     "why": "$\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$ is invertible but has a zero first pivot; it needs $PA=LU$."
+    },
+    {
+     "text": "$\\det A$ equals the product of the diagonal entries of $U$",
+     "correct": true,
+     "why": "$\\det L=1$, and $U$ is triangular."
+    },
+    {
+     "text": "$Ax=b$ can be solved by forward substitution in $Ly=b$, then back substitution in $Ux=y$",
+     "correct": true,
+     "why": "That is the purpose of the factorization: two triangular solves."
+    },
+    {
+     "text": "$A$ is invertible if and only if every diagonal entry of $U$ is non-zero",
+     "correct": true,
+     "why": "Follows from $\\det A=\\prod u_{ii}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "LU turns one solve into two triangular solves; existence without pivoting needs non-zero leading pivots."
+  },
+  {
+   "id": "la-lu-05",
+   "skill": "la.lu",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Given $L=\\begin{pmatrix}1&0&0\\\\2&1&0\\\\-1&3&1\\end{pmatrix}$ and $U=\\begin{pmatrix}2&1&1\\\\0&1&-1\\\\0&0&4\\end{pmatrix}$, find the $(3,3)$ entry of $A=LU$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Took only $l_{33}u_{33}$; row 3 of $L$ has three non-zero entries."
+    },
+    {
+     "value": 6,
+     "why": "Sign slip: used $u_{23}=+1$, giving $-1+3+4$."
+    }
+   ],
+   "solution": "$a_{33}=l_{31}u_{13}+l_{32}u_{23}+l_{33}u_{33}=(-1)(1)+3(-1)+1\\cdot4=0$."
+  },
+  {
+   "id": "la-lu-06",
+   "skill": "la.lu",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $A=\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}=LU$ with $L$ unit lower triangular. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$u_{22}=10$",
+     "correct": false,
+     "why": "Added instead of subtracting: $4+3\\cdot2$."
+    },
+    {
+     "text": "$u_{22}=-2$",
+     "correct": true,
+     "why": "$4-3\\cdot2=-2$."
+    },
+    {
+     "text": "$\\det A=-2$",
+     "correct": true,
+     "why": "Product of $U$'s diagonal: $1\\cdot(-2)$; matches $4-6$."
+    },
+    {
+     "text": "$l_{21}=3$",
+     "correct": true,
+     "why": "Multiplier $a_{21}/a_{11}=3/1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $l_{21}=3$.\n2. $R_2-3R_1=(0,-2)$.\n3. $U=\\begin{pmatrix}1&2\\\\0&-2\\end{pmatrix}$, $\\det A=-2$."
+  },
+  {
+   "id": "la-svd-01",
+   "skill": "la.svd",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Find the largest singular value of $A=\\begin{pmatrix}3&0\\\\4&5\\end{pmatrix}$ (to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6.708,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Took the largest eigenvalue (diagonal of a triangular matrix); singular values differ from eigenvalues for non-symmetric $A$."
+    },
+    {
+     "value": 45,
+     "why": "Forgot the square root of the eigenvalue of $A^TA$."
+    }
+   ],
+   "solution": "1. $A^TA=\\begin{pmatrix}25&20\\\\20&25\\end{pmatrix}$, eigenvalues $45, 5$.\n2. $\\sigma_1=\\sqrt{45}\\approx6.708$, $\\sigma_2=\\sqrt5$. Check: $\\sigma_1\\sigma_2=15=|\\det A|$."
+  },
+  {
+   "id": "la-svd-02",
+   "skill": "la.svd",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Let $u=(1,2,2)^T$, $v=(3,4)^T$ and $A=uv^T$ (a $3\\times2$ matrix). Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The only non-zero singular value of $A$ is $15$",
+     "correct": true,
+     "why": "$\\sigma=\\lVert u\\rVert\\lVert v\\rVert=3\\cdot5$."
+    },
+    {
+     "text": "The singular values of $A$ are $3$ and $5$",
+     "correct": false,
+     "why": "Listed the two norms separately; the single non-zero singular value is their product."
+    },
+    {
+     "text": "$\\operatorname{rank}A=1$",
+     "correct": true,
+     "why": "Every column is a multiple of $u$."
+    },
+    {
+     "text": "$A^TA$ has eigenvalues $225$ and $0$",
+     "correct": true,
+     "why": "$A^TA=\\lVert u\\rVert^2vv^T=9vv^T$, eigenvalues $9\\cdot25=225$ and $0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "$A=\\lVert u\\rVert\\lVert v\\rVert\\,\\hat u\\hat v^T$ is already an SVD with one singular value $15$."
+  },
+  {
+   "id": "la-svd-03",
+   "skill": "la.svd",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "Which statements about singular values are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A symmetric positive semidefinite matrix with eigenvalues $4,1,0$ has singular values $4,1,0$",
+     "correct": true,
+     "why": "For symmetric PSD $A$, $A^TA=A^2$ has eigenvalues $\\lambda^2$, so $\\sigma=\\lambda$."
+    },
+    {
+     "text": "$\\max_{\\lVert x\\rVert=1}\\lVert Ax\\rVert$ equals the largest singular value",
+     "correct": true,
+     "why": "$\\lVert Ax\\rVert^2=x^TA^TAx\\le\\lambda_{\\max}(A^TA)=\\sigma_1^2$."
+    },
+    {
+     "text": "A $3\\times3$ matrix with singular values $4,1,0$ has rank 3",
+     "correct": false,
+     "why": "Counted all singular values; rank equals the number of non-zero ones, here 2."
+    },
+    {
+     "text": "A symmetric matrix with eigenvalues $3$ and $-2$ has singular values $3$ and $-2$",
+     "correct": false,
+     "why": "Singular values are never negative; for symmetric $A$ they are $|\\lambda|$: $3$ and $2$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "$\\sigma_i=\\sqrt{\\lambda_i(A^TA)}\\ge0$. Symmetric: $\\sigma=|\\lambda|$; symmetric PSD: $\\sigma=\\lambda$."
+  },
+  {
+   "id": "la-svd-04",
+   "skill": "la.svd",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "A real $3\\times3$ matrix $A$ has singular values $3, 2, 1$. Find $\\sum_{i,j}a_{ij}^2$ (the squared Frobenius norm).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 14,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Added the singular values instead of their squares."
+    },
+    {
+     "value": 36,
+     "why": "Squared the sum of singular values: $(3+2+1)^2$."
+    }
+   ],
+   "solution": "$\\sum a_{ij}^2=\\operatorname{tr}(A^TA)=\\sum\\sigma_i^2=9+4+1=14$."
+  },
+  {
+   "id": "la-svd-05",
+   "skill": "la.svd",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern",
+   "stem": "The singular values of $A=\\begin{pmatrix}1&1\\\\1&1\\\\0&0\\end{pmatrix}$ are",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\sqrt2$ and $\\sqrt2$",
+     "correct": false,
+     "why": "Used the column norms; the columns are equal, so the matrix has rank 1, not 2."
+    },
+    {
+     "text": "$4$ and $0$",
+     "correct": false,
+     "why": "Forgot the square root of the eigenvalues of $A^TA$."
+    },
+    {
+     "text": "$2$ and $0$",
+     "correct": true,
+     "why": "$A^TA=\\begin{pmatrix}2&2\\\\2&2\\end{pmatrix}$ has eigenvalues $4,0$; square roots $2,0$."
+    },
+    {
+     "text": "$1$ and $1$",
+     "correct": false,
+     "why": "Read off entries as if $A$ were diagonal."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $A^TA=\\begin{pmatrix}2&2\\\\2&2\\end{pmatrix}$, eigenvalues $4,0$.\n2. $\\sigma=2,0$; rank 1."
+  },
+  {
+   "id": "la-svd-06",
+   "skill": "la.svd",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern",
+   "stem": "$A$ is a real $m\\times n$ matrix of rank $r$ with singular values $\\sigma_1\\ge\\sigma_2\\ge\\dots$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "For square $A$, the singular values are the absolute values of the eigenvalues",
+     "correct": false,
+     "why": "Only for normal (e.g. symmetric) $A$. $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ has eigenvalues $0,0$ but singular values $1,0$."
+    },
+    {
+     "text": "Exactly $r$ singular values of $A$ are non-zero",
+     "correct": true,
+     "why": "$\\operatorname{rank}(A^TA)=\\operatorname{rank}A=r$, so $A^TA$ has $r$ non-zero eigenvalues."
+    },
+    {
+     "text": "$\\lVert Ax\\rVert\\le\\sigma_1\\lVert x\\rVert$ for every $x$",
+     "correct": true,
+     "why": "$\\sigma_1$ is the largest stretch factor of $A$."
+    },
+    {
+     "text": "$A$ and $A^T$ have the same non-zero singular values",
+     "correct": true,
+     "why": "$A^TA$ and $AA^T$ share their non-zero eigenvalues."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "Singular values come from $A^TA$, not from the characteristic polynomial of $A$; they match $|\\lambda|$ only for normal matrices."
+  }
+ ]
+}

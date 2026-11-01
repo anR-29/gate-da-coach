@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bank Review</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <link rel="stylesheet" href="../css/app.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body>
+  <main id="main"><p class="muted">Usage: review.html?file=ga&amp;skill=ga.spatial</p></main>
+  <script type="module">
+    import { md, typeset, esc } from '../js/render.js';
+    const p = new URLSearchParams(location.search);
+    const file = p.get('file') || 'ga';
+    const skill = p.get('skill');
+    const data = await fetch(`../data/questions/${file}.json`).then((r) => r.json());
+    const qs = data.questions.filter((q) => !skill || q.skill === skill);
+    const main = document.getElementById('main');
+    main.innerHTML = qs.map((q) => `
+      <section class="card q" id="${esc(q.id)}">
+        <div class="meta">${esc(q.id)} · ${q.type} · ${q.marks}m · ${esc(q.skill)}</div>
+        <div class="stem">${md(q.stem)}</div>
+        ${q.figure ? `<div class="figure">${q.figure}</div>` : ''}
+        <div class="opts">${(q.options || []).map((o, i) => `
+          <div class="opt ${o.correct ? 'right' : ''}"><span class="key">${'ABCD'[i]}</span>
+            <span class="otext">${md(o.text, true)}<div class="why ${o.correct ? 'good' : 'bad'}">${md(o.why, true)}</div></span></div>`).join('')}</div>
+        ${q.type === 'NAT' ? `<p><b>Answer:</b> ${q.answer.value} ± ${q.answer.tol || 0}</p>` : ''}
+        <details><summary>Solution</summary>${md(q.solution)}</details>
+      </section>`).join('');
+    typeset(main);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1957 @@
+{
+  "area": "calc",
+  "skills": {
+    "calc.limits": {
+      "title": "Limits: L'Hôpital and standard limits",
+      "subject": "Calculus and Optimization",
+      "days": [
+        22
+      ],
+      "theory": "calc-limits",
+      "check": "Confirm the 0/0 or ∞/∞ form first; differentiate top and bottom separately, or expand with Taylor terms; 1^∞ → e^{lim (f−1)g}."
+    },
+    "calc.one-sided": {
+      "title": "One-sided limits and piecewise limits",
+      "subject": "Calculus and Optimization",
+      "days": [
+        22
+      ],
+      "theory": "calc-limits",
+      "check": "Compute the left and right limits separately; the limit exists only if they are equal (the value f(a) is irrelevant)."
+    },
+    "calc.continuity-const": {
+      "title": "Continuity: find the constant",
+      "subject": "Calculus and Optimization",
+      "days": [
+        22
+      ],
+      "theory": "calc-limits",
+      "check": "At every break point set left limit = right limit = f(a), and solve the resulting equations together."
+    },
+    "calc.composition": {
+      "title": "Composition of functions and limits",
+      "subject": "Calculus and Optimization",
+      "days": [
+        22
+      ],
+      "theory": "calc-limits",
+      "check": "Evaluate inside-out; for lim f(g(x)) find how g(x) approaches its limit (side, or exactly equal) before applying f."
+    },
+    "calc.differentiability": {
+      "title": "Differentiability vs continuity",
+      "subject": "Calculus and Optimization",
+      "days": [
+        23
+      ],
+      "theory": "calc-derivatives",
+      "check": "Check continuity first, then compare left and right derivatives at the joint; a corner means not differentiable."
+    },
+    "calc.derivative-rules": {
+      "title": "Derivative rules and higher derivatives",
+      "subject": "Calculus and Optimization",
+      "days": [
+        23
+      ],
+      "theory": "calc-derivatives",
+      "check": "Apply chain, product and quotient rules one layer at a time; for f^{(n)}(0) use n!·(Taylor coefficient)."
+    },
+    "calc.taylor": {
+      "title": "Taylor and Maclaurin series",
+      "subject": "Calculus and Optimization",
+      "days": [
+        23
+      ],
+      "theory": "calc-derivatives",
+      "check": "Coefficient of (x−a)^n is f^{(n)}(a)/n!; check the expansion point and multiply known series term by term."
+    },
+    "calc.series-sums": {
+      "title": "Series sums: geometric and telescoping",
+      "subject": "Calculus and Optimization",
+      "days": [
+        23
+      ],
+      "theory": "calc-derivatives",
+      "check": "Note the starting index; geometric sum from n=0 is 1/(1−r); split rational terms into partial fractions and cancel."
+    },
+    "calc.extrema": {
+      "title": "Maxima and minima of one variable",
+      "subject": "Calculus and Optimization",
+      "days": [
+        24
+      ],
+      "theory": "calc-optimization",
+      "check": "Find f'(x)=0 inside the domain, classify with f'' (or sign of f'), and compare with endpoint values on a closed interval."
+    },
+    "calc.convexity": {
+      "title": "Convexity checks",
+      "subject": "Calculus and Optimization",
+      "days": [
+        24
+      ],
+      "theory": "calc-optimization",
+      "check": "f is convex on an interval iff f''(x) ≥ 0 there; for convex f, any local minimum is global."
+    },
+    "calc.opt-word": {
+      "title": "Optimisation word problems",
+      "subject": "Calculus and Optimization",
+      "days": [
+        24
+      ],
+      "theory": "calc-optimization",
+      "check": "Write the objective in one variable using the constraint, fix the feasible domain, then differentiate."
+    },
+    "calc.gradient-descent": {
+      "title": "One step of gradient descent",
+      "subject": "Calculus and Optimization",
+      "days": [
+        24
+      ],
+      "theory": "calc-optimization",
+      "check": "x_new = x − η·f'(x): evaluate the gradient at the current point, multiply by η, and subtract."
+    }
+  },
+  "questions": [
+    {
+      "id": "calc-limits-01",
+      "skill": "calc.limits",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Evaluate $$\\lim_{x\\to 0}\\frac{e^{3x}-1-3x}{x^2}.$$",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4.5,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 9,
+          "why": "Differentiated twice but forgot that the second derivative of $x^2$ is 2, not 1."
+        },
+        {
+          "value": 1.5,
+          "why": "Expanded $e^{3x}$ with $\\frac{3x^2}{2}$ instead of $\\frac{(3x)^2}{2}=\\frac{9x^2}{2}$."
+        },
+        {
+          "value": 0,
+          "why": "Applied L'Hôpital once and substituted $x=0$ into $\\frac{3e^{3x}-3}{2x}$, which is still $0/0$."
+        }
+      ],
+      "solution": "1. Form is $0/0$.\n2. $e^{3x}=1+3x+\\frac{9x^2}{2}+\\dots$, so the numerator is $\\frac{9}{2}x^2+O(x^3)$.\n3. Limit $=\\frac{9}{2}=4.5$."
+    },
+    {
+      "id": "calc-limits-02",
+      "skill": "calc.limits",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\lim_{x\\to 0}\\frac{\\sin 5x}{\\tan 2x}$ equals",
+      "figure": null,
+      "options": [
+        {
+          "text": "$0$",
+          "correct": false,
+          "why": "Substituted $x=0$ in the numerator only; the form is $0/0$, not $0/\\text{nonzero}$."
+        },
+        {
+          "text": "$\\frac{5}{2}$",
+          "correct": true,
+          "why": "$\\sin 5x\\approx 5x$ and $\\tan 2x\\approx 2x$ near 0, so the ratio tends to $5/2$."
+        },
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Used $\\frac{\\sin u}{u}\\to1$ but ignored that the arguments are $5x$ and $2x$, not $x$."
+        },
+        {
+          "text": "$\\frac{2}{5}$",
+          "correct": false,
+          "why": "Inverted the ratio: took the argument of the denominator over that of the numerator."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "Write $\\frac{\\sin 5x}{5x}\\cdot\\frac{2x}{\\tan 2x}\\cdot\\frac{5}{2}$. The first two factors tend to 1, so the limit is $5/2$."
+    },
+    {
+      "id": "calc-limits-03",
+      "skill": "calc.limits",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Evaluate $\\displaystyle\\lim_{x\\to\\infty}\\left(1+\\frac{2}{x}\\right)^{3x}$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 403.43,
+        "tol": 0.05
+      },
+      "traps": [
+        {
+          "value": 1,
+          "why": "Treated $1^\\infty$ as 1; the base tends to 1 but the exponent grows without bound."
+        },
+        {
+          "value": 148.41,
+          "why": "Added the constants ($e^{2+3}$) instead of multiplying them ($e^{2\\cdot 3}$)."
+        },
+        {
+          "value": 7.39,
+          "why": "Used $(1+2/x)^x\\to e^2$ and ignored the factor 3 in the exponent."
+        }
+      ],
+      "solution": "1. Form $1^\\infty$: limit $=e^{L}$ with $L=\\lim 3x\\cdot\\frac{2}{x}=6$.\n2. $e^6\\approx 403.43$."
+    },
+    {
+      "id": "calc-limits-04",
+      "skill": "calc.limits",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\lim_{x\\to 0}\\frac{1-\\cos x}{x\\sin x}$ equals",
+      "figure": null,
+      "options": [
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Approximated $1-\\cos x$ by $x^2$, dropping the $\\frac{1}{2!}$."
+        },
+        {
+          "text": "$0$",
+          "correct": false,
+          "why": "After one L'Hôpital step, $\\frac{\\sin x}{\\sin x+x\\cos x}$ is still $0/0$; stopping there and reading the numerator as 0 is wrong."
+        },
+        {
+          "text": "$\\frac{1}{2}$",
+          "correct": true,
+          "why": "$1-\\cos x\\approx \\frac{x^2}{2}$ and $x\\sin x\\approx x^2$, so the ratio tends to $1/2$."
+        },
+        {
+          "text": "$2$",
+          "correct": false,
+          "why": "Inverted the ratio of leading coefficients ($1$ over $\\frac{1}{2}$)."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Numerator $\\sim x^2/2$, denominator $\\sim x^2$.\n2. Limit $=1/2$. (Two L'Hôpital steps give $\\frac{\\cos x}{2\\cos x-x\\sin x}\\to\\frac12$.)"
+    },
+    {
+      "id": "calc-limits-05",
+      "skill": "calc.limits",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which of the following limits equal 1?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\displaystyle\\lim_{x\\to\\infty}\\frac{\\ln x}{x}$",
+          "correct": false,
+          "why": "Read $\\infty/\\infty$ as 1; by L'Hôpital it is $\\lim\\frac{1/x}{1}=0$."
+        },
+        {
+          "text": "$\\displaystyle\\lim_{x\\to0}\\frac{\\ln(1+x)}{x}$",
+          "correct": true,
+          "why": "$\\ln(1+x)=x-\\frac{x^2}{2}+\\dots$, so the ratio tends to 1."
+        },
+        {
+          "text": "$\\displaystyle\\lim_{x\\to\\infty}x\\sin\\frac{1}{x}$",
+          "correct": true,
+          "why": "With $u=1/x\\to0^+$ this is $\\frac{\\sin u}{u}\\to1$."
+        },
+        {
+          "text": "$\\displaystyle\\lim_{x\\to0}\\frac{2^x-1}{x}$",
+          "correct": false,
+          "why": "Assumed $\\frac{a^x-1}{x}\\to1$ for every base; it tends to $\\ln a$, here $\\ln 2\\approx0.693$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\ln(1+x)/x\\to1$.\n2. $x\\sin(1/x)\\to1$.\n3. $(2^x-1)/x\\to\\ln2$.\n4. $\\ln x/x\\to0$. So only $\\frac{\\ln(1+x)}{x}$ and $x\\sin\\frac1x$ equal 1."
+    },
+    {
+      "id": "calc-one-sided-01",
+      "skill": "calc.one-sided",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=\\dfrac{|x-2|}{x-2}$, the value of $\\displaystyle\\lim_{x\\to2}f(x)$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Checked only the right-hand side ($x>2$)."
+        },
+        {
+          "text": "$-1$",
+          "correct": false,
+          "why": "Checked only the left-hand side ($x<2$)."
+        },
+        {
+          "text": "Does not exist",
+          "correct": true,
+          "why": "For $x>2$, $f=1$; for $x<2$, $f=-1$. The one-sided limits differ."
+        },
+        {
+          "text": "$0$",
+          "correct": false,
+          "why": "Treated $|0|/0$ as 0; the function is undefined at 2 and the limit is decided by the two sides."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $x\\to2^+$: $|x-2|=x-2$, so $f\\to1$.\n2. $x\\to2^-$: $|x-2|=-(x-2)$, so $f\\to-1$.\n3. $1\\ne-1$, so the limit does not exist."
+    },
+    {
+      "id": "calc-one-sided-02",
+      "skill": "calc.one-sided",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $\\lfloor x\\rfloor$ be the floor function. Find $\\displaystyle\\lim_{x\\to3^-}\\lfloor x\\rfloor+\\lim_{x\\to3^+}\\lfloor x\\rfloor$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Used $\\lfloor 3\\rfloor=3$ for the left limit; just below 3 the floor is 2."
+        },
+        {
+          "value": 4,
+          "why": "Used 2 for both sides; just above 3 the floor is already 3."
+        }
+      ],
+      "solution": "1. For $2\\le x<3$, $\\lfloor x\\rfloor=2$, so the left limit is 2.\n2. For $3\\le x<4$ it is 3, so the right limit is 3.\n3. Sum $=5$."
+    },
+    {
+      "id": "calc-one-sided-03",
+      "skill": "calc.one-sided",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let\n$$f(x)=\\begin{cases}\\dfrac{x^2-1}{x-1}, & x<1\\\\[4pt] 2, & x=1\\\\[2pt] 2x+1, & x>1\\end{cases}$$\nWhich statement is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Left limit 2, right limit 3, so $\\lim_{x\\to1}f(x)$ does not exist",
+          "correct": true,
+          "why": "Cancel $(x-1)$: left side is $x+1\\to2$; right side $2x+1\\to3$. They differ."
+        },
+        {
+          "text": "$\\lim_{x\\to1}f(x)=2$ because $f(1)=2$",
+          "correct": false,
+          "why": "Used the function value at the point; a limit ignores $f(1)$ and depends only on the two sides."
+        },
+        {
+          "text": "$\\lim_{x\\to1}f(x)=3$",
+          "correct": false,
+          "why": "Checked continuity only from the right side."
+        },
+        {
+          "text": "The left limit does not exist because the left piece is $0/0$ at $x=1$",
+          "correct": false,
+          "why": "Substituted $x=1$ without cancelling; $\\frac{x^2-1}{x-1}=x+1$ for $x\\ne1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Left: $\\frac{(x-1)(x+1)}{x-1}=x+1\\to2$.\n2. Right: $2x+1\\to3$.\n3. Unequal, so no limit (the value $f(1)=2$ does not matter)."
+    },
+    {
+      "id": "calc-one-sided-04",
+      "skill": "calc.one-sided",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Evaluate $\\displaystyle\\lim_{x\\to0^-}\\frac{x}{\\sqrt{1-\\cos 2x}}$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": -0.71,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.71,
+          "why": "Wrote $\\sqrt{\\sin^2x}=\\sin x$ instead of $|\\sin x|$; for $x<0$ this flips the sign."
+        },
+        {
+          "value": -1.41,
+          "why": "Inverted $\\sqrt2$: the denominator is $\\sqrt2\\,|\\sin x|$, giving $-1/\\sqrt2$, not $-\\sqrt2$."
+        },
+        {
+          "value": -1,
+          "why": "Approximated $1-\\cos2x$ by $x^2$ instead of $\\frac{(2x)^2}{2}=2x^2$, losing the $\\sqrt2$."
+        }
+      ],
+      "solution": "1. $1-\\cos2x=2\\sin^2x$, so $\\sqrt{1-\\cos2x}=\\sqrt2\\,|\\sin x|$.\n2. For $x\\to0^-$, $|\\sin x|=-\\sin x$.\n3. Limit $=\\frac{x}{-\\sqrt2\\sin x}\\to-\\frac{1}{\\sqrt2}\\approx-0.71$."
+    },
+    {
+      "id": "calc-one-sided-05",
+      "skill": "calc.one-sided",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=e^{1/x}$ ($x\\ne0$), which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\lim_{x\\to0^-}f(x)=\\infty$",
+          "correct": false,
+          "why": "Ignored the sign of $1/x$ for negative $x$; it tends to $-\\infty$."
+        },
+        {
+          "text": "$\\lim_{x\\to0^-}f(x)=0$",
+          "correct": true,
+          "why": "$1/x\\to-\\infty$ from the left, so $e^{1/x}\\to0$."
+        },
+        {
+          "text": "$\\lim_{x\\to0^+}f(x)=\\infty$",
+          "correct": true,
+          "why": "$1/x\\to+\\infty$ from the right, so $e^{1/x}\\to\\infty$."
+        },
+        {
+          "text": "$\\lim_{x\\to0}f(x)$ exists",
+          "correct": false,
+          "why": "Assumed both sides behave alike; the one-sided limits are $\\infty$ and 0."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Right: exponent $\\to+\\infty$, value $\\to\\infty$.\n2. Left: exponent $\\to-\\infty$, value $\\to0$.\n3. Sides differ, so the two-sided limit does not exist."
+    },
+    {
+      "id": "calc-continuity-const-01",
+      "skill": "calc.continuity-const",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For which value of $k$ is\n$$f(x)=\\begin{cases}kx^2+3, & x\\le2\\\\ 5x-1, & x>2\\end{cases}$$\ncontinuous at $x=2$?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 1.5,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 3,
+          "why": "Wrote $k\\cdot2+3$, forgetting to square 2."
+        },
+        {
+          "value": 2.25,
+          "why": "Set $4k=9$, dropping the $+3$ of the left piece."
+        },
+        {
+          "value": 1.75,
+          "why": "Evaluated the right piece as $5\\cdot2-2=8$ instead of $9$."
+        }
+      ],
+      "solution": "1. Left value: $4k+3$. Right limit: $5(2)-1=9$.\n2. $4k+3=9\\Rightarrow k=1.5$."
+    },
+    {
+      "id": "calc-continuity-const-02",
+      "skill": "calc.continuity-const",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For\n$$f(x)=\\begin{cases}\\dfrac{x^2-9}{x-3}, & x\\ne3\\\\ k, & x=3\\end{cases}$$\nthe value of $k$ that makes $f$ continuous at $x=3$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$0$",
+          "correct": false,
+          "why": "Substituted $x=3$ to get $0/0$ and read it as 0."
+        },
+        {
+          "text": "$9$",
+          "correct": false,
+          "why": "Cancelled only the denominator and evaluated $x^2$ at 3."
+        },
+        {
+          "text": "$6$",
+          "correct": true,
+          "why": "$\\frac{x^2-9}{x-3}=x+3\\to6$, so $k$ must be 6."
+        },
+        {
+          "text": "$3$",
+          "correct": false,
+          "why": "Cancelled to $x$ instead of $x+3$ (dropped the constant in the factor)."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Factor: $x^2-9=(x-3)(x+3)$.\n2. For $x\\ne3$, $f=x+3\\to6$.\n3. Continuity needs $k=6$."
+    },
+    {
+      "id": "calc-continuity-const-03",
+      "skill": "calc.continuity-const",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "The function\n$$f(x)=\\begin{cases}\\dfrac{\\sin 3x}{x}, & x<0\\\\[4pt] a, & x=0\\\\[2pt] \\dfrac{e^{bx}-1}{x}, & x>0\\end{cases}$$\nis continuous at $x=0$. Find $a+b$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 6,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Took $\\frac{\\sin3x}{x}\\to1$, ignoring the factor 3 (so $a=1$, $b=3$)."
+        },
+        {
+          "value": 3,
+          "why": "Found $a=3$ only and stopped; $b$ is also needed."
+        },
+        {
+          "value": 2,
+          "why": "Took both $\\frac{\\sin3x}{x}$ and $\\frac{e^{bx}-1}{x}$ as tending to 1 without the scale factors."
+        }
+      ],
+      "solution": "1. Left limit: $\\frac{\\sin3x}{x}\\to3$, so $a=3$.\n2. Right limit: $\\frac{e^{bx}-1}{x}\\to b$, so $b=3$.\n3. $a+b=6$."
+    },
+    {
+      "id": "calc-continuity-const-04",
+      "skill": "calc.continuity-const",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "The function\n$$f(x)=\\begin{cases}2x+a, & x<1\\\\ bx^2, & 1\\le x\\le2\\\\ x+6, & x>2\\end{cases}$$\nis continuous on $\\mathbb{R}$. Find $a+b$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Evaluated $bx^2$ at 2 as $2b$ (forgot to square): $b=4$, then $a=2$."
+        },
+        {
+          "value": 4,
+          "why": "Dropped the $2x$ term at the joint $x=1$, setting $a=b$ (so $a=2$, $b=2$)."
+        }
+      ],
+      "solution": "1. At $x=2$: $4b=2+6=8\\Rightarrow b=2$.\n2. At $x=1$: $2+a=b=2\\Rightarrow a=0$.\n3. $a+b=2$."
+    },
+    {
+      "id": "calc-composition-01",
+      "skill": "calc.composition",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "If $f(x)=x^2+1$ and $g(x)=2x-3$, then $(f\\circ g)(2)$ equals",
+      "figure": null,
+      "options": [
+        {
+          "text": "$5$",
+          "correct": false,
+          "why": "Multiplied $f(2)\\cdot g(2)=5\\cdot1$ instead of composing."
+        },
+        {
+          "text": "$7$",
+          "correct": false,
+          "why": "Computed $(g\\circ f)(2)=g(5)=7$: applied $f$ first."
+        },
+        {
+          "text": "$2$",
+          "correct": true,
+          "why": "$g(2)=1$, then $f(1)=2$."
+        },
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Stopped at the inner value $g(2)=1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inner first: $g(2)=2(2)-3=1$.\n2. Outer: $f(1)=1+1=2$."
+    },
+    {
+      "id": "calc-composition-02",
+      "skill": "calc.composition",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=\\operatorname{sgn}(x)$ (equal to $-1,0,1$ for $x<0$, $x=0$, $x>0$) and $g(x)=x^2$. Which statement about $h=f\\circ g$ at $x=0$ is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\lim_{x\\to0}h(x)=1$ but $h(0)=0$, so $h$ is discontinuous at 0",
+          "correct": true,
+          "why": "For $x\\ne0$, $x^2>0$ so $h(x)=1$; at 0, $h(0)=\\operatorname{sgn}(0)=0$."
+        },
+        {
+          "text": "$\\lim_{x\\to0}h(x)$ does not exist because sgn jumps at 0",
+          "correct": false,
+          "why": "Ignored that $g(x)=x^2$ approaches 0 only from the right, so only $f$'s right side matters."
+        },
+        {
+          "text": "$\\lim_{x\\to0}h(x)=1$ and $h$ is continuous at 0",
+          "correct": false,
+          "why": "Found the limit but did not compare it with the value $h(0)=0$."
+        },
+        {
+          "text": "$\\lim_{x\\to0}h(x)=0$ because $h(0)=0$",
+          "correct": false,
+          "why": "Substituted $x=0$ instead of taking the limit; for every $x\\ne0$, $h(x)=1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For $x\\ne0$: $g(x)>0$, so $h(x)=1$; the limit is 1.\n2. $h(0)=f(0)=0\\ne1$.\n3. Removable discontinuity at 0."
+    },
+    {
+      "id": "calc-composition-03",
+      "skill": "calc.composition",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=\\dfrac{x+1}{x-1}$. Find $f(f(3))$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 3,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Applied $f$ only once: $f(3)=2$."
+        },
+        {
+          "value": 0.5,
+          "why": "Computed $f(3)$ as $\\frac{3-1}{3+1}$ (numerator and denominator swapped), then stopped."
+        }
+      ],
+      "solution": "1. $f(3)=\\frac{4}{2}=2$.\n2. $f(2)=\\frac{3}{1}=3$. (In fact $f(f(x))=x$.)"
+    },
+    {
+      "id": "calc-composition-04",
+      "skill": "calc.composition",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=|x|$ and $g(x)=\\begin{cases}1, & x\\ge0\\\\ -1, & x<0\\end{cases}$. Which functions are continuous at $x=0$?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$f\\circ g$",
+          "correct": true,
+          "why": "$f(g(x))=|\\pm1|=1$ for all $x$: a constant."
+        },
+        {
+          "text": "$f\\cdot g$ (product)",
+          "correct": true,
+          "why": "$|x|\\cdot g(x)=x$ for all $x$, which is continuous."
+        },
+        {
+          "text": "$g\\circ g$",
+          "correct": false,
+          "why": "Assumed composing removes the jump; $g(1)=1$ and $g(-1)=-1$, so $g\\circ g=g$, which still jumps."
+        },
+        {
+          "text": "$g\\circ f$",
+          "correct": true,
+          "why": "$f(x)=|x|\\ge0$, so $g(f(x))=1$ for all $x$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f\\circ g\\equiv1$ and $g\\circ f\\equiv1$.\n2. $g\\circ g=g$ jumps at 0.\n3. $|x|g(x)=x$. So $f\\circ g$, $g\\circ f$ and $f\\cdot g$."
+    },
+    {
+      "id": "calc-composition-05",
+      "skill": "calc.composition",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Evaluate $\\displaystyle\\lim_{x\\to0}\\ln\\!\\left(\\frac{e^{2x}-1}{x}\\right)$ (rounded to three decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.693,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": 0,
+          "why": "Took $\\frac{e^{2x}-1}{x}\\to1$ (forgot the factor 2), then $\\ln1=0$."
+        },
+        {
+          "value": 2,
+          "why": "Found the inner limit 2 but forgot to apply $\\ln$."
+        }
+      ],
+      "solution": "1. Inner limit: $\\frac{e^{2x}-1}{x}\\to2$.\n2. $\\ln$ is continuous at 2, so the limit is $\\ln2\\approx0.693$."
+    },
+    {
+      "id": "calc-differentiability-01",
+      "skill": "calc.differentiability",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which functions are differentiable at $x=0$?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$x|x|$",
+          "correct": true,
+          "why": "$x|x|=\\pm x^2$; both one-sided derivatives at 0 are 0."
+        },
+        {
+          "text": "$|x|$",
+          "correct": false,
+          "why": "Assumed continuity implies differentiability; the one-sided derivatives are $-1$ and $1$ (a corner)."
+        },
+        {
+          "text": "$|x|^3$",
+          "correct": true,
+          "why": "$|x|^3=\\pm x^3$ with derivative $3x|x|\\to0$ from both sides."
+        },
+        {
+          "text": "$\\max(0,x)$ (ReLU)",
+          "correct": false,
+          "why": "Left derivative 0, right derivative 1: a corner at 0."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Compare $f'(0^-)$ and $f'(0^+)$.\n2. $|x|$: $-1,1$; ReLU: $0,1$ (both fail).\n3. $x|x|$ and $|x|^3$: both sides give 0."
+    },
+    {
+      "id": "calc-differentiability-02",
+      "skill": "calc.differentiability",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For which $(a,b)$ is\n$$f(x)=\\begin{cases}x^2+a, & x\\le1\\\\ bx+2, & x>1\\end{cases}$$\ndifferentiable at $x=1$?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$(a,b)=(1,2)$",
+          "correct": false,
+          "why": "Matched derivatives correctly but dropped the $+2$ when matching values ($1+a=b$)."
+        },
+        {
+          "text": "$(a,b)=(1,0)$",
+          "correct": false,
+          "why": "Checked continuity only ($1+a=b+2$) and picked an arbitrary pair; derivatives must also match."
+        },
+        {
+          "text": "$(a,b)=(2,1)$",
+          "correct": false,
+          "why": "Differentiated $x^2$ as $x$, giving $b=1$, then $1+a=3$."
+        },
+        {
+          "text": "$(a,b)=(3,2)$",
+          "correct": true,
+          "why": "Derivatives: $2x=2$ at 1, so $b=2$. Continuity: $1+a=b+2=4$, so $a=3$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Continuity: $1+a=b+2$.\n2. Equal slopes: $2(1)=b\\Rightarrow b=2$.\n3. Then $a=3$."
+    },
+    {
+      "id": "calc-differentiability-03",
+      "skill": "calc.differentiability",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "How many points in $\\mathbb{R}$ is $f(x)=|x^2-4|+|x|+|x^3|$ **not** differentiable at?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 3,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Counted $x=0$ twice or treated $|x^3|$ as having a corner; $|x|^3$ is differentiable at 0."
+        },
+        {
+          "value": 2,
+          "why": "Found the zeros of $x^2-4$ but missed the corner of $|x|$ at 0 (or missed $x=-2$)."
+        },
+        {
+          "value": 1,
+          "why": "Looked only at $|x|$; each simple root of $x^2-4$ also creates a corner."
+        }
+      ],
+      "solution": "1. $|x^2-4|$ has corners at $x=\\pm2$ (simple roots, slope $\\pm4$).\n2. $|x|$ has a corner at 0; $|x^3|$ is smooth there.\n3. At 0, $|x^2-4|$ is smooth, so the corner stays. Total 3."
+    },
+    {
+      "id": "calc-differentiability-04",
+      "skill": "calc.differentiability",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $r(x)=\\max(0,x)$ and $g(x)=\\big(r(x)\\big)^2$. Which statement is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$g$ is not differentiable at 0 because $r$ is not",
+          "correct": false,
+          "why": "Assumed squaring keeps the corner; the slope $2r(x)$ tends to 0 from both sides."
+        },
+        {
+          "text": "$g$ is differentiable everywhere and $g'(0)=0$",
+          "correct": true,
+          "why": "$g=0$ for $x<0$ and $x^2$ for $x\\ge0$; both one-sided derivatives at 0 are 0."
+        },
+        {
+          "text": "$g'(0)=1$",
+          "correct": false,
+          "why": "Used the right derivative of ReLU itself instead of differentiating $x^2$."
+        },
+        {
+          "text": "$g$ is not continuous at 0",
+          "correct": false,
+          "why": "Confused a corner with a jump; $g(0^-)=g(0^+)=0$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $g(x)=0$ for $x<0$, $x^2$ for $x\\ge0$.\n2. $g'(0^-)=0$, $g'(0^+)=\\lim\\frac{h^2}{h}=0$.\n3. Differentiable with $g'(0)=0$."
+    },
+    {
+      "id": "calc-differentiability-05",
+      "skill": "calc.differentiability",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=x|x|$, the derivative $f'(x)$ for all real $x$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$|x|$",
+          "correct": false,
+          "why": "Treated $|x|$ as a constant factor and differentiated only $x$."
+        },
+        {
+          "text": "$2x$",
+          "correct": false,
+          "why": "Treated $f$ as $x^2$ everywhere, ignoring that $f=-x^2$ for $x<0$."
+        },
+        {
+          "text": "Undefined at $x=0$",
+          "correct": false,
+          "why": "Assumed the corner of $|x|$ survives; multiplying by $x$ flattens it."
+        },
+        {
+          "text": "$2|x|$",
+          "correct": true,
+          "why": "For $x>0$, $f=x^2$, $f'=2x$; for $x<0$, $f=-x^2$, $f'=-2x$; at 0 both sides give 0. Together: $2|x|$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Split at 0: $f=x^2$ ($x\\ge0$), $-x^2$ ($x<0$).\n2. Derivatives $2x$ and $-2x$, both 0 at 0.\n3. $f'(x)=2|x|$."
+    },
+    {
+      "id": "calc-derivative-rules-01",
+      "skill": "calc.derivative-rules",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=x^2e^{x}$, find $f'''(0)$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 6,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Stopped at $f''(0)=2$."
+        },
+        {
+          "value": 1,
+          "why": "Differentiated only $e^x$ and kept $x^2$ fixed, or used $f'''=e^x$ alone."
+        },
+        {
+          "value": 0,
+          "why": "Forgot the product rule cross terms, so every term still carried a factor of $x$."
+        }
+      ],
+      "solution": "1. $f'=(x^2+2x)e^x$.\n2. $f''=(x^2+4x+2)e^x$.\n3. $f'''=(x^2+6x+6)e^x$, so $f'''(0)=6$. (Check: $x^2e^x=x^2+x^3+\\dots$, coefficient of $x^3$ is 1, times $3!=6$.)"
+    },
+    {
+      "id": "calc-derivative-rules-02",
+      "skill": "calc.derivative-rules",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\dfrac{d}{dx}\\ln(x^2+1)$ at $x=1$ equals",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\ln2$",
+          "correct": false,
+          "why": "Evaluated the function instead of its derivative."
+        },
+        {
+          "text": "$1$",
+          "correct": true,
+          "why": "$\\frac{2x}{x^2+1}=\\frac{2}{2}=1$."
+        },
+        {
+          "text": "$2$",
+          "correct": false,
+          "why": "Wrote the derivative as $2x$ and forgot to divide by $x^2+1$."
+        },
+        {
+          "text": "$\\frac{1}{2}$",
+          "correct": false,
+          "why": "Forgot the chain factor $2x$ and wrote $\\frac{1}{x^2+1}$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Chain rule: $\\frac{1}{x^2+1}\\cdot2x$.\n2. At $x=1$: $\\frac{2}{2}=1$."
+    },
+    {
+      "id": "calc-derivative-rules-03",
+      "skill": "calc.derivative-rules",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=\\sin(x^2)$, find $f''\\!\\left(\\sqrt{\\pi/2}\\right)$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": -6.28,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0,
+          "why": "Differentiated $2x\\cos(x^2)$ treating $2x$ as constant: $f''=2\\cos(x^2)$, which is 0 here."
+        },
+        {
+          "value": 6.28,
+          "why": "Sign slip: the derivative of $\\cos(x^2)$ is $-2x\\sin(x^2)$."
+        },
+        {
+          "value": -3.14,
+          "why": "Dropped the factor 2 from the inner derivative in the second term ($-2x^2\\sin x^2$ instead of $-4x^2\\sin x^2$)."
+        }
+      ],
+      "solution": "1. $f'=2x\\cos(x^2)$.\n2. $f''=2\\cos(x^2)-4x^2\\sin(x^2)$.\n3. At $x^2=\\pi/2$: $0-4\\cdot\\frac{\\pi}{2}\\cdot1=-2\\pi\\approx-6.28$."
+    },
+    {
+      "id": "calc-derivative-rules-04",
+      "skill": "calc.derivative-rules",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=\\dfrac{1}{1-x}$, the value of $f^{(5)}(0)$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Gave the Taylor coefficient of $x^5$ (which is 1) instead of multiplying by $5!$."
+        },
+        {
+          "text": "$-120$",
+          "correct": false,
+          "why": "Applied the alternating signs of $\\frac{1}{1+x}$; differentiating $(1-x)^{-1}$ gives two minus signs each time, which cancel."
+        },
+        {
+          "text": "$120$",
+          "correct": true,
+          "why": "$f^{(n)}(x)=\\frac{n!}{(1-x)^{n+1}}$, so $f^{(5)}(0)=5!=120$."
+        },
+        {
+          "text": "$24$",
+          "correct": false,
+          "why": "Used $4!$: off by one in the pattern $n!/(1-x)^{n+1}$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f'=(1-x)^{-2}$, $f''=2(1-x)^{-3}$, pattern $n!(1-x)^{-(n+1)}$.\n2. At 0: $5!=120$."
+    },
+    {
+      "id": "calc-derivative-rules-05",
+      "skill": "calc.derivative-rules",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which expressions equal $\\dfrac{d}{dx}\\left(\\dfrac{x}{1+x}\\right)$ for $x\\ne-1$?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Differentiated numerator and denominator separately ($\\frac{1}{1}$)."
+        },
+        {
+          "text": "$\\dfrac{1+2x}{(1+x)^2}$",
+          "correct": false,
+          "why": "Added instead of subtracting in the quotient-rule numerator ($v u'+u v'$)."
+        },
+        {
+          "text": "$\\dfrac{1}{(1+x)^2}$",
+          "correct": true,
+          "why": "Quotient rule: $\\frac{(1)(1+x)-x(1)}{(1+x)^2}=\\frac{1}{(1+x)^2}$."
+        },
+        {
+          "text": "$\\dfrac{d}{dx}\\left(-\\dfrac{1}{1+x}\\right)$",
+          "correct": true,
+          "why": "$\\frac{x}{1+x}=1-\\frac{1}{1+x}$, so the derivatives agree."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Quotient rule gives $\\frac{1}{(1+x)^2}$.\n2. Rewrite as $1-\\frac{1}{1+x}$; its derivative is also $\\frac{1}{(1+x)^2}$."
+    },
+    {
+      "id": "calc-taylor-01",
+      "skill": "calc.taylor",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find the coefficient of $x^3$ in the Maclaurin series of $e^{2x}$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 1.33,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.17,
+          "why": "Used $\\frac{1}{3!}$ and forgot the $2^3$ from $(2x)^3$."
+        },
+        {
+          "value": 8,
+          "why": "Used $2^3$ but forgot to divide by $3!$."
+        },
+        {
+          "value": 2.67,
+          "why": "Divided by $3$ instead of $3!=6$."
+        }
+      ],
+      "solution": "1. $e^{u}=\\sum u^n/n!$ with $u=2x$.\n2. $x^3$ term: $\\frac{2^3}{3!}=\\frac{8}{6}\\approx1.33$."
+    },
+    {
+      "id": "calc-taylor-02",
+      "skill": "calc.taylor",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "The second-order Taylor polynomial of $\\ln x$ about $x=1$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$(x-1)-\\frac{(x-1)^2}{2}$",
+          "correct": true,
+          "why": "$f(1)=0$, $f'(1)=1$, $f''(1)=-1$, so $0+(x-1)-\\frac{1}{2}(x-1)^2$."
+        },
+        {
+          "text": "$(x-1)+\\frac{(x-1)^2}{2}$",
+          "correct": false,
+          "why": "Sign error: $f''(x)=-1/x^2$ is negative at 1."
+        },
+        {
+          "text": "$x-\\frac{x^2}{2}$",
+          "correct": false,
+          "why": "Expanded $\\ln(1+x)$ about 0 and did not shift to $x-1$."
+        },
+        {
+          "text": "$1+(x-1)-\\frac{(x-1)^2}{2}$",
+          "correct": false,
+          "why": "Took $f(1)=\\ln1$ as 1 instead of 0."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f(1)=0$, $f'(1)=1$, $f''(1)=-1$.\n2. $P_2=(x-1)-\\frac{(x-1)^2}{2}$."
+    },
+    {
+      "id": "calc-taylor-03",
+      "skill": "calc.taylor",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find the coefficient of $x^4$ in the Maclaurin series of $e^{x}\\cos x$ (rounded to three decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": -0.167,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": 0.083,
+          "why": "Kept only $1\\cdot\\frac{x^4}{24}$ from each factor and missed the cross term $\\frac{x^2}{2}\\cdot\\left(-\\frac{x^2}{2}\\right)$."
+        },
+        {
+          "value": -0.208,
+          "why": "Missed one of the end terms: used $\\frac{1}{24}-\\frac14$ instead of $\\frac1{24}-\\frac14+\\frac1{24}$."
+        },
+        {
+          "value": 0.002,
+          "why": "Multiplied the two $x^4$ coefficients ($\\frac{1}{24}\\cdot\\frac{1}{24}$) instead of collecting all products that give $x^4$."
+        }
+      ],
+      "solution": "1. $e^x:1,1,\\frac12,\\frac16,\\frac1{24}$; $\\cos x:1,0,-\\frac12,0,\\frac1{24}$.\n2. $x^4$: $1\\cdot\\frac1{24}+\\frac12\\cdot(-\\frac12)+\\frac1{24}\\cdot1=-\\frac16\\approx-0.167$."
+    },
+    {
+      "id": "calc-taylor-04",
+      "skill": "calc.taylor",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Use the second-order Taylor polynomial of $\\sqrt{x}$ about $x=4$ to approximate $\\sqrt{4.2}$ (rounded to four decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2.0494,
+        "tol": 6e-05
+      },
+      "traps": [
+        {
+          "value": 2.05,
+          "why": "Stopped at the first-order (tangent line) approximation."
+        },
+        {
+          "value": 2.0488,
+          "why": "Forgot the $\\frac{1}{2!}$ on the second-order term."
+        },
+        {
+          "value": 2.0506,
+          "why": "Sign error: $f''(x)=-\\frac14x^{-3/2}$ is negative."
+        }
+      ],
+      "solution": "1. $f(4)=2$, $f'(4)=\\frac{1}{2\\sqrt4}=\\frac14$, $f''(4)=-\\frac{1}{4\\cdot8}=-\\frac1{32}$.\n2. $2+\\frac14(0.2)-\\frac{1}{64}(0.04)=2.049375\\approx2.0494$."
+    },
+    {
+      "id": "calc-taylor-05",
+      "skill": "calc.taylor",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For the Maclaurin series of $f(x)=\\ln(1+x)$, which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$f'''(0)=\\frac13$",
+          "correct": false,
+          "why": "Confused the coefficient with the derivative; $f'''(0)=3!\\cdot\\frac13=2$."
+        },
+        {
+          "text": "The series converges at $x=1$",
+          "correct": true,
+          "why": "At $x=1$ it is the alternating harmonic series, which converges (to $\\ln2$)."
+        },
+        {
+          "text": "The coefficient of $x^2$ is $\\frac12$",
+          "correct": false,
+          "why": "Missed the alternating sign; it is $-\\frac12$."
+        },
+        {
+          "text": "The coefficient of $x^3$ is $\\frac13$",
+          "correct": true,
+          "why": "$\\ln(1+x)=x-\\frac{x^2}{2}+\\frac{x^3}{3}-\\dots$"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Coefficients $(-1)^{n+1}/n$.\n2. $f^{(n)}(0)=n!\\cdot$coefficient, so $f'''(0)=2$.\n3. At $x=1$: alternating harmonic series converges."
+    },
+    {
+      "id": "calc-series-sums-01",
+      "skill": "calc.series-sums",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find $\\displaystyle\\sum_{n=0}^{\\infty}\\left(\\frac{2}{3}\\right)^n$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 3,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Used the sum from $n=1$, $\\frac{r}{1-r}$, though the series starts at $n=0$."
+        },
+        {
+          "value": 0.6,
+          "why": "Used $\\frac{1}{1+r}$ instead of $\\frac{1}{1-r}$."
+        }
+      ],
+      "solution": "1. Geometric with $a=1$, $r=\\frac23$.\n2. Sum $=\\frac{1}{1-2/3}=3$."
+    },
+    {
+      "id": "calc-series-sums-02",
+      "skill": "calc.series-sums",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find $\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{n(n+2)}$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.75,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": 1.5,
+          "why": "Wrote $\\frac{1}{n(n+2)}=\\frac1n-\\frac1{n+2}$, forgetting the factor $\\frac12$."
+        },
+        {
+          "value": 0.5,
+          "why": "Telescoped as if consecutive terms cancel, keeping only the first term 1 (times $\\frac12$)."
+        },
+        {
+          "value": 1,
+          "why": "Used the $\\frac{1}{n(n+1)}$ result."
+        }
+      ],
+      "solution": "1. $\\frac{1}{n(n+2)}=\\frac12\\left(\\frac1n-\\frac1{n+2}\\right)$.\n2. Terms cancel two apart; $1$ and $\\frac12$ survive.\n3. Sum $=\\frac12\\cdot\\frac32=0.75$."
+    },
+    {
+      "id": "calc-series-sums-03",
+      "skill": "calc.series-sums",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\sum_{n=1}^{\\infty}\\frac{n}{2^n}$ equals",
+      "figure": null,
+      "options": [
+        {
+          "text": "$4$",
+          "correct": false,
+          "why": "Used $\\sum nx^{n-1}=\\frac{1}{(1-x)^2}$ without multiplying by $x$."
+        },
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Ignored the factor $n$ and summed $\\sum_{n\\ge1}(1/2)^n$."
+        },
+        {
+          "text": "The series diverges",
+          "correct": false,
+          "why": "Assumed the growing factor $n$ wins; the ratio of consecutive terms tends to $\\frac12<1$, so it converges."
+        },
+        {
+          "text": "$2$",
+          "correct": true,
+          "why": "$\\sum nx^n=\\frac{x}{(1-x)^2}$; at $x=\\frac12$: $\\frac{1/2}{1/4}=2$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Differentiate $\\sum x^n=\\frac{1}{1-x}$: $\\sum nx^{n-1}=\\frac{1}{(1-x)^2}$.\n2. Multiply by $x$, put $x=\\frac12$: $2$."
+    },
+    {
+      "id": "calc-series-sums-04",
+      "skill": "calc.series-sums",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\sum_{n=1}^{\\infty}\\frac{3^n+2^n}{6^n}$ equals",
+      "figure": null,
+      "options": [
+        {
+          "text": "$1$",
+          "correct": false,
+          "why": "Kept only the $(1/2)^n$ part and dropped the second series."
+        },
+        {
+          "text": "$\\frac32$",
+          "correct": true,
+          "why": "Split: $\\sum(1/2)^n+\\sum(1/3)^n=1+\\frac12$."
+        },
+        {
+          "text": "$5$",
+          "correct": false,
+          "why": "Added the ratios into one geometric series with $r=\\frac12+\\frac13=\\frac56$."
+        },
+        {
+          "text": "$\\frac72$",
+          "correct": false,
+          "why": "Summed both series from $n=0$: $2+\\frac32$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\frac{3^n}{6^n}=(1/2)^n$, $\\frac{2^n}{6^n}=(1/3)^n$.\n2. From $n=1$: $\\frac{1/2}{1/2}=1$ and $\\frac{1/3}{2/3}=\\frac12$.\n3. Total $\\frac32$."
+    },
+    {
+      "id": "calc-series-sums-05",
+      "skill": "calc.series-sums",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which of the following series converge?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac{n}{n+1}$",
+          "correct": false,
+          "why": "Terms tend to 1, not 0, so the series diverges (n-th term test)."
+        },
+        {
+          "text": "$\\displaystyle\\sum_{n=1}^\\infty(1.01)^{-n}$",
+          "correct": true,
+          "why": "Geometric with $r=\\frac1{1.01}<1$."
+        },
+        {
+          "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac{(-1)^n}{n}$",
+          "correct": true,
+          "why": "Alternating series with terms decreasing to 0: converges (to $-\\ln2$)."
+        },
+        {
+          "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac1n$",
+          "correct": false,
+          "why": "Assumed terms tending to 0 is enough; the harmonic series diverges (like $\\ln N$)."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Harmonic: diverges.\n2. Alternating harmonic: converges.\n3. Geometric with $|r|<1$: converges.\n4. Terms $\\to1$: diverges."
+    },
+    {
+      "id": "calc-extrema-01",
+      "skill": "calc.extrema",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find the local minimum **value** of $f(x)=x^3-3x^2+4$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Reported $f(0)=4$, which is the local maximum ($f''(0)=-6<0$)."
+        },
+        {
+          "value": 2,
+          "why": "Reported the location $x=2$ instead of the value $f(2)$."
+        }
+      ],
+      "solution": "1. $f'=3x^2-6x=0\\Rightarrow x=0,2$.\n2. $f''=6x-6$: $f''(2)=6>0$ (min).\n3. $f(2)=8-12+4=0$."
+    },
+    {
+      "id": "calc-extrema-02",
+      "skill": "calc.extrema",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find the absolute maximum of $f(x)=x^3-3x$ on $[0,3]$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 18,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Used the stationary point $x=-1$ (a local max) which lies outside $[0,3]$."
+        },
+        {
+          "value": -2,
+          "why": "Reported the value at the only interior stationary point $x=1$, which is the minimum."
+        },
+        {
+          "value": 0,
+          "why": "Compared only $f(0)$ and $f(1)$ and forgot the right endpoint."
+        }
+      ],
+      "solution": "1. $f'=3x^2-3=0\\Rightarrow x=\\pm1$; only $x=1$ is in $[0,3]$.\n2. $f(0)=0$, $f(1)=-2$, $f(3)=18$.\n3. Max $=18$ at the endpoint."
+    },
+    {
+      "id": "calc-extrema-03",
+      "skill": "calc.extrema",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=x^4$, which statement about $x=0$ is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$x=0$ is not a critical point",
+          "correct": false,
+          "why": "$f'(0)=4\\cdot0^3=0$, so it is critical."
+        },
+        {
+          "text": "$f''(0)=0$, so the test is inconclusive; $x=0$ is a minimum",
+          "correct": true,
+          "why": "$f(x)\\ge0=f(0)$ for all $x$, and $f'$ changes sign from $-$ to $+$."
+        },
+        {
+          "text": "$x=0$ is a local maximum",
+          "correct": false,
+          "why": "Misread the inconclusive test; $f$ increases on both sides of 0."
+        },
+        {
+          "text": "$f''(0)=0$, so $x=0$ is an inflection point",
+          "correct": false,
+          "why": "Equated $f''=0$ with an inflection; $f''=12x^2$ does not change sign at 0."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f'(0)=0$, $f''(0)=0$: second-derivative test fails.\n2. First-derivative test: $f'<0$ for $x<0$, $f'>0$ for $x>0$.\n3. Minimum."
+    },
+    {
+      "id": "calc-extrema-04",
+      "skill": "calc.extrema",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=xe^{-x}$ on $[0,\\infty)$, which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$f''(1)>0$",
+          "correct": false,
+          "why": "Sign slip: $f''(1)=(1-2)e^{-1}<0$, consistent with a maximum."
+        },
+        {
+          "text": "$f$ has an inflection point at $x=2$",
+          "correct": true,
+          "why": "$f''=(x-2)e^{-x}$ changes sign at $x=2$."
+        },
+        {
+          "text": "$x=0$ is a global minimum",
+          "correct": true,
+          "why": "$f(0)=0$ and $f(x)>0$ for $x>0$; the endpoint matters."
+        },
+        {
+          "text": "The global maximum is $1/e$, at $x=1$",
+          "correct": true,
+          "why": "$f'=(1-x)e^{-x}=0$ at $x=1$; $f$ rises before and falls after."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f'=(1-x)e^{-x}$, $f''=(x-2)e^{-x}$.\n2. Max at 1, value $1/e$; min at endpoint 0.\n3. $f''$ changes sign at 2."
+    },
+    {
+      "id": "calc-extrema-05",
+      "skill": "calc.extrema",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "On $[0,3]$, the absolute maximum and minimum of $f(x)=2x^3-9x^2+12x$ are",
+      "figure": null,
+      "options": [
+        {
+          "text": "max 5, min 0",
+          "correct": false,
+          "why": "Checked the left endpoint but missed the right endpoint $x=3$."
+        },
+        {
+          "text": "max 9 (at $x=3$), min 0 (at $x=0$)",
+          "correct": true,
+          "why": "Candidates: $f(0)=0$, $f(1)=5$, $f(2)=4$, $f(3)=9$."
+        },
+        {
+          "text": "max 5 (at $x=1$), min 4 (at $x=2$)",
+          "correct": false,
+          "why": "Compared only the stationary points and ignored the endpoints."
+        },
+        {
+          "text": "max 9, min 4",
+          "correct": false,
+          "why": "Checked the right endpoint but missed the left endpoint $x=0$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f'=6(x-1)(x-2)$: stationary at 1, 2.\n2. Values: $0,5,4,9$ at $x=0,1,2,3$.\n3. Max 9 at 3, min 0 at 0."
+    },
+    {
+      "id": "calc-convexity-01",
+      "skill": "calc.convexity",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which functions are convex on all of $\\mathbb{R}$?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$e^{x}$",
+          "correct": true,
+          "why": "$f''=e^x>0$."
+        },
+        {
+          "text": "$x^3$",
+          "correct": false,
+          "why": "$f''=6x<0$ for $x<0$; it is convex only on $[0,\\infty)$."
+        },
+        {
+          "text": "$-x^2+2x$",
+          "correct": false,
+          "why": "$f''=-2<0$: concave. Looked at $f'$ or the linear term instead of $f''$."
+        },
+        {
+          "text": "$|x|$",
+          "correct": true,
+          "why": "Not differentiable at 0, but the chord between any two points lies on or above the graph; convexity does not need $f''$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $e^x$: $f''>0$.\n2. $|x|$: maximum of two lines, so convex.\n3. $x^3$ changes concavity at 0; $-x^2+2x$ is concave."
+    },
+    {
+      "id": "calc-convexity-02",
+      "skill": "calc.convexity",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$f(x)=x^4-6x^2$ is convex exactly on",
+      "figure": null,
+      "options": [
+        {
+          "text": "$-1\\le x\\le1$",
+          "correct": false,
+          "why": "Reversed the inequality: there $f''\\le0$ (concave)."
+        },
+        {
+          "text": "$|x|\\ge\\sqrt3$",
+          "correct": false,
+          "why": "Solved $f'=4x^3-12x=0$ (stationary points) instead of $f''\\ge0$."
+        },
+        {
+          "text": "all real $x$",
+          "correct": false,
+          "why": "Assumed the $x^4$ term dominates everywhere; near 0 the $-6x^2$ term wins."
+        },
+        {
+          "text": "$x\\le-1$ or $x\\ge1$",
+          "correct": true,
+          "why": "$f''=12x^2-12\\ge0\\iff|x|\\ge1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f''(x)=12x^2-12$.\n2. $f''\\ge0\\iff x^2\\ge1$."
+    },
+    {
+      "id": "calc-convexity-03",
+      "skill": "calc.convexity",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "$f(x)=x^4+ax^3+6x^2$ is convex on all of $\\mathbb{R}$ exactly when $|a|\\le c$. Find $c$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 16,
+          "why": "Reported the bound on $a^2$ ($a^2\\le16$) instead of on $|a|$."
+        },
+        {
+          "value": 2,
+          "why": "Used $b^2\\le ac$, forgetting the 4 in the discriminant $b^2-4ac$."
+        },
+        {
+          "value": 8,
+          "why": "Wrote $f''=12x^2+3ax+12$ (differentiated $ax^3$ only once), giving $9a^2\\le576$."
+        }
+      ],
+      "solution": "1. $f''=12x^2+6ax+12$.\n2. Needs no real sign change: $36a^2-4\\cdot12\\cdot12\\le0$.\n3. $a^2\\le16\\Rightarrow|a|\\le4$."
+    },
+    {
+      "id": "calc-convexity-04",
+      "skill": "calc.convexity",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f:\\mathbb{R}\\to\\mathbb{R}$ be convex and differentiable. Which statements are always true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Every local minimum of $f$ is a global minimum",
+          "correct": true,
+          "why": "Convexity rules out a lower point elsewhere: the chord to it would dip below the local minimum."
+        },
+        {
+          "text": "$f$ has at least one minimiser",
+          "correct": false,
+          "why": "Assumed convex means bounded below with a minimum; $e^x$ is convex with no minimiser."
+        },
+        {
+          "text": "$f'$ is non-decreasing",
+          "correct": true,
+          "why": "For differentiable $f$, convexity is equivalent to $f'$ being non-decreasing."
+        },
+        {
+          "text": "$f(x)\\ge f(0)+f'(0)\\,x$ for all $x$",
+          "correct": true,
+          "why": "The tangent line at any point lies below a convex function."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Local = global minimum and the tangent-line inequality are standard convexity facts.\n2. $f'$ non-decreasing is the first-order characterisation.\n3. $e^x$ shows a minimiser need not exist."
+    },
+    {
+      "id": "calc-opt-word-01",
+      "skill": "calc.opt-word",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Non-negative numbers $x,y$ satisfy $x+2y=20$. Find the maximum of $xy$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 50,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 100,
+          "why": "Treated the constraint as $x+y=20$ (answer $10\\cdot10$)."
+        },
+        {
+          "value": 0,
+          "why": "Checked only endpoints ($x=0$ or $y=0$)."
+        }
+      ],
+      "solution": "1. $x=20-2y$, $P=(20-2y)y=20y-2y^2$.\n2. $P'=20-4y=0\\Rightarrow y=5$, $x=10$.\n3. $P=50$."
+    },
+    {
+      "id": "calc-opt-word-02",
+      "skill": "calc.opt-word",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "An open box is made from a $12\\times12$ cm sheet by cutting equal squares of side $x$ from each corner and folding up. Find the maximum volume (cm³).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 128,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Reported the optimal cut $x=2$, not the volume."
+        },
+        {
+          "value": 256,
+          "why": "Used side $12-x$ instead of $12-2x$ (only one corner removed per side); maximum then at $x=4$."
+        },
+        {
+          "value": 0,
+          "why": "Picked the other root $x=6$ of $V'=0$, which gives zero volume."
+        }
+      ],
+      "solution": "1. $V=x(12-2x)^2$, $0<x<6$.\n2. $V'=(12-2x)(12-6x)=0\\Rightarrow x=2$ (or 6, excluded).\n3. $V(2)=2\\cdot64=128$."
+    },
+    {
+      "id": "calc-opt-word-03",
+      "skill": "calc.opt-word",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "A farmer has 400 m of fencing for a rectangular field beside a straight river; no fence is needed along the river. The maximum area (m²) is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$40000$",
+          "correct": false,
+          "why": "Used $x+y=400$ (only one side perpendicular to the river)."
+        },
+        {
+          "text": "$17777.8$",
+          "correct": false,
+          "why": "Assumed the three fenced sides are equal ($x=y=400/3$)."
+        },
+        {
+          "text": "$10000$",
+          "correct": false,
+          "why": "Fenced all four sides: a square of side 100."
+        },
+        {
+          "text": "$20000$",
+          "correct": true,
+          "why": "$2x+y=400$, $A=x(400-2x)$, maximised at $x=100$, $y=200$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Sides $x$ (two, perpendicular to river) and $y$: $2x+y=400$.\n2. $A=400x-2x^2$, $A'=0\\Rightarrow x=100$.\n3. $A=100\\cdot200=20000$."
+    },
+    {
+      "id": "calc-opt-word-04",
+      "skill": "calc.opt-word",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "The value of $x$ that minimises $(x-1)^2+(x-5)^2+(x-6)^2$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$12$",
+          "correct": false,
+          "why": "Solved $\\sum(x-a_i)=0$ as $x=\\sum a_i$, forgetting there are three $x$ terms."
+        },
+        {
+          "text": "$5$",
+          "correct": false,
+          "why": "Gave the median, which minimises $\\sum|x-a_i|$, not the sum of squares."
+        },
+        {
+          "text": "$3.5$",
+          "correct": false,
+          "why": "Used the midpoint of the extremes $(1+6)/2$."
+        },
+        {
+          "text": "$4$",
+          "correct": true,
+          "why": "Setting the derivative $2\\sum(x-a_i)=0$ gives the mean $(1+5+6)/3=4$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f'(x)=2[(x-1)+(x-5)+(x-6)]=2(3x-12)$.\n2. $f'=0\\Rightarrow x=4$; $f''=6>0$."
+    },
+    {
+      "id": "calc-gradient-descent-01",
+      "skill": "calc.gradient-descent",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Gradient descent on $f(x)=x^2-4x$ starts at $x_0=0$ with learning rate $\\eta=0.1$. Find $x_1$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.4,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": -0.4,
+          "why": "Moved along the gradient ($x+\\eta f'$) instead of against it."
+        },
+        {
+          "value": 4,
+          "why": "Forgot the learning rate: $x_1=0-(-4)$."
+        },
+        {
+          "value": 2,
+          "why": "Jumped to the minimiser $x=2$ instead of taking one step."
+        }
+      ],
+      "solution": "1. $f'(x)=2x-4$, $f'(0)=-4$.\n2. $x_1=0-0.1(-4)=0.4$."
+    },
+    {
+      "id": "calc-gradient-descent-02",
+      "skill": "calc.gradient-descent",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Gradient descent on $f(x)=(x-3)^2$ starts at $x_0=0$ with $\\eta=0.25$. Find $x_2$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2.25,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": 1.5,
+          "why": "Took only one step."
+        },
+        {
+          "value": 3,
+          "why": "Doubled the first step instead of recomputing the gradient at $x_1$."
+        },
+        {
+          "value": 1.3125,
+          "why": "Used $f'(x)=x-3$, forgetting the factor 2 from the square."
+        }
+      ],
+      "solution": "1. $f'=2(x-3)$.\n2. $x_1=0-0.25(-6)=1.5$.\n3. $x_2=1.5-0.25(-3)=2.25$."
+    },
+    {
+      "id": "calc-gradient-descent-03",
+      "skill": "calc.gradient-descent",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Gradient descent with constant step $\\eta=1.2$ is run on $f(x)=x^2$ from $x_0=1$. What happens?",
+      "figure": null,
+      "options": [
+        {
+          "text": "It converges monotonically to 0",
+          "correct": false,
+          "why": "That needs $0<\\eta<0.5$ so that $0<1-2\\eta<1$."
+        },
+        {
+          "text": "It converges to 0 because $f$ is convex",
+          "correct": false,
+          "why": "Convexity alone does not guarantee convergence; the step must satisfy $\\eta<1$ here (i.e. $|1-2\\eta|<1$)."
+        },
+        {
+          "text": "It diverges, alternating in sign, since $x_{k+1}=-1.4\\,x_k$",
+          "correct": true,
+          "why": "$x_{k+1}=x_k-1.2(2x_k)=(1-2.4)x_k$ and $|{-1.4}|>1$."
+        },
+        {
+          "text": "It oscillates between $1$ and $-1$ forever",
+          "correct": false,
+          "why": "That is the case $\\eta=1$, where $1-2\\eta=-1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Update: $x_{k+1}=(1-2\\eta)x_k=-1.4x_k$.\n2. $|x_k|=1.4^k\\to\\infty$ with alternating signs."
+    },
+    {
+      "id": "calc-gradient-descent-04",
+      "skill": "calc.gradient-descent",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "One gradient descent step on $f(x,y)=x^2+3y^2$ from $(1,1)$ with $\\eta=0.1$ gives",
+      "figure": null,
+      "options": [
+        {
+          "text": "$(-1,\\ -5)$",
+          "correct": false,
+          "why": "Forgot the learning rate: $(1,1)-(2,6)$."
+        },
+        {
+          "text": "$(1.2,\\ 1.6)$",
+          "correct": false,
+          "why": "Added the gradient (ascent) instead of subtracting."
+        },
+        {
+          "text": "$(0.8,\\ 0.4)$",
+          "correct": true,
+          "why": "$\\nabla f=(2x,6y)=(2,6)$; $(1,1)-0.1(2,6)=(0.8,0.4)$."
+        },
+        {
+          "text": "$(0.8,\\ 0.8)$",
+          "correct": false,
+          "why": "Used $\\partial f/\\partial x$ for both coordinates."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\nabla f(1,1)=(2,6)$.\n2. Step: $(1-0.2,\\ 1-0.6)=(0.8,0.4)$."
+    },
+    {
+      "id": "calc-gradient-descent-05",
+      "skill": "calc.gradient-descent",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "A one-parameter model predicts $\\hat y=wx$ with squared loss $L(w)=(wx-y)^2$. For the single sample $(x,y)=(2,4)$, start at $w_0=0$ and take one gradient step with $\\eta=0.05$. Find $w_1$.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.8,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": 0.4,
+          "why": "Dropped either the factor 2 from the square or the chain factor $x$: gradient $-8$ instead of $-16$."
+        },
+        {
+          "value": -0.8,
+          "why": "Sign error: moved along the gradient."
+        },
+        {
+          "value": 1.6,
+          "why": "Multiplied by $x$ twice: $2(wx-y)x^2=-32$."
+        }
+      ],
+      "solution": "1. $\\frac{dL}{dw}=2(wx-y)x=2(0-4)(2)=-16$.\n2. $w_1=0-0.05(-16)=0.8$."
+    }
+  ]
+}

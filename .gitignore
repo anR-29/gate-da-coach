@@ -1,0 +1,10 @@
+# private analysis (contains DA 2026 working notes) and source PDFs
+analysis/
+*.pdf
+tools/tmp/
+seed/
+__pycache__/
+.claude/
+pyq/
+books/
+tools/seed_history.py

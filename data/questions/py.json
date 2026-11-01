@@ -1,0 +1,2362 @@
+{
+  "area": "py",
+  "skills": {
+    "py.arith-ops": {
+      "title": "Arithmetic operators: /, //, %, **",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        25
+      ],
+      "theory": "py-basics",
+      "check": "// and % floor toward −∞ (a == (a//b)*b + a%b); / always gives float; ** is right-associative and binds tighter than unary minus."
+    },
+    "py.bool-precedence": {
+      "title": "Truthiness, short-circuit and comparison chaining",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        25
+      ],
+      "theory": "py-basics",
+      "check": "and/or return an operand, not True/False; not < and < or; a < b < c means a < b and b < c; `not` binds looser than ==."
+    },
+    "py.strings": {
+      "title": "Strings: slicing and methods",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        25
+      ],
+      "theory": "py-basics",
+      "check": "s[start:stop:step] excludes stop; negative step walks from the end; strings are immutable, so methods return new strings."
+    },
+    "py.loops": {
+      "title": "Loops: range, break, continue, else",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        25
+      ],
+      "theory": "py-basics",
+      "check": "range stop is excluded; loop-else runs only when the loop ends without break (including zero iterations)."
+    },
+    "py.recursion-trace": {
+      "title": "Tracing recursive functions",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        26
+      ],
+      "theory": "py-functions",
+      "check": "Write the call stack: each call finishes its own lines after the inner call returns; build values bottom-up from the base case."
+    },
+    "py.recursion-calls": {
+      "title": "Counting recursive calls",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        26
+      ],
+      "theory": "py-functions",
+      "check": "Set up C(n) = 1 + (calls made by the body); include the top call and the base-case calls; memo hits still count as calls."
+    },
+    "py.mutable-default": {
+      "title": "Mutable default arguments",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        26
+      ],
+      "theory": "py-functions",
+      "check": "Defaults are evaluated once at def time; a mutated default list/dict is shared by every call that omits the argument."
+    },
+    "py.scope": {
+      "title": "Scope: LEGB, global and nonlocal",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        26
+      ],
+      "theory": "py-functions",
+      "check": "Any assignment to a name in a function makes it local everywhere in that function unless declared global/nonlocal."
+    },
+    "py.closures": {
+      "title": "Closures and late binding",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        26
+      ],
+      "theory": "py-functions",
+      "check": "A closure looks up the enclosing variable when it is called, not when it is created; i=i in a lambda freezes the value."
+    },
+    "py.aliasing-copy": {
+      "title": "Aliasing, shallow and deep copy",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        27
+      ],
+      "theory": "py-collections",
+      "check": "b = a shares one object; a[:] and copy.copy copy only the outer list; += on a list mutates in place, + builds a new list."
+    },
+    "py.mutate-iterate": {
+      "title": "Mutating a list or dict while iterating",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        27
+      ],
+      "theory": "py-collections",
+      "check": "A for loop walks indices of the live list: removals skip the next element, appends are visited; iterate over a copy to be safe."
+    },
+    "py.comprehensions": {
+      "title": "Comprehensions and generators",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        27
+      ],
+      "theory": "py-collections",
+      "check": "Nested for-clauses read left to right like nested loops; dict comprehensions keep the last value per key; generators are single-use."
+    },
+    "py.dict-set-sort": {
+      "title": "Dicts, sets and sorting with key",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        27
+      ],
+      "theory": "py-collections",
+      "check": "Dicts keep insertion order; equal hashes (1, 1.0, True) collapse to one key; sorted() is stable and uses the key tuple left to right."
+    },
+    "py.trace-programs": {
+      "title": "Tracing multi-step programs",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        27
+      ],
+      "theory": "py-collections",
+      "check": "Keep a variable table, update it line by line, and track loop-else, break and data-structure state at each iteration."
+    }
+  },
+  "questions": [
+    {
+      "id": "py-arith-ops-01",
+      "skill": "py.arith-ops",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nprint(7 // -2, 7 % -2, -7 / 2)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`-3 1 -3.5`",
+          "correct": false,
+          "why": "Truncated toward zero as in C; Python's // floors toward negative infinity."
+        },
+        {
+          "text": "`-4 -1 -3.5`",
+          "correct": true,
+          "why": "7 / -2 = -3.5 floors to -4; then 7 - (-4)(-2) = -1, so the remainder takes the divisor's sign."
+        },
+        {
+          "text": "`-3 -1 -3.5`",
+          "correct": false,
+          "why": "Truncated the quotient but still gave the remainder the divisor's sign; the two must satisfy a == (a//b)*b + a%b."
+        },
+        {
+          "text": "`-4 -1 -4`",
+          "correct": false,
+          "why": "Treated / as floor division; / always returns the exact float -3.5."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `7 // -2` = floor(-3.5) = -4.\n2. `7 % -2` = 7 - (-4)(-2) = -1.\n3. `-7 / 2` = -3.5 (true division)."
+    },
+    {
+      "id": "py-arith-ops-02",
+      "skill": "py.arith-ops",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nx = 2 ** 3 ** 2 // 10 % 7\nprint(x)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Evaluated ** left to right: (2**3)**2 = 64, then 64 // 10 % 7 = 6."
+        },
+        {
+          "value": 170,
+          "why": "Did % before //: 512 // (10 % 7) = 170. They have equal precedence and group left to right."
+        },
+        {
+          "value": 51,
+          "why": "Stopped after 512 // 10 and forgot the % 7."
+        }
+      ],
+      "solution": "1. `**` is right-associative: 3 ** 2 = 9, 2 ** 9 = 512.\n2. `//` and `%` group left to right: 512 // 10 = 51, 51 % 7 = 2."
+    },
+    {
+      "id": "py-arith-ops-03",
+      "skill": "py.arith-ops",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nprint(-3 ** 2, (-3) ** 2, 2 ** -1)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`9 9 0`",
+          "correct": false,
+          "why": "Made both mistakes: unary minus first and integer result for 2 ** -1."
+        },
+        {
+          "text": "`9 9 0.5`",
+          "correct": false,
+          "why": "Assumed unary minus applies before **."
+        },
+        {
+          "text": "`-9 9 0`",
+          "correct": false,
+          "why": "Assumed int ** negative int stays an int and truncates."
+        },
+        {
+          "text": "`-9 9 0.5`",
+          "correct": true,
+          "why": "** binds tighter than unary minus, so -3 ** 2 is -(9); an int raised to a negative int gives a float."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `-3 ** 2` parses as `-(3 ** 2)` = -9.\n2. `(-3) ** 2` = 9.\n3. `2 ** -1` = 0.5 (float)."
+    },
+    {
+      "id": "py-arith-ops-04",
+      "skill": "py.arith-ops",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ntotal = 0\nfor n in [17, -17, 17.0]:\n    q, r = divmod(n, 5)\n    total += q * 10 + r\nprint(total)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 27,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 32,
+          "why": "Truncated -17 / 5 toward zero: (-3, -2) gives -32 instead of -37."
+        },
+        {
+          "value": 22,
+          "why": "Used the floor quotient -4 but a C-style remainder -2 for -17, giving -42."
+        },
+        {
+          "value": 96,
+          "why": "Assumed divmod(-17, 5) equals divmod(17, 5) with signs dropped: 32 + 32 + 32."
+        }
+      ],
+      "solution": "1. divmod(17, 5) = (3, 2) gives 32.\n2. divmod(-17, 5) = (-4, 3) because floor(-3.4) = -4 and -17 - (-20) = 3; gives -37.\n3. divmod(17.0, 5) = (3.0, 2.0) gives 32.0.\n4. 32 - 37 + 32.0 = 27.0, printed as `27.0`."
+    },
+    {
+      "id": "py-arith-ops-05",
+      "skill": "py.arith-ops",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Which of the following expressions evaluate to `True`?",
+      "figure": null,
+      "options": [
+        {
+          "text": "`10 / 2 == 5`",
+          "correct": true,
+          "why": "10 / 2 is the float 5.0, and 5.0 == 5 compares numeric values."
+        },
+        {
+          "text": "`-7 // 2 * 2 + -7 % 2 == -7`",
+          "correct": true,
+          "why": "Floor division and modulo always satisfy a == (a//b)*b + a%b: (-4)(2) + 1 = -7."
+        },
+        {
+          "text": "`0.1 + 0.2 == 0.3`",
+          "correct": false,
+          "why": "Assumed decimal fractions are exact in binary floating point; the sum is 0.30000000000000004."
+        },
+        {
+          "text": "`type(10 // 2.0) is int`",
+          "correct": false,
+          "why": "Assumed // always returns int; with a float operand it returns float (5.0)."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Float rounding makes 0.1 + 0.2 differ from 0.3.\n2. 5.0 == 5 is True.\n3. 10 // 2.0 is 5.0, a float.\n4. -7 // 2 = -4, -7 % 2 = 1, and -8 + 1 = -7."
+    },
+    {
+      "id": "py-bool-precedence-01",
+      "skill": "py.bool-precedence",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nprint(0 or [] or \"a\" and \"b\")\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[]`",
+          "correct": false,
+          "why": "Stopped at the second operand; `or` skips falsy values and keeps going."
+        },
+        {
+          "text": "`a`",
+          "correct": false,
+          "why": "Took `and` to return its first truthy operand; `and` returns the last operand when all are truthy."
+        },
+        {
+          "text": "`b`",
+          "correct": true,
+          "why": "`and` binds tighter: \"a\" and \"b\" returns \"b\"; then 0 or [] or \"b\" returns the first truthy operand, \"b\"."
+        },
+        {
+          "text": "`True`",
+          "correct": false,
+          "why": "Assumed and/or return booleans; they return one of the operands."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Precedence: `0 or [] or (\"a\" and \"b\")`.\n2. `\"a\" and \"b\"` → `\"b\"`.\n3. `0 or [] or \"b\"` → `\"b\"`."
+    },
+    {
+      "id": "py-bool-precedence-02",
+      "skill": "py.bool-precedence",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nprint(1 < 3 > 2, 1 < 3 == 3 < 2, (1 < 3) == 3)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`True True False`",
+          "correct": false,
+          "why": "Evaluated the second chain pairwise left to right: ((1<3)==3)<2 is False < 2, which is True."
+        },
+        {
+          "text": "`False False False`",
+          "correct": false,
+          "why": "Evaluated the first chain as (1 < 3) > 2, i.e. True > 2."
+        },
+        {
+          "text": "`True False False`",
+          "correct": true,
+          "why": "Chains expand to `1<3 and 3>2` (True) and `1<3 and 3==3 and 3<2` (False); True == 3 is False since True equals 1."
+        },
+        {
+          "text": "`True False True`",
+          "correct": false,
+          "why": "Treated True == 3 as truthy comparison; True compares equal only to 1."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `1 < 3 > 2` → `1 < 3 and 3 > 2` → True.\n2. `1 < 3 == 3 < 2` → `... and 3 < 2` → False.\n3. `(1 < 3) == 3` → `True == 3` → `1 == 3` → False."
+    },
+    {
+      "id": "py-bool-precedence-03",
+      "skill": "py.bool-precedence",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ncalls = 0\ndef f(v):\n    global calls\n    calls += 1\n    return v\n\nr = f(0) and f(1)\nr = f(2) or f(3)\nr = f(0) or f([]) or f(4) and f(5)\nr = not f(6) and f(7)\nprint(calls)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 7,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 9,
+          "why": "Assumed every call is evaluated; and/or stop as soon as the result is known."
+        },
+        {
+          "value": 8,
+          "why": "Called f(7): `not f(6)` is False, so `and` stops there."
+        },
+        {
+          "value": 6,
+          "why": "Thought `f(4) and f(5)` stops at f(4); `and` needs the second operand when the first is truthy."
+        }
+      ],
+      "solution": "1. `f(0) and ...` stops at the falsy 0: 1 call.\n2. `f(2) or ...` stops at the truthy 2: 1 call (total 2).\n3. f(0), f([]) are falsy; then `f(4) and f(5)` calls both: 4 calls (total 6).\n4. `not f(6)` is False, so `and` skips f(7): 1 call (total 7)."
+    },
+    {
+      "id": "py-bool-precedence-04",
+      "skill": "py.bool-precedence",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Which of the following values are **falsy** in Python (that is, `bool(v)` is `False`)?",
+      "figure": null,
+      "options": [
+        {
+          "text": "`0.0`",
+          "correct": true,
+          "why": "Zero of any numeric type is falsy."
+        },
+        {
+          "text": "`{}`",
+          "correct": true,
+          "why": "An empty dict is falsy."
+        },
+        {
+          "text": "`\"0\"`",
+          "correct": false,
+          "why": "Confused the string \"0\" with the number 0; any non-empty string is truthy."
+        },
+        {
+          "text": "`[0]`",
+          "correct": false,
+          "why": "Looked at the element 0; a list is falsy only when empty, and [0] has one element."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Empty containers and numeric zeros are falsy.\n2. `[0]` and `\"0\"` are non-empty, so truthy."
+    },
+    {
+      "id": "py-bool-precedence-05",
+      "skill": "py.bool-precedence",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\na = [1, 2]\nb = [1, 2]\nprint(a == b, a is b, not a == b[:1])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`True False True`",
+          "correct": true,
+          "why": "Equal contents but different objects; `not` has lower precedence than ==, so it negates (a == [1]) which is False."
+        },
+        {
+          "text": "`True True True`",
+          "correct": false,
+          "why": "Assumed equal lists are the same object; `is` tests identity."
+        },
+        {
+          "text": "`True False False`",
+          "correct": false,
+          "why": "Applied `not` before `==`: (not a) == [1] is False == [1]."
+        },
+        {
+          "text": "`False False True`",
+          "correct": false,
+          "why": "Used == as an identity test; == compares contents."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `a == b` → True (same contents).\n2. `a is b` → False (two list literals create two objects).\n3. `not a == b[:1]` → `not (a == [1])` → `not False` → True."
+    },
+    {
+      "id": "py-strings-01",
+      "skill": "py.strings",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ns = \"DATASCIENCE\"\nprint(s[2:8:2], s[-3:], s[::-4])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`TSI NCE EIT`",
+          "correct": true,
+          "why": "Indices 2, 4, 6 give T, S, I; the last three are NCE; stepping -4 from index 10 gives 10, 6, 2: E, I, T."
+        },
+        {
+          "text": "`TSI NCE DSN`",
+          "correct": false,
+          "why": "Stepped by 4 from the start (0, 4, 8) and ignored the negative sign; a negative step starts from the end."
+        },
+        {
+          "text": "`TSI ECN EIT`",
+          "correct": false,
+          "why": "Reversed s[-3:]; a negative start does not reverse direction, only a negative step does."
+        },
+        {
+          "text": "`TSIN NCE EIT`",
+          "correct": false,
+          "why": "Treated the stop index 8 as inclusive."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. s = D0 A1 T2 A3 S4 C5 I6 E7 N8 C9 E10.\n2. `s[2:8:2]` → indices 2, 4, 6 → TSI.\n3. `s[-3:]` → NCE.\n4. `s[::-4]` → indices 10, 6, 2 → EIT."
+    },
+    {
+      "id": "py-strings-02",
+      "skill": "py.strings",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ns = \"banana\"\nprint(s.find(\"na\") + s.count(\"an\") * 10 + s.rfind(\"a\"))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 27,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 29,
+          "why": "Used 1-based positions (3 + 20 + 6); string indices start at 0."
+        },
+        {
+          "value": 22,
+          "why": "Took rfind to count from the right end (0); it returns the ordinary index of the last match, 5."
+        },
+        {
+          "value": 17,
+          "why": "Counted \"an\" once; it occurs at indices 1 and 3."
+        }
+      ],
+      "solution": "1. `find(\"na\")` → 2.\n2. `count(\"an\")` → 2, times 10 → 20.\n3. `rfind(\"a\")` → 5 (index from the left of the last match).\n4. 2 + 20 + 5 = 27."
+    },
+    {
+      "id": "py-strings-03",
+      "skill": "py.strings",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ns = \"Data gate\"\nt = s\ns.upper()\ns = s.replace(\"a\", \"@\", 1)\nprint(t, s, sep=\"|\")\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`Data gate|D@ta gate`",
+          "correct": true,
+          "why": "upper() returns a new string that is discarded; replace with count 1 changes only the first 'a'; t still names the original string."
+        },
+        {
+          "text": "`Data gate|D@t@ g@te`",
+          "correct": false,
+          "why": "Ignored the count argument 1, which limits replace to the first match."
+        },
+        {
+          "text": "`D@ta gate|D@ta gate`",
+          "correct": false,
+          "why": "Assumed t follows s after rebinding; s = ... makes s name a new object while t keeps the old one."
+        },
+        {
+          "text": "`DATA GATE|D@TA GATE`",
+          "correct": false,
+          "why": "Assumed s.upper() changes s in place; strings are immutable."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `s.upper()` result is thrown away.\n2. `s.replace(\"a\", \"@\", 1)` → \"D@ta gate\"; s is rebound.\n3. t still refers to \"Data gate\"."
+    },
+    {
+      "id": "py-strings-04",
+      "skill": "py.strings",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nprint(\"ab\" * 2 + \"c\" * 0 + str(3 * \"2\" == \"222\"))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`abab True`",
+          "correct": false,
+          "why": "Assumed + inserts a space between strings."
+        },
+        {
+          "text": "`ababcTrue`",
+          "correct": false,
+          "why": "Assumed multiplying a string by 0 keeps one copy."
+        },
+        {
+          "text": "`ababTrue`",
+          "correct": true,
+          "why": "\"ab\" * 2 is \"abab\", \"c\" * 0 is the empty string, and 3 * \"2\" is \"222\"."
+        },
+        {
+          "text": "`ababFalse`",
+          "correct": false,
+          "why": "Treated 3 * \"2\" as arithmetic (6); with a string it repeats the text."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. \"abab\" + \"\" + str(True).\n2. Output: ababTrue."
+    },
+    {
+      "id": "py-strings-05",
+      "skill": "py.strings",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Let `s = \"python\"`. Which expressions evaluate to `True`?",
+      "figure": null,
+      "options": [
+        {
+          "text": "`s[-1:-4] == \"noh\"`",
+          "correct": false,
+          "why": "Expected a reversed slice; with the default step +1 and start after stop, the slice is empty."
+        },
+        {
+          "text": "`s[::-1][:2] == \"no\"`",
+          "correct": true,
+          "why": "s[::-1] is \"nohtyp\"; its first two characters are \"no\"."
+        },
+        {
+          "text": "`s[1:4] == \"yth\"`",
+          "correct": true,
+          "why": "Indices 1, 2, 3 are y, t, h; stop 4 is excluded."
+        },
+        {
+          "text": "`s[10:] == \"\"`",
+          "correct": true,
+          "why": "Slices clamp out-of-range indices instead of raising IndexError."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `s[1:4]` = \"yth\".\n2. `s[-1:-4]` = \"\" (step +1 cannot go from 5 down to 2).\n3. `\"nohtyp\"[:2]` = \"no\".\n4. `s[10:]` = \"\"."
+    },
+    {
+      "id": "py-loops-01",
+      "skill": "py.loops",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nfor i in range(10, 0, -3):\n    print(i, end=\" \")\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "``",
+          "correct": false,
+          "why": "Assumed a range with start > stop is empty; with a negative step it counts down."
+        },
+        {
+          "text": "`10 7 4 1`",
+          "correct": true,
+          "why": "Starts at 10, steps by -3, and stops before reaching 0; 1 > 0 is still included."
+        },
+        {
+          "text": "`10 7 4`",
+          "correct": false,
+          "why": "Stopped early, as if 1 were the stop value; only 0 (and beyond) is excluded."
+        },
+        {
+          "text": "`10 7 4 1 -2`",
+          "correct": false,
+          "why": "Treated the stop as inclusive or overshot it; range never passes the stop."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Values: 10, 7, 4, 1; the next, -2, is past the stop 0."
+    },
+    {
+      "id": "py-loops-02",
+      "skill": "py.loops",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ncount = 0\nfor n in range(2, 20):\n    for d in range(2, n):\n        if n % d == 0:\n            break\n    else:\n        count += n\nprint(count)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 77,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 75,
+          "why": "Thought the else does not run when the inner loop has zero iterations (n = 2); it does, since no break occurred."
+        },
+        {
+          "value": 112,
+          "why": "Assumed the else runs when the loop is broken; it runs only when the loop is not broken (that sums the composites)."
+        },
+        {
+          "value": 189,
+          "why": "Ignored the break/else logic and summed every n from 2 to 19."
+        }
+      ],
+      "solution": "1. The inner loop breaks on finding a divisor; else runs only for primes.\n2. n = 2: inner range is empty, else runs.\n3. Primes below 20: 2+3+5+7+11+13+17+19 = 77."
+    },
+    {
+      "id": "py-loops-03",
+      "skill": "py.loops",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ni, s = 0, 0\nwhile i < 10:\n    i += 1\n    if i % 3 == 0:\n        continue\n    if i > 7:\n        break\n    s += i\nelse:\n    s += 100\nprint(s, i)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`119 8`",
+          "correct": false,
+          "why": "Ran the else clause after a break; else runs only when the loop condition becomes false."
+        },
+        {
+          "text": "`19 8`",
+          "correct": true,
+          "why": "Adds 1, 2, 4, 5, 7 (skipping 3 and 6), then breaks at i = 8, so the else is skipped."
+        },
+        {
+          "text": "`28 8`",
+          "correct": false,
+          "why": "Treated continue as a no-op and added 3 and 6 as well."
+        },
+        {
+          "text": "`19 7`",
+          "correct": false,
+          "why": "Assumed break happens before i is incremented; i += 1 runs first in each pass."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. i = 1..7: add all except multiples of 3 → 1+2+4+5+7 = 19.\n2. i = 8: not a multiple of 3, 8 > 7 → break.\n3. Break skips the else. Output: 19 8."
+    },
+    {
+      "id": "py-loops-04",
+      "skill": "py.loops",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nprint(len(range(5, 50, 7)))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 7,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Used (50 - 5) // 7 = 6 and forgot to count the first element (the ceiling of 45 / 7 is 7)."
+        },
+        {
+          "value": 8,
+          "why": "Included a value past the stop (54)."
+        }
+      ],
+      "solution": "1. Values: 5, 12, 19, 26, 33, 40, 47.\n2. Count = ceil((50 - 5) / 7) = 7."
+    },
+    {
+      "id": "py-loops-05",
+      "skill": "py.loops",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Consider the program below. Which statements are true?\n\n```python\nfor k in range(3):\n    pass\nprint(k)\nfor j in range(0):\n    pass\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "After the second loop, the name `j` is undefined",
+          "correct": true,
+          "why": "range(0) yields nothing, so j is never assigned; using it raises NameError."
+        },
+        {
+          "text": "It prints `3`",
+          "correct": false,
+          "why": "Assumed the loop variable ends at the stop value as in a C for-loop; range never yields 3."
+        },
+        {
+          "text": "It prints `2`",
+          "correct": true,
+          "why": "After the loop the variable keeps the last value it was given, 2."
+        },
+        {
+          "text": "The body of `for j in range(0)` runs once",
+          "correct": false,
+          "why": "range(0) is empty; the body runs zero times."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. The first loop assigns k = 0, 1, 2; k stays 2.\n2. range(0) is empty, so j is never bound."
+    },
+    {
+      "id": "py-recursion-trace-01",
+      "skill": "py.recursion-trace",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef f(n):\n    if n <= 1:\n        return n\n    return f(n - 1) + 2 * f(n - 2)\n\nprint(f(5))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 11,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 21,
+          "why": "Used f(0) = 1; the base case returns n itself, so f(0) = 0."
+        },
+        {
+          "value": 5,
+          "why": "Dropped the factor 2, which gives the Fibonacci value f(5) = 5."
+        }
+      ],
+      "solution": "1. f(0) = 0, f(1) = 1.\n2. f(2) = 1 + 0 = 1, f(3) = 1 + 2 = 3, f(4) = 3 + 2 = 5.\n3. f(5) = 5 + 2·3 = 11."
+    },
+    {
+      "id": "py-recursion-trace-02",
+      "skill": "py.recursion-trace",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef show(n):\n    if n == 0:\n        return\n    print(n, end=\" \")\n    show(n - 1)\n    print(n, end=\" \")\n\nshow(3)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`3 2 1 1 2 3`",
+          "correct": true,
+          "why": "Each call prints n on the way down, then prints n again after the inner call returns, so the second half is reversed."
+        },
+        {
+          "text": "`3 2 1 3 2 1`",
+          "correct": false,
+          "why": "Assumed the second prints happen in call order; they run as the stack unwinds, innermost first."
+        },
+        {
+          "text": "`3 2 1 0 0 1 2 3`",
+          "correct": false,
+          "why": "Printed in the base case; show(0) returns before any print."
+        },
+        {
+          "text": "`1 2 3 3 2 1`",
+          "correct": false,
+          "why": "Reversed the halves; the first print happens before recursing."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Descending: print 3, 2, 1.\n2. show(0) returns.\n3. Unwinding: show(1) prints 1, then show(2) prints 2, then show(3) prints 3."
+    },
+    {
+      "id": "py-recursion-trace-03",
+      "skill": "py.recursion-trace",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef h(n, acc=0):\n    if n == 0:\n        return acc\n    return h(n // 10, acc * 10 + n % 10)\n\nprint(h(1203) + h(450))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 3075,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 3561,
+          "why": "Assumed reversing 450 gives 540; the reversed digits 0, 5, 4 make 054 = 54."
+        },
+        {
+          "value": 1653,
+          "why": "Assumed acc is never updated, so h returns n unchanged."
+        },
+        {
+          "value": 3471,
+          "why": "Reversed 1203 as 3021 but read 450 reversed as 450."
+        }
+      ],
+      "solution": "1. h(1203): acc becomes 3, 30, 302, 3021.\n2. h(450): acc becomes 0, 5, 54.\n3. 3021 + 54 = 3075."
+    },
+    {
+      "id": "py-recursion-trace-04",
+      "skill": "py.recursion-trace",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef p(n):\n    if n == 0:\n        return [0]\n    r = p(n - 1)\n    return r + [r[-1] + n]\n\nprint(p(4))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[10, 6, 3, 1, 0]`",
+          "correct": false,
+          "why": "Built the list in unwinding order; each level appends to the end of the list returned from below."
+        },
+        {
+          "text": "`[0, 1, 2, 3, 4]`",
+          "correct": false,
+          "why": "Appended n itself instead of r[-1] + n."
+        },
+        {
+          "text": "`[1, 3, 6, 10]`",
+          "correct": false,
+          "why": "Dropped the base list [0]."
+        },
+        {
+          "text": "`[0, 1, 3, 6, 10]`",
+          "correct": true,
+          "why": "Each level appends the previous last value plus n: 0, 0+1, 1+2, 3+3, 6+4."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. p(0) = [0].\n2. p(1) = [0, 1], p(2) = [0, 1, 3], p(3) = [0, 1, 3, 6].\n3. p(4) = [0, 1, 3, 6, 10]."
+    },
+    {
+      "id": "py-recursion-trace-05",
+      "skill": "py.recursion-trace",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef b(n):\n    if n < 2:\n        return str(n)\n    return b(n // 2) + str(n % 2)\n\nprint(b(13), b(8)[::-1])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`1101 1000`",
+          "correct": false,
+          "why": "Forgot the [::-1] reversal of b(8)."
+        },
+        {
+          "text": "`1101 0001`",
+          "correct": true,
+          "why": "Recursion builds the higher bits first: 13 is 1101 and 8 is 1000, reversed to 0001."
+        },
+        {
+          "text": "`1011 0001`",
+          "correct": false,
+          "why": "Put the current remainder before the recursive part, which reverses the bits."
+        },
+        {
+          "text": "`1101 0010`",
+          "correct": false,
+          "why": "Mis-converted 8: 8 = 1000 in binary."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. b(13) = b(6) + \"1\" = b(3) + \"0\" + \"1\" = \"11\" + \"01\" = \"1101\".\n2. b(8) = \"1000\"; reversed → \"0001\"."
+    },
+    {
+      "id": "py-recursion-calls-01",
+      "skill": "py.recursion-calls",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ncount = 0\ndef fib(n):\n    global count\n    count += 1\n    if n < 2:\n        return n\n    return fib(n - 1) + fib(n - 2)\n\nfib(5)\nprint(count)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 15,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 5,
+          "why": "Reported the value fib(5) = 5 instead of the number of calls."
+        },
+        {
+          "value": 6,
+          "why": "Counted one call per distinct n (0 to 5); naive recursion repeats subproblems."
+        },
+        {
+          "value": 14,
+          "why": "Forgot to count the top-level call fib(5)."
+        }
+      ],
+      "solution": "1. C(0) = C(1) = 1, C(n) = 1 + C(n-1) + C(n-2).\n2. C(2) = 3, C(3) = 5, C(4) = 9, C(5) = 15."
+    },
+    {
+      "id": "py-recursion-calls-02",
+      "skill": "py.recursion-calls",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ncount = 0\ndef t(n):\n    global count\n    count += 1\n    if n <= 1:\n        return 1\n    return t(n // 2) + t(n // 2) + t(n - 1)\n\nt(4)\nprint(count)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 16,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 15,
+          "why": "Did not count the top-level call t(4)."
+        },
+        {
+          "value": 9,
+          "why": "Counted t(n // 2) once per level although it is called twice."
+        },
+        {
+          "value": 11,
+          "why": "Treated the two identical t(n // 2) calls as cached; Python re-runs them."
+        }
+      ],
+      "solution": "1. C(0) = C(1) = 1; C(n) = 1 + 2·C(n // 2) + C(n - 1).\n2. C(2) = 1 + 2 + 1 = 4, C(3) = 1 + 2 + 4 = 7.\n3. C(4) = 1 + 2·4 + 7 = 16."
+    },
+    {
+      "id": "py-recursion-calls-03",
+      "skill": "py.recursion-calls",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "How many `*` characters does this program print?\n\n```python\ndef star(n):\n    if n > 0:\n        star(n - 1)\n        print(\"*\", end=\"\")\n        star(n - 1)\n\nstar(4)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`15`",
+          "correct": true,
+          "why": "S(n) = 2·S(n-1) + 1 with S(0) = 0, so S(4) = 15 stars."
+        },
+        {
+          "text": "`16`",
+          "correct": false,
+          "why": "Used 2^n, counting the base-case calls as if they printed."
+        },
+        {
+          "text": "`8`",
+          "correct": false,
+          "why": "Used 2^(n-1); each level doubles the stars and adds one."
+        },
+        {
+          "text": "`4`",
+          "correct": false,
+          "why": "Assumed one star per level, ignoring the second recursive call."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. S(0) = 0, S(n) = 2S(n-1) + 1.\n2. S(1)=1, S(2)=3, S(3)=7, S(4)=15."
+    },
+    {
+      "id": "py-recursion-calls-04",
+      "skill": "py.recursion-calls",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ncalls = 0\ndef d(n):\n    global calls\n    calls += 1\n    return 0 if n == 0 else d(n // 2) + 1\n\nprint(d(100), calls)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`7 8`",
+          "correct": true,
+          "why": "n goes 100, 50, 25, 12, 6, 3, 1, 0: seven halvings add 1 each, and there are eight calls including the base call."
+        },
+        {
+          "text": "`50 51`",
+          "correct": false,
+          "why": "Treated n // 2 as n - 2."
+        },
+        {
+          "text": "`7 7`",
+          "correct": false,
+          "why": "Forgot to count the base call d(0)."
+        },
+        {
+          "text": "`6 7`",
+          "correct": false,
+          "why": "Stopped at n = 1 as if it were the base case."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Chain: 100 → 50 → 25 → 12 → 6 → 3 → 1 → 0.\n2. Return value = number of arrows = 7.\n3. Calls = 8 nodes."
+    },
+    {
+      "id": "py-recursion-calls-05",
+      "skill": "py.recursion-calls",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ncalls = 0\nmemo = {}\ndef f(n):\n    global calls\n    calls += 1\n    if n in memo:\n        return memo[n]\n    memo[n] = n if n < 2 else f(n - 1) + f(n - 2)\n    return memo[n]\n\nf(10)\nprint(calls)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 19,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 11,
+          "why": "Counted only the fresh computations (n = 10 down to 0); memo hits still enter f and increment calls."
+        },
+        {
+          "value": 177,
+          "why": "Ignored the memo and used the naive call count."
+        }
+      ],
+      "solution": "1. f(10) calls f(9) first, which fills memo down to 0: fresh calls for n = 10..0 (11 calls).\n2. Each f(n) for n = 3..10 then calls f(n - 2), a memo hit: 8 more calls.\n3. f(2) calls f(0) fresh (already counted). Total 19."
+    },
+    {
+      "id": "py-mutable-default-01",
+      "skill": "py.mutable-default",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef add(x, bag=[]):\n    bag.append(x)\n    return bag\n\na = add(1)\nb = add(2)\nc = add(3, [])\nprint(a, b, c)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1, 2] [1, 2] [3]`",
+          "correct": true,
+          "why": "The default list is created once; a and b are the same list, while c uses the fresh list passed in."
+        },
+        {
+          "text": "`[1] [1, 2] [3]`",
+          "correct": false,
+          "why": "Assumed a captured a snapshot; a is the same object that later gets 2 appended."
+        },
+        {
+          "text": "`[1, 2] [1, 2] [1, 2, 3]`",
+          "correct": false,
+          "why": "Assumed passing [] still uses the shared default."
+        },
+        {
+          "text": "`[1] [2] [3]`",
+          "correct": false,
+          "why": "Assumed a new default list is created on each call."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `bag=[]` is evaluated once at def time.\n2. add(1), add(2) both mutate that list; a is b.\n3. add(3, []) uses its own list."
+    },
+    {
+      "id": "py-mutable-default-02",
+      "skill": "py.mutable-default",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef tally(k, seen={}):\n    seen[k] = seen.get(k, 0) + 1\n    return len(seen) * 10 + seen[k]\n\nr = 0\nfor w in \"abcab\":\n    r += tally(w)\nr += tally(\"a\", {})\nprint(r)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 138,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 66,
+          "why": "Assumed a fresh dict on every call, so every call returns 11."
+        },
+        {
+          "value": 127,
+          "why": "Dropped the last call tally(\"a\", {}), which returns 11 with its own dict."
+        },
+        {
+          "value": 139,
+          "why": "Let the last call use the shared dict; it receives a new empty dict."
+        }
+      ],
+      "solution": "1. Shared dict: a→11, b→21, c→31, a→32, b→32 (sum 127).\n2. tally(\"a\", {}) uses a new dict → 11.\n3. 127 + 11 = 138."
+    },
+    {
+      "id": "py-mutable-default-03",
+      "skill": "py.mutable-default",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef f(x, acc=None):\n    if acc is None:\n        acc = []\n    acc.append(x)\n    return acc\n\ndef g(x, acc=()):\n    acc += (x,)\n    return acc\n\nprint(f(1), f(2), g(1), g(2))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1] [1, 2] (1,) (1, 2)`",
+          "correct": false,
+          "why": "Assumed every default accumulates; the None idiom and the immutable tuple both avoid sharing."
+        },
+        {
+          "text": "`[1, 2] [1, 2] (1,) (2,)`",
+          "correct": false,
+          "why": "Ignored the `if acc is None` reset in f."
+        },
+        {
+          "text": "`[1] [2] (1,) (2,)`",
+          "correct": true,
+          "why": "f makes a new list when acc is None; tuples are immutable, so += in g rebinds the local name and the default stays ()."
+        },
+        {
+          "text": "`[1] [2] (1,) (1, 2)`",
+          "correct": false,
+          "why": "Assumed tuple += mutates the default; it creates a new tuple."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. f: each call without acc gets a new list.\n2. g: `acc += (x,)` builds a new tuple; the default () is untouched."
+    },
+    {
+      "id": "py-mutable-default-04",
+      "skill": "py.mutable-default",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "After this program runs, which statements are true?\n\n```python\ndef push(v, s=[]):\n    s.append(v)\n    return s\n\nx = push(1)\ny = push(2)\nz = push(3, x)\nw = push(4)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`z == [1, 3]`",
+          "correct": false,
+          "why": "Assumed passing x creates a separate list; x is the default list itself, already holding 1 and 2."
+        },
+        {
+          "text": "`len(w) == 4`",
+          "correct": true,
+          "why": "All four calls append to the same list (push(3, x) passes that same list explicitly)."
+        },
+        {
+          "text": "`push.__defaults__[0] == [1, 2, 3, 4]`",
+          "correct": true,
+          "why": "The default object lives in __defaults__ and has been mutated by every call."
+        },
+        {
+          "text": "`x is y` is `True`",
+          "correct": true,
+          "why": "Both calls omit s, so both return the single default list."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. x, y, z, w all name the default list.\n2. Its final content is [1, 2, 3, 4]."
+    },
+    {
+      "id": "py-mutable-default-05",
+      "skill": "py.mutable-default",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef inc(n, cache=[0]):\n    cache[0] += n\n    return cache[0]\n\nprint(inc(1) + inc(2) + inc(3))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 10,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Assumed cache resets to [0] on every call."
+        },
+        {
+          "value": 18,
+          "why": "Used the final total 6 for all three calls."
+        }
+      ],
+      "solution": "1. The default list persists: returns 1, then 3, then 6.\n2. 1 + 3 + 6 = 10."
+    },
+    {
+      "id": "py-scope-01",
+      "skill": "py.scope",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nx = 5\ndef f():\n    print(x)\n    x = 10\n\nf()\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`10`",
+          "correct": false,
+          "why": "Assumed assignments are hoisted with their values."
+        },
+        {
+          "text": "Raises `NameError`",
+          "correct": false,
+          "why": "Close, but the specific error is UnboundLocalError (a subclass of NameError) because x is a known local."
+        },
+        {
+          "text": "`5`",
+          "correct": false,
+          "why": "Assumed the global x is used until the local assignment; locality is decided at compile time for the whole function."
+        },
+        {
+          "text": "Raises `UnboundLocalError`",
+          "correct": true,
+          "why": "The assignment makes x local to the whole function, so print(x) reads a local that has no value yet."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `x = 10` inside f makes x local throughout f.\n2. `print(x)` runs before the local is bound → UnboundLocalError."
+    },
+    {
+      "id": "py-scope-02",
+      "skill": "py.scope",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nx = \"g\"\ndef outer():\n    x = \"o\"\n    def inner():\n        nonlocal x\n        x = \"i\"\n    def other():\n        global x\n        x = \"G\"\n    inner()\n    other()\n    return x\n\nr = outer()\nprint(r, x)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`i G`",
+          "correct": true,
+          "why": "nonlocal rebinds outer's x to \"i\"; global in other rebinds the module-level x to \"G\"."
+        },
+        {
+          "text": "`o G`",
+          "correct": false,
+          "why": "Thought nonlocal creates a new local in inner; it rebinds the enclosing function's variable."
+        },
+        {
+          "text": "`G g`",
+          "correct": false,
+          "why": "Thought `global x` inside other changes the nearest enclosing x; global always means module level."
+        },
+        {
+          "text": "`i g`",
+          "correct": false,
+          "why": "Assumed a global declaration in a nested function has no effect on the module."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. inner(): outer's x = \"i\".\n2. other(): module x = \"G\".\n3. outer returns its x (\"i\"); print shows i G."
+    },
+    {
+      "id": "py-scope-03",
+      "skill": "py.scope",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nn = 1\ndef a():\n    n = 2\n    def b():\n        return n * 10\n    n = 3\n    return b()\n\ndef c():\n    global n\n    n += 5\n    return n\n\nprint(a() + c() + n)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 42,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 32,
+          "why": "Assumed b captured n = 2 when it was defined; it reads the enclosing n when called (3)."
+        },
+        {
+          "value": 37,
+          "why": "Read the global n before c() updated it; operands are evaluated left to right, so n is read after c() makes it 6."
+        },
+        {
+          "value": 16,
+          "why": "Assumed b reads the global n = 1."
+        }
+      ],
+      "solution": "1. a(): b reads enclosing n at call time = 3 → 30.\n2. c(): global n = 6, returns 6.\n3. Then n is read as 6. Sum 30 + 6 + 6 = 42."
+    },
+    {
+      "id": "py-scope-04",
+      "skill": "py.scope",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Which statements about Python scope are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "A `for` loop variable inside a function is still bound after the loop ends",
+          "correct": true,
+          "why": "Loops do not create a new scope; the variable keeps its last value."
+        },
+        {
+          "text": "A name assigned anywhere in a function body is local throughout that body, unless declared `global` or `nonlocal`",
+          "correct": true,
+          "why": "Python decides scope at compile time, which is why reading it before the assignment raises UnboundLocalError."
+        },
+        {
+          "text": "`nonlocal x` inside a top-level function can refer to a module-level `x`",
+          "correct": false,
+          "why": "Confused nonlocal with global; nonlocal needs an enclosing function scope, otherwise it is a SyntaxError."
+        },
+        {
+          "text": "The variable of a list comprehension is visible in the enclosing function after the comprehension",
+          "correct": false,
+          "why": "That was Python 2 behaviour; in Python 3 the comprehension variable does not leak."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Function scope is decided at compile time.\n2. nonlocal requires an enclosing function.\n3. for-loop variables leak; comprehension variables do not."
+    },
+    {
+      "id": "py-scope-05",
+      "skill": "py.scope",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef f():\n    len = lambda s: 0\n    return len(\"abc\")\n\nprint(f(), len(\"abc\"))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`3 3`",
+          "correct": false,
+          "why": "Assumed builtins cannot be shadowed; local names are searched first."
+        },
+        {
+          "text": "`0 0`",
+          "correct": false,
+          "why": "Assumed the local assignment replaces the builtin globally."
+        },
+        {
+          "text": "`0 3`",
+          "correct": true,
+          "why": "The local name len shadows the builtin only inside f; outside, LEGB finds the builtin."
+        },
+        {
+          "text": "Raises `TypeError`",
+          "correct": false,
+          "why": "Assumed calling a lambda named len is invalid; any callable can be bound to that name."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inside f, L in LEGB finds the local lambda → 0.\n2. Outside, B finds the builtin len → 3."
+    },
+    {
+      "id": "py-closures-01",
+      "skill": "py.closures",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nfs = [lambda: i * i for i in range(4)]\nprint([f() for f in fs])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[9, 9, 9, 9]`",
+          "correct": true,
+          "why": "Every lambda looks up i when called; by then the comprehension has finished with i = 3."
+        },
+        {
+          "text": "`[0, 1, 4, 9]`",
+          "correct": false,
+          "why": "Assumed each lambda captures the value of i at creation (late binding)."
+        },
+        {
+          "text": "`[16, 16, 16, 16]`",
+          "correct": false,
+          "why": "Thought i ends at 4; range(4) stops at 3."
+        },
+        {
+          "text": "Raises `NameError`",
+          "correct": false,
+          "why": "Assumed i is gone after the comprehension; the closure keeps the comprehension's cell alive."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. All four lambdas share one variable i.\n2. When called, i = 3, so each returns 9."
+    },
+    {
+      "id": "py-closures-02",
+      "skill": "py.closures",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef make():\n    c = 0\n    def step():\n        nonlocal c\n        c += 2\n        return c\n    return step\n\ns1 = make()\ns2 = make()\ns1(); s1()\nprint(s1() + s2())\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 8,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 14,
+          "why": "Assumed s1 and s2 share one counter; each make() call creates its own c."
+        },
+        {
+          "value": 4,
+          "why": "Assumed c resets to 0 on every call of step."
+        }
+      ],
+      "solution": "1. s1 returns 2, 4, 6.\n2. s2 has its own c and returns 2.\n3. 6 + 2 = 8."
+    },
+    {
+      "id": "py-closures-03",
+      "skill": "py.closures",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nfs = [lambda x, i=i: x + i for i in range(3)]\ngs = [lambda x: x + i for i in range(3)]\nprint(fs[0](10), gs[0](10))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`10 12`",
+          "correct": true,
+          "why": "The default i=i freezes 0 for fs[0]; gs[0] reads the final i = 2 when called."
+        },
+        {
+          "text": "`12 12`",
+          "correct": false,
+          "why": "Thought the default i=i is also late-bound; defaults are evaluated when the lambda is created."
+        },
+        {
+          "text": "`10 10`",
+          "correct": false,
+          "why": "Assumed gs also captures i at creation; without a default it binds late."
+        },
+        {
+          "text": "`13 13`",
+          "correct": false,
+          "why": "Thought the loop variable ends at 3."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. fs[0] has default i = 0 → 10.\n2. gs[0] uses the shared i = 2 → 12."
+    },
+    {
+      "id": "py-closures-04",
+      "skill": "py.closures",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef multiplier(k):\n    def m(x):\n        return x * k\n    k += 1\n    return m\n\nfs = [multiplier(k) for k in (1, 2, 3)]\nprint(sum(f(10) for f in fs))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 90,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 60,
+          "why": "Assumed m captured k before the k += 1; it reads k when called, after the increment."
+        },
+        {
+          "value": 120,
+          "why": "Assumed all closures share the last k (3 + 1); each multiplier call has its own k."
+        }
+      ],
+      "solution": "1. Each call has its own k, incremented before return: 2, 3, 4.\n2. 10·2 + 10·3 + 10·4 = 90."
+    },
+    {
+      "id": "py-aliasing-copy-01",
+      "skill": "py.aliasing-copy",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\na = [1, 2, 3]\nb = a\nc = a[:]\nb.append(4)\nc.append(5)\nprint(a, len(c))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1, 2, 3, 4] 4`",
+          "correct": true,
+          "why": "b is another name for a, so 4 appears in a; c is a separate copy [1, 2, 3, 5]."
+        },
+        {
+          "text": "`[1, 2, 3] 4`",
+          "correct": false,
+          "why": "Assumed b is a copy of a; assignment never copies."
+        },
+        {
+          "text": "`[1, 2, 3, 4, 5] 5`",
+          "correct": false,
+          "why": "Assumed the slice a[:] is an alias; it creates a new list."
+        },
+        {
+          "text": "`[1, 2, 3, 4] 5`",
+          "correct": false,
+          "why": "Assumed c also sees the later append through b."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. b and a are the same list → [1, 2, 3, 4].\n2. c is a copy [1, 2, 3] then [1, 2, 3, 5] → length 4."
+    },
+    {
+      "id": "py-aliasing-copy-02",
+      "skill": "py.aliasing-copy",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ngrid = [[0] * 3] * 2\ngrid[0][1] = 7\nsafe = [[0] * 3 for _ in range(2)]\nsafe[0][1] = 7\nprint(grid, safe)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[[0, 7, 0], [0, 7, 0]] [[0, 7, 0], [0, 7, 0]]`",
+          "correct": false,
+          "why": "Assumed the comprehension also reuses one row; [0] * 3 is re-evaluated each iteration."
+        },
+        {
+          "text": "`[[0, 7, 0], [0, 7, 0]] [[0, 7, 0], [0, 0, 0]]`",
+          "correct": true,
+          "why": "* 2 repeats a reference to one inner list; the comprehension builds a new inner list each time."
+        },
+        {
+          "text": "`[[0, 7, 0], [0, 0, 0]] [[0, 7, 0], [0, 0, 0]]`",
+          "correct": false,
+          "why": "Assumed * 2 copies the inner list."
+        },
+        {
+          "text": "`[[7, 7, 7], [7, 7, 7]] [[0, 7, 0], [0, 0, 0]]`",
+          "correct": false,
+          "why": "Assumed [0] * 3 also shares one element slot; repeating an int is harmless and assigning index 1 changes only that slot."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. grid holds the same row twice, so the change shows in both.\n2. safe has two distinct rows."
+    },
+    {
+      "id": "py-aliasing-copy-03",
+      "skill": "py.aliasing-copy",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nimport copy\na = [[1, 2], [3]]\ns = copy.copy(a)\nd = copy.deepcopy(a)\ns[0].append(9)\ns.append([4])\nd[1].append(8)\nprint(len(a) * 100 + len(a[0]) * 10 + len(d[1]))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 232,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 222,
+          "why": "Assumed a shallow copy also copies the inner lists, so a[0] stays length 2."
+        },
+        {
+          "value": 332,
+          "why": "Assumed s.append([4]) also adds to a; the outer list is copied."
+        },
+        {
+          "value": 231,
+          "why": "Forgot that d[1].append(8) changes d (or assumed deepcopy shares d[1] with a, which is not printed)."
+        }
+      ],
+      "solution": "1. s shares inner lists with a: a[0] becomes [1, 2, 9] (length 3).\n2. s.append changes only s: len(a) = 2.\n3. d is independent: d[1] = [3, 8] (length 2).\n4. 200 + 30 + 2 = 232."
+    },
+    {
+      "id": "py-aliasing-copy-04",
+      "skill": "py.aliasing-copy",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nx = [1]\ny = x\nx += [2]\nz = x\nx = x + [3]\nprint(y, z, x)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1] [1] [1, 2, 3]`",
+          "correct": false,
+          "why": "Treated both operations as creating new lists."
+        },
+        {
+          "text": "`[1, 2, 3] [1, 2, 3] [1, 2, 3]`",
+          "correct": false,
+          "why": "Assumed x + [3] mutates the existing list."
+        },
+        {
+          "text": "`[1, 2] [1, 2] [1, 2, 3]`",
+          "correct": true,
+          "why": "+= extends the list in place (y sees it); x + [3] builds a new list and rebinds only x."
+        },
+        {
+          "text": "`[1] [1, 2] [1, 2, 3]`",
+          "correct": false,
+          "why": "Assumed += on a list rebinds like x = x + [2]; for lists it mutates in place."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `x += [2]` mutates the shared list: y = [1, 2].\n2. z names the same list.\n3. `x = x + [3]` creates a new list for x only."
+    },
+    {
+      "id": "py-aliasing-copy-05",
+      "skill": "py.aliasing-copy",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Which statements about this program are true?\n\n```python\nt = ([1], 2)\nt[0].append(3)\ntry:\n    t[0] += [4]\nexcept TypeError:\n    print(\"TypeError\")\nprint(t)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "It prints `TypeError`",
+          "correct": true,
+          "why": "t[0] += [4] extends the list, then fails when storing back into the tuple slot."
+        },
+        {
+          "text": "The final line printed is `([1, 3], 2)`",
+          "correct": false,
+          "why": "Assumed the failed += left the list unchanged; list += mutates first, then the tuple item assignment raises."
+        },
+        {
+          "text": "`t[0].append(3)` raises `TypeError`",
+          "correct": false,
+          "why": "Confused mutating the list inside the tuple with assigning to the tuple; append is allowed."
+        },
+        {
+          "text": "The final line printed is `([1, 3, 4], 2)`",
+          "correct": true,
+          "why": "The in-place extend happened before the assignment failed."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. t[0].append(3) works: t = ([1, 3], 2).\n2. t[0] += [4] runs list.__iadd__ (list becomes [1, 3, 4]) then t[0] = ... raises TypeError.\n3. Final t = ([1, 3, 4], 2)."
+    },
+    {
+      "id": "py-mutate-iterate-01",
+      "skill": "py.mutate-iterate",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nnums = [1, 2, 2, 3, 4, 4, 5]\nfor x in nums:\n    if x % 2 == 0:\n        nums.remove(x)\nprint(nums)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1, 3, 5]`",
+          "correct": false,
+          "why": "Assumed the loop sees every original element; it walks indices of the shrinking list."
+        },
+        {
+          "text": "`[1, 2, 3, 4, 5]`",
+          "correct": true,
+          "why": "After removing at index 1 the list shifts left, so the second 2 (now at index 1) is skipped; the same happens to the second 4."
+        },
+        {
+          "text": "`[1, 3, 4, 5]`",
+          "correct": false,
+          "why": "Spotted the skip for the 2s but not for the 4s."
+        },
+        {
+          "text": "Raises `RuntimeError`",
+          "correct": false,
+          "why": "Confused lists with dicts; changing a list's size during iteration does not raise."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. idx 1: x = 2 → remove → [1, 2, 3, 4, 4, 5].\n2. idx 2: x = 3; idx 3: x = 4 → remove → [1, 2, 3, 4, 5].\n3. idx 4: x = 5; loop ends."
+    },
+    {
+      "id": "py-mutate-iterate-02",
+      "skill": "py.mutate-iterate",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\na = [1, 2, 3]\nfor v in a:\n    if v < 25:\n        a.append(v * 10)\nprint(sum(a))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 366,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 66,
+          "why": "Assumed the loop visits only the original three elements; appended items are visited too."
+        },
+        {
+          "value": 6,
+          "why": "Assumed appending inside the loop has no effect."
+        }
+      ],
+      "solution": "1. Visits 1, 2, 3 → appends 10, 20, 30.\n2. Visits 10, 20 → appends 100, 200; 30, 100, 200 are not < 25.\n3. Sum = 1+2+3+10+20+30+100+200 = 366."
+    },
+    {
+      "id": "py-mutate-iterate-03",
+      "skill": "py.mutate-iterate",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\na = [0, 1, 2, 3, 4, 5]\na[1:4] = [\"x\"]\ndel a[::2]\nprint(a)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1, 3, 5]`",
+          "correct": false,
+          "why": "Ignored the slice assignment."
+        },
+        {
+          "text": "`['x', 5]`",
+          "correct": true,
+          "why": "Slice assignment replaces three items with one: [0, 'x', 4, 5]; deleting indices 0 and 2 leaves ['x', 5]."
+        },
+        {
+          "text": "`['x', 3, 5]`",
+          "correct": false,
+          "why": "Assumed slice assignment keeps the length and replaces only a[1]."
+        },
+        {
+          "text": "`[0, 4]`",
+          "correct": false,
+          "why": "Deleted the odd indices; a[::2] selects indices 0, 2, ..."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. a[1:4] = ['x'] → [0, 'x', 4, 5].\n2. del a[::2] removes indices 0 and 2 → ['x', 5]."
+    },
+    {
+      "id": "py-mutate-iterate-04",
+      "skill": "py.mutate-iterate",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nd = {\"a\": 1, \"b\": 2, \"c\": 3}\nfor k in list(d):\n    if d[k] % 2:\n        d[k * 2] = d.pop(k) * 10\nprint(d)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`{'a': 1, 'b': 2, 'c': 3, 'aa': 10, 'cc': 30}`",
+          "correct": false,
+          "why": "Ignored that pop removes the key."
+        },
+        {
+          "text": "`{'b': 2, 'aa': 10, 'cc': 30}`",
+          "correct": true,
+          "why": "list(d) is a snapshot; popped keys disappear and new keys are added at the end in insertion order."
+        },
+        {
+          "text": "`{'aa': 10, 'b': 2, 'cc': 30}`",
+          "correct": false,
+          "why": "Assumed the new key takes the old key's position; a new key is always appended."
+        },
+        {
+          "text": "Raises `RuntimeError`",
+          "correct": false,
+          "why": "Missed that the loop iterates over list(d), a copy, so changing d is safe."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. k = 'a': pop → 1, add 'aa': 10.\n2. k = 'b': even, skip.\n3. k = 'c': pop → 3, add 'cc': 30."
+    },
+    {
+      "id": "py-mutate-iterate-05",
+      "skill": "py.mutate-iterate",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nstack = [3, 1, 4, 1, 5]\nout = 0\nwhile stack:\n    x = stack.pop()\n    if x > 2:\n        stack.append(x - 2)\n    out += x\nprint(out)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 21,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 14,
+          "why": "Summed only the original elements and ignored the pushed x - 2 values."
+        }
+      ],
+      "solution": "1. pop 5 (push 3), pop 3 (push 1), pop 1, pop 1, pop 4 (push 2), pop 2, pop 1, pop 3 (push 1), pop 1.\n2. Sum: 5+3+1+1+4+2+1+3+1 = 21."
+    },
+    {
+      "id": "py-comprehensions-01",
+      "skill": "py.comprehensions",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nprint([x * y for x in range(1, 4) for y in range(x, 3)])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[[1, 2], [4], []]`",
+          "correct": false,
+          "why": "Read two for-clauses as building nested lists; they produce one flat list."
+        },
+        {
+          "text": "`[1, 2, 2, 4, 3, 6]`",
+          "correct": false,
+          "why": "Treated the inner range as range(1, 3) every time; it starts at the current x."
+        },
+        {
+          "text": "`[1, 2, 4]`",
+          "correct": true,
+          "why": "x = 1: y = 1, 2; x = 2: y = 2; x = 3: range(3, 3) is empty."
+        },
+        {
+          "text": "`[1, 4]`",
+          "correct": false,
+          "why": "Paired x and y like zip; consecutive for-clauses nest."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Expand as nested loops, outer x, inner y.\n2. Products: 1, 2, 4."
+    },
+    {
+      "id": "py-comprehensions-02",
+      "skill": "py.comprehensions",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nprint(len({c.lower() for c in \"Data And data\"}))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 7,
+          "why": "Ignored .lower(), counting D/d and A/a separately."
+        },
+        {
+          "value": 4,
+          "why": "Forgot the space character."
+        },
+        {
+          "value": 13,
+          "why": "Counted the string length; a set keeps only distinct values."
+        }
+      ],
+      "solution": "1. Lower-cased characters: d, a, t, space, n.\n2. Set size 5."
+    },
+    {
+      "id": "py-comprehensions-03",
+      "skill": "py.comprehensions",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nwords = [\"apple\", \"avocado\", \"banana\", \"blueberry\", \"cherry\"]\nd = {w[0]: len(w) for w in words}\nprint(d)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`{'a': 7, 'b': 9, 'c': 6}`",
+          "correct": true,
+          "why": "Repeated keys keep the last value assigned, while the key keeps its first position."
+        },
+        {
+          "text": "`{'a': 12, 'b': 15, 'c': 6}`",
+          "correct": false,
+          "why": "Assumed values accumulate for a repeated key."
+        },
+        {
+          "text": "`{'a': 5, 'b': 6, 'c': 6}`",
+          "correct": false,
+          "why": "Assumed the first occurrence wins."
+        },
+        {
+          "text": "Raises `KeyError`",
+          "correct": false,
+          "why": "Assumed duplicate keys raise; they silently overwrite."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. 'a' → 5 then 7; 'b' → 6 then 9; 'c' → 6."
+    },
+    {
+      "id": "py-comprehensions-04",
+      "skill": "py.comprehensions",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nm = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]\nt = [[row[i] for row in m] for i in range(3)]\ns = sum(x for row in t for x in row if x % 2 == 0)\nprint(sum(t[0]) * 10 + s)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 140,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 80,
+          "why": "Built rows instead of columns: took t[0] as [1, 2, 3]."
+        },
+        {
+          "value": 165,
+          "why": "Ignored the `if x % 2 == 0` filter and summed all 45."
+        }
+      ],
+      "solution": "1. t is the transpose; t[0] = [1, 4, 7], sum 12.\n2. Even entries: 2+4+6+8 = 20.\n3. 120 + 20 = 140."
+    },
+    {
+      "id": "py-comprehensions-05",
+      "skill": "py.comprehensions",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ng = (x * x for x in range(4))\nprint(sum(g), sum(g))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "Raises `TypeError`",
+          "correct": false,
+          "why": "Assumed sum cannot take a generator."
+        },
+        {
+          "text": "`14 14`",
+          "correct": false,
+          "why": "Assumed a generator can be iterated twice like a list."
+        },
+        {
+          "text": "`14 0`",
+          "correct": true,
+          "why": "The generator is exhausted by the first sum; the second sum sees no items."
+        },
+        {
+          "text": "`30 0`",
+          "correct": false,
+          "why": "Included 4 in range(4)."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. 0 + 1 + 4 + 9 = 14.\n2. The generator is now empty → 0."
+    },
+    {
+      "id": "py-dict-set-sort-01",
+      "skill": "py.dict-set-sort",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nA = {1, 2, 3, 4}\nB = {3, 4, 5}\nprint(len(A | B), len(A & B), sorted(A - B), sorted(A ^ B))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`5 2 [1, 2, 5] [1, 2]`",
+          "correct": false,
+          "why": "Swapped difference and symmetric difference."
+        },
+        {
+          "text": "`7 2 [1, 2] [1, 2, 5]`",
+          "correct": false,
+          "why": "Counted the union with duplicates (4 + 3)."
+        },
+        {
+          "text": "`5 2 [1, 2] [1, 2, 5]`",
+          "correct": true,
+          "why": "Union {1..5}, intersection {3, 4}, A − B = {1, 2}, symmetric difference {1, 2, 5}."
+        },
+        {
+          "text": "`5 2 [1, 2] [5]`",
+          "correct": false,
+          "why": "Took ^ as B − A."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. |A ∪ B| = 5, |A ∩ B| = 2.\n2. A − B = {1, 2}; A △ B = {1, 2, 5}."
+    },
+    {
+      "id": "py-dict-set-sort-02",
+      "skill": "py.dict-set-sort",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\nd = {1: \"a\", True: \"b\", 1.0: \"c\", 2: \"d\"}\nprint(len(d))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Assumed 1, True and 1.0 are distinct keys; they are equal and hash the same."
+        },
+        {
+          "value": 3,
+          "why": "Merged 1 and 1.0 but kept True separate; True == 1."
+        }
+      ],
+      "solution": "1. 1 == True == 1.0 with equal hashes → one key (value ends as \"c\").\n2. Keys: 1 and 2."
+    },
+    {
+      "id": "py-dict-set-sort-03",
+      "skill": "py.dict-set-sort",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndata = [(\"ria\", 82), (\"aman\", 91), (\"zoe\", 82), (\"dev\", 75)]\nr = sorted(data, key=lambda p: (-p[1], p[0]))\nprint([n for n, _ in r])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`['aman', 'zoe', 'ria', 'dev']`",
+          "correct": false,
+          "why": "Broke the tie by reverse name; the second key p[0] is ascending."
+        },
+        {
+          "text": "`['aman', 'dev', 'ria', 'zoe']`",
+          "correct": false,
+          "why": "Sorted by name only."
+        },
+        {
+          "text": "`['aman', 'ria', 'zoe', 'dev']`",
+          "correct": true,
+          "why": "Key sorts by score descending (negated), then name ascending for the tie at 82."
+        },
+        {
+          "text": "`['dev', 'ria', 'zoe', 'aman']`",
+          "correct": false,
+          "why": "Ignored the minus sign and sorted scores ascending."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Keys: aman (-91), ria (-82, 'ria'), zoe (-82, 'zoe'), dev (-75).\n2. Ascending key order: aman, ria, zoe, dev."
+    },
+    {
+      "id": "py-dict-set-sort-04",
+      "skill": "py.dict-set-sort",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ntext = \"to be or not to be\"\nfreq = {}\nfor w in text.split():\n    freq[w] = freq.get(w, 0) + 1\norder = list(freq)\nbest = max(freq, key=freq.get)\nprint(order.index(\"not\") * 10 + freq[best] + len(freq))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 36,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 16,
+          "why": "Assumed dict keys come out sorted; they keep insertion order (to, be, or, not)."
+        },
+        {
+          "value": 38,
+          "why": "Used the number of words (6) instead of distinct keys (4)."
+        },
+        {
+          "value": 35,
+          "why": "Took freq[best] as 1; the maximum count is 2 (for 'to', the first key with count 2)."
+        }
+      ],
+      "solution": "1. freq = {to: 2, be: 2, or: 1, not: 1} in insertion order.\n2. order.index(\"not\") = 3 → 30.\n3. best = 'to' (first max), count 2; len(freq) = 4.\n4. 30 + 2 + 4 = 36."
+    },
+    {
+      "id": "py-dict-set-sort-05",
+      "skill": "py.dict-set-sort",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "Which expressions evaluate to `True`?",
+      "figure": null,
+      "options": [
+        {
+          "text": "`{1, 2, 3} < {1, 2, 3}`",
+          "correct": false,
+          "why": "Read < as subset-or-equal; for sets < means proper subset."
+        },
+        {
+          "text": "`[3, 1, 2].sort() is None`",
+          "correct": true,
+          "why": "list.sort sorts in place and returns None."
+        },
+        {
+          "text": "`list({\"b\": 1, \"a\": 2}) == [\"a\", \"b\"]`",
+          "correct": false,
+          "why": "Assumed dict keys are sorted; list(d) follows insertion order ['b', 'a']."
+        },
+        {
+          "text": "`sorted([3, 1, 2], reverse=True) == [3, 2, 1]`",
+          "correct": true,
+          "why": "sorted returns a new list in descending order."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. sorted(..., reverse=True) → [3, 2, 1].\n2. .sort() returns None.\n3. A set is not a proper subset of itself.\n4. Insertion order gives ['b', 'a']."
+    },
+    {
+      "id": "py-trace-programs-01",
+      "skill": "py.trace-programs",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef process(items):\n    result = {}\n    for i, item in enumerate(items):\n        key = item % 3\n        if key in result:\n            result[key].append(i)\n        else:\n            result[key] = [i]\n    return result\n\nr = process([5, 9, 7, 2, 12, 4, 8])\ntotal = 0\nfor k, v in r.items():\n    total += k * sum(v)\nprint(total)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 25,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 41,
+          "why": "Summed the items instead of their indices (enumerate gives index i)."
+        },
+        {
+          "value": 33,
+          "why": "Used 1-based indices; enumerate starts at 0."
+        }
+      ],
+      "solution": "1. Groups by item % 3: key 2 → [0, 3, 6], key 0 → [1, 4], key 1 → [2, 5].\n2. total = 2·9 + 0·5 + 1·7 = 25."
+    },
+    {
+      "id": "py-trace-programs-02",
+      "skill": "py.trace-programs",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\nfrom collections import deque\nq = deque([1])\nseen = {1}\norder = []\nwhile q:\n    x = q.popleft()\n    order.append(x)\n    for y in (2 * x, x + 3):\n        if y <= 10 and y not in seen:\n            seen.add(y)\n            q.append(y)\nprint(order)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`[1, 2, 4, 5, 8, 7, 10]`",
+          "correct": true,
+          "why": "Breadth-first order: 1; then 2, 4; 2 adds 5; 4 adds 8, 7; 5 adds 10."
+        },
+        {
+          "text": "`[1, 2, 4, 5, 7, 8, 10]`",
+          "correct": false,
+          "why": "Assumed BFS visits values in increasing order; 8 was queued before 7."
+        },
+        {
+          "text": "`[1, 4, 7, 10, 8, 2, 5]`",
+          "correct": false,
+          "why": "Used pop() (LIFO, depth-first) instead of popleft() (FIFO)."
+        },
+        {
+          "text": "`[1, 2, 4, 5, 8, 7]`",
+          "correct": false,
+          "why": "Treated `y <= 10` as `y < 10` and dropped 10."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pop 1 → queue 2, 4.\n2. Pop 2 → 4 seen, queue 5. Pop 4 → queue 8, 7.\n3. Pop 5 → queue 10 (8 seen). Pop 8, 7, 10 add nothing."
+    },
+    {
+      "id": "py-trace-programs-03",
+      "skill": "py.trace-programs",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ndef search(a, target):\n    lo, hi, steps = 0, len(a) - 1, 0\n    while lo <= hi:\n        steps += 1\n        mid = (lo + hi) // 2\n        if a[mid] == target:\n            return steps\n        elif a[mid] < target:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return -steps\n\na = list(range(1, 40, 3))\nprint(search(a, 22) + search(a, 23))\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": -1,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 7,
+          "why": "Returned +steps for the unsuccessful search; the function returns -steps when not found."
+        },
+        {
+          "value": 0,
+          "why": "Assumed the unsuccessful search takes the same 3 steps as the successful one; it needs a 4th probe before lo > hi."
+        }
+      ],
+      "solution": "1. a = [1, 4, ..., 37] (13 items, a[i] = 1 + 3i); 22 is at index 7.\n2. search 22: mid 6 (19), mid 9 (28), mid 7 (22) → 3.\n3. search 23: mid 6, 9, 7 (22 < 23 → lo 8), mid 8 (25 > 23 → hi 7), stop → -4.\n4. 3 - 4 = -1."
+    },
+    {
+      "id": "py-trace-programs-04",
+      "skill": "py.trace-programs",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What is printed when this program runs?\n\n```python\ndef encode(s):\n    out = []\n    i = 0\n    while i < len(s):\n        j = i\n        while j < len(s) and s[j] == s[i]:\n            j += 1\n        out.append(s[i] + str(j - i))\n        i = j\n    return \"\".join(out)\n\nprint(encode(\"aaabccddd\"), encode(\"abc\")[::2])\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "`a3b1c2d3 a1b`",
+          "correct": false,
+          "why": "Read [::2] as the first half; it takes every second character."
+        },
+        {
+          "text": "`a3bc2d3 abc`",
+          "correct": false,
+          "why": "Assumed counts of 1 are omitted; the code always appends str(j - i)."
+        },
+        {
+          "text": "`a2b0c1d2 abc`",
+          "correct": false,
+          "why": "Off by one: counted j - i - 1; j stops at the first different character, so j - i is the run length."
+        },
+        {
+          "text": "`a3b1c2d3 abc`",
+          "correct": true,
+          "why": "Run-length encoding keeps counts of 1; \"a1b1c1\"[::2] takes indices 0, 2, 4 → \"abc\"."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Runs: aaa, b, cc, ddd → a3b1c2d3.\n2. encode(\"abc\") = \"a1b1c1\"; [::2] → \"abc\"."
+    },
+    {
+      "id": "py-trace-programs-05",
+      "skill": "py.trace-programs",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (Python output tracing)",
+      "stem": "What number is printed when this program runs?\n\n```python\ngrid = [[3, 8, 1], [9, 2, 7], [4, 6, 5]]\nscore = 0\nfor r, row in enumerate(grid):\n    for c, v in enumerate(row):\n        if v > 7:\n            score += r * 10 + c\n            break\n        score += v\n    else:\n        score *= 2\nprint(score)\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 58,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 29,
+          "why": "Forgot that the else runs when the inner loop finishes without break (row 2)."
+        },
+        {
+          "value": 102,
+          "why": "Ran the else for every row, including rows that hit break."
+        }
+      ],
+      "solution": "1. Row 0: +3, then 8 > 7 → +1, break (score 4).\n2. Row 1: 9 > 7 → +10, break (score 14).\n3. Row 2: +4 +6 +5 = 29, no break → else doubles → 58."
+    }
+  ]
+}

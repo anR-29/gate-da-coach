@@ -1,0 +1,5034 @@
+{
+ "area": "ps",
+ "skills": {
+  "ps.union-overlap": {
+   "title": "Union with overlap (inclusion–exclusion)",
+   "subject": "Probability and Statistics",
+   "days": [
+    1
+   ],
+   "theory": "ps-counting",
+   "check": "Add the singles, subtract every pairwise overlap once, add back the triple overlap."
+  },
+  "ps.sampling-no-replace": {
+   "title": "Sampling without replacement (one route)",
+   "subject": "Probability and Statistics",
+   "days": [
+    1
+   ],
+   "theory": "ps-counting",
+   "check": "Pick one route: sequential fractions (ordered) or combinations (unordered) top and bottom — never mix."
+  },
+  "ps.hypergeometric": {
+   "title": "Hypergeometric probabilities",
+   "subject": "Probability and Statistics",
+   "days": [
+    1,
+    5
+   ],
+   "theory": "ps-counting",
+   "check": "$\\binom{K}{k}\\binom{N-K}{n-k}/\\binom{N}{n}$: lower numbers add to $n$, upper numbers add to $N$."
+  },
+  "ps.at-least-one": {
+   "title": "'At least one' via the complement",
+   "subject": "Probability and Statistics",
+   "days": [
+    1
+   ],
+   "theory": "ps-counting",
+   "check": "$P(\\ge1)=1-P(\\text{none})$; build 'none' as a product (independent) or a ratio of counts."
+  },
+  "ps.ordered-outcomes": {
+   "title": "Counting ordered dice and coin outcomes",
+   "subject": "Probability and Statistics",
+   "days": [
+    1
+   ],
+   "theory": "ps-counting",
+   "check": "Dice and coins are distinguishable: 2 dice give 36 equally likely ordered pairs; (1,6) ≠ (6,1)."
+  },
+  "ps.given-restrict": {
+   "title": "Restrict the sample space after 'given'",
+   "subject": "Probability and Statistics",
+   "days": [
+    2
+   ],
+   "theory": "ps-conditional",
+   "check": "$P(A\\mid B)=P(A\\cap B)/P(B)$: the denominator becomes the 'given' event, not the whole space."
+  },
+  "ps.independence": {
+   "title": "Independent vs mutually exclusive",
+   "subject": "Probability and Statistics",
+   "days": [
+    2
+   ],
+   "theory": "ps-conditional",
+   "check": "Independent: $P(A\\cap B)=P(A)P(B)$, i.e. $P(A\\mid B)=P(A)$. Disjoint with positive probabilities ⇒ dependent."
+  },
+  "ps.total-prob": {
+   "title": "Total probability: weighted evidence",
+   "subject": "Probability and Statistics",
+   "days": [
+    3
+   ],
+   "theory": "ps-bayes",
+   "check": "$P(E)=\\sum_i P(E\\mid H_i)P(H_i)$: weight each branch by its prior before adding."
+  },
+  "ps.bayes": {
+   "title": "Bayes: numerator branch and base rate",
+   "subject": "Probability and Statistics",
+   "days": [
+    3
+   ],
+   "theory": "ps-bayes",
+   "check": "Numerator = prior × likelihood of the branch asked about; denominator = the full weighted total."
+  },
+  "ps.pmf-moments": {
+   "title": "PMF normalisation, $E[X]$ and $E[X^2]$",
+   "subject": "Probability and Statistics",
+   "days": [
+    4
+   ],
+   "theory": "ps-discrete",
+   "check": "Normalise over the full support first; $E[X^2]=\\sum x^2p(x)$, never $(E[X])^2$."
+  },
+  "ps.var-linear": {
+   "title": "Variance of $aX+b$",
+   "subject": "Probability and Statistics",
+   "days": [
+    4
+   ],
+   "theory": "ps-discrete",
+   "check": "$\\mathrm{Var}(aX+b)=a^2\\mathrm{Var}(X)$; $b$ drops out, sign of $a$ disappears; get Var from $E[X^2]-(E[X])^2$ first."
+  },
+  "ps.model-select": {
+   "title": "Choosing the model and its mean",
+   "subject": "Probability and Statistics",
+   "days": [
+    5
+   ],
+   "theory": "ps-binomial-poisson",
+   "check": "Fixed $n$ independent trials → binomial; events at a rate over an interval → Poisson; no replacement → hypergeometric; wait for first success → geometric."
+  },
+  "ps.tail-direction": {
+   "title": "Direction of $\\le$ / $\\ge$ tails",
+   "subject": "Probability and Statistics",
+   "days": [
+    5
+   ],
+   "theory": "ps-binomial-poisson",
+   "check": "Translate words first; $P(X\\ge k)=1-P(X\\le k-1)$ — the complement stops at $k-1$."
+  },
+  "ps.poisson-rate": {
+   "title": "Poisson rate × interval and $\\lambda=np$",
+   "subject": "Probability and Statistics",
+   "days": [
+    5
+   ],
+   "theory": "ps-binomial-poisson",
+   "check": "$\\lambda$ = rate × interval length (same units); for Binomial with large $n$, small $p$, use $\\lambda=np$."
+  },
+  "ps.pdf-cdf": {
+   "title": "PDF normalisation and CDF intervals",
+   "subject": "Probability and Statistics",
+   "days": [
+    6
+   ],
+   "theory": "ps-continuous",
+   "check": "Integrate $f$ over its support to 1 to fix the constant; $P(a<X\\le b)=F(b)-F(a)$; $f(x)$ is a density, not a probability."
+  },
+  "ps.median-cdf": {
+   "title": "Median by solving $F(m)=0.5$",
+   "subject": "Probability and Statistics",
+   "days": [
+    6
+   ],
+   "theory": "ps-continuous",
+   "check": "Find $F$, set $F(m)=0.5$, solve for $m$ — do not evaluate $F(0.5)$."
+  },
+  "ps.uniform-conditional": {
+   "title": "Uniform conditional probability",
+   "subject": "Probability and Statistics",
+   "days": [
+    6
+   ],
+   "theory": "ps-continuous",
+   "check": "For $X\\sim U(a,b)$: $P(X\\in A\\mid X\\in B)=\\text{length}(A\\cap B)/\\text{length}(B)$ — divide lengths, not cut-off values."
+  },
+  "ps.exponential": {
+   "title": "Exponential: $\\lambda=1/\\text{mean}$, memoryless, floor is geometric",
+   "subject": "Probability and Statistics",
+   "days": [
+    6
+   ],
+   "theory": "ps-continuous",
+   "check": "$P(X>t)=e^{-\\lambda t}$ with $\\lambda=1/\\mu$; $P(X>s+t\\mid X>s)=P(X>t)$; $\\lfloor X\\rfloor\\sim$ Geometric with $p=1-e^{-\\lambda}$."
+  },
+  "ps.standardize": {
+   "title": "Standardising and moments of $aZ+b$",
+   "subject": "Probability and Statistics",
+   "days": [
+    8
+   ],
+   "theory": "ps-normal",
+   "check": "$Z=(X-\\mu)/\\sigma$ with the SD, not the variance; $aZ+b$ has mean $b$, variance $a^2$."
+  },
+  "ps.chi-square": {
+   "title": "Chi-square as a sum of squared normals; t",
+   "subject": "Probability and Statistics",
+   "days": [
+    8
+   ],
+   "theory": "ps-normal",
+   "check": "$\\sum_{i=1}^kZ_i^2\\sim\\chi^2_k$: mean $k$, variance $2k$; $E[Z^2]=1$, $\\mathrm{Var}(Z^2)=2$; $t_k=Z/\\sqrt{V/k}$."
+  },
+  "ps.joint-pmf": {
+   "title": "Joint PMF: constant, marginals, conditionals",
+   "subject": "Probability and Statistics",
+   "days": [
+    9
+   ],
+   "theory": "ps-joint",
+   "check": "Sum over every cell to fix the constant; marginal = row/column sum; $p(x\\mid y)=p(x,y)/p_Y(y)$."
+  },
+  "ps.uniform-area": {
+   "title": "Probability by area for independent uniforms",
+   "subject": "Probability and Statistics",
+   "days": [
+    9
+   ],
+   "theory": "ps-joint",
+   "check": "Independent uniforms → constant joint density on the rectangle; probability = favourable area / total area."
+  },
+  "ps.total-expectation": {
+   "title": "Law of total expectation",
+   "subject": "Probability and Statistics",
+   "days": [
+    10
+   ],
+   "theory": "ps-cond-expectation",
+   "check": "$E[X]=\\sum_y E[X\\mid Y=y]P(Y=y)$ — weight each conditional mean by its probability."
+  },
+  "ps.total-variance": {
+   "title": "Total variance = within + between",
+   "subject": "Probability and Statistics",
+   "days": [
+    10
+   ],
+   "theory": "ps-cond-expectation",
+   "check": "$\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]+\\mathrm{Var}(E[X\\mid Y])$."
+  },
+  "ps.descriptive": {
+   "title": "Mean update, median and mode",
+   "subject": "Probability and Statistics",
+   "days": [
+    11,
+    14
+   ],
+   "theory": "ps-descriptive",
+   "check": "New mean = new total / new count; median = middle of the sorted data (average the two middles if $n$ is even)."
+  },
+  "ps.covariance": {
+   "title": "Covariance, correlation and $\\mathrm{Var}(aX+bY)$",
+   "subject": "Probability and Statistics",
+   "days": [
+    11,
+    14
+   ],
+   "theory": "ps-descriptive",
+   "check": "$\\mathrm{Cov}=E[XY]-E[X]E[Y]$; $\\rho=\\mathrm{Cov}/(\\sigma_X\\sigma_Y)$; $\\mathrm{Var}(aX+bY)=a^2\\sigma_X^2+b^2\\sigma_Y^2+2ab\\,\\mathrm{Cov}$."
+  },
+  "ps.cov-independence": {
+   "title": "Zero covariance vs independence",
+   "subject": "Probability and Statistics",
+   "days": [
+    11,
+    14
+   ],
+   "theory": "ps-descriptive",
+   "check": "Independent ⇒ Cov = 0; Cov = 0 does not imply independence (e.g. $Y=X^2$, $X$ symmetric). Cov ≠ 0 ⇒ dependent."
+  },
+  "ps.clt-sum": {
+   "title": "Sums and means of iid variables; CLT",
+   "subject": "Probability and Statistics",
+   "days": [
+    12,
+    14
+   ],
+   "theory": "ps-clt-ci",
+   "check": "Sum: mean $n\\mu$, variance $n\\sigma^2$, SD $\\sigma\\sqrt n$. Mean: SE $=\\sigma/\\sqrt n$. Standardise with the SD/SE, not the variance."
+  },
+  "ps.ci-compute": {
+   "title": "Computing a confidence interval",
+   "subject": "Probability and Statistics",
+   "days": [
+    12,
+    14
+   ],
+   "theory": "ps-clt-ci",
+   "check": "$\\bar x\\pm z_{\\alpha/2}\\sigma/\\sqrt n$ ($\\sigma$ known) or $\\bar x\\pm t_{\\alpha/2,n-1}s/\\sqrt n$; a NAT asks for one number (an endpoint, width or $n$), not the interval."
+  },
+  "ps.ci-interpret": {
+   "title": "Interpreting a confidence interval",
+   "subject": "Probability and Statistics",
+   "days": [
+    12,
+    14
+   ],
+   "theory": "ps-clt-ci",
+   "check": "$\\mu$ is fixed; '95%' describes the procedure — about 95% of intervals built this way cover $\\mu$. No probability statement about $\\mu$ for a computed interval."
+  },
+  "ps.test-select": {
+   "title": "Choosing z, t or chi-square",
+   "subject": "Probability and Statistics",
+   "days": [
+    13,
+    14
+   ],
+   "theory": "ps-tests",
+   "check": "Mean, $\\sigma$ known → $z$; mean, $\\sigma$ unknown (small $n$) → $t_{n-1}$; variance or count tables → $\\chi^2$."
+  },
+  "ps.test-logic": {
+   "title": "p-values and decision wording",
+   "subject": "Probability and Statistics",
+   "days": [
+    13,
+    14
+   ],
+   "theory": "ps-tests",
+   "check": "p = P(data at least this extreme | $H_0$); reject $H_0$ iff $p\\le\\alpha$; say 'fail to reject', never 'accept' or 'P($H_0$ true)'."
+  },
+  "ps.errors-power": {
+   "title": "Type I/II errors and power",
+   "subject": "Probability and Statistics",
+   "days": [
+    13,
+    14
+   ],
+   "theory": "ps-tests",
+   "check": "$\\alpha=P(\\text{reject }H_0\\mid H_0)$, $\\beta=P(\\text{fail to reject}\\mid H_1)$, power $=1-\\beta$."
+  },
+  "ps.estimator": {
+   "title": "Unbiasedness and estimator variance",
+   "subject": "Probability and Statistics",
+   "days": [
+    13,
+    14
+   ],
+   "theory": "ps-tests",
+   "check": "Unbiased: $E[\\hat\\theta]=\\theta$. $\\bar X$ is unbiased with variance $\\sigma^2/n$; $s^2$ uses $n-1$; dividing by $n$ is biased low."
+  }
+ },
+ "questions": [
+  {
+   "id": "ps-union-overlap-01",
+   "skill": "ps.union-overlap",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "In a batch of 60 students, 35 study Python, 28 study Statistics and 12 study both. How many study at least one of the two?",
+   "figure": null,
+   "options": [
+    {
+     "text": "39",
+     "correct": false,
+     "why": "Subtracted the overlap twice ($63 - 24$); that counts students taking exactly one subject."
+    },
+    {
+     "text": "9",
+     "correct": false,
+     "why": "This is $60 - 51$, the number taking neither; the question asks for at least one."
+    },
+    {
+     "text": "51",
+     "correct": true,
+     "why": "$35 + 28 - 12 = 51$: the overlap is subtracted exactly once."
+    },
+    {
+     "text": "63",
+     "correct": false,
+     "why": "Added 35 + 28 and missed the overlap: the 12 students taking both were counted twice."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $|P \\cup S| = |P| + |S| - |P \\cap S|$.\n2. $= 35 + 28 - 12 = 51$."
+  },
+  {
+   "id": "ps-union-overlap-02",
+   "skill": "ps.union-overlap",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For events $A$ and $B$, $P(A)=0.45$, $P(B)=0.35$ and $P(A\\cap B)=0.15$. Find the probability that neither $A$ nor $B$ occurs.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.35,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.2,
+     "why": "Missed the overlap: used $P(A\\cup B)=0.80$."
+    },
+    {
+     "value": 0.65,
+     "why": "Gave $P(A\\cup B)$; 'neither' is its complement."
+    },
+    {
+     "value": 0.5,
+     "why": "Subtracted the overlap twice: $1-(0.8-0.3)$."
+    }
+   ],
+   "solution": "1. $P(A\\cup B)=0.45+0.35-0.15=0.65$.\n2. $P(\\text{neither})=1-0.65=0.35$."
+  },
+  {
+   "id": "ps-union-overlap-03",
+   "skill": "ps.union-overlap",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "How many integers from 1 to 300 (inclusive) are divisible by 4 or by 6?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 100,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 125,
+     "why": "Missed the overlap: $75 + 50$ counts multiples of 12 twice."
+    },
+    {
+     "value": 113,
+     "why": "Used $4\\times 6=24$ as the overlap; a number divisible by both 4 and 6 is a multiple of lcm$=12$, not 24."
+    },
+    {
+     "value": 200,
+     "why": "Counted integers divisible by neither ($300-100$)."
+    }
+   ],
+   "solution": "1. Multiples of 4: $\\lfloor 300/4\\rfloor = 75$; of 6: $50$.\n2. Both means multiples of lcm(4,6)=12: $25$.\n3. $75+50-25=100$."
+  },
+  {
+   "id": "ps-union-overlap-04",
+   "skill": "ps.union-overlap",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Of 100 app users, 50 use feature A, 40 use B, 30 use C; 15 use A and B, 10 use A and C, 12 use B and C, and 5 use all three. How many use none of the three features?",
+   "figure": null,
+   "options": [
+    {
+     "text": "0",
+     "correct": false,
+     "why": "Summed singles to 120 ≥ 100 and concluded everyone is covered; overlaps were ignored."
+    },
+    {
+     "text": "12",
+     "correct": true,
+     "why": "Union $=120-37+5=88$, so $100-88=12$ use none."
+    },
+    {
+     "text": "22",
+     "correct": false,
+     "why": "Subtracted the triple overlap instead of adding it: union $=78$."
+    },
+    {
+     "text": "17",
+     "correct": false,
+     "why": "Forgot to add back the triple overlap: union $=120-37=83$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $|A\\cup B\\cup C| = 120 - (15+10+12) + 5 = 88$.\n2. None $= 100 - 88 = 12$."
+  },
+  {
+   "id": "ps-union-overlap-05",
+   "skill": "ps.union-overlap",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Events $A$ and $B$ satisfy $P(A)=0.6$ and $P(B)=0.5$. Which of the following must be true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A$ and $B$ cannot be mutually exclusive",
+     "correct": true,
+     "why": "Disjoint would need $P(A\\cup B)=1.1>1$, impossible."
+    },
+    {
+     "text": "$P(A\\cup B)=1.1$",
+     "correct": false,
+     "why": "Added without the overlap; a probability cannot exceed 1."
+    },
+    {
+     "text": "$P(A\\cap B)\\ge 0.1$",
+     "correct": true,
+     "why": "$P(A\\cup B)\\le 1$ forces $P(A\\cap B)=1.1-P(A\\cup B)\\ge 0.1$."
+    },
+    {
+     "text": "$P(A\\cap B)=0.3$",
+     "correct": false,
+     "why": "That assumes independence, which is not given; the overlap can be anything in $[0.1,0.5]$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(A\\cap B)=P(A)+P(B)-P(A\\cup B)=1.1-P(A\\cup B)$.\n2. Since $P(A\\cup B)\\in[0.6,1]$, the overlap lies in $[0.1,0.5]$, never 0."
+  },
+  {
+   "id": "ps-sampling-no-replace-01",
+   "skill": "ps.sampling-no-replace",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A box has 5 red and 3 blue balls. Two balls are drawn without replacement. What is the probability that both are red?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac{5}{14}$",
+     "correct": true,
+     "why": "$\\frac{5}{8}\\cdot\\frac{4}{7}=\\frac{20}{56}=\\frac{5}{14}$ (same as $\\binom52/\\binom82=10/28$)."
+    },
+    {
+     "text": "$\\frac{25}{64}$",
+     "correct": false,
+     "why": "Used $(5/8)^2$, i.e. drew with replacement."
+    },
+    {
+     "text": "$\\frac{5}{28}$",
+     "correct": false,
+     "why": "Mixed routes: unordered numerator $\\binom52=10$ over ordered denominator $8\\cdot7=56$."
+    },
+    {
+     "text": "$\\frac{5}{7}$",
+     "correct": false,
+     "why": "Mixed routes: ordered numerator $5\\cdot4=20$ over unordered denominator $\\binom82=28$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sequential: $\\frac58\\cdot\\frac47=\\frac{5}{14}$.\n2. Check with combinations: $\\binom52/\\binom82=10/28=5/14$."
+  },
+  {
+   "id": "ps-sampling-no-replace-02",
+   "skill": "ps.sampling-no-replace",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A bag holds 6 white and 4 black counters. Three are drawn without replacement. Find the probability of exactly 2 white.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.5,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.432,
+     "why": "Used the binomial $3(0.6)^2(0.4)$, which assumes replacement."
+    },
+    {
+     "value": 0.1667,
+     "why": "Computed only the order W, W, B ($\\frac{6}{10}\\cdot\\frac59\\cdot\\frac48$) and forgot the 3 positions for the black counter."
+    }
+   ],
+   "solution": "1. Combinations: $\\binom62\\binom41/\\binom{10}{3}=15\\cdot4/120$.\n2. $=0.5$."
+  },
+  {
+   "id": "ps-sampling-no-replace-03",
+   "skill": "ps.sampling-no-replace",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two cards are drawn without replacement from a standard 52-card deck. What is the probability that both are aces?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac{2}{221}$",
+     "correct": false,
+     "why": "Ordered numerator $4\\cdot3=12$ over unordered denominator $\\binom{52}{2}=1326$."
+    },
+    {
+     "text": "$\\frac{1}{442}$",
+     "correct": false,
+     "why": "Unordered numerator $\\binom42=6$ over ordered denominator $52\\cdot51$."
+    },
+    {
+     "text": "$\\frac{1}{221}$",
+     "correct": true,
+     "why": "$\\frac{4}{52}\\cdot\\frac{3}{51}=\\frac{12}{2652}=\\frac{1}{221}$."
+    },
+    {
+     "text": "$\\frac{1}{169}$",
+     "correct": false,
+     "why": "Used $(4/52)^2$: replaced the first card."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sequential: $\\frac{4}{52}\\cdot\\frac{3}{51}=\\frac{1}{221}$.\n2. Combinations agree: $\\binom42/\\binom{52}2=6/1326$."
+  },
+  {
+   "id": "ps-sampling-no-replace-04",
+   "skill": "ps.sampling-no-replace",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A drawer has 4 good and 2 faulty bulbs. Bulbs are tested one at a time, without replacement. Find the probability that both faulty bulbs have been found within the first 3 tests.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.2,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.0667,
+     "why": "Counted only the case 'faulty on tests 1 and 2'; the faulty pair can also occupy tests (1,3) or (2,3)."
+    },
+    {
+     "value": 0.0333,
+     "why": "Mixed routes: unordered numerator $\\binom22\\binom41=4$ over ordered denominator $6\\cdot5\\cdot4=120$."
+    }
+   ],
+   "solution": "1. 'Both found within 3 tests' = both faulty bulbs are among the first 3 tested.\n2. Unordered: $\\binom22\\binom41/\\binom63=4/20=0.2$."
+  },
+  {
+   "id": "ps-hypergeometric-01",
+   "skill": "ps.hypergeometric",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A committee of 4 is chosen at random from 6 men and 4 women. Find the probability that it has exactly 2 women.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.4286,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.3456,
+     "why": "Used Binomial(4, 0.4); people are chosen without replacement."
+    },
+    {
+     "value": 0.0286,
+     "why": "Wrote $\\binom42/\\binom{10}{4}=6/210$ and dropped the $\\binom62$ factor for the men."
+    }
+   ],
+   "solution": "1. $\\binom42\\binom62/\\binom{10}4 = 6\\cdot15/210$.\n2. $=90/210\\approx0.4286$."
+  },
+  {
+   "id": "ps-hypergeometric-02",
+   "skill": "ps.hypergeometric",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A lot of 20 items contains 5 defectives. A sample of 3 is drawn without replacement. The probability that the sample contains at least one defective is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.601",
+     "correct": true,
+     "why": "$1-\\binom{15}3/\\binom{20}3=1-455/1140\\approx0.601$."
+    },
+    {
+     "text": "0.578",
+     "correct": false,
+     "why": "Used $1-0.75^3$, i.e. sampling with replacement."
+    },
+    {
+     "text": "0.461",
+     "correct": false,
+     "why": "Computed exactly one defective, $5\\cdot105/1140$, not at least one."
+    },
+    {
+     "text": "0.399",
+     "correct": false,
+     "why": "That is $P(\\text{no defective})$; the question asks for its complement."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(\\text{none})=\\binom{15}{3}/\\binom{20}{3}=455/1140$.\n2. Answer $=1-0.399=0.601$."
+  },
+  {
+   "id": "ps-hypergeometric-03",
+   "skill": "ps.hypergeometric",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "An urn has 7 red and 5 green balls. Four are drawn at random without replacement. Find the probability of exactly 2 red and 2 green.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.4242,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.8485,
+     "why": "Took $\\binom72=42$ (forgot to divide $7\\cdot6$ by 2)."
+    },
+    {
+     "value": 0.3545,
+     "why": "Used Binomial(4, 7/12), which assumes replacement."
+    }
+   ],
+   "solution": "1. $\\binom72=21$, $\\binom52=10$, $\\binom{12}4=495$.\n2. $21\\cdot10/495\\approx0.4242$."
+  },
+  {
+   "id": "ps-hypergeometric-04",
+   "skill": "ps.hypergeometric",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "From 12 applicants, of whom 5 are qualified, 4 are selected at random. Which expression gives $P(\\text{exactly 3 qualified})$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\binom53\\binom71/\\binom{12}4$",
+     "correct": true,
+     "why": "Choose 3 of the 5 qualified and 1 of the 7 others, over all 4-subsets."
+    },
+    {
+     "text": "$\\binom53\\binom71/\\binom{12}3$",
+     "correct": false,
+     "why": "Denominator must choose $n=4$, matching $3+1$."
+    },
+    {
+     "text": "$\\binom43(5/12)^3(7/12)$",
+     "correct": false,
+     "why": "Binomial form assumes replacement; the success probability changes after each pick."
+    },
+    {
+     "text": "$\\binom53/\\binom{12}4$",
+     "correct": false,
+     "why": "Dropped the factor $\\binom71$ for the one unqualified applicant."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Hypergeometric: $\\binom{K}{k}\\binom{N-K}{n-k}/\\binom Nn$ with $N=12,K=5,n=4,k=3$."
+  },
+  {
+   "id": "ps-at-least-one-01",
+   "skill": "ps.at-least-one",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Three independent servers each fail on a given day with probability 0.1. Find the probability that at least one fails that day.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.271,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.3,
+     "why": "Added $0.1+0.1+0.1$; that double-counts days with two or more failures."
+    },
+    {
+     "value": 0.729,
+     "why": "Gave $P(\\text{no failure})=0.9^3$; 'at least one' is its complement."
+    },
+    {
+     "value": 0.001,
+     "why": "Computed all three failing, $0.1^3$."
+    }
+   ],
+   "solution": "1. $P(\\text{none fail})=0.9^3=0.729$.\n2. $P(\\ge1)=1-0.729=0.271$."
+  },
+  {
+   "id": "ps-at-least-one-02",
+   "skill": "ps.at-least-one",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A fair die is rolled 4 times. The probability of at least one six is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.482",
+     "correct": false,
+     "why": "That is $(5/6)^4$, the probability of no six."
+    },
+    {
+     "text": "0.518",
+     "correct": true,
+     "why": "$1-(5/6)^4\\approx0.518$."
+    },
+    {
+     "text": "0.667",
+     "correct": false,
+     "why": "Added $4\\times\\frac16$; overlapping sixes were counted more than once."
+    },
+    {
+     "text": "0.386",
+     "correct": false,
+     "why": "That is exactly one six, $4\\cdot\\frac16(\\frac56)^3$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(\\text{no six})=(5/6)^4\\approx0.482$.\n2. $P(\\ge1)=0.518$."
+  },
+  {
+   "id": "ps-at-least-one-03",
+   "skill": "ps.at-least-one",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Each independent trial succeeds with probability 0.2. What is the smallest number of trials $n$ for which $P(\\text{at least one success})\\ge 0.95$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 14,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 13,
+     "why": "Rounded $\\ln0.05/\\ln0.8\\approx13.4$ down; $0.8^{13}\\approx0.055>0.05$, so 13 is not enough."
+    },
+    {
+     "value": 5,
+     "why": "Used $1/p$, the expected wait, not the 95% condition."
+    },
+    {
+     "value": 4.75,
+     "why": "Divided $0.95/0.2$; probabilities of 'at least one' do not add linearly."
+    }
+   ],
+   "solution": "1. Need $1-0.8^n\\ge0.95$, i.e. $0.8^n\\le0.05$.\n2. $n\\ge\\ln0.05/\\ln0.8\\approx13.4$, so $n=14$."
+  },
+  {
+   "id": "ps-at-least-one-04",
+   "skill": "ps.at-least-one",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A 4-digit PIN is formed by choosing each digit from 0–9 uniformly at random, repetition allowed. What is the probability that some digit appears more than once?",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.496",
+     "correct": true,
+     "why": "$1-\\frac{10\\cdot9\\cdot8\\cdot7}{10^4}=1-0.504=0.496$."
+    },
+    {
+     "text": "0.600",
+     "correct": false,
+     "why": "Added $\\binom42\\cdot\\frac1{10}$ over pairs; pair events overlap, so this over-counts."
+    },
+    {
+     "text": "0.100",
+     "correct": false,
+     "why": "Used the chance that one specific pair matches."
+    },
+    {
+     "text": "0.504",
+     "correct": false,
+     "why": "That is the probability that all four digits are distinct."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. All distinct: $10\\cdot9\\cdot8\\cdot7/10^4=0.504$.\n2. Some repeat $=1-0.504=0.496$."
+  },
+  {
+   "id": "ps-ordered-outcomes-01",
+   "skill": "ps.ordered-outcomes",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two fair dice are rolled. Find the probability that the sum is 7.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.1667,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.0909,
+     "why": "Treated the 11 possible sums as equally likely ($1/11$)."
+    },
+    {
+     "value": 0.0833,
+     "why": "Counted unordered pairs {1,6},{2,5},{3,4} as 3 out of 36; each appears twice in ordered outcomes."
+    }
+   ],
+   "solution": "1. Ordered pairs with sum 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) = 6.\n2. $6/36\\approx0.1667$."
+  },
+  {
+   "id": "ps-ordered-outcomes-02",
+   "skill": "ps.ordered-outcomes",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Three fair coins are tossed. What is the probability of exactly two heads?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac18$",
+     "correct": false,
+     "why": "Counted only HHT; the tail can be in any of 3 positions."
+    },
+    {
+     "text": "$\\frac38$",
+     "correct": true,
+     "why": "HHT, HTH, THH: 3 of the 8 ordered outcomes."
+    },
+    {
+     "text": "$\\frac14$",
+     "correct": false,
+     "why": "Treated 0, 1, 2, 3 heads as 4 equally likely outcomes."
+    },
+    {
+     "text": "$\\frac12$",
+     "correct": false,
+     "why": "That is at least two heads (4 of 8)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sample space has $2^3=8$ ordered outcomes.\n2. Exactly two heads: $\\binom32=3$ outcomes, so $3/8$."
+  },
+  {
+   "id": "ps-ordered-outcomes-03",
+   "skill": "ps.ordered-outcomes",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two fair dice are rolled. Find the probability that the larger of the two numbers is exactly 4.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.1944,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.1111,
+     "why": "Counted unordered pairs {4,1},{4,2},{4,3},{4,4} = 4; (1,4) and (4,1) are different outcomes."
+    },
+    {
+     "value": 0.4444,
+     "why": "Gave $P(\\max\\le4)=(4/6)^2$; must subtract $P(\\max\\le3)$."
+    }
+   ],
+   "solution": "1. $P(\\max\\le4)=16/36$, $P(\\max\\le3)=9/36$.\n2. $P(\\max=4)=7/36\\approx0.1944$."
+  },
+  {
+   "id": "ps-ordered-outcomes-04",
+   "skill": "ps.ordered-outcomes",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two fair dice are rolled. What is the probability that the sum is at least 10?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac{3}{11}$",
+     "correct": false,
+     "why": "Treated the 11 sums as equally likely."
+    },
+    {
+     "text": "$\\frac56$",
+     "correct": false,
+     "why": "Reversed direction: that is $P(\\text{sum}\\le9)$."
+    },
+    {
+     "text": "$\\frac16$",
+     "correct": true,
+     "why": "Sums 10, 11, 12 have 3 + 2 + 1 = 6 ordered outcomes: $6/36$."
+    },
+    {
+     "text": "$\\frac19$",
+     "correct": false,
+     "why": "Counted unordered pairs {4,6},{5,5},{5,6},{6,6} = 4 out of 36."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sum 10: (4,6),(5,5),(6,4); 11: (5,6),(6,5); 12: (6,6).\n2. $6/36=1/6$."
+  },
+  {
+   "id": "ps-given-restrict-01",
+   "skill": "ps.given-restrict",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two fair dice are rolled. Given that the sum is 8, what is the probability that at least one die shows 6?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac{11}{36}$",
+     "correct": false,
+     "why": "That is the unconditional $P(\\text{at least one 6})$; the condition was ignored."
+    },
+    {
+     "text": "$\\frac13$",
+     "correct": false,
+     "why": "Counted unordered pairs {2,6},{3,5},{4,4}; ordered outcomes are the equally likely ones."
+    },
+    {
+     "text": "$\\frac1{18}$",
+     "correct": false,
+     "why": "Used $2/36$: did not restrict the denominator to the 5 outcomes with sum 8."
+    },
+    {
+     "text": "$\\frac25$",
+     "correct": true,
+     "why": "Sum 8 has 5 ordered outcomes; (2,6) and (6,2) contain a 6."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Given space: (2,6),(3,5),(4,4),(5,3),(6,2).\n2. Favourable: 2, so $2/5$."
+  },
+  {
+   "id": "ps-given-restrict-02",
+   "skill": "ps.given-restrict",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$P(A)=0.5$, $P(B)=0.4$ and $P(A\\cap B)=0.1$. Find $P(A\\mid B)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.25,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.1,
+     "why": "Gave $P(A\\cap B)$; did not divide by $P(B)$."
+    },
+    {
+     "value": 0.2,
+     "why": "Divided by $P(A)$; that is $P(B\\mid A)$."
+    },
+    {
+     "value": 0.5,
+     "why": "Gave $P(A)$ and ignored the condition."
+    }
+   ],
+   "solution": "1. $P(A\\mid B)=0.1/0.4=0.25$."
+  },
+  {
+   "id": "ps-given-restrict-03",
+   "skill": "ps.given-restrict",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A fair coin is tossed three times. Given that at least two heads occurred, find the probability that all three tosses are heads.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.25,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.125,
+     "why": "Gave $P(HHH)=1/8$ without restricting to the 4 outcomes with ≥2 heads."
+    },
+    {
+     "value": 0.5,
+     "why": "Argued 'one toss is left, so 1/2'; the condition does not fix which tosses were heads."
+    }
+   ],
+   "solution": "1. Given set: HHT, HTH, THH, HHH (4 outcomes).\n2. Favourable: HHH, so $1/4$."
+  },
+  {
+   "id": "ps-given-restrict-04",
+   "skill": "ps.given-restrict",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Of 200 customers, 120 used mobile (36 of them bought) and 80 used desktop (12 bought). A customer is picked at random from those who bought. What is the probability that they used mobile?",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.75",
+     "correct": true,
+     "why": "Restrict to the 48 buyers: $36/48=0.75$."
+    },
+    {
+     "text": "0.18",
+     "correct": false,
+     "why": "Gave the joint $36/200$; the denominator must be the buyers only."
+    },
+    {
+     "text": "0.60",
+     "correct": false,
+     "why": "Gave $P(\\text{mobile})=120/200$ and ignored the condition."
+    },
+    {
+     "text": "0.30",
+     "correct": false,
+     "why": "Computed $P(\\text{bought}\\mid\\text{mobile})=36/120$, the reverse conditional."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Buyers: $36+12=48$.\n2. $P(\\text{mobile}\\mid\\text{bought})=36/48=0.75$."
+  },
+  {
+   "id": "ps-independence-01",
+   "skill": "ps.independence",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$A$ and $B$ are mutually exclusive with $P(A)=0.3$ and $P(B)=0.4$. Which statement is true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$P(A\\cup B)=0.58$",
+     "correct": false,
+     "why": "Subtracted $0.3\\times0.4$ as if independent; disjoint gives $0.7$."
+    },
+    {
+     "text": "$P(A\\mid B)=0$",
+     "correct": true,
+     "why": "Disjoint means $P(A\\cap B)=0$, so $P(A\\mid B)=0/0.4=0$."
+    },
+    {
+     "text": "$P(A\\mid B)=0.3$",
+     "correct": false,
+     "why": "That is what independence would give; knowing $B$ occurred rules $A$ out."
+    },
+    {
+     "text": "$A$ and $B$ are independent",
+     "correct": false,
+     "why": "Independence needs $P(A\\cap B)=0.12$, but it is 0."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Mutually exclusive: $P(A\\cap B)=0\\ne P(A)P(B)=0.12$.\n2. So dependent, and $P(A\\mid B)=0$."
+  },
+  {
+   "id": "ps-independence-02",
+   "skill": "ps.independence",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$P(A)=0.4$, $P(B)=0.5$ and $P(A\\cup B)=0.7$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A$ and $B$ are mutually exclusive",
+     "correct": false,
+     "why": "$P(A\\cap B)=0.2\\ne0$."
+    },
+    {
+     "text": "$P(A\\mid B)=0.4$",
+     "correct": true,
+     "why": "$0.2/0.5=0.4=P(A)$."
+    },
+    {
+     "text": "$A$ and $B$ are independent",
+     "correct": true,
+     "why": "$P(A\\cap B)=0.4+0.5-0.7=0.2=0.4\\times0.5$."
+    },
+    {
+     "text": "$P(A^c\\cap B^c)=0.3$",
+     "correct": true,
+     "why": "$1-P(A\\cup B)=0.3$ (also $0.6\\times0.5$)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(A\\cap B)=0.2$.\n2. Compare with $P(A)P(B)=0.2$: equal, so independent.\n3. Neither $=1-0.7=0.3$."
+  },
+  {
+   "id": "ps-independence-03",
+   "skill": "ps.independence",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A fair die is rolled once. Let $A=\\{2,4,6\\}$, $B=\\{1,2,3,4\\}$, $C=\\{1,2,3\\}$. Which pairs are independent?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A,C$ only",
+     "correct": false,
+     "why": "$P(A\\mid C)=1/3$ differs from $P(A)=1/2$, so $A,C$ are dependent."
+    },
+    {
+     "text": "Neither: the events overlap, so they cannot be independent",
+     "correct": false,
+     "why": "Confused overlap with dependence; independent events with positive probability must overlap."
+    },
+    {
+     "text": "$A,B$ only",
+     "correct": true,
+     "why": "$P(A\\mid B)=2/4=1/2=P(A)$, but $P(A\\mid C)=1/3\\ne1/2$."
+    },
+    {
+     "text": "Both pairs",
+     "correct": false,
+     "why": "Overlapping is not the test; $A,C$ fails $P(A\\cap C)=1/6\\ne1/4$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(A\\cap B)=2/6=1/3=\\frac12\\cdot\\frac23$ ✓.\n2. $P(A\\cap C)=1/6\\ne\\frac12\\cdot\\frac12$ ✗."
+  },
+  {
+   "id": "ps-independence-04",
+   "skill": "ps.independence",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$A$ and $B$ are independent with $P(A)=0.3$ and $P(B)=0.6$. Find $P(A\\cup B)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.72,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.9,
+     "why": "Added as if mutually exclusive; independent events overlap with $P=0.18$."
+    },
+    {
+     "value": 0.18,
+     "why": "Gave $P(A\\cap B)$, not the union."
+    }
+   ],
+   "solution": "1. $P(A\\cap B)=0.18$.\n2. $P(A\\cup B)=0.3+0.6-0.18=0.72$."
+  },
+  {
+   "id": "ps-independence-05",
+   "skill": "ps.independence",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For events with $0<P(A)<1$ and $0<P(B)<1$, which statements are always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If $P(A\\mid B)>P(A)$ then $P(B\\mid A)<P(B)$",
+     "correct": false,
+     "why": "Both are equivalent to $P(A\\cap B)>P(A)P(B)$, so $P(B\\mid A)>P(B)$."
+    },
+    {
+     "text": "If $A,B$ are independent, they are mutually exclusive",
+     "correct": false,
+     "why": "Independent gives $P(A\\cap B)=P(A)P(B)>0$, so they overlap."
+    },
+    {
+     "text": "If $A,B$ are independent, so are $A^c$ and $B$",
+     "correct": true,
+     "why": "$P(A^c\\cap B)=P(B)-P(A)P(B)=P(A^c)P(B)$."
+    },
+    {
+     "text": "If $A,B$ are mutually exclusive, they are dependent",
+     "correct": true,
+     "why": "$P(A\\cap B)=0<P(A)P(B)$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Disjoint and independent can both hold only if one event has probability 0.\n2. Complements of independent events stay independent."
+  },
+  {
+   "id": "ps-total-prob-01",
+   "skill": "ps.total-prob",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Machines A, B, C make 50%, 30% and 20% of a factory's output with defect rates 2%, 3% and 5%. Find the probability that a randomly chosen item is defective.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.029,
+    "tol": 0.0005
+   },
+   "traps": [
+    {
+     "value": 0.0333,
+     "why": "Took the plain average of the defect rates; branches must be weighted by output share."
+    },
+    {
+     "value": 0.1,
+     "why": "Added the defect rates without weights."
+    }
+   ],
+   "solution": "1. $P(D)=0.5(0.02)+0.3(0.03)+0.2(0.05)$.\n2. $=0.010+0.009+0.010=0.029$."
+  },
+  {
+   "id": "ps-total-prob-02",
+   "skill": "ps.total-prob",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Urn I has 3 red, 2 blue; urn II has 1 red, 4 blue. A fair coin picks the urn and one ball is drawn. $P(\\text{red})$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.4",
+     "correct": true,
+     "why": "$0.5(0.6)+0.5(0.2)=0.4$."
+    },
+    {
+     "text": "0.12",
+     "correct": false,
+     "why": "Multiplied $0.6\\times0.2$; the branches are alternatives, so add weighted terms."
+    },
+    {
+     "text": "0.3",
+     "correct": false,
+     "why": "Kept only urn I's branch $0.5\\times0.6$."
+    },
+    {
+     "text": "0.8",
+     "correct": false,
+     "why": "Added $0.6+0.2$ without the 0.5 weights."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Partition by urn.\n2. $P(R)=\\frac12\\cdot\\frac35+\\frac12\\cdot\\frac15=0.4$."
+  },
+  {
+   "id": "ps-total-prob-03",
+   "skill": "ps.total-prob",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Urn A has 2 white and 3 black balls; urn B has 4 white and 4 black. One ball is moved at random from A to B, then one ball is drawn from B. Find $P(\\text{white from B})$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.4889,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.5,
+     "why": "Ignored the transfer and used $4/8$; B now has 9 balls."
+    },
+    {
+     "value": 0.4444,
+     "why": "Assumed a black ball was moved; both transfer branches must be weighted."
+    }
+   ],
+   "solution": "1. Moved white (2/5): B has 5W of 9. Moved black (3/5): 4W of 9.\n2. $\\frac25\\cdot\\frac59+\\frac35\\cdot\\frac49=\\frac{22}{45}\\approx0.4889$."
+  },
+  {
+   "id": "ps-total-prob-04",
+   "skill": "ps.total-prob",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "40% of emails are spam. The word 'offer' appears in 30% of spam and 5% of non-spam emails. The probability that a random email contains 'offer' is",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.35",
+     "correct": false,
+     "why": "Added the two conditional rates without priors."
+    },
+    {
+     "text": "0.12",
+     "correct": false,
+     "why": "Kept only the spam branch."
+    },
+    {
+     "text": "0.15",
+     "correct": true,
+     "why": "$0.4(0.3)+0.6(0.05)=0.12+0.03=0.15$."
+    },
+    {
+     "text": "0.175",
+     "correct": false,
+     "why": "Averaged 0.3 and 0.05 equally; the classes are 40/60, not 50/50."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Partition: spam / not spam.\n2. $P(\\text{offer})=0.12+0.03=0.15$."
+  },
+  {
+   "id": "ps-bayes-01",
+   "skill": "ps.bayes",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A condition affects 1% of people. A test detects it in 95% of affected people and gives a false positive in 5% of unaffected people. Find $P(\\text{affected}\\mid\\text{positive})$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.161,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.95,
+     "why": "Gave the sensitivity $P(+\\mid D)$, the reverse conditional."
+    },
+    {
+     "value": 0.0095,
+     "why": "Stopped at the numerator $0.01\\times0.95$; must divide by $P(+)=0.059$."
+    },
+    {
+     "value": 0.839,
+     "why": "Used the unaffected branch in the numerator; that is $P(\\text{not affected}\\mid +)$."
+    }
+   ],
+   "solution": "1. $P(+)=0.01(0.95)+0.99(0.05)=0.059$.\n2. $P(D\\mid+)=0.0095/0.059\\approx0.161$."
+  },
+  {
+   "id": "ps-bayes-02",
+   "skill": "ps.bayes",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Machines A, B, C make 50%, 30%, 20% of output with defect rates 2%, 3%, 5%. An item is found defective. The probability it came from C is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.345",
+     "correct": true,
+     "why": "$\\frac{0.2\\times0.05}{0.029}=\\frac{0.010}{0.029}\\approx0.345$."
+    },
+    {
+     "text": "0.500",
+     "correct": false,
+     "why": "Unweighted: $5/(2+3+5)$ ignores output shares."
+    },
+    {
+     "text": "0.200",
+     "correct": false,
+     "why": "Gave the prior share of C; the defect evidence was ignored."
+    },
+    {
+     "text": "0.310",
+     "correct": false,
+     "why": "Wrong branch in the numerator: $0.009/0.029$ is machine B."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(D)=0.029$.\n2. $P(C\\mid D)=0.2(0.05)/0.029\\approx0.345$."
+  },
+  {
+   "id": "ps-bayes-03",
+   "skill": "ps.bayes",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Urn I (4 red, 1 blue) is chosen with probability 1/4 and urn II (2 red, 3 blue) with probability 3/4. One ball drawn is red. Find $P(\\text{urn II}\\mid\\text{red})$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.6,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.4,
+     "why": "Used urn I's branch $0.25\\times0.8$ in the numerator."
+    },
+    {
+     "value": 0.3333,
+     "why": "Ignored the priors: $0.4/(0.8+0.4)$."
+    },
+    {
+     "value": 0.75,
+     "why": "Gave the prior of urn II; the evidence was not used."
+    }
+   ],
+   "solution": "1. $P(R)=\\frac14(0.8)+\\frac34(0.4)=0.5$.\n2. $P(II\\mid R)=0.3/0.5=0.6$."
+  },
+  {
+   "id": "ps-bayes-04",
+   "skill": "ps.bayes",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "0.1% of transactions are fraudulent. A detector flags 99% of frauds and 1% of legitimate transactions. Given a flag, the probability of fraud is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.99",
+     "correct": false,
+     "why": "Confused $P(\\text{flag}\\mid\\text{fraud})$ with $P(\\text{fraud}\\mid\\text{flag})$."
+    },
+    {
+     "text": "0.001",
+     "correct": false,
+     "why": "Gave the base rate and ignored the evidence."
+    },
+    {
+     "text": "0.91",
+     "correct": false,
+     "why": "Wrong branch: that is $P(\\text{legitimate}\\mid\\text{flag})$."
+    },
+    {
+     "text": "0.09",
+     "correct": true,
+     "why": "$\\frac{0.00099}{0.00099+0.00999}\\approx0.09$; the tiny base rate dominates."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(\\text{flag})=0.001(0.99)+0.999(0.01)=0.01098$.\n2. $P(F\\mid\\text{flag})=0.00099/0.01098\\approx0.09$."
+  },
+  {
+   "id": "ps-bayes-05",
+   "skill": "ps.bayes",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A test has sensitivity 0.9 and specificity 0.9. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If prevalence is 1%, $P(D\\mid+)<0.1$",
+     "correct": true,
+     "why": "$0.009/(0.009+0.099)\\approx0.083$."
+    },
+    {
+     "text": "If prevalence is 50%, $P(D\\mid+)=0.9$",
+     "correct": true,
+     "why": "$0.45/(0.45+0.05)=0.9$."
+    },
+    {
+     "text": "$P(D\\mid+)$ does not depend on prevalence",
+     "correct": false,
+     "why": "The prior enters both numerator and denominator."
+    },
+    {
+     "text": "$P(+)=0.9$ whatever the prevalence",
+     "correct": false,
+     "why": "$P(+)=0.9\\pi+0.1(1-\\pi)$ changes with $\\pi$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(D\\mid+)=\\frac{0.9\\pi}{0.9\\pi+0.1(1-\\pi)}$.\n2. Plug $\\pi=0.5$ and $\\pi=0.01$."
+  },
+  {
+   "id": "ps-pmf-moments-01",
+   "skill": "ps.pmf-moments",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$P(X=x)=kx$ for $x=1,2,3,4$. Find $E[X]$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 2.5,
+     "why": "Averaged 1–4 equally; the probabilities are $kx$, not equal."
+    },
+    {
+     "value": 30,
+     "why": "Computed $\\sum x\\cdot x$ but forgot to multiply by $k=0.1$."
+    }
+   ],
+   "solution": "1. $k(1+2+3+4)=1\\Rightarrow k=0.1$.\n2. $E[X]=0.1(1+4+9+16)=3$."
+  },
+  {
+   "id": "ps-pmf-moments-02",
+   "skill": "ps.pmf-moments",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$P(X=x)=c(x+1)$ for $x=0,1,2,3$. Find $E[X^2]$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Gave $(E[X])^2=2^2$; $E[X^2]$ squares the values before weighting."
+    },
+    {
+     "value": 1,
+     "why": "Gave $\\mathrm{Var}(X)=5-4$."
+    },
+    {
+     "value": 5.5556,
+     "why": "Dropped $x=0$ from the support, so $c=1/9$ instead of $1/10$."
+    }
+   ],
+   "solution": "1. Normalise over $x=0..3$: $c(1+2+3+4)=1$, $c=0.1$.\n2. $E[X^2]=0.1(0\\cdot1+1\\cdot2+4\\cdot3+9\\cdot4)=5$."
+  },
+  {
+   "id": "ps-pmf-moments-03",
+   "skill": "ps.pmf-moments",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ takes values $-1, 0, 2$ with probabilities $0.3, 0.2, 0.5$. $E[X^2]$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "1.81",
+     "correct": false,
+     "why": "That is the variance $2.3-0.49$."
+    },
+    {
+     "text": "2.3",
+     "correct": true,
+     "why": "$(-1)^2(0.3)+0+2^2(0.5)=2.3$."
+    },
+    {
+     "text": "0.49",
+     "correct": false,
+     "why": "Squared the mean $E[X]=0.7$."
+    },
+    {
+     "text": "1.7",
+     "correct": false,
+     "why": "Kept the sign of $-1$: wrote $-0.3$ instead of $(-1)^2(0.3)=+0.3$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[X^2]=\\sum x^2p(x)=0.3+2=2.3$."
+  },
+  {
+   "id": "ps-pmf-moments-04",
+   "skill": "ps.pmf-moments",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ takes values 1 and 3, each with probability 1/2. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\mathrm{Var}(X)=1$",
+     "correct": true,
+     "why": "$5-2^2=1$."
+    },
+    {
+     "text": "$E[X^2]=4$",
+     "correct": false,
+     "why": "That is $(E[X])^2$; $E[X^2]=(1+9)/2=5$."
+    },
+    {
+     "text": "$E[1/X]=1/2$",
+     "correct": false,
+     "why": "$1/E[X]=1/2$, but $E[1/X]=(1+1/3)/2=2/3$; expectation does not pass through nonlinear functions."
+    },
+    {
+     "text": "$E[X^2]\\ge(E[X])^2$ for every random variable",
+     "correct": true,
+     "why": "Their difference is $\\mathrm{Var}(X)\\ge0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[X]=2$, $E[X^2]=5$.\n2. $\\mathrm{Var}=5-4=1$."
+  },
+  {
+   "id": "ps-var-linear-01",
+   "skill": "ps.var-linear",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$\\mathrm{Var}(X)=4$. Find $\\mathrm{Var}(3X-5)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 36,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Multiplied by $a=3$ instead of $a^2=9$."
+    },
+    {
+     "value": 7,
+     "why": "Applied the transformation to the variance: $3(4)-5$."
+    },
+    {
+     "value": 31,
+     "why": "Squared $a$ but kept the shift: $9(4)-5$; constants do not change spread."
+    }
+   ],
+   "solution": "1. $\\mathrm{Var}(3X-5)=3^2\\cdot4=36$."
+  },
+  {
+   "id": "ps-var-linear-02",
+   "skill": "ps.var-linear",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$E[X]=2$ and $E[X^2]=13$. Find $\\mathrm{Var}(-2X+7)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 36,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 52,
+     "why": "Used $E[X^2]=13$ as the variance: $4\\times13$."
+    },
+    {
+     "value": -18,
+     "why": "Multiplied by $a=-2$ instead of $a^2=4$; a variance cannot be negative."
+    },
+    {
+     "value": 43,
+     "why": "Added the shift 7 to $36$."
+    }
+   ],
+   "solution": "1. $\\mathrm{Var}(X)=13-2^2=9$.\n2. $\\mathrm{Var}(-2X+7)=(-2)^2\\cdot9=36$."
+  },
+  {
+   "id": "ps-var-linear-03",
+   "skill": "ps.var-linear",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Y=5-X$ and the standard deviation of $X$ is 3. The standard deviation of $Y$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$-3$",
+     "correct": false,
+     "why": "Kept the sign of $a=-1$; SD is never negative."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Applied the shift to the SD: $5-3$."
+    },
+    {
+     "text": "3",
+     "correct": true,
+     "why": "$\\mathrm{SD}(aX+b)=|a|\\,\\mathrm{SD}(X)=1\\cdot3$."
+    },
+    {
+     "text": "9",
+     "correct": false,
+     "why": "Gave the variance, not the SD."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\mathrm{SD}(Y)=|-1|\\cdot3=3$."
+  },
+  {
+   "id": "ps-var-linear-04",
+   "skill": "ps.var-linear",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$E[X]=1$ and $E[X^2]=5$. For $Y=4-3X$, $(E[Y],\\mathrm{Var}(Y))$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(1, 36)$",
+     "correct": true,
+     "why": "$E[Y]=4-3=1$; $\\mathrm{Var}(X)=5-1=4$, so $\\mathrm{Var}(Y)=9\\cdot4=36$."
+    },
+    {
+     "text": "$(1, -12)$",
+     "correct": false,
+     "why": "Multiplied the variance by $a=-3$ instead of $a^2$."
+    },
+    {
+     "text": "$(7, 36)$",
+     "correct": false,
+     "why": "Sign slip in the mean: $4+3$."
+    },
+    {
+     "text": "$(1, 45)$",
+     "correct": false,
+     "why": "Used $E[X^2]=5$ as $\\mathrm{Var}(X)$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[Y]=4-3E[X]=1$.\n2. $\\mathrm{Var}(X)=E[X^2]-(E[X])^2=4$; $\\mathrm{Var}(Y)=9\\cdot4=36$."
+  },
+  {
+   "id": "ps-var-linear-05",
+   "skill": "ps.var-linear",
+   "type": "NAT",
+   "marks": 2,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Daily temperature $C$ (°C) has mean 20 and variance 25. Find the variance of $F=1.8C+32$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 81,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 45,
+     "why": "Multiplied by 1.8 instead of $1.8^2=3.24$."
+    },
+    {
+     "value": 113,
+     "why": "Added 32 to $81$; the shift does not affect variance."
+    },
+    {
+     "value": 77,
+     "why": "Used $1.8\\times25+32$."
+    }
+   ],
+   "solution": "1. $\\mathrm{Var}(F)=1.8^2\\cdot25=3.24\\cdot25=81$."
+  },
+  {
+   "id": "ps-model-select-01",
+   "skill": "ps.model-select",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Calls reach a help desk at an average rate of 3 per minute, independently. $X$ = number of calls in a 10-minute window. The best model is",
+   "figure": null,
+   "options": [
+    {
+     "text": "Poisson(3)",
+     "correct": false,
+     "why": "Used the per-minute rate without scaling to 10 minutes."
+    },
+    {
+     "text": "Geometric(0.3)",
+     "correct": false,
+     "why": "Geometric counts trials until the first success, not counts in a window."
+    },
+    {
+     "text": "Poisson(30)",
+     "correct": true,
+     "why": "Counts in an interval at a constant rate: $\\lambda=3\\times10$."
+    },
+    {
+     "text": "Binomial(10, 0.3)",
+     "correct": false,
+     "why": "Invented 10 trials; calls are not limited to one per minute."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Rate × interval $=3\\times10=30$.\n2. $X\\sim$ Poisson(30)."
+  },
+  {
+   "id": "ps-model-select-02",
+   "skill": "ps.model-select",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "From a batch of 30 chips with 6 defective, 5 are tested without replacement. $X$ = number of defectives tested. $X$ follows",
+   "figure": null,
+   "options": [
+    {
+     "text": "Hypergeometric with $N=30, K=6, n=5$",
+     "correct": true,
+     "why": "Fixed finite lot, drawing without replacement."
+    },
+    {
+     "text": "Geometric(0.2)",
+     "correct": false,
+     "why": "Geometric counts draws until the first defective."
+    },
+    {
+     "text": "Poisson(1)",
+     "correct": false,
+     "why": "Poisson is a limit model for rare events, not the exact law for a small finite lot."
+    },
+    {
+     "text": "Binomial(5, 0.2)",
+     "correct": false,
+     "why": "Binomial needs a constant success probability; it changes after each draw here."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Without replacement from a finite lot → hypergeometric."
+  },
+  {
+   "id": "ps-model-select-03",
+   "skill": "ps.model-select",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which of the following random variables are binomial?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Number of defectives among 20 parts, each independently defective with probability 0.03",
+     "correct": true,
+     "why": "Fixed $n=20$, independent, constant $p$."
+    },
+    {
+     "text": "Number of rolls of a die until the first six",
+     "correct": false,
+     "why": "$n$ is not fixed: geometric."
+    },
+    {
+     "text": "Number of heads in 12 tosses of a fair coin",
+     "correct": true,
+     "why": "Fixed $n=12$, independent, constant $p=0.5$."
+    },
+    {
+     "text": "Number of aces in 5 cards dealt from a deck",
+     "correct": false,
+     "why": "Dealt without replacement, so $p$ changes: hypergeometric."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Binomial checklist: fixed $n$, two outcomes, independent trials, constant $p$."
+  },
+  {
+   "id": "ps-model-select-04",
+   "skill": "ps.model-select",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A student guesses all 20 questions of a quiz; each has 4 options with exactly one correct. Find the expected number of correct answers.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0.2023,
+     "why": "Computed $P(X=5)$, the probability of exactly 5 correct, instead of the expectation $np$."
+    },
+    {
+     "value": 0.25,
+     "why": "Gave $p$ for one question, not $np$ for 20."
+    }
+   ],
+   "solution": "1. $X\\sim$ Binomial(20, 0.25).\n2. $E[X]=np=5$."
+  },
+  {
+   "id": "ps-model-select-05",
+   "skill": "ps.model-select",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A fair die is rolled 12 times. The probability of exactly two sixes is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.0045",
+     "correct": false,
+     "why": "Dropped the $\\binom{12}2$ factor for the positions of the sixes."
+    },
+    {
+     "text": "0.592",
+     "correct": false,
+     "why": "Took $\\binom{12}2=132$ (forgot to divide by 2)."
+    },
+    {
+     "text": "0.296",
+     "correct": true,
+     "why": "$\\binom{12}2(\\frac16)^2(\\frac56)^{10}=66\\times0.004486\\approx0.296$."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Gave $E[X]=np=2$; the question asks for a probability."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $X\\sim$ Binomial(12, 1/6).\n2. $\\binom{12}2=66$.\n3. $66\\cdot\\frac1{36}\\cdot(\\frac56)^{10}\\approx0.296$."
+  },
+  {
+   "id": "ps-tail-direction-01",
+   "skill": "ps.tail-direction",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim$ Binomial(4, 0.5). Find $P(X\\ge3)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.3125,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.6875,
+     "why": "Reversed the direction: computed $P(X\\le2)$."
+    },
+    {
+     "value": 0.0625,
+     "why": "Used $1-P(X\\le3)$; the complement of $X\\ge3$ is $X\\le2$."
+    }
+   ],
+   "solution": "1. $P(X=3)+P(X=4)=\\frac{4+1}{16}$.\n2. $=0.3125$."
+  },
+  {
+   "id": "ps-tail-direction-02",
+   "skill": "ps.tail-direction",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim$ Poisson(2). $P(X\\ge2)$ is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.323",
+     "correct": false,
+     "why": "Used $1-P(X\\le2)$; that is $P(X\\ge3)$."
+    },
+    {
+     "text": "0.406",
+     "correct": false,
+     "why": "Reversed: that is $P(X\\le1)$."
+    },
+    {
+     "text": "0.594",
+     "correct": true,
+     "why": "$1-e^{-2}(1+2)=1-0.406=0.594$."
+    },
+    {
+     "text": "0.271",
+     "correct": false,
+     "why": "Gave only $P(X=2)=2e^{-2}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $P(X\\ge2)=1-P(0)-P(1)$.\n2. $=1-3e^{-2}\\approx0.594$."
+  },
+  {
+   "id": "ps-tail-direction-03",
+   "skill": "ps.tail-direction",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Defects per sheet follow Poisson(1.5). Find the probability that a sheet has at most 1 defect.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.5578,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.4422,
+     "why": "Reversed: computed $P(X\\ge2)$."
+    },
+    {
+     "value": 0.2231,
+     "why": "Kept only $P(X=0)$; 'at most 1' includes $X=1$."
+    },
+    {
+     "value": 0.8088,
+     "why": "Included $X=2$: computed $P(X\\le2)$."
+    }
+   ],
+   "solution": "1. $P(X\\le1)=e^{-1.5}(1+1.5)$.\n2. $=0.2231\\times2.5\\approx0.5578$."
+  },
+  {
+   "id": "ps-tail-direction-04",
+   "skill": "ps.tail-direction",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ = number of failures in 10 trials. 'No more than 3 failures' is the event",
+   "figure": null,
+   "options": [
+    {
+     "text": "$X\\le3$",
+     "correct": true,
+     "why": "'No more than 3' allows 0, 1, 2 or 3."
+    },
+    {
+     "text": "$X>3$",
+     "correct": false,
+     "why": "That is the complement, 'more than 3'."
+    },
+    {
+     "text": "$X<3$",
+     "correct": false,
+     "why": "Dropped $X=3$; 'no more than' includes the boundary."
+    },
+    {
+     "text": "$X\\ge3$",
+     "correct": false,
+     "why": "Reversed the direction."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 'At most / no more than $k$' → $X\\le k$; 'at least $k$' → $X\\ge k$."
+  },
+  {
+   "id": "ps-tail-direction-05",
+   "skill": "ps.tail-direction",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim$ Binomial(5, 0.2). Find $P(X\\ge2)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.2627,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.7373,
+     "why": "Reversed: computed $P(X\\le1)$."
+    },
+    {
+     "value": 0.0579,
+     "why": "Used $1-P(X\\le2)$; that is $P(X\\ge3)$."
+    },
+    {
+     "value": 0.2048,
+     "why": "Gave only $P(X=2)$."
+    }
+   ],
+   "solution": "1. $P(0)=0.8^5=0.32768$, $P(1)=5(0.2)(0.8^4)=0.4096$.\n2. $P(X\\ge2)=1-0.73728=0.26272$."
+  },
+  {
+   "id": "ps-poisson-rate-01",
+   "skill": "ps.poisson-rate",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Emails arrive as a Poisson process at 6 per hour. Find the probability that no email arrives in a 20-minute interval.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.1353,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.0025,
+     "why": "Used $\\lambda=6$ without scaling to 20 minutes ($e^{-6}$)."
+    },
+    {
+     "value": 0.8647,
+     "why": "Gave $P(\\text{at least one})=1-e^{-2}$."
+    }
+   ],
+   "solution": "1. $\\lambda=6\\times\\frac{20}{60}=2$.\n2. $P(0)=e^{-2}\\approx0.1353$."
+  },
+  {
+   "id": "ps-poisson-rate-02",
+   "skill": "ps.poisson-rate",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Each of 500 items is independently defective with probability 0.004. Using the Poisson approximation, find the probability of exactly 2 defectives.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.2707,
+    "tol": 0.004
+   },
+   "traps": [
+    {
+     "value": 0.5413,
+     "why": "Forgot the $2!$: used $\\lambda^2e^{-\\lambda}$."
+    },
+    {
+     "value": 0.6767,
+     "why": "Computed $P(X\\le2)$ instead of $P(X=2)$."
+    },
+    {
+     "value": 0.1353,
+     "why": "Gave $P(X=0)=e^{-2}$."
+    }
+   ],
+   "solution": "1. $\\lambda=np=500\\times0.004=2$.\n2. $P(2)=e^{-2}2^2/2!\\approx0.2707$."
+  },
+  {
+   "id": "ps-poisson-rate-03",
+   "skill": "ps.poisson-rate",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Typos occur at an average of 0.5 per page. $X$ = number of typos in a 6-page report. Then $X\\sim$",
+   "figure": null,
+   "options": [
+    {
+     "text": "Poisson(12)",
+     "correct": false,
+     "why": "Divided $6/0.5$ instead of multiplying."
+    },
+    {
+     "text": "Binomial(6, 0.5)",
+     "correct": false,
+     "why": "Treated each page as one trial; a page can have several typos."
+    },
+    {
+     "text": "Poisson(3)",
+     "correct": true,
+     "why": "$\\lambda=0.5\\times6=3$."
+    },
+    {
+     "text": "Poisson(0.5)",
+     "correct": false,
+     "why": "Used the per-page rate for the whole report."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Rate × length $=0.5\\times6=3$."
+  },
+  {
+   "id": "ps-poisson-rate-04",
+   "skill": "ps.poisson-rate",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Customers arrive as a Poisson process at 12 per hour. The probability of at least one arrival in a 5-minute interval is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "1.000",
+     "correct": false,
+     "why": "Used $\\lambda=12$ for 5 minutes; rate not scaled to the interval."
+    },
+    {
+     "text": "0.083",
+     "correct": false,
+     "why": "Treated $5/60$ as the probability."
+    },
+    {
+     "text": "0.632",
+     "correct": true,
+     "why": "$\\lambda=12\\times5/60=1$; $1-e^{-1}\\approx0.632$."
+    },
+    {
+     "text": "0.368",
+     "correct": false,
+     "why": "Gave $P(\\text{none})=e^{-1}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\lambda=1$.\n2. $P(\\ge1)=1-e^{-1}\\approx0.632$."
+  },
+  {
+   "id": "ps-pdf-cdf-01",
+   "skill": "ps.pdf-cdf",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=kx^2$ for $0\\le x\\le2$ (zero elsewhere) is a PDF. Find $k$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.375,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.25,
+     "why": "Set the density's peak $f(2)=4k$ equal to 1; the area must be 1, not the height."
+    },
+    {
+     "value": 0.125,
+     "why": "Integrated $x^2$ to $x^3$ without the factor $1/3$: $8k=1$."
+    }
+   ],
+   "solution": "1. $\\int_0^2kx^2dx=\\frac{8k}{3}=1$.\n2. $k=3/8=0.375$."
+  },
+  {
+   "id": "ps-pdf-cdf-02",
+   "skill": "ps.pdf-cdf",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=k(2-x)$ for $0\\le x\\le2$. Find $P(0.5<X<1)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.3125,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.75,
+     "why": "Gave $F(1)$ alone; must subtract $F(0.5)$."
+    },
+    {
+     "value": 0.25,
+     "why": "Subtracted density values $f(0.5)-f(1)$; probabilities come from areas, i.e. $F$."
+    },
+    {
+     "value": 0.625,
+     "why": "Skipped normalisation and used $k=1$; the area must be 1, so $k=1/2$."
+    }
+   ],
+   "solution": "1. $\\int_0^2k(2-x)dx=2k=1\\Rightarrow k=\\frac12$.\n2. $F(x)=x-\\frac{x^2}{4}$.\n3. $F(1)-F(0.5)=0.75-0.4375=0.3125$."
+  },
+  {
+   "id": "ps-pdf-cdf-03",
+   "skill": "ps.pdf-cdf",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which function is a valid PDF on $[0,2]$ (zero elsewhere)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$f(x)=1$",
+     "correct": false,
+     "why": "Area is 2, not 1."
+    },
+    {
+     "text": "$f(x)=x/2$",
+     "correct": true,
+     "why": "Non-negative and $\\int_0^2 x/2\\,dx=1$."
+    },
+    {
+     "text": "$f(x)=x-\\tfrac12$",
+     "correct": false,
+     "why": "Area is 1, but $f<0$ on $[0,\\tfrac12)$; a density cannot be negative."
+    },
+    {
+     "text": "$f(x)=x$",
+     "correct": false,
+     "why": "Area is 2, not 1."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Check two conditions: $f\\ge0$ and total area 1."
+  },
+  {
+   "id": "ps-pdf-cdf-04",
+   "skill": "ps.pdf-cdf",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ has CDF $F(x)=x^3$ for $0\\le x\\le1$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The PDF is $f(x)=3x^2$ on $[0,1]$",
+     "correct": true,
+     "why": "$f=F'$."
+    },
+    {
+     "text": "$P(X=0.5)=0.75$",
+     "correct": false,
+     "why": "$0.75=f(0.5)$ is a density value; for a continuous $X$, $P(X=0.5)=0$."
+    },
+    {
+     "text": "$P(0.5<X<1)=0.875$",
+     "correct": true,
+     "why": "$F(1)-F(0.5)=1-0.125$."
+    },
+    {
+     "text": "$P(X\\le0.5)=0.125$",
+     "correct": true,
+     "why": "$F(0.5)=0.5^3$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f=3x^2$.\n2. Interval probabilities are CDF differences; point probabilities are 0."
+  },
+  {
+   "id": "ps-median-cdf-01",
+   "skill": "ps.median-cdf",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=2x$ for $0\\le x\\le1$. Find the median of $X$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.7071,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.25,
+     "why": "Evaluated $F(0.5)=0.25$ instead of solving $F(m)=0.5$."
+    },
+    {
+     "value": 0.6667,
+     "why": "Gave the mean $\\int_0^1 2x^2dx=2/3$."
+    }
+   ],
+   "solution": "1. $F(x)=x^2$.\n2. $m^2=0.5\\Rightarrow m=\\sqrt{0.5}\\approx0.7071$."
+  },
+  {
+   "id": "ps-median-cdf-02",
+   "skill": "ps.median-cdf",
+   "type": "NAT",
+   "marks": 2,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=3x^2$ for $0\\le x\\le1$. Find the median of $X$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.7937,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.125,
+     "why": "Evaluated $F(0.5)=0.5^3$ instead of solving $F(m)=0.5$."
+    },
+    {
+     "value": 0.75,
+     "why": "Gave the mean $\\int_0^13x^3dx=3/4$."
+    },
+    {
+     "value": 0.5,
+     "why": "Took the midpoint of the support; the density is not symmetric."
+    }
+   ],
+   "solution": "1. $F(x)=x^3$.\n2. $m^3=0.5\\Rightarrow m=0.5^{1/3}\\approx0.7937$."
+  },
+  {
+   "id": "ps-median-cdf-03",
+   "skill": "ps.median-cdf",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ is exponential with mean 4. The median of $X$ is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "2.773",
+     "correct": true,
+     "why": "$1-e^{-m/4}=0.5\\Rightarrow m=4\\ln2\\approx2.773$."
+    },
+    {
+     "text": "0.173",
+     "correct": false,
+     "why": "Used $\\lambda=4$ (the mean) in $\\ln2/\\lambda$; here $\\lambda=1/4$."
+    },
+    {
+     "text": "0.118",
+     "correct": false,
+     "why": "Evaluated $F(0.5)=1-e^{-0.125}$ instead of solving $F(m)=0.5$."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Gave the mean; for a right-skewed exponential the median is smaller."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\lambda=1/4$, $F(x)=1-e^{-x/4}$.\n2. $e^{-m/4}=0.5\\Rightarrow m=4\\ln2$."
+  },
+  {
+   "id": "ps-median-cdf-04",
+   "skill": "ps.median-cdf",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=x/8$ for $0\\le x\\le4$. Find the median of $X$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.8284,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.0156,
+     "why": "Evaluated $F(0.5)=0.25/16$ instead of solving $F(m)=0.5$."
+    },
+    {
+     "value": 2.6667,
+     "why": "Gave the mean $\\int_0^4x^2/8\\,dx$."
+    },
+    {
+     "value": 2,
+     "why": "Took the midpoint of $[0,4]$; the density increases, so the median is to the right."
+    }
+   ],
+   "solution": "1. $F(x)=x^2/16$.\n2. $m^2/16=0.5\\Rightarrow m=\\sqrt8\\approx2.828$."
+  },
+  {
+   "id": "ps-uniform-conditional-01",
+   "skill": "ps.uniform-conditional",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim U(0,10)$. Find $P(X>7\\mid X>4)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.5,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.3,
+     "why": "Gave the unconditional $P(X>7)$; must restrict to $(4,10)$."
+    },
+    {
+     "value": 1.75,
+     "why": "Divided the cut-offs $7/4$; a probability cannot exceed 1."
+    },
+    {
+     "value": 0.5714,
+     "why": "Divided cut-offs $4/7$ instead of lengths $3/6$."
+    }
+   ],
+   "solution": "1. Given $X>4$: $X\\sim U(4,10)$, length 6.\n2. $P=\\frac{10-7}{6}=0.5$."
+  },
+  {
+   "id": "ps-uniform-conditional-02",
+   "skill": "ps.uniform-conditional",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim U(2,12)$. Find $P(X<6\\mid X>4)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.25,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.4,
+     "why": "Gave $P(X<6)=4/10$ without conditioning."
+    },
+    {
+     "value": 1.5,
+     "why": "Divided cut-offs $6/4$."
+    },
+    {
+     "value": 0.2,
+     "why": "Gave the joint $P(4<X<6)=2/10$ without dividing by $P(X>4)$."
+    }
+   ],
+   "solution": "1. Restricted range $(4,12)$, length 8.\n2. Favourable $(4,6)$, length 2: $2/8=0.25$."
+  },
+  {
+   "id": "ps-uniform-conditional-03",
+   "skill": "ps.uniform-conditional",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A bus arrives at a time uniform on $[0,30]$ minutes. It has not arrived by minute 10. The probability it arrives within the next 10 minutes is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac13$",
+     "correct": false,
+     "why": "Unconditional $P(10<X<20)=10/30$; the denominator was not restricted."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Divided cut-offs $20/10$; not a probability."
+    },
+    {
+     "text": "$\\frac23$",
+     "correct": false,
+     "why": "Gave $P(X>10)$, the conditioning event itself."
+    },
+    {
+     "text": "$\\frac12$",
+     "correct": true,
+     "why": "Given $X>10$, $X\\sim U(10,30)$; $P(10<X<20)=10/20$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Remaining interval length 20.\n2. $10/20=1/2$."
+  },
+  {
+   "id": "ps-uniform-conditional-04",
+   "skill": "ps.uniform-conditional",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim U(-1,3)$. $P(X^2<1\\mid X>0)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac13$",
+     "correct": true,
+     "why": "Given $(0,3)$; $X^2<1$ there means $(0,1)$: $1/3$."
+    },
+    {
+     "text": "$\\frac14$",
+     "correct": false,
+     "why": "Joint $P(0<X<1)=1/4$, not divided by $P(X>0)=3/4$."
+    },
+    {
+     "text": "$\\frac23$",
+     "correct": false,
+     "why": "Counted all of $(-1,1)$ (length 2) inside the restricted range; negatives are excluded."
+    },
+    {
+     "text": "$\\frac12$",
+     "correct": false,
+     "why": "Unconditional $P(-1<X<1)=2/4$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Restrict to $(0,3)$: length 3.\n2. $X^2<1$ and $X>0$: $(0,1)$, length 1."
+  },
+  {
+   "id": "ps-exponential-01",
+   "skill": "ps.exponential",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A component's lifetime is exponential with mean 5 years. Find the probability it lasts more than 5 years.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.3679,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.6321,
+     "why": "Gave $P(X<5)=1-e^{-1}$."
+    },
+    {
+     "value": 0,
+     "why": "Used $\\lambda=5$ (the mean) so $e^{-25}\\approx0$; the rate is $1/5$."
+    },
+    {
+     "value": 0.5,
+     "why": "Assumed the mean is the median; for the exponential they differ."
+    }
+   ],
+   "solution": "1. $\\lambda=1/5$.\n2. $P(X>5)=e^{-1}\\approx0.368$."
+  },
+  {
+   "id": "ps-exponential-02",
+   "skill": "ps.exponential",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A bulb's lifetime is exponential with mean 1000 h. It has already worked 600 h. The probability it works at least another 500 h is closest to",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.607",
+     "correct": true,
+     "why": "Memoryless: $P(X>1100\\mid X>600)=P(X>500)=e^{-0.5}$."
+    },
+    {
+     "text": "0.549",
+     "correct": false,
+     "why": "Gave $P(X>600)=e^{-0.6}$, the conditioning event."
+    },
+    {
+     "text": "0.333",
+     "correct": false,
+     "why": "Gave unconditional $P(X>1100)=e^{-1.1}$; the condition $X>600$ was not used."
+    },
+    {
+     "text": "0.500",
+     "correct": false,
+     "why": "Used a uniform-style ratio $500/1000$; exponential tails are $e^{-\\lambda t}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\lambda=1/1000$.\n2. Memoryless: answer $=e^{-500/1000}\\approx0.607$."
+  },
+  {
+   "id": "ps-exponential-03",
+   "skill": "ps.exponential",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim$ Exponential with rate $\\lambda=0.5$ and $N=\\lfloor X\\rfloor$. Find $P(N=2)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.1447,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.1839,
+     "why": "Used the density value $f(2)=0.5e^{-1}$ as a probability."
+    },
+    {
+     "value": 0.3679,
+     "why": "Gave $P(X\\ge2)$; $N=2$ means $2\\le X<3$."
+    }
+   ],
+   "solution": "1. $P(N=2)=P(2\\le X<3)=e^{-1}-e^{-1.5}$.\n2. $\\approx0.3679-0.2231=0.1447$ (geometric: $(e^{-0.5})^2(1-e^{-0.5})$)."
+  },
+  {
+   "id": "ps-exponential-04",
+   "skill": "ps.exponential",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ is exponential with mean 2. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\lfloor X\\rfloor$ is geometric with success probability $1-e^{-0.5}$",
+     "correct": true,
+     "why": "$P(\\lfloor X\\rfloor=k)=(e^{-0.5})^k(1-e^{-0.5})$."
+    },
+    {
+     "text": "$P(X>3\\mid X>1)=P(X>2)$",
+     "correct": true,
+     "why": "Memoryless property."
+    },
+    {
+     "text": "The rate is $\\lambda=0.5$",
+     "correct": true,
+     "why": "$\\lambda=1/\\text{mean}$."
+    },
+    {
+     "text": "$\\mathrm{Var}(X)=2$",
+     "correct": false,
+     "why": "$\\mathrm{Var}=1/\\lambda^2=4$; 2 is the mean (and the SD)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\lambda=0.5$, Var $=4$.\n2. Memoryless and floor-geometric follow from $P(X>t)=e^{-0.5t}$."
+  },
+  {
+   "id": "ps-exponential-05",
+   "skill": "ps.exponential",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ is exponential and $P(X>2)=0.25$. Find $E[X]$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.4427,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.6931,
+     "why": "Gave $\\lambda=\\ln4/2$; the mean is $1/\\lambda$."
+    },
+    {
+     "value": 8,
+     "why": "Treated $P(X>2)$ as $2/\\mu$ (a uniform-style ratio)."
+    }
+   ],
+   "solution": "1. $e^{-2\\lambda}=0.25\\Rightarrow\\lambda=\\ln4/2\\approx0.693$.\n2. $E[X]=1/\\lambda\\approx1.443$."
+  },
+  {
+   "id": "ps-standardize-01",
+   "skill": "ps.standardize",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim N(50,16)$ (variance 16). Find $P(X>58)$. Use $\\Phi(0.5)=0.6915$, $\\Phi(2)=0.9772$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.0228,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.3085,
+     "why": "Divided by the variance 16 instead of $\\sigma=4$, giving $z=0.5$."
+    },
+    {
+     "value": 0.9772,
+     "why": "Gave $P(X<58)$, the wrong tail."
+    }
+   ],
+   "solution": "1. $\\sigma=4$, $z=(58-50)/4=2$.\n2. $P=1-0.9772=0.0228$."
+  },
+  {
+   "id": "ps-standardize-02",
+   "skill": "ps.standardize",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Z\\sim N(0,1)$ and $Y=3Z-2$. Then $(E[Y],\\mathrm{Var}(Y))$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(1,9)$",
+     "correct": false,
+     "why": "Took $E[Y]=3-2$, treating $E[Z]$ as 1."
+    },
+    {
+     "text": "$(-2,3)$",
+     "correct": false,
+     "why": "Scaled the variance by $a=3$, not $a^2$."
+    },
+    {
+     "text": "$(-2,7)$",
+     "correct": false,
+     "why": "Subtracted the shift from the variance."
+    },
+    {
+     "text": "$(-2,9)$",
+     "correct": true,
+     "why": "$E=3\\cdot0-2$, $\\mathrm{Var}=3^2\\cdot1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[aZ+b]=b$; $\\mathrm{Var}(aZ+b)=a^2$."
+  },
+  {
+   "id": "ps-standardize-03",
+   "skill": "ps.standardize",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim N(100,15^2)$. Find $P(85<X<130)$. Use $\\Phi(1)=0.8413$, $\\Phi(2)=0.9772$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.8185,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.1359,
+     "why": "Treated the lower $z=-1$ as $+1$: computed $\\Phi(2)-\\Phi(1)$."
+    },
+    {
+     "value": 0.9772,
+     "why": "Stopped at $P(X<130)$ and ignored the lower bound."
+    }
+   ],
+   "solution": "1. $z_1=-1$, $z_2=2$.\n2. $\\Phi(2)-\\Phi(-1)=0.9772-(1-0.8413)=0.8185$."
+  },
+  {
+   "id": "ps-standardize-04",
+   "skill": "ps.standardize",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim N(\\mu,\\sigma^2)$ with $P(X<40)=0.5$ and $P(X<46)=0.8413$. Given $\\Phi(1)=0.8413$, the variance $\\sigma^2$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Confused the $z$-value with $\\sigma$."
+    },
+    {
+     "text": "36",
+     "correct": true,
+     "why": "$\\mu=40$; $(46-40)/\\sigma=1\\Rightarrow\\sigma=6$, $\\sigma^2=36$."
+    },
+    {
+     "text": "2.449",
+     "correct": false,
+     "why": "Treated 6 as the variance and took its root."
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Reported $\\sigma$, but the question asks for the variance."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Median of a normal is $\\mu$: $\\mu=40$.\n2. $z=1$ at 46 gives $\\sigma=6$, variance 36."
+  },
+  {
+   "id": "ps-standardize-05",
+   "skill": "ps.standardize",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Z\\sim N(0,1)$. $E[(2Z+1)^2]$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Dropped the constant term $1^2$."
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Did not square the coefficient: $2E[Z^2]+1$."
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Squared the mean: $(E[2Z+1])^2=1$; misses the variance 4."
+    },
+    {
+     "text": "5",
+     "correct": true,
+     "why": "$4E[Z^2]+4E[Z]+1=4+0+1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[W^2]=\\mathrm{Var}(W)+(E[W])^2$ with $W=2Z+1$.\n2. $=4+1=5$."
+  },
+  {
+   "id": "ps-chi-square-01",
+   "skill": "ps.chi-square",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Z\\sim N(0,1)$. Find $\\mathrm{Var}(Z^2)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Gave $E[Z^2]=1$, the mean of $\\chi^2_1$."
+    },
+    {
+     "value": 3,
+     "why": "Gave $E[Z^4]=3$ without subtracting $(E[Z^2])^2=1$."
+    }
+   ],
+   "solution": "1. $E[Z^4]=3$, $E[Z^2]=1$.\n2. $\\mathrm{Var}(Z^2)=3-1=2$."
+  },
+  {
+   "id": "ps-chi-square-02",
+   "skill": "ps.chi-square",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X_1,X_2,X_3$ are iid $N(0,4)$ (variance 4). Find $\\mathrm{Var}(X_1^2+X_2^2+X_3^2)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 96,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Used $2k$ as if the $X_i$ were standard normal; each $X_i=2Z_i$."
+    },
+    {
+     "value": 24,
+     "why": "Scaled by $\\sigma^2=4$ instead of $\\sigma^4=16$: $X_i^2=4Z_i^2$ has variance $16\\cdot2$."
+    },
+    {
+     "value": 12,
+     "why": "Gave the mean $3\\times4$."
+    }
+   ],
+   "solution": "1. $X_i^2=4Z_i^2$, $\\mathrm{Var}=16\\cdot2=32$.\n2. Independent sum: $3\\times32=96$."
+  },
+  {
+   "id": "ps-chi-square-03",
+   "skill": "ps.chi-square",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Z_1,Z_2,Z_3$ are iid $N(0,1)$. Which has a $\\chi^2_3$ distribution?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$3Z_1^2$",
+     "correct": false,
+     "why": "Mean 3 but variance 18; it is a scaled $\\chi^2_1$."
+    },
+    {
+     "text": "$Z_1+Z_2+Z_3$",
+     "correct": false,
+     "why": "That is normal $N(0,3)$, not chi-square."
+    },
+    {
+     "text": "$Z_1^2+Z_2^2+Z_3^2$",
+     "correct": true,
+     "why": "Sum of 3 independent squared standard normals."
+    },
+    {
+     "text": "$(Z_1+Z_2+Z_3)^2$",
+     "correct": false,
+     "why": "$Z_1+Z_2+Z_3\\sim N(0,3)$, so its square is $3\\chi^2_1$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\chi^2_k$ needs $k$ independent squared standard normals."
+  },
+  {
+   "id": "ps-chi-square-04",
+   "skill": "ps.chi-square",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Z\\sim N(0,1)$ and $V\\sim\\chi^2_4$ are independent. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$E[V]=4$",
+     "correct": true,
+     "why": "Mean of $\\chi^2_k$ is $k$."
+    },
+    {
+     "text": "$Z^2+V\\sim\\chi^2_4$",
+     "correct": false,
+     "why": "Adding one more squared normal gives $\\chi^2_5$."
+    },
+    {
+     "text": "$\\mathrm{Var}(V)=8$",
+     "correct": true,
+     "why": "Variance of $\\chi^2_k$ is $2k$."
+    },
+    {
+     "text": "$Z/\\sqrt{V/4}\\sim t_4$",
+     "correct": true,
+     "why": "Definition of Student's $t$ with 4 df."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\chi^2_k$: mean $k$, variance $2k$; degrees of freedom add."
+  },
+  {
+   "id": "ps-joint-pmf-01",
+   "skill": "ps.joint-pmf",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$p(x,y)=c(x+y)$ for $x\\in\\{0,1\\}$, $y\\in\\{0,1,2\\}$. Find $c$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.1111,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.1667,
+     "why": "Counted 6 cells and set $c=1/6$; the cells carry weights $x+y$."
+    },
+    {
+     "value": 0.3333,
+     "why": "Summed only the $x=0$ row (total 3)."
+    }
+   ],
+   "solution": "1. $\\sum(x+y)=(0+1+2)+(1+2+3)=9$.\n2. $c=1/9\\approx0.1111$."
+  },
+  {
+   "id": "ps-joint-pmf-02",
+   "skill": "ps.joint-pmf",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$p(x,y)=(x+y)/9$ for $x\\in\\{0,1\\}$, $y\\in\\{0,1,2\\}$. Find $P(X=1\\mid Y=1)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.6667,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.2222,
+     "why": "Gave the joint $p(1,1)=2/9$ without dividing by $P(Y=1)$."
+    },
+    {
+     "value": 0.3333,
+     "why": "Divided by $P(X=1)=6/9$ (that gives $P(Y=1\\mid X=1)$), or reported $P(Y=1)=3/9$."
+    }
+   ],
+   "solution": "1. $P(Y=1)=p(0,1)+p(1,1)=1/9+2/9=3/9$.\n2. $P(X=1\\mid Y=1)=(2/9)/(3/9)=2/3$."
+  },
+  {
+   "id": "ps-joint-pmf-03",
+   "skill": "ps.joint-pmf",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The joint PMF of $X,Y$ is\n\n| | $Y=0$ | $Y=1$ |\n|---|---|---|\n| $X=0$ | 0.1 | 0.3 |\n| $X=1$ | 0.2 | 0.4 |\n\n$P(Y=1)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.6",
+     "correct": false,
+     "why": "Summed the row $X=1$, which is $P(X=1)$."
+    },
+    {
+     "text": "0.4",
+     "correct": false,
+     "why": "Took one cell $p(1,1)$ instead of the column sum."
+    },
+    {
+     "text": "0.35",
+     "correct": false,
+     "why": "Averaged the column instead of summing."
+    },
+    {
+     "text": "0.7",
+     "correct": true,
+     "why": "Column sum $0.3+0.4$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Marginal of $Y$: sum down the $Y=1$ column."
+  },
+  {
+   "id": "ps-joint-pmf-04",
+   "skill": "ps.joint-pmf",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The joint PMF of $X,Y$ is\n\n| | $Y=0$ | $Y=1$ |\n|---|---|---|\n| $X=0$ | 0.1 | 0.3 |\n| $X=1$ | 0.2 | 0.4 |\n\n$E[X\\mid Y=1]$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.6",
+     "correct": false,
+     "why": "Gave $E[X]$, ignoring the condition."
+    },
+    {
+     "text": "$\\frac47$",
+     "correct": true,
+     "why": "$P(X=1\\mid Y=1)=0.4/0.7$; $E[X\\mid Y=1]=0\\cdot\\frac37+1\\cdot\\frac47$."
+    },
+    {
+     "text": "0.4",
+     "correct": false,
+     "why": "Used the joint $p(1,1)$ without dividing by $P(Y=1)$."
+    },
+    {
+     "text": "$\\frac23$",
+     "correct": false,
+     "why": "Divided by $P(X=1)=0.6$ instead of $P(Y=1)$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Restrict to column $Y=1$ (total 0.7).\n2. $E[X\\mid Y=1]=0.4/0.7=4/7$."
+  },
+  {
+   "id": "ps-joint-pmf-05",
+   "skill": "ps.joint-pmf",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The joint PMF of $X,Y$ is\n\n| | $Y=1$ | $Y=2$ |\n|---|---|---|\n| $X=1$ | 0.12 | 0.28 |\n| $X=2$ | 0.18 | 0.42 |\n\nWhich statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$X$ and $Y$ are independent",
+     "correct": true,
+     "why": "Every cell equals the product of its marginals, e.g. $0.4\\times0.3=0.12$."
+    },
+    {
+     "text": "$\\mathrm{Cov}(X,Y)=0$",
+     "correct": true,
+     "why": "Independence implies zero covariance."
+    },
+    {
+     "text": "$P(Y=2\\mid X=1)=0.7$",
+     "correct": true,
+     "why": "$0.28/0.4=0.7$."
+    },
+    {
+     "text": "$P(X=2\\mid Y=2)=0.42$",
+     "correct": false,
+     "why": "That is the joint cell; the conditional is $0.42/0.7=0.6$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Marginals: $P(X=1)=0.4$, $P(Y=1)=0.3$.\n2. Check all four cells against products."
+  },
+  {
+   "id": "ps-uniform-area-01",
+   "skill": "ps.uniform-area",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim U(0,2)$ and $Y\\sim U(0,1)$ are independent. Find $P(X\\ge Y)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.75,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.5,
+     "why": "Assumed symmetry; the ranges differ, so $X\\ge Y$ is not a half."
+    },
+    {
+     "value": 0.25,
+     "why": "Reversed: computed $P(X<Y)$, the triangle of area 0.5 out of 2."
+    }
+   ],
+   "solution": "1. Rectangle $[0,2]\\times[0,1]$, area 2.\n2. $X<Y$: triangle of area 0.5, so $P(X\\ge Y)=1-0.25=0.75$."
+  },
+  {
+   "id": "ps-uniform-area-02",
+   "skill": "ps.uniform-area",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X,Y$ are iid $U(0,1)$. Find $P(X+Y\\le0.6)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.18,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.6,
+     "why": "Treated $X+Y$ as uniform; it is triangular."
+    },
+    {
+     "value": 0.36,
+     "why": "Forgot the $\\frac12$ in the triangle area $0.6^2/2$."
+    }
+   ],
+   "solution": "1. Region: triangle with legs 0.6.\n2. Area $=0.6^2/2=0.18$."
+  },
+  {
+   "id": "ps-uniform-area-03",
+   "skill": "ps.uniform-area",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X,Y$ are iid $U(0,1)$. $P(|X-Y|\\le0.2)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.64",
+     "correct": false,
+     "why": "Gave the complement $P(|X-Y|>0.2)$."
+    },
+    {
+     "text": "0.40",
+     "correct": false,
+     "why": "Took band width $2\\times0.2$ times length 1, ignoring the clipped corners."
+    },
+    {
+     "text": "0.36",
+     "correct": true,
+     "why": "$1-2\\cdot\\frac{0.8^2}{2}=1-0.64$."
+    },
+    {
+     "text": "0.18",
+     "correct": false,
+     "why": "Counted only the $X\\ge Y$ side of the band."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Outside the band: two triangles with legs 0.8, total area 0.64.\n2. $1-0.64=0.36$."
+  },
+  {
+   "id": "ps-uniform-area-04",
+   "skill": "ps.uniform-area",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X\\sim U(0,1)$ and $Y\\sim U(0,3)$ are independent. $P(Y<X)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\frac16$",
+     "correct": true,
+     "why": "Triangle area $\\frac12$ over rectangle area 3."
+    },
+    {
+     "text": "$\\frac12$",
+     "correct": false,
+     "why": "Assumed symmetry; the ranges differ."
+    },
+    {
+     "text": "$\\frac13$",
+     "correct": false,
+     "why": "Forgot the $\\frac12$ in the triangle area."
+    },
+    {
+     "text": "$\\frac56$",
+     "correct": false,
+     "why": "Reversed: that is $P(Y\\ge X)$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Rectangle $[0,1]\\times[0,3]$, area 3.\n2. $Y<X$: triangle under $y=x$, area $\\frac12$."
+  },
+  {
+   "id": "ps-uniform-area-05",
+   "skill": "ps.uniform-area",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X,Y$ are iid $U(0,4)$. Find $P(X\\ge2Y)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.25,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.5,
+     "why": "Assumed symmetry, as if the line were $y=x$."
+    },
+    {
+     "value": 0.75,
+     "why": "Reversed: computed $P(X<2Y)$."
+    }
+   ],
+   "solution": "1. Region $y\\le x/2$: area $\\int_0^4\\frac x2dx=4$.\n2. $4/16=0.25$."
+  },
+  {
+   "id": "ps-total-expectation-01",
+   "skill": "ps.total-expectation",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "60% of customers are regulars with mean spend 500; 40% are new with mean spend 200. Find the overall mean spend.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 380,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 350,
+     "why": "Averaged 500 and 200 equally; weights are 0.6 and 0.4."
+    },
+    {
+     "value": 320,
+     "why": "Swapped the weights: $0.4(500)+0.6(200)$."
+    }
+   ],
+   "solution": "1. $E=0.6(500)+0.4(200)=380$."
+  },
+  {
+   "id": "ps-total-expectation-02",
+   "skill": "ps.total-expectation",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A fair die is rolled; if it shows $k$, a fair coin is tossed $k$ times. Find the expected number of heads.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.75,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 3.5,
+     "why": "Gave $E[k]$ and forgot $E[\\text{heads}\\mid k]=k/2$."
+    },
+    {
+     "value": 0.5,
+     "why": "Used one toss only."
+    }
+   ],
+   "solution": "1. $E[H\\mid k]=k/2$.\n2. $E[H]=E[k]/2=3.5/2=1.75$."
+  },
+  {
+   "id": "ps-total-expectation-03",
+   "skill": "ps.total-expectation",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$Y\\sim U(0,1)$ and $E[X\\mid Y]=2Y+1$. Then $E[X]$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "2",
+     "correct": true,
+     "why": "$E[X]=E[2Y+1]=2(0.5)+1$."
+    },
+    {
+     "text": "$2Y+1$",
+     "correct": false,
+     "why": "$E[X]$ is a number; $E[X\\mid Y]$ still has to be averaged over $Y$."
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Plugged $Y=0$ (or dropped the $2Y$ term)."
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Plugged $Y=1$ instead of averaging over $Y$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Tower rule: $E[X]=E[E[X\\mid Y]]$.\n2. $=2E[Y]+1=2$."
+  },
+  {
+   "id": "ps-total-expectation-04",
+   "skill": "ps.total-expectation",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A commuter takes route A with probability 1/3 (mean 30 min) and route B with probability 2/3 (mean 15 min). The expected commute time is",
+   "figure": null,
+   "options": [
+    {
+     "text": "25 min",
+     "correct": false,
+     "why": "Swapped the weights."
+    },
+    {
+     "text": "22.5 min",
+     "correct": false,
+     "why": "Unweighted average of 30 and 15."
+    },
+    {
+     "text": "20 min",
+     "correct": true,
+     "why": "$\\frac13(30)+\\frac23(15)=10+10$."
+    },
+    {
+     "text": "45 min",
+     "correct": false,
+     "why": "Added the conditional means."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[T]=\\sum E[T\\mid\\text{route}]P(\\text{route})=20$."
+  },
+  {
+   "id": "ps-total-variance-01",
+   "skill": "ps.total-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two equally likely groups: group 1 has mean 10 and variance 4; group 2 has mean 20 and variance 4. Find the variance of $X$ for a randomly chosen member.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 29,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Kept only the within-group variance."
+    },
+    {
+     "value": 25,
+     "why": "Kept only the between-group variance of the means."
+    },
+    {
+     "value": 8,
+     "why": "Added the two group variances."
+    }
+   ],
+   "solution": "1. Within: $E[\\mathrm{Var}]=4$.\n2. Between: means 10, 20 equally likely → variance 25.\n3. Total $=29$."
+  },
+  {
+   "id": "ps-total-variance-02",
+   "skill": "ps.total-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "With probability 0.4, $X\\sim N(0,1)$; otherwise $X\\sim N(5,4)$. Find $\\mathrm{Var}(X)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8.8,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 2.8,
+     "why": "Kept only the within part $0.4(1)+0.6(4)$."
+    },
+    {
+     "value": 6,
+     "why": "Kept only the between part."
+    },
+    {
+     "value": 2.5,
+     "why": "Averaged the variances 1 and 4 without weights and ignored the means."
+    }
+   ],
+   "solution": "1. Within $=0.4(1)+0.6(4)=2.8$.\n2. $E[X]=3$; between $=0.4(9)+0.6(4)=6$.\n3. Total $=8.8$."
+  },
+  {
+   "id": "ps-total-variance-03",
+   "skill": "ps.total-variance",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "In $\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]+\\mathrm{Var}(E[X\\mid Y])$, the term $E[\\mathrm{Var}(X\\mid Y)]$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "the average within-group variance",
+     "correct": true,
+     "why": "It averages the spread inside each $Y$-group."
+    },
+    {
+     "text": "the variance between group means",
+     "correct": false,
+     "why": "That is $\\mathrm{Var}(E[X\\mid Y])$."
+    },
+    {
+     "text": "the total variance",
+     "correct": false,
+     "why": "Total is the sum of both terms."
+    },
+    {
+     "text": "always at least $\\mathrm{Var}(X)$",
+     "correct": false,
+     "why": "It is at most $\\mathrm{Var}(X)$ because the other term is non-negative."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Within + between = total."
+  },
+  {
+   "id": "ps-total-variance-04",
+   "skill": "ps.total-variance",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statements are true for any random variables $X,Y$ (finite variances)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]\\cdot\\mathrm{Var}(E[X\\mid Y])$",
+     "correct": false,
+     "why": "The two parts add; they do not multiply."
+    },
+    {
+     "text": "If $E[X\\mid Y]$ is constant, $\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]$",
+     "correct": true,
+     "why": "Between term is 0."
+    },
+    {
+     "text": "$\\mathrm{Var}(X)\\ge E[\\mathrm{Var}(X\\mid Y)]$",
+     "correct": true,
+     "why": "The between term is non-negative."
+    },
+    {
+     "text": "If $X$ is a function of $Y$, $\\mathrm{Var}(X)=\\mathrm{Var}(E[X\\mid Y])$",
+     "correct": true,
+     "why": "Within term is 0 since $X$ is fixed given $Y$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Both parts are non-negative and add to the total."
+  },
+  {
+   "id": "ps-total-variance-05",
+   "skill": "ps.total-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$N$ is uniform on $\\{1,2,3\\}$ and, given $N$, $X\\sim$ Poisson($N$). Find $\\mathrm{Var}(X)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.6667,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Kept only $E[\\mathrm{Var}(X\\mid N)]=E[N]=2$."
+    },
+    {
+     "value": 0.6667,
+     "why": "Kept only $\\mathrm{Var}(E[X\\mid N])=\\mathrm{Var}(N)$."
+    }
+   ],
+   "solution": "1. Poisson: mean = variance = $N$.\n2. $E[N]+\\mathrm{Var}(N)=2+2/3$."
+  },
+  {
+   "id": "ps-descriptive-01",
+   "skill": "ps.descriptive",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The mean of 9 observations is 20. A 10th observation equal to 30 is added. Find the new mean.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 21,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 25,
+     "why": "Averaged the old mean and the new value; the old mean stands for 9 values, not 1."
+    },
+    {
+     "value": 20,
+     "why": "Assumed one value cannot move the mean."
+    }
+   ],
+   "solution": "1. Old total $=180$; new total $=210$.\n2. New mean $=210/10=21$."
+  },
+  {
+   "id": "ps-descriptive-02",
+   "skill": "ps.descriptive",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Data: 8, 2, 11, 5, 2, 14. The median is",
+   "figure": null,
+   "options": [
+    {
+     "text": "6.5",
+     "correct": true,
+     "why": "Sorted 2, 2, 5, 8, 11, 14: middles 5 and 8 average to 6.5."
+    },
+    {
+     "text": "7",
+     "correct": false,
+     "why": "That is the mean $42/6$."
+    },
+    {
+     "text": "8",
+     "correct": false,
+     "why": "Averaged the middle positions 11 and 5 without sorting."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "That is the mode."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sort first.\n2. Even $n$: average the 3rd and 4th values."
+  },
+  {
+   "id": "ps-descriptive-03",
+   "skill": "ps.descriptive",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The mean of 20 values is 15. It is found that a value 40 was wrongly recorded as 10. Find the corrected mean.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 16.5,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 13.5,
+     "why": "Applied the correction in the wrong direction (subtracted 30)."
+    },
+    {
+     "value": 45,
+     "why": "Added the full difference 30 to the mean instead of $30/20$."
+    }
+   ],
+   "solution": "1. Total $=300$; corrected $=300-10+40=330$.\n2. Mean $=330/20=16.5$."
+  },
+  {
+   "id": "ps-descriptive-04",
+   "skill": "ps.descriptive",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Data: 2, 4, 4, 5, 10 (mean 5, median 4, mode 4). The value 10 is replaced by 100. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The mean increases by 18",
+     "correct": true,
+     "why": "Total rises by 90, so mean rises by $90/5$."
+    },
+    {
+     "text": "The range is unchanged",
+     "correct": false,
+     "why": "Range goes from 8 to 98."
+    },
+    {
+     "text": "The mode is unchanged",
+     "correct": true,
+     "why": "4 still occurs most often."
+    },
+    {
+     "text": "The median is unchanged",
+     "correct": true,
+     "why": "Middle sorted value is still 4."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Median and mode ignore the size of an extreme value; mean and range do not."
+  },
+  {
+   "id": "ps-covariance-01",
+   "skill": "ps.covariance",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$E[X]=2$, $E[Y]=3$ and $E[XY]=8$. Find $\\mathrm{Cov}(X,Y)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Gave $E[XY]$ without subtracting $E[X]E[Y]$."
+    },
+    {
+     "value": -2,
+     "why": "Subtracted the wrong way: $E[X]E[Y]-E[XY]$."
+    }
+   ],
+   "solution": "1. $\\mathrm{Cov}=8-2\\cdot3=2$."
+  },
+  {
+   "id": "ps-covariance-02",
+   "skill": "ps.covariance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$\\mathrm{Var}(X)=9$, $\\mathrm{Var}(Y)=16$ and $\\mathrm{Cov}(X,Y)=6$. Find the correlation $\\rho$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.5,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.0417,
+     "why": "Divided by the product of variances $9\\cdot16$ instead of SDs $3\\cdot4$."
+    },
+    {
+     "value": 0.24,
+     "why": "Divided by the sum of variances 25."
+    }
+   ],
+   "solution": "1. $\\rho=6/(3\\cdot4)=0.5$."
+  },
+  {
+   "id": "ps-covariance-03",
+   "skill": "ps.covariance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$\\mathrm{Var}(X)=4$, $\\mathrm{Var}(Y)=9$, $\\mathrm{Cov}(X,Y)=-2$. Find $\\mathrm{Var}(2X-3Y)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 121,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 97,
+     "why": "Dropped the covariance term."
+    },
+    {
+     "value": 73,
+     "why": "Sign slip in the cross term: $2ab\\,\\mathrm{Cov}=2(2)(-3)(-2)=+24$, not $-24$."
+    },
+    {
+     "value": -19,
+     "why": "Did not square the coefficients: $2(4)-3(9)$."
+    }
+   ],
+   "solution": "1. $a^2\\mathrm{Var}X=16$, $b^2\\mathrm{Var}Y=81$.\n2. $2ab\\,\\mathrm{Cov}=2(2)(-3)(-2)=24$.\n3. Total $=121$."
+  },
+  {
+   "id": "ps-covariance-04",
+   "skill": "ps.covariance",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The joint PMF of $X,Y$ is\n\n| | $Y=0$ | $Y=1$ |\n|---|---|---|\n| $X=0$ | 0.1 | 0.3 |\n| $X=1$ | 0.2 | 0.4 |\n\n$\\mathrm{Cov}(X,Y)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.02",
+     "correct": false,
+     "why": "Subtracted in the wrong order."
+    },
+    {
+     "text": "0.40",
+     "correct": false,
+     "why": "Gave $E[XY]$ without subtracting $E[X]E[Y]$."
+    },
+    {
+     "text": "$-0.089$",
+     "correct": false,
+     "why": "Divided by $\\sigma_X\\sigma_Y$: that is the correlation, not the covariance."
+    },
+    {
+     "text": "$-0.02$",
+     "correct": true,
+     "why": "$E[XY]=0.4$, $E[X]E[Y]=0.6\\times0.7=0.42$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[X]=0.6$, $E[Y]=0.7$, $E[XY]=p(1,1)=0.4$.\n2. $\\mathrm{Cov}=0.4-0.42=-0.02$."
+  },
+  {
+   "id": "ps-covariance-05",
+   "skill": "ps.covariance",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ and $Y$ are independent with $\\mathrm{Var}(X)=3$ and $\\mathrm{Var}(Y)=5$. $\\mathrm{Var}(X-Y)$ equals",
+   "figure": null,
+   "options": [
+    {
+     "text": "Cannot be found without $\\mathrm{Cov}(X,Y)$",
+     "correct": false,
+     "why": "Independence gives $\\mathrm{Cov}=0$."
+    },
+    {
+     "text": "$-2$",
+     "correct": false,
+     "why": "Subtracted variances; the coefficient $-1$ is squared."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Took $|3-5|$; variances of independent terms always add."
+    },
+    {
+     "text": "8",
+     "correct": true,
+     "why": "$\\mathrm{Var}(X)+(-1)^2\\mathrm{Var}(Y)$, and $\\mathrm{Cov}=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\mathrm{Var}(X-Y)=\\mathrm{Var}X+\\mathrm{Var}Y-2\\mathrm{Cov}=3+5-0$."
+  },
+  {
+   "id": "ps-cov-independence-01",
+   "skill": "ps.cov-independence",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X$ is uniform on $\\{-1,0,1\\}$ and $Y=X^2$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\rho(X,Y)=1$",
+     "correct": false,
+     "why": "$\\rho=0$; the relation is not linear."
+    },
+    {
+     "text": "$X$ and $Y$ are independent",
+     "correct": false,
+     "why": "$P(Y=0\\mid X=0)=1\\ne P(Y=0)=1/3$; zero covariance does not give independence."
+    },
+    {
+     "text": "$X$ and $Y$ are dependent",
+     "correct": true,
+     "why": "$Y$ is a function of $X$."
+    },
+    {
+     "text": "$\\mathrm{Cov}(X,Y)=0$",
+     "correct": true,
+     "why": "$E[XY]=E[X^3]=0$ and $E[X]=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Cov uses $E[X^3]=0$.\n2. Dependence: knowing $X$ fixes $Y$."
+  },
+  {
+   "id": "ps-cov-independence-02",
+   "skill": "ps.cov-independence",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statements are always true for random variables $X,Y$ with finite variances?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If $\\mathrm{Cov}(X,Y)=0$ then $X,Y$ are independent",
+     "correct": false,
+     "why": "Implication reversed; $Y=X^2$ with symmetric $X$ is a counterexample."
+    },
+    {
+     "text": "If $\\mathrm{Cov}(X,Y)\\ne0$ then $X,Y$ are dependent",
+     "correct": true,
+     "why": "Contrapositive of the first statement."
+    },
+    {
+     "text": "If $X,Y$ are dependent then $\\mathrm{Cov}(X,Y)\\ne0$",
+     "correct": false,
+     "why": "Contrapositive of the false converse, so also false."
+    },
+    {
+     "text": "If $X,Y$ are independent then $\\mathrm{Cov}(X,Y)=0$",
+     "correct": true,
+     "why": "$E[XY]=E[X]E[Y]$ under independence."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Only 'independent ⇒ Cov 0' and its contrapositive hold."
+  },
+  {
+   "id": "ps-cov-independence-03",
+   "skill": "ps.cov-independence",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$(X,Y)$ is uniform on the four points $(1,0),(-1,0),(0,1),(0,-1)$. Which is true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\mathrm{Cov}(X,Y)=0$ and $X,Y$ are dependent",
+     "correct": true,
+     "why": "$XY=0$ always and $E[X]=E[Y]=0$; but $P(X=0,Y=0)=0\\ne\\frac12\\cdot\\frac12$."
+    },
+    {
+     "text": "$\\mathrm{Cov}(X,Y)=0$ and $X,Y$ are independent",
+     "correct": false,
+     "why": "Reversed implication: zero covariance does not give independence."
+    },
+    {
+     "text": "$\\mathrm{Cov}(X,Y)\\ne0$ and $X,Y$ are dependent",
+     "correct": false,
+     "why": "$E[XY]=0=E[X]E[Y]$, so Cov is 0."
+    },
+    {
+     "text": "$\\mathrm{Cov}(X,Y)\\ne0$ and $X,Y$ are independent",
+     "correct": false,
+     "why": "Impossible: independence forces Cov $=0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Cov $=0-0=0$.\n2. Product test fails at $(0,0)$, so dependent."
+  },
+  {
+   "id": "ps-cov-independence-04",
+   "skill": "ps.cov-independence",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "For $X\\sim N(0,1)$, $\\mathrm{Cov}(X,X^2)=0$",
+     "correct": true,
+     "why": "$E[X^3]=0$ by symmetry."
+    },
+    {
+     "text": "If $(X,Y)$ is jointly normal and $\\mathrm{Cov}(X,Y)=0$, then $X,Y$ are independent",
+     "correct": true,
+     "why": "Special property of the bivariate normal."
+    },
+    {
+     "text": "$\\rho=0$ means $X$ and $Y$ have no relationship of any kind",
+     "correct": false,
+     "why": "$\\rho$ only measures linear association."
+    },
+    {
+     "text": "For $X\\sim N(0,1)$, $X$ and $X^2$ are independent",
+     "correct": false,
+     "why": "$X^2$ is determined by $X$; zero covariance does not imply independence."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Cov 0 ⇒ independence only under joint normality."
+  },
+  {
+   "id": "ps-clt-sum-01",
+   "skill": "ps.clt-sum",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X_1,\\dots,X_{25}$ are iid with mean 4 and SD 3. Find the SD of $S=X_1+\\dots+X_{25}$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 15,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 75,
+     "why": "Multiplied the SD by $n$; variances add, so SD scales by $\\sqrt n$."
+    },
+    {
+     "value": 225,
+     "why": "Gave the variance $25\\times9$."
+    },
+    {
+     "value": 0.6,
+     "why": "Gave the SE of the mean $3/5$."
+    }
+   ],
+   "solution": "1. $\\mathrm{Var}(S)=25\\cdot9=225$.\n2. $\\mathrm{SD}=15$."
+  },
+  {
+   "id": "ps-clt-sum-02",
+   "skill": "ps.clt-sum",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A population has $\\sigma=12$. Find the standard error of the sample mean for $n=36$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.3333,
+     "why": "Divided by $n$ instead of $\\sqrt n$."
+    },
+    {
+     "value": 4,
+     "why": "Gave $\\sigma^2/n=144/36$, the variance of $\\bar X$."
+    },
+    {
+     "value": 72,
+     "why": "Multiplied by $\\sqrt n$ (that is the SD of the sum)."
+    }
+   ],
+   "solution": "1. $SE=\\sigma/\\sqrt n=12/6=2$."
+  },
+  {
+   "id": "ps-clt-sum-03",
+   "skill": "ps.clt-sum",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A fair coin is tossed 400 times. Using the normal approximation (no continuity correction), find $P(\\text{heads}\\ge220)$. Use $\\Phi(0.2)=0.5793$, $\\Phi(2)=0.9772$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.0228,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.9772,
+     "why": "Took the wrong tail, $P(\\text{heads}<220)$."
+    },
+    {
+     "value": 0.4207,
+     "why": "Used the variance 100 as the SD: $z=20/100$."
+    }
+   ],
+   "solution": "1. Mean $np=200$, variance $np(1-p)=100$, SD 10.\n2. $z=2$, $P=1-0.9772=0.0228$."
+  },
+  {
+   "id": "ps-clt-sum-04",
+   "skill": "ps.clt-sum",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X_1,\\dots,X_{100}$ are iid with mean 2 and variance 4. $P(\\bar X>2.4)$ is approximately (use $\\Phi(0.2)=0.5793$, $\\Phi(2)=0.9772$)",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.0228",
+     "correct": true,
+     "why": "$SE=2/10=0.2$, $z=0.4/0.2=2$."
+    },
+    {
+     "text": "0.9772",
+     "correct": false,
+     "why": "Wrong tail."
+    },
+    {
+     "text": "0.0000",
+     "correct": false,
+     "why": "Used $\\sigma^2/n=0.04$ as the SE: $z=10$."
+    },
+    {
+     "text": "0.4207",
+     "correct": false,
+     "why": "Used $\\sigma=2$ as the SE (forgot $\\sqrt n$): $z=0.2$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\bar X\\approx N(2, 4/100)$, SE $=0.2$.\n2. $P(Z>2)=0.0228$."
+  },
+  {
+   "id": "ps-ci-compute-01",
+   "skill": "ps.ci-compute",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$n=64$, $\\sigma=16$ (known), $\\bar x=50$. Find the upper limit of the 95% CI for $\\mu$ ($z_{0.025}=1.96$). Enter a single number.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 53.92,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 81.36,
+     "why": "Forgot $\\sqrt n$: used $1.96\\times16$."
+    },
+    {
+     "value": 50.49,
+     "why": "Divided by $n$ instead of $\\sqrt n$: $16/64$."
+    },
+    {
+     "value": 46.08,
+     "why": "Gave the lower limit."
+    }
+   ],
+   "solution": "1. $SE=16/8=2$.\n2. Upper $=50+1.96\\times2=53.92$."
+  },
+  {
+   "id": "ps-ci-compute-02",
+   "skill": "ps.ci-compute",
+   "type": "NAT",
+   "marks": 2,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$\\sigma=10$ (known), $n=100$. Find the total width of the 95% CI for $\\mu$ ($z_{0.025}=1.96$). Enter a single number.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3.92,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 1.96,
+     "why": "Gave the half-width (margin of error)."
+    },
+    {
+     "value": 0.392,
+     "why": "Used $\\sigma/n$ instead of $\\sigma/\\sqrt n$."
+    }
+   ],
+   "solution": "1. $SE=1$.\n2. Width $=2\\times1.96\\times1=3.92$."
+  },
+  {
+   "id": "ps-ci-compute-03",
+   "skill": "ps.ci-compute",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "With $\\sigma=5$ known, what is the smallest $n$ for which the 95% margin of error is at most 1? ($z_{0.025}=1.96$)",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 97,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 96,
+     "why": "Rounded $96.04$ down; $n=96$ gives margin slightly above 1."
+    },
+    {
+     "value": 10,
+     "why": "Forgot to square: $1.96\\times5=9.8$."
+    }
+   ],
+   "solution": "1. $1.96\\cdot5/\\sqrt n\\le1\\Rightarrow n\\ge(9.8)^2=96.04$.\n2. Round up: $n=97$."
+  },
+  {
+   "id": "ps-ci-compute-04",
+   "skill": "ps.ci-compute",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A normal sample of $n=16$ gives $\\bar x=20$, $s=8$ ($\\sigma$ unknown). Given $t_{0.025,15}=2.131$, $t_{0.025,16}=2.120$, $z_{0.025}=1.96$, the 95% CI for $\\mu$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(15.76,\\ 24.24)$",
+     "correct": false,
+     "why": "Used $n=16$ degrees of freedom; it should be $n-1=15$."
+    },
+    {
+     "text": "$(15.74,\\ 24.26)$",
+     "correct": true,
+     "why": "$20\\pm2.131\\times8/4=20\\pm4.262$."
+    },
+    {
+     "text": "$(16.08,\\ 23.92)$",
+     "correct": false,
+     "why": "Used $z$ although $\\sigma$ is unknown and $n$ is small."
+    },
+    {
+     "text": "$(2.95,\\ 37.05)$",
+     "correct": false,
+     "why": "Forgot $\\sqrt n$: $2.131\\times8$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $SE=8/\\sqrt{16}=2$, df $=15$.\n2. $20\\pm2.131\\times2$."
+  },
+  {
+   "id": "ps-ci-interpret-01",
+   "skill": "ps.ci-interpret",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A 95% CI for $\\mu$ computed as $\\bar x\\pm1.96\\sigma/\\sqrt n$ is $(12.1,\\ 15.3)$. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$P(12.1<\\mu<15.3)=0.95$",
+     "correct": false,
+     "why": "$\\mu$ is fixed; once computed, the interval either covers it or not."
+    },
+    {
+     "text": "The sample mean is 13.7",
+     "correct": true,
+     "why": "A symmetric interval is centred at $\\bar x=(12.1+15.3)/2$."
+    },
+    {
+     "text": "95% of the sample observations lie in $(12.1,\\ 15.3)$",
+     "correct": false,
+     "why": "The CI is for the mean, not for individual observations."
+    },
+    {
+     "text": "If the procedure were repeated many times, about 95% of the intervals would contain $\\mu$",
+     "correct": true,
+     "why": "That is what the confidence level means."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Confidence is a property of the method.\n2. Centre $=\\bar x$."
+  },
+  {
+   "id": "ps-ci-interpret-02",
+   "skill": "ps.ci-interpret",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Other things fixed, which statements about the width of a $z$-interval for $\\mu$ are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Increasing $n$ narrows the interval",
+     "correct": true,
+     "why": "Width $\\propto1/\\sqrt n$."
+    },
+    {
+     "text": "Going from 95% to 99% confidence narrows the interval",
+     "correct": false,
+     "why": "Higher confidence needs a larger $z$, so a wider interval."
+    },
+    {
+     "text": "Quadrupling $n$ halves the width",
+     "correct": true,
+     "why": "$\\sqrt4=2$."
+    },
+    {
+     "text": "A larger $\\sigma$ widens the interval",
+     "correct": true,
+     "why": "Width $\\propto\\sigma$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Width $=2z_{\\alpha/2}\\sigma/\\sqrt n$."
+  },
+  {
+   "id": "ps-ci-interpret-03",
+   "skill": "ps.ci-interpret",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A computed 90% CI for $\\mu$ is $(4.2,\\ 6.8)$. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "There is a 90% probability that $\\mu$ lies between 4.2 and 6.8",
+     "correct": false,
+     "why": "Assigns probability to a fixed parameter."
+    },
+    {
+     "text": "$\\mu$ is either in $(4.2,6.8)$ or not; 90% is the long-run coverage rate of the method",
+     "correct": true,
+     "why": "Probability refers to the random interval before data, not to fixed $\\mu$."
+    },
+    {
+     "text": "90% of future sample means will fall in $(4.2,6.8)$",
+     "correct": false,
+     "why": "The CI targets $\\mu$, not future $\\bar x$ values."
+    },
+    {
+     "text": "$\\bar x$ lies in the interval with probability 0.9",
+     "correct": false,
+     "why": "$\\bar x$ is the centre, so it is always inside."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Frequentist CI: coverage of the procedure."
+  },
+  {
+   "id": "ps-ci-interpret-04",
+   "skill": "ps.ci-interpret",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A 95% CI for $\\mu$ is $(48,\\ 56)$. Consider two-sided tests at the 5% level. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The margin of error is 4",
+     "correct": true,
+     "why": "Half-width $(56-48)/2$."
+    },
+    {
+     "text": "$H_0:\\mu=58$ is rejected",
+     "correct": true,
+     "why": "58 lies outside the 95% CI."
+    },
+    {
+     "text": "$P(H_0:\\mu=50\\text{ is true})=0.95$",
+     "correct": false,
+     "why": "Neither a CI nor a test gives the probability that $H_0$ is true."
+    },
+    {
+     "text": "$H_0:\\mu=50$ is not rejected",
+     "correct": true,
+     "why": "50 lies inside the 95% CI."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. CI–test duality: reject $\\mu_0$ at 5% iff $\\mu_0$ is outside the 95% CI."
+  },
+  {
+   "id": "ps-test-select-01",
+   "skill": "ps.test-select",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Is the mean fill weight 500 g? A normal sample of 12 bottles is taken; $\\sigma$ is unknown. The test statistic follows",
+   "figure": null,
+   "options": [
+    {
+     "text": "$t$ with 11 df",
+     "correct": true,
+     "why": "Mean with unknown $\\sigma$: $t_{n-1}$."
+    },
+    {
+     "text": "$\\chi^2$ with 11 df",
+     "correct": false,
+     "why": "$\\chi^2_{n-1}$ is for testing a variance, not a mean."
+    },
+    {
+     "text": "$z$ (standard normal)",
+     "correct": false,
+     "why": "$z$ needs $\\sigma$ known (or a large sample)."
+    },
+    {
+     "text": "$t$ with 12 df",
+     "correct": false,
+     "why": "Degrees of freedom are $n-1=11$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Parameter: mean. $\\sigma$ unknown, $n=12$ → $t_{11}$."
+  },
+  {
+   "id": "ps-test-select-02",
+   "skill": "ps.test-select",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "To test $H_0:\\sigma^2=4$ for a normal population from a sample of size $n$, the statistic is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(n-1)s^2/4$, compared with $\\chi^2_{n-1}$",
+     "correct": true,
+     "why": "Variance test for a normal population."
+    },
+    {
+     "text": "$\\sum(O-E)^2/E$",
+     "correct": false,
+     "why": "That is the goodness-of-fit statistic for counts."
+    },
+    {
+     "text": "$(\\bar x-\\mu_0)/(s/\\sqrt n)$, compared with $t_{n-1}$",
+     "correct": false,
+     "why": "That tests a mean, not a variance."
+    },
+    {
+     "text": "$(\\bar x-\\mu_0)/(2/\\sqrt n)$, compared with $N(0,1)$",
+     "correct": false,
+     "why": "That is a $z$-test for a mean with $\\sigma=2$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Variance → $\\chi^2_{n-1}$ with $(n-1)s^2/\\sigma_0^2$."
+  },
+  {
+   "id": "ps-test-select-03",
+   "skill": "ps.test-select",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which situations call for a $\\chi^2$ test?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Whether mean height is 170 cm with $\\sigma$ known",
+     "correct": false,
+     "why": "A mean with known $\\sigma$ uses $z$; $\\chi^2$ is not for means."
+    },
+    {
+     "text": "Whether gender and product preference are independent, from a $2\\times3$ table",
+     "correct": true,
+     "why": "Test of independence on a contingency table."
+    },
+    {
+     "text": "Whether a normal population's variance equals 9",
+     "correct": true,
+     "why": "Variance test uses $\\chi^2_{n-1}$."
+    },
+    {
+     "text": "Whether a die is fair, from counts of 600 rolls",
+     "correct": true,
+     "why": "Goodness of fit on counts."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\chi^2$: counts (fit/independence) or a single normal variance."
+  },
+  {
+   "id": "ps-test-select-04",
+   "skill": "ps.test-select",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A normal sample of $n=16$ has $\\bar x=52$ and $s=6$. For $H_0:\\mu=50$, find the value of the $t$ statistic.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.3333,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.3333,
+     "why": "Forgot $\\sqrt n$: used $2/6$."
+    },
+    {
+     "value": 5.3333,
+     "why": "Divided $s$ by $n$ instead of $\\sqrt n$."
+    }
+   ],
+   "solution": "1. $t=(52-50)/(6/4)$.\n2. $=1.333$ with 15 df."
+  },
+  {
+   "id": "ps-test-select-05",
+   "skill": "ps.test-select",
+   "type": "NAT",
+   "marks": 2,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A coin is tossed 100 times: 60 heads, 40 tails. Compute the $\\chi^2$ goodness-of-fit statistic for $H_0$: fair coin.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Included only the heads cell; both cells contribute."
+    },
+    {
+     "value": 0.08,
+     "why": "Divided by $E^2$ instead of $E$."
+    }
+   ],
+   "solution": "1. $E=50$ per cell.\n2. $(10^2+10^2)/50=4$ with 1 df."
+  },
+  {
+   "id": "ps-test-logic-01",
+   "skill": "ps.test-logic",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A test of $H_0$ gives $p=0.03$. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "At $\\alpha=0.05$, $H_0$ is rejected",
+     "correct": true,
+     "why": "$0.03\\le0.05$."
+    },
+    {
+     "text": "If $H_0$ were true, a result at least this extreme would occur with probability 0.03",
+     "correct": true,
+     "why": "That is the definition of the p-value."
+    },
+    {
+     "text": "The probability that $H_0$ is true is 0.03",
+     "correct": false,
+     "why": "A p-value is computed assuming $H_0$; it is not $P(H_0)$."
+    },
+    {
+     "text": "At $\\alpha=0.01$, we fail to reject $H_0$",
+     "correct": true,
+     "why": "$0.03>0.01$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Compare $p$ with $\\alpha$.\n2. p-value is conditional on $H_0$."
+  },
+  {
+   "id": "ps-test-logic-02",
+   "skill": "ps.test-logic",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A test gives $p=0.12$ at $\\alpha=0.05$. The correct conclusion is",
+   "figure": null,
+   "options": [
+    {
+     "text": "Accept $H_0$: it is shown to be true",
+     "correct": false,
+     "why": "Not rejecting is not proof of $H_0$."
+    },
+    {
+     "text": "Reject $H_0$ because $0.12>0.05$",
+     "correct": false,
+     "why": "Direction reversed: reject only when $p\\le\\alpha$."
+    },
+    {
+     "text": "Fail to reject $H_0$; the data do not give enough evidence against it",
+     "correct": true,
+     "why": "$p>\\alpha$."
+    },
+    {
+     "text": "There is a 12% chance that $H_0$ is true",
+     "correct": false,
+     "why": "Assigns probability to $H_0$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $p=0.12>0.05$ → fail to reject."
+  },
+  {
+   "id": "ps-test-logic-03",
+   "skill": "ps.test-logic",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A two-sided $z$-test gives $z=1.8$. Using $\\Phi(1.8)=0.9641$, find the p-value.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.0718,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.0359,
+     "why": "Gave the one-sided p-value; two-sided doubles it."
+    },
+    {
+     "value": 0.9641,
+     "why": "Gave $\\Phi(1.8)$, the area on the wrong side."
+    },
+    {
+     "value": 0.9282,
+     "why": "Doubled the wrong-side area: $1-0.0718$."
+    }
+   ],
+   "solution": "1. One tail: $1-0.9641=0.0359$.\n2. Two-sided: $2\\times0.0359=0.0718$."
+  },
+  {
+   "id": "ps-test-logic-04",
+   "skill": "ps.test-logic",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For $H_1:\\mu>\\mu_0$ the observed statistic is $z=-1.5$. Given $\\Phi(1.5)=0.9332$, the p-value is",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.0668",
+     "correct": false,
+     "why": "Used the left tail $P(Z\\le-1.5)$; for $H_1:\\mu>\\mu_0$ the p-value is the right tail."
+    },
+    {
+     "text": "0.0334",
+     "correct": false,
+     "why": "Halved the wrong tail."
+    },
+    {
+     "text": "0.9332",
+     "correct": true,
+     "why": "$P(Z\\ge-1.5)=\\Phi(1.5)$; the data point away from $H_1$."
+    },
+    {
+     "text": "0.1336",
+     "correct": false,
+     "why": "Computed a two-sided p-value."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Right-tailed test: $p=P(Z\\ge z_{obs})$.\n2. $P(Z\\ge-1.5)=0.9332$ → fail to reject."
+  },
+  {
+   "id": "ps-errors-power-01",
+   "skill": "ps.errors-power",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A Type II error is",
+   "figure": null,
+   "options": [
+    {
+     "text": "rejecting $H_0$ when $H_1$ is true",
+     "correct": false,
+     "why": "That is a correct decision (power)."
+    },
+    {
+     "text": "failing to reject $H_0$ when $H_1$ is true",
+     "correct": true,
+     "why": "Missed detection; probability $\\beta$."
+    },
+    {
+     "text": "the probability that $H_0$ is false",
+     "correct": false,
+     "why": "Error rates are conditional on a hypothesis, not probabilities of hypotheses."
+    },
+    {
+     "text": "rejecting $H_0$ when $H_0$ is true",
+     "correct": false,
+     "why": "That is a Type I error."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Type I: false alarm ($\\alpha$). Type II: miss ($\\beta$)."
+  },
+  {
+   "id": "ps-errors-power-02",
+   "skill": "ps.errors-power",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "One observation $X\\sim N(\\mu,1)$. Test $H_0:\\mu=0$ vs $H_1:\\mu=2$; reject $H_0$ if $X>1.5$. Find the power. Use $\\Phi(0.5)=0.6915$, $\\Phi(1.5)=0.9332$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.6915,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.3085,
+     "why": "Gave $\\beta=P(X\\le1.5\\mid\\mu=2)$."
+    },
+    {
+     "value": 0.0668,
+     "why": "Gave $\\alpha=P(X>1.5\\mid\\mu=0)$."
+    },
+    {
+     "value": 0.9332,
+     "why": "Used $\\mu=0$ in the wrong tail: $P(X\\le1.5\\mid H_0)$."
+    }
+   ],
+   "solution": "1. Power $=P(X>1.5\\mid\\mu=2)=P(Z>-0.5)$.\n2. $=\\Phi(0.5)=0.6915$."
+  },
+  {
+   "id": "ps-errors-power-03",
+   "skill": "ps.errors-power",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Other things fixed, which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Lowering $\\alpha$ from 0.05 to 0.01 increases $\\beta$",
+     "correct": true,
+     "why": "A stricter cut-off misses more true effects."
+    },
+    {
+     "text": "Power $=P(\\text{reject }H_0\\mid H_0\\text{ true})$",
+     "correct": false,
+     "why": "That is $\\alpha$; power is computed under $H_1$."
+    },
+    {
+     "text": "$\\alpha+\\beta=1$ always",
+     "correct": false,
+     "why": "They are computed under different hypotheses; no such identity."
+    },
+    {
+     "text": "Increasing $n$ increases power",
+     "correct": true,
+     "why": "Smaller SE separates $H_0$ and $H_1$ distributions."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Power $=1-\\beta=P(\\text{reject}\\mid H_1)$."
+  },
+  {
+   "id": "ps-errors-power-04",
+   "skill": "ps.errors-power",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "To test $H_0$: a coin is fair, it is tossed 5 times and $H_0$ is rejected if all 5 tosses are the same. Find the Type I error probability.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.0625,
+    "tol": 0.0005
+   },
+   "traps": [
+    {
+     "value": 0.03125,
+     "why": "Counted only all heads; all tails also leads to rejection."
+    },
+    {
+     "value": 0.9375,
+     "why": "Gave $P(\\text{fail to reject}\\mid H_0)$."
+    }
+   ],
+   "solution": "1. Under $H_0$: $P(HHHHH)+P(TTTTT)=2/32$.\n2. $\\alpha=0.0625$."
+  },
+  {
+   "id": "ps-estimator-01",
+   "skill": "ps.estimator",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X_1,\\dots,X_n$ are iid with mean $\\mu$ and variance $\\sigma^2$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\bar X$ is unbiased for $\\mu$",
+     "correct": true,
+     "why": "$E[\\bar X]=\\mu$."
+    },
+    {
+     "text": "$X_1$ alone is an unbiased estimator of $\\mu$",
+     "correct": true,
+     "why": "$E[X_1]=\\mu$; unbiased but with larger variance $\\sigma^2$."
+    },
+    {
+     "text": "$\\frac1n\\sum(X_i-\\bar X)^2$ is unbiased for $\\sigma^2$",
+     "correct": false,
+     "why": "Its mean is $\\frac{n-1}n\\sigma^2$; the $n-1$ divisor is needed."
+    },
+    {
+     "text": "$\\mathrm{Var}(\\bar X)=\\sigma^2/n$",
+     "correct": true,
+     "why": "Independent terms, each scaled by $1/n$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Unbiasedness is about the mean of the estimator; precision is about its variance."
+  },
+  {
+   "id": "ps-estimator-02",
+   "skill": "ps.estimator",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$T=(X_1+2X_2+3X_3)/k$ where $X_i$ are iid with mean $\\mu$. For $T$ to be unbiased for $\\mu$, $k$ must be",
+   "figure": null,
+   "options": [
+    {
+     "text": "14",
+     "correct": false,
+     "why": "Used the sum of squared weights, which matters for variance, not bias."
+    },
+    {
+     "text": "6",
+     "correct": true,
+     "why": "$E[T]=(1+2+3)\\mu/k=\\mu$ needs $k=6$."
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Divided by the number of terms, not the sum of weights."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Took the average weight."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $E[T]=6\\mu/k$.\n2. Set equal to $\\mu$: $k=6$."
+  },
+  {
+   "id": "ps-estimator-03",
+   "skill": "ps.estimator",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$X_1,\\dots,X_4$ are iid with variance $\\sigma^2$. $T_1=\\bar X$ (all four) and $T_2=(X_1+X_4)/2$. Find $\\mathrm{Var}(T_2)/\\mathrm{Var}(T_1)$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.5,
+     "why": "Inverted the ratio."
+    },
+    {
+     "value": 1,
+     "why": "Assumed two unbiased estimators have equal variance."
+    }
+   ],
+   "solution": "1. $\\mathrm{Var}(T_1)=\\sigma^2/4$, $\\mathrm{Var}(T_2)=\\sigma^2/2$.\n2. Ratio $=2$."
+  },
+  {
+   "id": "ps-estimator-04",
+   "skill": "ps.estimator",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "As the sample size $n$ grows, which statements about $\\bar X$ (iid data, finite variance) are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Its variance decreases",
+     "correct": true,
+     "why": "$\\sigma^2/n$."
+    },
+    {
+     "text": "$E[\\bar X]$ moves closer to $\\mu$",
+     "correct": false,
+     "why": "It already equals $\\mu$; only the spread shrinks."
+    },
+    {
+     "text": "Its bias stays 0",
+     "correct": true,
+     "why": "$E[\\bar X]=\\mu$ for every $n$."
+    },
+    {
+     "text": "$\\mathrm{Var}(\\bar X)$ decreases like $1/\\sqrt n$",
+     "correct": false,
+     "why": "Variance scales as $1/n$; the SE scales as $1/\\sqrt n$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Unbiased at every $n$; variance $\\sigma^2/n$."
+  }
+ ]
+}
