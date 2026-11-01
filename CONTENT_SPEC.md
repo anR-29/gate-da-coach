@@ -89,5 +89,29 @@ Concise, at most about 60 lines. Structure:
 | `calc` | `data/questions/calc.json` | Calculus and Optimization (days 22–24) |
 | `py` | `data/questions/py.json` | Python and DSA (days 25–35) |
 | `ga` | `data/questions/ga.json` | General Aptitude (every day, by category) |
+| `dsa` | `data/questions/dsa.json` | Data structures and algorithms (days 29–35) |
+| `db` | `data/questions/db.json` | Databases and warehousing (days 36–42) |
+| `ml` | `data/questions/ml.json` | Machine learning (days 43–56) |
+| `ai` | `data/questions/ai.json` | Artificial intelligence (days 57–63) |
+
+## Trap classes (optional `trap` field, from the 2024–26 predictability study)
+
+Wrong options and NAT `traps` may carry `"trap": "C6"`. The app shows the class name in feedback and tracks which classes the student falls for.
+
+| Code | Class |
+|---|---|
+| C1 | converse / missing condition / over-claim |
+| C2 | swap of paired concepts (single↔complete linkage, LIFO↔FIFO, α↔β, ∪↔∩) |
+| C3 | wrong neighbouring formula |
+| C4 | square / scale (variance vs SD, ‖u‖ vs ‖u‖², λ vs 1/λ) |
+| C5 | boundary / strictness / endpoints / support |
+| C6 | counting convention / off-by-one / partial step |
+| C7 | independence / prior / conditional inversion |
+| C8 | structural impossibility / "always" |
+| C9 | property misapplied (data structure, model, language semantics) |
+| C10 | surface look-alike |
+| C11 | sign / direction |
+
+**Design patterns seen in real papers:** most MSQs have 2 correct options and some have 1 or 3; never use "all four correct" as a habit. NAT answers are often integers or probabilities in [0, 1]. Mix these naturally so that no answer pattern can be exploited.
 
 GA skills must use these category ids, so they match the plan's GA rotation: `ga.grammar`, `ga.reading`, `ga.numerical`, `ga.di`, `ga.reasoning`, `ga.spatial`. Set `days: []` for GA skills.

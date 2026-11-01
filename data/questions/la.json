@@ -236,7 +236,8 @@
     {
      "text": "$\\{(x,y,z): xy=0\\}$",
      "correct": false,
-     "why": "Union of two planes. $(1,0,0)+(0,1,0)=(1,1,0)$ has $xy=1$, so it is not closed under addition."
+     "why": "Union of two planes. $(1,0,0)+(0,1,0)=(1,1,0)$ has $xy=1$, so it is not closed under addition.",
+     "trap": "C9"
     },
     {
      "text": "$\\{(x,y,z): x+2y-z=0\\}$",
@@ -251,7 +252,8 @@
     {
      "text": "$\\{(x,y,z): x+y+z=1\\}$",
      "correct": false,
-     "why": "Affine plane: $(0,0,0)$ gives $0\\neq 1$, so the zero vector is missing."
+     "why": "Affine plane: $(0,0,0)$ gives $0\\neq 1$, so the zero vector is missing.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -276,17 +278,20 @@
     {
      "text": "$\\{x\\in\\mathbb{R}^4: Ax=b\\}$",
      "correct": false,
-     "why": "$A0=0\\neq b$, so $0$ is not a solution. Solution sets of $Ax=b$ with $b\\neq0$ are shifted (affine) sets."
+     "why": "$A0=0\\neq b$, so $0$ is not a solution. Solution sets of $Ax=b$ with $b\\neq0$ are shifted (affine) sets.",
+     "trap": "C10"
     },
     {
      "text": "$\\{x\\in\\mathbb{R}^4: x_1\\ge 0\\}$",
      "correct": false,
-     "why": "Closed under addition but not under scaling: $(-1)\\cdot(1,0,0,0)$ has $x_1=-1$."
+     "why": "Closed under addition but not under scaling: $(-1)\\cdot(1,0,0,0)$ has $x_1=-1$.",
+     "trap": "C5"
     },
     {
      "text": "The set of all invertible $2\\times 2$ matrices, in $\\mathbb{R}^{2\\times 2}$",
      "correct": false,
-     "why": "The zero matrix is not invertible; also $I+(-I)=0$ leaves the set."
+     "why": "The zero matrix is not invertible; also $I+(-I)=0$ leaves the set.",
+     "trap": "C9"
     }
    ],
    "answer": null,
@@ -311,17 +316,20 @@
     {
      "text": "$\\{x: \\lVert x\\rVert\\le 1\\}$",
      "correct": false,
-     "why": "Contains $0$ but is not closed under scaling: $e_1$ is in the set, $2e_1$ is not."
+     "why": "Contains $0$ but is not closed under scaling: $e_1$ is in the set, $2e_1$ is not.",
+     "trap": "C5"
     },
     {
      "text": "$\\{x: Ax=b\\}\\cup\\{0\\}$",
      "correct": false,
-     "why": "Adding $0$ by hand does not give closure: if $Ax=b$ then $A(2x)=2b\\neq b$."
+     "why": "Adding $0$ by hand does not give closure: if $Ax=b$ then $A(2x)=2b\\neq b$.",
+     "trap": "C10"
     },
     {
      "text": "$\\{x: Ax=b\\}$",
      "correct": false,
-     "why": "Contains no zero vector since $A0=0\\ne b$; it is a translate of the null space."
+     "why": "Contains no zero vector since $A0=0\\ne b$; it is a translate of the null space.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -346,7 +354,8 @@
     {
      "text": "$W_k$ is a subspace for every $k$, because it is defined by linear equations",
      "correct": false,
-     "why": "Linear equations with a non-zero right side give an affine set: $(0,0,0)$ fails $x+y=k$ when $k\\neq 0$."
+     "why": "Linear equations with a non-zero right side give an affine set: $(0,0,0)$ fails $x+y=k$ when $k\\neq 0$.",
+     "trap": "C1"
     },
     {
      "text": "$W_3$ is a line in $\\mathbb{R}^3$ that does not pass through the origin",
@@ -376,7 +385,8 @@
     {
      "text": "$\\{p: \\deg p = 2 \\text{ exactly}\\}$",
      "correct": false,
-     "why": "The zero polynomial is missing, and $x^2+(-x^2+x)=x$ has degree 1."
+     "why": "The zero polynomial is missing, and $x^2+(-x^2+x)=x$ has degree 1.",
+     "trap": "C9"
     },
     {
      "text": "$\\{p: p'(x)=0 \\text{ for all } x\\}$",
@@ -391,7 +401,8 @@
     {
      "text": "$\\{p: p(0)=1\\}$",
      "correct": false,
-     "why": "The zero polynomial has $p(0)=0\\ne1$; the sum of two members has value $2$ at $0$."
+     "why": "The zero polynomial has $p(0)=0\\ne1$; the sum of two members has value $2$ at $0$.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -415,11 +426,13 @@
    "traps": [
     {
      "value": 1,
-     "why": "Sign slip in the cofactor expansion: the determinant is $k+1$, not $k-1$."
+     "why": "Sign slip in the cofactor expansion: the determinant is $k+1$, not $k-1$.",
+     "trap": "C11"
     },
     {
      "value": 0,
-     "why": "Assumed a zero entry makes the set dependent; with $k=0$ the determinant is $1\\neq0$."
+     "why": "Assumed a zero entry makes the set dependent; with $k=0$ the determinant is $1\\neq0$.",
+     "trap": "C10"
     }
    ],
    "solution": "1. Put the vectors as columns: $\\det\\begin{pmatrix}1&0&1\\\\1&1&0\\\\0&1&k\\end{pmatrix}=1\\cdot(k-0)-0+1\\cdot(1-0)=k+1$.\n2. Dependent iff $k+1=0$, so $k=-1$.\n3. Check: $(1,0,-1)=(1,1,0)-(0,1,1)$."
@@ -477,17 +490,20 @@
     {
      "text": "$\\{v_1+v_2,\\; v_2+v_3,\\; v_3+v_1\\}$",
      "correct": false,
-     "why": "Coefficient matrix has determinant $2\\neq0$, so this set is independent (true over the reals)."
+     "why": "Coefficient matrix has determinant $2\\neq0$, so this set is independent (true over the reals).",
+     "trap": "C10"
     },
     {
      "text": "$\\{2v_1,\\; 3v_2,\\; v_1+v_3\\}$",
      "correct": false,
-     "why": "Coefficient matrix determinant $2\\cdot3\\cdot1=6\\neq0$; scaling does not create a dependency."
+     "why": "Coefficient matrix determinant $2\\cdot3\\cdot1=6\\neq0$; scaling does not create a dependency.",
+     "trap": "C10"
     },
     {
      "text": "$\\{v_1,\\; v_1+v_2,\\; v_1+v_2+v_3\\}$",
      "correct": false,
-     "why": "Triangular coefficient matrix with determinant $1$; you can recover each $v_i$ by subtraction."
+     "why": "Triangular coefficient matrix with determinant $1$; you can recover each $v_i$ by subtraction.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -517,7 +533,8 @@
     {
      "text": "The rows of $A$ are linearly independent",
      "correct": false,
-     "why": "5 rows in a row space of dimension 3: at least 2 rows depend on the others."
+     "why": "5 rows in a row space of dimension 3: at least 2 rows depend on the others.",
+     "trap": "C2"
     },
     {
      "text": "$Ax=0$ has only the solution $x=0$",
@@ -546,11 +563,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Found $(2,4,1,3)=2(1,2,0,1)+(0,0,1,1)$ but missed that $(3,6,1,4)=3(1,2,0,1)+(0,0,1,1)$ too."
+     "why": "Found $(2,4,1,3)=2(1,2,0,1)+(0,0,1,1)$ but missed that $(3,6,1,4)=3(1,2,0,1)+(0,0,1,1)$ too.",
+     "trap": "C6"
     },
     {
      "value": 4,
-     "why": "Counted the vectors (or non-zero rows) without row reducing."
+     "why": "Counted the vectors (or non-zero rows) without row reducing.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Stack as rows and reduce: $R_2-2R_1=(0,0,1,1)=R_3$; $R_4-3R_1=(0,0,1,1)$.\n2. After elimination only two non-zero rows remain.\n3. Dimension $=2$, basis $\\{(1,2,0,1),(0,0,1,1)\\}$."
@@ -572,11 +591,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Reported the number of constraints instead of $n$ minus the number of constraints."
+     "why": "Reported the number of constraints instead of $n$ minus the number of constraints.",
+     "trap": "C2"
     },
     {
      "value": 4,
-     "why": "Counted only one of the two independent constraints."
+     "why": "Counted only one of the two independent constraints.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $W$ is the null space of a $2\\times5$ matrix with 2 independent rows.\n2. $\\dim W = 5-2 = 3$ (free: $x_2, x_3, x_5$)."
@@ -604,12 +625,14 @@
     {
      "text": "Matrices with trace $0$ form a space of dimension 6",
      "correct": false,
-     "why": "Trace $0$ is one linear constraint on 9 entries, so the dimension is $9-1=8$."
+     "why": "Trace $0$ is one linear constraint on 9 entries, so the dimension is $9-1=8$.",
+     "trap": "C6"
     },
     {
      "text": "Skew-symmetric matrices form a space of dimension 6",
      "correct": false,
-     "why": "Counted the diagonal as free, as for symmetric matrices; $a_{ii}=-a_{ii}$ forces it to $0$, leaving 3 free entries."
+     "why": "Counted the diagonal as free, as for symmetric matrices; $a_{ii}=-a_{ii}$ forces it to $0$, leaving 3 free entries.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -629,7 +652,8 @@
     {
      "text": "Some spanning set of $V$ has fewer than $n$ vectors",
      "correct": false,
-     "why": "Every spanning set has at least $\\dim V$ vectors; fewer vectors span a space of dimension less than $n$."
+     "why": "Every spanning set has at least $\\dim V$ vectors; fewer vectors span a space of dimension less than $n$.",
+     "trap": "C8"
     },
     {
      "text": "Any $n$ vectors that span $V$ form a basis",
@@ -669,17 +693,20 @@
     {
      "text": "$1$",
      "correct": false,
-     "why": "Arithmetic slip in $3+4-5$, or used $\\dim(W_1+W_2)=6$, which exceeds 5."
+     "why": "Arithmetic slip in $3+4-5$, or used $\\dim(W_1+W_2)=6$, which exceeds 5.",
+     "trap": "C6"
     },
     {
      "text": "$0$",
      "correct": false,
-     "why": "Ignored that both live in $\\mathbb{R}^5$: $\\dim(W_1+W_2)\\le5$ forces overlap."
+     "why": "Ignored that both live in $\\mathbb{R}^5$: $\\dim(W_1+W_2)\\le5$ forces overlap.",
+     "trap": "C9"
     },
     {
      "text": "$3$",
      "correct": false,
-     "why": "That is the largest possible value (when $W_1\\subseteq W_2$), not the smallest."
+     "why": "That is the largest possible value (when $W_1\\subseteq W_2$), not the smallest.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -699,7 +726,8 @@
     {
      "text": "$A$ must be symmetric",
      "correct": false,
-     "why": "$\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ satisfies $A^2=A$ but is not symmetric (an oblique projection)."
+     "why": "$\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ satisfies $A^2=A$ but is not symmetric (an oblique projection).",
+     "trap": "C1"
     },
     {
      "text": "$A$ is singular",
@@ -709,7 +737,8 @@
     {
      "text": "$2A$ is idempotent",
      "correct": false,
-     "why": "$(2A)^2=4A^2=4A\\neq2A$; scaling breaks idempotence. (It is $I-A$ that is again idempotent.)"
+     "why": "$(2A)^2=4A^2=4A\\neq2A$; scaling breaks idempotence. (It is $I-A$ that is again idempotent.)",
+     "trap": "C4"
     },
     {
      "text": "Every eigenvalue of $A$ is $0$ or $1$",
@@ -749,7 +778,8 @@
     {
      "text": "$\\operatorname{rank}(N)=0$ because all eigenvalues are $0$",
      "correct": false,
-     "why": "Zero eigenvalues do not make a matrix zero: $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ has rank 1."
+     "why": "Zero eigenvalues do not make a matrix zero: $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ has rank 1.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -769,7 +799,8 @@
     {
      "text": "the sum of squares of the entries above the diagonal",
      "correct": false,
-     "why": "Generalised from the $2\\times2$ case $\\det\\begin{pmatrix}0&a\\\\-a&0\\end{pmatrix}=a^2$; for odd $n$ the sign argument forces $0$."
+     "why": "Generalised from the $2\\times2$ case $\\det\\begin{pmatrix}0&a\\\\-a&0\\end{pmatrix}=a^2$; for odd $n$ the sign argument forces $0$.",
+     "trap": "C10"
     },
     {
      "text": "always $0$",
@@ -779,12 +810,14 @@
     {
      "text": "any real number, depending on the entries",
      "correct": false,
-     "why": "Used $\\det(-A)=-\\det A$ without the power: the correct rule is $\\det(-A)=(-1)^n\\det A$."
+     "why": "Used $\\det(-A)=-\\det A$ without the power: the correct rule is $\\det(-A)=(-1)^n\\det A$.",
+     "trap": "C11"
     },
     {
      "text": "always $\\pm1$",
      "correct": false,
-     "why": "Confused skew-symmetric with orthogonal ($\\det=\\pm1$)."
+     "why": "Confused skew-symmetric with orthogonal ($\\det=\\pm1$).",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -819,7 +852,8 @@
     {
      "text": "If $A$ and $B$ are symmetric, $AB$ is symmetric",
      "correct": false,
-     "why": "$(AB)^T=BA$, which equals $AB$ only if they commute. Example: $A=\\begin{pmatrix}1&1\\\\1&0\\end{pmatrix}$, $B=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$ give $AB=\\begin{pmatrix}1&0\\\\1&0\\end{pmatrix}$."
+     "why": "$(AB)^T=BA$, which equals $AB$ only if they commute. Example: $A=\\begin{pmatrix}1&1\\\\1&0\\end{pmatrix}$, $B=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$ give $AB=\\begin{pmatrix}1&0\\\\1&0\\end{pmatrix}$.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -843,11 +877,13 @@
    "traps": [
     {
      "value": -3,
-     "why": "Sign slip in $\\det A=3(-2)-k(-2)=-6+2k$; wrote $-6-2k=0$."
+     "why": "Sign slip in $\\det A=3(-2)-k(-2)=-6+2k$; wrote $-6-2k=0$.",
+     "trap": "C11"
     },
     {
      "value": 1,
-     "why": "Used rank $=$ trace $=1$ and stopped; trace is $1$ for every $k$, so it does not fix $k$."
+     "why": "Used rank $=$ trace $=1$ and stopped; trace is $1$ for every $k$, so it does not fix $k$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. A non-trivial idempotent $2\\times2$ matrix has eigenvalues $0,1$: trace $1$ (true for all $k$) and $\\det=0$.\n2. $\\det A=-6+2k=0\\Rightarrow k=3$.\n3. Check: $A^2=\\begin{pmatrix}9-2k&k\\\\-2&4-2k\\end{pmatrix}=A$ at $k=3$."
@@ -869,11 +905,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Read the $(1,4)$ entry of $M$ itself; forgot that the off-diagonal block grows with the power."
+     "why": "Read the $(1,4)$ entry of $M$ itself; forgot that the off-diagonal block grows with the power.",
+     "trap": "C6"
     },
     {
      "value": 32,
-     "why": "Raised the entry to the 5th power ($2^5$) instead of multiplying the block by 5."
+     "why": "Raised the entry to the 5th power ($2^5$) instead of multiplying the block by 5.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Block multiply: $M^2=\\begin{pmatrix}I&2B\\\\0&I\\end{pmatrix}$, and by induction $M^k=\\begin{pmatrix}I&kB\\\\0&I\\end{pmatrix}$.\n2. The $(1,4)$ entry of $M^5$ is $5B_{12}=5\\cdot2=10$."
@@ -891,12 +929,14 @@
     {
      "text": "$\\begin{pmatrix}A^{-1}&-B\\\\0&D^{-1}\\end{pmatrix}$",
      "correct": false,
-     "why": "Copied the scalar rule for $\\begin{pmatrix}1&b\\\\0&1\\end{pmatrix}$; top-right gives $-AB+BD^{-1}\\neq0$ in general."
+     "why": "Copied the scalar rule for $\\begin{pmatrix}1&b\\\\0&1\\end{pmatrix}$; top-right gives $-AB+BD^{-1}\\neq0$ in general.",
+     "trap": "C10"
     },
     {
      "text": "$\\begin{pmatrix}A^{-1}&A^{-1}BD^{-1}\\\\0&D^{-1}\\end{pmatrix}$",
      "correct": false,
-     "why": "Sign error: the top-right block becomes $2BD^{-1}$, not $0$."
+     "why": "Sign error: the top-right block becomes $2BD^{-1}$, not $0$.",
+     "trap": "C11"
     },
     {
      "text": "$\\begin{pmatrix}A^{-1}&-A^{-1}BD^{-1}\\\\0&D^{-1}\\end{pmatrix}$",
@@ -906,7 +946,8 @@
     {
      "text": "$\\begin{pmatrix}A^{-1}&-D^{-1}BA^{-1}\\\\0&D^{-1}\\end{pmatrix}$",
      "correct": false,
-     "why": "Wrong order: $D^{-1}BA^{-1}$ is not even defined unless $p=q$; block products keep their order."
+     "why": "Wrong order: $D^{-1}BA^{-1}$ is not even defined unless $p=q$; block products keep their order.",
+     "trap": "C9"
     }
    ],
    "answer": null,
@@ -930,11 +971,13 @@
    "traps": [
     {
      "value": 7,
-     "why": "Added the block determinants ($5+2$) instead of multiplying."
+     "why": "Added the block determinants ($5+2$) instead of multiplying.",
+     "trap": "C3"
     },
     {
      "value": 5,
-     "why": "Used only the top-left block."
+     "why": "Used only the top-left block.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Block upper triangular: $\\det=\\det\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}\\det\\begin{pmatrix}4&1\\\\2&1\\end{pmatrix}$.\n2. $=5\\cdot2=10$. The top-right block does not matter."
@@ -957,7 +1000,8 @@
     {
      "text": "$AB=\\sum_{i=1}^n b_i a_i^T$",
      "correct": false,
-     "why": "Order reversed: $b_ia_i^T$ is $p\\times m$, the shape of $(AB)^T$; in fact $\\sum b_ia_i^T=(AB)^T$."
+     "why": "Order reversed: $b_ia_i^T$ is $p\\times m$, the shape of $(AB)^T$; in fact $\\sum b_ia_i^T=(AB)^T$.",
+     "trap": "C11"
     },
     {
      "text": "The $j$-th column of $AB$ is $A$ times the $j$-th column of $B$",
@@ -987,12 +1031,14 @@
     {
      "text": "$CAB$",
      "correct": false,
-     "why": "$(4\\times3)(3\\times2)(2\\times4)$ gives a $4\\times4$ matrix."
+     "why": "$(4\\times3)(3\\times2)(2\\times4)$ gives a $4\\times4$ matrix.",
+     "trap": "C9"
     },
     {
      "text": "$ABC$",
      "correct": false,
-     "why": "$(3\\times2)(2\\times4)(4\\times3)$ gives a $3\\times3$ matrix."
+     "why": "$(3\\times2)(2\\times4)(4\\times3)$ gives a $3\\times3$ matrix.",
+     "trap": "C9"
     },
     {
      "text": "$ACB$",
@@ -1002,7 +1048,8 @@
     {
      "text": "$BCA$",
      "correct": false,
-     "why": "$(2\\times4)(4\\times3)(3\\times2)$ gives a $2\\times2$ matrix."
+     "why": "$(2\\times4)(4\\times3)(3\\times2)$ gives a $2\\times2$ matrix.",
+     "trap": "C9"
     }
    ],
    "answer": null,
@@ -1027,12 +1074,14 @@
     {
      "text": "$(A+B)^{-1}=A^{-1}+B^{-1}$ whenever $A+B$ is invertible",
      "correct": false,
-     "why": "$A=B=I$: $(2I)^{-1}=\\tfrac12I$ but $A^{-1}+B^{-1}=2I$."
+     "why": "$A=B=I$: $(2I)^{-1}=\\tfrac12I$ but $A^{-1}+B^{-1}=2I$.",
+     "trap": "C9"
     },
     {
      "text": "$(AB)^{-1}=A^{-1}B^{-1}$",
      "correct": false,
-     "why": "Order must reverse: $(AB)^{-1}=B^{-1}A^{-1}$, since $AB\\,B^{-1}A^{-1}=I$."
+     "why": "Order must reverse: $(AB)^{-1}=B^{-1}A^{-1}$, since $AB\\,B^{-1}A^{-1}=I$.",
+     "trap": "C11"
     },
     {
      "text": "$(AB^T)^T=BA^T$",
@@ -1061,15 +1110,18 @@
    "traps": [
     {
      "value": 8,
-     "why": "Used $(2A)^{-1}=2A^{-1}$: multiplied instead of dividing."
+     "why": "Used $(2A)^{-1}=2A^{-1}$: multiplied instead of dividing.",
+     "trap": "C4"
     },
     {
      "value": 0.125,
-     "why": "Took the reciprocal of a single entry, $1/(2\\cdot4)$; entries of an inverse are not reciprocals of entries."
+     "why": "Took the reciprocal of a single entry, $1/(2\\cdot4)$; entries of an inverse are not reciprocals of entries.",
+     "trap": "C10"
     },
     {
      "value": 0.75,
-     "why": "Computed $A$ and reported the $(1,1)$ entry of $2A$, not of its inverse."
+     "why": "Computed $A$ and reported the $(1,1)$ entry of $2A$, not of its inverse.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $(cA)^{-1}=\\tfrac1c A^{-1}$.\n2. $(2A)^{-1}=\\tfrac12\\begin{pmatrix}4&2\\\\2&3\\end{pmatrix}$, so the $(1,1)$ entry is $2$."
@@ -1087,17 +1139,20 @@
     {
      "text": "$A^{-1}B^{-1}$",
      "correct": false,
-     "why": "Dropped the transpose. This is $(BA)^{-1}$, not related to $(AB)^T$."
+     "why": "Dropped the transpose. This is $(BA)^{-1}$, not related to $(AB)^T$.",
+     "trap": "C6"
     },
     {
      "text": "$B^{-1}A^{-1}$",
      "correct": false,
-     "why": "This is $(AB)^{-1}$; the transpose was ignored."
+     "why": "This is $(AB)^{-1}$; the transpose was ignored.",
+     "trap": "C6"
     },
     {
      "text": "$(B^{-1})^T(A^{-1})^T$",
      "correct": false,
-     "why": "Reversed the order only once; transpose and inverse each reverse, so the net order is $A$ then $B$."
+     "why": "Reversed the order only once; transpose and inverse each reverse, so the net order is $A$ then $B$.",
+     "trap": "C11"
     },
     {
      "text": "$(A^{-1})^T(B^{-1})^T$",
@@ -1122,12 +1177,14 @@
     {
      "text": "$A$ must equal $I$ or $2I$",
      "correct": false,
-     "why": "$A=\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$ also satisfies the equation; only the eigenvalues are restricted to $\\{1,2\\}$."
+     "why": "$A=\\begin{pmatrix}1&0\\\\0&2\\end{pmatrix}$ also satisfies the equation; only the eigenvalues are restricted to $\\{1,2\\}$.",
+     "trap": "C1"
     },
     {
      "text": "$A^{-1}=\\tfrac12(A-3I)$",
      "correct": false,
-     "why": "Sign slip when moving terms: $A(A-3I)=-2I$, so this is $-A^{-1}$."
+     "why": "Sign slip when moving terms: $A(A-3I)=-2I$, so this is $-A^{-1}$.",
+     "trap": "C11"
     },
     {
      "text": "$A^{-1}=\\tfrac12(3I-A)$",
@@ -1167,7 +1224,8 @@
     {
      "text": "$(cA)^{-1}=cA^{-1}$",
      "correct": false,
-     "why": "$(cA)(cA^{-1})=c^2I\\neq I$; the correct inverse is $\\tfrac1cA^{-1}$."
+     "why": "$(cA)(cA^{-1})=c^2I\\neq I$; the correct inverse is $\\tfrac1cA^{-1}$.",
+     "trap": "C4"
     },
     {
      "text": "If $A$ is symmetric, so is $A^{-1}$",
@@ -1196,15 +1254,18 @@
    "traps": [
     {
      "value": 4,
-     "why": "Counted non-zero rows without row reducing."
+     "why": "Counted non-zero rows without row reducing.",
+     "trap": "C6"
     },
     {
      "value": 3,
-     "why": "Spotted $R_2=2R_1$ but missed $R_4=R_1+R_3$."
+     "why": "Spotted $R_2=2R_1$ but missed $R_4=R_1+R_3$.",
+     "trap": "C6"
     },
     {
      "value": 1,
-     "why": "After spotting $R_2=2R_1$, also discarded the independent row $R_3$."
+     "why": "After spotting $R_2=2R_1$, also discarded the independent row $R_3$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $R_2-2R_1=0$.\n2. $R_4-R_1=(0,1,1,0)=R_3$, so $R_4-R_1-R_3=0$.\n3. Rows $R_1,R_3$ remain and are independent: rank $2$."
@@ -1226,7 +1287,8 @@
    "traps": [
     {
      "value": 2,
-     "why": "Assumed $R_3=R_1+R_2$ from the first three columns; $R_1+R_2=(3,7,4,1)$ differs from $R_3$ in the last entry."
+     "why": "Assumed $R_3=R_1+R_2$ from the first three columns; $R_1+R_2=(3,7,4,1)$ differs from $R_3$ in the last entry.",
+     "trap": "C10"
     }
    ],
    "solution": "1. $R_2-2R_1=(0,1,1,1)$, $R_3-3R_1=(0,1,1,2)$.\n2. Subtract: $(0,0,0,1)$, a third pivot.\n3. Rank $3$. Near-miss patterns must be checked on every entry."
@@ -1244,7 +1306,8 @@
     {
      "text": "$\\operatorname{rank}A=1$ when $k=5$",
      "correct": false,
-     "why": "Dropped an independent row: rows 1 and 2 are not multiples, so rank is at least 2."
+     "why": "Dropped an independent row: rows 1 and 2 are not multiples, so rank is at least 2.",
+     "trap": "C6"
     },
     {
      "text": "$\\operatorname{rank}A=2$ exactly when $k=5$",
@@ -1254,12 +1317,14 @@
     {
      "text": "$\\operatorname{rank}A=2$ exactly when $k=4$",
      "correct": false,
-     "why": "Arithmetic slip: wrote $R_3-R_1$ as $(0,2,k)$ instead of $(0,2,k-1)$, giving $k-4$."
+     "why": "Arithmetic slip: wrote $R_3-R_1$ as $(0,2,k)$ instead of $(0,2,k-1)$, giving $k-4$.",
+     "trap": "C6"
     },
     {
      "text": "$\\operatorname{rank}A=3$ for every $k$",
      "correct": false,
-     "why": "Counted three non-zero rows without reducing; for $k=5$ the third row is $2R_2-R_1$."
+     "why": "Counted three non-zero rows without reducing; for $k=5$ the third row is $2R_2-R_1$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -1279,7 +1344,8 @@
     {
      "text": "$\\operatorname{rank}(A+B)=\\operatorname{rank}A+\\operatorname{rank}B$",
      "correct": false,
-     "why": "Only $\\le$ holds. $A=I$, $B=-I$: rank of the sum is $0$, not $2n$."
+     "why": "Only $\\le$ holds. $A=I$, $B=-I$: rank of the sum is $0$, not $2n$.",
+     "trap": "C1"
     },
     {
      "text": "$\\operatorname{rank}(A)=\\operatorname{rank}(A^T)$",
@@ -1294,7 +1360,8 @@
     {
      "text": "$\\operatorname{rank}(AB)=\\operatorname{rank}A$ whenever $B$ is square",
      "correct": false,
-     "why": "Needs $B$ invertible: $B=0$ gives $\\operatorname{rank}(AB)=0$. In general only $\\operatorname{rank}(AB)\\le\\min\\{\\operatorname{rank}A,\\operatorname{rank}B\\}$."
+     "why": "Needs $B$ invertible: $B=0$ gives $\\operatorname{rank}(AB)=0$. In general only $\\operatorname{rank}(AB)\\le\\min\\{\\operatorname{rank}A,\\operatorname{rank}B\\}$.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -1318,15 +1385,18 @@
    "traps": [
     {
      "value": 4,
-     "why": "Counted non-zero rows without reducing."
+     "why": "Counted non-zero rows without reducing.",
+     "trap": "C6"
     },
     {
      "value": 1,
-     "why": "Saw that consecutive rows differ by $(1,1,1,1)$ and concluded all rows are multiples of one row; they are not, e.g. $(2,3,4,5)$ and $(3,4,5,6)$ are not proportional."
+     "why": "Saw that consecutive rows differ by $(1,1,1,1)$ and concluded all rows are multiples of one row; they are not, e.g. $(2,3,4,5)$ and $(3,4,5,6)$ are not proportional.",
+     "trap": "C10"
     },
     {
      "value": 3,
-     "why": "Removed only one dependent row."
+     "why": "Removed only one dependent row.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Each row is $(i+1,i+2,i+3,i+4)=(i)(1,1,1,1)+(1,2,3,4)$.\n2. Every row lies in $\\operatorname{span}\\{(1,1,1,1),(1,2,3,4)\\}$, and two rows are independent.\n3. Rank $2$."
@@ -1348,11 +1418,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Used the number of rows: $5-3$. Rank–nullity counts columns ($n=7$)."
+     "why": "Used the number of rows: $5-3$. Rank–nullity counts columns ($n=7$).",
+     "trap": "C2"
     },
     {
      "value": 3,
-     "why": "Equated nullity with rank."
+     "why": "Equated nullity with rank.",
+     "trap": "C2"
     }
    ],
    "solution": "$A$ maps $\\mathbb{R}^7\\to\\mathbb{R}^5$. Rank–nullity: $\\text{nullity}=7-3=4$."
@@ -1374,11 +1446,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Assumed $A$ and $A^T$ have the same nullity; only their ranks agree."
+     "why": "Assumed $A$ and $A^T$ have the same nullity; only their ranks agree.",
+     "trap": "C9"
     },
     {
      "value": 2,
-     "why": "Used $6-4$: subtracted the shape instead of going through the rank."
+     "why": "Used $6-4$: subtracted the shape instead of going through the rank.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\operatorname{rank}A=6-3=3$.\n2. $A^T$ is $6\\times4$ with rank 3, so nullity $(A^T)=4-3=1$."
@@ -1396,7 +1470,8 @@
     {
      "text": "$T$ can be one-to-one",
      "correct": false,
-     "why": "One-to-one needs nullity $0$, impossible since nullity $\\ge2$."
+     "why": "One-to-one needs nullity $0$, impossible since nullity $\\ge2$.",
+     "trap": "C8"
     },
     {
      "text": "If $\\operatorname{rank}A=3$ then $\\dim N(A)=2$",
@@ -1406,7 +1481,8 @@
     {
      "text": "$\\dim N(A)\\ge 3$",
      "correct": false,
-     "why": "Used $5-2$ or assumed rank $\\le2$; rank can be 3, so the guaranteed bound is only nullity $\\ge5-3=2$."
+     "why": "Used $5-2$ or assumed rank $\\le2$; rank can be 3, so the guaranteed bound is only nullity $\\ge5-3=2$.",
+     "trap": "C5"
     },
     {
      "text": "$T$ can be onto $\\mathbb{R}^3$",
@@ -1441,12 +1517,14 @@
     {
      "text": "$(1,0,3,1)^T\\in N(A)$",
      "correct": false,
-     "why": "Sign slip with free variable $x_4=1$: $x_3=-3x_4=-3$, not $3$. Row 2 gives $3+3=6\\neq0$."
+     "why": "Sign slip with free variable $x_4=1$: $x_3=-3x_4=-3$, not $3$. Row 2 gives $3+3=6\\neq0$.",
+     "trap": "C11"
     },
     {
      "text": "The columns of $A$ are linearly independent",
      "correct": false,
-     "why": "Four vectors in $\\mathbb{R}^2$ are always dependent; nullity $2>0$ confirms it."
+     "why": "Four vectors in $\\mathbb{R}^2$ are always dependent; nullity $2>0$ confirms it.",
+     "trap": "C8"
     }
    ],
    "answer": null,
@@ -1470,11 +1548,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Treated $A^2=0$ as if $A=0$."
+     "why": "Treated $A^2=0$ as if $A=0$.",
+     "trap": "C10"
     },
     {
      "value": 1,
-     "why": "Found $\\operatorname{rank}A=1$ and reported the rank instead of $3-\\operatorname{rank}$."
+     "why": "Found $\\operatorname{rank}A=1$ and reported the rank instead of $3-\\operatorname{rank}$.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $A^2=0$ means $A(Ax)=0$: the column space of $A$ lies inside $N(A)$.\n2. So $\\operatorname{rank}A\\le 3-\\operatorname{rank}A$, giving $\\operatorname{rank}A\\le1$; $A\\neq0$ gives rank 1.\n3. Nullity $=3-1=2$."
@@ -1497,7 +1577,8 @@
     {
      "text": "$Ax=b$ has a unique solution for some $b$",
      "correct": false,
-     "why": "Nullity is $5-3=2$; whenever a solution exists, adding null-space vectors gives infinitely many."
+     "why": "Nullity is $5-3=2$; whenever a solution exists, adding null-space vectors gives infinitely many.",
+     "trap": "C8"
     },
     {
      "text": "$Ax=0$ has a non-zero solution",
@@ -1537,7 +1618,8 @@
     {
      "text": "$Ax=b$ has a solution for every $b\\in\\mathbb{R}^5$",
      "correct": false,
-     "why": "The column space is 3-dimensional inside $\\mathbb{R}^5$; most $b$ lie outside it."
+     "why": "The column space is 3-dimensional inside $\\mathbb{R}^5$; most $b$ lie outside it.",
+     "trap": "C1"
     },
     {
      "text": "$Ax=0$ has only the trivial solution",
@@ -1566,11 +1648,13 @@
    "traps": [
     {
      "value": 34,
-     "why": "Combined right sides as $2\\cdot14+6$ instead of $2\\cdot14-6$; the left sides satisfy $R_3=2R_2-R_1$."
+     "why": "Combined right sides as $2\\cdot14+6$ instead of $2\\cdot14-6$; the left sides satisfy $R_3=2R_2-R_1$.",
+     "trap": "C11"
     },
     {
      "value": 14,
-     "why": "Assumed the third equation must copy the second right side."
+     "why": "Assumed the third equation must copy the second right side.",
+     "trap": "C10"
     }
    ],
    "solution": "1. Eliminate: $R_2-R_1:(0,1,2\\,|\\,8)$, $R_3-R_1:(0,2,4\\,|\\,m-6)$.\n2. $R_3-2R_2$ gives $(0,0,0\\,|\\,m-22)$.\n3. Consistent (and then infinitely many solutions, rank $2<3$) iff $m=22$."
@@ -1593,17 +1677,20 @@
     {
      "text": "Unique solution for every $k$",
      "correct": false,
-     "why": "Ignored that the coefficient matrix is singular at $k=4$."
+     "why": "Ignored that the coefficient matrix is singular at $k=4$.",
+     "trap": "C1"
     },
     {
      "text": "Unique solution for $k\\neq4$; no solution for $k=4$",
      "correct": false,
-     "why": "Assumed singular means inconsistent without checking the right side: $6=2\\cdot3$, so it is consistent."
+     "why": "Assumed singular means inconsistent without checking the right side: $6=2\\cdot3$, so it is consistent.",
+     "trap": "C1"
     },
     {
      "text": "Infinitely many solutions for every $k\\neq4$",
      "correct": false,
-     "why": "Reversed the cases: $\\det\\neq0$ gives exactly one solution."
+     "why": "Reversed the cases: $\\det\\neq0$ gives exactly one solution.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -1628,7 +1715,8 @@
     {
      "text": "$(x,y,z)=(1,0,1)$ is a solution",
      "correct": false,
-     "why": "With $z=1$: $x=3-2=1$ but $y=1+1=2$, not $0$ (sign slip in $y-z=1$)."
+     "why": "With $z=1$: $x=3-2=1$ but $y=1+1=2$, not $0$ (sign slip in $y-z=1$).",
+     "trap": "C11"
     },
     {
      "text": "The system has infinitely many solutions",
@@ -1662,11 +1750,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Reported $y$ instead of $z$ (back-substitution order mixed up)."
+     "why": "Reported $y$ instead of $z$ (back-substitution order mixed up).",
+     "trap": "C6"
     },
     {
      "value": 1,
-     "why": "Reported $x$; the question asks for $z$."
+     "why": "Reported $x$; the question asks for $z$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $R_2-2R_1$: $y+3z=11$. $R_3+R_1$: $2y+3z=13$.\n2. $(R_3+R_1)-2(R_2-2R_1)$: $-3z=-9$, so $z=3$.\n3. Back-substitute: $y=2$, $x=1$. Check: $2+2-3=1$."
@@ -1689,7 +1779,8 @@
     {
      "text": "The columns of $A$ are linearly independent",
      "correct": false,
-     "why": "Rank $2<4$ columns."
+     "why": "Rank $2<4$ columns.",
+     "trap": "C8"
     },
     {
      "text": "$\\operatorname{rank}A=2$",
@@ -1699,7 +1790,8 @@
     {
      "text": "$\\operatorname{rank}A=3$, because rows 3 and 4 are not multiples of each other",
      "correct": false,
-     "why": "Pairwise non-proportional rows can still be dependent; both are combinations of $R_1,R_2$."
+     "why": "Pairwise non-proportional rows can still be dependent; both are combinations of $R_1,R_2$.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -1723,15 +1815,18 @@
    "traps": [
     {
      "value": 0.5,
-     "why": "Used $\\det(2A^{-1})=2\\det(A^{-1})$; the scalar must be raised to $n=3$."
+     "why": "Used $\\det(2A^{-1})=2\\det(A^{-1})$; the scalar must be raised to $n=3$.",
+     "trap": "C4"
     },
     {
      "value": 32,
-     "why": "Forgot the inverse: computed $2^3\\det A$."
+     "why": "Forgot the inverse: computed $2^3\\det A$.",
+     "trap": "C6"
     },
     {
      "value": 0.03125,
-     "why": "Computed $\\det\\big((2A)^{-1}\\big)=1/(8\\cdot4)$ instead of $\\det(2A^{-1})$."
+     "why": "Computed $\\det\\big((2A)^{-1}\\big)=1/(8\\cdot4)$ instead of $\\det(2A^{-1})$.",
+     "trap": "C3"
     }
    ],
    "solution": "$\\det(2A^{-1})=2^3\\det(A^{-1})=8\\cdot\\tfrac14=2$."
@@ -1753,15 +1848,18 @@
    "traps": [
     {
      "value": 6,
-     "why": "Used $c$ instead of $c^n$: $(-3)(-2)$."
+     "why": "Used $c$ instead of $c^n$: $(-3)(-2)$.",
+     "trap": "C4"
     },
     {
      "value": 54,
-     "why": "Used the wrong size: $(-3)^3(-2)$."
+     "why": "Used the wrong size: $(-3)^3(-2)$.",
+     "trap": "C6"
     },
     {
      "value": 162,
-     "why": "Assumed $\\det(A^T)=-\\det A$; transposing does not change the determinant."
+     "why": "Assumed $\\det(A^T)=-\\det A$; transposing does not change the determinant.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $\\det(A^T)=\\det A=-2$.\n2. $\\det(-3A^T)=(-3)^4(-2)=81\\cdot(-2)=-162$."
@@ -1784,7 +1882,8 @@
     {
      "text": "$\\det(A+B)=\\det A+\\det B$",
      "correct": false,
-     "why": "$A=B=I_2$: $\\det(2I)=4\\neq2$."
+     "why": "$A=B=I_2$: $\\det(2I)=4\\neq2$.",
+     "trap": "C9"
     },
     {
      "text": "$\\det(AB)=\\det(BA)$",
@@ -1794,7 +1893,8 @@
     {
      "text": "Adding $3\\times$ row 1 to row 2 multiplies $\\det A$ by $3$",
      "correct": false,
-     "why": "Adding a multiple of one row to another leaves the determinant unchanged; only scaling a row scales it."
+     "why": "Adding a multiple of one row to another leaves the determinant unchanged; only scaling a row scales it.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -1814,17 +1914,20 @@
     {
      "text": "$-135$",
      "correct": false,
-     "why": "Applied $c^n=3^3$ for scaling a single row; $c^n$ is only for scaling the whole matrix."
+     "why": "Applied $c^n=3^3$ for scaling a single row; $c^n$ is only for scaling the whole matrix.",
+     "trap": "C4"
     },
     {
      "text": "$-30$",
      "correct": false,
-     "why": "Treated the row addition as multiplying the determinant by 2."
+     "why": "Treated the row addition as multiplying the determinant by 2.",
+     "trap": "C3"
     },
     {
      "text": "$15$",
      "correct": false,
-     "why": "Forgot the sign change from the row swap."
+     "why": "Forgot the sign change from the row swap.",
+     "trap": "C11"
     },
     {
      "text": "$-15$",
@@ -1853,11 +1956,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Assumed $\\det(\\operatorname{adj}A)=\\det A$."
+     "why": "Assumed $\\det(\\operatorname{adj}A)=\\det A$.",
+     "trap": "C3"
     },
     {
      "value": 27,
-     "why": "Used $(\\det A)^n$ instead of $(\\det A)^{n-1}$."
+     "why": "Used $(\\det A)^n$ instead of $(\\det A)^{n-1}$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $A\\operatorname{adj}A=(\\det A)I$, so $\\det A\\cdot\\det(\\operatorname{adj}A)=(\\det A)^3$.\n2. $\\det(\\operatorname{adj}A)=(\\det A)^{2}=9$."
@@ -1879,11 +1984,13 @@
    "traps": [
     {
      "value": 5,
-     "why": "Plugged $\\det A$ into the polynomial: $(\\det A)^2+1=4+1$."
+     "why": "Plugged $\\det A$ into the polynomial: $(\\det A)^2+1=4+1$.",
+     "trap": "C10"
     },
     {
      "value": 9,
-     "why": "Added the transformed eigenvalues $2+5+2$ instead of multiplying."
+     "why": "Added the transformed eigenvalues $2+5+2$ instead of multiplying.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Eigenvalues of $A^2+I$: $\\lambda^2+1=2,5,2$.\n2. $\\det=2\\cdot5\\cdot2=20$."
@@ -1905,11 +2012,13 @@
    "traps": [
     {
      "value": 12,
-     "why": "Plugged $\\det A=6$ into the polynomial: $36-30+6$."
+     "why": "Plugged $\\det A=6$ into the polynomial: $36-30+6$.",
+     "trap": "C10"
     },
     {
      "value": -78,
-     "why": "Split the determinant over the sum: $\\det(A^2)-\\det(5A)+\\det(6I)=36-150+36$."
+     "why": "Split the determinant over the sum: $\\det(A^2)-\\det(5A)+\\det(6I)=36-150+36$.",
+     "trap": "C9"
     }
    ],
    "solution": "1. $p(\\lambda)=\\lambda^2-5\\lambda+6=(\\lambda-2)(\\lambda-3)$.\n2. $p(2)=p(3)=0$, so $\\det p(A)=0\\cdot0=0$ (indeed $p(A)=0$ by Cayley–Hamilton)."
@@ -1931,11 +2040,13 @@
    "traps": [
     {
      "value": 1.833,
-     "why": "Plugged the determinant in: $1/\\det A+2=-\\tfrac16+2$."
+     "why": "Plugged the determinant in: $1/\\det A+2=-\\tfrac16+2$.",
+     "trap": "C10"
     },
     {
      "value": -4,
-     "why": "Used $-\\lambda$ for the eigenvalues of $A^{-1}$ instead of $1/\\lambda$: $(1)(4)(-1)$."
+     "why": "Used $-\\lambda$ for the eigenvalues of $A^{-1}$ instead of $1/\\lambda$: $(1)(4)(-1)$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Eigenvalues of $A^{-1}$: $1,-\\tfrac12,\\tfrac13$.\n2. Add 2: $3,\\tfrac32,\\tfrac73$.\n3. Product $=3\\cdot\\tfrac32\\cdot\\tfrac73=10.5$."
@@ -1953,12 +2064,14 @@
     {
      "text": "$1$",
      "correct": false,
-     "why": "Computed $\\det A-\\operatorname{tr}A$, dropping the $t^2$ term."
+     "why": "Computed $\\det A-\\operatorname{tr}A$, dropping the $t^2$ term.",
+     "trap": "C6"
     },
     {
      "text": "$12$",
      "correct": false,
-     "why": "Sign slip: evaluated $t^2+5t+6$ at $t=1$."
+     "why": "Sign slip: evaluated $t^2+5t+6$ at $t=1$.",
+     "trap": "C11"
     },
     {
      "text": "$2$",
@@ -1968,7 +2081,8 @@
     {
      "text": "$5$",
      "correct": false,
-     "why": "Used $\\det A-\\det I=6-1$; determinant is not linear."
+     "why": "Used $\\det A-\\det I=6-1$; determinant is not linear.",
+     "trap": "C9"
     }
    ],
    "answer": null,
@@ -1992,11 +2106,13 @@
    "traps": [
     {
      "value": 12,
-     "why": "Plugged the determinant in: $(\\det A)^2+\\det A=16-4$."
+     "why": "Plugged the determinant in: $(\\det A)^2+\\det A=16-4$.",
+     "trap": "C10"
     },
     {
      "value": 10,
-     "why": "Added $\\lambda^2+\\lambda$ over the eigenvalues ($2+2+6$) instead of multiplying."
+     "why": "Added $\\lambda^2+\\lambda$ over the eigenvalues ($2+2+6$) instead of multiplying.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $p(\\lambda)=\\lambda^2+\\lambda$: $p(1)=2$, $p(-2)=2$, $p(2)=6$.\n2. $\\det p(A)=2\\cdot2\\cdot6=24$."
@@ -2018,11 +2134,13 @@
    "traps": [
     {
      "value": 9,
-     "why": "Subtracted 3 only once from the trace: $12-3$."
+     "why": "Subtracted 3 only once from the trace: $12-3$.",
+     "trap": "C6"
     },
     {
      "value": 4,
-     "why": "Read a diagonal entry as an eigenvalue; $A$ is not triangular."
+     "why": "Read a diagonal entry as an eigenvalue; $A$ is not triangular.",
+     "trap": "C10"
     }
    ],
    "solution": "1. Trace $=12$.\n2. $3+3+\\lambda=12\\Rightarrow\\lambda=6$.\n3. Cross-check: row sums are 6, so $(1,1,1)^T$ is an eigenvector with eigenvalue 6; $\\det A=3\\cdot3\\cdot6=54$."
@@ -2045,17 +2163,20 @@
     {
      "text": "$1$ and $2$",
      "correct": false,
-     "why": "Read the diagonal entries; that only works for triangular matrices."
+     "why": "Read the diagonal entries; that only works for triangular matrices.",
+     "trap": "C10"
     },
     {
      "text": "$-4$ and $1$",
      "correct": false,
-     "why": "Sign slip in the quadratic: sum would be $-3\\neq$ trace."
+     "why": "Sign slip in the quadratic: sum would be $-3\\neq$ trace.",
+     "trap": "C11"
     },
     {
      "text": "$3$ and $-4$",
      "correct": false,
-     "why": "Reported the trace and determinant themselves."
+     "why": "Reported the trace and determinant themselves.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -2085,12 +2206,14 @@
     {
      "text": "$A$ is diagonalizable",
      "correct": false,
-     "why": "$\\lambda=3$ has AM 2, but $A-3I=\\begin{pmatrix}-1&0&0\\\\5&0&0\\\\-1&4&0\\end{pmatrix}$ has rank 2, so GM $=1$."
+     "why": "$\\lambda=3$ has AM 2, but $A-3I=\\begin{pmatrix}-1&0&0\\\\5&0&0\\\\-1&4&0\\end{pmatrix}$ has rank 2, so GM $=1$.",
+     "trap": "C1"
     },
     {
      "text": "$A+A^T$ has eigenvalues $4, 6, 6$",
      "correct": false,
-     "why": "$A+A^T$ is symmetric but not triangular; its diagonal $4,6,6$ is not its spectrum (for example $\\det(A+A^T-4I)\\neq0$)."
+     "why": "$A+A^T$ is symmetric but not triangular; its diagonal $4,6,6$ is not its spectrum (for example $\\det(A+A^T-4I)\\neq0$).",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -2114,11 +2237,13 @@
    "traps": [
     {
      "value": -6,
-     "why": "Took $\\det A/2=-6$ as an eigenvalue; it is the product of the other two."
+     "why": "Took $\\det A/2=-6$ as an eigenvalue; it is the product of the other two.",
+     "trap": "C2"
     },
     {
      "value": 1,
-     "why": "Took $\\operatorname{tr}A-2=1$ as an eigenvalue; it is the sum of the other two."
+     "why": "Took $\\operatorname{tr}A-2=1$ as an eigenvalue; it is the sum of the other two.",
+     "trap": "C2"
     }
    ],
    "solution": "1. Other two: $\\lambda_2+\\lambda_3=1$, $\\lambda_2\\lambda_3=-6$.\n2. $t^2-t-6=0\\Rightarrow t=3,-2$.\n3. Eigenvalues $2,3,-2$; smallest $-2$. Check: $2\\cdot3\\cdot(-2)=-12$."
@@ -2141,7 +2266,8 @@
     {
      "text": "The eigenvalues of $B$ are $5$ and $2$",
      "correct": false,
-     "why": "Diagonal entries of a non-triangular matrix; check: product $10\\neq\\det B=6$."
+     "why": "Diagonal entries of a non-triangular matrix; check: product $10\\neq\\det B=6$.",
+     "trap": "C10"
     },
     {
      "text": "The eigenvalues of $B$ are $1$ and $6$",
@@ -2210,11 +2336,13 @@
    "traps": [
     {
      "value": 64,
-     "why": "Cubed the trace: $(2-1+3)^3$; trace is not multiplicative."
+     "why": "Cubed the trace: $(2-1+3)^3$; trace is not multiplicative.",
+     "trap": "C9"
     },
     {
      "value": 36,
-     "why": "Sign slip: used $(-1)^3=+1$."
+     "why": "Sign slip: used $(-1)^3=+1$.",
+     "trap": "C11"
     }
    ],
    "solution": "$\\operatorname{tr}(A^3)=\\sum\\lambda_i^3=8-1+27=34$."
@@ -2236,11 +2364,13 @@
    "traps": [
     {
      "value": 0.1667,
-     "why": "Inverted the trace: $1/(2+4)$."
+     "why": "Inverted the trace: $1/(2+4)$.",
+     "trap": "C3"
     },
     {
      "value": 0.125,
-     "why": "Inverted the determinant: $1/8$."
+     "why": "Inverted the determinant: $1/8$.",
+     "trap": "C3"
     }
    ],
    "solution": "Eigenvalues of $A^{-1}$ are $\\tfrac12,\\tfrac14$; trace $=0.75$."
@@ -2258,17 +2388,20 @@
     {
      "text": "$Bv=\\left(\\dfrac1\\lambda-2\\right)v$",
      "correct": false,
-     "why": "Inverted before shifting: that is the eigenvalue of $A^{-1}-2I$."
+     "why": "Inverted before shifting: that is the eigenvalue of $A^{-1}-2I$.",
+     "trap": "C2"
     },
     {
      "text": "$v$ need not be an eigenvector of $B$",
      "correct": false,
-     "why": "Polynomials and inverses of $A$ keep the eigenvectors of $A$."
+     "why": "Polynomials and inverses of $A$ keep the eigenvectors of $A$.",
+     "trap": "C9"
     },
     {
      "text": "$Bv=(\\lambda-2)\\,v$",
      "correct": false,
-     "why": "Forgot the inverse: that is the eigenvalue of $A-2I$."
+     "why": "Forgot the inverse: that is the eigenvalue of $A-2I$.",
+     "trap": "C6"
     },
     {
      "text": "$Bv=\\dfrac{1}{\\lambda-2}\\,v$",
@@ -2297,11 +2430,13 @@
    "traps": [
     {
      "value": 1,
-     "why": "Transformed only the largest eigenvalue of $A$: $(3-4)^2=1$. The map $\\lambda\\mapsto(\\lambda-4)^2$ is not increasing here."
+     "why": "Transformed only the largest eigenvalue of $A$: $(3-4)^2=1$. The map $\\lambda\\mapsto(\\lambda-4)^2$ is not increasing here.",
+     "trap": "C11"
     },
     {
      "value": 4,
-     "why": "Arithmetic slip or picked the middle value $(2-4)^2$."
+     "why": "Arithmetic slip or picked the middle value $(2-4)^2$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Eigenvalues of $(A-4I)^2$: $(1-4)^2=9$, $(2-4)^2=4$, $(3-4)^2=1$.\n2. Largest is $9$, coming from the smallest $\\lambda$."
@@ -2329,7 +2464,8 @@
     {
      "text": "The non-zero eigenvalue of $A$ is $\\lVert u\\rVert^2=9$",
      "correct": false,
-     "why": "The non-zero eigenvalue is $v^Tu=2$, not $u^Tu$; $\\lVert u\\rVert\\lVert v\\rVert=3\\sqrt6$ is the singular value, also different."
+     "why": "The non-zero eigenvalue is $v^Tu=2$, not $u^Tu$; $\\lVert u\\rVert\\lVert v\\rVert=3\\sqrt6$ is the singular value, also different.",
+     "trap": "C2"
     },
     {
      "text": "$\\operatorname{rank}A=1$",
@@ -2358,11 +2494,13 @@
    "traps": [
     {
      "value": 6,
-     "why": "Took the eigenvalue of $xx^T$ ($x^Tx=6$) and forgot the $+1$ from $I$."
+     "why": "Took the eigenvalue of $xx^T$ ($x^Tx=6$) and forgot the $+1$ from $I$.",
+     "trap": "C6"
     },
     {
      "value": 343,
-     "why": "Assumed all three eigenvalues equal $1+x^Tx=7$; two of them are $1$."
+     "why": "Assumed all three eigenvalues equal $1+x^Tx=7$; two of them are $1$.",
+     "trap": "C1"
     }
    ],
    "solution": "1. $xx^T$ has eigenvalues $x^Tx=6$, $0$, $0$.\n2. $I+xx^T$ has eigenvalues $7,1,1$; determinant $7$."
@@ -2380,17 +2518,20 @@
     {
      "text": "The eigenvalues of $A$ are $1, 0, 0$",
      "correct": false,
-     "why": "Assumed a rank-1 matrix always has a non-zero eigenvalue; it is $v^Tu$, which is $0$ here."
+     "why": "Assumed a rank-1 matrix always has a non-zero eigenvalue; it is $v^Tu$, which is $0$ here.",
+     "trap": "C1"
     },
     {
      "text": "$A$ is diagonalizable because it has rank 1",
      "correct": false,
-     "why": "GM of $0$ is $3-1=2<3=$ AM, so $A$ is not diagonalizable."
+     "why": "GM of $0$ is $3-1=2<3=$ AM, so $A$ is not diagonalizable.",
+     "trap": "C1"
     },
     {
      "text": "$A$ has eigenvalue $\\lVert u\\rVert\\lVert v\\rVert=\\sqrt{22}$",
      "correct": false,
-     "why": "$\\lVert u\\rVert\\lVert v\\rVert$ is the non-zero singular value, not an eigenvalue."
+     "why": "$\\lVert u\\rVert\\lVert v\\rVert$ is the non-zero singular value, not an eigenvalue.",
+     "trap": "C2"
     },
     {
      "text": "All eigenvalues of $A$ are $0$, and $A^2=0$",
@@ -2419,15 +2560,18 @@
    "traps": [
     {
      "value": 32,
-     "why": "Ignored $J$: used $\\det(2I)=2^5$."
+     "why": "Ignored $J$: used $\\det(2I)=2^5$.",
+     "trap": "C6"
     },
     {
      "value": 16807,
-     "why": "Assumed every eigenvalue of $J+2I$ is $5+2=7$; four of them are $0+2=2$."
+     "why": "Assumed every eigenvalue of $J+2I$ is $5+2=7$; four of them are $0+2=2$.",
+     "trap": "C1"
     },
     {
      "value": 7,
-     "why": "Multiplied only the eigenvalue coming from the all-ones direction."
+     "why": "Multiplied only the eigenvalue coming from the all-ones direction.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $J=\\mathbf{1}\\mathbf{1}^T$ has eigenvalues $5,0,0,0,0$.\n2. $J+2I$: $7,2,2,2,2$.\n3. $\\det=7\\cdot2^4=112$."
@@ -2449,11 +2593,13 @@
    "traps": [
     {
      "value": 512,
-     "why": "Used $A^{10}=2^9A$ and forgot that $\\operatorname{tr}A=2$ multiplies in."
+     "why": "Used $A^{10}=2^9A$ and forgot that $\\operatorname{tr}A=2$ multiplies in.",
+     "trap": "C6"
     },
     {
      "value": 20,
-     "why": "Multiplied instead of powering: $10\\cdot v^Tu$."
+     "why": "Multiplied instead of powering: $10\\cdot v^Tu$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $A^k=(v^Tu)^{k-1}A$ with $v^Tu=2$.\n2. $\\operatorname{tr}(A^{10})=2^9\\cdot\\operatorname{tr}A=2^9\\cdot2=1024$ (the only non-zero eigenvalue is $2$, and $2^{10}=1024$)."
@@ -2475,11 +2621,13 @@
    "traps": [
     {
      "value": 1,
-     "why": "Reported $\\operatorname{rank}(A-2I)$; GM is $n-\\operatorname{rank}(A-2I)=3-1$."
+     "why": "Reported $\\operatorname{rank}(A-2I)$; GM is $n-\\operatorname{rank}(A-2I)=3-1$.",
+     "trap": "C2"
     },
     {
      "value": 3,
-     "why": "Equated GM with the algebraic multiplicity."
+     "why": "Equated GM with the algebraic multiplicity.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $A-2I=\\begin{pmatrix}0&1&0\\\\0&0&0\\\\0&0&0\\end{pmatrix}$ has rank 1.\n2. GM $=3-1=2$, while AM $=3$: not diagonalizable."
@@ -2497,7 +2645,8 @@
     {
      "text": "$\\begin{pmatrix}2&1\\\\0&2\\end{pmatrix}$",
      "correct": false,
-     "why": "$\\lambda=2$ with AM 2, but $A-2I$ has rank 1, so GM $=1$."
+     "why": "$\\lambda=2$ with AM 2, but $A-2I$ has rank 1, so GM $=1$.",
+     "trap": "C1"
     },
     {
      "text": "$\\begin{pmatrix}1&1\\\\0&2\\end{pmatrix}$",
@@ -2507,7 +2656,8 @@
     {
      "text": "$\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$",
      "correct": false,
-     "why": "$\\lambda=0$ with AM 2, GM $=2-1=1$."
+     "why": "$\\lambda=0$ with AM 2, GM $=2-1=1$.",
+     "trap": "C1"
     },
     {
      "text": "$\\begin{pmatrix}2&0\\\\0&2\\end{pmatrix}$",
@@ -2536,11 +2686,13 @@
    "traps": [
     {
      "value": 1,
-     "why": "Reported $\\operatorname{rank}(A-2I)$ (all-ones matrix, rank 1) instead of $3-1$."
+     "why": "Reported $\\operatorname{rank}(A-2I)$ (all-ones matrix, rank 1) instead of $3-1$.",
+     "trap": "C2"
     },
     {
      "value": 3,
-     "why": "Counted the non-zero rows of $A-2I$ without reducing; they are all equal."
+     "why": "Counted the non-zero rows of $A-2I$ without reducing; they are all equal.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $A-2I$ is the all-ones matrix, rank 1.\n2. GM $=3-1=2$. (The third eigenvalue is $9-4=5$ from the trace.)"
@@ -2558,17 +2710,20 @@
     {
      "text": "Eigenvalues $2$ and $0$, so $A$ is diagonalizable",
      "correct": false,
-     "why": "Read the diagonal of a non-triangular matrix; product $0\\neq\\det A=1$."
+     "why": "Read the diagonal of a non-triangular matrix; product $0\\neq\\det A=1$.",
+     "trap": "C10"
     },
     {
      "text": "Eigenvalues $1$ and $-1$, so $A$ is diagonalizable",
      "correct": false,
-     "why": "Dropped the trace term and solved $\\lambda^2-1=0$; check: sum $0\\neq$ trace $2$."
+     "why": "Dropped the trace term and solved $\\lambda^2-1=0$; check: sum $0\\neq$ trace $2$.",
+     "trap": "C6"
     },
     {
      "text": "$\\lambda=1$ with AM 2 and GM 2, so $A$ is diagonalizable",
      "correct": false,
-     "why": "Assumed GM $=$ AM; row reducing $A-I$ leaves one pivot, so GM is 1."
+     "why": "Assumed GM $=$ AM; row reducing $A-I$ leaves one pivot, so GM is 1.",
+     "trap": "C1"
     },
     {
      "text": "$\\lambda=1$ with AM 2 and GM 1, so $A$ is not diagonalizable",
@@ -2593,7 +2748,8 @@
     {
      "text": "The geometric multiplicity of $\\lambda=3$ is 3",
      "correct": false,
-     "why": "Equated GM with $\\operatorname{rank}(A-3I)$; GM $=n-\\operatorname{rank}=1$ (and GM can never exceed AM $=2$)."
+     "why": "Equated GM with $\\operatorname{rank}(A-3I)$; GM $=n-\\operatorname{rank}=1$ (and GM can never exceed AM $=2$).",
+     "trap": "C2"
     },
     {
      "text": "$A$ is invertible",
@@ -2608,7 +2764,8 @@
     {
      "text": "$A$ is diagonalizable",
      "correct": false,
-     "why": "GM of $\\lambda=3$ is $4-3=1<2=$ AM."
+     "why": "GM of $\\lambda=3$ is $4-3=1<2=$ AM.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -2632,11 +2789,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Reported $\\operatorname{rank}(A-4I)=2$; GM is $5-2$."
+     "why": "Reported $\\operatorname{rank}(A-4I)=2$; GM is $5-2$.",
+     "trap": "C2"
     },
     {
      "value": 4,
-     "why": "Equated GM with AM $=4$; the $1$ above the diagonal removes one eigenvector."
+     "why": "Equated GM with AM $=4$; the $1$ above the diagonal removes one eigenvector.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $A-4I$ has non-zero rows $(0,1,0,0,0)$ and $(0,0,0,0,5)$: rank 2.\n2. GM $=5-2=3<4=$ AM."
@@ -2659,7 +2818,8 @@
     {
      "text": "$(1,2,0)^T$",
      "correct": false,
-     "why": "$A(1,2,0)^T=(4,5,3)^T$, not a multiple of $(1,2,0)^T$."
+     "why": "$A(1,2,0)^T=(4,5,3)^T$, not a multiple of $(1,2,0)^T$.",
+     "trap": "C10"
     },
     {
      "text": "$(1,-1,0)^T$",
@@ -2693,11 +2853,13 @@
    "traps": [
     {
      "value": 0,
-     "why": "Found $\\det A=0$ (so $0$ is an eigenvalue) and stopped; the third eigenvalue is $5-6-0=-1$."
+     "why": "Found $\\det A=0$ (so $0$ is an eigenvalue) and stopped; the third eigenvalue is $5-6-0=-1$.",
+     "trap": "C6"
     },
     {
      "value": 1,
-     "why": "Sign slip: used trace $-$ row sum as $6-5$."
+     "why": "Sign slip: used trace $-$ row sum as $6-5$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Row sums are all 6: eigenvalue 6 with $(1,1,1)^T$.\n2. $\\det A=1(4-2)-2(6-2)+3(6-4)=0$: eigenvalue 0.\n3. Trace $5$: third eigenvalue $5-6-0=-1$."
@@ -2715,12 +2877,14 @@
     {
      "text": "$(2,-1)^T$",
      "correct": false,
-     "why": "Swapped the components: $A(2,-1)^T=(7,1)^T$."
+     "why": "Swapped the components: $A(2,-1)^T=(7,1)^T$.",
+     "trap": "C2"
     },
     {
      "text": "$(1,2)^T$",
      "correct": false,
-     "why": "Sign slip in $(A-2I)x=0$: $A(1,2)^T=(6,8)^T$, not a multiple."
+     "why": "Sign slip in $(A-2I)x=0$: $A(1,2)^T=(6,8)^T$, not a multiple.",
+     "trap": "C11"
     },
     {
      "text": "$(1,-2)^T$",
@@ -2730,7 +2894,8 @@
     {
      "text": "$(1,1)^T$",
      "correct": false,
-     "why": "This is the eigenvector for $\\lambda=5$ (equal row sums 5), not 2."
+     "why": "This is the eigenvector for $\\lambda=5$ (equal row sums 5), not 2.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -2755,7 +2920,8 @@
     {
      "text": "Every column of $A$ sums to $3$",
      "correct": false,
-     "why": "Row sums say nothing about column sums: $\\begin{pmatrix}1&2\\\\3&0\\end{pmatrix}$ has row sums $3,3$ but column sums $4,2$."
+     "why": "Row sums say nothing about column sums: $\\begin{pmatrix}1&2\\\\3&0\\end{pmatrix}$ has row sums $3,3$ but column sums $4,2$.",
+     "trap": "C2"
     },
     {
      "text": "$3$ is an eigenvalue of $A$",
@@ -2789,11 +2955,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Set $4+k=6$, using the eigenvalue as the first component; the first component must be $\\lambda\\cdot2=12$."
+     "why": "Set $4+k=6$, using the eigenvalue as the first component; the first component must be $\\lambda\\cdot2=12$.",
+     "trap": "C6"
     },
     {
      "value": -8,
-     "why": "Sign slip solving $4+k=12$."
+     "why": "Sign slip solving $4+k=12$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $A(2,1)^T=(4+k,\\,6)^T$.\n2. Second component: $6=\\lambda\\cdot1\\Rightarrow\\lambda=6$.\n3. First: $4+k=6\\cdot2=12\\Rightarrow k=8$."
@@ -2821,7 +2989,8 @@
     {
      "text": "$\\det(A^2A^T)=4$",
      "correct": false,
-     "why": "Dropped the transpose factor: $\\det(A^T)=\\det A$, so $\\det(A^2A^T)=2^3=8$."
+     "why": "Dropped the transpose factor: $\\det(A^T)=\\det A$, so $\\det(A^2A^T)=2^3=8$.",
+     "trap": "C6"
     },
     {
      "text": "$\\det(2A)=16$",
@@ -2861,7 +3030,8 @@
     {
      "text": "$\\det(A+I)=\\det A+1=4$",
      "correct": false,
-     "why": "Determinant is not additive: $\\det(A+I)=(1+1)(3+1)=8$."
+     "why": "Determinant is not additive: $\\det(A+I)=(1+1)(3+1)=8$.",
+     "trap": "C9"
     }
    ],
    "answer": null,
@@ -2881,7 +3051,8 @@
     {
      "text": "$\\det P=1$",
      "correct": false,
-     "why": "$r<n$ means eigenvalue 0 is present, so $\\det P=0$. Only $P=I$ has determinant 1."
+     "why": "$r<n$ means eigenvalue 0 is present, so $\\det P=0$. Only $P=I$ has determinant 1.",
+     "trap": "C8"
     },
     {
      "text": "$\\operatorname{tr}P=r$",
@@ -2920,11 +3091,13 @@
    "traps": [
     {
      "value": 18,
-     "why": "Used $aa^Tx$ without dividing by $a^Ta=9$."
+     "why": "Used $aa^Tx$ without dividing by $a^Ta=9$.",
+     "trap": "C6"
     },
     {
      "value": 6,
-     "why": "Divided by $\\lVert a\\rVert=3$ instead of $\\lVert a\\rVert^2=9$."
+     "why": "Divided by $\\lVert a\\rVert=3$ instead of $\\lVert a\\rVert^2=9$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. $Px=\\dfrac{a^Tx}{a^Ta}a=\\dfrac{3+0+6}{9}a=a$.\n2. $Px=(1,2,2)^T$; third component $2$."
@@ -2946,11 +3119,13 @@
    "traps": [
     {
      "value": 70,
-     "why": "Projected with $(b^Ta_i)a_i$ without dividing by $a_i^Ta_i$ ($3$ and $2$)."
+     "why": "Projected with $(b^Ta_i)a_i$ without dividing by $a_i^Ta_i$ ($3$ and $2$).",
+     "trap": "C6"
     },
     {
      "value": 18.33,
-     "why": "Reported $\\lVert p\\rVert^2$ instead of the residual $\\lVert b-p\\rVert^2$."
+     "why": "Reported $\\lVert p\\rVert^2$ instead of the residual $\\lVert b-p\\rVert^2$.",
+     "trap": "C2"
     }
    ],
    "solution": "1. Columns $a_1=(1,1,1)$, $a_2=(0,1,-1)$ are orthogonal, so $p=\\frac{7}{3}a_1+\\frac{-2}{2}a_2=(\\tfrac73,\\tfrac43,\\tfrac{10}3)$.\n2. $b-p=(-\\tfrac43,\\tfrac23,\\tfrac23)$, orthogonal to both columns.\n3. $\\lVert b-p\\rVert^2=\\tfrac{16+4+4}{9}=\\tfrac83\\approx2.667$."
@@ -2968,12 +3143,14 @@
     {
      "text": "$\\begin{pmatrix}\\tfrac12&\\tfrac12\\\\-\\tfrac12&-\\tfrac12\\end{pmatrix}$",
      "correct": false,
-     "why": "Its square is $0$ (nilpotent), not itself; trace 0 already rules it out as a rank-1 projection."
+     "why": "Its square is $0$ (nilpotent), not itself; trace 0 already rules it out as a rank-1 projection.",
+     "trap": "C10"
     },
     {
      "text": "$\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$",
      "correct": false,
-     "why": "Symmetric and orthogonal, but its square is $I$: a reflection, eigenvalues $\\pm1$."
+     "why": "Symmetric and orthogonal, but its square is $I$: a reflection, eigenvalues $\\pm1$.",
+     "trap": "C2"
     },
     {
      "text": "$\\begin{pmatrix}\\tfrac12&\\tfrac12\\\\\\tfrac12&\\tfrac12\\end{pmatrix}$",
@@ -2983,7 +3160,8 @@
     {
      "text": "$\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$",
      "correct": false,
-     "why": "Idempotent but not symmetric: an oblique projection."
+     "why": "Idempotent but not symmetric: an oblique projection.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -3003,12 +3181,14 @@
     {
      "text": "$P$ has eigenvalue 1 with multiplicity 3 and eigenvalue 0 with multiplicity 2",
      "correct": false,
-     "why": "Swapped the counts: eigenvalue 1 lives on the 2-dim column space, 0 on its 3-dim complement; trace $=2=$ rank confirms."
+     "why": "Swapped the counts: eigenvalue 1 lives on the 2-dim column space, 0 on its 3-dim complement; trace $=2=$ rank confirms.",
+     "trap": "C2"
     },
     {
      "text": "$P=I_5$, since $(A^TA)^{-1}=A^{-1}(A^T)^{-1}$",
      "correct": false,
-     "why": "$A$ is not square, so $A^{-1}$ does not exist and the inverse cannot be split. $P=I$ only when $A$ is square and invertible."
+     "why": "$A$ is not square, so $A^{-1}$ does not exist and the inverse cannot be split. $P=I$ only when $A$ is square and invertible.",
+     "trap": "C9"
     },
     {
      "text": "$PA=A$",
@@ -3048,7 +3228,8 @@
     {
      "text": "Every eigenvalue of $Q$ is $1$ or $-1$",
      "correct": false,
-     "why": "Rotation by $90^\\circ$, $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$, has eigenvalues $\\pm i$. Only $|\\lambda|=1$ is guaranteed."
+     "why": "Rotation by $90^\\circ$, $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$, has eigenvalues $\\pm i$. Only $|\\lambda|=1$ is guaranteed.",
+     "trap": "C1"
     },
     {
      "text": "$\\lVert Qx\\rVert=\\lVert x\\rVert$ for every $x$",
@@ -3073,7 +3254,8 @@
     {
      "text": "$(a,b)=(-8,\\,6)$",
      "correct": false,
-     "why": "Orthogonal to the first column but length 10, not 1."
+     "why": "Orthogonal to the first column but length 10, not 1.",
+     "trap": "C4"
     },
     {
      "text": "$(a,b)=(-0.8,\\,0.6)$",
@@ -3083,12 +3265,14 @@
     {
      "text": "$(a,b)=(0.8,\\,0.6)$",
      "correct": false,
-     "why": "Unit length but not orthogonal: $0.48+0.48\\neq0$."
+     "why": "Unit length but not orthogonal: $0.48+0.48\\neq0$.",
+     "trap": "C1"
     },
     {
      "text": "$(a,b)=(0.6,\\,0.8)$",
      "correct": false,
-     "why": "Repeats the first column; $\\det Q=0$."
+     "why": "Repeats the first column; $\\det Q=0$.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -3112,11 +3296,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Used $c$ instead of $c^n$: $3\\cdot|\\det Q|$."
+     "why": "Used $c$ instead of $c^n$: $3\\cdot|\\det Q|$.",
+     "trap": "C4"
     },
     {
      "value": 12,
-     "why": "Multiplied $3$ by $n=4$ instead of raising it to the 4th power."
+     "why": "Multiplied $3$ by $n=4$ instead of raising it to the 4th power.",
+     "trap": "C4"
     }
    ],
    "solution": "$|\\det(3Q)|=3^4|\\det Q|=81\\cdot1=81$."
@@ -3134,7 +3320,8 @@
     {
      "text": "$Q_1+Q_2$ is orthogonal",
      "correct": false,
-     "why": "$Q_1=Q_2=I$ gives $2I$, which stretches lengths by 2."
+     "why": "$Q_1=Q_2=I$ gives $2I$, which stretches lengths by 2.",
+     "trap": "C9"
     },
     {
      "text": "$Q_1^T$ is orthogonal",
@@ -3173,11 +3360,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Ignored the $-2uu^T$ term or assumed $\\operatorname{tr}(uu^T)=0$."
+     "why": "Ignored the $-2uu^T$ term or assumed $\\operatorname{tr}(uu^T)=0$.",
+     "trap": "C6"
     },
     {
      "value": -1,
-     "why": "Reported $\\det H$; $H$ is a reflection with eigenvalues $-1,1,1$."
+     "why": "Reported $\\det H$; $H$ is a reflection with eigenvalues $-1,1,1$.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $u$ is a unit vector, so $\\operatorname{tr}(uu^T)=u^Tu=1$.\n2. $\\operatorname{tr}H=3-2=1$. Eigenvalues: $-1$ (along $u$), $1,1$; $H$ is orthogonal and symmetric."
@@ -3200,17 +3389,20 @@
     {
      "text": "positive semidefinite but not positive definite",
      "correct": false,
-     "why": "That needs $\\det=0$; here $\\det=2>0$."
+     "why": "That needs $\\det=0$; here $\\det=2>0$.",
+     "trap": "C5"
     },
     {
      "text": "negative definite",
      "correct": false,
-     "why": "Diagonal entries are positive, so $Q(1,0)=3>0$."
+     "why": "Diagonal entries are positive, so $Q(1,0)=3>0$.",
+     "trap": "C11"
     },
     {
      "text": "indefinite",
      "correct": false,
-     "why": "Put the full coefficient 4 off the diagonal: $\\begin{pmatrix}3&4\\\\4&2\\end{pmatrix}$ has $\\det=-10$. The cross term must be halved."
+     "why": "Put the full coefficient 4 off the diagonal: $\\begin{pmatrix}3&4\\\\4&2\\end{pmatrix}$ has $\\det=-10$. The cross term must be halved.",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -3234,11 +3426,13 @@
    "traps": [
     {
      "value": 1,
-     "why": "Did not halve the cross term: used $\\begin{pmatrix}1&2k\\\\2k&4\\end{pmatrix}$, giving $4-4k^2=0$."
+     "why": "Did not halve the cross term: used $\\begin{pmatrix}1&2k\\\\2k&4\\end{pmatrix}$, giving $4-4k^2=0$.",
+     "trap": "C4"
     },
     {
      "value": 4,
-     "why": "Solved $k^2=4$ as $k=4$, forgetting the square root."
+     "why": "Solved $k^2=4$ as $k=4$, forgetting the square root.",
+     "trap": "C4"
     }
    ],
    "solution": "1. Matrix $\\begin{pmatrix}1&k\\\\k&4\\end{pmatrix}$.\n2. PSD but singular: $\\det=4-k^2=0\\Rightarrow k=2$.\n3. Then $Q=(x+2y)^2\\ge0$, zero along $x=-2y$."
@@ -3271,7 +3465,8 @@
     {
      "text": "If $m<n$, then $G$ is positive definite",
      "correct": false,
-     "why": "$\\operatorname{rank}G\\le m<n$, so the $n\\times n$ matrix $G$ is singular. E.g. $A=\\begin{pmatrix}1&2&3\\\\0&1&1\\end{pmatrix}$ gives $\\det G=0$."
+     "why": "$\\operatorname{rank}G\\le m<n$, so the $n\\times n$ matrix $G$ is singular. E.g. $A=\\begin{pmatrix}1&2&3\\\\0&1&1\\end{pmatrix}$ gives $\\det G=0$.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -3296,12 +3491,14 @@
     {
      "text": "$\\det A=8$",
      "correct": false,
-     "why": "Multiplied the diagonal entries; $A$ is not triangular. $\\det A=4$."
+     "why": "Multiplied the diagonal entries; $A$ is not triangular. $\\det A=4$.",
+     "trap": "C10"
     },
     {
      "text": "$x^TAx<0$ for some $x$, because of the negative off-diagonal entries",
      "correct": false,
-     "why": "Signs of off-diagonal entries do not decide definiteness; $x^TAx=x_1^2+(x_1-x_2)^2+(x_2-x_3)^2+x_3^2>0$ for $x\\ne0$."
+     "why": "Signs of off-diagonal entries do not decide definiteness; $x^TAx=x_1^2+(x_1-x_2)^2+(x_2-x_3)^2+x_3^2>0$ for $x\\ne0$.",
+     "trap": "C10"
     },
     {
      "text": "All eigenvalues of $A$ are positive",
@@ -3326,12 +3523,14 @@
     {
      "text": "$\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$",
      "correct": false,
-     "why": "Eigenvalue 0: only positive semidefinite."
+     "why": "Eigenvalue 0: only positive semidefinite.",
+     "trap": "C5"
     },
     {
      "text": "$\\begin{pmatrix}4&3\\\\3&2\\end{pmatrix}$",
      "correct": false,
-     "why": "Positive diagonal is necessary, not sufficient: $\\det=8-9=-1<0$, indefinite."
+     "why": "Positive diagonal is necessary, not sufficient: $\\det=8-9=-1<0$, indefinite.",
+     "trap": "C1"
     },
     {
      "text": "$\\begin{pmatrix}2&-1\\\\-1&2\\end{pmatrix}$",
@@ -3341,7 +3540,8 @@
     {
      "text": "$\\begin{pmatrix}1&2\\\\2&1\\end{pmatrix}$",
      "correct": false,
-     "why": "Positive entries do not imply PD: eigenvalues $3,-1$."
+     "why": "Positive entries do not imply PD: eigenvalues $3,-1$.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -3365,11 +3565,13 @@
    "traps": [
     {
      "value": 3,
-     "why": "Took the largest diagonal entry; that is only $x^TAx$ at $x=e_1$."
+     "why": "Took the largest diagonal entry; that is only $x^TAx$ at $x=e_1$.",
+     "trap": "C10"
     },
     {
      "value": 8,
-     "why": "Plugged in $x=(1,1)^T$ without normalising: $\\lVert x\\rVert^2=2$."
+     "why": "Plugged in $x=(1,1)^T$ without normalising: $\\lVert x\\rVert^2=2$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. Eigenvalues: $3\\pm1$, i.e. $4,2$.\n2. Max of the Rayleigh quotient $=\\lambda_{\\max}=4$, at $x=\\tfrac1{\\sqrt2}(1,1)^T$."
@@ -3391,11 +3593,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Took the smaller diagonal coefficient (value at $(0,1)$), not the smallest eigenvalue."
+     "why": "Took the smaller diagonal coefficient (value at $(0,1)$), not the smallest eigenvalue.",
+     "trap": "C10"
     },
     {
      "value": -0.772,
-     "why": "Did not halve the cross term: used $\\begin{pmatrix}5&4\\\\4&2\\end{pmatrix}$."
+     "why": "Did not halve the cross term: used $\\begin{pmatrix}5&4\\\\4&2\\end{pmatrix}$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. Matrix $\\begin{pmatrix}5&2\\\\2&2\\end{pmatrix}$: trace 7, det 6, eigenvalues $6,1$.\n2. Minimum on the unit circle $=\\lambda_{\\min}=1$, at $x\\propto(1,-2)$."
@@ -3423,7 +3627,8 @@
     {
      "text": "The maximum of $x^TAx$ over $\\lVert x\\rVert\\le2$ is $10$",
      "correct": false,
-     "why": "$x^TAx$ scales with $\\lVert x\\rVert^2$, not $\\lVert x\\rVert$: the maximum is $4\\cdot5=20$."
+     "why": "$x^TAx$ scales with $\\lVert x\\rVert^2$, not $\\lVert x\\rVert$: the maximum is $4\\cdot5=20$.",
+     "trap": "C4"
     },
     {
      "text": "$R(x)=1$ for some $x$",
@@ -3448,7 +3653,8 @@
     {
      "text": "$3$",
      "correct": false,
-     "why": "Took the largest eigenvalue in absolute value (spectral norm), but $x^TAx$ keeps the sign."
+     "why": "Took the largest eigenvalue in absolute value (spectral norm), but $x^TAx$ keeps the sign.",
+     "trap": "C11"
     },
     {
      "text": "$2$",
@@ -3458,12 +3664,14 @@
     {
      "text": "$0$",
      "correct": false,
-     "why": "Averaged the eigenvalues; that is $\\operatorname{tr}A/3$, not the maximum."
+     "why": "Averaged the eigenvalues; that is $\\operatorname{tr}A/3$, not the maximum.",
+     "trap": "C3"
     },
     {
      "text": "$-3$",
      "correct": false,
-     "why": "That is the minimum, $\\lambda_{\\min}$."
+     "why": "That is the minimum, $\\lambda_{\\min}$.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -3483,12 +3691,14 @@
     {
      "text": "The maximum is attained at $x=\\tfrac1{\\sqrt2}(1,-1)^T$",
      "correct": false,
-     "why": "That is the eigenvector for $\\lambda=1$, where the minimum occurs; the maximum is at $\\tfrac1{\\sqrt2}(1,1)^T$ (row sums equal 3)."
+     "why": "That is the eigenvector for $\\lambda=1$, where the minimum occurs; the maximum is at $\\tfrac1{\\sqrt2}(1,1)^T$ (row sums equal 3).",
+     "trap": "C2"
     },
     {
      "text": "The minimum of $f$ is $2$, the smallest diagonal entry",
      "correct": false,
-     "why": "Diagonal entries are values of $f$, not its minimum; the minimum is $\\lambda_{\\min}=1$ at $\\tfrac1{\\sqrt2}(1,-1)^T$."
+     "why": "Diagonal entries are values of $f$, not its minimum; the minimum is $\\lambda_{\\min}=1$ at $\\tfrac1{\\sqrt2}(1,-1)^T$.",
+     "trap": "C10"
     },
     {
      "text": "$f(e_1)=2$ lies between the minimum and maximum",
@@ -3522,11 +3732,13 @@
    "traps": [
     {
      "value": 5,
-     "why": "Copied $a_{22}$ without eliminating."
+     "why": "Copied $a_{22}$ without eliminating.",
+     "trap": "C6"
     },
     {
      "value": 8,
-     "why": "Added instead of subtracting: $5+3\\cdot1$."
+     "why": "Added instead of subtracting: $5+3\\cdot1$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Multiplier $l_{21}=6/2=3$.\n2. $u_{22}=5-3\\cdot1=2$. Check: $\\det A=10-6=4=2\\cdot2$."
@@ -3548,11 +3760,13 @@
    "traps": [
     {
      "value": 4,
-     "why": "Copied $a_{33}$; row 3 still has to be reduced by $3\\times$ the new row 2."
+     "why": "Copied $a_{33}$; row 3 still has to be reduced by $3\\times$ the new row 2.",
+     "trap": "C6"
     },
     {
      "value": 7,
-     "why": "Added instead of subtracting: $4+3\\cdot1$."
+     "why": "Added instead of subtracting: $4+3\\cdot1$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $R_2-2R_1=(0,1,1)$; $l_{21}=2$, $l_{31}=0$.\n2. $l_{32}=3/1=3$: $R_3-3R_2=(0,0,4-3)=(0,0,1)$.\n3. $u_{33}=1$. Check $\\det A=1\\cdot1\\cdot1=1$."
@@ -3570,7 +3784,8 @@
     {
      "text": "$\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$",
      "correct": false,
-     "why": "Singular but already upper triangular: $L=I$, $U=A$."
+     "why": "Singular but already upper triangular: $L=I$, $U=A$.",
+     "trap": "C9"
     },
     {
      "text": "$\\begin{pmatrix}0&1\\\\1&1\\end{pmatrix}$",
@@ -3580,12 +3795,14 @@
     {
      "text": "$\\begin{pmatrix}2&4\\\\1&3\\end{pmatrix}$",
      "correct": false,
-     "why": "Pivot 2, $l_{21}=\\tfrac12$, $u_{22}=3-2=1$."
+     "why": "Pivot 2, $l_{21}=\\tfrac12$, $u_{22}=3-2=1$.",
+     "trap": "C9"
     },
     {
      "text": "$\\begin{pmatrix}1&1\\\\1&1\\end{pmatrix}$",
      "correct": false,
-     "why": "Assumed singular means no LU; $L=\\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}$, $U=\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ works."
+     "why": "Assumed singular means no LU; $L=\\begin{pmatrix}1&0\\\\1&1\\end{pmatrix}$, $U=\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ works.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -3605,7 +3822,8 @@
     {
      "text": "Every invertible matrix has such a factorization without row exchanges",
      "correct": false,
-     "why": "$\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$ is invertible but has a zero first pivot; it needs $PA=LU$."
+     "why": "$\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$ is invertible but has a zero first pivot; it needs $PA=LU$.",
+     "trap": "C1"
     },
     {
      "text": "$\\det A$ equals the product of the diagonal entries of $U$",
@@ -3644,11 +3862,13 @@
    "traps": [
     {
      "value": 4,
-     "why": "Took only $l_{33}u_{33}$; row 3 of $L$ has three non-zero entries."
+     "why": "Took only $l_{33}u_{33}$; row 3 of $L$ has three non-zero entries.",
+     "trap": "C6"
     },
     {
      "value": 6,
-     "why": "Sign slip: used $u_{23}=+1$, giving $-1+3+4$."
+     "why": "Sign slip: used $u_{23}=+1$, giving $-1+3+4$.",
+     "trap": "C11"
     }
    ],
    "solution": "$a_{33}=l_{31}u_{13}+l_{32}u_{23}+l_{33}u_{33}=(-1)(1)+3(-1)+1\\cdot4=0$."
@@ -3666,7 +3886,8 @@
     {
      "text": "$u_{22}=10$",
      "correct": false,
-     "why": "Added instead of subtracting: $4+3\\cdot2$."
+     "why": "Added instead of subtracting: $4+3\\cdot2$.",
+     "trap": "C11"
     },
     {
      "text": "$u_{22}=-2$",
@@ -3705,11 +3926,13 @@
    "traps": [
     {
      "value": 5,
-     "why": "Took the largest eigenvalue (diagonal of a triangular matrix); singular values differ from eigenvalues for non-symmetric $A$."
+     "why": "Took the largest eigenvalue (diagonal of a triangular matrix); singular values differ from eigenvalues for non-symmetric $A$.",
+     "trap": "C2"
     },
     {
      "value": 45,
-     "why": "Forgot the square root of the eigenvalue of $A^TA$."
+     "why": "Forgot the square root of the eigenvalue of $A^TA$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. $A^TA=\\begin{pmatrix}25&20\\\\20&25\\end{pmatrix}$, eigenvalues $45, 5$.\n2. $\\sigma_1=\\sqrt{45}\\approx6.708$, $\\sigma_2=\\sqrt5$. Check: $\\sigma_1\\sigma_2=15=|\\det A|$."
@@ -3732,7 +3955,8 @@
     {
      "text": "The singular values of $A$ are $3$ and $5$",
      "correct": false,
-     "why": "Listed the two norms separately; the single non-zero singular value is their product."
+     "why": "Listed the two norms separately; the single non-zero singular value is their product.",
+     "trap": "C6"
     },
     {
      "text": "$\\operatorname{rank}A=1$",
@@ -3772,12 +3996,14 @@
     {
      "text": "A $3\\times3$ matrix with singular values $4,1,0$ has rank 3",
      "correct": false,
-     "why": "Counted all singular values; rank equals the number of non-zero ones, here 2."
+     "why": "Counted all singular values; rank equals the number of non-zero ones, here 2.",
+     "trap": "C6"
     },
     {
      "text": "A symmetric matrix with eigenvalues $3$ and $-2$ has singular values $3$ and $-2$",
      "correct": false,
-     "why": "Singular values are never negative; for symmetric $A$ they are $|\\lambda|$: $3$ and $2$."
+     "why": "Singular values are never negative; for symmetric $A$ they are $|\\lambda|$: $3$ and $2$.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -3801,11 +4027,13 @@
    "traps": [
     {
      "value": 6,
-     "why": "Added the singular values instead of their squares."
+     "why": "Added the singular values instead of their squares.",
+     "trap": "C4"
     },
     {
      "value": 36,
-     "why": "Squared the sum of singular values: $(3+2+1)^2$."
+     "why": "Squared the sum of singular values: $(3+2+1)^2$.",
+     "trap": "C4"
     }
    ],
    "solution": "$\\sum a_{ij}^2=\\operatorname{tr}(A^TA)=\\sum\\sigma_i^2=9+4+1=14$."
@@ -3823,12 +4051,14 @@
     {
      "text": "$\\sqrt2$ and $\\sqrt2$",
      "correct": false,
-     "why": "Used the column norms; the columns are equal, so the matrix has rank 1, not 2."
+     "why": "Used the column norms; the columns are equal, so the matrix has rank 1, not 2.",
+     "trap": "C10"
     },
     {
      "text": "$4$ and $0$",
      "correct": false,
-     "why": "Forgot the square root of the eigenvalues of $A^TA$."
+     "why": "Forgot the square root of the eigenvalues of $A^TA$.",
+     "trap": "C4"
     },
     {
      "text": "$2$ and $0$",
@@ -3838,7 +4068,8 @@
     {
      "text": "$1$ and $1$",
      "correct": false,
-     "why": "Read off entries as if $A$ were diagonal."
+     "why": "Read off entries as if $A$ were diagonal.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -3858,7 +4089,8 @@
     {
      "text": "For square $A$, the singular values are the absolute values of the eigenvalues",
      "correct": false,
-     "why": "Only for normal (e.g. symmetric) $A$. $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ has eigenvalues $0,0$ but singular values $1,0$."
+     "why": "Only for normal (e.g. symmetric) $A$. $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ has eigenvalues $0,0$ but singular values $1,0$.",
+     "trap": "C1"
     },
     {
      "text": "Exactly $r$ singular values of $A$ are non-zero",

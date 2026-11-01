@@ -58,17 +58,20 @@
         {
           "text": "tentatively",
           "correct": false,
-          "why": "*Tentatively* means hesitantly; a vote taken without discussion is abrupt, not hesitant."
+          "why": "*Tentatively* means hesitantly; a vote taken without discussion is abrupt, not hesitant.",
+          "trap": "C10"
         },
         {
           "text": "sumptuously",
           "correct": false,
-          "why": "Sound-alike trap: *sumptuously* means lavishly or expensively, which has nothing to do with a quick rejection."
+          "why": "Sound-alike trap: *sumptuously* means lavishly or expensively, which has nothing to do with a quick rejection.",
+          "trap": "C10"
         },
         {
           "text": "subsequently",
           "correct": false,
-          "why": "*Subsequently* only says 'later'; it ignores the clue that there was no discussion."
+          "why": "*Subsequently* only says 'later'; it ignores the clue that there was no discussion.",
+          "trap": "C6"
         },
         {
           "text": "summarily",
@@ -93,17 +96,20 @@
         {
           "text": "an; an",
           "correct": false,
-          "why": "Got *honest* right but judged *useful* by its letter u; it is pronounced 'yoo-sful', a consonant sound."
+          "why": "Got *honest* right but judged *useful* by its letter u; it is pronounced 'yoo-sful', a consonant sound.",
+          "trap": "C10"
         },
         {
           "text": "a; an",
           "correct": false,
-          "why": "Chose by spelling: h looks like a consonant and u like a vowel, but the sounds are the reverse."
+          "why": "Chose by spelling: h looks like a consonant and u like a vowel, but the sounds are the reverse.",
+          "trap": "C10"
         },
         {
           "text": "a; a",
           "correct": false,
-          "why": "Got *useful* right but judged *honest* by its letter h; the h is silent, so it needs *an*."
+          "why": "Got *useful* right but judged *honest* by its letter h; the h is silent, so it needs *an*.",
+          "trap": "C10"
         },
         {
           "text": "an; a",
@@ -128,12 +134,14 @@
         {
           "text": "will have worked; since",
           "correct": false,
-          "why": "*Since* needs a starting point (since 2020), not a duration like 'six years'."
+          "why": "*Since* needs a starting point (since 2020), not a duration like 'six years'.",
+          "trap": "C2"
         },
         {
           "text": "has worked; for",
           "correct": false,
-          "why": "Present perfect describes up to now; 'by next March' points to a future moment, so future perfect is needed."
+          "why": "Present perfect describes up to now; 'by next March' points to a future moment, so future perfect is needed.",
+          "trap": "C9"
         },
         {
           "text": "will have worked; for",
@@ -143,7 +151,8 @@
         {
           "text": "worked; since",
           "correct": false,
-          "why": "Two errors: simple past cannot reach a future deadline, and *since* cannot take a duration."
+          "why": "Two errors: simple past cannot reach a future deadline, and *since* cannot take a duration.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -163,7 +172,8 @@
         {
           "text": "ensured; assure; insure",
           "correct": false,
-          "why": "*Ensure* does not take a person as listener; you assure people and ensure outcomes."
+          "why": "*Ensure* does not take a person as listener; you assure people and ensure outcomes.",
+          "trap": "C2"
         },
         {
           "text": "assured; ensure; insure",
@@ -173,12 +183,14 @@
         {
           "text": "insured; ensure; assure",
           "correct": false,
-          "why": "*Insure* is about financial cover, not about telling someone; and you cannot 'assure equipment against damage'."
+          "why": "*Insure* is about financial cover, not about telling someone; and you cannot 'assure equipment against damage'.",
+          "trap": "C10"
         },
         {
           "text": "assured; insure; ensure",
           "correct": false,
-          "why": "Swapped the last two: a generator makes power certain (ensure); flood cover is financial (insure)."
+          "why": "Swapped the last two: a generator makes power certain (ensure); flood cover is financial (insure).",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -198,12 +210,14 @@
         {
           "text": "Painter : Brush",
           "correct": false,
-          "why": "Maker : tool; the brush is what the painter uses, not what the painter produces."
+          "why": "Maker : tool; the brush is what the painter uses, not what the painter produces.",
+          "trap": "C10"
         },
         {
           "text": "Symphony : Composer",
           "correct": false,
-          "why": "Right relationship but reversed direction (thing made : maker); order matters in analogies."
+          "why": "Right relationship but reversed direction (thing made : maker); order matters in analogies.",
+          "trap": "C11"
         },
         {
           "text": "Composer : Symphony",
@@ -213,7 +227,8 @@
         {
           "text": "Pilot : Aircraft",
           "correct": false,
-          "why": "Operator : thing operated; a pilot uses an aircraft but does not create it."
+          "why": "Operator : thing operated; a pilot uses an aircraft but does not create it.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -233,17 +248,20 @@
         {
           "text": "Flood : Rain",
           "correct": false,
-          "why": "Reversed direction: rain causes a flood, so this pair is effect : cause."
+          "why": "Reversed direction: rain causes a flood, so this pair is effect : cause.",
+          "trap": "C11"
         },
         {
           "text": "Fever : Thermometer",
           "correct": false,
-          "why": "Condition : measuring instrument; a thermometer measures fever, it is not caused by it."
+          "why": "Condition : measuring instrument; a thermometer measures fever, it is not caused by it.",
+          "trap": "C10"
         },
         {
           "text": "Hunger : Food",
           "correct": false,
-          "why": "Need : remedy; food relieves hunger, it is not an effect caused by hunger."
+          "why": "Need : remedy; food relieves hunger, it is not an effect caused by hunger.",
+          "trap": "C10"
         },
         {
           "text": "Negligence : Accident",
@@ -268,17 +286,20 @@
         {
           "text": "cover for",
           "correct": false,
-          "why": "*Cover for* means to stand in for or protect a person, not to hide an event."
+          "why": "*Cover for* means to stand in for or protect a person, not to hide an event.",
+          "trap": "C10"
         },
         {
           "text": "play up",
           "correct": false,
-          "why": "*Play up* means exaggerate — the opposite of hiding the incident."
+          "why": "*Play up* means exaggerate — the opposite of hiding the incident.",
+          "trap": "C11"
         },
         {
           "text": "make up",
           "correct": false,
-          "why": "*Make up* means invent or reconcile; it does not mean conceal."
+          "why": "*Make up* means invent or reconcile; it does not mean conceal.",
+          "trap": "C10"
         },
         {
           "text": "cover up",
@@ -303,17 +324,20 @@
         {
           "text": "affect; effect",
           "correct": false,
-          "why": "Swapped noun and verb: *affect* is normally the verb, *effect* the noun."
+          "why": "Swapped noun and verb: *affect* is normally the verb, *effect* the noun.",
+          "trap": "C2"
         },
         {
           "text": "affect; affect",
           "correct": false,
-          "why": "'A strong ___' needs a noun; *affect* as a noun is a psychology term for displayed emotion."
+          "why": "'A strong ___' needs a noun; *affect* as a noun is a psychology term for displayed emotion.",
+          "trap": "C9"
         },
         {
           "text": "effect; effect",
           "correct": false,
-          "why": "The second blank follows 'did not', so it needs the verb *affect*; *effect* as a verb means 'bring about'."
+          "why": "The second blank follows 'did not', so it needs the verb *affect*; *effect* as a verb means 'bring about'.",
+          "trap": "C2"
         },
         {
           "text": "effect; affect",
@@ -338,17 +362,20 @@
         {
           "text": "A number of students was absent today.",
           "correct": false,
-          "why": "*A number of* means 'many' and takes a plural verb: *were absent*."
+          "why": "*A number of* means 'many' and takes a plural verb: *were absent*.",
+          "trap": "C10"
         },
         {
           "text": "Each of the reports have been reviewed.",
           "correct": false,
-          "why": "The subject is *Each* (singular), not *reports*; it should be *has been*."
+          "why": "The subject is *Each* (singular), not *reports*; it should be *has been*.",
+          "trap": "C10"
         },
         {
           "text": "Neither the manager nor the analysts was aware of the error.",
           "correct": false,
-          "why": "With *neither...nor*, the verb agrees with the nearer subject, *analysts*: *were*."
+          "why": "With *neither...nor*, the verb agrees with the nearer subject, *analysts*: *were*.",
+          "trap": "C9"
         },
         {
           "text": "The number of applicants has risen sharply this year.",
@@ -373,12 +400,14 @@
         {
           "text": "ethereal",
           "correct": false,
-          "why": "Sound-alike trap: *ethereal* means delicate or heavenly, unrelated to duration."
+          "why": "Sound-alike trap: *ethereal* means delicate or heavenly, unrelated to duration.",
+          "trap": "C10"
         },
         {
           "text": "fleeting",
           "correct": false,
-          "why": "*Fleeting* is a synonym of ephemeral; the question asks for the opposite."
+          "why": "*Fleeting* is a synonym of ephemeral; the question asks for the opposite.",
+          "trap": "C11"
         },
         {
           "text": "enduring",
@@ -388,7 +417,8 @@
         {
           "text": "evident",
           "correct": false,
-          "why": "*Evident* means obvious; it has no link to how long something lasts."
+          "why": "*Evident* means obvious; it has no link to how long something lasts.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -408,17 +438,20 @@
         {
           "text": "lucid; engrossing",
           "correct": false,
-          "why": "First blank is right, but *engrossing* contradicts 'gave up halfway'."
+          "why": "First blank is right, but *engrossing* contradicts 'gave up halfway'.",
+          "trap": "C6"
         },
         {
           "text": "turgid; tedious",
           "correct": false,
-          "why": "Missed the contrast: *turgid* (pompous, heavy) cannot be the object of praise."
+          "why": "Missed the contrast: *turgid* (pompous, heavy) cannot be the object of praise.",
+          "trap": "C11"
         },
         {
           "text": "convoluted; gripping",
           "correct": false,
-          "why": "Reversed the polarity: *convoluted* is a criticism, and nobody abandons a *gripping* plot."
+          "why": "Reversed the polarity: *convoluted* is a criticism, and nobody abandons a *gripping* plot.",
+          "trap": "C11"
         },
         {
           "text": "lucid; tedious",
@@ -443,17 +476,20 @@
         {
           "text": "a; an; a",
           "correct": false,
-          "why": "Chose every article by the first letter; all three words sound different from how they are spelled."
+          "why": "Chose every article by the first letter; all three words sound different from how they are spelled.",
+          "trap": "C10"
         },
         {
           "text": "an; an; an",
           "correct": false,
-          "why": "Judged *European* by the letter E; it starts with a 'y' sound, so it takes *a*."
+          "why": "Judged *European* by the letter E; it starts with a 'y' sound, so it takes *a*.",
+          "trap": "C10"
         },
         {
           "text": "an; a; a",
           "correct": false,
-          "why": "Judged *MBA* by the letter M; the letter name 'em' starts with a vowel sound, so it takes *an*."
+          "why": "Judged *MBA* by the letter M; the letter name 'em' starts with a vowel sound, so it takes *an*.",
+          "trap": "C10"
         },
         {
           "text": "an; a; an",
@@ -478,7 +514,8 @@
         {
           "text": "The city-wide increase in speed checks explains the 30% fall on the twelve streets.",
           "correct": false,
-          "why": "The checks were city-wide, yet other streets saw no change, so they cannot explain the gap; this overclaims a cause."
+          "why": "The checks were city-wide, yet other streets saw no change, so they cannot explain the gap; this overclaims a cause.",
+          "trap": "C1"
         },
         {
           "text": "Part of the fall in injuries on the twelve streets may reflect how those streets differed from the rest, not just the lanes.",
@@ -488,12 +525,14 @@
         {
           "text": "Because the twelve streets were randomly selected, the 30% fall can be credited to the lanes alone.",
           "correct": false,
-          "why": "Read 'not randomly selected' as 'randomly selected'. The passage says the opposite, which is why the lanes cannot take full credit."
+          "why": "Read 'not randomly selected' as 'randomly selected'. The passage says the opposite, which is why the lanes cannot take full credit.",
+          "trap": "C11"
         },
         {
           "text": "Protected bicycle lanes made cycling on the twelve streets more dangerous.",
           "correct": false,
-          "why": "Contradicts the data: injuries on those streets fell."
+          "why": "Contradicts the data: injuries on those streets fell.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -518,17 +557,20 @@
         {
           "text": "Evaporating water is used to cool the hive.",
           "correct": false,
-          "why": "Directly stated, so it does not go beyond the passage; this is the supported-option trap."
+          "why": "Directly stated, so it does not go beyond the passage; this is the supported-option trap.",
+          "trap": "C11"
         },
         {
           "text": "Workers can produce heat without flying.",
           "correct": false,
-          "why": "Directly supported (shivering flight muscles without moving wings). Picking it means you answered 'which is supported' instead of 'which goes beyond'."
+          "why": "Directly supported (shivering flight muscles without moving wings). Picking it means you answered 'which is supported' instead of 'which goes beyond'.",
+          "trap": "C11"
         },
         {
           "text": "In a diverse colony, not all workers start fanning at the same temperature.",
           "correct": false,
-          "why": "This restates the passage's explanation, so it is supported, not beyond it."
+          "why": "This restates the passage's explanation, so it is supported, not beyond it.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -548,7 +590,8 @@
         {
           "text": "Wading birds control the number of crabs in the wetland.",
           "correct": false,
-          "why": "Reversed the direction of influence; keeping birds out had no effect on crabs, which is exactly what the passage stresses."
+          "why": "Reversed the direction of influence; keeping birds out had no effect on crabs, which is exactly what the passage stresses.",
+          "trap": "C11"
         },
         {
           "text": "The number of crabs influences where wading birds feed.",
@@ -558,12 +601,14 @@
         {
           "text": "Crabs are the birds' only food throughout the year.",
           "correct": false,
-          "why": "Overgeneralises 'main food during the breeding season' into 'only food all year'."
+          "why": "Overgeneralises 'main food during the breeding season' into 'only food all year'.",
+          "trap": "C1"
         },
         {
           "text": "Removing crabs made the bird population grow.",
           "correct": false,
-          "why": "Contradicts the passage: birds stopped feeding in plots without crabs."
+          "why": "Contradicts the passage: birds stopped feeding in plots without crabs.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -583,7 +628,8 @@
         {
           "text": "Some large firms pay staff to work on shared code.",
           "correct": false,
-          "why": "A true detail, but a supporting point, not the main idea."
+          "why": "A true detail, but a supporting point, not the main idea.",
+          "trap": "C6"
         },
         {
           "text": "Widely used open-source software receives far less support than its importance would justify.",
@@ -593,12 +639,14 @@
         {
           "text": "Open-source software is less secure than commercial software.",
           "correct": false,
-          "why": "Goes beyond the passage: no comparison with commercial software is made."
+          "why": "Goes beyond the passage: no comparison with commercial software is made.",
+          "trap": "C1"
         },
         {
           "text": "Foundations have solved the funding problem of open-source maintainers.",
           "correct": false,
-          "why": "Contradicts the passage, which calls these efforts 'small compared with the value'."
+          "why": "Contradicts the passage, which calls these efforts 'small compared with the value'.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -618,17 +666,20 @@
         {
           "text": "Morning visits had been the lowest of the day.",
           "correct": false,
-          "why": "This is the reason for the later **opening** time, not for the later closing time — wrong reason matched to the change."
+          "why": "This is the reason for the later **opening** time, not for the later closing time — wrong reason matched to the change.",
+          "trap": "C2"
         },
         {
           "text": "The library wanted to reduce its operating costs.",
           "correct": false,
-          "why": "The passage says costs were kept unchanged, not reduced."
+          "why": "The passage says costs were kept unchanged, not reduced.",
+          "trap": "C10"
         },
         {
           "text": "Total visitor numbers had been rising for five years.",
           "correct": false,
-          "why": "Contradicts the passage: visitor numbers were flat, and the report rules this out as the reason."
+          "why": "Contradicts the passage: visitor numbers were flat, and the report rules this out as the reason.",
+          "trap": "C11"
         },
         {
           "text": "Many former users could not reach it before 6 pm because of their work shifts.",
@@ -653,7 +704,8 @@
         {
           "text": "Washing with water can be costly in dry areas.",
           "correct": false,
-          "why": "Stated in the second sentence; choosing it means you looked for a supported option."
+          "why": "Stated in the second sentence; choosing it means you looked for a supported option.",
+          "trap": "C11"
         },
         {
           "text": "The robotic brushes alone account for the entire increase in output.",
@@ -663,12 +715,14 @@
         {
           "text": "Dust on panels can reduce their output.",
           "correct": false,
-          "why": "Stated in the first sentence; it is supported, so it cannot answer a NOT question — the reversal was lost."
+          "why": "Stated in the first sentence; it is supported, so it cannot answer a NOT question — the reversal was lost.",
+          "trap": "C11"
         },
         {
           "text": "The weather may have contributed to the higher output.",
           "correct": false,
-          "why": "This is the engineers' caution itself; it is supported."
+          "why": "This is the engineers' caution itself; it is supported.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -688,17 +742,20 @@
         {
           "text": "The hospital has already switched its guidelines to the demanding routine.",
           "correct": false,
-          "why": "Contradicts the passage: the authors recommend a trial **before** any change."
+          "why": "Contradicts the passage: the authors recommend a trial **before** any change.",
+          "trap": "C11"
         },
         {
           "text": "The demanding routine is harmful for older patients.",
           "correct": false,
-          "why": "Goes beyond the passage: no harm was reported, and older patients were simply less likely to choose it."
+          "why": "Goes beyond the passage: no harm was reported, and older patients were simply less likely to choose it.",
+          "trap": "C1"
         },
         {
           "text": "Since patients were randomly assigned, the demanding routine causes faster recovery.",
           "correct": false,
-          "why": "Read 'not randomised' as 'randomised'. Patients chose for themselves, so causation cannot be claimed."
+          "why": "Read 'not randomised' as 'randomised'. Patients chose for themselves, so causation cannot be claimed.",
+          "trap": "C11"
         },
         {
           "text": "The study cannot yet show that the demanding routine itself speeds recovery.",
@@ -723,7 +780,8 @@
         {
           "text": "better job prospects for the learners' children",
           "correct": false,
-          "why": "Mixes up the cause of decline (parents seeking jobs) with the outcome of revival."
+          "why": "Mixes up the cause of decline (parents seeking jobs) with the outcome of revival.",
+          "trap": "C2"
         },
         {
           "text": "people who understand the language but rarely use it",
@@ -733,12 +791,14 @@
         {
           "text": "fluent everyday speakers of the language",
           "correct": false,
-          "why": "That outcome is linked to programmes that combine school with home and community use."
+          "why": "That outcome is linked to programmes that combine school with home and community use.",
+          "trap": "C10"
         },
         {
           "text": "no speakers or learners at all",
           "correct": false,
-          "why": "Exaggerates: classroom-only teaching still produces people who understand the language."
+          "why": "Exaggerates: classroom-only teaching still produces people who understand the language.",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -758,12 +818,14 @@
         {
           "text": "The firm's product must be less well known than the rival's.",
           "correct": false,
-          "why": "This is the finance team's point about the rival, not a requirement for the sales claim."
+          "why": "This is the finance team's point about the rival, not a requirement for the sales claim.",
+          "trap": "C10"
         },
         {
           "text": "Licence sales must double, as the rival's did.",
           "correct": false,
-          "why": "Doubling is sufficient but not necessary; any rise above 25% would do. 'Must' asks for the necessary condition."
+          "why": "Doubling is sufficient but not necessary; any rise above 25% would do. 'Must' asks for the necessary condition.",
+          "trap": "C1"
         },
         {
           "text": "Licence sales must rise by more than 25%.",
@@ -773,7 +835,8 @@
         {
           "text": "Licence sales must rise by more than 20%.",
           "correct": false,
-          "why": "Assumed a 20% cut is offset by a 20% rise; $0.8 \\times 1.2 = 0.96$, so revenue would still fall."
+          "why": "Assumed a 20% cut is offset by a 20% rise; $0.8 \\times 1.2 = 0.96$, so revenue would still fall.",
+          "trap": "C3"
         }
       ],
       "answer": null,
@@ -793,7 +856,8 @@
         {
           "text": "Managers' views of the arrangement changed during the study.",
           "correct": false,
-          "why": "Supported: they expected a fall but later said performance was not hurt."
+          "why": "Supported: they expected a fall but later said performance was not hurt.",
+          "trap": "C11"
         },
         {
           "text": "Hybrid work would also reduce resignations among the company's sales staff.",
@@ -803,12 +867,14 @@
         {
           "text": "The output of hybrid workers did not decline.",
           "correct": false,
-          "why": "Supported: output 'stayed the same'. Choosing it means you looked for a supported statement instead of one that goes beyond."
+          "why": "Supported: output 'stayed the same'. Choosing it means you looked for a supported statement instead of one that goes beyond.",
+          "trap": "C11"
         },
         {
           "text": "Resignations were lower among hybrid workers than among full-time office staff.",
           "correct": false,
-          "why": "Supported: resignations fell by a third relative to office colleagues."
+          "why": "Supported: resignations fell by a third relative to office colleagues.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -828,12 +894,14 @@
         {
           "text": "They had expected long queues from the start.",
           "correct": false,
-          "why": "Contradicts the passage: they expected 'modest interest'."
+          "why": "Contradicts the passage: they expected 'modest interest'.",
+          "trap": "C11"
         },
         {
           "text": "They decided that famous objects should be moved into storage.",
           "correct": false,
-          "why": "Distorts the passage: nothing is said about moving famous objects."
+          "why": "Distorts the passage: nothing is said about moving famous objects.",
+          "trap": "C1"
         },
         {
           "text": "They came to see the storage itself as worth showing to the public.",
@@ -843,7 +911,8 @@
         {
           "text": "They concluded that visitors prefer clearly labelled objects.",
           "correct": false,
-          "why": "Goes against the passage, which mentions crowds drawn to unlabelled tools and abundance."
+          "why": "Goes against the passage, which mentions crowds drawn to unlabelled tools and abundance.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -863,7 +932,8 @@
         {
           "text": "15",
           "correct": false,
-          "why": "Reported the boys (5 parts) instead of the requested total."
+          "why": "Reported the boys (5 parts) instead of the requested total.",
+          "trap": "C6"
         },
         {
           "text": "36",
@@ -873,12 +943,14 @@
         {
           "text": "27",
           "correct": false,
-          "why": "Added one part to the girls instead of all five boys' parts: 21 + 2×3."
+          "why": "Added one part to the girls instead of all five boys' parts: 21 + 2×3.",
+          "trap": "C6"
         },
         {
           "text": "50.4",
           "correct": false,
-          "why": "Treated 21 as the boys' share (21/5 per part) and then multiplied by 12."
+          "why": "Treated 21 as the boys' share (21/5 per part) and then multiplied by 12.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -898,7 +970,8 @@
         {
           "text": "28",
           "correct": false,
-          "why": "Reported the final water quantity instead of the amount added."
+          "why": "Reported the final water quantity instead of the amount added.",
+          "trap": "C6"
         },
         {
           "text": "10",
@@ -908,12 +981,14 @@
         {
           "text": "45",
           "correct": false,
-          "why": "Inverted the target ratio (water : milk = 3 : 2), giving 63 L of water."
+          "why": "Inverted the target ratio (water : milk = 3 : 2), giving 63 L of water.",
+          "trap": "C11"
         },
         {
           "text": "6",
           "correct": false,
-          "why": "Kept the total at 60 L (water = 2/5 × 60 = 24); adding water changes the total."
+          "why": "Kept the total at 60 L (water = 2/5 × 60 = 24); adding water changes the total.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -933,17 +1008,20 @@
         {
           "text": "17",
           "correct": false,
-          "why": "Rounded 15.05 up to 16 and then added 1 again."
+          "why": "Rounded 15.05 up to 16 and then added 1 again.",
+          "trap": "C6"
         },
         {
           "text": "15",
           "correct": false,
-          "why": "Took the integer part of the log as the digit count; digits = floor(log) + 1."
+          "why": "Took the integer part of the log as the digit count; digits = floor(log) + 1.",
+          "trap": "C6"
         },
         {
           "text": "51",
           "correct": false,
-          "why": "Counted digits of the exponent idea (50 + 1), ignoring the logarithm."
+          "why": "Counted digits of the exponent idea (50 + 1), ignoring the logarithm.",
+          "trap": "C10"
         },
         {
           "text": "16",
@@ -968,17 +1046,20 @@
         {
           "text": "5",
           "correct": false,
-          "why": "Dropped the sign: $\\log_3 (1/9) = -2$, not $+2$."
+          "why": "Dropped the sign: $\\log_3 (1/9) = -2$, not $+2$.",
+          "trap": "C11"
         },
         {
           "text": "4",
           "correct": false,
-          "why": "Two slips together: took $\\log_3(1/9)$ as +2 and $\\log_5 1$ as 1, giving 3 + 2 − 1."
+          "why": "Two slips together: took $\\log_3(1/9)$ as +2 and $\\log_5 1$ as 1, giving 3 + 2 − 1.",
+          "trap": "C11"
         },
         {
           "text": "0",
           "correct": false,
-          "why": "Took $\\log_5 1 = 1$; the log of 1 is 0 in every base."
+          "why": "Took $\\log_5 1 = 1$; the log of 1 is 0 in every base.",
+          "trap": "C9"
         },
         {
           "text": "1",
@@ -1003,7 +1084,8 @@
         {
           "text": "94",
           "correct": false,
-          "why": "Added the previous term (31) to 63, a Fibonacci-style guess."
+          "why": "Added the previous term (31) to 63, a Fibonacci-style guess.",
+          "trap": "C10"
         },
         {
           "text": "127",
@@ -1013,12 +1095,14 @@
         {
           "text": "95",
           "correct": false,
-          "why": "Repeated the last difference (32) instead of doubling it to 64."
+          "why": "Repeated the last difference (32) instead of doubling it to 64.",
+          "trap": "C6"
         },
         {
           "text": "126",
           "correct": false,
-          "why": "Doubled 63 but dropped the +1."
+          "why": "Doubled 63 but dropped the +1.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1038,12 +1122,14 @@
         {
           "text": "18",
           "correct": false,
-          "why": "Assumed the removed number equals the old average; then the average would not change."
+          "why": "Assumed the removed number equals the old average; then the average would not change.",
+          "trap": "C10"
         },
         {
           "text": "2",
           "correct": false,
-          "why": "Reported the drop in the average, not the removed number."
+          "why": "Reported the drop in the average, not the removed number.",
+          "trap": "C6"
         },
         {
           "text": "26",
@@ -1053,7 +1139,8 @@
         {
           "text": "10",
           "correct": false,
-          "why": "Multiplied the drop (2) by five numbers; the right bookkeeping is 5 × 18 − 4 × 16."
+          "why": "Multiplied the drop (2) by five numbers; the right bookkeeping is 5 × 18 − 4 × 16.",
+          "trap": "C3"
         }
       ],
       "answer": null,
@@ -1073,17 +1160,20 @@
         {
           "text": "14",
           "correct": false,
-          "why": "Subtracted days directly (18 − 4); days are not additive across workers, rates are."
+          "why": "Subtracted days directly (18 − 4); days are not additive across workers, rates are.",
+          "trap": "C3"
         },
         {
           "text": "3.2",
           "correct": false,
-          "why": "Used the together-time 7.2 days and subtracted 4, as if both kept working."
+          "why": "Used the together-time 7.2 days and subtracted 4, as if both kept working.",
+          "trap": "C6"
         },
         {
           "text": "12",
           "correct": false,
-          "why": "Counted only A's work in the first 4 days (4/12) and forgot B was also working."
+          "why": "Counted only A's work in the first 4 days (4/12) and forgot B was also working.",
+          "trap": "C6"
         },
         {
           "text": "8",
@@ -1108,17 +1198,20 @@
         {
           "text": "1/11",
           "correct": false,
-          "why": "Treated the 11 possible sums (2 to 12) as equally likely."
+          "why": "Treated the 11 possible sums (2 to 12) as equally likely.",
+          "trap": "C6"
         },
         {
           "text": "3/36",
           "correct": false,
-          "why": "Counted unordered pairs {2,6},{3,5},{4,4} but divided by the 36 ordered outcomes."
+          "why": "Counted unordered pairs {2,6},{3,5},{4,4} but divided by the 36 ordered outcomes.",
+          "trap": "C6"
         },
         {
           "text": "1/7",
           "correct": false,
-          "why": "Counted 3 unordered pairs out of 21 unordered outcomes; unordered outcomes are not equally likely."
+          "why": "Counted 3 unordered pairs out of 21 unordered outcomes; unordered outcomes are not equally likely.",
+          "trap": "C6"
         },
         {
           "text": "5/36",
@@ -1148,17 +1241,20 @@
         {
           "text": "40",
           "correct": false,
-          "why": "Decimal drift the other way: treated 0.0198 as 0.198."
+          "why": "Decimal drift the other way: treated 0.0198 as 0.198.",
+          "trap": "C4"
         },
         {
           "text": "0.25",
           "correct": false,
-          "why": "Multiplied by 0.25 instead of dividing by it."
+          "why": "Multiplied by 0.25 instead of dividing by it.",
+          "trap": "C11"
         },
         {
           "text": "0.4",
           "correct": false,
-          "why": "Decimal drift: lost a place when dividing by 0.25."
+          "why": "Decimal drift: lost a place when dividing by 0.25.",
+          "trap": "C4"
         }
       ],
       "answer": null,
@@ -1178,7 +1274,8 @@
         {
           "text": "3060",
           "correct": false,
-          "why": "Reported votes cast; 10% of the list did not vote at all."
+          "why": "Reported votes cast; 10% of the list did not vote at all.",
+          "trap": "C6"
         },
         {
           "text": "3400",
@@ -1188,12 +1285,14 @@
         {
           "text": "3333",
           "correct": false,
-          "why": "Divided 3000 by 0.9 but forgot to add the 60 invalid votes first."
+          "why": "Divided 3000 by 0.9 but forgot to add the 60 invalid votes first.",
+          "trap": "C6"
         },
         {
           "text": "3000",
           "correct": false,
-          "why": "Stopped at the valid votes — a part — instead of the requested total on the list."
+          "why": "Stopped at the valid votes — a part — instead of the requested total on the list.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1213,12 +1312,14 @@
         {
           "text": "10",
           "correct": false,
-          "why": "Used simple growth: 10 × 10% = 100%; compounding doubles it sooner."
+          "why": "Used simple growth: 10 × 10% = 100%; compounding doubles it sooner.",
+          "trap": "C3"
         },
         {
           "text": "7",
           "correct": false,
-          "why": "Rule of 70/72 gives ~7.2 and was rounded down; after 7 years the factor is only 1.949."
+          "why": "Rule of 70/72 gives ~7.2 and was rounded down; after 7 years the factor is only 1.949.",
+          "trap": "C5"
         },
         {
           "text": "8",
@@ -1228,7 +1329,8 @@
         {
           "text": "9",
           "correct": false,
-          "why": "Off by one: counted the starting year as year 1."
+          "why": "Off by one: counted the starting year as year 1.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1248,17 +1350,20 @@
         {
           "text": "80",
           "correct": false,
-          "why": "Reported the total mixture (60 + 20) instead of the amount of 30% solution asked for."
+          "why": "Reported the total mixture (60 + 20) instead of the amount of 30% solution asked for.",
+          "trap": "C6"
         },
         {
           "text": "20",
           "correct": false,
-          "why": "Used equal volumes; that gives a 50% solution, not 40%."
+          "why": "Used equal volumes; that gives a 50% solution, not 40%.",
+          "trap": "C10"
         },
         {
           "text": "6.67",
           "correct": false,
-          "why": "Flipped the alligation ratio to 1 : 3, giving 20/3 L."
+          "why": "Flipped the alligation ratio to 1 : 3, giving 20/3 L.",
+          "trap": "C11"
         },
         {
           "text": "60",
@@ -1283,17 +1388,20 @@
         {
           "text": "15%",
           "correct": false,
-          "why": "Reported the absolute change (15 crore) as a percentage."
+          "why": "Reported the absolute change (15 crore) as a percentage.",
+          "trap": "C3"
         },
         {
           "text": "25%",
           "correct": false,
-          "why": "Divided by the new value 60 instead of the old value 45."
+          "why": "Divided by the new value 60 instead of the old value 45.",
+          "trap": "C2"
         },
         {
           "text": "50%",
           "correct": false,
-          "why": "Compared Q1 with Q4 instead of Q3 with Q4."
+          "why": "Compared Q1 with Q4 instead of Q3 with Q4.",
+          "trap": "C10"
         },
         {
           "text": "33.3%",
@@ -1323,17 +1431,20 @@
         {
           "text": "35.8%",
           "correct": false,
-          "why": "Divided by 600 (six months × 100) instead of the actual total 400."
+          "why": "Divided by 600 (six months × 100) instead of the actual total 400.",
+          "trap": "C3"
         },
         {
           "text": "46.25%",
           "correct": false,
-          "why": "Computed the share of January–April instead (185/400)."
+          "why": "Computed the share of January–April instead (185/400).",
+          "trap": "C10"
         },
         {
           "text": "30%",
           "correct": false,
-          "why": "Used only May (120/400)."
+          "why": "Used only May (120/400).",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1353,17 +1464,20 @@
         {
           "text": "78",
           "correct": false,
-          "why": "Used the average of the largest section only."
+          "why": "Used the average of the largest section only.",
+          "trap": "C6"
         },
         {
           "text": "67.6",
           "correct": false,
-          "why": "Paired the weights with the wrong rows (50 with A, 30 with B)."
+          "why": "Paired the weights with the wrong rows (50 with A, 30 with B).",
+          "trap": "C2"
         },
         {
           "text": "68.67",
           "correct": false,
-          "why": "Took the plain average of the three section averages, ignoring section sizes."
+          "why": "Took the plain average of the three section averages, ignoring section sizes.",
+          "trap": "C7"
         },
         {
           "text": "70.8",
@@ -1388,7 +1502,8 @@
         {
           "text": "20%",
           "correct": false,
-          "why": "Computed revenue growth (250 → 300), not profit growth."
+          "why": "Computed revenue growth (250 → 300), not profit growth.",
+          "trap": "C10"
         },
         {
           "text": "44%",
@@ -1398,12 +1513,14 @@
         {
           "text": "22%",
           "correct": false,
-          "why": "Reported the absolute profit change (22 lakh) as a percentage."
+          "why": "Reported the absolute profit change (22 lakh) as a percentage.",
+          "trap": "C3"
         },
         {
           "text": "14%",
           "correct": false,
-          "why": "Computed cost growth (200 → 228)."
+          "why": "Computed cost growth (200 → 228).",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -1423,12 +1540,14 @@
         {
           "text": "25%",
           "correct": false,
-          "why": "Reported the absolute difference (25 students) as a percentage."
+          "why": "Reported the absolute difference (25 students) as a percentage.",
+          "trap": "C3"
         },
         {
           "text": "200%",
           "correct": false,
-          "why": "Python is 200% **of** DBMS (twice as many); 'exceeds by' is 100%."
+          "why": "Python is 200% **of** DBMS (twice as many); 'exceeds by' is 100%.",
+          "trap": "C3"
         },
         {
           "text": "100%",
@@ -1438,7 +1557,8 @@
         {
           "text": "50%",
           "correct": false,
-          "why": "Divided the difference by Python's 50 instead of DBMS's 25."
+          "why": "Divided the difference by Python's 50 instead of DBMS's 25.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -1458,7 +1578,8 @@
         {
           "text": "All three plants grew by at least 20%.",
           "correct": false,
-          "why": "Estimation drift: rounded 36/200 up to 'about 20%'; it is exactly 18%."
+          "why": "Estimation drift: rounded 36/200 up to 'about 20%'; it is exactly 18%.",
+          "trap": "C5"
         },
         {
           "text": "P had the highest percentage growth from January to March.",
@@ -1468,12 +1589,14 @@
         {
           "text": "R had the highest percentage growth, since its output rose the most.",
           "correct": false,
-          "why": "R has the largest **absolute** rise (36) but the smallest percentage."
+          "why": "R has the largest **absolute** rise (36) but the smallest percentage.",
+          "trap": "C2"
         },
         {
           "text": "Q's percentage growth was higher than P's.",
           "correct": false,
-          "why": "Mixed bases: used March for P (18/78 ≈ 23%) but January for Q (25%). Use the January base for both."
+          "why": "Mixed bases: used March for P (18/78 ≈ 23%) but January for Q (25%). Use the January base for both.",
+          "trap": "C3"
         }
       ],
       "answer": null,
@@ -1493,17 +1616,20 @@
         {
           "text": "1400",
           "correct": false,
-          "why": "Reported the old five-day average."
+          "why": "Reported the old five-day average.",
+          "trap": "C6"
         },
         {
           "text": "1450",
           "correct": false,
-          "why": "Assumed the new day equals the new average; that only holds if the average does not change."
+          "why": "Assumed the new day equals the new average; that only holds if the average does not change.",
+          "trap": "C1"
         },
         {
           "text": "1650",
           "correct": false,
-          "why": "Old average 1400 + 5 × 50; the 50 rise is spread over **six** days, so it is 1400 + 6 × 50."
+          "why": "Old average 1400 + 5 × 50; the 50 rise is spread over **six** days, so it is 1400 + 6 × 50.",
+          "trap": "C6"
         },
         {
           "text": "1700",
@@ -1528,7 +1654,8 @@
         {
           "text": "20%",
           "correct": false,
-          "why": "Subtracted 10 percentage points; a 10% rise in the base does not cut a share by 10 points."
+          "why": "Subtracted 10 percentage points; a 10% rise in the base does not cut a share by 10 points.",
+          "trap": "C3"
         },
         {
           "text": "27.3%",
@@ -1538,12 +1665,14 @@
         {
           "text": "30%",
           "correct": false,
-          "why": "Assumed the share stays fixed; rent is fixed in rupees, so its share falls."
+          "why": "Assumed the share stays fixed; rent is fixed in rupees, so its share falls.",
+          "trap": "C1"
         },
         {
           "text": "33%",
           "correct": false,
-          "why": "Multiplied 30% by 1.1, moving the share the wrong way."
+          "why": "Multiplied 30% by 1.1, moving the share the wrong way.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -1563,7 +1692,8 @@
         {
           "text": "D",
           "correct": false,
-          "why": "D has the largest **absolute** increase (+14) but on a large base it is only 20%."
+          "why": "D has the largest **absolute** increase (+14) but on a large base it is only 20%.",
+          "trap": "C2"
         },
         {
           "text": "C",
@@ -1573,12 +1703,14 @@
         {
           "text": "Cannot be determined from the chart",
           "correct": false,
-          "why": "Every bar is labelled with its value, so percent changes can be computed exactly."
+          "why": "Every bar is labelled with its value, so percent changes can be computed exactly.",
+          "trap": "C8"
         },
         {
           "text": "B",
           "correct": false,
-          "why": "B shows the biggest change in bar height (15), but it is a **decrease**."
+          "why": "B shows the biggest change in bar height (15), but it is a **decrease**.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -1598,17 +1730,20 @@
         {
           "text": "₹60",
           "correct": false,
-          "why": "Took the middle price (median) instead of the weighted mean."
+          "why": "Took the middle price (median) instead of the weighted mean.",
+          "trap": "C2"
         },
         {
           "text": "₹64.50",
           "correct": false,
-          "why": "Matched quantities to the wrong prices (40 kg at ₹80, 35 kg at ₹50)."
+          "why": "Matched quantities to the wrong prices (40 kg at ₹80, 35 kg at ₹50).",
+          "trap": "C2"
         },
         {
           "text": "₹63.33",
           "correct": false,
-          "why": "Averaged the three prices without weighting by quantity."
+          "why": "Averaged the three prices without weighting by quantity.",
+          "trap": "C7"
         },
         {
           "text": "₹63",
@@ -1638,17 +1773,20 @@
         {
           "text": "300",
           "correct": false,
-          "why": "Gave the current total, ignoring the new hires."
+          "why": "Gave the current total, ignoring the new hires.",
+          "trap": "C6"
         },
         {
           "text": "96",
           "correct": false,
-          "why": "Reported the new Sales headcount — one part of the ratio — instead of the total asked for."
+          "why": "Reported the new Sales headcount — one part of the ratio — instead of the total asked for.",
+          "trap": "C6"
         },
         {
           "text": "16",
           "correct": false,
-          "why": "Reported the number hired, not the new total."
+          "why": "Reported the number hired, not the new total.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1668,12 +1806,14 @@
         {
           "text": "If the administrator approved, the server restarted.",
           "correct": false,
-          "why": "Inverse of the rule (no approval → no restart): negating both sides does not follow; approval is necessary, not sufficient."
+          "why": "Inverse of the rule (no approval → no restart): negating both sides does not follow; approval is necessary, not sufficient.",
+          "trap": "C1"
         },
         {
           "text": "If the server did not restart, the administrator did not approve.",
           "correct": false,
-          "why": "Converse of the rule (no approval → no restart): the server may have stayed down for another reason even after approval."
+          "why": "Converse of the rule (no approval → no restart): the server may have stayed down for another reason even after approval.",
+          "trap": "C1"
         },
         {
           "text": "If the server restarted, the administrator approved.",
@@ -1683,7 +1823,8 @@
         {
           "text": "Without approval, the server may still restart.",
           "correct": false,
-          "why": "Directly contradicts the rule: no approval rules out a restart."
+          "why": "Directly contradicts the rule: no approval rules out a restart.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -1703,7 +1844,8 @@
         {
           "text": "Nothing can be concluded about the rain.",
           "correct": false,
-          "why": "Doubted the contrapositive; 'not played' is the negated consequent, which always gives the negated antecedent."
+          "why": "Doubted the contrapositive; 'not played' is the negated consequent, which always gives the negated antecedent.",
+          "trap": "C1"
         },
         {
           "text": "It rained.",
@@ -1713,12 +1855,14 @@
         {
           "text": "Whenever it rains, the match is cancelled.",
           "correct": false,
-          "why": "Inverse: the rule never says rain forces cancellation; it only says no rain forces play."
+          "why": "Inverse: the rule never says rain forces cancellation; it only says no rain forces play.",
+          "trap": "C1"
         },
         {
           "text": "It did not rain.",
           "correct": false,
-          "why": "Reversed the conclusion: if it had not rained, the match would have been played."
+          "why": "Reversed the conclusion: if it had not rained, the match would have been played.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -1738,7 +1882,8 @@
         {
           "text": "Only conclusion I follows",
           "correct": false,
-          "why": "Assumed the graduates who are managers include analysts; the middle term 'graduates' is not fully linked."
+          "why": "Assumed the graduates who are managers include analysts; the middle term 'graduates' is not fully linked.",
+          "trap": "C1"
         },
         {
           "text": "Only conclusion II follows",
@@ -1748,12 +1893,14 @@
         {
           "text": "Both I and II follow",
           "correct": false,
-          "why": "Treated a possibility (I) as certain."
+          "why": "Treated a possibility (I) as certain.",
+          "trap": "C1"
         },
         {
           "text": "Neither I nor II follows",
           "correct": false,
-          "why": "Missed that 'some A are B' always gives 'some B are A'."
+          "why": "Missed that 'some A are B' always gives 'some B are A'.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1778,17 +1925,20 @@
         {
           "text": "Only conclusion II follows",
           "correct": false,
-          "why": "Turned 'some devices' into 'all devices'; devices outside the sensor group may be cheap."
+          "why": "Turned 'some devices' into 'all devices'; devices outside the sensor group may be cheap.",
+          "trap": "C1"
         },
         {
           "text": "Both I and II follow",
           "correct": false,
-          "why": "Accepted the overgeneralised II along with I."
+          "why": "Accepted the overgeneralised II along with I.",
+          "trap": "C1"
         },
         {
           "text": "Neither I nor II follows",
           "correct": false,
-          "why": "Missed that the overlap of devices and sensors lies wholly outside 'cheap'."
+          "why": "Missed that the overlap of devices and sensors lies wholly outside 'cheap'.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1808,17 +1958,20 @@
         {
           "text": "C",
           "correct": false,
-          "why": "C is in the middle (third from either end)."
+          "why": "C is in the middle (third from either end).",
+          "trap": "C10"
         },
         {
           "text": "A",
           "correct": false,
-          "why": "Counted from the left: A is second from the left."
+          "why": "Counted from the left: A is second from the left.",
+          "trap": "C11"
         },
         {
           "text": "B",
           "correct": false,
-          "why": "Put B in seat 4, ignoring 'B is not next to E'."
+          "why": "Put B in seat 4, ignoring 'B is not next to E'.",
+          "trap": "C1"
         },
         {
           "text": "D",
@@ -1843,12 +1996,14 @@
         {
           "text": "Q",
           "correct": false,
-          "why": "Reversed one clause, reading 'P more than Q' as Q above P."
+          "why": "Reversed one clause, reading 'P more than Q' as Q above P.",
+          "trap": "C11"
         },
         {
           "text": "Cannot be determined",
           "correct": false,
-          "why": "Each person is linked to the chain, so the full order is fixed."
+          "why": "Each person is linked to the chain, so the full order is fixed.",
+          "trap": "C8"
         },
         {
           "text": "P",
@@ -1858,7 +2013,8 @@
         {
           "text": "R",
           "correct": false,
-          "why": "Stopped one rank early, or forgot that T is above R."
+          "why": "Stopped one rank early, or forgot that T is above R.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1878,17 +2034,20 @@
         {
           "text": "240",
           "correct": false,
-          "why": "Doubled the last term, ignoring the growing multiplier."
+          "why": "Doubled the last term, ignoring the growing multiplier.",
+          "trap": "C3"
         },
         {
           "text": "144",
           "correct": false,
-          "why": "Added the previous term (24) instead of multiplying."
+          "why": "Added the previous term (24) instead of multiplying.",
+          "trap": "C3"
         },
         {
           "text": "600",
           "correct": false,
-          "why": "Repeated the last multiplier (×5) instead of increasing it."
+          "why": "Repeated the last multiplier (×5) instead of increasing it.",
+          "trap": "C6"
         },
         {
           "text": "720",
@@ -1913,12 +2072,14 @@
         {
           "text": "B",
           "correct": false,
-          "why": "Off-by-one when wrapping: counted A as 0, so 27 landed on B."
+          "why": "Off-by-one when wrapping: counted A as 0, so 27 landed on B.",
+          "trap": "C6"
         },
         {
           "text": "Y",
           "correct": false,
-          "why": "Reused an earlier gap (+5) instead of the next one (+7)."
+          "why": "Reused an earlier gap (+5) instead of the next one (+7).",
+          "trap": "C6"
         },
         {
           "text": "A",
@@ -1928,7 +2089,8 @@
         {
           "text": "Z",
           "correct": false,
-          "why": "Repeated the last gap (+6) to reach 26."
+          "why": "Repeated the last gap (+6) to reach 26.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1948,12 +2110,14 @@
         {
           "text": "Statement I alone is sufficient",
           "correct": false,
-          "why": "Forgot the negative root: $x$ could be 4 or −4."
+          "why": "Forgot the negative root: $x$ could be 4 or −4.",
+          "trap": "C5"
         },
         {
           "text": "Statement II alone is sufficient",
           "correct": false,
-          "why": "II only gives a sign; infinitely many positive integers remain."
+          "why": "II only gives a sign; infinitely many positive integers remain.",
+          "trap": "C1"
         },
         {
           "text": "Both together are sufficient, but neither alone",
@@ -1963,7 +2127,8 @@
         {
           "text": "Both together are not sufficient",
           "correct": false,
-          "why": "Missed that the sign condition eliminates −4."
+          "why": "Missed that the sign condition eliminates −4.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1988,17 +2153,20 @@
         {
           "text": "Statement II alone is sufficient",
           "correct": false,
-          "why": "Assumed squaring keeps order; e.g. x = −3, y = 1 gives $x^2 > y^2$ but $x < y$."
+          "why": "Assumed squaring keeps order; e.g. x = −3, y = 1 gives $x^2 > y^2$ but $x < y$.",
+          "trap": "C1"
         },
         {
           "text": "Both together are sufficient, but neither alone",
           "correct": false,
-          "why": "I already settles the question, so II is not needed."
+          "why": "I already settles the question, so II is not needed.",
+          "trap": "C6"
         },
         {
           "text": "Both together are not sufficient",
           "correct": false,
-          "why": "Missed that a positive difference fixes the order."
+          "why": "Missed that a positive difference fixes the order.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -2018,7 +2186,8 @@
         {
           "text": "5 km, north-east",
           "correct": false,
-          "why": "Sign slip: took 9 − 5 = 4 as northward, but the 9 km leg is southward and longer."
+          "why": "Sign slip: took 9 − 5 = 4 as northward, but the 9 km leg is southward and longer.",
+          "trap": "C11"
         },
         {
           "text": "5 km, south-east",
@@ -2028,12 +2197,14 @@
         {
           "text": "4 km, south",
           "correct": false,
-          "why": "Ignored the 3 km eastward leg."
+          "why": "Ignored the 3 km eastward leg.",
+          "trap": "C6"
         },
         {
           "text": "17 km, south-east",
           "correct": false,
-          "why": "Added path lengths (5 + 3 + 9) instead of finding displacement."
+          "why": "Added path lengths (5 + 3 + 9) instead of finding displacement.",
+          "trap": "C3"
         }
       ],
       "answer": null,
@@ -2053,12 +2224,14 @@
         {
           "text": "2",
           "correct": false,
-          "why": "Checkerboard thinking; F alone touches every other region, so at least 3 are needed even before the ring."
+          "why": "Checkerboard thinking; F alone touches every other region, so at least 3 are needed even before the ring.",
+          "trap": "C10"
         },
         {
           "text": "3",
           "correct": false,
-          "why": "Coloured the ring alternately with 2 colours; an odd ring of 5 cannot alternate, so it needs 3 before F is added."
+          "why": "Coloured the ring alternately with 2 colours; an odd ring of 5 cannot alternate, so it needs 3 before F is added.",
+          "trap": "C10"
         },
         {
           "text": "4",
@@ -2068,7 +2241,8 @@
         {
           "text": "6",
           "correct": false,
-          "why": "Gave every region its own colour; non-adjacent regions (e.g. A and C) can share."
+          "why": "Gave every region its own colour; non-adjacent regions (e.g. A and C) can share.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -2088,17 +2262,20 @@
         {
           "text": "2",
           "correct": false,
-          "why": "Coloured the quadrants alternately but forgot T borders all of them."
+          "why": "Coloured the quadrants alternately but forgot T borders all of them.",
+          "trap": "C6"
         },
         {
           "text": "5",
           "correct": false,
-          "why": "Gave each region its own colour; P and R (and Q and S) can share."
+          "why": "Gave each region its own colour; P and R (and Q and S) can share.",
+          "trap": "C6"
         },
         {
           "text": "4",
           "correct": false,
-          "why": "Assumed diagonal quadrants (P and R, or Q and S) touch; the circle T separates them completely."
+          "why": "Assumed diagonal quadrants (P and R, or Q and S) touch; the circle T separates them completely.",
+          "trap": "C9"
         },
         {
           "text": "3",
@@ -2128,17 +2305,20 @@
         {
           "text": "D",
           "correct": false,
-          "why": "D sits beside C, so it folds up as a side wall next to A, not opposite it."
+          "why": "D sits beside C, so it folds up as a side wall next to A, not opposite it.",
+          "trap": "C9"
         },
         {
           "text": "F",
           "correct": false,
-          "why": "Picked the square farthest away in the net; distance in the net is not the rule, alternation is."
+          "why": "Picked the square farthest away in the net; distance in the net is not the rule, alternation is.",
+          "trap": "C10"
         },
         {
           "text": "C",
           "correct": false,
-          "why": "C shares an edge with A in the net; squares joined by an edge always end up adjacent."
+          "why": "C shares an edge with A in the net; squares joined by an edge always end up adjacent.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -2158,7 +2338,8 @@
         {
           "text": "3",
           "correct": false,
-          "why": "3 appears next to 2 in View 1, so it is adjacent, never opposite."
+          "why": "3 appears next to 2 in View 1, so it is adjacent, never opposite.",
+          "trap": "C9"
         },
         {
           "text": "6",
@@ -2168,12 +2349,14 @@
         {
           "text": "5",
           "correct": false,
-          "why": "Assumed a standard die where opposite faces add to 7; the stem says it is not standard."
+          "why": "Assumed a standard die where opposite faces add to 7; the stem says it is not standard.",
+          "trap": "C1"
         },
         {
           "text": "4",
           "correct": false,
-          "why": "Picked a face never shown, assuming the hidden face must be opposite; 4 or 5 could sit anywhere among the unseen positions."
+          "why": "Picked a face never shown, assuming the hidden face must be opposite; 4 or 5 could sit anywhere among the unseen positions.",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -2193,17 +2376,20 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"32\" cy=\"22\" r=\"5\"/><circle cx=\"82\" cy=\"22\" r=\"5\"/><circle cx=\"32\" cy=\"72\" r=\"5\"/><circle cx=\"82\" cy=\"72\" r=\"5\"/></svg>",
           "correct": false,
-          "why": "Slid the hole across each crease (translation) instead of reflecting it; reflections keep the same distance from the crease."
+          "why": "Slid the hole across each crease (translation) instead of reflecting it; reflections keep the same distance from the crease.",
+          "trap": "C2"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"22\" cy=\"72\" r=\"5\"/><circle cx=\"82\" cy=\"72\" r=\"5\"/></svg>",
           "correct": false,
-          "why": "Unfolded only one fold; two folds make four layers, so one punch gives four holes."
+          "why": "Unfolded only one fold; two folds make four layers, so one punch gives four holes.",
+          "trap": "C6"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"22\" cy=\"32\" r=\"5\"/><circle cx=\"82\" cy=\"72\" r=\"5\"/></svg>",
           "correct": false,
-          "why": "Unfolded both folds at once as a half-turn about the centre; that misses the two single-reflection holes."
+          "why": "Unfolded both folds at once as a half-turn about the centre; that misses the two single-reflection holes.",
+          "trap": "C10"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"22\" cy=\"32\" r=\"5\"/><circle cx=\"22\" cy=\"72\" r=\"5\"/><circle cx=\"82\" cy=\"32\" r=\"5\"/><circle cx=\"82\" cy=\"72\" r=\"5\"/></svg>",
@@ -2228,12 +2414,14 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"72\" cy=\"22\" r=\"5\"/><circle cx=\"32\" cy=\"82\" r=\"5\"/></svg>",
           "correct": false,
-          "why": "Rotated the hole 180° about the centre; a fold is a reflection, not a rotation."
+          "why": "Rotated the hole 180° about the centre; a fold is a reflection, not a rotation.",
+          "trap": "C2"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"72\" cy=\"22\" r=\"5\"/><circle cx=\"32\" cy=\"22\" r=\"5\"/></svg>",
           "correct": false,
-          "why": "Reflected across the vertical centre line as if the crease were vertical."
+          "why": "Reflected across the vertical centre line as if the crease were vertical.",
+          "trap": "C10"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"72\" cy=\"22\" r=\"5\"/><circle cx=\"22\" cy=\"72\" r=\"5\"/></svg>",
@@ -2243,7 +2431,8 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 104 104\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"64\" height=\"64\"><rect x=\"2\" y=\"2\" width=\"100\" height=\"100\" fill=\"none\" stroke=\"currentColor\"/><circle cx=\"72\" cy=\"22\" r=\"5\"/><circle cx=\"72\" cy=\"82\" r=\"5\"/></svg>",
           "correct": false,
-          "why": "Reflected across the horizontal centre line as if the crease were horizontal."
+          "why": "Reflected across the horizontal centre line as if the crease were horizontal.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -2263,7 +2452,8 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"18\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Rotated 180° (two quarter-turns) instead of one."
+          "why": "Rotated 180° (two quarter-turns) instead of one.",
+          "trap": "C6"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
@@ -2273,12 +2463,14 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Rotated anticlockwise: the top row went to the left column instead of the right."
+          "why": "Rotated anticlockwise: the top row went to the left column instead of the right.",
+          "trap": "C11"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Changed the sign of x without swapping x and y — that is a mirror image, not a rotation."
+          "why": "Changed the sign of x without swapping x and y — that is a mirror image, not a rotation.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -2298,7 +2490,8 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"2\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Flipped top and bottom — that is the image in a horizontal mirror (water image)."
+          "why": "Flipped top and bottom — that is the image in a horizontal mirror (water image).",
+          "trap": "C2"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
@@ -2308,12 +2501,14 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Rotated 90°; a mirror never turns rows into columns."
+          "why": "Rotated 90°; a mirror never turns rows into columns.",
+          "trap": "C2"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 52\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"60\"><path d=\"M2 2V50M18 2V50M34 2V50M50 2V50M2 2H50M2 18H50M2 34H50M2 50H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"34\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"34\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Rotated 180°; that flips both left-right and top-bottom."
+          "why": "Rotated 180°; that flips both left-right and top-bottom.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -2338,17 +2533,20 @@
         {
           "text": "3",
           "correct": false,
-          "why": "Counted only the smallest triangles at the top."
+          "why": "Counted only the smallest triangles at the top.",
+          "trap": "C6"
         },
         {
           "text": "6",
           "correct": false,
-          "why": "Counted triangles on one base only, missing the set cut off by the middle line."
+          "why": "Counted triangles on one base only, missing the set cut off by the middle line.",
+          "trap": "C6"
         },
         {
           "text": "10",
           "correct": false,
-          "why": "Missed the two largest triangles — one spanning each full horizontal line."
+          "why": "Missed the two largest triangles — one spanning each full horizontal line.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -2368,17 +2566,20 @@
         {
           "text": "60",
           "correct": false,
-          "why": "Counted all rectangles, C(5,2) × C(4,2) = 60, not just squares."
+          "why": "Counted all rectangles, C(5,2) × C(4,2) = 60, not just squares.",
+          "trap": "C2"
         },
         {
           "text": "18",
           "correct": false,
-          "why": "Missed the two 3 × 3 squares."
+          "why": "Missed the two 3 × 3 squares.",
+          "trap": "C6"
         },
         {
           "text": "12",
           "correct": false,
-          "why": "Counted only the unit squares."
+          "why": "Counted only the unit squares.",
+          "trap": "C6"
         },
         {
           "text": "20",
@@ -2408,17 +2609,20 @@
         {
           "text": "A regular hexagon",
           "correct": false,
-          "why": "That is the section through the centre perpendicular to a space diagonal, not a corner cut."
+          "why": "That is the section through the centre perpendicular to a space diagonal, not a corner cut.",
+          "trap": "C10"
         },
         {
           "text": "A square",
           "correct": false,
-          "why": "A square section comes from a plane parallel to a face."
+          "why": "A square section comes from a plane parallel to a face.",
+          "trap": "C10"
         },
         {
           "text": "A right-angled triangle",
           "correct": false,
-          "why": "Carried over the right angle between edges at the corner; the cut's sides are face diagonals, not edges."
+          "why": "Carried over the right angle between edges at the corner; the cut's sides are face diagonals, not edges.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -2438,7 +2642,8 @@
         {
           "text": "A circle",
           "correct": false,
-          "why": "That needs a cut perpendicular to the axis."
+          "why": "That needs a cut perpendicular to the axis.",
+          "trap": "C10"
         },
         {
           "text": "An ellipse",
@@ -2448,12 +2653,14 @@
         {
           "text": "A parabola",
           "correct": false,
-          "why": "A parabola is an open curve from a cone cut parallel to its slant side; a closed cut of a cylinder is never open."
+          "why": "A parabola is an open curve from a cone cut parallel to its slant side; a closed cut of a cylinder is never open.",
+          "trap": "C8"
         },
         {
           "text": "A rectangle",
           "correct": false,
-          "why": "That needs a cut parallel to the axis, through both flat ends."
+          "why": "That needs a cut parallel to the axis, through both flat ends.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -2473,7 +2680,8 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 36\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"42\"><path d=\"M2 2V34M18 2V34M34 2V34M50 2V34M2 2H50M2 18H50M2 34H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Right area but a zigzag; the gap has a straight run of three cells."
+          "why": "Right area but a zigzag; the gap has a straight run of three cells.",
+          "trap": "C10"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 36\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"42\"><path d=\"M2 2V34M18 2V34M34 2V34M50 2V34M2 2H50M2 18H50M2 34H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
@@ -2483,12 +2691,14 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 36\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"42\"><path d=\"M2 2V34M18 2V34M34 2V34M50 2V34M2 2H50M2 18H50M2 34H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Mirror image of the gap: its foot points the wrong way, and fitting it would need a flip, which is not allowed."
+          "why": "Mirror image of the gap: its foot points the wrong way, and fitting it would need a flip, which is not allowed.",
+          "trap": "C11"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 52 36\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"42\"><path d=\"M2 2V34M18 2V34M34 2V34M50 2V34M2 2H50M2 18H50M2 34H50\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".2\"/><rect x=\"2\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"34\" y=\"2\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"18\" y=\"18\" width=\"16\" height=\"16\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "Right area (4 cells) but a T-shape; the gap has three cells in a line with one at the end, not the middle."
+          "why": "Right area (4 cells) but a T-shape; the gap has three cells in a line with one at the end, not the middle.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -2508,12 +2718,14 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 46\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"46\"><rect x=\"16\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"16\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"30\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"44\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"16\" y=\"30\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "This is the standard cross net (1-4-1); it folds into a cube."
+          "why": "This is the standard cross net (1-4-1); it folds into a cube.",
+          "trap": "C1"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 74 32\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"74\" height=\"32\"><rect x=\"2\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"16\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"30\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"30\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"44\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"58\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "The 3-3 staircase is a valid net; rejecting it comes from thinking every net needs a row of four."
+          "why": "The 3-3 staircase is a valid net; rejecting it comes from thinking every net needs a row of four.",
+          "trap": "C1"
         },
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 32\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"32\"><rect x=\"2\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"16\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"16\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"30\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"44\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
@@ -2523,7 +2735,8 @@
         {
           "text": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 60 46\" font-family=\"sans-serif\" font-size=\"11\" fill=\"currentColor\" width=\"60\" height=\"46\"><rect x=\"2\" y=\"2\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"2\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"16\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"30\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"44\" y=\"16\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/><rect x=\"44\" y=\"30\" width=\"14\" height=\"14\" fill-opacity=\".6\" stroke=\"currentColor\"/></svg>",
           "correct": false,
-          "why": "A 1-4-1 net with the flaps on opposite ends is still valid; flaps need not be in the same column."
+          "why": "A 1-4-1 net with the flaps on opposite ends is still valid; flaps need not be in the same column.",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -2548,17 +2761,20 @@
         {
           "text": "8:23",
           "correct": false,
-          "why": "Borrow error: did 12 − 4 = 8 and 60 − 37 = 23 without taking the borrowed hour from the 12."
+          "why": "Borrow error: did 12 − 4 = 8 and 60 − 37 = 23 without taking the borrowed hour from the 12.",
+          "trap": "C6"
         },
         {
           "text": "4:23",
           "correct": false,
-          "why": "Mirrored only the minute hand and kept the hour as shown."
+          "why": "Mirrored only the minute hand and kept the hour as shown.",
+          "trap": "C6"
         },
         {
           "text": "7:22",
           "correct": false,
-          "why": "Used 11:59 instead of 11:60 (12:00) as the reference, losing a minute."
+          "why": "Used 11:59 instead of 11:60 (12:00) as the reference, losing a minute.",
+          "trap": "C6"
         }
       ],
       "answer": null,

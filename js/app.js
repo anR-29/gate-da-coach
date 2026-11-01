@@ -1,9 +1,9 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020504';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020516';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
-  endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER,
-} from './engine.js?v=202611020504';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020504';
+  endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
+} from './engine.js?v=202611020516';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020516';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -259,9 +259,10 @@ function renderFeedback() {
     });
     detail = rows.join('');
   }
+  const trapTags = (f.traps || []).map((c) => `<span class="chip hot">${esc(c)} · ${esc(TRAP_CLASSES[c] || '')}</span>`).join('');
   const verdict = f.correct
     ? (f.conf === 'Guess' ? '<div class="verdict ok">Sahi — lekin Guess tha, isliye revision card bana diya.</div>' : '<div class="verdict ok">Sahi ✓</div>')
-    : '<div class="verdict no">Galat ✗</div>';
+    : `<div class="verdict no">Galat ✗</div>${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}`;
   const next = f.repairQueued
     ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga. Check: ${esc(skill.check || '')}</p>`
     : f.stopSkill
@@ -518,6 +519,7 @@ function viewProgress() {
       </tbody></table>
       <p class="muted small">${state.attempts.length < 20 ? 'Sample chhota hai (20 se kam unseen attempts) — trend mat padho.' : ''}</p>
     </section>
+    ${trapProfile(state)}
     <section class="card">
       <h2>Revision cards</h2>
       <div class="stats">
@@ -538,6 +540,26 @@ function viewProgress() {
       ${logs.slice().reverse().map((l) => `<tr><td>${l.day}</td><td>${fmtDate(l.date)}</td><td>${l.hours ?? '—'}</td><td>${l.anxiety ?? '—'}</td><td>${l.firstPass ? pct(l.firstPassOk, l.firstPass) : '—'}</td></tr>`).join('')}
       </tbody></table>
     </section>`);
+}
+
+// Which of the 11 recurring GATE trap classes the student falls for, from tagged wrong answers.
+function trapProfile(state) {
+  const counts = {};
+  let total = 0;
+  for (const a of state.attempts) {
+    for (const t of a.traps || []) {
+      counts[t] = (counts[t] || 0) + 1;
+      total++;
+    }
+  }
+  const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  return `<section class="card">
+      <h2>Trap profile</h2>
+      <p class="muted small">GATE papers 2024–26 me har sawaal in 11 trap classes me aata hai. Ye tumhari galtiyon ka breakdown hai.</p>
+      ${rows.length ? `<table class="tbl"><thead><tr><th>Trap class</th><th>Galtiyan</th><th></th></tr></thead><tbody>
+        ${rows.map(([c, n]) => `<tr><td><b>${esc(c)}</b> ${esc(TRAP_CLASSES[c] || '')}</td><td>${n}</td><td><div class="minibar"><div style="width:${(100 * n) / rows[0][1]}%"></div></div> ${pct(n, total)}</td></tr>`).join('')}
+      </tbody></table>` : '<p class="muted">Abhi tagged galtiyan nahi hain. Naye banks (DSA, DBMS, ML, AI) ke har galat option pe trap class hai.</p>'}
+    </section>`;
 }
 
 function chart(days) {
@@ -627,7 +649,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611020504');
+  const store = await import('./store.js?v=202611020516');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

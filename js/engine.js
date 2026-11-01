@@ -1,12 +1,12 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611020504';
+import { addEvent, allEvents, cfg } from './store.js?v=202611020516';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
 export const REVIEW_CAP = 10;
 export const REPAIRS_PER_SKILL = 2;
-const AREAS = ['ps', 'la', 'calc', 'py', 'ga'];
+const AREAS = ['ps', 'la', 'calc', 'py', 'dsa', 'db', 'ml', 'ai', 'ga'];
 
 export const content = { plan: null, skills: {}, questions: {}, bySkill: {}, theory: new Set() };
 
@@ -342,6 +342,27 @@ export function grade(q, response) {
   return { valid: true, correct, chosen: [...chosen], right: [...right] };
 }
 
+export const TRAP_CLASSES = {
+  C1: 'Converse / missing condition / over-claim',
+  C2: 'Swapped paired concepts',
+  C3: 'Wrong neighbouring formula',
+  C4: 'Square / scale',
+  C5: 'Boundary / strictness / endpoints',
+  C6: 'Counting / off-by-one / partial step',
+  C7: 'Independence / prior / conditional inversion',
+  C8: 'Structural impossibility / "always"',
+  C9: 'Property misapplied',
+  C10: 'Surface look-alike',
+  C11: 'Sign / direction',
+};
+
+// Trap classes behind a wrong response: chosen wrong options, or the matched NAT trap.
+function trapsOf(q, g) {
+  if (g.correct) return [];
+  if (q.type === 'NAT') return g.trap?.trap ? [g.trap.trap] : [];
+  return g.chosen.map((i) => q.options[i]).filter((o) => !o.correct && o.trap).map((o) => o.trap);
+}
+
 // Records the attempt, updates revision cards and queues repair variants.
 export function submit(session, item, response, conf, ms) {
   const q = item.q;
@@ -349,15 +370,17 @@ export function submit(session, item, response, conf, ms) {
   if (!g.valid) return { ...g };
   const skill = content.skills[q.skill];
   const date = session.date;
+  const traps = trapsOf(q, g);
   addEvent('attempt', {
     qid: q.id, skill: q.skill, subject: skill?.subject || '', day: session.day, date,
     mode: item.mode, resp: response, correct: g.correct, conf, repeated: item.repeated, ms,
+    ...(traps.length ? { traps } : {}),
   });
 
   const state = derive();
   const counts = sessionCounts(session, state);
   const repairsDone = counts.repairsBySkill[q.skill] || 0;
-  const out = { ...g, repairQueued: false, showTheory: false, stopSkill: false, cardOpened: false };
+  const out = { ...g, traps, repairQueued: false, showTheory: false, stopSkill: false, cardOpened: false };
   const guessed = conf === 'Guess';
 
   if (item.mode === 'review') {

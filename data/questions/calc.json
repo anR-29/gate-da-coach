@@ -128,15 +128,18 @@
       "traps": [
         {
           "value": 9,
-          "why": "Differentiated twice but forgot that the second derivative of $x^2$ is 2, not 1."
+          "why": "Differentiated twice but forgot that the second derivative of $x^2$ is 2, not 1.",
+          "trap": "C6"
         },
         {
           "value": 1.5,
-          "why": "Expanded $e^{3x}$ with $\\frac{3x^2}{2}$ instead of $\\frac{(3x)^2}{2}=\\frac{9x^2}{2}$."
+          "why": "Expanded $e^{3x}$ with $\\frac{3x^2}{2}$ instead of $\\frac{(3x)^2}{2}=\\frac{9x^2}{2}$.",
+          "trap": "C4"
         },
         {
           "value": 0,
-          "why": "Applied L'Hôpital once and substituted $x=0$ into $\\frac{3e^{3x}-3}{2x}$, which is still $0/0$."
+          "why": "Applied L'Hôpital once and substituted $x=0$ into $\\frac{3e^{3x}-3}{2x}$, which is still $0/0$.",
+          "trap": "C6"
         }
       ],
       "solution": "1. Form is $0/0$.\n2. $e^{3x}=1+3x+\\frac{9x^2}{2}+\\dots$, so the numerator is $\\frac{9}{2}x^2+O(x^3)$.\n3. Limit $=\\frac{9}{2}=4.5$."
@@ -154,7 +157,8 @@
         {
           "text": "$0$",
           "correct": false,
-          "why": "Substituted $x=0$ in the numerator only; the form is $0/0$, not $0/\\text{nonzero}$."
+          "why": "Substituted $x=0$ in the numerator only; the form is $0/0$, not $0/\\text{nonzero}$.",
+          "trap": "C6"
         },
         {
           "text": "$\\frac{5}{2}$",
@@ -164,12 +168,14 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Used $\\frac{\\sin u}{u}\\to1$ but ignored that the arguments are $5x$ and $2x$, not $x$."
+          "why": "Used $\\frac{\\sin u}{u}\\to1$ but ignored that the arguments are $5x$ and $2x$, not $x$.",
+          "trap": "C4"
         },
         {
           "text": "$\\frac{2}{5}$",
           "correct": false,
-          "why": "Inverted the ratio: took the argument of the denominator over that of the numerator."
+          "why": "Inverted the ratio: took the argument of the denominator over that of the numerator.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -193,15 +199,18 @@
       "traps": [
         {
           "value": 1,
-          "why": "Treated $1^\\infty$ as 1; the base tends to 1 but the exponent grows without bound."
+          "why": "Treated $1^\\infty$ as 1; the base tends to 1 but the exponent grows without bound.",
+          "trap": "C8"
         },
         {
           "value": 148.41,
-          "why": "Added the constants ($e^{2+3}$) instead of multiplying them ($e^{2\\cdot 3}$)."
+          "why": "Added the constants ($e^{2+3}$) instead of multiplying them ($e^{2\\cdot 3}$).",
+          "trap": "C3"
         },
         {
           "value": 7.39,
-          "why": "Used $(1+2/x)^x\\to e^2$ and ignored the factor 3 in the exponent."
+          "why": "Used $(1+2/x)^x\\to e^2$ and ignored the factor 3 in the exponent.",
+          "trap": "C4"
         }
       ],
       "solution": "1. Form $1^\\infty$: limit $=e^{L}$ with $L=\\lim 3x\\cdot\\frac{2}{x}=6$.\n2. $e^6\\approx 403.43$."
@@ -219,12 +228,14 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Approximated $1-\\cos x$ by $x^2$, dropping the $\\frac{1}{2!}$."
+          "why": "Approximated $1-\\cos x$ by $x^2$, dropping the $\\frac{1}{2!}$.",
+          "trap": "C4"
         },
         {
           "text": "$0$",
           "correct": false,
-          "why": "After one L'Hôpital step, $\\frac{\\sin x}{\\sin x+x\\cos x}$ is still $0/0$; stopping there and reading the numerator as 0 is wrong."
+          "why": "After one L'Hôpital step, $\\frac{\\sin x}{\\sin x+x\\cos x}$ is still $0/0$; stopping there and reading the numerator as 0 is wrong.",
+          "trap": "C6"
         },
         {
           "text": "$\\frac{1}{2}$",
@@ -234,7 +245,8 @@
         {
           "text": "$2$",
           "correct": false,
-          "why": "Inverted the ratio of leading coefficients ($1$ over $\\frac{1}{2}$)."
+          "why": "Inverted the ratio of leading coefficients ($1$ over $\\frac{1}{2}$).",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -254,7 +266,8 @@
         {
           "text": "$\\displaystyle\\lim_{x\\to\\infty}\\frac{\\ln x}{x}$",
           "correct": false,
-          "why": "Read $\\infty/\\infty$ as 1; by L'Hôpital it is $\\lim\\frac{1/x}{1}=0$."
+          "why": "Read $\\infty/\\infty$ as 1; by L'Hôpital it is $\\lim\\frac{1/x}{1}=0$.",
+          "trap": "C10"
         },
         {
           "text": "$\\displaystyle\\lim_{x\\to0}\\frac{\\ln(1+x)}{x}$",
@@ -269,7 +282,8 @@
         {
           "text": "$\\displaystyle\\lim_{x\\to0}\\frac{2^x-1}{x}$",
           "correct": false,
-          "why": "Assumed $\\frac{a^x-1}{x}\\to1$ for every base; it tends to $\\ln a$, here $\\ln 2\\approx0.693$."
+          "why": "Assumed $\\frac{a^x-1}{x}\\to1$ for every base; it tends to $\\ln a$, here $\\ln 2\\approx0.693$.",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -289,12 +303,14 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Checked only the right-hand side ($x>2$)."
+          "why": "Checked only the right-hand side ($x>2$).",
+          "trap": "C5"
         },
         {
           "text": "$-1$",
           "correct": false,
-          "why": "Checked only the left-hand side ($x<2$)."
+          "why": "Checked only the left-hand side ($x<2$).",
+          "trap": "C5"
         },
         {
           "text": "Does not exist",
@@ -304,7 +320,8 @@
         {
           "text": "$0$",
           "correct": false,
-          "why": "Treated $|0|/0$ as 0; the function is undefined at 2 and the limit is decided by the two sides."
+          "why": "Treated $|0|/0$ as 0; the function is undefined at 2 and the limit is decided by the two sides.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -328,11 +345,13 @@
       "traps": [
         {
           "value": 6,
-          "why": "Used $\\lfloor 3\\rfloor=3$ for the left limit; just below 3 the floor is 2."
+          "why": "Used $\\lfloor 3\\rfloor=3$ for the left limit; just below 3 the floor is 2.",
+          "trap": "C5"
         },
         {
           "value": 4,
-          "why": "Used 2 for both sides; just above 3 the floor is already 3."
+          "why": "Used 2 for both sides; just above 3 the floor is already 3.",
+          "trap": "C5"
         }
       ],
       "solution": "1. For $2\\le x<3$, $\\lfloor x\\rfloor=2$, so the left limit is 2.\n2. For $3\\le x<4$ it is 3, so the right limit is 3.\n3. Sum $=5$."
@@ -355,17 +374,20 @@
         {
           "text": "$\\lim_{x\\to1}f(x)=2$ because $f(1)=2$",
           "correct": false,
-          "why": "Used the function value at the point; a limit ignores $f(1)$ and depends only on the two sides."
+          "why": "Used the function value at the point; a limit ignores $f(1)$ and depends only on the two sides.",
+          "trap": "C10"
         },
         {
           "text": "$\\lim_{x\\to1}f(x)=3$",
           "correct": false,
-          "why": "Checked continuity only from the right side."
+          "why": "Checked continuity only from the right side.",
+          "trap": "C5"
         },
         {
           "text": "The left limit does not exist because the left piece is $0/0$ at $x=1$",
           "correct": false,
-          "why": "Substituted $x=1$ without cancelling; $\\frac{x^2-1}{x-1}=x+1$ for $x\\ne1$."
+          "why": "Substituted $x=1$ without cancelling; $\\frac{x^2-1}{x-1}=x+1$ for $x\\ne1$.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -389,15 +411,18 @@
       "traps": [
         {
           "value": 0.71,
-          "why": "Wrote $\\sqrt{\\sin^2x}=\\sin x$ instead of $|\\sin x|$; for $x<0$ this flips the sign."
+          "why": "Wrote $\\sqrt{\\sin^2x}=\\sin x$ instead of $|\\sin x|$; for $x<0$ this flips the sign.",
+          "trap": "C11"
         },
         {
           "value": -1.41,
-          "why": "Inverted $\\sqrt2$: the denominator is $\\sqrt2\\,|\\sin x|$, giving $-1/\\sqrt2$, not $-\\sqrt2$."
+          "why": "Inverted $\\sqrt2$: the denominator is $\\sqrt2\\,|\\sin x|$, giving $-1/\\sqrt2$, not $-\\sqrt2$.",
+          "trap": "C4"
         },
         {
           "value": -1,
-          "why": "Approximated $1-\\cos2x$ by $x^2$ instead of $\\frac{(2x)^2}{2}=2x^2$, losing the $\\sqrt2$."
+          "why": "Approximated $1-\\cos2x$ by $x^2$ instead of $\\frac{(2x)^2}{2}=2x^2$, losing the $\\sqrt2$.",
+          "trap": "C4"
         }
       ],
       "solution": "1. $1-\\cos2x=2\\sin^2x$, so $\\sqrt{1-\\cos2x}=\\sqrt2\\,|\\sin x|$.\n2. For $x\\to0^-$, $|\\sin x|=-\\sin x$.\n3. Limit $=\\frac{x}{-\\sqrt2\\sin x}\\to-\\frac{1}{\\sqrt2}\\approx-0.71$."
@@ -415,7 +440,8 @@
         {
           "text": "$\\lim_{x\\to0^-}f(x)=\\infty$",
           "correct": false,
-          "why": "Ignored the sign of $1/x$ for negative $x$; it tends to $-\\infty$."
+          "why": "Ignored the sign of $1/x$ for negative $x$; it tends to $-\\infty$.",
+          "trap": "C11"
         },
         {
           "text": "$\\lim_{x\\to0^-}f(x)=0$",
@@ -430,7 +456,8 @@
         {
           "text": "$\\lim_{x\\to0}f(x)$ exists",
           "correct": false,
-          "why": "Assumed both sides behave alike; the one-sided limits are $\\infty$ and 0."
+          "why": "Assumed both sides behave alike; the one-sided limits are $\\infty$ and 0.",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -454,15 +481,18 @@
       "traps": [
         {
           "value": 3,
-          "why": "Wrote $k\\cdot2+3$, forgetting to square 2."
+          "why": "Wrote $k\\cdot2+3$, forgetting to square 2.",
+          "trap": "C4"
         },
         {
           "value": 2.25,
-          "why": "Set $4k=9$, dropping the $+3$ of the left piece."
+          "why": "Set $4k=9$, dropping the $+3$ of the left piece.",
+          "trap": "C6"
         },
         {
           "value": 1.75,
-          "why": "Evaluated the right piece as $5\\cdot2-2=8$ instead of $9$."
+          "why": "Evaluated the right piece as $5\\cdot2-2=8$ instead of $9$.",
+          "trap": "C6"
         }
       ],
       "solution": "1. Left value: $4k+3$. Right limit: $5(2)-1=9$.\n2. $4k+3=9\\Rightarrow k=1.5$."
@@ -480,12 +510,14 @@
         {
           "text": "$0$",
           "correct": false,
-          "why": "Substituted $x=3$ to get $0/0$ and read it as 0."
+          "why": "Substituted $x=3$ to get $0/0$ and read it as 0.",
+          "trap": "C10"
         },
         {
           "text": "$9$",
           "correct": false,
-          "why": "Cancelled only the denominator and evaluated $x^2$ at 3."
+          "why": "Cancelled only the denominator and evaluated $x^2$ at 3.",
+          "trap": "C6"
         },
         {
           "text": "$6$",
@@ -495,7 +527,8 @@
         {
           "text": "$3$",
           "correct": false,
-          "why": "Cancelled to $x$ instead of $x+3$ (dropped the constant in the factor)."
+          "why": "Cancelled to $x$ instead of $x+3$ (dropped the constant in the factor).",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -519,15 +552,18 @@
       "traps": [
         {
           "value": 4,
-          "why": "Took $\\frac{\\sin3x}{x}\\to1$, ignoring the factor 3 (so $a=1$, $b=3$)."
+          "why": "Took $\\frac{\\sin3x}{x}\\to1$, ignoring the factor 3 (so $a=1$, $b=3$).",
+          "trap": "C4"
         },
         {
           "value": 3,
-          "why": "Found $a=3$ only and stopped; $b$ is also needed."
+          "why": "Found $a=3$ only and stopped; $b$ is also needed.",
+          "trap": "C6"
         },
         {
           "value": 2,
-          "why": "Took both $\\frac{\\sin3x}{x}$ and $\\frac{e^{bx}-1}{x}$ as tending to 1 without the scale factors."
+          "why": "Took both $\\frac{\\sin3x}{x}$ and $\\frac{e^{bx}-1}{x}$ as tending to 1 without the scale factors.",
+          "trap": "C4"
         }
       ],
       "solution": "1. Left limit: $\\frac{\\sin3x}{x}\\to3$, so $a=3$.\n2. Right limit: $\\frac{e^{bx}-1}{x}\\to b$, so $b=3$.\n3. $a+b=6$."
@@ -549,11 +585,13 @@
       "traps": [
         {
           "value": 6,
-          "why": "Evaluated $bx^2$ at 2 as $2b$ (forgot to square): $b=4$, then $a=2$."
+          "why": "Evaluated $bx^2$ at 2 as $2b$ (forgot to square): $b=4$, then $a=2$.",
+          "trap": "C4"
         },
         {
           "value": 4,
-          "why": "Dropped the $2x$ term at the joint $x=1$, setting $a=b$ (so $a=2$, $b=2$)."
+          "why": "Dropped the $2x$ term at the joint $x=1$, setting $a=b$ (so $a=2$, $b=2$).",
+          "trap": "C6"
         }
       ],
       "solution": "1. At $x=2$: $4b=2+6=8\\Rightarrow b=2$.\n2. At $x=1$: $2+a=b=2\\Rightarrow a=0$.\n3. $a+b=2$."
@@ -571,12 +609,14 @@
         {
           "text": "$5$",
           "correct": false,
-          "why": "Multiplied $f(2)\\cdot g(2)=5\\cdot1$ instead of composing."
+          "why": "Multiplied $f(2)\\cdot g(2)=5\\cdot1$ instead of composing.",
+          "trap": "C3"
         },
         {
           "text": "$7$",
           "correct": false,
-          "why": "Computed $(g\\circ f)(2)=g(5)=7$: applied $f$ first."
+          "why": "Computed $(g\\circ f)(2)=g(5)=7$: applied $f$ first.",
+          "trap": "C2"
         },
         {
           "text": "$2$",
@@ -586,7 +626,8 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Stopped at the inner value $g(2)=1$."
+          "why": "Stopped at the inner value $g(2)=1$.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -611,17 +652,20 @@
         {
           "text": "$\\lim_{x\\to0}h(x)$ does not exist because sgn jumps at 0",
           "correct": false,
-          "why": "Ignored that $g(x)=x^2$ approaches 0 only from the right, so only $f$'s right side matters."
+          "why": "Ignored that $g(x)=x^2$ approaches 0 only from the right, so only $f$'s right side matters.",
+          "trap": "C5"
         },
         {
           "text": "$\\lim_{x\\to0}h(x)=1$ and $h$ is continuous at 0",
           "correct": false,
-          "why": "Found the limit but did not compare it with the value $h(0)=0$."
+          "why": "Found the limit but did not compare it with the value $h(0)=0$.",
+          "trap": "C6"
         },
         {
           "text": "$\\lim_{x\\to0}h(x)=0$ because $h(0)=0$",
           "correct": false,
-          "why": "Substituted $x=0$ instead of taking the limit; for every $x\\ne0$, $h(x)=1$."
+          "why": "Substituted $x=0$ instead of taking the limit; for every $x\\ne0$, $h(x)=1$.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -645,11 +689,13 @@
       "traps": [
         {
           "value": 2,
-          "why": "Applied $f$ only once: $f(3)=2$."
+          "why": "Applied $f$ only once: $f(3)=2$.",
+          "trap": "C6"
         },
         {
           "value": 0.5,
-          "why": "Computed $f(3)$ as $\\frac{3-1}{3+1}$ (numerator and denominator swapped), then stopped."
+          "why": "Computed $f(3)$ as $\\frac{3-1}{3+1}$ (numerator and denominator swapped), then stopped.",
+          "trap": "C2"
         }
       ],
       "solution": "1. $f(3)=\\frac{4}{2}=2$.\n2. $f(2)=\\frac{3}{1}=3$. (In fact $f(f(x))=x$.)"
@@ -677,7 +723,8 @@
         {
           "text": "$g\\circ g$",
           "correct": false,
-          "why": "Assumed composing removes the jump; $g(1)=1$ and $g(-1)=-1$, so $g\\circ g=g$, which still jumps."
+          "why": "Assumed composing removes the jump; $g(1)=1$ and $g(-1)=-1$, so $g\\circ g=g$, which still jumps.",
+          "trap": "C1"
         },
         {
           "text": "$g\\circ f$",
@@ -706,11 +753,13 @@
       "traps": [
         {
           "value": 0,
-          "why": "Took $\\frac{e^{2x}-1}{x}\\to1$ (forgot the factor 2), then $\\ln1=0$."
+          "why": "Took $\\frac{e^{2x}-1}{x}\\to1$ (forgot the factor 2), then $\\ln1=0$.",
+          "trap": "C4"
         },
         {
           "value": 2,
-          "why": "Found the inner limit 2 but forgot to apply $\\ln$."
+          "why": "Found the inner limit 2 but forgot to apply $\\ln$.",
+          "trap": "C6"
         }
       ],
       "solution": "1. Inner limit: $\\frac{e^{2x}-1}{x}\\to2$.\n2. $\\ln$ is continuous at 2, so the limit is $\\ln2\\approx0.693$."
@@ -733,7 +782,8 @@
         {
           "text": "$|x|$",
           "correct": false,
-          "why": "Assumed continuity implies differentiability; the one-sided derivatives are $-1$ and $1$ (a corner)."
+          "why": "Assumed continuity implies differentiability; the one-sided derivatives are $-1$ and $1$ (a corner).",
+          "trap": "C1"
         },
         {
           "text": "$|x|^3$",
@@ -743,7 +793,8 @@
         {
           "text": "$\\max(0,x)$ (ReLU)",
           "correct": false,
-          "why": "Left derivative 0, right derivative 1: a corner at 0."
+          "why": "Left derivative 0, right derivative 1: a corner at 0.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -763,17 +814,20 @@
         {
           "text": "$(a,b)=(1,2)$",
           "correct": false,
-          "why": "Matched derivatives correctly but dropped the $+2$ when matching values ($1+a=b$)."
+          "why": "Matched derivatives correctly but dropped the $+2$ when matching values ($1+a=b$).",
+          "trap": "C6"
         },
         {
           "text": "$(a,b)=(1,0)$",
           "correct": false,
-          "why": "Checked continuity only ($1+a=b+2$) and picked an arbitrary pair; derivatives must also match."
+          "why": "Checked continuity only ($1+a=b+2$) and picked an arbitrary pair; derivatives must also match.",
+          "trap": "C6"
         },
         {
           "text": "$(a,b)=(2,1)$",
           "correct": false,
-          "why": "Differentiated $x^2$ as $x$, giving $b=1$, then $1+a=3$."
+          "why": "Differentiated $x^2$ as $x$, giving $b=1$, then $1+a=3$.",
+          "trap": "C3"
         },
         {
           "text": "$(a,b)=(3,2)$",
@@ -802,15 +856,18 @@
       "traps": [
         {
           "value": 4,
-          "why": "Counted $x=0$ twice or treated $|x^3|$ as having a corner; $|x|^3$ is differentiable at 0."
+          "why": "Counted $x=0$ twice or treated $|x^3|$ as having a corner; $|x|^3$ is differentiable at 0.",
+          "trap": "C6"
         },
         {
           "value": 2,
-          "why": "Found the zeros of $x^2-4$ but missed the corner of $|x|$ at 0 (or missed $x=-2$)."
+          "why": "Found the zeros of $x^2-4$ but missed the corner of $|x|$ at 0 (or missed $x=-2$).",
+          "trap": "C6"
         },
         {
           "value": 1,
-          "why": "Looked only at $|x|$; each simple root of $x^2-4$ also creates a corner."
+          "why": "Looked only at $|x|$; each simple root of $x^2-4$ also creates a corner.",
+          "trap": "C6"
         }
       ],
       "solution": "1. $|x^2-4|$ has corners at $x=\\pm2$ (simple roots, slope $\\pm4$).\n2. $|x|$ has a corner at 0; $|x^3|$ is smooth there.\n3. At 0, $|x^2-4|$ is smooth, so the corner stays. Total 3."
@@ -828,7 +885,8 @@
         {
           "text": "$g$ is not differentiable at 0 because $r$ is not",
           "correct": false,
-          "why": "Assumed squaring keeps the corner; the slope $2r(x)$ tends to 0 from both sides."
+          "why": "Assumed squaring keeps the corner; the slope $2r(x)$ tends to 0 from both sides.",
+          "trap": "C1"
         },
         {
           "text": "$g$ is differentiable everywhere and $g'(0)=0$",
@@ -838,12 +896,14 @@
         {
           "text": "$g'(0)=1$",
           "correct": false,
-          "why": "Used the right derivative of ReLU itself instead of differentiating $x^2$."
+          "why": "Used the right derivative of ReLU itself instead of differentiating $x^2$.",
+          "trap": "C10"
         },
         {
           "text": "$g$ is not continuous at 0",
           "correct": false,
-          "why": "Confused a corner with a jump; $g(0^-)=g(0^+)=0$."
+          "why": "Confused a corner with a jump; $g(0^-)=g(0^+)=0$.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -863,17 +923,20 @@
         {
           "text": "$|x|$",
           "correct": false,
-          "why": "Treated $|x|$ as a constant factor and differentiated only $x$."
+          "why": "Treated $|x|$ as a constant factor and differentiated only $x$.",
+          "trap": "C3"
         },
         {
           "text": "$2x$",
           "correct": false,
-          "why": "Treated $f$ as $x^2$ everywhere, ignoring that $f=-x^2$ for $x<0$."
+          "why": "Treated $f$ as $x^2$ everywhere, ignoring that $f=-x^2$ for $x<0$.",
+          "trap": "C5"
         },
         {
           "text": "Undefined at $x=0$",
           "correct": false,
-          "why": "Assumed the corner of $|x|$ survives; multiplying by $x$ flattens it."
+          "why": "Assumed the corner of $|x|$ survives; multiplying by $x$ flattens it.",
+          "trap": "C1"
         },
         {
           "text": "$2|x|$",
@@ -902,15 +965,18 @@
       "traps": [
         {
           "value": 2,
-          "why": "Stopped at $f''(0)=2$."
+          "why": "Stopped at $f''(0)=2$.",
+          "trap": "C6"
         },
         {
           "value": 1,
-          "why": "Differentiated only $e^x$ and kept $x^2$ fixed, or used $f'''=e^x$ alone."
+          "why": "Differentiated only $e^x$ and kept $x^2$ fixed, or used $f'''=e^x$ alone.",
+          "trap": "C3"
         },
         {
           "value": 0,
-          "why": "Forgot the product rule cross terms, so every term still carried a factor of $x$."
+          "why": "Forgot the product rule cross terms, so every term still carried a factor of $x$.",
+          "trap": "C3"
         }
       ],
       "solution": "1. $f'=(x^2+2x)e^x$.\n2. $f''=(x^2+4x+2)e^x$.\n3. $f'''=(x^2+6x+6)e^x$, so $f'''(0)=6$. (Check: $x^2e^x=x^2+x^3+\\dots$, coefficient of $x^3$ is 1, times $3!=6$.)"
@@ -928,7 +994,8 @@
         {
           "text": "$\\ln2$",
           "correct": false,
-          "why": "Evaluated the function instead of its derivative."
+          "why": "Evaluated the function instead of its derivative.",
+          "trap": "C10"
         },
         {
           "text": "$1$",
@@ -938,12 +1005,14 @@
         {
           "text": "$2$",
           "correct": false,
-          "why": "Wrote the derivative as $2x$ and forgot to divide by $x^2+1$."
+          "why": "Wrote the derivative as $2x$ and forgot to divide by $x^2+1$.",
+          "trap": "C6"
         },
         {
           "text": "$\\frac{1}{2}$",
           "correct": false,
-          "why": "Forgot the chain factor $2x$ and wrote $\\frac{1}{x^2+1}$."
+          "why": "Forgot the chain factor $2x$ and wrote $\\frac{1}{x^2+1}$.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -967,15 +1036,18 @@
       "traps": [
         {
           "value": 0,
-          "why": "Differentiated $2x\\cos(x^2)$ treating $2x$ as constant: $f''=2\\cos(x^2)$, which is 0 here."
+          "why": "Differentiated $2x\\cos(x^2)$ treating $2x$ as constant: $f''=2\\cos(x^2)$, which is 0 here.",
+          "trap": "C3"
         },
         {
           "value": 6.28,
-          "why": "Sign slip: the derivative of $\\cos(x^2)$ is $-2x\\sin(x^2)$."
+          "why": "Sign slip: the derivative of $\\cos(x^2)$ is $-2x\\sin(x^2)$.",
+          "trap": "C11"
         },
         {
           "value": -3.14,
-          "why": "Dropped the factor 2 from the inner derivative in the second term ($-2x^2\\sin x^2$ instead of $-4x^2\\sin x^2$)."
+          "why": "Dropped the factor 2 from the inner derivative in the second term ($-2x^2\\sin x^2$ instead of $-4x^2\\sin x^2$).",
+          "trap": "C4"
         }
       ],
       "solution": "1. $f'=2x\\cos(x^2)$.\n2. $f''=2\\cos(x^2)-4x^2\\sin(x^2)$.\n3. At $x^2=\\pi/2$: $0-4\\cdot\\frac{\\pi}{2}\\cdot1=-2\\pi\\approx-6.28$."
@@ -993,12 +1065,14 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Gave the Taylor coefficient of $x^5$ (which is 1) instead of multiplying by $5!$."
+          "why": "Gave the Taylor coefficient of $x^5$ (which is 1) instead of multiplying by $5!$.",
+          "trap": "C4"
         },
         {
           "text": "$-120$",
           "correct": false,
-          "why": "Applied the alternating signs of $\\frac{1}{1+x}$; differentiating $(1-x)^{-1}$ gives two minus signs each time, which cancel."
+          "why": "Applied the alternating signs of $\\frac{1}{1+x}$; differentiating $(1-x)^{-1}$ gives two minus signs each time, which cancel.",
+          "trap": "C11"
         },
         {
           "text": "$120$",
@@ -1008,7 +1082,8 @@
         {
           "text": "$24$",
           "correct": false,
-          "why": "Used $4!$: off by one in the pattern $n!/(1-x)^{n+1}$."
+          "why": "Used $4!$: off by one in the pattern $n!/(1-x)^{n+1}$.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1028,12 +1103,14 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Differentiated numerator and denominator separately ($\\frac{1}{1}$)."
+          "why": "Differentiated numerator and denominator separately ($\\frac{1}{1}$).",
+          "trap": "C3"
         },
         {
           "text": "$\\dfrac{1+2x}{(1+x)^2}$",
           "correct": false,
-          "why": "Added instead of subtracting in the quotient-rule numerator ($v u'+u v'$)."
+          "why": "Added instead of subtracting in the quotient-rule numerator ($v u'+u v'$).",
+          "trap": "C11"
         },
         {
           "text": "$\\dfrac{1}{(1+x)^2}$",
@@ -1067,15 +1144,18 @@
       "traps": [
         {
           "value": 0.17,
-          "why": "Used $\\frac{1}{3!}$ and forgot the $2^3$ from $(2x)^3$."
+          "why": "Used $\\frac{1}{3!}$ and forgot the $2^3$ from $(2x)^3$.",
+          "trap": "C4"
         },
         {
           "value": 8,
-          "why": "Used $2^3$ but forgot to divide by $3!$."
+          "why": "Used $2^3$ but forgot to divide by $3!$.",
+          "trap": "C4"
         },
         {
           "value": 2.67,
-          "why": "Divided by $3$ instead of $3!=6$."
+          "why": "Divided by $3$ instead of $3!=6$.",
+          "trap": "C3"
         }
       ],
       "solution": "1. $e^{u}=\\sum u^n/n!$ with $u=2x$.\n2. $x^3$ term: $\\frac{2^3}{3!}=\\frac{8}{6}\\approx1.33$."
@@ -1098,17 +1178,20 @@
         {
           "text": "$(x-1)+\\frac{(x-1)^2}{2}$",
           "correct": false,
-          "why": "Sign error: $f''(x)=-1/x^2$ is negative at 1."
+          "why": "Sign error: $f''(x)=-1/x^2$ is negative at 1.",
+          "trap": "C11"
         },
         {
           "text": "$x-\\frac{x^2}{2}$",
           "correct": false,
-          "why": "Expanded $\\ln(1+x)$ about 0 and did not shift to $x-1$."
+          "why": "Expanded $\\ln(1+x)$ about 0 and did not shift to $x-1$.",
+          "trap": "C10"
         },
         {
           "text": "$1+(x-1)-\\frac{(x-1)^2}{2}$",
           "correct": false,
-          "why": "Took $f(1)=\\ln1$ as 1 instead of 0."
+          "why": "Took $f(1)=\\ln1$ as 1 instead of 0.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1132,15 +1215,18 @@
       "traps": [
         {
           "value": 0.083,
-          "why": "Kept only $1\\cdot\\frac{x^4}{24}$ from each factor and missed the cross term $\\frac{x^2}{2}\\cdot\\left(-\\frac{x^2}{2}\\right)$."
+          "why": "Kept only $1\\cdot\\frac{x^4}{24}$ from each factor and missed the cross term $\\frac{x^2}{2}\\cdot\\left(-\\frac{x^2}{2}\\right)$.",
+          "trap": "C6"
         },
         {
           "value": -0.208,
-          "why": "Missed one of the end terms: used $\\frac{1}{24}-\\frac14$ instead of $\\frac1{24}-\\frac14+\\frac1{24}$."
+          "why": "Missed one of the end terms: used $\\frac{1}{24}-\\frac14$ instead of $\\frac1{24}-\\frac14+\\frac1{24}$.",
+          "trap": "C6"
         },
         {
           "value": 0.002,
-          "why": "Multiplied the two $x^4$ coefficients ($\\frac{1}{24}\\cdot\\frac{1}{24}$) instead of collecting all products that give $x^4$."
+          "why": "Multiplied the two $x^4$ coefficients ($\\frac{1}{24}\\cdot\\frac{1}{24}$) instead of collecting all products that give $x^4$.",
+          "trap": "C3"
         }
       ],
       "solution": "1. $e^x:1,1,\\frac12,\\frac16,\\frac1{24}$; $\\cos x:1,0,-\\frac12,0,\\frac1{24}$.\n2. $x^4$: $1\\cdot\\frac1{24}+\\frac12\\cdot(-\\frac12)+\\frac1{24}\\cdot1=-\\frac16\\approx-0.167$."
@@ -1162,15 +1248,18 @@
       "traps": [
         {
           "value": 2.05,
-          "why": "Stopped at the first-order (tangent line) approximation."
+          "why": "Stopped at the first-order (tangent line) approximation.",
+          "trap": "C6"
         },
         {
           "value": 2.0488,
-          "why": "Forgot the $\\frac{1}{2!}$ on the second-order term."
+          "why": "Forgot the $\\frac{1}{2!}$ on the second-order term.",
+          "trap": "C4"
         },
         {
           "value": 2.0506,
-          "why": "Sign error: $f''(x)=-\\frac14x^{-3/2}$ is negative."
+          "why": "Sign error: $f''(x)=-\\frac14x^{-3/2}$ is negative.",
+          "trap": "C11"
         }
       ],
       "solution": "1. $f(4)=2$, $f'(4)=\\frac{1}{2\\sqrt4}=\\frac14$, $f''(4)=-\\frac{1}{4\\cdot8}=-\\frac1{32}$.\n2. $2+\\frac14(0.2)-\\frac{1}{64}(0.04)=2.049375\\approx2.0494$."
@@ -1188,7 +1277,8 @@
         {
           "text": "$f'''(0)=\\frac13$",
           "correct": false,
-          "why": "Confused the coefficient with the derivative; $f'''(0)=3!\\cdot\\frac13=2$."
+          "why": "Confused the coefficient with the derivative; $f'''(0)=3!\\cdot\\frac13=2$.",
+          "trap": "C2"
         },
         {
           "text": "The series converges at $x=1$",
@@ -1198,7 +1288,8 @@
         {
           "text": "The coefficient of $x^2$ is $\\frac12$",
           "correct": false,
-          "why": "Missed the alternating sign; it is $-\\frac12$."
+          "why": "Missed the alternating sign; it is $-\\frac12$.",
+          "trap": "C11"
         },
         {
           "text": "The coefficient of $x^3$ is $\\frac13$",
@@ -1227,11 +1318,13 @@
       "traps": [
         {
           "value": 2,
-          "why": "Used the sum from $n=1$, $\\frac{r}{1-r}$, though the series starts at $n=0$."
+          "why": "Used the sum from $n=1$, $\\frac{r}{1-r}$, though the series starts at $n=0$.",
+          "trap": "C5"
         },
         {
           "value": 0.6,
-          "why": "Used $\\frac{1}{1+r}$ instead of $\\frac{1}{1-r}$."
+          "why": "Used $\\frac{1}{1+r}$ instead of $\\frac{1}{1-r}$.",
+          "trap": "C3"
         }
       ],
       "solution": "1. Geometric with $a=1$, $r=\\frac23$.\n2. Sum $=\\frac{1}{1-2/3}=3$."
@@ -1253,15 +1346,18 @@
       "traps": [
         {
           "value": 1.5,
-          "why": "Wrote $\\frac{1}{n(n+2)}=\\frac1n-\\frac1{n+2}$, forgetting the factor $\\frac12$."
+          "why": "Wrote $\\frac{1}{n(n+2)}=\\frac1n-\\frac1{n+2}$, forgetting the factor $\\frac12$.",
+          "trap": "C4"
         },
         {
           "value": 0.5,
-          "why": "Telescoped as if consecutive terms cancel, keeping only the first term 1 (times $\\frac12$)."
+          "why": "Telescoped as if consecutive terms cancel, keeping only the first term 1 (times $\\frac12$).",
+          "trap": "C6"
         },
         {
           "value": 1,
-          "why": "Used the $\\frac{1}{n(n+1)}$ result."
+          "why": "Used the $\\frac{1}{n(n+1)}$ result.",
+          "trap": "C3"
         }
       ],
       "solution": "1. $\\frac{1}{n(n+2)}=\\frac12\\left(\\frac1n-\\frac1{n+2}\\right)$.\n2. Terms cancel two apart; $1$ and $\\frac12$ survive.\n3. Sum $=\\frac12\\cdot\\frac32=0.75$."
@@ -1279,17 +1375,20 @@
         {
           "text": "$4$",
           "correct": false,
-          "why": "Used $\\sum nx^{n-1}=\\frac{1}{(1-x)^2}$ without multiplying by $x$."
+          "why": "Used $\\sum nx^{n-1}=\\frac{1}{(1-x)^2}$ without multiplying by $x$.",
+          "trap": "C6"
         },
         {
           "text": "$1$",
           "correct": false,
-          "why": "Ignored the factor $n$ and summed $\\sum_{n\\ge1}(1/2)^n$."
+          "why": "Ignored the factor $n$ and summed $\\sum_{n\\ge1}(1/2)^n$.",
+          "trap": "C6"
         },
         {
           "text": "The series diverges",
           "correct": false,
-          "why": "Assumed the growing factor $n$ wins; the ratio of consecutive terms tends to $\\frac12<1$, so it converges."
+          "why": "Assumed the growing factor $n$ wins; the ratio of consecutive terms tends to $\\frac12<1$, so it converges.",
+          "trap": "C1"
         },
         {
           "text": "$2$",
@@ -1314,7 +1413,8 @@
         {
           "text": "$1$",
           "correct": false,
-          "why": "Kept only the $(1/2)^n$ part and dropped the second series."
+          "why": "Kept only the $(1/2)^n$ part and dropped the second series.",
+          "trap": "C6"
         },
         {
           "text": "$\\frac32$",
@@ -1324,12 +1424,14 @@
         {
           "text": "$5$",
           "correct": false,
-          "why": "Added the ratios into one geometric series with $r=\\frac12+\\frac13=\\frac56$."
+          "why": "Added the ratios into one geometric series with $r=\\frac12+\\frac13=\\frac56$.",
+          "trap": "C3"
         },
         {
           "text": "$\\frac72$",
           "correct": false,
-          "why": "Summed both series from $n=0$: $2+\\frac32$."
+          "why": "Summed both series from $n=0$: $2+\\frac32$.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -1349,7 +1451,8 @@
         {
           "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac{n}{n+1}$",
           "correct": false,
-          "why": "Terms tend to 1, not 0, so the series diverges (n-th term test)."
+          "why": "Terms tend to 1, not 0, so the series diverges (n-th term test).",
+          "trap": "C1"
         },
         {
           "text": "$\\displaystyle\\sum_{n=1}^\\infty(1.01)^{-n}$",
@@ -1364,7 +1467,8 @@
         {
           "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac1n$",
           "correct": false,
-          "why": "Assumed terms tending to 0 is enough; the harmonic series diverges (like $\\ln N$)."
+          "why": "Assumed terms tending to 0 is enough; the harmonic series diverges (like $\\ln N$).",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -1388,11 +1492,13 @@
       "traps": [
         {
           "value": 4,
-          "why": "Reported $f(0)=4$, which is the local maximum ($f''(0)=-6<0$)."
+          "why": "Reported $f(0)=4$, which is the local maximum ($f''(0)=-6<0$).",
+          "trap": "C2"
         },
         {
           "value": 2,
-          "why": "Reported the location $x=2$ instead of the value $f(2)$."
+          "why": "Reported the location $x=2$ instead of the value $f(2)$.",
+          "trap": "C2"
         }
       ],
       "solution": "1. $f'=3x^2-6x=0\\Rightarrow x=0,2$.\n2. $f''=6x-6$: $f''(2)=6>0$ (min).\n3. $f(2)=8-12+4=0$."
@@ -1414,15 +1520,18 @@
       "traps": [
         {
           "value": 2,
-          "why": "Used the stationary point $x=-1$ (a local max) which lies outside $[0,3]$."
+          "why": "Used the stationary point $x=-1$ (a local max) which lies outside $[0,3]$.",
+          "trap": "C5"
         },
         {
           "value": -2,
-          "why": "Reported the value at the only interior stationary point $x=1$, which is the minimum."
+          "why": "Reported the value at the only interior stationary point $x=1$, which is the minimum.",
+          "trap": "C2"
         },
         {
           "value": 0,
-          "why": "Compared only $f(0)$ and $f(1)$ and forgot the right endpoint."
+          "why": "Compared only $f(0)$ and $f(1)$ and forgot the right endpoint.",
+          "trap": "C5"
         }
       ],
       "solution": "1. $f'=3x^2-3=0\\Rightarrow x=\\pm1$; only $x=1$ is in $[0,3]$.\n2. $f(0)=0$, $f(1)=-2$, $f(3)=18$.\n3. Max $=18$ at the endpoint."
@@ -1440,7 +1549,8 @@
         {
           "text": "$x=0$ is not a critical point",
           "correct": false,
-          "why": "$f'(0)=4\\cdot0^3=0$, so it is critical."
+          "why": "$f'(0)=4\\cdot0^3=0$, so it is critical.",
+          "trap": "C9"
         },
         {
           "text": "$f''(0)=0$, so the test is inconclusive; $x=0$ is a minimum",
@@ -1450,12 +1560,14 @@
         {
           "text": "$x=0$ is a local maximum",
           "correct": false,
-          "why": "Misread the inconclusive test; $f$ increases on both sides of 0."
+          "why": "Misread the inconclusive test; $f$ increases on both sides of 0.",
+          "trap": "C11"
         },
         {
           "text": "$f''(0)=0$, so $x=0$ is an inflection point",
           "correct": false,
-          "why": "Equated $f''=0$ with an inflection; $f''=12x^2$ does not change sign at 0."
+          "why": "Equated $f''=0$ with an inflection; $f''=12x^2$ does not change sign at 0.",
+          "trap": "C1"
         }
       ],
       "answer": null,
@@ -1475,7 +1587,8 @@
         {
           "text": "$f''(1)>0$",
           "correct": false,
-          "why": "Sign slip: $f''(1)=(1-2)e^{-1}<0$, consistent with a maximum."
+          "why": "Sign slip: $f''(1)=(1-2)e^{-1}<0$, consistent with a maximum.",
+          "trap": "C11"
         },
         {
           "text": "$f$ has an inflection point at $x=2$",
@@ -1510,7 +1623,8 @@
         {
           "text": "max 5, min 0",
           "correct": false,
-          "why": "Checked the left endpoint but missed the right endpoint $x=3$."
+          "why": "Checked the left endpoint but missed the right endpoint $x=3$.",
+          "trap": "C5"
         },
         {
           "text": "max 9 (at $x=3$), min 0 (at $x=0$)",
@@ -1520,12 +1634,14 @@
         {
           "text": "max 5 (at $x=1$), min 4 (at $x=2$)",
           "correct": false,
-          "why": "Compared only the stationary points and ignored the endpoints."
+          "why": "Compared only the stationary points and ignored the endpoints.",
+          "trap": "C5"
         },
         {
           "text": "max 9, min 4",
           "correct": false,
-          "why": "Checked the right endpoint but missed the left endpoint $x=0$."
+          "why": "Checked the right endpoint but missed the left endpoint $x=0$.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -1550,12 +1666,14 @@
         {
           "text": "$x^3$",
           "correct": false,
-          "why": "$f''=6x<0$ for $x<0$; it is convex only on $[0,\\infty)$."
+          "why": "$f''=6x<0$ for $x<0$; it is convex only on $[0,\\infty)$.",
+          "trap": "C5"
         },
         {
           "text": "$-x^2+2x$",
           "correct": false,
-          "why": "$f''=-2<0$: concave. Looked at $f'$ or the linear term instead of $f''$."
+          "why": "$f''=-2<0$: concave. Looked at $f'$ or the linear term instead of $f''$.",
+          "trap": "C2"
         },
         {
           "text": "$|x|$",
@@ -1580,17 +1698,20 @@
         {
           "text": "$-1\\le x\\le1$",
           "correct": false,
-          "why": "Reversed the inequality: there $f''\\le0$ (concave)."
+          "why": "Reversed the inequality: there $f''\\le0$ (concave).",
+          "trap": "C11"
         },
         {
           "text": "$|x|\\ge\\sqrt3$",
           "correct": false,
-          "why": "Solved $f'=4x^3-12x=0$ (stationary points) instead of $f''\\ge0$."
+          "why": "Solved $f'=4x^3-12x=0$ (stationary points) instead of $f''\\ge0$.",
+          "trap": "C2"
         },
         {
           "text": "all real $x$",
           "correct": false,
-          "why": "Assumed the $x^4$ term dominates everywhere; near 0 the $-6x^2$ term wins."
+          "why": "Assumed the $x^4$ term dominates everywhere; near 0 the $-6x^2$ term wins.",
+          "trap": "C1"
         },
         {
           "text": "$x\\le-1$ or $x\\ge1$",
@@ -1619,15 +1740,18 @@
       "traps": [
         {
           "value": 16,
-          "why": "Reported the bound on $a^2$ ($a^2\\le16$) instead of on $|a|$."
+          "why": "Reported the bound on $a^2$ ($a^2\\le16$) instead of on $|a|$.",
+          "trap": "C4"
         },
         {
           "value": 2,
-          "why": "Used $b^2\\le ac$, forgetting the 4 in the discriminant $b^2-4ac$."
+          "why": "Used $b^2\\le ac$, forgetting the 4 in the discriminant $b^2-4ac$.",
+          "trap": "C3"
         },
         {
           "value": 8,
-          "why": "Wrote $f''=12x^2+3ax+12$ (differentiated $ax^3$ only once), giving $9a^2\\le576$."
+          "why": "Wrote $f''=12x^2+3ax+12$ (differentiated $ax^3$ only once), giving $9a^2\\le576$.",
+          "trap": "C6"
         }
       ],
       "solution": "1. $f''=12x^2+6ax+12$.\n2. Needs no real sign change: $36a^2-4\\cdot12\\cdot12\\le0$.\n3. $a^2\\le16\\Rightarrow|a|\\le4$."
@@ -1650,7 +1774,8 @@
         {
           "text": "$f$ has at least one minimiser",
           "correct": false,
-          "why": "Assumed convex means bounded below with a minimum; $e^x$ is convex with no minimiser."
+          "why": "Assumed convex means bounded below with a minimum; $e^x$ is convex with no minimiser.",
+          "trap": "C1"
         },
         {
           "text": "$f'$ is non-decreasing",
@@ -1684,11 +1809,13 @@
       "traps": [
         {
           "value": 100,
-          "why": "Treated the constraint as $x+y=20$ (answer $10\\cdot10$)."
+          "why": "Treated the constraint as $x+y=20$ (answer $10\\cdot10$).",
+          "trap": "C10"
         },
         {
           "value": 0,
-          "why": "Checked only endpoints ($x=0$ or $y=0$)."
+          "why": "Checked only endpoints ($x=0$ or $y=0$).",
+          "trap": "C5"
         }
       ],
       "solution": "1. $x=20-2y$, $P=(20-2y)y=20y-2y^2$.\n2. $P'=20-4y=0\\Rightarrow y=5$, $x=10$.\n3. $P=50$."
@@ -1710,15 +1837,18 @@
       "traps": [
         {
           "value": 2,
-          "why": "Reported the optimal cut $x=2$, not the volume."
+          "why": "Reported the optimal cut $x=2$, not the volume.",
+          "trap": "C2"
         },
         {
           "value": 256,
-          "why": "Used side $12-x$ instead of $12-2x$ (only one corner removed per side); maximum then at $x=4$."
+          "why": "Used side $12-x$ instead of $12-2x$ (only one corner removed per side); maximum then at $x=4$.",
+          "trap": "C6"
         },
         {
           "value": 0,
-          "why": "Picked the other root $x=6$ of $V'=0$, which gives zero volume."
+          "why": "Picked the other root $x=6$ of $V'=0$, which gives zero volume.",
+          "trap": "C5"
         }
       ],
       "solution": "1. $V=x(12-2x)^2$, $0<x<6$.\n2. $V'=(12-2x)(12-6x)=0\\Rightarrow x=2$ (or 6, excluded).\n3. $V(2)=2\\cdot64=128$."
@@ -1736,17 +1866,20 @@
         {
           "text": "$40000$",
           "correct": false,
-          "why": "Used $x+y=400$ (only one side perpendicular to the river)."
+          "why": "Used $x+y=400$ (only one side perpendicular to the river).",
+          "trap": "C6"
         },
         {
           "text": "$17777.8$",
           "correct": false,
-          "why": "Assumed the three fenced sides are equal ($x=y=400/3$)."
+          "why": "Assumed the three fenced sides are equal ($x=y=400/3$).",
+          "trap": "C10"
         },
         {
           "text": "$10000$",
           "correct": false,
-          "why": "Fenced all four sides: a square of side 100."
+          "why": "Fenced all four sides: a square of side 100.",
+          "trap": "C6"
         },
         {
           "text": "$20000$",
@@ -1771,17 +1904,20 @@
         {
           "text": "$12$",
           "correct": false,
-          "why": "Solved $\\sum(x-a_i)=0$ as $x=\\sum a_i$, forgetting there are three $x$ terms."
+          "why": "Solved $\\sum(x-a_i)=0$ as $x=\\sum a_i$, forgetting there are three $x$ terms.",
+          "trap": "C6"
         },
         {
           "text": "$5$",
           "correct": false,
-          "why": "Gave the median, which minimises $\\sum|x-a_i|$, not the sum of squares."
+          "why": "Gave the median, which minimises $\\sum|x-a_i|$, not the sum of squares.",
+          "trap": "C2"
         },
         {
           "text": "$3.5$",
           "correct": false,
-          "why": "Used the midpoint of the extremes $(1+6)/2$."
+          "why": "Used the midpoint of the extremes $(1+6)/2$.",
+          "trap": "C10"
         },
         {
           "text": "$4$",
@@ -1810,15 +1946,18 @@
       "traps": [
         {
           "value": -0.4,
-          "why": "Moved along the gradient ($x+\\eta f'$) instead of against it."
+          "why": "Moved along the gradient ($x+\\eta f'$) instead of against it.",
+          "trap": "C11"
         },
         {
           "value": 4,
-          "why": "Forgot the learning rate: $x_1=0-(-4)$."
+          "why": "Forgot the learning rate: $x_1=0-(-4)$.",
+          "trap": "C6"
         },
         {
           "value": 2,
-          "why": "Jumped to the minimiser $x=2$ instead of taking one step."
+          "why": "Jumped to the minimiser $x=2$ instead of taking one step.",
+          "trap": "C6"
         }
       ],
       "solution": "1. $f'(x)=2x-4$, $f'(0)=-4$.\n2. $x_1=0-0.1(-4)=0.4$."
@@ -1840,15 +1979,18 @@
       "traps": [
         {
           "value": 1.5,
-          "why": "Took only one step."
+          "why": "Took only one step.",
+          "trap": "C6"
         },
         {
           "value": 3,
-          "why": "Doubled the first step instead of recomputing the gradient at $x_1$."
+          "why": "Doubled the first step instead of recomputing the gradient at $x_1$.",
+          "trap": "C6"
         },
         {
           "value": 1.3125,
-          "why": "Used $f'(x)=x-3$, forgetting the factor 2 from the square."
+          "why": "Used $f'(x)=x-3$, forgetting the factor 2 from the square.",
+          "trap": "C4"
         }
       ],
       "solution": "1. $f'=2(x-3)$.\n2. $x_1=0-0.25(-6)=1.5$.\n3. $x_2=1.5-0.25(-3)=2.25$."
@@ -1866,12 +2008,14 @@
         {
           "text": "It converges monotonically to 0",
           "correct": false,
-          "why": "That needs $0<\\eta<0.5$ so that $0<1-2\\eta<1$."
+          "why": "That needs $0<\\eta<0.5$ so that $0<1-2\\eta<1$.",
+          "trap": "C5"
         },
         {
           "text": "It converges to 0 because $f$ is convex",
           "correct": false,
-          "why": "Convexity alone does not guarantee convergence; the step must satisfy $\\eta<1$ here (i.e. $|1-2\\eta|<1$)."
+          "why": "Convexity alone does not guarantee convergence; the step must satisfy $\\eta<1$ here (i.e. $|1-2\\eta|<1$).",
+          "trap": "C1"
         },
         {
           "text": "It diverges, alternating in sign, since $x_{k+1}=-1.4\\,x_k$",
@@ -1881,7 +2025,8 @@
         {
           "text": "It oscillates between $1$ and $-1$ forever",
           "correct": false,
-          "why": "That is the case $\\eta=1$, where $1-2\\eta=-1$."
+          "why": "That is the case $\\eta=1$, where $1-2\\eta=-1$.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -1901,12 +2046,14 @@
         {
           "text": "$(-1,\\ -5)$",
           "correct": false,
-          "why": "Forgot the learning rate: $(1,1)-(2,6)$."
+          "why": "Forgot the learning rate: $(1,1)-(2,6)$.",
+          "trap": "C6"
         },
         {
           "text": "$(1.2,\\ 1.6)$",
           "correct": false,
-          "why": "Added the gradient (ascent) instead of subtracting."
+          "why": "Added the gradient (ascent) instead of subtracting.",
+          "trap": "C11"
         },
         {
           "text": "$(0.8,\\ 0.4)$",
@@ -1916,7 +2063,8 @@
         {
           "text": "$(0.8,\\ 0.8)$",
           "correct": false,
-          "why": "Used $\\partial f/\\partial x$ for both coordinates."
+          "why": "Used $\\partial f/\\partial x$ for both coordinates.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -1940,15 +2088,18 @@
       "traps": [
         {
           "value": 0.4,
-          "why": "Dropped either the factor 2 from the square or the chain factor $x$: gradient $-8$ instead of $-16$."
+          "why": "Dropped either the factor 2 from the square or the chain factor $x$: gradient $-8$ instead of $-16$.",
+          "trap": "C4"
         },
         {
           "value": -0.8,
-          "why": "Sign error: moved along the gradient."
+          "why": "Sign error: moved along the gradient.",
+          "trap": "C11"
         },
         {
           "value": 1.6,
-          "why": "Multiplied by $x$ twice: $2(wx-y)x^2=-32$."
+          "why": "Multiplied by $x$ twice: $2(wx-y)x^2=-32$.",
+          "trap": "C4"
         }
       ],
       "solution": "1. $\\frac{dL}{dw}=2(wx-y)x=2(0-4)(2)=-16$.\n2. $w_1=0-0.05(-16)=0.8$."

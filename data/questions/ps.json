@@ -333,12 +333,14 @@
     {
      "text": "39",
      "correct": false,
-     "why": "Subtracted the overlap twice ($63 - 24$); that counts students taking exactly one subject."
+     "why": "Subtracted the overlap twice ($63 - 24$); that counts students taking exactly one subject.",
+     "trap": "C6"
     },
     {
      "text": "9",
      "correct": false,
-     "why": "This is $60 - 51$, the number taking neither; the question asks for at least one."
+     "why": "This is $60 - 51$, the number taking neither; the question asks for at least one.",
+     "trap": "C11"
     },
     {
      "text": "51",
@@ -348,7 +350,8 @@
     {
      "text": "63",
      "correct": false,
-     "why": "Added 35 + 28 and missed the overlap: the 12 students taking both were counted twice."
+     "why": "Added 35 + 28 and missed the overlap: the 12 students taking both were counted twice.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -372,15 +375,18 @@
    "traps": [
     {
      "value": 0.2,
-     "why": "Missed the overlap: used $P(A\\cup B)=0.80$."
+     "why": "Missed the overlap: used $P(A\\cup B)=0.80$.",
+     "trap": "C6"
     },
     {
      "value": 0.65,
-     "why": "Gave $P(A\\cup B)$; 'neither' is its complement."
+     "why": "Gave $P(A\\cup B)$; 'neither' is its complement.",
+     "trap": "C11"
     },
     {
      "value": 0.5,
-     "why": "Subtracted the overlap twice: $1-(0.8-0.3)$."
+     "why": "Subtracted the overlap twice: $1-(0.8-0.3)$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $P(A\\cup B)=0.45+0.35-0.15=0.65$.\n2. $P(\\text{neither})=1-0.65=0.35$."
@@ -402,15 +408,18 @@
    "traps": [
     {
      "value": 125,
-     "why": "Missed the overlap: $75 + 50$ counts multiples of 12 twice."
+     "why": "Missed the overlap: $75 + 50$ counts multiples of 12 twice.",
+     "trap": "C6"
     },
     {
      "value": 113,
-     "why": "Used $4\\times 6=24$ as the overlap; a number divisible by both 4 and 6 is a multiple of lcm$=12$, not 24."
+     "why": "Used $4\\times 6=24$ as the overlap; a number divisible by both 4 and 6 is a multiple of lcm$=12$, not 24.",
+     "trap": "C3"
     },
     {
      "value": 200,
-     "why": "Counted integers divisible by neither ($300-100$)."
+     "why": "Counted integers divisible by neither ($300-100$).",
+     "trap": "C11"
     }
    ],
    "solution": "1. Multiples of 4: $\\lfloor 300/4\\rfloor = 75$; of 6: $50$.\n2. Both means multiples of lcm(4,6)=12: $25$.\n3. $75+50-25=100$."
@@ -428,7 +437,8 @@
     {
      "text": "0",
      "correct": false,
-     "why": "Summed singles to 120 ≥ 100 and concluded everyone is covered; overlaps were ignored."
+     "why": "Summed singles to 120 ≥ 100 and concluded everyone is covered; overlaps were ignored.",
+     "trap": "C6"
     },
     {
      "text": "12",
@@ -438,12 +448,14 @@
     {
      "text": "22",
      "correct": false,
-     "why": "Subtracted the triple overlap instead of adding it: union $=78$."
+     "why": "Subtracted the triple overlap instead of adding it: union $=78$.",
+     "trap": "C11"
     },
     {
      "text": "17",
      "correct": false,
-     "why": "Forgot to add back the triple overlap: union $=120-37=83$."
+     "why": "Forgot to add back the triple overlap: union $=120-37=83$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -468,7 +480,8 @@
     {
      "text": "$P(A\\cup B)=1.1$",
      "correct": false,
-     "why": "Added without the overlap; a probability cannot exceed 1."
+     "why": "Added without the overlap; a probability cannot exceed 1.",
+     "trap": "C8"
     },
     {
      "text": "$P(A\\cap B)\\ge 0.1$",
@@ -478,7 +491,8 @@
     {
      "text": "$P(A\\cap B)=0.3$",
      "correct": false,
-     "why": "That assumes independence, which is not given; the overlap can be anything in $[0.1,0.5]$."
+     "why": "That assumes independence, which is not given; the overlap can be anything in $[0.1,0.5]$.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -503,17 +517,20 @@
     {
      "text": "$\\frac{25}{64}$",
      "correct": false,
-     "why": "Used $(5/8)^2$, i.e. drew with replacement."
+     "why": "Used $(5/8)^2$, i.e. drew with replacement.",
+     "trap": "C7"
     },
     {
      "text": "$\\frac{5}{28}$",
      "correct": false,
-     "why": "Mixed routes: unordered numerator $\\binom52=10$ over ordered denominator $8\\cdot7=56$."
+     "why": "Mixed routes: unordered numerator $\\binom52=10$ over ordered denominator $8\\cdot7=56$.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac{5}{7}$",
      "correct": false,
-     "why": "Mixed routes: ordered numerator $5\\cdot4=20$ over unordered denominator $\\binom82=28$."
+     "why": "Mixed routes: ordered numerator $5\\cdot4=20$ over unordered denominator $\\binom82=28$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -537,11 +554,13 @@
    "traps": [
     {
      "value": 0.432,
-     "why": "Used the binomial $3(0.6)^2(0.4)$, which assumes replacement."
+     "why": "Used the binomial $3(0.6)^2(0.4)$, which assumes replacement.",
+     "trap": "C7"
     },
     {
      "value": 0.1667,
-     "why": "Computed only the order W, W, B ($\\frac{6}{10}\\cdot\\frac59\\cdot\\frac48$) and forgot the 3 positions for the black counter."
+     "why": "Computed only the order W, W, B ($\\frac{6}{10}\\cdot\\frac59\\cdot\\frac48$) and forgot the 3 positions for the black counter.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Combinations: $\\binom62\\binom41/\\binom{10}{3}=15\\cdot4/120$.\n2. $=0.5$."
@@ -559,12 +578,14 @@
     {
      "text": "$\\frac{2}{221}$",
      "correct": false,
-     "why": "Ordered numerator $4\\cdot3=12$ over unordered denominator $\\binom{52}{2}=1326$."
+     "why": "Ordered numerator $4\\cdot3=12$ over unordered denominator $\\binom{52}{2}=1326$.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac{1}{442}$",
      "correct": false,
-     "why": "Unordered numerator $\\binom42=6$ over ordered denominator $52\\cdot51$."
+     "why": "Unordered numerator $\\binom42=6$ over ordered denominator $52\\cdot51$.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac{1}{221}$",
@@ -574,7 +595,8 @@
     {
      "text": "$\\frac{1}{169}$",
      "correct": false,
-     "why": "Used $(4/52)^2$: replaced the first card."
+     "why": "Used $(4/52)^2$: replaced the first card.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -598,11 +620,13 @@
    "traps": [
     {
      "value": 0.0667,
-     "why": "Counted only the case 'faulty on tests 1 and 2'; the faulty pair can also occupy tests (1,3) or (2,3)."
+     "why": "Counted only the case 'faulty on tests 1 and 2'; the faulty pair can also occupy tests (1,3) or (2,3).",
+     "trap": "C6"
     },
     {
      "value": 0.0333,
-     "why": "Mixed routes: unordered numerator $\\binom22\\binom41=4$ over ordered denominator $6\\cdot5\\cdot4=120$."
+     "why": "Mixed routes: unordered numerator $\\binom22\\binom41=4$ over ordered denominator $6\\cdot5\\cdot4=120$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. 'Both found within 3 tests' = both faulty bulbs are among the first 3 tested.\n2. Unordered: $\\binom22\\binom41/\\binom63=4/20=0.2$."
@@ -624,11 +648,13 @@
    "traps": [
     {
      "value": 0.3456,
-     "why": "Used Binomial(4, 0.4); people are chosen without replacement."
+     "why": "Used Binomial(4, 0.4); people are chosen without replacement.",
+     "trap": "C7"
     },
     {
      "value": 0.0286,
-     "why": "Wrote $\\binom42/\\binom{10}{4}=6/210$ and dropped the $\\binom62$ factor for the men."
+     "why": "Wrote $\\binom42/\\binom{10}{4}=6/210$ and dropped the $\\binom62$ factor for the men.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $\\binom42\\binom62/\\binom{10}4 = 6\\cdot15/210$.\n2. $=90/210\\approx0.4286$."
@@ -651,17 +677,20 @@
     {
      "text": "0.578",
      "correct": false,
-     "why": "Used $1-0.75^3$, i.e. sampling with replacement."
+     "why": "Used $1-0.75^3$, i.e. sampling with replacement.",
+     "trap": "C7"
     },
     {
      "text": "0.461",
      "correct": false,
-     "why": "Computed exactly one defective, $5\\cdot105/1140$, not at least one."
+     "why": "Computed exactly one defective, $5\\cdot105/1140$, not at least one.",
+     "trap": "C6"
     },
     {
      "text": "0.399",
      "correct": false,
-     "why": "That is $P(\\text{no defective})$; the question asks for its complement."
+     "why": "That is $P(\\text{no defective})$; the question asks for its complement.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -685,11 +714,13 @@
    "traps": [
     {
      "value": 0.8485,
-     "why": "Took $\\binom72=42$ (forgot to divide $7\\cdot6$ by 2)."
+     "why": "Took $\\binom72=42$ (forgot to divide $7\\cdot6$ by 2).",
+     "trap": "C6"
     },
     {
      "value": 0.3545,
-     "why": "Used Binomial(4, 7/12), which assumes replacement."
+     "why": "Used Binomial(4, 7/12), which assumes replacement.",
+     "trap": "C7"
     }
    ],
    "solution": "1. $\\binom72=21$, $\\binom52=10$, $\\binom{12}4=495$.\n2. $21\\cdot10/495\\approx0.4242$."
@@ -712,17 +743,20 @@
     {
      "text": "$\\binom53\\binom71/\\binom{12}3$",
      "correct": false,
-     "why": "Denominator must choose $n=4$, matching $3+1$."
+     "why": "Denominator must choose $n=4$, matching $3+1$.",
+     "trap": "C6"
     },
     {
      "text": "$\\binom43(5/12)^3(7/12)$",
      "correct": false,
-     "why": "Binomial form assumes replacement; the success probability changes after each pick."
+     "why": "Binomial form assumes replacement; the success probability changes after each pick.",
+     "trap": "C7"
     },
     {
      "text": "$\\binom53/\\binom{12}4$",
      "correct": false,
-     "why": "Dropped the factor $\\binom71$ for the one unqualified applicant."
+     "why": "Dropped the factor $\\binom71$ for the one unqualified applicant.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -746,15 +780,18 @@
    "traps": [
     {
      "value": 0.3,
-     "why": "Added $0.1+0.1+0.1$; that double-counts days with two or more failures."
+     "why": "Added $0.1+0.1+0.1$; that double-counts days with two or more failures.",
+     "trap": "C6"
     },
     {
      "value": 0.729,
-     "why": "Gave $P(\\text{no failure})=0.9^3$; 'at least one' is its complement."
+     "why": "Gave $P(\\text{no failure})=0.9^3$; 'at least one' is its complement.",
+     "trap": "C11"
     },
     {
      "value": 0.001,
-     "why": "Computed all three failing, $0.1^3$."
+     "why": "Computed all three failing, $0.1^3$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $P(\\text{none fail})=0.9^3=0.729$.\n2. $P(\\ge1)=1-0.729=0.271$."
@@ -772,7 +809,8 @@
     {
      "text": "0.482",
      "correct": false,
-     "why": "That is $(5/6)^4$, the probability of no six."
+     "why": "That is $(5/6)^4$, the probability of no six.",
+     "trap": "C11"
     },
     {
      "text": "0.518",
@@ -782,12 +820,14 @@
     {
      "text": "0.667",
      "correct": false,
-     "why": "Added $4\\times\\frac16$; overlapping sixes were counted more than once."
+     "why": "Added $4\\times\\frac16$; overlapping sixes were counted more than once.",
+     "trap": "C6"
     },
     {
      "text": "0.386",
      "correct": false,
-     "why": "That is exactly one six, $4\\cdot\\frac16(\\frac56)^3$."
+     "why": "That is exactly one six, $4\\cdot\\frac16(\\frac56)^3$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -811,15 +851,18 @@
    "traps": [
     {
      "value": 13,
-     "why": "Rounded $\\ln0.05/\\ln0.8\\approx13.4$ down; $0.8^{13}\\approx0.055>0.05$, so 13 is not enough."
+     "why": "Rounded $\\ln0.05/\\ln0.8\\approx13.4$ down; $0.8^{13}\\approx0.055>0.05$, so 13 is not enough.",
+     "trap": "C5"
     },
     {
      "value": 5,
-     "why": "Used $1/p$, the expected wait, not the 95% condition."
+     "why": "Used $1/p$, the expected wait, not the 95% condition.",
+     "trap": "C3"
     },
     {
      "value": 4.75,
-     "why": "Divided $0.95/0.2$; probabilities of 'at least one' do not add linearly."
+     "why": "Divided $0.95/0.2$; probabilities of 'at least one' do not add linearly.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Need $1-0.8^n\\ge0.95$, i.e. $0.8^n\\le0.05$.\n2. $n\\ge\\ln0.05/\\ln0.8\\approx13.4$, so $n=14$."
@@ -842,17 +885,20 @@
     {
      "text": "0.600",
      "correct": false,
-     "why": "Added $\\binom42\\cdot\\frac1{10}$ over pairs; pair events overlap, so this over-counts."
+     "why": "Added $\\binom42\\cdot\\frac1{10}$ over pairs; pair events overlap, so this over-counts.",
+     "trap": "C6"
     },
     {
      "text": "0.100",
      "correct": false,
-     "why": "Used the chance that one specific pair matches."
+     "why": "Used the chance that one specific pair matches.",
+     "trap": "C6"
     },
     {
      "text": "0.504",
      "correct": false,
-     "why": "That is the probability that all four digits are distinct."
+     "why": "That is the probability that all four digits are distinct.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -876,11 +922,13 @@
    "traps": [
     {
      "value": 0.0909,
-     "why": "Treated the 11 possible sums as equally likely ($1/11$)."
+     "why": "Treated the 11 possible sums as equally likely ($1/11$).",
+     "trap": "C6"
     },
     {
      "value": 0.0833,
-     "why": "Counted unordered pairs {1,6},{2,5},{3,4} as 3 out of 36; each appears twice in ordered outcomes."
+     "why": "Counted unordered pairs {1,6},{2,5},{3,4} as 3 out of 36; each appears twice in ordered outcomes.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Ordered pairs with sum 7: (1,6),(2,5),(3,4),(4,3),(5,2),(6,1) = 6.\n2. $6/36\\approx0.1667$."
@@ -898,7 +946,8 @@
     {
      "text": "$\\frac18$",
      "correct": false,
-     "why": "Counted only HHT; the tail can be in any of 3 positions."
+     "why": "Counted only HHT; the tail can be in any of 3 positions.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac38$",
@@ -908,12 +957,14 @@
     {
      "text": "$\\frac14$",
      "correct": false,
-     "why": "Treated 0, 1, 2, 3 heads as 4 equally likely outcomes."
+     "why": "Treated 0, 1, 2, 3 heads as 4 equally likely outcomes.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac12$",
      "correct": false,
-     "why": "That is at least two heads (4 of 8)."
+     "why": "That is at least two heads (4 of 8).",
+     "trap": "C5"
     }
    ],
    "answer": null,
@@ -937,11 +988,13 @@
    "traps": [
     {
      "value": 0.1111,
-     "why": "Counted unordered pairs {4,1},{4,2},{4,3},{4,4} = 4; (1,4) and (4,1) are different outcomes."
+     "why": "Counted unordered pairs {4,1},{4,2},{4,3},{4,4} = 4; (1,4) and (4,1) are different outcomes.",
+     "trap": "C6"
     },
     {
      "value": 0.4444,
-     "why": "Gave $P(\\max\\le4)=(4/6)^2$; must subtract $P(\\max\\le3)$."
+     "why": "Gave $P(\\max\\le4)=(4/6)^2$; must subtract $P(\\max\\le3)$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $P(\\max\\le4)=16/36$, $P(\\max\\le3)=9/36$.\n2. $P(\\max=4)=7/36\\approx0.1944$."
@@ -959,12 +1012,14 @@
     {
      "text": "$\\frac{3}{11}$",
      "correct": false,
-     "why": "Treated the 11 sums as equally likely."
+     "why": "Treated the 11 sums as equally likely.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac56$",
      "correct": false,
-     "why": "Reversed direction: that is $P(\\text{sum}\\le9)$."
+     "why": "Reversed direction: that is $P(\\text{sum}\\le9)$.",
+     "trap": "C11"
     },
     {
      "text": "$\\frac16$",
@@ -974,7 +1029,8 @@
     {
      "text": "$\\frac19$",
      "correct": false,
-     "why": "Counted unordered pairs {4,6},{5,5},{5,6},{6,6} = 4 out of 36."
+     "why": "Counted unordered pairs {4,6},{5,5},{5,6},{6,6} = 4 out of 36.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -994,17 +1050,20 @@
     {
      "text": "$\\frac{11}{36}$",
      "correct": false,
-     "why": "That is the unconditional $P(\\text{at least one 6})$; the condition was ignored."
+     "why": "That is the unconditional $P(\\text{at least one 6})$; the condition was ignored.",
+     "trap": "C7"
     },
     {
      "text": "$\\frac13$",
      "correct": false,
-     "why": "Counted unordered pairs {2,6},{3,5},{4,4}; ordered outcomes are the equally likely ones."
+     "why": "Counted unordered pairs {2,6},{3,5},{4,4}; ordered outcomes are the equally likely ones.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac1{18}$",
      "correct": false,
-     "why": "Used $2/36$: did not restrict the denominator to the 5 outcomes with sum 8."
+     "why": "Used $2/36$: did not restrict the denominator to the 5 outcomes with sum 8.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac25$",
@@ -1033,15 +1092,18 @@
    "traps": [
     {
      "value": 0.1,
-     "why": "Gave $P(A\\cap B)$; did not divide by $P(B)$."
+     "why": "Gave $P(A\\cap B)$; did not divide by $P(B)$.",
+     "trap": "C6"
     },
     {
      "value": 0.2,
-     "why": "Divided by $P(A)$; that is $P(B\\mid A)$."
+     "why": "Divided by $P(A)$; that is $P(B\\mid A)$.",
+     "trap": "C7"
     },
     {
      "value": 0.5,
-     "why": "Gave $P(A)$ and ignored the condition."
+     "why": "Gave $P(A)$ and ignored the condition.",
+     "trap": "C7"
     }
    ],
    "solution": "1. $P(A\\mid B)=0.1/0.4=0.25$."
@@ -1063,11 +1125,13 @@
    "traps": [
     {
      "value": 0.125,
-     "why": "Gave $P(HHH)=1/8$ without restricting to the 4 outcomes with ≥2 heads."
+     "why": "Gave $P(HHH)=1/8$ without restricting to the 4 outcomes with ≥2 heads.",
+     "trap": "C7"
     },
     {
      "value": 0.5,
-     "why": "Argued 'one toss is left, so 1/2'; the condition does not fix which tosses were heads."
+     "why": "Argued 'one toss is left, so 1/2'; the condition does not fix which tosses were heads.",
+     "trap": "C7"
     }
    ],
    "solution": "1. Given set: HHT, HTH, THH, HHH (4 outcomes).\n2. Favourable: HHH, so $1/4$."
@@ -1090,17 +1154,20 @@
     {
      "text": "0.18",
      "correct": false,
-     "why": "Gave the joint $36/200$; the denominator must be the buyers only."
+     "why": "Gave the joint $36/200$; the denominator must be the buyers only.",
+     "trap": "C6"
     },
     {
      "text": "0.60",
      "correct": false,
-     "why": "Gave $P(\\text{mobile})=120/200$ and ignored the condition."
+     "why": "Gave $P(\\text{mobile})=120/200$ and ignored the condition.",
+     "trap": "C7"
     },
     {
      "text": "0.30",
      "correct": false,
-     "why": "Computed $P(\\text{bought}\\mid\\text{mobile})=36/120$, the reverse conditional."
+     "why": "Computed $P(\\text{bought}\\mid\\text{mobile})=36/120$, the reverse conditional.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -1120,7 +1187,8 @@
     {
      "text": "$P(A\\cup B)=0.58$",
      "correct": false,
-     "why": "Subtracted $0.3\\times0.4$ as if independent; disjoint gives $0.7$."
+     "why": "Subtracted $0.3\\times0.4$ as if independent; disjoint gives $0.7$.",
+     "trap": "C2"
     },
     {
      "text": "$P(A\\mid B)=0$",
@@ -1130,12 +1198,14 @@
     {
      "text": "$P(A\\mid B)=0.3$",
      "correct": false,
-     "why": "That is what independence would give; knowing $B$ occurred rules $A$ out."
+     "why": "That is what independence would give; knowing $B$ occurred rules $A$ out.",
+     "trap": "C2"
     },
     {
      "text": "$A$ and $B$ are independent",
      "correct": false,
-     "why": "Independence needs $P(A\\cap B)=0.12$, but it is 0."
+     "why": "Independence needs $P(A\\cap B)=0.12$, but it is 0.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -1155,7 +1225,8 @@
     {
      "text": "$A$ and $B$ are mutually exclusive",
      "correct": false,
-     "why": "$P(A\\cap B)=0.2\\ne0$."
+     "why": "$P(A\\cap B)=0.2\\ne0$.",
+     "trap": "C2"
     },
     {
      "text": "$P(A\\mid B)=0.4$",
@@ -1190,12 +1261,14 @@
     {
      "text": "$A,C$ only",
      "correct": false,
-     "why": "$P(A\\mid C)=1/3$ differs from $P(A)=1/2$, so $A,C$ are dependent."
+     "why": "$P(A\\mid C)=1/3$ differs from $P(A)=1/2$, so $A,C$ are dependent.",
+     "trap": "C11"
     },
     {
      "text": "Neither: the events overlap, so they cannot be independent",
      "correct": false,
-     "why": "Confused overlap with dependence; independent events with positive probability must overlap."
+     "why": "Confused overlap with dependence; independent events with positive probability must overlap.",
+     "trap": "C2"
     },
     {
      "text": "$A,B$ only",
@@ -1205,7 +1278,8 @@
     {
      "text": "Both pairs",
      "correct": false,
-     "why": "Overlapping is not the test; $A,C$ fails $P(A\\cap C)=1/6\\ne1/4$."
+     "why": "Overlapping is not the test; $A,C$ fails $P(A\\cap C)=1/6\\ne1/4$.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -1229,11 +1303,13 @@
    "traps": [
     {
      "value": 0.9,
-     "why": "Added as if mutually exclusive; independent events overlap with $P=0.18$."
+     "why": "Added as if mutually exclusive; independent events overlap with $P=0.18$.",
+     "trap": "C2"
     },
     {
      "value": 0.18,
-     "why": "Gave $P(A\\cap B)$, not the union."
+     "why": "Gave $P(A\\cap B)$, not the union.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $P(A\\cap B)=0.18$.\n2. $P(A\\cup B)=0.3+0.6-0.18=0.72$."
@@ -1251,12 +1327,14 @@
     {
      "text": "If $P(A\\mid B)>P(A)$ then $P(B\\mid A)<P(B)$",
      "correct": false,
-     "why": "Both are equivalent to $P(A\\cap B)>P(A)P(B)$, so $P(B\\mid A)>P(B)$."
+     "why": "Both are equivalent to $P(A\\cap B)>P(A)P(B)$, so $P(B\\mid A)>P(B)$.",
+     "trap": "C11"
     },
     {
      "text": "If $A,B$ are independent, they are mutually exclusive",
      "correct": false,
-     "why": "Independent gives $P(A\\cap B)=P(A)P(B)>0$, so they overlap."
+     "why": "Independent gives $P(A\\cap B)=P(A)P(B)>0$, so they overlap.",
+     "trap": "C2"
     },
     {
      "text": "If $A,B$ are independent, so are $A^c$ and $B$",
@@ -1290,11 +1368,13 @@
    "traps": [
     {
      "value": 0.0333,
-     "why": "Took the plain average of the defect rates; branches must be weighted by output share."
+     "why": "Took the plain average of the defect rates; branches must be weighted by output share.",
+     "trap": "C7"
     },
     {
      "value": 0.1,
-     "why": "Added the defect rates without weights."
+     "why": "Added the defect rates without weights.",
+     "trap": "C7"
     }
    ],
    "solution": "1. $P(D)=0.5(0.02)+0.3(0.03)+0.2(0.05)$.\n2. $=0.010+0.009+0.010=0.029$."
@@ -1317,17 +1397,20 @@
     {
      "text": "0.12",
      "correct": false,
-     "why": "Multiplied $0.6\\times0.2$; the branches are alternatives, so add weighted terms."
+     "why": "Multiplied $0.6\\times0.2$; the branches are alternatives, so add weighted terms.",
+     "trap": "C3"
     },
     {
      "text": "0.3",
      "correct": false,
-     "why": "Kept only urn I's branch $0.5\\times0.6$."
+     "why": "Kept only urn I's branch $0.5\\times0.6$.",
+     "trap": "C6"
     },
     {
      "text": "0.8",
      "correct": false,
-     "why": "Added $0.6+0.2$ without the 0.5 weights."
+     "why": "Added $0.6+0.2$ without the 0.5 weights.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -1351,11 +1434,13 @@
    "traps": [
     {
      "value": 0.5,
-     "why": "Ignored the transfer and used $4/8$; B now has 9 balls."
+     "why": "Ignored the transfer and used $4/8$; B now has 9 balls.",
+     "trap": "C6"
     },
     {
      "value": 0.4444,
-     "why": "Assumed a black ball was moved; both transfer branches must be weighted."
+     "why": "Assumed a black ball was moved; both transfer branches must be weighted.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Moved white (2/5): B has 5W of 9. Moved black (3/5): 4W of 9.\n2. $\\frac25\\cdot\\frac59+\\frac35\\cdot\\frac49=\\frac{22}{45}\\approx0.4889$."
@@ -1373,12 +1458,14 @@
     {
      "text": "0.35",
      "correct": false,
-     "why": "Added the two conditional rates without priors."
+     "why": "Added the two conditional rates without priors.",
+     "trap": "C7"
     },
     {
      "text": "0.12",
      "correct": false,
-     "why": "Kept only the spam branch."
+     "why": "Kept only the spam branch.",
+     "trap": "C6"
     },
     {
      "text": "0.15",
@@ -1388,7 +1475,8 @@
     {
      "text": "0.175",
      "correct": false,
-     "why": "Averaged 0.3 and 0.05 equally; the classes are 40/60, not 50/50."
+     "why": "Averaged 0.3 and 0.05 equally; the classes are 40/60, not 50/50.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -1412,15 +1500,18 @@
    "traps": [
     {
      "value": 0.95,
-     "why": "Gave the sensitivity $P(+\\mid D)$, the reverse conditional."
+     "why": "Gave the sensitivity $P(+\\mid D)$, the reverse conditional.",
+     "trap": "C7"
     },
     {
      "value": 0.0095,
-     "why": "Stopped at the numerator $0.01\\times0.95$; must divide by $P(+)=0.059$."
+     "why": "Stopped at the numerator $0.01\\times0.95$; must divide by $P(+)=0.059$.",
+     "trap": "C6"
     },
     {
      "value": 0.839,
-     "why": "Used the unaffected branch in the numerator; that is $P(\\text{not affected}\\mid +)$."
+     "why": "Used the unaffected branch in the numerator; that is $P(\\text{not affected}\\mid +)$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $P(+)=0.01(0.95)+0.99(0.05)=0.059$.\n2. $P(D\\mid+)=0.0095/0.059\\approx0.161$."
@@ -1443,17 +1534,20 @@
     {
      "text": "0.500",
      "correct": false,
-     "why": "Unweighted: $5/(2+3+5)$ ignores output shares."
+     "why": "Unweighted: $5/(2+3+5)$ ignores output shares.",
+     "trap": "C7"
     },
     {
      "text": "0.200",
      "correct": false,
-     "why": "Gave the prior share of C; the defect evidence was ignored."
+     "why": "Gave the prior share of C; the defect evidence was ignored.",
+     "trap": "C7"
     },
     {
      "text": "0.310",
      "correct": false,
-     "why": "Wrong branch in the numerator: $0.009/0.029$ is machine B."
+     "why": "Wrong branch in the numerator: $0.009/0.029$ is machine B.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -1477,15 +1571,18 @@
    "traps": [
     {
      "value": 0.4,
-     "why": "Used urn I's branch $0.25\\times0.8$ in the numerator."
+     "why": "Used urn I's branch $0.25\\times0.8$ in the numerator.",
+     "trap": "C10"
     },
     {
      "value": 0.3333,
-     "why": "Ignored the priors: $0.4/(0.8+0.4)$."
+     "why": "Ignored the priors: $0.4/(0.8+0.4)$.",
+     "trap": "C7"
     },
     {
      "value": 0.75,
-     "why": "Gave the prior of urn II; the evidence was not used."
+     "why": "Gave the prior of urn II; the evidence was not used.",
+     "trap": "C7"
     }
    ],
    "solution": "1. $P(R)=\\frac14(0.8)+\\frac34(0.4)=0.5$.\n2. $P(II\\mid R)=0.3/0.5=0.6$."
@@ -1503,17 +1600,20 @@
     {
      "text": "0.99",
      "correct": false,
-     "why": "Confused $P(\\text{flag}\\mid\\text{fraud})$ with $P(\\text{fraud}\\mid\\text{flag})$."
+     "why": "Confused $P(\\text{flag}\\mid\\text{fraud})$ with $P(\\text{fraud}\\mid\\text{flag})$.",
+     "trap": "C7"
     },
     {
      "text": "0.001",
      "correct": false,
-     "why": "Gave the base rate and ignored the evidence."
+     "why": "Gave the base rate and ignored the evidence.",
+     "trap": "C7"
     },
     {
      "text": "0.91",
      "correct": false,
-     "why": "Wrong branch: that is $P(\\text{legitimate}\\mid\\text{flag})$."
+     "why": "Wrong branch: that is $P(\\text{legitimate}\\mid\\text{flag})$.",
+     "trap": "C11"
     },
     {
      "text": "0.09",
@@ -1548,12 +1648,14 @@
     {
      "text": "$P(D\\mid+)$ does not depend on prevalence",
      "correct": false,
-     "why": "The prior enters both numerator and denominator."
+     "why": "The prior enters both numerator and denominator.",
+     "trap": "C7"
     },
     {
      "text": "$P(+)=0.9$ whatever the prevalence",
      "correct": false,
-     "why": "$P(+)=0.9\\pi+0.1(1-\\pi)$ changes with $\\pi$."
+     "why": "$P(+)=0.9\\pi+0.1(1-\\pi)$ changes with $\\pi$.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -1577,11 +1679,13 @@
    "traps": [
     {
      "value": 2.5,
-     "why": "Averaged 1–4 equally; the probabilities are $kx$, not equal."
+     "why": "Averaged 1–4 equally; the probabilities are $kx$, not equal.",
+     "trap": "C6"
     },
     {
      "value": 30,
-     "why": "Computed $\\sum x\\cdot x$ but forgot to multiply by $k=0.1$."
+     "why": "Computed $\\sum x\\cdot x$ but forgot to multiply by $k=0.1$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $k(1+2+3+4)=1\\Rightarrow k=0.1$.\n2. $E[X]=0.1(1+4+9+16)=3$."
@@ -1603,15 +1707,18 @@
    "traps": [
     {
      "value": 4,
-     "why": "Gave $(E[X])^2=2^2$; $E[X^2]$ squares the values before weighting."
+     "why": "Gave $(E[X])^2=2^2$; $E[X^2]$ squares the values before weighting.",
+     "trap": "C4"
     },
     {
      "value": 1,
-     "why": "Gave $\\mathrm{Var}(X)=5-4$."
+     "why": "Gave $\\mathrm{Var}(X)=5-4$.",
+     "trap": "C3"
     },
     {
      "value": 5.5556,
-     "why": "Dropped $x=0$ from the support, so $c=1/9$ instead of $1/10$."
+     "why": "Dropped $x=0$ from the support, so $c=1/9$ instead of $1/10$.",
+     "trap": "C5"
     }
    ],
    "solution": "1. Normalise over $x=0..3$: $c(1+2+3+4)=1$, $c=0.1$.\n2. $E[X^2]=0.1(0\\cdot1+1\\cdot2+4\\cdot3+9\\cdot4)=5$."
@@ -1629,7 +1736,8 @@
     {
      "text": "1.81",
      "correct": false,
-     "why": "That is the variance $2.3-0.49$."
+     "why": "That is the variance $2.3-0.49$.",
+     "trap": "C3"
     },
     {
      "text": "2.3",
@@ -1639,12 +1747,14 @@
     {
      "text": "0.49",
      "correct": false,
-     "why": "Squared the mean $E[X]=0.7$."
+     "why": "Squared the mean $E[X]=0.7$.",
+     "trap": "C4"
     },
     {
      "text": "1.7",
      "correct": false,
-     "why": "Kept the sign of $-1$: wrote $-0.3$ instead of $(-1)^2(0.3)=+0.3$."
+     "why": "Kept the sign of $-1$: wrote $-0.3$ instead of $(-1)^2(0.3)=+0.3$.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -1669,12 +1779,14 @@
     {
      "text": "$E[X^2]=4$",
      "correct": false,
-     "why": "That is $(E[X])^2$; $E[X^2]=(1+9)/2=5$."
+     "why": "That is $(E[X])^2$; $E[X^2]=(1+9)/2=5$.",
+     "trap": "C4"
     },
     {
      "text": "$E[1/X]=1/2$",
      "correct": false,
-     "why": "$1/E[X]=1/2$, but $E[1/X]=(1+1/3)/2=2/3$; expectation does not pass through nonlinear functions."
+     "why": "$1/E[X]=1/2$, but $E[1/X]=(1+1/3)/2=2/3$; expectation does not pass through nonlinear functions.",
+     "trap": "C9"
     },
     {
      "text": "$E[X^2]\\ge(E[X])^2$ for every random variable",
@@ -1703,15 +1815,18 @@
    "traps": [
     {
      "value": 12,
-     "why": "Multiplied by $a=3$ instead of $a^2=9$."
+     "why": "Multiplied by $a=3$ instead of $a^2=9$.",
+     "trap": "C4"
     },
     {
      "value": 7,
-     "why": "Applied the transformation to the variance: $3(4)-5$."
+     "why": "Applied the transformation to the variance: $3(4)-5$.",
+     "trap": "C3"
     },
     {
      "value": 31,
-     "why": "Squared $a$ but kept the shift: $9(4)-5$; constants do not change spread."
+     "why": "Squared $a$ but kept the shift: $9(4)-5$; constants do not change spread.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\mathrm{Var}(3X-5)=3^2\\cdot4=36$."
@@ -1733,15 +1848,18 @@
    "traps": [
     {
      "value": 52,
-     "why": "Used $E[X^2]=13$ as the variance: $4\\times13$."
+     "why": "Used $E[X^2]=13$ as the variance: $4\\times13$.",
+     "trap": "C3"
     },
     {
      "value": -18,
-     "why": "Multiplied by $a=-2$ instead of $a^2=4$; a variance cannot be negative."
+     "why": "Multiplied by $a=-2$ instead of $a^2=4$; a variance cannot be negative.",
+     "trap": "C4"
     },
     {
      "value": 43,
-     "why": "Added the shift 7 to $36$."
+     "why": "Added the shift 7 to $36$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\mathrm{Var}(X)=13-2^2=9$.\n2. $\\mathrm{Var}(-2X+7)=(-2)^2\\cdot9=36$."
@@ -1759,12 +1877,14 @@
     {
      "text": "$-3$",
      "correct": false,
-     "why": "Kept the sign of $a=-1$; SD is never negative."
+     "why": "Kept the sign of $a=-1$; SD is never negative.",
+     "trap": "C11"
     },
     {
      "text": "2",
      "correct": false,
-     "why": "Applied the shift to the SD: $5-3$."
+     "why": "Applied the shift to the SD: $5-3$.",
+     "trap": "C3"
     },
     {
      "text": "3",
@@ -1774,7 +1894,8 @@
     {
      "text": "9",
      "correct": false,
-     "why": "Gave the variance, not the SD."
+     "why": "Gave the variance, not the SD.",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -1799,17 +1920,20 @@
     {
      "text": "$(1, -12)$",
      "correct": false,
-     "why": "Multiplied the variance by $a=-3$ instead of $a^2$."
+     "why": "Multiplied the variance by $a=-3$ instead of $a^2$.",
+     "trap": "C4"
     },
     {
      "text": "$(7, 36)$",
      "correct": false,
-     "why": "Sign slip in the mean: $4+3$."
+     "why": "Sign slip in the mean: $4+3$.",
+     "trap": "C11"
     },
     {
      "text": "$(1, 45)$",
      "correct": false,
-     "why": "Used $E[X^2]=5$ as $\\mathrm{Var}(X)$."
+     "why": "Used $E[X^2]=5$ as $\\mathrm{Var}(X)$.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -1833,15 +1957,18 @@
    "traps": [
     {
      "value": 45,
-     "why": "Multiplied by 1.8 instead of $1.8^2=3.24$."
+     "why": "Multiplied by 1.8 instead of $1.8^2=3.24$.",
+     "trap": "C4"
     },
     {
      "value": 113,
-     "why": "Added 32 to $81$; the shift does not affect variance."
+     "why": "Added 32 to $81$; the shift does not affect variance.",
+     "trap": "C3"
     },
     {
      "value": 77,
-     "why": "Used $1.8\\times25+32$."
+     "why": "Used $1.8\\times25+32$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\mathrm{Var}(F)=1.8^2\\cdot25=3.24\\cdot25=81$."
@@ -1859,12 +1986,14 @@
     {
      "text": "Poisson(3)",
      "correct": false,
-     "why": "Used the per-minute rate without scaling to 10 minutes."
+     "why": "Used the per-minute rate without scaling to 10 minutes.",
+     "trap": "C4"
     },
     {
      "text": "Geometric(0.3)",
      "correct": false,
-     "why": "Geometric counts trials until the first success, not counts in a window."
+     "why": "Geometric counts trials until the first success, not counts in a window.",
+     "trap": "C9"
     },
     {
      "text": "Poisson(30)",
@@ -1874,7 +2003,8 @@
     {
      "text": "Binomial(10, 0.3)",
      "correct": false,
-     "why": "Invented 10 trials; calls are not limited to one per minute."
+     "why": "Invented 10 trials; calls are not limited to one per minute.",
+     "trap": "C9"
     }
    ],
    "answer": null,
@@ -1899,17 +2029,20 @@
     {
      "text": "Geometric(0.2)",
      "correct": false,
-     "why": "Geometric counts draws until the first defective."
+     "why": "Geometric counts draws until the first defective.",
+     "trap": "C9"
     },
     {
      "text": "Poisson(1)",
      "correct": false,
-     "why": "Poisson is a limit model for rare events, not the exact law for a small finite lot."
+     "why": "Poisson is a limit model for rare events, not the exact law for a small finite lot.",
+     "trap": "C9"
     },
     {
      "text": "Binomial(5, 0.2)",
      "correct": false,
-     "why": "Binomial needs a constant success probability; it changes after each draw here."
+     "why": "Binomial needs a constant success probability; it changes after each draw here.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -1934,7 +2067,8 @@
     {
      "text": "Number of rolls of a die until the first six",
      "correct": false,
-     "why": "$n$ is not fixed: geometric."
+     "why": "$n$ is not fixed: geometric.",
+     "trap": "C9"
     },
     {
      "text": "Number of heads in 12 tosses of a fair coin",
@@ -1944,7 +2078,8 @@
     {
      "text": "Number of aces in 5 cards dealt from a deck",
      "correct": false,
-     "why": "Dealt without replacement, so $p$ changes: hypergeometric."
+     "why": "Dealt without replacement, so $p$ changes: hypergeometric.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -1968,11 +2103,13 @@
    "traps": [
     {
      "value": 0.2023,
-     "why": "Computed $P(X=5)$, the probability of exactly 5 correct, instead of the expectation $np$."
+     "why": "Computed $P(X=5)$, the probability of exactly 5 correct, instead of the expectation $np$.",
+     "trap": "C3"
     },
     {
      "value": 0.25,
-     "why": "Gave $p$ for one question, not $np$ for 20."
+     "why": "Gave $p$ for one question, not $np$ for 20.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $X\\sim$ Binomial(20, 0.25).\n2. $E[X]=np=5$."
@@ -1990,12 +2127,14 @@
     {
      "text": "0.0045",
      "correct": false,
-     "why": "Dropped the $\\binom{12}2$ factor for the positions of the sixes."
+     "why": "Dropped the $\\binom{12}2$ factor for the positions of the sixes.",
+     "trap": "C6"
     },
     {
      "text": "0.592",
      "correct": false,
-     "why": "Took $\\binom{12}2=132$ (forgot to divide by 2)."
+     "why": "Took $\\binom{12}2=132$ (forgot to divide by 2).",
+     "trap": "C6"
     },
     {
      "text": "0.296",
@@ -2005,7 +2144,8 @@
     {
      "text": "2",
      "correct": false,
-     "why": "Gave $E[X]=np=2$; the question asks for a probability."
+     "why": "Gave $E[X]=np=2$; the question asks for a probability.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -2029,11 +2169,13 @@
    "traps": [
     {
      "value": 0.6875,
-     "why": "Reversed the direction: computed $P(X\\le2)$."
+     "why": "Reversed the direction: computed $P(X\\le2)$.",
+     "trap": "C11"
     },
     {
      "value": 0.0625,
-     "why": "Used $1-P(X\\le3)$; the complement of $X\\ge3$ is $X\\le2$."
+     "why": "Used $1-P(X\\le3)$; the complement of $X\\ge3$ is $X\\le2$.",
+     "trap": "C5"
     }
    ],
    "solution": "1. $P(X=3)+P(X=4)=\\frac{4+1}{16}$.\n2. $=0.3125$."
@@ -2051,12 +2193,14 @@
     {
      "text": "0.323",
      "correct": false,
-     "why": "Used $1-P(X\\le2)$; that is $P(X\\ge3)$."
+     "why": "Used $1-P(X\\le2)$; that is $P(X\\ge3)$.",
+     "trap": "C5"
     },
     {
      "text": "0.406",
      "correct": false,
-     "why": "Reversed: that is $P(X\\le1)$."
+     "why": "Reversed: that is $P(X\\le1)$.",
+     "trap": "C11"
     },
     {
      "text": "0.594",
@@ -2066,7 +2210,8 @@
     {
      "text": "0.271",
      "correct": false,
-     "why": "Gave only $P(X=2)=2e^{-2}$."
+     "why": "Gave only $P(X=2)=2e^{-2}$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -2090,15 +2235,18 @@
    "traps": [
     {
      "value": 0.4422,
-     "why": "Reversed: computed $P(X\\ge2)$."
+     "why": "Reversed: computed $P(X\\ge2)$.",
+     "trap": "C11"
     },
     {
      "value": 0.2231,
-     "why": "Kept only $P(X=0)$; 'at most 1' includes $X=1$."
+     "why": "Kept only $P(X=0)$; 'at most 1' includes $X=1$.",
+     "trap": "C5"
     },
     {
      "value": 0.8088,
-     "why": "Included $X=2$: computed $P(X\\le2)$."
+     "why": "Included $X=2$: computed $P(X\\le2)$.",
+     "trap": "C5"
     }
    ],
    "solution": "1. $P(X\\le1)=e^{-1.5}(1+1.5)$.\n2. $=0.2231\\times2.5\\approx0.5578$."
@@ -2121,17 +2269,20 @@
     {
      "text": "$X>3$",
      "correct": false,
-     "why": "That is the complement, 'more than 3'."
+     "why": "That is the complement, 'more than 3'.",
+     "trap": "C11"
     },
     {
      "text": "$X<3$",
      "correct": false,
-     "why": "Dropped $X=3$; 'no more than' includes the boundary."
+     "why": "Dropped $X=3$; 'no more than' includes the boundary.",
+     "trap": "C5"
     },
     {
      "text": "$X\\ge3$",
      "correct": false,
-     "why": "Reversed the direction."
+     "why": "Reversed the direction.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -2155,15 +2306,18 @@
    "traps": [
     {
      "value": 0.7373,
-     "why": "Reversed: computed $P(X\\le1)$."
+     "why": "Reversed: computed $P(X\\le1)$.",
+     "trap": "C11"
     },
     {
      "value": 0.0579,
-     "why": "Used $1-P(X\\le2)$; that is $P(X\\ge3)$."
+     "why": "Used $1-P(X\\le2)$; that is $P(X\\ge3)$.",
+     "trap": "C5"
     },
     {
      "value": 0.2048,
-     "why": "Gave only $P(X=2)$."
+     "why": "Gave only $P(X=2)$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $P(0)=0.8^5=0.32768$, $P(1)=5(0.2)(0.8^4)=0.4096$.\n2. $P(X\\ge2)=1-0.73728=0.26272$."
@@ -2185,11 +2339,13 @@
    "traps": [
     {
      "value": 0.0025,
-     "why": "Used $\\lambda=6$ without scaling to 20 minutes ($e^{-6}$)."
+     "why": "Used $\\lambda=6$ without scaling to 20 minutes ($e^{-6}$).",
+     "trap": "C4"
     },
     {
      "value": 0.8647,
-     "why": "Gave $P(\\text{at least one})=1-e^{-2}$."
+     "why": "Gave $P(\\text{at least one})=1-e^{-2}$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $\\lambda=6\\times\\frac{20}{60}=2$.\n2. $P(0)=e^{-2}\\approx0.1353$."
@@ -2211,15 +2367,18 @@
    "traps": [
     {
      "value": 0.5413,
-     "why": "Forgot the $2!$: used $\\lambda^2e^{-\\lambda}$."
+     "why": "Forgot the $2!$: used $\\lambda^2e^{-\\lambda}$.",
+     "trap": "C3"
     },
     {
      "value": 0.6767,
-     "why": "Computed $P(X\\le2)$ instead of $P(X=2)$."
+     "why": "Computed $P(X\\le2)$ instead of $P(X=2)$.",
+     "trap": "C5"
     },
     {
      "value": 0.1353,
-     "why": "Gave $P(X=0)=e^{-2}$."
+     "why": "Gave $P(X=0)=e^{-2}$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $\\lambda=np=500\\times0.004=2$.\n2. $P(2)=e^{-2}2^2/2!\\approx0.2707$."
@@ -2237,12 +2396,14 @@
     {
      "text": "Poisson(12)",
      "correct": false,
-     "why": "Divided $6/0.5$ instead of multiplying."
+     "why": "Divided $6/0.5$ instead of multiplying.",
+     "trap": "C4"
     },
     {
      "text": "Binomial(6, 0.5)",
      "correct": false,
-     "why": "Treated each page as one trial; a page can have several typos."
+     "why": "Treated each page as one trial; a page can have several typos.",
+     "trap": "C9"
     },
     {
      "text": "Poisson(3)",
@@ -2252,7 +2413,8 @@
     {
      "text": "Poisson(0.5)",
      "correct": false,
-     "why": "Used the per-page rate for the whole report."
+     "why": "Used the per-page rate for the whole report.",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -2272,12 +2434,14 @@
     {
      "text": "1.000",
      "correct": false,
-     "why": "Used $\\lambda=12$ for 5 minutes; rate not scaled to the interval."
+     "why": "Used $\\lambda=12$ for 5 minutes; rate not scaled to the interval.",
+     "trap": "C4"
     },
     {
      "text": "0.083",
      "correct": false,
-     "why": "Treated $5/60$ as the probability."
+     "why": "Treated $5/60$ as the probability.",
+     "trap": "C3"
     },
     {
      "text": "0.632",
@@ -2287,7 +2451,8 @@
     {
      "text": "0.368",
      "correct": false,
-     "why": "Gave $P(\\text{none})=e^{-1}$."
+     "why": "Gave $P(\\text{none})=e^{-1}$.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -2311,11 +2476,13 @@
    "traps": [
     {
      "value": 0.25,
-     "why": "Set the density's peak $f(2)=4k$ equal to 1; the area must be 1, not the height."
+     "why": "Set the density's peak $f(2)=4k$ equal to 1; the area must be 1, not the height.",
+     "trap": "C9"
     },
     {
      "value": 0.125,
-     "why": "Integrated $x^2$ to $x^3$ without the factor $1/3$: $8k=1$."
+     "why": "Integrated $x^2$ to $x^3$ without the factor $1/3$: $8k=1$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\int_0^2kx^2dx=\\frac{8k}{3}=1$.\n2. $k=3/8=0.375$."
@@ -2337,15 +2504,18 @@
    "traps": [
     {
      "value": 0.75,
-     "why": "Gave $F(1)$ alone; must subtract $F(0.5)$."
+     "why": "Gave $F(1)$ alone; must subtract $F(0.5)$.",
+     "trap": "C6"
     },
     {
      "value": 0.25,
-     "why": "Subtracted density values $f(0.5)-f(1)$; probabilities come from areas, i.e. $F$."
+     "why": "Subtracted density values $f(0.5)-f(1)$; probabilities come from areas, i.e. $F$.",
+     "trap": "C9"
     },
     {
      "value": 0.625,
-     "why": "Skipped normalisation and used $k=1$; the area must be 1, so $k=1/2$."
+     "why": "Skipped normalisation and used $k=1$; the area must be 1, so $k=1/2$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $\\int_0^2k(2-x)dx=2k=1\\Rightarrow k=\\frac12$.\n2. $F(x)=x-\\frac{x^2}{4}$.\n3. $F(1)-F(0.5)=0.75-0.4375=0.3125$."
@@ -2363,7 +2533,8 @@
     {
      "text": "$f(x)=1$",
      "correct": false,
-     "why": "Area is 2, not 1."
+     "why": "Area is 2, not 1.",
+     "trap": "C6"
     },
     {
      "text": "$f(x)=x/2$",
@@ -2373,12 +2544,14 @@
     {
      "text": "$f(x)=x-\\tfrac12$",
      "correct": false,
-     "why": "Area is 1, but $f<0$ on $[0,\\tfrac12)$; a density cannot be negative."
+     "why": "Area is 1, but $f<0$ on $[0,\\tfrac12)$; a density cannot be negative.",
+     "trap": "C5"
     },
     {
      "text": "$f(x)=x$",
      "correct": false,
-     "why": "Area is 2, not 1."
+     "why": "Area is 2, not 1.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -2403,7 +2576,8 @@
     {
      "text": "$P(X=0.5)=0.75$",
      "correct": false,
-     "why": "$0.75=f(0.5)$ is a density value; for a continuous $X$, $P(X=0.5)=0$."
+     "why": "$0.75=f(0.5)$ is a density value; for a continuous $X$, $P(X=0.5)=0$.",
+     "trap": "C9"
     },
     {
      "text": "$P(0.5<X<1)=0.875$",
@@ -2437,11 +2611,13 @@
    "traps": [
     {
      "value": 0.25,
-     "why": "Evaluated $F(0.5)=0.25$ instead of solving $F(m)=0.5$."
+     "why": "Evaluated $F(0.5)=0.25$ instead of solving $F(m)=0.5$.",
+     "trap": "C2"
     },
     {
      "value": 0.6667,
-     "why": "Gave the mean $\\int_0^1 2x^2dx=2/3$."
+     "why": "Gave the mean $\\int_0^1 2x^2dx=2/3$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $F(x)=x^2$.\n2. $m^2=0.5\\Rightarrow m=\\sqrt{0.5}\\approx0.7071$."
@@ -2463,15 +2639,18 @@
    "traps": [
     {
      "value": 0.125,
-     "why": "Evaluated $F(0.5)=0.5^3$ instead of solving $F(m)=0.5$."
+     "why": "Evaluated $F(0.5)=0.5^3$ instead of solving $F(m)=0.5$.",
+     "trap": "C2"
     },
     {
      "value": 0.75,
-     "why": "Gave the mean $\\int_0^13x^3dx=3/4$."
+     "why": "Gave the mean $\\int_0^13x^3dx=3/4$.",
+     "trap": "C3"
     },
     {
      "value": 0.5,
-     "why": "Took the midpoint of the support; the density is not symmetric."
+     "why": "Took the midpoint of the support; the density is not symmetric.",
+     "trap": "C10"
     }
    ],
    "solution": "1. $F(x)=x^3$.\n2. $m^3=0.5\\Rightarrow m=0.5^{1/3}\\approx0.7937$."
@@ -2494,17 +2673,20 @@
     {
      "text": "0.173",
      "correct": false,
-     "why": "Used $\\lambda=4$ (the mean) in $\\ln2/\\lambda$; here $\\lambda=1/4$."
+     "why": "Used $\\lambda=4$ (the mean) in $\\ln2/\\lambda$; here $\\lambda=1/4$.",
+     "trap": "C4"
     },
     {
      "text": "0.118",
      "correct": false,
-     "why": "Evaluated $F(0.5)=1-e^{-0.125}$ instead of solving $F(m)=0.5$."
+     "why": "Evaluated $F(0.5)=1-e^{-0.125}$ instead of solving $F(m)=0.5$.",
+     "trap": "C2"
     },
     {
      "text": "4",
      "correct": false,
-     "why": "Gave the mean; for a right-skewed exponential the median is smaller."
+     "why": "Gave the mean; for a right-skewed exponential the median is smaller.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -2528,15 +2710,18 @@
    "traps": [
     {
      "value": 0.0156,
-     "why": "Evaluated $F(0.5)=0.25/16$ instead of solving $F(m)=0.5$."
+     "why": "Evaluated $F(0.5)=0.25/16$ instead of solving $F(m)=0.5$.",
+     "trap": "C2"
     },
     {
      "value": 2.6667,
-     "why": "Gave the mean $\\int_0^4x^2/8\\,dx$."
+     "why": "Gave the mean $\\int_0^4x^2/8\\,dx$.",
+     "trap": "C3"
     },
     {
      "value": 2,
-     "why": "Took the midpoint of $[0,4]$; the density increases, so the median is to the right."
+     "why": "Took the midpoint of $[0,4]$; the density increases, so the median is to the right.",
+     "trap": "C10"
     }
    ],
    "solution": "1. $F(x)=x^2/16$.\n2. $m^2/16=0.5\\Rightarrow m=\\sqrt8\\approx2.828$."
@@ -2558,15 +2743,18 @@
    "traps": [
     {
      "value": 0.3,
-     "why": "Gave the unconditional $P(X>7)$; must restrict to $(4,10)$."
+     "why": "Gave the unconditional $P(X>7)$; must restrict to $(4,10)$.",
+     "trap": "C7"
     },
     {
      "value": 1.75,
-     "why": "Divided the cut-offs $7/4$; a probability cannot exceed 1."
+     "why": "Divided the cut-offs $7/4$; a probability cannot exceed 1.",
+     "trap": "C8"
     },
     {
      "value": 0.5714,
-     "why": "Divided cut-offs $4/7$ instead of lengths $3/6$."
+     "why": "Divided cut-offs $4/7$ instead of lengths $3/6$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Given $X>4$: $X\\sim U(4,10)$, length 6.\n2. $P=\\frac{10-7}{6}=0.5$."
@@ -2588,15 +2776,18 @@
    "traps": [
     {
      "value": 0.4,
-     "why": "Gave $P(X<6)=4/10$ without conditioning."
+     "why": "Gave $P(X<6)=4/10$ without conditioning.",
+     "trap": "C7"
     },
     {
      "value": 1.5,
-     "why": "Divided cut-offs $6/4$."
+     "why": "Divided cut-offs $6/4$.",
+     "trap": "C8"
     },
     {
      "value": 0.2,
-     "why": "Gave the joint $P(4<X<6)=2/10$ without dividing by $P(X>4)$."
+     "why": "Gave the joint $P(4<X<6)=2/10$ without dividing by $P(X>4)$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Restricted range $(4,12)$, length 8.\n2. Favourable $(4,6)$, length 2: $2/8=0.25$."
@@ -2614,17 +2805,20 @@
     {
      "text": "$\\frac13$",
      "correct": false,
-     "why": "Unconditional $P(10<X<20)=10/30$; the denominator was not restricted."
+     "why": "Unconditional $P(10<X<20)=10/30$; the denominator was not restricted.",
+     "trap": "C7"
     },
     {
      "text": "2",
      "correct": false,
-     "why": "Divided cut-offs $20/10$; not a probability."
+     "why": "Divided cut-offs $20/10$; not a probability.",
+     "trap": "C8"
     },
     {
      "text": "$\\frac23$",
      "correct": false,
-     "why": "Gave $P(X>10)$, the conditioning event itself."
+     "why": "Gave $P(X>10)$, the conditioning event itself.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac12$",
@@ -2654,17 +2848,20 @@
     {
      "text": "$\\frac14$",
      "correct": false,
-     "why": "Joint $P(0<X<1)=1/4$, not divided by $P(X>0)=3/4$."
+     "why": "Joint $P(0<X<1)=1/4$, not divided by $P(X>0)=3/4$.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac23$",
      "correct": false,
-     "why": "Counted all of $(-1,1)$ (length 2) inside the restricted range; negatives are excluded."
+     "why": "Counted all of $(-1,1)$ (length 2) inside the restricted range; negatives are excluded.",
+     "trap": "C5"
     },
     {
      "text": "$\\frac12$",
      "correct": false,
-     "why": "Unconditional $P(-1<X<1)=2/4$."
+     "why": "Unconditional $P(-1<X<1)=2/4$.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -2688,15 +2885,18 @@
    "traps": [
     {
      "value": 0.6321,
-     "why": "Gave $P(X<5)=1-e^{-1}$."
+     "why": "Gave $P(X<5)=1-e^{-1}$.",
+     "trap": "C11"
     },
     {
      "value": 0,
-     "why": "Used $\\lambda=5$ (the mean) so $e^{-25}\\approx0$; the rate is $1/5$."
+     "why": "Used $\\lambda=5$ (the mean) so $e^{-25}\\approx0$; the rate is $1/5$.",
+     "trap": "C4"
     },
     {
      "value": 0.5,
-     "why": "Assumed the mean is the median; for the exponential they differ."
+     "why": "Assumed the mean is the median; for the exponential they differ.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\lambda=1/5$.\n2. $P(X>5)=e^{-1}\\approx0.368$."
@@ -2719,17 +2919,20 @@
     {
      "text": "0.549",
      "correct": false,
-     "why": "Gave $P(X>600)=e^{-0.6}$, the conditioning event."
+     "why": "Gave $P(X>600)=e^{-0.6}$, the conditioning event.",
+     "trap": "C7"
     },
     {
      "text": "0.333",
      "correct": false,
-     "why": "Gave unconditional $P(X>1100)=e^{-1.1}$; the condition $X>600$ was not used."
+     "why": "Gave unconditional $P(X>1100)=e^{-1.1}$; the condition $X>600$ was not used.",
+     "trap": "C7"
     },
     {
      "text": "0.500",
      "correct": false,
-     "why": "Used a uniform-style ratio $500/1000$; exponential tails are $e^{-\\lambda t}$."
+     "why": "Used a uniform-style ratio $500/1000$; exponential tails are $e^{-\\lambda t}$.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -2753,11 +2956,13 @@
    "traps": [
     {
      "value": 0.1839,
-     "why": "Used the density value $f(2)=0.5e^{-1}$ as a probability."
+     "why": "Used the density value $f(2)=0.5e^{-1}$ as a probability.",
+     "trap": "C9"
     },
     {
      "value": 0.3679,
-     "why": "Gave $P(X\\ge2)$; $N=2$ means $2\\le X<3$."
+     "why": "Gave $P(X\\ge2)$; $N=2$ means $2\\le X<3$.",
+     "trap": "C5"
     }
    ],
    "solution": "1. $P(N=2)=P(2\\le X<3)=e^{-1}-e^{-1.5}$.\n2. $\\approx0.3679-0.2231=0.1447$ (geometric: $(e^{-0.5})^2(1-e^{-0.5})$)."
@@ -2790,7 +2995,8 @@
     {
      "text": "$\\mathrm{Var}(X)=2$",
      "correct": false,
-     "why": "$\\mathrm{Var}=1/\\lambda^2=4$; 2 is the mean (and the SD)."
+     "why": "$\\mathrm{Var}=1/\\lambda^2=4$; 2 is the mean (and the SD).",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -2814,11 +3020,13 @@
    "traps": [
     {
      "value": 0.6931,
-     "why": "Gave $\\lambda=\\ln4/2$; the mean is $1/\\lambda$."
+     "why": "Gave $\\lambda=\\ln4/2$; the mean is $1/\\lambda$.",
+     "trap": "C4"
     },
     {
      "value": 8,
-     "why": "Treated $P(X>2)$ as $2/\\mu$ (a uniform-style ratio)."
+     "why": "Treated $P(X>2)$ as $2/\\mu$ (a uniform-style ratio).",
+     "trap": "C3"
     }
    ],
    "solution": "1. $e^{-2\\lambda}=0.25\\Rightarrow\\lambda=\\ln4/2\\approx0.693$.\n2. $E[X]=1/\\lambda\\approx1.443$."
@@ -2840,11 +3048,13 @@
    "traps": [
     {
      "value": 0.3085,
-     "why": "Divided by the variance 16 instead of $\\sigma=4$, giving $z=0.5$."
+     "why": "Divided by the variance 16 instead of $\\sigma=4$, giving $z=0.5$.",
+     "trap": "C4"
     },
     {
      "value": 0.9772,
-     "why": "Gave $P(X<58)$, the wrong tail."
+     "why": "Gave $P(X<58)$, the wrong tail.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $\\sigma=4$, $z=(58-50)/4=2$.\n2. $P=1-0.9772=0.0228$."
@@ -2862,17 +3072,20 @@
     {
      "text": "$(1,9)$",
      "correct": false,
-     "why": "Took $E[Y]=3-2$, treating $E[Z]$ as 1."
+     "why": "Took $E[Y]=3-2$, treating $E[Z]$ as 1.",
+     "trap": "C6"
     },
     {
      "text": "$(-2,3)$",
      "correct": false,
-     "why": "Scaled the variance by $a=3$, not $a^2$."
+     "why": "Scaled the variance by $a=3$, not $a^2$.",
+     "trap": "C4"
     },
     {
      "text": "$(-2,7)$",
      "correct": false,
-     "why": "Subtracted the shift from the variance."
+     "why": "Subtracted the shift from the variance.",
+     "trap": "C3"
     },
     {
      "text": "$(-2,9)$",
@@ -2901,11 +3114,13 @@
    "traps": [
     {
      "value": 0.1359,
-     "why": "Treated the lower $z=-1$ as $+1$: computed $\\Phi(2)-\\Phi(1)$."
+     "why": "Treated the lower $z=-1$ as $+1$: computed $\\Phi(2)-\\Phi(1)$.",
+     "trap": "C11"
     },
     {
      "value": 0.9772,
-     "why": "Stopped at $P(X<130)$ and ignored the lower bound."
+     "why": "Stopped at $P(X<130)$ and ignored the lower bound.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $z_1=-1$, $z_2=2$.\n2. $\\Phi(2)-\\Phi(-1)=0.9772-(1-0.8413)=0.8185$."
@@ -2923,7 +3138,8 @@
     {
      "text": "1",
      "correct": false,
-     "why": "Confused the $z$-value with $\\sigma$."
+     "why": "Confused the $z$-value with $\\sigma$.",
+     "trap": "C10"
     },
     {
      "text": "36",
@@ -2933,12 +3149,14 @@
     {
      "text": "2.449",
      "correct": false,
-     "why": "Treated 6 as the variance and took its root."
+     "why": "Treated 6 as the variance and took its root.",
+     "trap": "C4"
     },
     {
      "text": "6",
      "correct": false,
-     "why": "Reported $\\sigma$, but the question asks for the variance."
+     "why": "Reported $\\sigma$, but the question asks for the variance.",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -2958,17 +3176,20 @@
     {
      "text": "4",
      "correct": false,
-     "why": "Dropped the constant term $1^2$."
+     "why": "Dropped the constant term $1^2$.",
+     "trap": "C6"
     },
     {
      "text": "3",
      "correct": false,
-     "why": "Did not square the coefficient: $2E[Z^2]+1$."
+     "why": "Did not square the coefficient: $2E[Z^2]+1$.",
+     "trap": "C4"
     },
     {
      "text": "1",
      "correct": false,
-     "why": "Squared the mean: $(E[2Z+1])^2=1$; misses the variance 4."
+     "why": "Squared the mean: $(E[2Z+1])^2=1$; misses the variance 4.",
+     "trap": "C4"
     },
     {
      "text": "5",
@@ -2997,11 +3218,13 @@
    "traps": [
     {
      "value": 1,
-     "why": "Gave $E[Z^2]=1$, the mean of $\\chi^2_1$."
+     "why": "Gave $E[Z^2]=1$, the mean of $\\chi^2_1$.",
+     "trap": "C3"
     },
     {
      "value": 3,
-     "why": "Gave $E[Z^4]=3$ without subtracting $(E[Z^2])^2=1$."
+     "why": "Gave $E[Z^4]=3$ without subtracting $(E[Z^2])^2=1$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $E[Z^4]=3$, $E[Z^2]=1$.\n2. $\\mathrm{Var}(Z^2)=3-1=2$."
@@ -3023,15 +3246,18 @@
    "traps": [
     {
      "value": 6,
-     "why": "Used $2k$ as if the $X_i$ were standard normal; each $X_i=2Z_i$."
+     "why": "Used $2k$ as if the $X_i$ were standard normal; each $X_i=2Z_i$.",
+     "trap": "C4"
     },
     {
      "value": 24,
-     "why": "Scaled by $\\sigma^2=4$ instead of $\\sigma^4=16$: $X_i^2=4Z_i^2$ has variance $16\\cdot2$."
+     "why": "Scaled by $\\sigma^2=4$ instead of $\\sigma^4=16$: $X_i^2=4Z_i^2$ has variance $16\\cdot2$.",
+     "trap": "C4"
     },
     {
      "value": 12,
-     "why": "Gave the mean $3\\times4$."
+     "why": "Gave the mean $3\\times4$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $X_i^2=4Z_i^2$, $\\mathrm{Var}=16\\cdot2=32$.\n2. Independent sum: $3\\times32=96$."
@@ -3049,12 +3275,14 @@
     {
      "text": "$3Z_1^2$",
      "correct": false,
-     "why": "Mean 3 but variance 18; it is a scaled $\\chi^2_1$."
+     "why": "Mean 3 but variance 18; it is a scaled $\\chi^2_1$.",
+     "trap": "C4"
     },
     {
      "text": "$Z_1+Z_2+Z_3$",
      "correct": false,
-     "why": "That is normal $N(0,3)$, not chi-square."
+     "why": "That is normal $N(0,3)$, not chi-square.",
+     "trap": "C10"
     },
     {
      "text": "$Z_1^2+Z_2^2+Z_3^2$",
@@ -3064,7 +3292,8 @@
     {
      "text": "$(Z_1+Z_2+Z_3)^2$",
      "correct": false,
-     "why": "$Z_1+Z_2+Z_3\\sim N(0,3)$, so its square is $3\\chi^2_1$."
+     "why": "$Z_1+Z_2+Z_3\\sim N(0,3)$, so its square is $3\\chi^2_1$.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -3089,7 +3318,8 @@
     {
      "text": "$Z^2+V\\sim\\chi^2_4$",
      "correct": false,
-     "why": "Adding one more squared normal gives $\\chi^2_5$."
+     "why": "Adding one more squared normal gives $\\chi^2_5$.",
+     "trap": "C6"
     },
     {
      "text": "$\\mathrm{Var}(V)=8$",
@@ -3123,11 +3353,13 @@
    "traps": [
     {
      "value": 0.1667,
-     "why": "Counted 6 cells and set $c=1/6$; the cells carry weights $x+y$."
+     "why": "Counted 6 cells and set $c=1/6$; the cells carry weights $x+y$.",
+     "trap": "C6"
     },
     {
      "value": 0.3333,
-     "why": "Summed only the $x=0$ row (total 3)."
+     "why": "Summed only the $x=0$ row (total 3).",
+     "trap": "C6"
     }
    ],
    "solution": "1. $\\sum(x+y)=(0+1+2)+(1+2+3)=9$.\n2. $c=1/9\\approx0.1111$."
@@ -3149,11 +3381,13 @@
    "traps": [
     {
      "value": 0.2222,
-     "why": "Gave the joint $p(1,1)=2/9$ without dividing by $P(Y=1)$."
+     "why": "Gave the joint $p(1,1)=2/9$ without dividing by $P(Y=1)$.",
+     "trap": "C6"
     },
     {
      "value": 0.3333,
-     "why": "Divided by $P(X=1)=6/9$ (that gives $P(Y=1\\mid X=1)$), or reported $P(Y=1)=3/9$."
+     "why": "Divided by $P(X=1)=6/9$ (that gives $P(Y=1\\mid X=1)$), or reported $P(Y=1)=3/9$.",
+     "trap": "C7"
     }
    ],
    "solution": "1. $P(Y=1)=p(0,1)+p(1,1)=1/9+2/9=3/9$.\n2. $P(X=1\\mid Y=1)=(2/9)/(3/9)=2/3$."
@@ -3171,17 +3405,20 @@
     {
      "text": "0.6",
      "correct": false,
-     "why": "Summed the row $X=1$, which is $P(X=1)$."
+     "why": "Summed the row $X=1$, which is $P(X=1)$.",
+     "trap": "C2"
     },
     {
      "text": "0.4",
      "correct": false,
-     "why": "Took one cell $p(1,1)$ instead of the column sum."
+     "why": "Took one cell $p(1,1)$ instead of the column sum.",
+     "trap": "C6"
     },
     {
      "text": "0.35",
      "correct": false,
-     "why": "Averaged the column instead of summing."
+     "why": "Averaged the column instead of summing.",
+     "trap": "C3"
     },
     {
      "text": "0.7",
@@ -3206,7 +3443,8 @@
     {
      "text": "0.6",
      "correct": false,
-     "why": "Gave $E[X]$, ignoring the condition."
+     "why": "Gave $E[X]$, ignoring the condition.",
+     "trap": "C7"
     },
     {
      "text": "$\\frac47$",
@@ -3216,12 +3454,14 @@
     {
      "text": "0.4",
      "correct": false,
-     "why": "Used the joint $p(1,1)$ without dividing by $P(Y=1)$."
+     "why": "Used the joint $p(1,1)$ without dividing by $P(Y=1)$.",
+     "trap": "C6"
     },
     {
      "text": "$\\frac23$",
      "correct": false,
-     "why": "Divided by $P(X=1)=0.6$ instead of $P(Y=1)$."
+     "why": "Divided by $P(X=1)=0.6$ instead of $P(Y=1)$.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -3256,7 +3496,8 @@
     {
      "text": "$P(X=2\\mid Y=2)=0.42$",
      "correct": false,
-     "why": "That is the joint cell; the conditional is $0.42/0.7=0.6$."
+     "why": "That is the joint cell; the conditional is $0.42/0.7=0.6$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -3280,11 +3521,13 @@
    "traps": [
     {
      "value": 0.5,
-     "why": "Assumed symmetry; the ranges differ, so $X\\ge Y$ is not a half."
+     "why": "Assumed symmetry; the ranges differ, so $X\\ge Y$ is not a half.",
+     "trap": "C10"
     },
     {
      "value": 0.25,
-     "why": "Reversed: computed $P(X<Y)$, the triangle of area 0.5 out of 2."
+     "why": "Reversed: computed $P(X<Y)$, the triangle of area 0.5 out of 2.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Rectangle $[0,2]\\times[0,1]$, area 2.\n2. $X<Y$: triangle of area 0.5, so $P(X\\ge Y)=1-0.25=0.75$."
@@ -3306,11 +3549,13 @@
    "traps": [
     {
      "value": 0.6,
-     "why": "Treated $X+Y$ as uniform; it is triangular."
+     "why": "Treated $X+Y$ as uniform; it is triangular.",
+     "trap": "C9"
     },
     {
      "value": 0.36,
-     "why": "Forgot the $\\frac12$ in the triangle area $0.6^2/2$."
+     "why": "Forgot the $\\frac12$ in the triangle area $0.6^2/2$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Region: triangle with legs 0.6.\n2. Area $=0.6^2/2=0.18$."
@@ -3328,12 +3573,14 @@
     {
      "text": "0.64",
      "correct": false,
-     "why": "Gave the complement $P(|X-Y|>0.2)$."
+     "why": "Gave the complement $P(|X-Y|>0.2)$.",
+     "trap": "C11"
     },
     {
      "text": "0.40",
      "correct": false,
-     "why": "Took band width $2\\times0.2$ times length 1, ignoring the clipped corners."
+     "why": "Took band width $2\\times0.2$ times length 1, ignoring the clipped corners.",
+     "trap": "C5"
     },
     {
      "text": "0.36",
@@ -3343,7 +3590,8 @@
     {
      "text": "0.18",
      "correct": false,
-     "why": "Counted only the $X\\ge Y$ side of the band."
+     "why": "Counted only the $X\\ge Y$ side of the band.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -3368,17 +3616,20 @@
     {
      "text": "$\\frac12$",
      "correct": false,
-     "why": "Assumed symmetry; the ranges differ."
+     "why": "Assumed symmetry; the ranges differ.",
+     "trap": "C10"
     },
     {
      "text": "$\\frac13$",
      "correct": false,
-     "why": "Forgot the $\\frac12$ in the triangle area."
+     "why": "Forgot the $\\frac12$ in the triangle area.",
+     "trap": "C3"
     },
     {
      "text": "$\\frac56$",
      "correct": false,
-     "why": "Reversed: that is $P(Y\\ge X)$."
+     "why": "Reversed: that is $P(Y\\ge X)$.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -3402,11 +3653,13 @@
    "traps": [
     {
      "value": 0.5,
-     "why": "Assumed symmetry, as if the line were $y=x$."
+     "why": "Assumed symmetry, as if the line were $y=x$.",
+     "trap": "C10"
     },
     {
      "value": 0.75,
-     "why": "Reversed: computed $P(X<2Y)$."
+     "why": "Reversed: computed $P(X<2Y)$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Region $y\\le x/2$: area $\\int_0^4\\frac x2dx=4$.\n2. $4/16=0.25$."
@@ -3428,11 +3681,13 @@
    "traps": [
     {
      "value": 350,
-     "why": "Averaged 500 and 200 equally; weights are 0.6 and 0.4."
+     "why": "Averaged 500 and 200 equally; weights are 0.6 and 0.4.",
+     "trap": "C7"
     },
     {
      "value": 320,
-     "why": "Swapped the weights: $0.4(500)+0.6(200)$."
+     "why": "Swapped the weights: $0.4(500)+0.6(200)$.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $E=0.6(500)+0.4(200)=380$."
@@ -3454,11 +3709,13 @@
    "traps": [
     {
      "value": 3.5,
-     "why": "Gave $E[k]$ and forgot $E[\\text{heads}\\mid k]=k/2$."
+     "why": "Gave $E[k]$ and forgot $E[\\text{heads}\\mid k]=k/2$.",
+     "trap": "C6"
     },
     {
      "value": 0.5,
-     "why": "Used one toss only."
+     "why": "Used one toss only.",
+     "trap": "C6"
     }
    ],
    "solution": "1. $E[H\\mid k]=k/2$.\n2. $E[H]=E[k]/2=3.5/2=1.75$."
@@ -3481,17 +3738,20 @@
     {
      "text": "$2Y+1$",
      "correct": false,
-     "why": "$E[X]$ is a number; $E[X\\mid Y]$ still has to be averaged over $Y$."
+     "why": "$E[X]$ is a number; $E[X\\mid Y]$ still has to be averaged over $Y$.",
+     "trap": "C9"
     },
     {
      "text": "1",
      "correct": false,
-     "why": "Plugged $Y=0$ (or dropped the $2Y$ term)."
+     "why": "Plugged $Y=0$ (or dropped the $2Y$ term).",
+     "trap": "C5"
     },
     {
      "text": "3",
      "correct": false,
-     "why": "Plugged $Y=1$ instead of averaging over $Y$."
+     "why": "Plugged $Y=1$ instead of averaging over $Y$.",
+     "trap": "C5"
     }
    ],
    "answer": null,
@@ -3511,12 +3771,14 @@
     {
      "text": "25 min",
      "correct": false,
-     "why": "Swapped the weights."
+     "why": "Swapped the weights.",
+     "trap": "C2"
     },
     {
      "text": "22.5 min",
      "correct": false,
-     "why": "Unweighted average of 30 and 15."
+     "why": "Unweighted average of 30 and 15.",
+     "trap": "C7"
     },
     {
      "text": "20 min",
@@ -3526,7 +3788,8 @@
     {
      "text": "45 min",
      "correct": false,
-     "why": "Added the conditional means."
+     "why": "Added the conditional means.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -3550,15 +3813,18 @@
    "traps": [
     {
      "value": 4,
-     "why": "Kept only the within-group variance."
+     "why": "Kept only the within-group variance.",
+     "trap": "C6"
     },
     {
      "value": 25,
-     "why": "Kept only the between-group variance of the means."
+     "why": "Kept only the between-group variance of the means.",
+     "trap": "C6"
     },
     {
      "value": 8,
-     "why": "Added the two group variances."
+     "why": "Added the two group variances.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Within: $E[\\mathrm{Var}]=4$.\n2. Between: means 10, 20 equally likely → variance 25.\n3. Total $=29$."
@@ -3580,15 +3846,18 @@
    "traps": [
     {
      "value": 2.8,
-     "why": "Kept only the within part $0.4(1)+0.6(4)$."
+     "why": "Kept only the within part $0.4(1)+0.6(4)$.",
+     "trap": "C6"
     },
     {
      "value": 6,
-     "why": "Kept only the between part."
+     "why": "Kept only the between part.",
+     "trap": "C6"
     },
     {
      "value": 2.5,
-     "why": "Averaged the variances 1 and 4 without weights and ignored the means."
+     "why": "Averaged the variances 1 and 4 without weights and ignored the means.",
+     "trap": "C3"
     }
    ],
    "solution": "1. Within $=0.4(1)+0.6(4)=2.8$.\n2. $E[X]=3$; between $=0.4(9)+0.6(4)=6$.\n3. Total $=8.8$."
@@ -3611,17 +3880,20 @@
     {
      "text": "the variance between group means",
      "correct": false,
-     "why": "That is $\\mathrm{Var}(E[X\\mid Y])$."
+     "why": "That is $\\mathrm{Var}(E[X\\mid Y])$.",
+     "trap": "C2"
     },
     {
      "text": "the total variance",
      "correct": false,
-     "why": "Total is the sum of both terms."
+     "why": "Total is the sum of both terms.",
+     "trap": "C1"
     },
     {
      "text": "always at least $\\mathrm{Var}(X)$",
      "correct": false,
-     "why": "It is at most $\\mathrm{Var}(X)$ because the other term is non-negative."
+     "why": "It is at most $\\mathrm{Var}(X)$ because the other term is non-negative.",
+     "trap": "C11"
     }
    ],
    "answer": null,
@@ -3641,7 +3913,8 @@
     {
      "text": "$\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]\\cdot\\mathrm{Var}(E[X\\mid Y])$",
      "correct": false,
-     "why": "The two parts add; they do not multiply."
+     "why": "The two parts add; they do not multiply.",
+     "trap": "C3"
     },
     {
      "text": "If $E[X\\mid Y]$ is constant, $\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]$",
@@ -3680,11 +3953,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Kept only $E[\\mathrm{Var}(X\\mid N)]=E[N]=2$."
+     "why": "Kept only $E[\\mathrm{Var}(X\\mid N)]=E[N]=2$.",
+     "trap": "C6"
     },
     {
      "value": 0.6667,
-     "why": "Kept only $\\mathrm{Var}(E[X\\mid N])=\\mathrm{Var}(N)$."
+     "why": "Kept only $\\mathrm{Var}(E[X\\mid N])=\\mathrm{Var}(N)$.",
+     "trap": "C6"
     }
    ],
    "solution": "1. Poisson: mean = variance = $N$.\n2. $E[N]+\\mathrm{Var}(N)=2+2/3$."
@@ -3706,11 +3981,13 @@
    "traps": [
     {
      "value": 25,
-     "why": "Averaged the old mean and the new value; the old mean stands for 9 values, not 1."
+     "why": "Averaged the old mean and the new value; the old mean stands for 9 values, not 1.",
+     "trap": "C7"
     },
     {
      "value": 20,
-     "why": "Assumed one value cannot move the mean."
+     "why": "Assumed one value cannot move the mean.",
+     "trap": "C8"
     }
    ],
    "solution": "1. Old total $=180$; new total $=210$.\n2. New mean $=210/10=21$."
@@ -3733,17 +4010,20 @@
     {
      "text": "7",
      "correct": false,
-     "why": "That is the mean $42/6$."
+     "why": "That is the mean $42/6$.",
+     "trap": "C2"
     },
     {
      "text": "8",
      "correct": false,
-     "why": "Averaged the middle positions 11 and 5 without sorting."
+     "why": "Averaged the middle positions 11 and 5 without sorting.",
+     "trap": "C6"
     },
     {
      "text": "2",
      "correct": false,
-     "why": "That is the mode."
+     "why": "That is the mode.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -3767,11 +4047,13 @@
    "traps": [
     {
      "value": 13.5,
-     "why": "Applied the correction in the wrong direction (subtracted 30)."
+     "why": "Applied the correction in the wrong direction (subtracted 30).",
+     "trap": "C11"
     },
     {
      "value": 45,
-     "why": "Added the full difference 30 to the mean instead of $30/20$."
+     "why": "Added the full difference 30 to the mean instead of $30/20$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. Total $=300$; corrected $=300-10+40=330$.\n2. Mean $=330/20=16.5$."
@@ -3794,7 +4076,8 @@
     {
      "text": "The range is unchanged",
      "correct": false,
-     "why": "Range goes from 8 to 98."
+     "why": "Range goes from 8 to 98.",
+     "trap": "C9"
     },
     {
      "text": "The mode is unchanged",
@@ -3828,11 +4111,13 @@
    "traps": [
     {
      "value": 8,
-     "why": "Gave $E[XY]$ without subtracting $E[X]E[Y]$."
+     "why": "Gave $E[XY]$ without subtracting $E[X]E[Y]$.",
+     "trap": "C6"
     },
     {
      "value": -2,
-     "why": "Subtracted the wrong way: $E[X]E[Y]-E[XY]$."
+     "why": "Subtracted the wrong way: $E[X]E[Y]-E[XY]$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $\\mathrm{Cov}=8-2\\cdot3=2$."
@@ -3854,11 +4139,13 @@
    "traps": [
     {
      "value": 0.0417,
-     "why": "Divided by the product of variances $9\\cdot16$ instead of SDs $3\\cdot4$."
+     "why": "Divided by the product of variances $9\\cdot16$ instead of SDs $3\\cdot4$.",
+     "trap": "C4"
     },
     {
      "value": 0.24,
-     "why": "Divided by the sum of variances 25."
+     "why": "Divided by the sum of variances 25.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $\\rho=6/(3\\cdot4)=0.5$."
@@ -3880,15 +4167,18 @@
    "traps": [
     {
      "value": 97,
-     "why": "Dropped the covariance term."
+     "why": "Dropped the covariance term.",
+     "trap": "C6"
     },
     {
      "value": 73,
-     "why": "Sign slip in the cross term: $2ab\\,\\mathrm{Cov}=2(2)(-3)(-2)=+24$, not $-24$."
+     "why": "Sign slip in the cross term: $2ab\\,\\mathrm{Cov}=2(2)(-3)(-2)=+24$, not $-24$.",
+     "trap": "C11"
     },
     {
      "value": -19,
-     "why": "Did not square the coefficients: $2(4)-3(9)$."
+     "why": "Did not square the coefficients: $2(4)-3(9)$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. $a^2\\mathrm{Var}X=16$, $b^2\\mathrm{Var}Y=81$.\n2. $2ab\\,\\mathrm{Cov}=2(2)(-3)(-2)=24$.\n3. Total $=121$."
@@ -3906,17 +4196,20 @@
     {
      "text": "0.02",
      "correct": false,
-     "why": "Subtracted in the wrong order."
+     "why": "Subtracted in the wrong order.",
+     "trap": "C11"
     },
     {
      "text": "0.40",
      "correct": false,
-     "why": "Gave $E[XY]$ without subtracting $E[X]E[Y]$."
+     "why": "Gave $E[XY]$ without subtracting $E[X]E[Y]$.",
+     "trap": "C6"
     },
     {
      "text": "$-0.089$",
      "correct": false,
-     "why": "Divided by $\\sigma_X\\sigma_Y$: that is the correlation, not the covariance."
+     "why": "Divided by $\\sigma_X\\sigma_Y$: that is the correlation, not the covariance.",
+     "trap": "C2"
     },
     {
      "text": "$-0.02$",
@@ -3941,17 +4234,20 @@
     {
      "text": "Cannot be found without $\\mathrm{Cov}(X,Y)$",
      "correct": false,
-     "why": "Independence gives $\\mathrm{Cov}=0$."
+     "why": "Independence gives $\\mathrm{Cov}=0$.",
+     "trap": "C1"
     },
     {
      "text": "$-2$",
      "correct": false,
-     "why": "Subtracted variances; the coefficient $-1$ is squared."
+     "why": "Subtracted variances; the coefficient $-1$ is squared.",
+     "trap": "C4"
     },
     {
      "text": "2",
      "correct": false,
-     "why": "Took $|3-5|$; variances of independent terms always add."
+     "why": "Took $|3-5|$; variances of independent terms always add.",
+     "trap": "C3"
     },
     {
      "text": "8",
@@ -3976,12 +4272,14 @@
     {
      "text": "$\\rho(X,Y)=1$",
      "correct": false,
-     "why": "$\\rho=0$; the relation is not linear."
+     "why": "$\\rho=0$; the relation is not linear.",
+     "trap": "C9"
     },
     {
      "text": "$X$ and $Y$ are independent",
      "correct": false,
-     "why": "$P(Y=0\\mid X=0)=1\\ne P(Y=0)=1/3$; zero covariance does not give independence."
+     "why": "$P(Y=0\\mid X=0)=1\\ne P(Y=0)=1/3$; zero covariance does not give independence.",
+     "trap": "C1"
     },
     {
      "text": "$X$ and $Y$ are dependent",
@@ -4011,7 +4309,8 @@
     {
      "text": "If $\\mathrm{Cov}(X,Y)=0$ then $X,Y$ are independent",
      "correct": false,
-     "why": "Implication reversed; $Y=X^2$ with symmetric $X$ is a counterexample."
+     "why": "Implication reversed; $Y=X^2$ with symmetric $X$ is a counterexample.",
+     "trap": "C1"
     },
     {
      "text": "If $\\mathrm{Cov}(X,Y)\\ne0$ then $X,Y$ are dependent",
@@ -4021,7 +4320,8 @@
     {
      "text": "If $X,Y$ are dependent then $\\mathrm{Cov}(X,Y)\\ne0$",
      "correct": false,
-     "why": "Contrapositive of the false converse, so also false."
+     "why": "Contrapositive of the false converse, so also false.",
+     "trap": "C1"
     },
     {
      "text": "If $X,Y$ are independent then $\\mathrm{Cov}(X,Y)=0$",
@@ -4051,17 +4351,20 @@
     {
      "text": "$\\mathrm{Cov}(X,Y)=0$ and $X,Y$ are independent",
      "correct": false,
-     "why": "Reversed implication: zero covariance does not give independence."
+     "why": "Reversed implication: zero covariance does not give independence.",
+     "trap": "C1"
     },
     {
      "text": "$\\mathrm{Cov}(X,Y)\\ne0$ and $X,Y$ are dependent",
      "correct": false,
-     "why": "$E[XY]=0=E[X]E[Y]$, so Cov is 0."
+     "why": "$E[XY]=0=E[X]E[Y]$, so Cov is 0.",
+     "trap": "C6"
     },
     {
      "text": "$\\mathrm{Cov}(X,Y)\\ne0$ and $X,Y$ are independent",
      "correct": false,
-     "why": "Impossible: independence forces Cov $=0$."
+     "why": "Impossible: independence forces Cov $=0$.",
+     "trap": "C8"
     }
    ],
    "answer": null,
@@ -4091,12 +4394,14 @@
     {
      "text": "$\\rho=0$ means $X$ and $Y$ have no relationship of any kind",
      "correct": false,
-     "why": "$\\rho$ only measures linear association."
+     "why": "$\\rho$ only measures linear association.",
+     "trap": "C1"
     },
     {
      "text": "For $X\\sim N(0,1)$, $X$ and $X^2$ are independent",
      "correct": false,
-     "why": "$X^2$ is determined by $X$; zero covariance does not imply independence."
+     "why": "$X^2$ is determined by $X$; zero covariance does not imply independence.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -4120,15 +4425,18 @@
    "traps": [
     {
      "value": 75,
-     "why": "Multiplied the SD by $n$; variances add, so SD scales by $\\sqrt n$."
+     "why": "Multiplied the SD by $n$; variances add, so SD scales by $\\sqrt n$.",
+     "trap": "C4"
     },
     {
      "value": 225,
-     "why": "Gave the variance $25\\times9$."
+     "why": "Gave the variance $25\\times9$.",
+     "trap": "C4"
     },
     {
      "value": 0.6,
-     "why": "Gave the SE of the mean $3/5$."
+     "why": "Gave the SE of the mean $3/5$.",
+     "trap": "C2"
     }
    ],
    "solution": "1. $\\mathrm{Var}(S)=25\\cdot9=225$.\n2. $\\mathrm{SD}=15$."
@@ -4150,15 +4458,18 @@
    "traps": [
     {
      "value": 0.3333,
-     "why": "Divided by $n$ instead of $\\sqrt n$."
+     "why": "Divided by $n$ instead of $\\sqrt n$.",
+     "trap": "C4"
     },
     {
      "value": 4,
-     "why": "Gave $\\sigma^2/n=144/36$, the variance of $\\bar X$."
+     "why": "Gave $\\sigma^2/n=144/36$, the variance of $\\bar X$.",
+     "trap": "C4"
     },
     {
      "value": 72,
-     "why": "Multiplied by $\\sqrt n$ (that is the SD of the sum)."
+     "why": "Multiplied by $\\sqrt n$ (that is the SD of the sum).",
+     "trap": "C2"
     }
    ],
    "solution": "1. $SE=\\sigma/\\sqrt n=12/6=2$."
@@ -4180,11 +4491,13 @@
    "traps": [
     {
      "value": 0.9772,
-     "why": "Took the wrong tail, $P(\\text{heads}<220)$."
+     "why": "Took the wrong tail, $P(\\text{heads}<220)$.",
+     "trap": "C11"
     },
     {
      "value": 0.4207,
-     "why": "Used the variance 100 as the SD: $z=20/100$."
+     "why": "Used the variance 100 as the SD: $z=20/100$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. Mean $np=200$, variance $np(1-p)=100$, SD 10.\n2. $z=2$, $P=1-0.9772=0.0228$."
@@ -4207,17 +4520,20 @@
     {
      "text": "0.9772",
      "correct": false,
-     "why": "Wrong tail."
+     "why": "Wrong tail.",
+     "trap": "C11"
     },
     {
      "text": "0.0000",
      "correct": false,
-     "why": "Used $\\sigma^2/n=0.04$ as the SE: $z=10$."
+     "why": "Used $\\sigma^2/n=0.04$ as the SE: $z=10$.",
+     "trap": "C4"
     },
     {
      "text": "0.4207",
      "correct": false,
-     "why": "Used $\\sigma=2$ as the SE (forgot $\\sqrt n$): $z=0.2$."
+     "why": "Used $\\sigma=2$ as the SE (forgot $\\sqrt n$): $z=0.2$.",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -4241,15 +4557,18 @@
    "traps": [
     {
      "value": 81.36,
-     "why": "Forgot $\\sqrt n$: used $1.96\\times16$."
+     "why": "Forgot $\\sqrt n$: used $1.96\\times16$.",
+     "trap": "C4"
     },
     {
      "value": 50.49,
-     "why": "Divided by $n$ instead of $\\sqrt n$: $16/64$."
+     "why": "Divided by $n$ instead of $\\sqrt n$: $16/64$.",
+     "trap": "C4"
     },
     {
      "value": 46.08,
-     "why": "Gave the lower limit."
+     "why": "Gave the lower limit.",
+     "trap": "C11"
     }
    ],
    "solution": "1. $SE=16/8=2$.\n2. Upper $=50+1.96\\times2=53.92$."
@@ -4271,11 +4590,13 @@
    "traps": [
     {
      "value": 1.96,
-     "why": "Gave the half-width (margin of error)."
+     "why": "Gave the half-width (margin of error).",
+     "trap": "C6"
     },
     {
      "value": 0.392,
-     "why": "Used $\\sigma/n$ instead of $\\sigma/\\sqrt n$."
+     "why": "Used $\\sigma/n$ instead of $\\sigma/\\sqrt n$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. $SE=1$.\n2. Width $=2\\times1.96\\times1=3.92$."
@@ -4297,11 +4618,13 @@
    "traps": [
     {
      "value": 96,
-     "why": "Rounded $96.04$ down; $n=96$ gives margin slightly above 1."
+     "why": "Rounded $96.04$ down; $n=96$ gives margin slightly above 1.",
+     "trap": "C5"
     },
     {
      "value": 10,
-     "why": "Forgot to square: $1.96\\times5=9.8$."
+     "why": "Forgot to square: $1.96\\times5=9.8$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. $1.96\\cdot5/\\sqrt n\\le1\\Rightarrow n\\ge(9.8)^2=96.04$.\n2. Round up: $n=97$."
@@ -4319,7 +4642,8 @@
     {
      "text": "$(15.76,\\ 24.24)$",
      "correct": false,
-     "why": "Used $n=16$ degrees of freedom; it should be $n-1=15$."
+     "why": "Used $n=16$ degrees of freedom; it should be $n-1=15$.",
+     "trap": "C6"
     },
     {
      "text": "$(15.74,\\ 24.26)$",
@@ -4329,12 +4653,14 @@
     {
      "text": "$(16.08,\\ 23.92)$",
      "correct": false,
-     "why": "Used $z$ although $\\sigma$ is unknown and $n$ is small."
+     "why": "Used $z$ although $\\sigma$ is unknown and $n$ is small.",
+     "trap": "C9"
     },
     {
      "text": "$(2.95,\\ 37.05)$",
      "correct": false,
-     "why": "Forgot $\\sqrt n$: $2.131\\times8$."
+     "why": "Forgot $\\sqrt n$: $2.131\\times8$.",
+     "trap": "C4"
     }
    ],
    "answer": null,
@@ -4354,7 +4680,8 @@
     {
      "text": "$P(12.1<\\mu<15.3)=0.95$",
      "correct": false,
-     "why": "$\\mu$ is fixed; once computed, the interval either covers it or not."
+     "why": "$\\mu$ is fixed; once computed, the interval either covers it or not.",
+     "trap": "C1"
     },
     {
      "text": "The sample mean is 13.7",
@@ -4364,7 +4691,8 @@
     {
      "text": "95% of the sample observations lie in $(12.1,\\ 15.3)$",
      "correct": false,
-     "why": "The CI is for the mean, not for individual observations."
+     "why": "The CI is for the mean, not for individual observations.",
+     "trap": "C10"
     },
     {
      "text": "If the procedure were repeated many times, about 95% of the intervals would contain $\\mu$",
@@ -4394,7 +4722,8 @@
     {
      "text": "Going from 95% to 99% confidence narrows the interval",
      "correct": false,
-     "why": "Higher confidence needs a larger $z$, so a wider interval."
+     "why": "Higher confidence needs a larger $z$, so a wider interval.",
+     "trap": "C11"
     },
     {
      "text": "Quadrupling $n$ halves the width",
@@ -4424,7 +4753,8 @@
     {
      "text": "There is a 90% probability that $\\mu$ lies between 4.2 and 6.8",
      "correct": false,
-     "why": "Assigns probability to a fixed parameter."
+     "why": "Assigns probability to a fixed parameter.",
+     "trap": "C1"
     },
     {
      "text": "$\\mu$ is either in $(4.2,6.8)$ or not; 90% is the long-run coverage rate of the method",
@@ -4434,12 +4764,14 @@
     {
      "text": "90% of future sample means will fall in $(4.2,6.8)$",
      "correct": false,
-     "why": "The CI targets $\\mu$, not future $\\bar x$ values."
+     "why": "The CI targets $\\mu$, not future $\\bar x$ values.",
+     "trap": "C10"
     },
     {
      "text": "$\\bar x$ lies in the interval with probability 0.9",
      "correct": false,
-     "why": "$\\bar x$ is the centre, so it is always inside."
+     "why": "$\\bar x$ is the centre, so it is always inside.",
+     "trap": "C1"
     }
    ],
    "answer": null,
@@ -4469,7 +4801,8 @@
     {
      "text": "$P(H_0:\\mu=50\\text{ is true})=0.95$",
      "correct": false,
-     "why": "Neither a CI nor a test gives the probability that $H_0$ is true."
+     "why": "Neither a CI nor a test gives the probability that $H_0$ is true.",
+     "trap": "C7"
     },
     {
      "text": "$H_0:\\mu=50$ is not rejected",
@@ -4499,17 +4832,20 @@
     {
      "text": "$\\chi^2$ with 11 df",
      "correct": false,
-     "why": "$\\chi^2_{n-1}$ is for testing a variance, not a mean."
+     "why": "$\\chi^2_{n-1}$ is for testing a variance, not a mean.",
+     "trap": "C9"
     },
     {
      "text": "$z$ (standard normal)",
      "correct": false,
-     "why": "$z$ needs $\\sigma$ known (or a large sample)."
+     "why": "$z$ needs $\\sigma$ known (or a large sample).",
+     "trap": "C9"
     },
     {
      "text": "$t$ with 12 df",
      "correct": false,
-     "why": "Degrees of freedom are $n-1=11$."
+     "why": "Degrees of freedom are $n-1=11$.",
+     "trap": "C6"
     }
    ],
    "answer": null,
@@ -4534,17 +4870,20 @@
     {
      "text": "$\\sum(O-E)^2/E$",
      "correct": false,
-     "why": "That is the goodness-of-fit statistic for counts."
+     "why": "That is the goodness-of-fit statistic for counts.",
+     "trap": "C10"
     },
     {
      "text": "$(\\bar x-\\mu_0)/(s/\\sqrt n)$, compared with $t_{n-1}$",
      "correct": false,
-     "why": "That tests a mean, not a variance."
+     "why": "That tests a mean, not a variance.",
+     "trap": "C10"
     },
     {
      "text": "$(\\bar x-\\mu_0)/(2/\\sqrt n)$, compared with $N(0,1)$",
      "correct": false,
-     "why": "That is a $z$-test for a mean with $\\sigma=2$."
+     "why": "That is a $z$-test for a mean with $\\sigma=2$.",
+     "trap": "C10"
     }
    ],
    "answer": null,
@@ -4564,7 +4903,8 @@
     {
      "text": "Whether mean height is 170 cm with $\\sigma$ known",
      "correct": false,
-     "why": "A mean with known $\\sigma$ uses $z$; $\\chi^2$ is not for means."
+     "why": "A mean with known $\\sigma$ uses $z$; $\\chi^2$ is not for means.",
+     "trap": "C9"
     },
     {
      "text": "Whether gender and product preference are independent, from a $2\\times3$ table",
@@ -4603,11 +4943,13 @@
    "traps": [
     {
      "value": 0.3333,
-     "why": "Forgot $\\sqrt n$: used $2/6$."
+     "why": "Forgot $\\sqrt n$: used $2/6$.",
+     "trap": "C4"
     },
     {
      "value": 5.3333,
-     "why": "Divided $s$ by $n$ instead of $\\sqrt n$."
+     "why": "Divided $s$ by $n$ instead of $\\sqrt n$.",
+     "trap": "C4"
     }
    ],
    "solution": "1. $t=(52-50)/(6/4)$.\n2. $=1.333$ with 15 df."
@@ -4629,11 +4971,13 @@
    "traps": [
     {
      "value": 2,
-     "why": "Included only the heads cell; both cells contribute."
+     "why": "Included only the heads cell; both cells contribute.",
+     "trap": "C6"
     },
     {
      "value": 0.08,
-     "why": "Divided by $E^2$ instead of $E$."
+     "why": "Divided by $E^2$ instead of $E$.",
+     "trap": "C3"
     }
    ],
    "solution": "1. $E=50$ per cell.\n2. $(10^2+10^2)/50=4$ with 1 df."
@@ -4661,7 +5005,8 @@
     {
      "text": "The probability that $H_0$ is true is 0.03",
      "correct": false,
-     "why": "A p-value is computed assuming $H_0$; it is not $P(H_0)$."
+     "why": "A p-value is computed assuming $H_0$; it is not $P(H_0)$.",
+     "trap": "C7"
     },
     {
      "text": "At $\\alpha=0.01$, we fail to reject $H_0$",
@@ -4686,12 +5031,14 @@
     {
      "text": "Accept $H_0$: it is shown to be true",
      "correct": false,
-     "why": "Not rejecting is not proof of $H_0$."
+     "why": "Not rejecting is not proof of $H_0$.",
+     "trap": "C1"
     },
     {
      "text": "Reject $H_0$ because $0.12>0.05$",
      "correct": false,
-     "why": "Direction reversed: reject only when $p\\le\\alpha$."
+     "why": "Direction reversed: reject only when $p\\le\\alpha$.",
+     "trap": "C11"
     },
     {
      "text": "Fail to reject $H_0$; the data do not give enough evidence against it",
@@ -4701,7 +5048,8 @@
     {
      "text": "There is a 12% chance that $H_0$ is true",
      "correct": false,
-     "why": "Assigns probability to $H_0$."
+     "why": "Assigns probability to $H_0$.",
+     "trap": "C7"
     }
    ],
    "answer": null,
@@ -4725,15 +5073,18 @@
    "traps": [
     {
      "value": 0.0359,
-     "why": "Gave the one-sided p-value; two-sided doubles it."
+     "why": "Gave the one-sided p-value; two-sided doubles it.",
+     "trap": "C6"
     },
     {
      "value": 0.9641,
-     "why": "Gave $\\Phi(1.8)$, the area on the wrong side."
+     "why": "Gave $\\Phi(1.8)$, the area on the wrong side.",
+     "trap": "C11"
     },
     {
      "value": 0.9282,
-     "why": "Doubled the wrong-side area: $1-0.0718$."
+     "why": "Doubled the wrong-side area: $1-0.0718$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. One tail: $1-0.9641=0.0359$.\n2. Two-sided: $2\\times0.0359=0.0718$."
@@ -4751,12 +5102,14 @@
     {
      "text": "0.0668",
      "correct": false,
-     "why": "Used the left tail $P(Z\\le-1.5)$; for $H_1:\\mu>\\mu_0$ the p-value is the right tail."
+     "why": "Used the left tail $P(Z\\le-1.5)$; for $H_1:\\mu>\\mu_0$ the p-value is the right tail.",
+     "trap": "C11"
     },
     {
      "text": "0.0334",
      "correct": false,
-     "why": "Halved the wrong tail."
+     "why": "Halved the wrong tail.",
+     "trap": "C11"
     },
     {
      "text": "0.9332",
@@ -4766,7 +5119,8 @@
     {
      "text": "0.1336",
      "correct": false,
-     "why": "Computed a two-sided p-value."
+     "why": "Computed a two-sided p-value.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -4786,7 +5140,8 @@
     {
      "text": "rejecting $H_0$ when $H_1$ is true",
      "correct": false,
-     "why": "That is a correct decision (power)."
+     "why": "That is a correct decision (power).",
+     "trap": "C2"
     },
     {
      "text": "failing to reject $H_0$ when $H_1$ is true",
@@ -4796,12 +5151,14 @@
     {
      "text": "the probability that $H_0$ is false",
      "correct": false,
-     "why": "Error rates are conditional on a hypothesis, not probabilities of hypotheses."
+     "why": "Error rates are conditional on a hypothesis, not probabilities of hypotheses.",
+     "trap": "C7"
     },
     {
      "text": "rejecting $H_0$ when $H_0$ is true",
      "correct": false,
-     "why": "That is a Type I error."
+     "why": "That is a Type I error.",
+     "trap": "C2"
     }
    ],
    "answer": null,
@@ -4825,15 +5182,18 @@
    "traps": [
     {
      "value": 0.3085,
-     "why": "Gave $\\beta=P(X\\le1.5\\mid\\mu=2)$."
+     "why": "Gave $\\beta=P(X\\le1.5\\mid\\mu=2)$.",
+     "trap": "C2"
     },
     {
      "value": 0.0668,
-     "why": "Gave $\\alpha=P(X>1.5\\mid\\mu=0)$."
+     "why": "Gave $\\alpha=P(X>1.5\\mid\\mu=0)$.",
+     "trap": "C2"
     },
     {
      "value": 0.9332,
-     "why": "Used $\\mu=0$ in the wrong tail: $P(X\\le1.5\\mid H_0)$."
+     "why": "Used $\\mu=0$ in the wrong tail: $P(X\\le1.5\\mid H_0)$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Power $=P(X>1.5\\mid\\mu=2)=P(Z>-0.5)$.\n2. $=\\Phi(0.5)=0.6915$."
@@ -4856,12 +5216,14 @@
     {
      "text": "Power $=P(\\text{reject }H_0\\mid H_0\\text{ true})$",
      "correct": false,
-     "why": "That is $\\alpha$; power is computed under $H_1$."
+     "why": "That is $\\alpha$; power is computed under $H_1$.",
+     "trap": "C2"
     },
     {
      "text": "$\\alpha+\\beta=1$ always",
      "correct": false,
-     "why": "They are computed under different hypotheses; no such identity."
+     "why": "They are computed under different hypotheses; no such identity.",
+     "trap": "C8"
     },
     {
      "text": "Increasing $n$ increases power",
@@ -4890,11 +5252,13 @@
    "traps": [
     {
      "value": 0.03125,
-     "why": "Counted only all heads; all tails also leads to rejection."
+     "why": "Counted only all heads; all tails also leads to rejection.",
+     "trap": "C6"
     },
     {
      "value": 0.9375,
-     "why": "Gave $P(\\text{fail to reject}\\mid H_0)$."
+     "why": "Gave $P(\\text{fail to reject}\\mid H_0)$.",
+     "trap": "C11"
     }
    ],
    "solution": "1. Under $H_0$: $P(HHHHH)+P(TTTTT)=2/32$.\n2. $\\alpha=0.0625$."
@@ -4922,7 +5286,8 @@
     {
      "text": "$\\frac1n\\sum(X_i-\\bar X)^2$ is unbiased for $\\sigma^2$",
      "correct": false,
-     "why": "Its mean is $\\frac{n-1}n\\sigma^2$; the $n-1$ divisor is needed."
+     "why": "Its mean is $\\frac{n-1}n\\sigma^2$; the $n-1$ divisor is needed.",
+     "trap": "C6"
     },
     {
      "text": "$\\mathrm{Var}(\\bar X)=\\sigma^2/n$",
@@ -4947,7 +5312,8 @@
     {
      "text": "14",
      "correct": false,
-     "why": "Used the sum of squared weights, which matters for variance, not bias."
+     "why": "Used the sum of squared weights, which matters for variance, not bias.",
+     "trap": "C4"
     },
     {
      "text": "6",
@@ -4957,12 +5323,14 @@
     {
      "text": "3",
      "correct": false,
-     "why": "Divided by the number of terms, not the sum of weights."
+     "why": "Divided by the number of terms, not the sum of weights.",
+     "trap": "C6"
     },
     {
      "text": "2",
      "correct": false,
-     "why": "Took the average weight."
+     "why": "Took the average weight.",
+     "trap": "C3"
     }
    ],
    "answer": null,
@@ -4986,11 +5354,13 @@
    "traps": [
     {
      "value": 0.5,
-     "why": "Inverted the ratio."
+     "why": "Inverted the ratio.",
+     "trap": "C11"
     },
     {
      "value": 1,
-     "why": "Assumed two unbiased estimators have equal variance."
+     "why": "Assumed two unbiased estimators have equal variance.",
+     "trap": "C1"
     }
    ],
    "solution": "1. $\\mathrm{Var}(T_1)=\\sigma^2/4$, $\\mathrm{Var}(T_2)=\\sigma^2/2$.\n2. Ratio $=2$."
@@ -5013,7 +5383,8 @@
     {
      "text": "$E[\\bar X]$ moves closer to $\\mu$",
      "correct": false,
-     "why": "It already equals $\\mu$; only the spread shrinks."
+     "why": "It already equals $\\mu$; only the spread shrinks.",
+     "trap": "C1"
     },
     {
      "text": "Its bias stays 0",
@@ -5023,7 +5394,8 @@
     {
      "text": "$\\mathrm{Var}(\\bar X)$ decreases like $1/\\sqrt n$",
      "correct": false,
-     "why": "Variance scales as $1/n$; the SE scales as $1/\\sqrt n$."
+     "why": "Variance scales as $1/n$; the SE scales as $1/\\sqrt n$.",
+     "trap": "C4"
     }
    ],
    "answer": null,

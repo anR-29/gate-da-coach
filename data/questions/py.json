@@ -142,7 +142,8 @@
         {
           "text": "`-3 1 -3.5`",
           "correct": false,
-          "why": "Truncated toward zero as in C; Python's // floors toward negative infinity."
+          "why": "Truncated toward zero as in C; Python's // floors toward negative infinity.",
+          "trap": "C11"
         },
         {
           "text": "`-4 -1 -3.5`",
@@ -152,12 +153,14 @@
         {
           "text": "`-3 -1 -3.5`",
           "correct": false,
-          "why": "Truncated the quotient but still gave the remainder the divisor's sign; the two must satisfy a == (a//b)*b + a%b."
+          "why": "Truncated the quotient but still gave the remainder the divisor's sign; the two must satisfy a == (a//b)*b + a%b.",
+          "trap": "C11"
         },
         {
           "text": "`-4 -1 -4`",
           "correct": false,
-          "why": "Treated / as floor division; / always returns the exact float -3.5."
+          "why": "Treated / as floor division; / always returns the exact float -3.5.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -181,15 +184,18 @@
       "traps": [
         {
           "value": 6,
-          "why": "Evaluated ** left to right: (2**3)**2 = 64, then 64 // 10 % 7 = 6."
+          "why": "Evaluated ** left to right: (2**3)**2 = 64, then 64 // 10 % 7 = 6.",
+          "trap": "C11"
         },
         {
           "value": 170,
-          "why": "Did % before //: 512 // (10 % 7) = 170. They have equal precedence and group left to right."
+          "why": "Did % before //: 512 // (10 % 7) = 170. They have equal precedence and group left to right.",
+          "trap": "C9"
         },
         {
           "value": 51,
-          "why": "Stopped after 512 // 10 and forgot the % 7."
+          "why": "Stopped after 512 // 10 and forgot the % 7.",
+          "trap": "C6"
         }
       ],
       "solution": "1. `**` is right-associative: 3 ** 2 = 9, 2 ** 9 = 512.\n2. `//` and `%` group left to right: 512 // 10 = 51, 51 % 7 = 2."
@@ -207,17 +213,20 @@
         {
           "text": "`9 9 0`",
           "correct": false,
-          "why": "Made both mistakes: unary minus first and integer result for 2 ** -1."
+          "why": "Made both mistakes: unary minus first and integer result for 2 ** -1.",
+          "trap": "C9"
         },
         {
           "text": "`9 9 0.5`",
           "correct": false,
-          "why": "Assumed unary minus applies before **."
+          "why": "Assumed unary minus applies before **.",
+          "trap": "C9"
         },
         {
           "text": "`-9 9 0`",
           "correct": false,
-          "why": "Assumed int ** negative int stays an int and truncates."
+          "why": "Assumed int ** negative int stays an int and truncates.",
+          "trap": "C9"
         },
         {
           "text": "`-9 9 0.5`",
@@ -246,15 +255,18 @@
       "traps": [
         {
           "value": 32,
-          "why": "Truncated -17 / 5 toward zero: (-3, -2) gives -32 instead of -37."
+          "why": "Truncated -17 / 5 toward zero: (-3, -2) gives -32 instead of -37.",
+          "trap": "C11"
         },
         {
           "value": 22,
-          "why": "Used the floor quotient -4 but a C-style remainder -2 for -17, giving -42."
+          "why": "Used the floor quotient -4 but a C-style remainder -2 for -17, giving -42.",
+          "trap": "C11"
         },
         {
           "value": 96,
-          "why": "Assumed divmod(-17, 5) equals divmod(17, 5) with signs dropped: 32 + 32 + 32."
+          "why": "Assumed divmod(-17, 5) equals divmod(17, 5) with signs dropped: 32 + 32 + 32.",
+          "trap": "C11"
         }
       ],
       "solution": "1. divmod(17, 5) = (3, 2) gives 32.\n2. divmod(-17, 5) = (-4, 3) because floor(-3.4) = -4 and -17 - (-20) = 3; gives -37.\n3. divmod(17.0, 5) = (3.0, 2.0) gives 32.0.\n4. 32 - 37 + 32.0 = 27.0, printed as `27.0`."
@@ -282,12 +294,14 @@
         {
           "text": "`0.1 + 0.2 == 0.3`",
           "correct": false,
-          "why": "Assumed decimal fractions are exact in binary floating point; the sum is 0.30000000000000004."
+          "why": "Assumed decimal fractions are exact in binary floating point; the sum is 0.30000000000000004.",
+          "trap": "C9"
         },
         {
           "text": "`type(10 // 2.0) is int`",
           "correct": false,
-          "why": "Assumed // always returns int; with a float operand it returns float (5.0)."
+          "why": "Assumed // always returns int; with a float operand it returns float (5.0).",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -307,12 +321,14 @@
         {
           "text": "`[]`",
           "correct": false,
-          "why": "Stopped at the second operand; `or` skips falsy values and keeps going."
+          "why": "Stopped at the second operand; `or` skips falsy values and keeps going.",
+          "trap": "C6"
         },
         {
           "text": "`a`",
           "correct": false,
-          "why": "Took `and` to return its first truthy operand; `and` returns the last operand when all are truthy."
+          "why": "Took `and` to return its first truthy operand; `and` returns the last operand when all are truthy.",
+          "trap": "C2"
         },
         {
           "text": "`b`",
@@ -322,7 +338,8 @@
         {
           "text": "`True`",
           "correct": false,
-          "why": "Assumed and/or return booleans; they return one of the operands."
+          "why": "Assumed and/or return booleans; they return one of the operands.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -342,12 +359,14 @@
         {
           "text": "`True True False`",
           "correct": false,
-          "why": "Evaluated the second chain pairwise left to right: ((1<3)==3)<2 is False < 2, which is True."
+          "why": "Evaluated the second chain pairwise left to right: ((1<3)==3)<2 is False < 2, which is True.",
+          "trap": "C9"
         },
         {
           "text": "`False False False`",
           "correct": false,
-          "why": "Evaluated the first chain as (1 < 3) > 2, i.e. True > 2."
+          "why": "Evaluated the first chain as (1 < 3) > 2, i.e. True > 2.",
+          "trap": "C9"
         },
         {
           "text": "`True False False`",
@@ -357,7 +376,8 @@
         {
           "text": "`True False True`",
           "correct": false,
-          "why": "Treated True == 3 as truthy comparison; True compares equal only to 1."
+          "why": "Treated True == 3 as truthy comparison; True compares equal only to 1.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -381,15 +401,18 @@
       "traps": [
         {
           "value": 9,
-          "why": "Assumed every call is evaluated; and/or stop as soon as the result is known."
+          "why": "Assumed every call is evaluated; and/or stop as soon as the result is known.",
+          "trap": "C9"
         },
         {
           "value": 8,
-          "why": "Called f(7): `not f(6)` is False, so `and` stops there."
+          "why": "Called f(7): `not f(6)` is False, so `and` stops there.",
+          "trap": "C6"
         },
         {
           "value": 6,
-          "why": "Thought `f(4) and f(5)` stops at f(4); `and` needs the second operand when the first is truthy."
+          "why": "Thought `f(4) and f(5)` stops at f(4); `and` needs the second operand when the first is truthy.",
+          "trap": "C2"
         }
       ],
       "solution": "1. `f(0) and ...` stops at the falsy 0: 1 call.\n2. `f(2) or ...` stops at the truthy 2: 1 call (total 2).\n3. f(0), f([]) are falsy; then `f(4) and f(5)` calls both: 4 calls (total 6).\n4. `not f(6)` is False, so `and` skips f(7): 1 call (total 7)."
@@ -417,12 +440,14 @@
         {
           "text": "`\"0\"`",
           "correct": false,
-          "why": "Confused the string \"0\" with the number 0; any non-empty string is truthy."
+          "why": "Confused the string \"0\" with the number 0; any non-empty string is truthy.",
+          "trap": "C10"
         },
         {
           "text": "`[0]`",
           "correct": false,
-          "why": "Looked at the element 0; a list is falsy only when empty, and [0] has one element."
+          "why": "Looked at the element 0; a list is falsy only when empty, and [0] has one element.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -447,17 +472,20 @@
         {
           "text": "`True True True`",
           "correct": false,
-          "why": "Assumed equal lists are the same object; `is` tests identity."
+          "why": "Assumed equal lists are the same object; `is` tests identity.",
+          "trap": "C2"
         },
         {
           "text": "`True False False`",
           "correct": false,
-          "why": "Applied `not` before `==`: (not a) == [1] is False == [1]."
+          "why": "Applied `not` before `==`: (not a) == [1] is False == [1].",
+          "trap": "C9"
         },
         {
           "text": "`False False True`",
           "correct": false,
-          "why": "Used == as an identity test; == compares contents."
+          "why": "Used == as an identity test; == compares contents.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -482,17 +510,20 @@
         {
           "text": "`TSI NCE DSN`",
           "correct": false,
-          "why": "Stepped by 4 from the start (0, 4, 8) and ignored the negative sign; a negative step starts from the end."
+          "why": "Stepped by 4 from the start (0, 4, 8) and ignored the negative sign; a negative step starts from the end.",
+          "trap": "C11"
         },
         {
           "text": "`TSI ECN EIT`",
           "correct": false,
-          "why": "Reversed s[-3:]; a negative start does not reverse direction, only a negative step does."
+          "why": "Reversed s[-3:]; a negative start does not reverse direction, only a negative step does.",
+          "trap": "C11"
         },
         {
           "text": "`TSIN NCE EIT`",
           "correct": false,
-          "why": "Treated the stop index 8 as inclusive."
+          "why": "Treated the stop index 8 as inclusive.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -516,15 +547,18 @@
       "traps": [
         {
           "value": 29,
-          "why": "Used 1-based positions (3 + 20 + 6); string indices start at 0."
+          "why": "Used 1-based positions (3 + 20 + 6); string indices start at 0.",
+          "trap": "C6"
         },
         {
           "value": 22,
-          "why": "Took rfind to count from the right end (0); it returns the ordinary index of the last match, 5."
+          "why": "Took rfind to count from the right end (0); it returns the ordinary index of the last match, 5.",
+          "trap": "C11"
         },
         {
           "value": 17,
-          "why": "Counted \"an\" once; it occurs at indices 1 and 3."
+          "why": "Counted \"an\" once; it occurs at indices 1 and 3.",
+          "trap": "C6"
         }
       ],
       "solution": "1. `find(\"na\")` → 2.\n2. `count(\"an\")` → 2, times 10 → 20.\n3. `rfind(\"a\")` → 5 (index from the left of the last match).\n4. 2 + 20 + 5 = 27."
@@ -547,17 +581,20 @@
         {
           "text": "`Data gate|D@t@ g@te`",
           "correct": false,
-          "why": "Ignored the count argument 1, which limits replace to the first match."
+          "why": "Ignored the count argument 1, which limits replace to the first match.",
+          "trap": "C9"
         },
         {
           "text": "`D@ta gate|D@ta gate`",
           "correct": false,
-          "why": "Assumed t follows s after rebinding; s = ... makes s name a new object while t keeps the old one."
+          "why": "Assumed t follows s after rebinding; s = ... makes s name a new object while t keeps the old one.",
+          "trap": "C9"
         },
         {
           "text": "`DATA GATE|D@TA GATE`",
           "correct": false,
-          "why": "Assumed s.upper() changes s in place; strings are immutable."
+          "why": "Assumed s.upper() changes s in place; strings are immutable.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -577,12 +614,14 @@
         {
           "text": "`abab True`",
           "correct": false,
-          "why": "Assumed + inserts a space between strings."
+          "why": "Assumed + inserts a space between strings.",
+          "trap": "C9"
         },
         {
           "text": "`ababcTrue`",
           "correct": false,
-          "why": "Assumed multiplying a string by 0 keeps one copy."
+          "why": "Assumed multiplying a string by 0 keeps one copy.",
+          "trap": "C5"
         },
         {
           "text": "`ababTrue`",
@@ -592,7 +631,8 @@
         {
           "text": "`ababFalse`",
           "correct": false,
-          "why": "Treated 3 * \"2\" as arithmetic (6); with a string it repeats the text."
+          "why": "Treated 3 * \"2\" as arithmetic (6); with a string it repeats the text.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -612,7 +652,8 @@
         {
           "text": "`s[-1:-4] == \"noh\"`",
           "correct": false,
-          "why": "Expected a reversed slice; with the default step +1 and start after stop, the slice is empty."
+          "why": "Expected a reversed slice; with the default step +1 and start after stop, the slice is empty.",
+          "trap": "C11"
         },
         {
           "text": "`s[::-1][:2] == \"no\"`",
@@ -647,7 +688,8 @@
         {
           "text": "``",
           "correct": false,
-          "why": "Assumed a range with start > stop is empty; with a negative step it counts down."
+          "why": "Assumed a range with start > stop is empty; with a negative step it counts down.",
+          "trap": "C11"
         },
         {
           "text": "`10 7 4 1`",
@@ -657,12 +699,14 @@
         {
           "text": "`10 7 4`",
           "correct": false,
-          "why": "Stopped early, as if 1 were the stop value; only 0 (and beyond) is excluded."
+          "why": "Stopped early, as if 1 were the stop value; only 0 (and beyond) is excluded.",
+          "trap": "C5"
         },
         {
           "text": "`10 7 4 1 -2`",
           "correct": false,
-          "why": "Treated the stop as inclusive or overshot it; range never passes the stop."
+          "why": "Treated the stop as inclusive or overshot it; range never passes the stop.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -686,15 +730,18 @@
       "traps": [
         {
           "value": 75,
-          "why": "Thought the else does not run when the inner loop has zero iterations (n = 2); it does, since no break occurred."
+          "why": "Thought the else does not run when the inner loop has zero iterations (n = 2); it does, since no break occurred.",
+          "trap": "C5"
         },
         {
           "value": 112,
-          "why": "Assumed the else runs when the loop is broken; it runs only when the loop is not broken (that sums the composites)."
+          "why": "Assumed the else runs when the loop is broken; it runs only when the loop is not broken (that sums the composites).",
+          "trap": "C2"
         },
         {
           "value": 189,
-          "why": "Ignored the break/else logic and summed every n from 2 to 19."
+          "why": "Ignored the break/else logic and summed every n from 2 to 19.",
+          "trap": "C9"
         }
       ],
       "solution": "1. The inner loop breaks on finding a divisor; else runs only for primes.\n2. n = 2: inner range is empty, else runs.\n3. Primes below 20: 2+3+5+7+11+13+17+19 = 77."
@@ -712,7 +759,8 @@
         {
           "text": "`119 8`",
           "correct": false,
-          "why": "Ran the else clause after a break; else runs only when the loop condition becomes false."
+          "why": "Ran the else clause after a break; else runs only when the loop condition becomes false.",
+          "trap": "C9"
         },
         {
           "text": "`19 8`",
@@ -722,12 +770,14 @@
         {
           "text": "`28 8`",
           "correct": false,
-          "why": "Treated continue as a no-op and added 3 and 6 as well."
+          "why": "Treated continue as a no-op and added 3 and 6 as well.",
+          "trap": "C9"
         },
         {
           "text": "`19 7`",
           "correct": false,
-          "why": "Assumed break happens before i is incremented; i += 1 runs first in each pass."
+          "why": "Assumed break happens before i is incremented; i += 1 runs first in each pass.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -751,11 +801,13 @@
       "traps": [
         {
           "value": 6,
-          "why": "Used (50 - 5) // 7 = 6 and forgot to count the first element (the ceiling of 45 / 7 is 7)."
+          "why": "Used (50 - 5) // 7 = 6 and forgot to count the first element (the ceiling of 45 / 7 is 7).",
+          "trap": "C6"
         },
         {
           "value": 8,
-          "why": "Included a value past the stop (54)."
+          "why": "Included a value past the stop (54).",
+          "trap": "C5"
         }
       ],
       "solution": "1. Values: 5, 12, 19, 26, 33, 40, 47.\n2. Count = ceil((50 - 5) / 7) = 7."
@@ -778,7 +830,8 @@
         {
           "text": "It prints `3`",
           "correct": false,
-          "why": "Assumed the loop variable ends at the stop value as in a C for-loop; range never yields 3."
+          "why": "Assumed the loop variable ends at the stop value as in a C for-loop; range never yields 3.",
+          "trap": "C5"
         },
         {
           "text": "It prints `2`",
@@ -788,7 +841,8 @@
         {
           "text": "The body of `for j in range(0)` runs once",
           "correct": false,
-          "why": "range(0) is empty; the body runs zero times."
+          "why": "range(0) is empty; the body runs zero times.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -812,11 +866,13 @@
       "traps": [
         {
           "value": 21,
-          "why": "Used f(0) = 1; the base case returns n itself, so f(0) = 0."
+          "why": "Used f(0) = 1; the base case returns n itself, so f(0) = 0.",
+          "trap": "C5"
         },
         {
           "value": 5,
-          "why": "Dropped the factor 2, which gives the Fibonacci value f(5) = 5."
+          "why": "Dropped the factor 2, which gives the Fibonacci value f(5) = 5.",
+          "trap": "C6"
         }
       ],
       "solution": "1. f(0) = 0, f(1) = 1.\n2. f(2) = 1 + 0 = 1, f(3) = 1 + 2 = 3, f(4) = 3 + 2 = 5.\n3. f(5) = 5 + 2·3 = 11."
@@ -839,17 +895,20 @@
         {
           "text": "`3 2 1 3 2 1`",
           "correct": false,
-          "why": "Assumed the second prints happen in call order; they run as the stack unwinds, innermost first."
+          "why": "Assumed the second prints happen in call order; they run as the stack unwinds, innermost first.",
+          "trap": "C11"
         },
         {
           "text": "`3 2 1 0 0 1 2 3`",
           "correct": false,
-          "why": "Printed in the base case; show(0) returns before any print."
+          "why": "Printed in the base case; show(0) returns before any print.",
+          "trap": "C5"
         },
         {
           "text": "`1 2 3 3 2 1`",
           "correct": false,
-          "why": "Reversed the halves; the first print happens before recursing."
+          "why": "Reversed the halves; the first print happens before recursing.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -873,15 +932,18 @@
       "traps": [
         {
           "value": 3561,
-          "why": "Assumed reversing 450 gives 540; the reversed digits 0, 5, 4 make 054 = 54."
+          "why": "Assumed reversing 450 gives 540; the reversed digits 0, 5, 4 make 054 = 54.",
+          "trap": "C10"
         },
         {
           "value": 1653,
-          "why": "Assumed acc is never updated, so h returns n unchanged."
+          "why": "Assumed acc is never updated, so h returns n unchanged.",
+          "trap": "C9"
         },
         {
           "value": 3471,
-          "why": "Reversed 1203 as 3021 but read 450 reversed as 450."
+          "why": "Reversed 1203 as 3021 but read 450 reversed as 450.",
+          "trap": "C6"
         }
       ],
       "solution": "1. h(1203): acc becomes 3, 30, 302, 3021.\n2. h(450): acc becomes 0, 5, 54.\n3. 3021 + 54 = 3075."
@@ -899,17 +961,20 @@
         {
           "text": "`[10, 6, 3, 1, 0]`",
           "correct": false,
-          "why": "Built the list in unwinding order; each level appends to the end of the list returned from below."
+          "why": "Built the list in unwinding order; each level appends to the end of the list returned from below.",
+          "trap": "C11"
         },
         {
           "text": "`[0, 1, 2, 3, 4]`",
           "correct": false,
-          "why": "Appended n itself instead of r[-1] + n."
+          "why": "Appended n itself instead of r[-1] + n.",
+          "trap": "C10"
         },
         {
           "text": "`[1, 3, 6, 10]`",
           "correct": false,
-          "why": "Dropped the base list [0]."
+          "why": "Dropped the base list [0].",
+          "trap": "C5"
         },
         {
           "text": "`[0, 1, 3, 6, 10]`",
@@ -934,7 +999,8 @@
         {
           "text": "`1101 1000`",
           "correct": false,
-          "why": "Forgot the [::-1] reversal of b(8)."
+          "why": "Forgot the [::-1] reversal of b(8).",
+          "trap": "C6"
         },
         {
           "text": "`1101 0001`",
@@ -944,12 +1010,14 @@
         {
           "text": "`1011 0001`",
           "correct": false,
-          "why": "Put the current remainder before the recursive part, which reverses the bits."
+          "why": "Put the current remainder before the recursive part, which reverses the bits.",
+          "trap": "C11"
         },
         {
           "text": "`1101 0010`",
           "correct": false,
-          "why": "Mis-converted 8: 8 = 1000 in binary."
+          "why": "Mis-converted 8: 8 = 1000 in binary.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -973,15 +1041,18 @@
       "traps": [
         {
           "value": 5,
-          "why": "Reported the value fib(5) = 5 instead of the number of calls."
+          "why": "Reported the value fib(5) = 5 instead of the number of calls.",
+          "trap": "C2"
         },
         {
           "value": 6,
-          "why": "Counted one call per distinct n (0 to 5); naive recursion repeats subproblems."
+          "why": "Counted one call per distinct n (0 to 5); naive recursion repeats subproblems.",
+          "trap": "C9"
         },
         {
           "value": 14,
-          "why": "Forgot to count the top-level call fib(5)."
+          "why": "Forgot to count the top-level call fib(5).",
+          "trap": "C6"
         }
       ],
       "solution": "1. C(0) = C(1) = 1, C(n) = 1 + C(n-1) + C(n-2).\n2. C(2) = 3, C(3) = 5, C(4) = 9, C(5) = 15."
@@ -1003,15 +1074,18 @@
       "traps": [
         {
           "value": 15,
-          "why": "Did not count the top-level call t(4)."
+          "why": "Did not count the top-level call t(4).",
+          "trap": "C6"
         },
         {
           "value": 9,
-          "why": "Counted t(n // 2) once per level although it is called twice."
+          "why": "Counted t(n // 2) once per level although it is called twice.",
+          "trap": "C6"
         },
         {
           "value": 11,
-          "why": "Treated the two identical t(n // 2) calls as cached; Python re-runs them."
+          "why": "Treated the two identical t(n // 2) calls as cached; Python re-runs them.",
+          "trap": "C9"
         }
       ],
       "solution": "1. C(0) = C(1) = 1; C(n) = 1 + 2·C(n // 2) + C(n - 1).\n2. C(2) = 1 + 2 + 1 = 4, C(3) = 1 + 2 + 4 = 7.\n3. C(4) = 1 + 2·4 + 7 = 16."
@@ -1034,17 +1108,20 @@
         {
           "text": "`16`",
           "correct": false,
-          "why": "Used 2^n, counting the base-case calls as if they printed."
+          "why": "Used 2^n, counting the base-case calls as if they printed.",
+          "trap": "C6"
         },
         {
           "text": "`8`",
           "correct": false,
-          "why": "Used 2^(n-1); each level doubles the stars and adds one."
+          "why": "Used 2^(n-1); each level doubles the stars and adds one.",
+          "trap": "C6"
         },
         {
           "text": "`4`",
           "correct": false,
-          "why": "Assumed one star per level, ignoring the second recursive call."
+          "why": "Assumed one star per level, ignoring the second recursive call.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1069,17 +1146,20 @@
         {
           "text": "`50 51`",
           "correct": false,
-          "why": "Treated n // 2 as n - 2."
+          "why": "Treated n // 2 as n - 2.",
+          "trap": "C10"
         },
         {
           "text": "`7 7`",
           "correct": false,
-          "why": "Forgot to count the base call d(0)."
+          "why": "Forgot to count the base call d(0).",
+          "trap": "C6"
         },
         {
           "text": "`6 7`",
           "correct": false,
-          "why": "Stopped at n = 1 as if it were the base case."
+          "why": "Stopped at n = 1 as if it were the base case.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -1103,11 +1183,13 @@
       "traps": [
         {
           "value": 11,
-          "why": "Counted only the fresh computations (n = 10 down to 0); memo hits still enter f and increment calls."
+          "why": "Counted only the fresh computations (n = 10 down to 0); memo hits still enter f and increment calls.",
+          "trap": "C6"
         },
         {
           "value": 177,
-          "why": "Ignored the memo and used the naive call count."
+          "why": "Ignored the memo and used the naive call count.",
+          "trap": "C9"
         }
       ],
       "solution": "1. f(10) calls f(9) first, which fills memo down to 0: fresh calls for n = 10..0 (11 calls).\n2. Each f(n) for n = 3..10 then calls f(n - 2), a memo hit: 8 more calls.\n3. f(2) calls f(0) fresh (already counted). Total 19."
@@ -1130,17 +1212,20 @@
         {
           "text": "`[1] [1, 2] [3]`",
           "correct": false,
-          "why": "Assumed a captured a snapshot; a is the same object that later gets 2 appended."
+          "why": "Assumed a captured a snapshot; a is the same object that later gets 2 appended.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2] [1, 2] [1, 2, 3]`",
           "correct": false,
-          "why": "Assumed passing [] still uses the shared default."
+          "why": "Assumed passing [] still uses the shared default.",
+          "trap": "C9"
         },
         {
           "text": "`[1] [2] [3]`",
           "correct": false,
-          "why": "Assumed a new default list is created on each call."
+          "why": "Assumed a new default list is created on each call.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1164,15 +1249,18 @@
       "traps": [
         {
           "value": 66,
-          "why": "Assumed a fresh dict on every call, so every call returns 11."
+          "why": "Assumed a fresh dict on every call, so every call returns 11.",
+          "trap": "C9"
         },
         {
           "value": 127,
-          "why": "Dropped the last call tally(\"a\", {}), which returns 11 with its own dict."
+          "why": "Dropped the last call tally(\"a\", {}), which returns 11 with its own dict.",
+          "trap": "C6"
         },
         {
           "value": 139,
-          "why": "Let the last call use the shared dict; it receives a new empty dict."
+          "why": "Let the last call use the shared dict; it receives a new empty dict.",
+          "trap": "C9"
         }
       ],
       "solution": "1. Shared dict: a→11, b→21, c→31, a→32, b→32 (sum 127).\n2. tally(\"a\", {}) uses a new dict → 11.\n3. 127 + 11 = 138."
@@ -1190,12 +1278,14 @@
         {
           "text": "`[1] [1, 2] (1,) (1, 2)`",
           "correct": false,
-          "why": "Assumed every default accumulates; the None idiom and the immutable tuple both avoid sharing."
+          "why": "Assumed every default accumulates; the None idiom and the immutable tuple both avoid sharing.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2] [1, 2] (1,) (2,)`",
           "correct": false,
-          "why": "Ignored the `if acc is None` reset in f."
+          "why": "Ignored the `if acc is None` reset in f.",
+          "trap": "C6"
         },
         {
           "text": "`[1] [2] (1,) (2,)`",
@@ -1205,7 +1295,8 @@
         {
           "text": "`[1] [2] (1,) (1, 2)`",
           "correct": false,
-          "why": "Assumed tuple += mutates the default; it creates a new tuple."
+          "why": "Assumed tuple += mutates the default; it creates a new tuple.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1225,7 +1316,8 @@
         {
           "text": "`z == [1, 3]`",
           "correct": false,
-          "why": "Assumed passing x creates a separate list; x is the default list itself, already holding 1 and 2."
+          "why": "Assumed passing x creates a separate list; x is the default list itself, already holding 1 and 2.",
+          "trap": "C9"
         },
         {
           "text": "`len(w) == 4`",
@@ -1264,11 +1356,13 @@
       "traps": [
         {
           "value": 6,
-          "why": "Assumed cache resets to [0] on every call."
+          "why": "Assumed cache resets to [0] on every call.",
+          "trap": "C9"
         },
         {
           "value": 18,
-          "why": "Used the final total 6 for all three calls."
+          "why": "Used the final total 6 for all three calls.",
+          "trap": "C9"
         }
       ],
       "solution": "1. The default list persists: returns 1, then 3, then 6.\n2. 1 + 3 + 6 = 10."
@@ -1286,17 +1380,20 @@
         {
           "text": "`10`",
           "correct": false,
-          "why": "Assumed assignments are hoisted with their values."
+          "why": "Assumed assignments are hoisted with their values.",
+          "trap": "C9"
         },
         {
           "text": "Raises `NameError`",
           "correct": false,
-          "why": "Close, but the specific error is UnboundLocalError (a subclass of NameError) because x is a known local."
+          "why": "Close, but the specific error is UnboundLocalError (a subclass of NameError) because x is a known local.",
+          "trap": "C10"
         },
         {
           "text": "`5`",
           "correct": false,
-          "why": "Assumed the global x is used until the local assignment; locality is decided at compile time for the whole function."
+          "why": "Assumed the global x is used until the local assignment; locality is decided at compile time for the whole function.",
+          "trap": "C9"
         },
         {
           "text": "Raises `UnboundLocalError`",
@@ -1326,17 +1423,20 @@
         {
           "text": "`o G`",
           "correct": false,
-          "why": "Thought nonlocal creates a new local in inner; it rebinds the enclosing function's variable."
+          "why": "Thought nonlocal creates a new local in inner; it rebinds the enclosing function's variable.",
+          "trap": "C9"
         },
         {
           "text": "`G g`",
           "correct": false,
-          "why": "Thought `global x` inside other changes the nearest enclosing x; global always means module level."
+          "why": "Thought `global x` inside other changes the nearest enclosing x; global always means module level.",
+          "trap": "C2"
         },
         {
           "text": "`i g`",
           "correct": false,
-          "why": "Assumed a global declaration in a nested function has no effect on the module."
+          "why": "Assumed a global declaration in a nested function has no effect on the module.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1360,15 +1460,18 @@
       "traps": [
         {
           "value": 32,
-          "why": "Assumed b captured n = 2 when it was defined; it reads the enclosing n when called (3)."
+          "why": "Assumed b captured n = 2 when it was defined; it reads the enclosing n when called (3).",
+          "trap": "C9"
         },
         {
           "value": 37,
-          "why": "Read the global n before c() updated it; operands are evaluated left to right, so n is read after c() makes it 6."
+          "why": "Read the global n before c() updated it; operands are evaluated left to right, so n is read after c() makes it 6.",
+          "trap": "C9"
         },
         {
           "value": 16,
-          "why": "Assumed b reads the global n = 1."
+          "why": "Assumed b reads the global n = 1.",
+          "trap": "C9"
         }
       ],
       "solution": "1. a(): b reads enclosing n at call time = 3 → 30.\n2. c(): global n = 6, returns 6.\n3. Then n is read as 6. Sum 30 + 6 + 6 = 42."
@@ -1396,12 +1499,14 @@
         {
           "text": "`nonlocal x` inside a top-level function can refer to a module-level `x`",
           "correct": false,
-          "why": "Confused nonlocal with global; nonlocal needs an enclosing function scope, otherwise it is a SyntaxError."
+          "why": "Confused nonlocal with global; nonlocal needs an enclosing function scope, otherwise it is a SyntaxError.",
+          "trap": "C2"
         },
         {
           "text": "The variable of a list comprehension is visible in the enclosing function after the comprehension",
           "correct": false,
-          "why": "That was Python 2 behaviour; in Python 3 the comprehension variable does not leak."
+          "why": "That was Python 2 behaviour; in Python 3 the comprehension variable does not leak.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1421,12 +1526,14 @@
         {
           "text": "`3 3`",
           "correct": false,
-          "why": "Assumed builtins cannot be shadowed; local names are searched first."
+          "why": "Assumed builtins cannot be shadowed; local names are searched first.",
+          "trap": "C9"
         },
         {
           "text": "`0 0`",
           "correct": false,
-          "why": "Assumed the local assignment replaces the builtin globally."
+          "why": "Assumed the local assignment replaces the builtin globally.",
+          "trap": "C9"
         },
         {
           "text": "`0 3`",
@@ -1436,7 +1543,8 @@
         {
           "text": "Raises `TypeError`",
           "correct": false,
-          "why": "Assumed calling a lambda named len is invalid; any callable can be bound to that name."
+          "why": "Assumed calling a lambda named len is invalid; any callable can be bound to that name.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1461,17 +1569,20 @@
         {
           "text": "`[0, 1, 4, 9]`",
           "correct": false,
-          "why": "Assumed each lambda captures the value of i at creation (late binding)."
+          "why": "Assumed each lambda captures the value of i at creation (late binding).",
+          "trap": "C9"
         },
         {
           "text": "`[16, 16, 16, 16]`",
           "correct": false,
-          "why": "Thought i ends at 4; range(4) stops at 3."
+          "why": "Thought i ends at 4; range(4) stops at 3.",
+          "trap": "C6"
         },
         {
           "text": "Raises `NameError`",
           "correct": false,
-          "why": "Assumed i is gone after the comprehension; the closure keeps the comprehension's cell alive."
+          "why": "Assumed i is gone after the comprehension; the closure keeps the comprehension's cell alive.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1495,11 +1606,13 @@
       "traps": [
         {
           "value": 14,
-          "why": "Assumed s1 and s2 share one counter; each make() call creates its own c."
+          "why": "Assumed s1 and s2 share one counter; each make() call creates its own c.",
+          "trap": "C9"
         },
         {
           "value": 4,
-          "why": "Assumed c resets to 0 on every call of step."
+          "why": "Assumed c resets to 0 on every call of step.",
+          "trap": "C9"
         }
       ],
       "solution": "1. s1 returns 2, 4, 6.\n2. s2 has its own c and returns 2.\n3. 6 + 2 = 8."
@@ -1522,17 +1635,20 @@
         {
           "text": "`12 12`",
           "correct": false,
-          "why": "Thought the default i=i is also late-bound; defaults are evaluated when the lambda is created."
+          "why": "Thought the default i=i is also late-bound; defaults are evaluated when the lambda is created.",
+          "trap": "C9"
         },
         {
           "text": "`10 10`",
           "correct": false,
-          "why": "Assumed gs also captures i at creation; without a default it binds late."
+          "why": "Assumed gs also captures i at creation; without a default it binds late.",
+          "trap": "C9"
         },
         {
           "text": "`13 13`",
           "correct": false,
-          "why": "Thought the loop variable ends at 3."
+          "why": "Thought the loop variable ends at 3.",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1556,11 +1672,13 @@
       "traps": [
         {
           "value": 60,
-          "why": "Assumed m captured k before the k += 1; it reads k when called, after the increment."
+          "why": "Assumed m captured k before the k += 1; it reads k when called, after the increment.",
+          "trap": "C9"
         },
         {
           "value": 120,
-          "why": "Assumed all closures share the last k (3 + 1); each multiplier call has its own k."
+          "why": "Assumed all closures share the last k (3 + 1); each multiplier call has its own k.",
+          "trap": "C9"
         }
       ],
       "solution": "1. Each call has its own k, incremented before return: 2, 3, 4.\n2. 10·2 + 10·3 + 10·4 = 90."
@@ -1583,17 +1701,20 @@
         {
           "text": "`[1, 2, 3] 4`",
           "correct": false,
-          "why": "Assumed b is a copy of a; assignment never copies."
+          "why": "Assumed b is a copy of a; assignment never copies.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2, 3, 4, 5] 5`",
           "correct": false,
-          "why": "Assumed the slice a[:] is an alias; it creates a new list."
+          "why": "Assumed the slice a[:] is an alias; it creates a new list.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2, 3, 4] 5`",
           "correct": false,
-          "why": "Assumed c also sees the later append through b."
+          "why": "Assumed c also sees the later append through b.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1613,7 +1734,8 @@
         {
           "text": "`[[0, 7, 0], [0, 7, 0]] [[0, 7, 0], [0, 7, 0]]`",
           "correct": false,
-          "why": "Assumed the comprehension also reuses one row; [0] * 3 is re-evaluated each iteration."
+          "why": "Assumed the comprehension also reuses one row; [0] * 3 is re-evaluated each iteration.",
+          "trap": "C9"
         },
         {
           "text": "`[[0, 7, 0], [0, 7, 0]] [[0, 7, 0], [0, 0, 0]]`",
@@ -1623,12 +1745,14 @@
         {
           "text": "`[[0, 7, 0], [0, 0, 0]] [[0, 7, 0], [0, 0, 0]]`",
           "correct": false,
-          "why": "Assumed * 2 copies the inner list."
+          "why": "Assumed * 2 copies the inner list.",
+          "trap": "C9"
         },
         {
           "text": "`[[7, 7, 7], [7, 7, 7]] [[0, 7, 0], [0, 0, 0]]`",
           "correct": false,
-          "why": "Assumed [0] * 3 also shares one element slot; repeating an int is harmless and assigning index 1 changes only that slot."
+          "why": "Assumed [0] * 3 also shares one element slot; repeating an int is harmless and assigning index 1 changes only that slot.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1652,15 +1776,18 @@
       "traps": [
         {
           "value": 222,
-          "why": "Assumed a shallow copy also copies the inner lists, so a[0] stays length 2."
+          "why": "Assumed a shallow copy also copies the inner lists, so a[0] stays length 2.",
+          "trap": "C2"
         },
         {
           "value": 332,
-          "why": "Assumed s.append([4]) also adds to a; the outer list is copied."
+          "why": "Assumed s.append([4]) also adds to a; the outer list is copied.",
+          "trap": "C9"
         },
         {
           "value": 231,
-          "why": "Forgot that d[1].append(8) changes d (or assumed deepcopy shares d[1] with a, which is not printed)."
+          "why": "Forgot that d[1].append(8) changes d (or assumed deepcopy shares d[1] with a, which is not printed).",
+          "trap": "C6"
         }
       ],
       "solution": "1. s shares inner lists with a: a[0] becomes [1, 2, 9] (length 3).\n2. s.append changes only s: len(a) = 2.\n3. d is independent: d[1] = [3, 8] (length 2).\n4. 200 + 30 + 2 = 232."
@@ -1678,12 +1805,14 @@
         {
           "text": "`[1] [1] [1, 2, 3]`",
           "correct": false,
-          "why": "Treated both operations as creating new lists."
+          "why": "Treated both operations as creating new lists.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2, 3] [1, 2, 3] [1, 2, 3]`",
           "correct": false,
-          "why": "Assumed x + [3] mutates the existing list."
+          "why": "Assumed x + [3] mutates the existing list.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2] [1, 2] [1, 2, 3]`",
@@ -1693,7 +1822,8 @@
         {
           "text": "`[1] [1, 2] [1, 2, 3]`",
           "correct": false,
-          "why": "Assumed += on a list rebinds like x = x + [2]; for lists it mutates in place."
+          "why": "Assumed += on a list rebinds like x = x + [2]; for lists it mutates in place.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1718,12 +1848,14 @@
         {
           "text": "The final line printed is `([1, 3], 2)`",
           "correct": false,
-          "why": "Assumed the failed += left the list unchanged; list += mutates first, then the tuple item assignment raises."
+          "why": "Assumed the failed += left the list unchanged; list += mutates first, then the tuple item assignment raises.",
+          "trap": "C9"
         },
         {
           "text": "`t[0].append(3)` raises `TypeError`",
           "correct": false,
-          "why": "Confused mutating the list inside the tuple with assigning to the tuple; append is allowed."
+          "why": "Confused mutating the list inside the tuple with assigning to the tuple; append is allowed.",
+          "trap": "C9"
         },
         {
           "text": "The final line printed is `([1, 3, 4], 2)`",
@@ -1748,7 +1880,8 @@
         {
           "text": "`[1, 3, 5]`",
           "correct": false,
-          "why": "Assumed the loop sees every original element; it walks indices of the shrinking list."
+          "why": "Assumed the loop sees every original element; it walks indices of the shrinking list.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2, 3, 4, 5]`",
@@ -1758,12 +1891,14 @@
         {
           "text": "`[1, 3, 4, 5]`",
           "correct": false,
-          "why": "Spotted the skip for the 2s but not for the 4s."
+          "why": "Spotted the skip for the 2s but not for the 4s.",
+          "trap": "C6"
         },
         {
           "text": "Raises `RuntimeError`",
           "correct": false,
-          "why": "Confused lists with dicts; changing a list's size during iteration does not raise."
+          "why": "Confused lists with dicts; changing a list's size during iteration does not raise.",
+          "trap": "C10"
         }
       ],
       "answer": null,
@@ -1787,11 +1922,13 @@
       "traps": [
         {
           "value": 66,
-          "why": "Assumed the loop visits only the original three elements; appended items are visited too."
+          "why": "Assumed the loop visits only the original three elements; appended items are visited too.",
+          "trap": "C9"
         },
         {
           "value": 6,
-          "why": "Assumed appending inside the loop has no effect."
+          "why": "Assumed appending inside the loop has no effect.",
+          "trap": "C9"
         }
       ],
       "solution": "1. Visits 1, 2, 3 → appends 10, 20, 30.\n2. Visits 10, 20 → appends 100, 200; 30, 100, 200 are not < 25.\n3. Sum = 1+2+3+10+20+30+100+200 = 366."
@@ -1809,7 +1946,8 @@
         {
           "text": "`[1, 3, 5]`",
           "correct": false,
-          "why": "Ignored the slice assignment."
+          "why": "Ignored the slice assignment.",
+          "trap": "C6"
         },
         {
           "text": "`['x', 5]`",
@@ -1819,12 +1957,14 @@
         {
           "text": "`['x', 3, 5]`",
           "correct": false,
-          "why": "Assumed slice assignment keeps the length and replaces only a[1]."
+          "why": "Assumed slice assignment keeps the length and replaces only a[1].",
+          "trap": "C9"
         },
         {
           "text": "`[0, 4]`",
           "correct": false,
-          "why": "Deleted the odd indices; a[::2] selects indices 0, 2, ..."
+          "why": "Deleted the odd indices; a[::2] selects indices 0, 2, ...",
+          "trap": "C6"
         }
       ],
       "answer": null,
@@ -1844,7 +1984,8 @@
         {
           "text": "`{'a': 1, 'b': 2, 'c': 3, 'aa': 10, 'cc': 30}`",
           "correct": false,
-          "why": "Ignored that pop removes the key."
+          "why": "Ignored that pop removes the key.",
+          "trap": "C6"
         },
         {
           "text": "`{'b': 2, 'aa': 10, 'cc': 30}`",
@@ -1854,12 +1995,14 @@
         {
           "text": "`{'aa': 10, 'b': 2, 'cc': 30}`",
           "correct": false,
-          "why": "Assumed the new key takes the old key's position; a new key is always appended."
+          "why": "Assumed the new key takes the old key's position; a new key is always appended.",
+          "trap": "C9"
         },
         {
           "text": "Raises `RuntimeError`",
           "correct": false,
-          "why": "Missed that the loop iterates over list(d), a copy, so changing d is safe."
+          "why": "Missed that the loop iterates over list(d), a copy, so changing d is safe.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1883,7 +2026,8 @@
       "traps": [
         {
           "value": 14,
-          "why": "Summed only the original elements and ignored the pushed x - 2 values."
+          "why": "Summed only the original elements and ignored the pushed x - 2 values.",
+          "trap": "C6"
         }
       ],
       "solution": "1. pop 5 (push 3), pop 3 (push 1), pop 1, pop 1, pop 4 (push 2), pop 2, pop 1, pop 3 (push 1), pop 1.\n2. Sum: 5+3+1+1+4+2+1+3+1 = 21."
@@ -1901,12 +2045,14 @@
         {
           "text": "`[[1, 2], [4], []]`",
           "correct": false,
-          "why": "Read two for-clauses as building nested lists; they produce one flat list."
+          "why": "Read two for-clauses as building nested lists; they produce one flat list.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 2, 2, 4, 3, 6]`",
           "correct": false,
-          "why": "Treated the inner range as range(1, 3) every time; it starts at the current x."
+          "why": "Treated the inner range as range(1, 3) every time; it starts at the current x.",
+          "trap": "C5"
         },
         {
           "text": "`[1, 2, 4]`",
@@ -1916,7 +2062,8 @@
         {
           "text": "`[1, 4]`",
           "correct": false,
-          "why": "Paired x and y like zip; consecutive for-clauses nest."
+          "why": "Paired x and y like zip; consecutive for-clauses nest.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -1940,15 +2087,18 @@
       "traps": [
         {
           "value": 7,
-          "why": "Ignored .lower(), counting D/d and A/a separately."
+          "why": "Ignored .lower(), counting D/d and A/a separately.",
+          "trap": "C6"
         },
         {
           "value": 4,
-          "why": "Forgot the space character."
+          "why": "Forgot the space character.",
+          "trap": "C6"
         },
         {
           "value": 13,
-          "why": "Counted the string length; a set keeps only distinct values."
+          "why": "Counted the string length; a set keeps only distinct values.",
+          "trap": "C9"
         }
       ],
       "solution": "1. Lower-cased characters: d, a, t, space, n.\n2. Set size 5."
@@ -1971,17 +2121,20 @@
         {
           "text": "`{'a': 12, 'b': 15, 'c': 6}`",
           "correct": false,
-          "why": "Assumed values accumulate for a repeated key."
+          "why": "Assumed values accumulate for a repeated key.",
+          "trap": "C9"
         },
         {
           "text": "`{'a': 5, 'b': 6, 'c': 6}`",
           "correct": false,
-          "why": "Assumed the first occurrence wins."
+          "why": "Assumed the first occurrence wins.",
+          "trap": "C9"
         },
         {
           "text": "Raises `KeyError`",
           "correct": false,
-          "why": "Assumed duplicate keys raise; they silently overwrite."
+          "why": "Assumed duplicate keys raise; they silently overwrite.",
+          "trap": "C9"
         }
       ],
       "answer": null,
@@ -2005,11 +2158,13 @@
       "traps": [
         {
           "value": 80,
-          "why": "Built rows instead of columns: took t[0] as [1, 2, 3]."
+          "why": "Built rows instead of columns: took t[0] as [1, 2, 3].",
+          "trap": "C2"
         },
         {
           "value": 165,
-          "why": "Ignored the `if x % 2 == 0` filter and summed all 45."
+          "why": "Ignored the `if x % 2 == 0` filter and summed all 45.",
+          "trap": "C6"
         }
       ],
       "solution": "1. t is the transpose; t[0] = [1, 4, 7], sum 12.\n2. Even entries: 2+4+6+8 = 20.\n3. 120 + 20 = 140."
@@ -2027,12 +2182,14 @@
         {
           "text": "Raises `TypeError`",
           "correct": false,
-          "why": "Assumed sum cannot take a generator."
+          "why": "Assumed sum cannot take a generator.",
+          "trap": "C9"
         },
         {
           "text": "`14 14`",
           "correct": false,
-          "why": "Assumed a generator can be iterated twice like a list."
+          "why": "Assumed a generator can be iterated twice like a list.",
+          "trap": "C9"
         },
         {
           "text": "`14 0`",
@@ -2042,7 +2199,8 @@
         {
           "text": "`30 0`",
           "correct": false,
-          "why": "Included 4 in range(4)."
+          "why": "Included 4 in range(4).",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -2062,12 +2220,14 @@
         {
           "text": "`5 2 [1, 2, 5] [1, 2]`",
           "correct": false,
-          "why": "Swapped difference and symmetric difference."
+          "why": "Swapped difference and symmetric difference.",
+          "trap": "C2"
         },
         {
           "text": "`7 2 [1, 2] [1, 2, 5]`",
           "correct": false,
-          "why": "Counted the union with duplicates (4 + 3)."
+          "why": "Counted the union with duplicates (4 + 3).",
+          "trap": "C6"
         },
         {
           "text": "`5 2 [1, 2] [1, 2, 5]`",
@@ -2077,7 +2237,8 @@
         {
           "text": "`5 2 [1, 2] [5]`",
           "correct": false,
-          "why": "Took ^ as B − A."
+          "why": "Took ^ as B − A.",
+          "trap": "C2"
         }
       ],
       "answer": null,
@@ -2101,11 +2262,13 @@
       "traps": [
         {
           "value": 4,
-          "why": "Assumed 1, True and 1.0 are distinct keys; they are equal and hash the same."
+          "why": "Assumed 1, True and 1.0 are distinct keys; they are equal and hash the same.",
+          "trap": "C9"
         },
         {
           "value": 3,
-          "why": "Merged 1 and 1.0 but kept True separate; True == 1."
+          "why": "Merged 1 and 1.0 but kept True separate; True == 1.",
+          "trap": "C9"
         }
       ],
       "solution": "1. 1 == True == 1.0 with equal hashes → one key (value ends as \"c\").\n2. Keys: 1 and 2."
@@ -2123,12 +2286,14 @@
         {
           "text": "`['aman', 'zoe', 'ria', 'dev']`",
           "correct": false,
-          "why": "Broke the tie by reverse name; the second key p[0] is ascending."
+          "why": "Broke the tie by reverse name; the second key p[0] is ascending.",
+          "trap": "C11"
         },
         {
           "text": "`['aman', 'dev', 'ria', 'zoe']`",
           "correct": false,
-          "why": "Sorted by name only."
+          "why": "Sorted by name only.",
+          "trap": "C6"
         },
         {
           "text": "`['aman', 'ria', 'zoe', 'dev']`",
@@ -2138,7 +2303,8 @@
         {
           "text": "`['dev', 'ria', 'zoe', 'aman']`",
           "correct": false,
-          "why": "Ignored the minus sign and sorted scores ascending."
+          "why": "Ignored the minus sign and sorted scores ascending.",
+          "trap": "C11"
         }
       ],
       "answer": null,
@@ -2162,15 +2328,18 @@
       "traps": [
         {
           "value": 16,
-          "why": "Assumed dict keys come out sorted; they keep insertion order (to, be, or, not)."
+          "why": "Assumed dict keys come out sorted; they keep insertion order (to, be, or, not).",
+          "trap": "C9"
         },
         {
           "value": 38,
-          "why": "Used the number of words (6) instead of distinct keys (4)."
+          "why": "Used the number of words (6) instead of distinct keys (4).",
+          "trap": "C6"
         },
         {
           "value": 35,
-          "why": "Took freq[best] as 1; the maximum count is 2 (for 'to', the first key with count 2)."
+          "why": "Took freq[best] as 1; the maximum count is 2 (for 'to', the first key with count 2).",
+          "trap": "C6"
         }
       ],
       "solution": "1. freq = {to: 2, be: 2, or: 1, not: 1} in insertion order.\n2. order.index(\"not\") = 3 → 30.\n3. best = 'to' (first max), count 2; len(freq) = 4.\n4. 30 + 2 + 4 = 36."
@@ -2188,7 +2357,8 @@
         {
           "text": "`{1, 2, 3} < {1, 2, 3}`",
           "correct": false,
-          "why": "Read < as subset-or-equal; for sets < means proper subset."
+          "why": "Read < as subset-or-equal; for sets < means proper subset.",
+          "trap": "C5"
         },
         {
           "text": "`[3, 1, 2].sort() is None`",
@@ -2198,7 +2368,8 @@
         {
           "text": "`list({\"b\": 1, \"a\": 2}) == [\"a\", \"b\"]`",
           "correct": false,
-          "why": "Assumed dict keys are sorted; list(d) follows insertion order ['b', 'a']."
+          "why": "Assumed dict keys are sorted; list(d) follows insertion order ['b', 'a'].",
+          "trap": "C9"
         },
         {
           "text": "`sorted([3, 1, 2], reverse=True) == [3, 2, 1]`",
@@ -2227,11 +2398,13 @@
       "traps": [
         {
           "value": 41,
-          "why": "Summed the items instead of their indices (enumerate gives index i)."
+          "why": "Summed the items instead of their indices (enumerate gives index i).",
+          "trap": "C2"
         },
         {
           "value": 33,
-          "why": "Used 1-based indices; enumerate starts at 0."
+          "why": "Used 1-based indices; enumerate starts at 0.",
+          "trap": "C6"
         }
       ],
       "solution": "1. Groups by item % 3: key 2 → [0, 3, 6], key 0 → [1, 4], key 1 → [2, 5].\n2. total = 2·9 + 0·5 + 1·7 = 25."
@@ -2254,17 +2427,20 @@
         {
           "text": "`[1, 2, 4, 5, 7, 8, 10]`",
           "correct": false,
-          "why": "Assumed BFS visits values in increasing order; 8 was queued before 7."
+          "why": "Assumed BFS visits values in increasing order; 8 was queued before 7.",
+          "trap": "C9"
         },
         {
           "text": "`[1, 4, 7, 10, 8, 2, 5]`",
           "correct": false,
-          "why": "Used pop() (LIFO, depth-first) instead of popleft() (FIFO)."
+          "why": "Used pop() (LIFO, depth-first) instead of popleft() (FIFO).",
+          "trap": "C2"
         },
         {
           "text": "`[1, 2, 4, 5, 8, 7]`",
           "correct": false,
-          "why": "Treated `y <= 10` as `y < 10` and dropped 10."
+          "why": "Treated `y <= 10` as `y < 10` and dropped 10.",
+          "trap": "C5"
         }
       ],
       "answer": null,
@@ -2288,11 +2464,13 @@
       "traps": [
         {
           "value": 7,
-          "why": "Returned +steps for the unsuccessful search; the function returns -steps when not found."
+          "why": "Returned +steps for the unsuccessful search; the function returns -steps when not found.",
+          "trap": "C11"
         },
         {
           "value": 0,
-          "why": "Assumed the unsuccessful search takes the same 3 steps as the successful one; it needs a 4th probe before lo > hi."
+          "why": "Assumed the unsuccessful search takes the same 3 steps as the successful one; it needs a 4th probe before lo > hi.",
+          "trap": "C6"
         }
       ],
       "solution": "1. a = [1, 4, ..., 37] (13 items, a[i] = 1 + 3i); 22 is at index 7.\n2. search 22: mid 6 (19), mid 9 (28), mid 7 (22) → 3.\n3. search 23: mid 6, 9, 7 (22 < 23 → lo 8), mid 8 (25 > 23 → hi 7), stop → -4.\n4. 3 - 4 = -1."
@@ -2310,17 +2488,20 @@
         {
           "text": "`a3b1c2d3 a1b`",
           "correct": false,
-          "why": "Read [::2] as the first half; it takes every second character."
+          "why": "Read [::2] as the first half; it takes every second character.",
+          "trap": "C10"
         },
         {
           "text": "`a3bc2d3 abc`",
           "correct": false,
-          "why": "Assumed counts of 1 are omitted; the code always appends str(j - i)."
+          "why": "Assumed counts of 1 are omitted; the code always appends str(j - i).",
+          "trap": "C9"
         },
         {
           "text": "`a2b0c1d2 abc`",
           "correct": false,
-          "why": "Off by one: counted j - i - 1; j stops at the first different character, so j - i is the run length."
+          "why": "Off by one: counted j - i - 1; j stops at the first different character, so j - i is the run length.",
+          "trap": "C6"
         },
         {
           "text": "`a3b1c2d3 abc`",
@@ -2349,11 +2530,13 @@
       "traps": [
         {
           "value": 29,
-          "why": "Forgot that the else runs when the inner loop finishes without break (row 2)."
+          "why": "Forgot that the else runs when the inner loop finishes without break (row 2).",
+          "trap": "C9"
         },
         {
           "value": 102,
-          "why": "Ran the else for every row, including rows that hit break."
+          "why": "Ran the else for every row, including rows that hit break.",
+          "trap": "C9"
         }
       ],
       "solution": "1. Row 0: +3, then 8 > 7 → +1, break (score 4).\n2. Row 1: 9 > 7 → +10, break (score 14).\n3. Row 2: +4 +6 +5 = 29, no break → else doubles → 58."
