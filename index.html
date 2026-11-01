@@ -10,14 +10,36 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
   <script>
-    try { const t = localStorage.getItem('gdc.theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+    // Theme lives here (not in app.js) so it works even before the app modules load.
+    (function () {
+      var modes = ['auto', 'light', 'dark'];
+      var mode = 'auto';
+      try { mode = localStorage.getItem('gdc.theme') || 'auto'; } catch (e) {}
+      function apply() {
+        if (mode === 'auto') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', mode);
+        var btn = document.getElementById('themebtn');
+        if (btn) {
+          btn.title = 'Theme: ' + mode;
+          btn.querySelector('use').setAttribute('href', mode === 'light' ? '#i-sun' : mode === 'dark' ? '#i-moon' : '#i-auto');
+        }
+      }
+      apply();
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest || !e.target.closest('#themebtn')) return;
+        mode = modes[(modes.indexOf(mode) + 1) % modes.length];
+        try { localStorage.setItem('gdc.theme', mode); } catch (err) {}
+        apply();
+      });
+      document.addEventListener('DOMContentLoaded', apply);
+    })();
   </script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/app.css?v=202611020504">
   <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/app.js?v=202611020504"></script>
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
