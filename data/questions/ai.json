@@ -1,0 +1,1192 @@
+{
+ "area": "ai",
+ "skills": {
+  "ai.uninformed-order": {
+   "title": "BFS and DFS expansion order",
+   "subject": "Artificial Intelligence",
+   "days": [
+    57
+   ],
+   "theory": "ai-uninformed",
+   "check": "Write the frontier after every expansion; BFS = FIFO queue, DFS = LIFO/recursion; apply the stated tie rule and skip nodes already seen."
+  },
+  "ai.goal-test": {
+   "title": "Goal test on generation vs on expansion",
+   "subject": "Artificial Intelligence",
+   "days": [
+    57
+   ],
+   "theory": "ai-uninformed",
+   "check": "Test on generation stops while the goal's parent is being expanded; test on expansion lets the goal wait in the frontier (one extra level for BFS). UCS needs the test on expansion."
+  },
+  "ai.ucs-trace": {
+   "title": "Uniform-cost search traces",
+   "subject": "Artificial Intelligence",
+   "days": [
+    57
+   ],
+   "theory": "ai-uninformed",
+   "check": "Pop the lowest g (ties as stated), lower a frontier node's g when a cheaper path appears, stop only when the goal is popped."
+  },
+  "ai.ids": {
+   "title": "Iterative deepening search",
+   "subject": "Artificial Intelligence",
+   "days": [
+    57
+   ],
+   "theory": "ai-uninformed",
+   "check": "Limits 0,1,â€¦,d; each iteration is a fresh DFS from the root. Generated nodes: dÂ·b + (dâˆ’1)bÂ² + â€¦ + 1Â·b^d = O(b^d); memory O(bd)."
+  },
+  "ai.search-props": {
+   "title": "Completeness and optimality of uninformed search",
+   "subject": "Artificial Intelligence",
+   "days": [
+    57
+   ],
+   "theory": "ai-uninformed",
+   "check": "BFS/UCS/IDS complete (finite b); DFS not with infinite paths. Optimal: BFS/IDS for unit costs, UCS for costs â‰¥ Îµ > 0; DFS never guaranteed."
+  },
+  "ai.search-complexity": {
+   "title": "Time and space in b, d, m",
+   "subject": "Artificial Intelligence",
+   "days": [
+    57
+   ],
+   "theory": "ai-uninformed",
+   "check": "BFS time and space O(b^d) (O(b^{d+1}) with late goal test); DFS time O(b^m), space O(bm); IDS O(b^d) time, O(bd) space; UCS O(b^{1+âŒŠC*/ÎµâŒ‹})."
+  }
+ },
+ "questions": [
+  {
+   "id": "ai-uninformed-order-01",
+   "skill": "ai.uninformed-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (DA-2024-Q44 style)",
+   "stem": "Breadth-first search is run on the undirected graph in the figure from start $S$ to goal $G$. Use graph search (a node already in the frontier or already expanded is never added again), generate successors in alphabetical order, and apply the goal test when a node is selected for expansion. In which order are nodes expanded (the goal counts as expanded)?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 315 165\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 79L85 46M35 91L85 124M107 38L158 27M105 46L160 79M105 124L160 91M107 132L158 143M182 27L233 38M182 87L278 108M182 142L278 113M251 50L284 100\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"85\" r=\"12\"/><circle cx=\"95\" cy=\"40\" r=\"12\"/><circle cx=\"95\" cy=\"130\" r=\"12\"/><circle cx=\"170\" cy=\"25\" r=\"12\"/><circle cx=\"170\" cy=\"85\" r=\"12\"/><circle cx=\"170\" cy=\"145\" r=\"12\"/><circle cx=\"245\" cy=\"40\" r=\"12\"/><circle cx=\"290\" cy=\"110\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"89\">S</text><text x=\"95\" y=\"44\">A</text><text x=\"95\" y=\"134\">B</text><text x=\"170\" y=\"29\">C</text><text x=\"170\" y=\"89\">D</text><text x=\"170\" y=\"149\">E</text><text x=\"245\" y=\"44\">F</text><text x=\"290\" y=\"114\">G</text></g></svg>",
+   "options": [
+    {
+     "text": "S, A, C, F, G",
+     "correct": false,
+     "why": "This is the depth-first order: it follows A â†’ C â†’ F â†’ G instead of finishing each level.",
+     "trap": "C2"
+    },
+    {
+     "text": "S, A, B, C, D",
+     "correct": false,
+     "why": "Stopped when G was generated (while expanding D); the goal test here is on expansion, so E, F and then G are still dequeued.",
+     "trap": "C6"
+    },
+    {
+     "text": "S, A, B, C, D, E, F, G",
+     "correct": true,
+     "why": "FIFO queue: S â†’ (A, B) â†’ A adds C, D â†’ B adds only E (D is already queued) â†’ C adds F â†’ D adds G; E and F are dequeued before G."
+    },
+    {
+     "text": "S, A, D, G",
+     "correct": false,
+     "why": "This is the path BFS returns, not the order of expansion; nodes off the path are expanded too.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Queue after S: A, B.\n2. A â†’ add C, D. B â†’ D already queued, add E.\n3. C â†’ add F. D â†’ add G. E â†’ G already queued.\n4. F, then G is dequeued and passes the goal test: S, A, B, C, D, E, F, G."
+  },
+  {
+   "id": "ai-uninformed-order-02",
+   "skill": "ai.uninformed-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Recursive depth-first search is run on the graph in the figure from $S$ to goal $G$. Unvisited neighbours are tried in alphabetical order, a node is never visited twice, and the search stops as soon as $G$ is visited. Which visiting order results?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 315 165\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 79L85 46M35 91L85 124M107 38L158 27M105 46L160 79M105 124L160 91M107 132L158 143M182 27L233 38M182 87L278 108M182 142L278 113M251 50L284 100\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"85\" r=\"12\"/><circle cx=\"95\" cy=\"40\" r=\"12\"/><circle cx=\"95\" cy=\"130\" r=\"12\"/><circle cx=\"170\" cy=\"25\" r=\"12\"/><circle cx=\"170\" cy=\"85\" r=\"12\"/><circle cx=\"170\" cy=\"145\" r=\"12\"/><circle cx=\"245\" cy=\"40\" r=\"12\"/><circle cx=\"290\" cy=\"110\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"89\">S</text><text x=\"95\" y=\"44\">A</text><text x=\"95\" y=\"134\">B</text><text x=\"170\" y=\"29\">C</text><text x=\"170\" y=\"89\">D</text><text x=\"170\" y=\"149\">E</text><text x=\"245\" y=\"44\">F</text><text x=\"290\" y=\"114\">G</text></g></svg>",
+   "options": [
+    {
+     "text": "S, A, B, C, D, E, F, G",
+     "correct": false,
+     "why": "That is the breadth-first (level-by-level) order; DFS goes deep along the first branch.",
+     "trap": "C2"
+    },
+    {
+     "text": "S, A, D, G",
+     "correct": false,
+     "why": "That is the shortest path; DFS from A tries C before D, so it reaches G through C and F.",
+     "trap": "C10"
+    },
+    {
+     "text": "S, A, C, F, G",
+     "correct": true,
+     "why": "S â†’ A (first alphabetically) â†’ C (first unvisited neighbour of A) â†’ F â†’ G, which is the goal."
+    },
+    {
+     "text": "S, B, E, G",
+     "correct": false,
+     "why": "Tried neighbours in reverse alphabetical order (B before A), like pushing children onto a stack in the wrong order.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. S â†’ A (A < B).\n2. A's unvisited neighbours: C, D â†’ go to C.\n3. C â†’ F â†’ G (goal). Order S, A, C, F, G; the path found has 4 edges, not the shortest."
+  },
+  {
+   "id": "ai-uninformed-order-03",
+   "skill": "ai.uninformed-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2024-Q44 style)",
+   "stem": "In the tree shown, children are generated left to right and the goal test is applied when a node is expanded (the goal counts as expanded). The goal is $J$. Let $n_B$ and $n_D$ be the numbers of nodes expanded by BFS and by DFS. What is $n_B-n_D$?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 330 158\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M155 21L89 53M175 21L241 53M71 66L44 92M87 66L114 92M243 66L216 92M259 66L286 92M31 110L20 132M41 110L53 132M117 110L106 132M127 110L139 132M203 110L191 132M213 110L224 132M289 110L277 132M299 110L310 132\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"15\" cy=\"142\" r=\"11\"/><circle cx=\"58\" cy=\"142\" r=\"11\"/><circle cx=\"36\" cy=\"100\" r=\"11\"/><circle cx=\"101\" cy=\"142\" r=\"11\"/><circle cx=\"144\" cy=\"142\" r=\"11\"/><circle cx=\"122\" cy=\"100\" r=\"11\"/><circle cx=\"79\" cy=\"58\" r=\"11\"/><circle cx=\"186\" cy=\"142\" r=\"11\"/><circle cx=\"229\" cy=\"142\" r=\"11\"/><circle cx=\"208\" cy=\"100\" r=\"11\"/><circle cx=\"272\" cy=\"142\" r=\"11\"/><circle cx=\"315\" cy=\"142\" r=\"11\"/><circle cx=\"294\" cy=\"100\" r=\"11\"/><circle cx=\"251\" cy=\"58\" r=\"11\"/><circle cx=\"165\" cy=\"16\" r=\"11\"/></g><g text-anchor=\"middle\"><text x=\"15\" y=\"146\">H</text><text x=\"58\" y=\"146\">I</text><text x=\"36\" y=\"104\">D</text><text x=\"101\" y=\"146\">J</text><text x=\"144\" y=\"146\">K</text><text x=\"122\" y=\"104\">E</text><text x=\"79\" y=\"62\">B</text><text x=\"186\" y=\"146\">L</text><text x=\"229\" y=\"146\">M</text><text x=\"208\" y=\"104\">F</text><text x=\"272\" y=\"146\">N</text><text x=\"315\" y=\"146\">O</text><text x=\"294\" y=\"104\">G</text><text x=\"251\" y=\"62\">C</text><text x=\"165\" y=\"20\">A</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 10,
+     "why": "Reported $n_B$ alone; the question asks for the difference.",
+     "trap": "C6"
+    },
+    {
+     "value": -3,
+     "why": "Subtracted in the wrong order ($n_D-n_B$).",
+     "trap": "C11"
+    },
+    {
+     "value": 2,
+     "why": "Did not count the goal $J$ as expanded in one of the two searches.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Counted BFS one node past the goal; BFS stops exactly at $J$, the 10th node in level order.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. BFS (level order): A, B, C, D, E, F, G, H, I, J â†’ $n_B=10$.\n2. DFS: A, B, D, H, I, E, J â†’ $n_D=7$.\n3. $n_B-n_D=3$."
+  },
+  {
+   "id": "ai-uninformed-order-04",
+   "skill": "ai.uninformed-order",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "In the tree shown, the goal is $G$. Children are generated left to right and the goal test is applied on expansion (the goal counts as expanded). Which statements are correct?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 300 158\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M154 20L66 54M167 27L174 47M174 20L248 54M48 66L23 92M64 66L88 92M177 69L177 89M252 67L237 91M264 67L279 91M15 111L15 131M90 109L75 133M102 109L117 133M177 111L177 131M231 111L231 131\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"15\" cy=\"142\" r=\"11\"/><circle cx=\"15\" cy=\"100\" r=\"11\"/><circle cx=\"69\" cy=\"142\" r=\"11\"/><circle cx=\"123\" cy=\"142\" r=\"11\"/><circle cx=\"96\" cy=\"100\" r=\"11\"/><circle cx=\"56\" cy=\"58\" r=\"11\"/><circle cx=\"177\" cy=\"142\" r=\"11\"/><circle cx=\"177\" cy=\"100\" r=\"11\"/><circle cx=\"177\" cy=\"58\" r=\"11\"/><circle cx=\"231\" cy=\"142\" r=\"11\"/><circle cx=\"231\" cy=\"100\" r=\"11\"/><circle cx=\"285\" cy=\"100\" r=\"11\"/><circle cx=\"258\" cy=\"58\" r=\"11\"/><circle cx=\"164\" cy=\"16\" r=\"11\"/></g><g text-anchor=\"middle\"><text x=\"15\" y=\"146\">J</text><text x=\"15\" y=\"104\">E</text><text x=\"69\" y=\"146\">K</text><text x=\"123\" y=\"146\">L</text><text x=\"96\" y=\"104\">F</text><text x=\"56\" y=\"62\">B</text><text x=\"177\" y=\"146\">M</text><text x=\"177\" y=\"104\">G</text><text x=\"177\" y=\"62\">C</text><text x=\"231\" y=\"146\">N</text><text x=\"231\" y=\"104\">H</text><text x=\"285\" y=\"104\">I</text><text x=\"258\" y=\"62\">D</text><text x=\"164\" y=\"20\">A</text></g></svg>",
+   "options": [
+    {
+     "text": "BFS expands 7 nodes.",
+     "correct": true,
+     "why": "Level order A, B, C, D, E, F, G: the goal is the 7th node dequeued."
+    },
+    {
+     "text": "DFS expands fewer nodes than BFS.",
+     "correct": false,
+     "why": "DFS first exhausts B's whole subtree (E, J, F, K, L) before reaching C, so it expands 9 nodes; DFS is not always cheaper.",
+     "trap": "C8"
+    },
+    {
+     "text": "DFS expands 9 nodes.",
+     "correct": true,
+     "why": "A, B, E, J, F, K, L, C, G: nine expansions."
+    },
+    {
+     "text": "DFS returns a longer path to $G$ than BFS.",
+     "correct": false,
+     "why": "In a tree each node has exactly one path from the root, so both return Aâ€“Câ€“G.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS: A, B, C, D, E, F, G â†’ 7.\n2. DFS: A, B, E, J, F, K, L, C, G â†’ 9.\n3. Paths in a tree are unique, so both return A â†’ C â†’ G."
+  },
+  {
+   "id": "ai-uninformed-order-05",
+   "skill": "ai.uninformed-order",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Recursive depth-first graph search runs on the **directed** graph in the figure from $S$ to $G$. Successors are tried in alphabetical order, visited nodes are skipped, and the search stops when $G$ is visited. Which path does DFS return?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 315 160\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 73L90 37M34 87L91 133M108 38L152 82M148 89L37 81M169 98L211 132M112 140L208 140M229 133L281 92M112 30L208 30M229 37L281 78\" fill=\"none\" stroke=\"currentColor\"/><path d=\"M90 37L86 44L81 38zM91 133L82 131L87 124zM152 82L143 79L149 73zM37 81L45 77L45 85zM211 132L202 130L207 124zM208 140L200 144L200 136zM281 92L277 101L272 94zM208 30L200 34L200 26zM281 78L272 76L277 69z\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"80\" r=\"12\"/><circle cx=\"100\" cy=\"30\" r=\"12\"/><circle cx=\"160\" cy=\"90\" r=\"12\"/><circle cx=\"100\" cy=\"140\" r=\"12\"/><circle cx=\"220\" cy=\"140\" r=\"12\"/><circle cx=\"220\" cy=\"30\" r=\"12\"/><circle cx=\"290\" cy=\"85\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"84\">S</text><text x=\"100\" y=\"34\">A</text><text x=\"160\" y=\"94\">B</text><text x=\"100\" y=\"144\">C</text><text x=\"220\" y=\"144\">D</text><text x=\"220\" y=\"34\">E</text><text x=\"290\" y=\"89\">G</text></g></svg>",
+   "options": [
+    {
+     "text": "S â†’ A â†’ B â†’ S â†’ C â†’ D â†’ G",
+     "correct": false,
+     "why": "Followed the edge B â†’ S back to the visited start; graph search skips visited nodes, so no cycle enters the path.",
+     "trap": "C9"
+    },
+    {
+     "text": "S â†’ C â†’ D â†’ G",
+     "correct": false,
+     "why": "Tried C before A; alphabetical order puts A first at S.",
+     "trap": "C6"
+    },
+    {
+     "text": "S â†’ A â†’ E â†’ G",
+     "correct": false,
+     "why": "That is the fewest-edge path BFS would return; DFS commits to A's first successor B before trying E.",
+     "trap": "C2"
+    },
+    {
+     "text": "S â†’ A â†’ B â†’ D â†’ G",
+     "correct": true,
+     "why": "From S go to A, from A to B (B < E); B's successor S is visited, so go to D, then G."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. S â†’ A (A < C).\n2. A â†’ B (B < E).\n3. B: S already visited, so â†’ D.\n4. D â†’ G. Path S, A, B, D, G (4 edges), while BFS would find S, A, E, G (3 edges)."
+  },
+  {
+   "id": "ai-uninformed-order-06",
+   "skill": "ai.uninformed-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Breadth-first graph search runs on the **directed** graph in the figure from $S$ to $G$. Successors are generated alphabetically, a node already in the frontier or already expanded is not added again, and the goal test is applied on expansion. In which order are nodes expanded?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 315 160\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 73L90 37M34 87L91 133M108 38L152 82M148 89L37 81M169 98L211 132M112 140L208 140M229 133L281 92M112 30L208 30M229 37L281 78\" fill=\"none\" stroke=\"currentColor\"/><path d=\"M90 37L86 44L81 38zM91 133L82 131L87 124zM152 82L143 79L149 73zM37 81L45 77L45 85zM211 132L202 130L207 124zM208 140L200 144L200 136zM281 92L277 101L272 94zM208 30L200 34L200 26zM281 78L272 76L277 69z\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"80\" r=\"12\"/><circle cx=\"100\" cy=\"30\" r=\"12\"/><circle cx=\"160\" cy=\"90\" r=\"12\"/><circle cx=\"100\" cy=\"140\" r=\"12\"/><circle cx=\"220\" cy=\"140\" r=\"12\"/><circle cx=\"220\" cy=\"30\" r=\"12\"/><circle cx=\"290\" cy=\"85\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"84\">S</text><text x=\"100\" y=\"34\">A</text><text x=\"160\" y=\"94\">B</text><text x=\"100\" y=\"144\">C</text><text x=\"220\" y=\"144\">D</text><text x=\"220\" y=\"34\">E</text><text x=\"290\" y=\"89\">G</text></g></svg>",
+   "options": [
+    {
+     "text": "S, A, B, D, G",
+     "correct": false,
+     "why": "That is the depth-first order; BFS finishes A's sibling C before going deeper.",
+     "trap": "C2"
+    },
+    {
+     "text": "S, A, C, B, E, D, S, G",
+     "correct": false,
+     "why": "Re-added S through the edge B â†’ S; graph search never re-adds an expanded node.",
+     "trap": "C9"
+    },
+    {
+     "text": "S, A, C, B, E, D, G",
+     "correct": true,
+     "why": "Queue: S â†’ A, C â†’ (A adds B, E) â†’ C adds D â†’ B adds nothing new (S expanded, D queued) â†’ E adds G â†’ D â†’ G."
+    },
+    {
+     "text": "S, A, C, B, E",
+     "correct": false,
+     "why": "Stopped when G was generated while expanding E; with the test on expansion, D and then G are still dequeued.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Expand S: queue A, C.\n2. A: add B, E. C: add D.\n3. B: S expanded, D queued â†’ nothing. E: add G.\n4. D: G queued â†’ nothing. Dequeue G. Order S, A, C, B, E, D, G."
+  },
+  {
+   "id": "ai-goal-test-01",
+   "skill": "ai.goal-test",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Breadth-first graph search is run on the undirected graph in the figure from $S$ to $G$, generating successors alphabetically. This time the goal test is applied **when a node is generated**, and the search stops at that moment. How many nodes are expanded (have their successors generated)?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 315 165\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 79L85 46M35 91L85 124M107 38L158 27M105 46L160 79M105 124L160 91M107 132L158 143M182 27L233 38M182 87L278 108M182 142L278 113M251 50L284 100\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"85\" r=\"12\"/><circle cx=\"95\" cy=\"40\" r=\"12\"/><circle cx=\"95\" cy=\"130\" r=\"12\"/><circle cx=\"170\" cy=\"25\" r=\"12\"/><circle cx=\"170\" cy=\"85\" r=\"12\"/><circle cx=\"170\" cy=\"145\" r=\"12\"/><circle cx=\"245\" cy=\"40\" r=\"12\"/><circle cx=\"290\" cy=\"110\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"89\">S</text><text x=\"95\" y=\"44\">A</text><text x=\"95\" y=\"134\">B</text><text x=\"170\" y=\"29\">C</text><text x=\"170\" y=\"89\">D</text><text x=\"170\" y=\"149\">E</text><text x=\"245\" y=\"44\">F</text><text x=\"290\" y=\"114\">G</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Applied the goal test on expansion instead: then E, F and G are also dequeued.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Counted G as expanded; with the test on generation G is detected while D is being expanded and is never expanded.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Stopped before expanding D, but G is only generated when D (the first node adjacent to G in the queue) is expanded.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Expand S (gen A, B), A (gen C, D), B (gen E), C (gen F).\n2. Expand D: generates G, which passes the goal test.\n3. Expanded: S, A, B, C, D â†’ 5."
+  },
+  {
+   "id": "ai-goal-test-02",
+   "skill": "ai.goal-test",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Breadth-first search on a tree with branching factor $b$ and shallowest goal at depth $d$ is changed so that the goal test is done **when a node is expanded** instead of when it is generated. In the worst case, the number of nodes generated becomes",
+   "figure": null,
+   "options": [
+    {
+     "text": "$O(b^d)$, unchanged",
+     "correct": false,
+     "why": "With a test on expansion the goal waits in the queue while every other depth-$d$ node is expanded and generates its children.",
+     "trap": "C6"
+    },
+    {
+     "text": "$O(bd)$",
+     "correct": false,
+     "why": "That is the memory of DFS or IDS, not the node count of BFS.",
+     "trap": "C3"
+    },
+    {
+     "text": "$O(b^{d+1})$",
+     "correct": true,
+     "why": "Each depth-$d$ node before the goal is expanded, so nearly a full extra level of $b^{d+1}$ children is generated."
+    },
+    {
+     "text": "$O(b^{2d})$",
+     "correct": false,
+     "why": "Squared the bound; delaying the test adds only one level, a factor of $b$.",
+     "trap": "C4"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Test on generation: stop when the goal is created â†’ $b+b^2+\\dots+b^d=O(b^d)$.\n2. Test on expansion: all depth-$d$ nodes ahead of the goal are expanded â†’ adds up to $b^{d+1}$ nodes.\n3. So $O(b^{d+1})$."
+  },
+  {
+   "id": "ai-goal-test-03",
+   "skill": "ai.goal-test",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "BFS runs on a complete binary tree (branching factor 2). The only goal is the **last** node at depth 3 in left-to-right order. The goal test is applied **when a node is expanded**, and expanding a node generates both its children. Counting the root, how many nodes are generated in total when the search stops?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 29,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 15,
+     "why": "Used the goal test on generation: the search would stop as soon as the goal is created ($1+2+4+8$).",
+     "trap": "C6"
+    },
+    {
+     "value": 31,
+     "why": "Also expanded the goal itself; the search stops when the goal is selected, before its children are generated.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Reported only the extra nodes caused by the late test ($7\\times 2$), not the total generated.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Before the goal is dequeued, all of depths 0â€“3 have been generated: $1+2+4+8=15$.\n2. The 7 depth-3 nodes ahead of the goal are expanded, adding $7\\times 2=14$ nodes.\n3. Total $15+14=29$."
+  },
+  {
+   "id": "ai-goal-test-04",
+   "skill": "ai.goal-test",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (DA-2025-Q44 style)",
+   "stem": "For which strategy does applying the goal test at generation time (instead of at expansion) break its optimality guarantee?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Uniform-cost search",
+     "correct": true,
+     "why": "A goal generated early may carry a high $g$; a cheaper path can still be found later, so UCS must wait until the goal is popped."
+    },
+    {
+     "text": "Iterative deepening search with unit step costs",
+     "correct": false,
+     "why": "Each IDS iteration finds the shallowest goal either way; the test position changes cost, not optimality.",
+     "trap": "C2"
+    },
+    {
+     "text": "Depth-first search",
+     "correct": false,
+     "why": "DFS is not optimal under either rule, so there is no guarantee to break.",
+     "trap": "C9"
+    },
+    {
+     "text": "Breadth-first search with unit step costs",
+     "correct": false,
+     "why": "For BFS the first goal generated is already at the shallowest depth, so an early test keeps it optimal and saves work.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS/IDS: optimal for unit costs; an early test is safe.\n2. UCS: optimality comes from popping in increasing $g$; testing on generation can return a costlier path."
+  },
+  {
+   "id": "ai-goal-test-05",
+   "skill": "ai.goal-test",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Uniform-cost search runs on the weighted graph in the figure from $S$ to $G$ (ties broken alphabetically). Which statements are correct?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 170\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 78L100 37M35 92L100 133M120 37L180 78M120 133L180 92M202 82L283 63M122 32L283 58M122 141L218 149M237 140L288 70\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"85\" r=\"12\"/><circle cx=\"110\" cy=\"30\" r=\"12\"/><circle cx=\"110\" cy=\"140\" r=\"12\"/><circle cx=\"190\" cy=\"85\" r=\"12\"/><circle cx=\"230\" cy=\"150\" r=\"12\"/><circle cx=\"295\" cy=\"60\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"89\">S</text><text x=\"110\" y=\"34\">A</text><text x=\"110\" y=\"144\">B</text><text x=\"190\" y=\"89\">C</text><text x=\"230\" y=\"154\">D</text><text x=\"295\" y=\"64\">G</text><text x=\"72\" y=\"69\">2</text><text x=\"63\" y=\"124\">2</text><text x=\"145\" y=\"69\">2</text><text x=\"145\" y=\"109\">1</text><text x=\"245\" y=\"85\">3</text><text x=\"201\" y=\"58\">6</text><text x=\"169\" y=\"158\">3</text><text x=\"255\" y=\"104\">2</text></g></svg>",
+   "options": [
+    {
+     "text": "With the goal test on generation, the search stops after expanding S and A and returns a path of cost 8.",
+     "correct": true,
+     "why": "A is popped first (tie with B, alphabetical) and generates G with $g=2+6=8$; the early test accepts it."
+    },
+    {
+     "text": "With the goal test on expansion, the returned path costs 6.",
+     "correct": true,
+     "why": "G is popped with $g=6$ via Sâ€“Bâ€“Câ€“G, after C (3) and D (5)."
+    },
+    {
+     "text": "Both placements return the same path because UCS orders the frontier by cost.",
+     "correct": false,
+     "why": "Ordering helps only if the goal must be popped; a generation-time test accepts the first, costly copy of G.",
+     "trap": "C8"
+    },
+    {
+     "text": "With the goal test on expansion, the returned path is Sâ€“Aâ€“Câ€“G.",
+     "correct": false,
+     "why": "Sâ€“Aâ€“Câ€“G costs 7; C is reached more cheaply via B (cost 3), so the parent of C is B.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pop S: A=2, B=2. Pop A (tie, alphabetical): C=4, G=8 â† early test stops here (cost 8).\n2. Otherwise pop B: Câ†’3, D=5. Pop C: Gâ†’6. Pop D: G stays 6.\n3. Pop G at 6 via Sâ€“Bâ€“Câ€“G."
+  },
+  {
+   "id": "ai-ucs-trace-01",
+   "skill": "ai.ucs-trace",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Uniform-cost graph search runs on the weighted undirected graph in the figure from $S$ to $G$. A frontier node's cost is lowered if a cheaper path is found, ties are broken alphabetically, and the goal test is done when a node is popped. In what order are nodes expanded (the goal counts)?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 325 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 29L100 73M28 34L57 138M103 90L67 140M122 83L178 97M71 146L179 104M72 151L238 159M198 108L242 152M200 93L290 29M254 149L296 33M37 22L288 22\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"22\" r=\"12\"/><circle cx=\"110\" cy=\"80\" r=\"12\"/><circle cx=\"60\" cy=\"150\" r=\"12\"/><circle cx=\"190\" cy=\"100\" r=\"12\"/><circle cx=\"250\" cy=\"160\" r=\"12\"/><circle cx=\"300\" cy=\"22\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"26\">S</text><text x=\"110\" y=\"84\">A</text><text x=\"60\" y=\"154\">B</text><text x=\"190\" y=\"104\">C</text><text x=\"250\" y=\"164\">D</text><text x=\"300\" y=\"26\">G</text><text x=\"62\" y=\"62\">1</text><text x=\"34\" y=\"92\">4</text><text x=\"78\" y=\"114\">2</text><text x=\"148\" y=\"103\">5</text><text x=\"128\" y=\"137\">1</text><text x=\"155\" y=\"168\">5</text><text x=\"214\" y=\"140\">2</text><text x=\"250\" y=\"72\">6</text><text x=\"283\" y=\"98\">2</text><text x=\"162\" y=\"35\">12</text></g></svg>",
+   "options": [
+    {
+     "text": "S, A, B, C, G",
+     "correct": false,
+     "why": "Popped G after C at cost 10, but D (cost 6) and the path through D (cost 8) are cheaper.",
+     "trap": "C6"
+    },
+    {
+     "text": "S, A, B, C, D, G",
+     "correct": true,
+     "why": "Pop costs: S 0, A 1, B 3 (via A), C 4 (via B), D 6 (via C), G 8 (via D)."
+    },
+    {
+     "text": "S, G",
+     "correct": false,
+     "why": "Stopped when G was generated from S with cost 12; UCS waits until G is popped, and cheaper paths still exist.",
+     "trap": "C6"
+    },
+    {
+     "text": "S, A, C, B, D, G",
+     "correct": false,
+     "why": "Treated Aâ€“C (cost 5) as cheaper than reaching B via A (1+2=3); UCS orders by total path cost $g$, not single edge weights.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Expand S: A=1, B=4, G=12.\n2. A: Bâ†’3, C=6. B: Câ†’4, D=8.\n3. C: Dâ†’6, Gâ†’10. D: Gâ†’8.\n4. Pop G at 8. Order S, A, B, C, D, G."
+  },
+  {
+   "id": "ai-ucs-trace-02",
+   "skill": "ai.ucs-trace",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For the graph in the figure, what is the cost of the path returned by uniform-cost search from $S$ to $G$ (goal test when popped)?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 325 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 29L100 73M28 34L57 138M103 90L67 140M122 83L178 97M71 146L179 104M72 151L238 159M198 108L242 152M200 93L290 29M254 149L296 33M37 22L288 22\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"22\" r=\"12\"/><circle cx=\"110\" cy=\"80\" r=\"12\"/><circle cx=\"60\" cy=\"150\" r=\"12\"/><circle cx=\"190\" cy=\"100\" r=\"12\"/><circle cx=\"250\" cy=\"160\" r=\"12\"/><circle cx=\"300\" cy=\"22\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"26\">S</text><text x=\"110\" y=\"84\">A</text><text x=\"60\" y=\"154\">B</text><text x=\"190\" y=\"104\">C</text><text x=\"250\" y=\"164\">D</text><text x=\"300\" y=\"26\">G</text><text x=\"62\" y=\"62\">1</text><text x=\"34\" y=\"92\">4</text><text x=\"78\" y=\"114\">2</text><text x=\"148\" y=\"103\">5</text><text x=\"128\" y=\"137\">1</text><text x=\"155\" y=\"168\">5</text><text x=\"214\" y=\"140\">2</text><text x=\"250\" y=\"72\">6</text><text x=\"283\" y=\"98\">2</text><text x=\"162\" y=\"35\">12</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 8,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Returned the direct edge Sâ€“G: that is what BFS (fewest edges) or a goal test on generation gives.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Took G when it was first improved via C (4+6), or went A â†’ C directly (1+5+2+2); D at cost 6 is popped first and lowers G to 8.",
+     "trap": "C6"
+    },
+    {
+     "value": 11,
+     "why": "Used Sâ€“Bâ€“Dâ€“G with the edge Sâ€“B (4), missing that B is cheaper via A (3) and that Câ€“D is a shortcut.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Cheapest costs: A=1, B=3, C=4, D=6.\n2. G via D: 6+2=8, via C: 10, direct: 12.\n3. Path Sâ€“Aâ€“Bâ€“Câ€“Dâ€“G, cost 8."
+  },
+  {
+   "id": "ai-ucs-trace-03",
+   "skill": "ai.ucs-trace",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "On the graph in the figure (search from $S$ to $G$), which statements are correct?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 325 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 29L100 73M28 34L57 138M103 90L67 140M122 83L178 97M71 146L179 104M72 151L238 159M198 108L242 152M200 93L290 29M254 149L296 33M37 22L288 22\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"22\" r=\"12\"/><circle cx=\"110\" cy=\"80\" r=\"12\"/><circle cx=\"60\" cy=\"150\" r=\"12\"/><circle cx=\"190\" cy=\"100\" r=\"12\"/><circle cx=\"250\" cy=\"160\" r=\"12\"/><circle cx=\"300\" cy=\"22\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"26\">S</text><text x=\"110\" y=\"84\">A</text><text x=\"60\" y=\"154\">B</text><text x=\"190\" y=\"104\">C</text><text x=\"250\" y=\"164\">D</text><text x=\"300\" y=\"26\">G</text><text x=\"62\" y=\"62\">1</text><text x=\"34\" y=\"92\">4</text><text x=\"78\" y=\"114\">2</text><text x=\"148\" y=\"103\">5</text><text x=\"128\" y=\"137\">1</text><text x=\"155\" y=\"168\">5</text><text x=\"214\" y=\"140\">2</text><text x=\"250\" y=\"72\">6</text><text x=\"283\" y=\"98\">2</text><text x=\"162\" y=\"35\">12</text></g></svg>",
+   "options": [
+    {
+     "text": "BFS (fewest edges) returns a path of cost 12.",
+     "correct": true,
+     "why": "Sâ€“G is a single edge, so BFS returns it, ignoring its cost."
+    },
+    {
+     "text": "UCS with the goal test on expansion returns a path of cost 8.",
+     "correct": true,
+     "why": "G is popped only when its cost is 8, via Sâ€“Aâ€“Bâ€“Câ€“Dâ€“G."
+    },
+    {
+     "text": "UCS with the goal test on generation also returns cost 8.",
+     "correct": false,
+     "why": "G is generated while expanding S, with cost 12, so the search would stop immediately.",
+     "trap": "C6"
+    },
+    {
+     "text": "UCS expands D before C.",
+     "correct": false,
+     "why": "C is popped at cost 4, D at 6; $g$ order puts C first.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS: S â†’ G directly (cost 12).\n2. UCS (test on pop): costs A 1, B 3, C 4, D 6, G 8.\n3. Testing on generation stops at the cost-12 copy of G."
+  },
+  {
+   "id": "ai-ucs-trace-04",
+   "skill": "ai.ucs-trace",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Uniform-cost search (goal test on pop, frontier costs lowered when a cheaper path is found) runs from $S$ to $G$ on the undirected graph with edges Sâ€“A (3), Sâ€“B (1), Bâ€“A (1), Aâ€“G (2), Bâ€“C (4), Câ€“G (1). What is $g(A)$ at the moment $A$ is expanded?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Kept the first cost found for A (direct edge from S); B is popped first at cost 1 and lowers A to 1+1=2.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Used the single edge weight Bâ€“A instead of the total path cost from S.",
+     "trap": "C3"
+    },
+    {
+     "value": 4,
+     "why": "Gave the cost of the goal G (2+2), not of A.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Pop S: A=3, B=1.\n2. Pop B (1): A lowered to 2, C=5.\n3. Pop A with $g(A)=2$ (then G=4 is popped next)."
+  },
+  {
+   "id": "ai-ucs-trace-05",
+   "skill": "ai.ucs-trace",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Uniform-cost search runs on the graph in the figure from $S$ to $G$; ties are broken alphabetically, the goal test is applied when a node is popped, and frontier costs are lowered when a cheaper path appears. In which order are nodes expanded?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 170\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 78L100 37M35 92L100 133M120 37L180 78M120 133L180 92M202 82L283 63M122 32L283 58M122 141L218 149M237 140L288 70\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"85\" r=\"12\"/><circle cx=\"110\" cy=\"30\" r=\"12\"/><circle cx=\"110\" cy=\"140\" r=\"12\"/><circle cx=\"190\" cy=\"85\" r=\"12\"/><circle cx=\"230\" cy=\"150\" r=\"12\"/><circle cx=\"295\" cy=\"60\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"89\">S</text><text x=\"110\" y=\"34\">A</text><text x=\"110\" y=\"144\">B</text><text x=\"190\" y=\"89\">C</text><text x=\"230\" y=\"154\">D</text><text x=\"295\" y=\"64\">G</text><text x=\"72\" y=\"69\">2</text><text x=\"63\" y=\"124\">2</text><text x=\"145\" y=\"69\">2</text><text x=\"145\" y=\"109\">1</text><text x=\"245\" y=\"85\">3</text><text x=\"201\" y=\"58\">6</text><text x=\"169\" y=\"158\">3</text><text x=\"255\" y=\"104\">2</text></g></svg>",
+   "options": [
+    {
+     "text": "S, A, C, G",
+     "correct": false,
+     "why": "Followed A's cheapest edges like a depth-first walk; UCS keeps every frontier node and always pops the global minimum $g$.",
+     "trap": "C9"
+    },
+    {
+     "text": "S, A, B, C, G",
+     "correct": false,
+     "why": "Skipped D: after C is popped at 3, D ($g=5$) is cheaper than G ($g=6$) and is popped first.",
+     "trap": "C6"
+    },
+    {
+     "text": "S, A, B, C, D, G",
+     "correct": true,
+     "why": "Pops at g = 0, 2, 2, 3 (C via B), 5 (D), 6 (G via C)."
+    },
+    {
+     "text": "S, B, A, C, D, G",
+     "correct": false,
+     "why": "Broke the tie between A and B (both $g=2$) the wrong way; alphabetical order pops A first.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. S: A=2, B=2.\n2. A (tie â†’ alphabetical): C=4, G=8. B: Câ†’3, D=5.\n3. C (3): Gâ†’6. D (5): G stays 6.\n4. G popped at 6."
+  },
+  {
+   "id": "ai-ids-01",
+   "skill": "ai.ids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Iterative deepening search runs depth limits $0,1,2,\\dots$ on a complete tree with branching factor 2. The only goal is the **last** node at depth 3 (in left-to-right order), so every iteration runs to completion. Counting each visit of a node in every iteration (the root counts each time), how many node visits are made in total?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 26,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 15,
+     "why": "Counted only the final iteration (limit 3): $1+2+4+8$.",
+     "trap": "C6"
+    },
+    {
+     "value": 11,
+     "why": "Left out the final iteration that actually finds the goal ($1+3+7$).",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Counted only the nodes below the root in the final iteration ($2+4+8$).",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Limit 0: 1. Limit 1: 1+2=3. Limit 2: 7. Limit 3: 15.\n2. Total $1+3+7+15=26$."
+  },
+  {
+   "id": "ai-ids-02",
+   "skill": "ai.ids",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Iterative deepening search starts with depth limit 0 and raises the limit by 1 each time. The shallowest goal is at depth 4. How many times is the root node visited in total?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Started the count at limit 1 or stopped at limit 3; limits 0, 1, 2, 3, 4 give five iterations.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Treated IDS like a single DFS; every iteration restarts from the root.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Iterations use limits 0, 1, 2, 3, 4.\n2. Each starts at the root â†’ 5 visits."
+  },
+  {
+   "id": "ai-ids-03",
+   "skill": "ai.ids",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Iterative deepening search (limits $0,1,2,\\dots$; children left to right; goal test on visit) runs on the tree shown with goal $F$. What is the complete sequence of node visits?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 116\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M91 23L52 51M109 23L148 51M37 67L21 91M49 67L66 91M151 67L134 91M163 67L179 91\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"15\" cy=\"100\" r=\"11\"/><circle cx=\"72\" cy=\"100\" r=\"11\"/><circle cx=\"43\" cy=\"58\" r=\"11\"/><circle cx=\"128\" cy=\"100\" r=\"11\"/><circle cx=\"185\" cy=\"100\" r=\"11\"/><circle cx=\"157\" cy=\"58\" r=\"11\"/><circle cx=\"100\" cy=\"16\" r=\"11\"/></g><g text-anchor=\"middle\"><text x=\"15\" y=\"104\">D</text><text x=\"72\" y=\"104\">E</text><text x=\"43\" y=\"62\">B</text><text x=\"128\" y=\"104\">F</text><text x=\"185\" y=\"104\">G</text><text x=\"157\" y=\"62\">C</text><text x=\"100\" y=\"20\">A</text></g></svg>",
+   "options": [
+    {
+     "text": "A, B, C, D, E, F",
+     "correct": false,
+     "why": "That is the BFS order; IDS revisits the upper levels in every iteration.",
+     "trap": "C2"
+    },
+    {
+     "text": "A, B, D, E, C, F",
+     "correct": false,
+     "why": "That is a single depth-first pass; IDS first runs the shallower limits 0 and 1.",
+     "trap": "C6"
+    },
+    {
+     "text": "A, A, B, C, A, B, D, E, C, F",
+     "correct": true,
+     "why": "Limit 0: A. Limit 1: A, B, C. Limit 2: A, B, D, E, C, F (goal)."
+    },
+    {
+     "text": "A, A, B, C, A, B, C, D, E, F",
+     "correct": false,
+     "why": "Visited depth 1 completely before depth 2 within the last iteration; each iteration is depth-first, so D, E come right after B.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Limit 0: A.\n2. Limit 1: A, B, C.\n3. Limit 2: A, B, D, E, C, F â†’ stop at F."
+  },
+  {
+   "id": "ai-ids-04",
+   "skill": "ai.ids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "In the worst case, iterative deepening search with branching factor $b=3$ and shallowest goal depth $d=4$ generates $N=d\\,b+(d-1)\\,b^2+\\dots+1\\cdot b^d$ nodes (the root is not counted). What is $N$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 174,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 120,
+     "why": "Used the BFS count $b+b^2+b^3+b^4$, which generates each level once.",
+     "trap": "C2"
+    },
+    {
+     "value": 81,
+     "why": "Counted only the deepest level $b^d$.",
+     "trap": "C6"
+    },
+    {
+     "value": 179,
+     "why": "Added the root once per iteration (5 iterations); the formula excludes the root.",
+     "trap": "C6"
+    },
+    {
+     "value": 426,
+     "why": "Reversed the multipliers ($1\\cdot b+2b^2+3b^3+4b^4$); the deepest level is generated only once and the shallowest $d$ times.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $4\\cdot 3=12$, $3\\cdot 9=27$, $2\\cdot 27=54$, $1\\cdot 81=81$.\n2. $N=12+27+54+81=174$ (BFS: 120)."
+  },
+  {
+   "id": "ai-ids-05",
+   "skill": "ai.ids",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statements about iterative deepening search (IDS) with finite branching factor $b$ and shallowest goal depth $d$ are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Although shallow nodes are regenerated many times, total time is still $O(b^d)$.",
+     "correct": true,
+     "why": "Most nodes are on the deepest level, which is generated only once; the repeats add a constant factor about $b/(b-1)$."
+    },
+    {
+     "text": "IDS needs $O(b^d)$ memory, like BFS.",
+     "correct": false,
+     "why": "Swapped with BFS; each iteration is depth-first and stores one path with its siblings, $O(bd)$.",
+     "trap": "C2"
+    },
+    {
+     "text": "IDS returns a goal at the same depth as plain DFS would.",
+     "correct": false,
+     "why": "Plain DFS may return a deeper goal on its leftmost branch; IDS raises the limit one level at a time, so it returns a shallowest goal, like BFS.",
+     "trap": "C2"
+    },
+    {
+     "text": "IDS remains complete even if $b$ is infinite.",
+     "correct": false,
+     "why": "With infinite $b$ even the limit-1 iteration never finishes; completeness needs finite $b$.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Time $O(b^d)$, memory $O(bd)$.\n2. Finds a shallowest goal (optimal for unit costs).\n3. Completeness needs finite $b$."
+  },
+  {
+   "id": "ai-search-props-01",
+   "skill": "ai.search-props",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A state space has finite branching factor $b$, every action costs 1, and the shallowest goal is at depth $d$, but some paths are infinitely long. Which strategy is guaranteed to be both complete and optimal?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Breadth-first search",
+     "correct": true,
+     "why": "BFS finishes each depth before the next, so it reaches depth $d$ in finite time and the first goal found is a shallowest one, which is optimal for unit costs."
+    },
+    {
+     "text": "Depth-first search",
+     "correct": false,
+     "why": "DFS can run forever down an infinite path, so it is not complete here, and it need not find the shallowest goal.",
+     "trap": "C8"
+    },
+    {
+     "text": "Greedy best-first search",
+     "correct": false,
+     "why": "Greedy ignores path cost (it orders by $h$ only), so it is not optimal even with unit costs.",
+     "trap": "C9"
+    },
+    {
+     "text": "Depth-limited search with limit $\\ell=d-1$",
+     "correct": false,
+     "why": "A limit below $d$ cuts off every goal, so this search can never succeed.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Unit costs â‡’ shallowest goal = cheapest goal.\n2. BFS explores level by level, so it is complete (finite $b$) and returns the shallowest goal.\n3. DFS is incomplete with infinite paths; greedy ignores $g$."
+  },
+  {
+   "id": "ai-search-props-02",
+   "skill": "ai.search-props",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statements about depth-first search are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It always returns the shallowest goal.",
+     "correct": false,
+     "why": "DFS returns the first goal on its leftmost descent, which may be deeper than another goal.",
+     "trap": "C1"
+    },
+    {
+     "text": "Tree-search DFS can loop forever on a finite graph that has a cycle.",
+     "correct": true,
+     "why": "Without a visited set DFS can walk round the cycle again and again, so it is incomplete there."
+    },
+    {
+     "text": "Graph-search DFS (with a visited set) is complete on a finite graph.",
+     "correct": true,
+     "why": "Each node is visited at most once, so the search ends after finitely many steps and finds a reachable goal."
+    },
+    {
+     "text": "DFS is optimal whenever all step costs are equal.",
+     "correct": false,
+     "why": "Equal costs make the shallowest goal the cheapest, but DFS does not return the shallowest goal.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. DFS is never optimal in general.\n2. Tree search can cycle; graph search on a finite graph terminates and is complete."
+  },
+  {
+   "id": "ai-search-props-03",
+   "skill": "ai.search-props",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statements about uniform-cost search (UCS) are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If every step cost is at least some $\\varepsilon>0$, UCS is complete and optimal.",
+     "correct": true,
+     "why": "Costs bounded away from 0 mean $g$ grows along every path, so the goal is popped in finite time, and popping in order of $g$ makes the first goal popped the cheapest."
+    },
+    {
+     "text": "UCS remains optimal when some edges have negative cost.",
+     "correct": false,
+     "why": "A negative edge found later can make an already-popped path cheaper; UCS assumes costs are non-negative.",
+     "trap": "C5"
+    },
+    {
+     "text": "With all step costs equal, UCS expands nodes in non-decreasing order of depth, like BFS.",
+     "correct": true,
+     "why": "$g$ is then a constant times depth, so ordering by $g$ is ordering by depth."
+    },
+    {
+     "text": "UCS stops as soon as the goal is generated, which is what makes it optimal.",
+     "correct": false,
+     "why": "That reverses the rule: UCS must wait until the goal is popped; a goal generated early may be reached later by a cheaper path.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Optimality needs costs â‰¥ Îµ > 0 and the goal test on expansion.\n2. Negative costs break the 'popped = final' property.\n3. Equal costs: $g\\propto$ depth, so UCS behaves like BFS."
+  },
+  {
+   "id": "ai-search-props-04",
+   "skill": "ai.search-props",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which statement about iterative deepening search (IDS) with branching factor $b$ and shallowest goal depth $d$ is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It is optimal for any positive step costs.",
+     "correct": false,
+     "why": "IDS finds the shallowest goal; that is cheapest only when all step costs are equal.",
+     "trap": "C1"
+    },
+    {
+     "text": "It is complete, optimal for unit step costs, uses $O(bd)$ memory and $O(b^d)$ time.",
+     "correct": true,
+     "why": "IDS combines BFS's level-by-level guarantee with DFS's linear memory."
+    },
+    {
+     "text": "Its memory is $O(b^d)$, the same as BFS.",
+     "correct": false,
+     "why": "Swapped with BFS; each IDS iteration is a depth-first search, which stores only one path with siblings.",
+     "trap": "C2"
+    },
+    {
+     "text": "Re-expanding shallow levels makes its time $O(b^{d+1})$.",
+     "correct": false,
+     "why": "The repeated levels are small: level $i$ is redone $d-i+1$ times, and the total stays $O(b^d)$.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Each iteration is DFS with limit $\\ell$ â†’ memory $O(bd)$.\n2. Total generated $= db+(d-1)b^2+\\dots+1\\cdot b^d=O(b^d)$.\n3. Finds the shallowest goal â†’ optimal only for unit costs."
+  },
+  {
+   "id": "ai-search-props-05",
+   "skill": "ai.search-props",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Step costs in a problem are positive but unequal. Which uninformed strategy is guaranteed to return a cheapest path?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Uniform-cost search",
+     "correct": true,
+     "why": "UCS expands in increasing path cost $g$ and tests the goal when popped, so the first goal popped is a cheapest one (costs â‰¥ Îµ > 0)."
+    },
+    {
+     "text": "Iterative deepening search",
+     "correct": false,
+     "why": "IDS also returns the shallowest goal, so it has the same unit-cost restriction as BFS.",
+     "trap": "C1"
+    },
+    {
+     "text": "Depth-first search",
+     "correct": false,
+     "why": "DFS ignores both depth and cost when choosing a branch; it returns the first goal on its leftmost path.",
+     "trap": "C9"
+    },
+    {
+     "text": "Breadth-first search",
+     "correct": false,
+     "why": "BFS returns the path with the fewest edges, which is cheapest only when all step costs are equal.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Unequal costs: fewest edges â‰  cheapest.\n2. UCS orders by $g$ and is optimal for costs â‰¥ Îµ > 0."
+  },
+  {
+   "id": "ai-search-complexity-01",
+   "skill": "ai.search-complexity",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "BFS with the goal test on generation runs on a tree with branching factor $b=3$. In the worst case the goal is the last node at depth $d=4$. Not counting the root, how many nodes are generated?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 120,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 121,
+     "why": "Counted the root, which the question excludes.",
+     "trap": "C6"
+    },
+    {
+     "value": 81,
+     "why": "Counted only the deepest level $b^d$.",
+     "trap": "C6"
+    },
+    {
+     "value": 363,
+     "why": "Added a further level ($3^5=243$) as if the goal test were on expansion.",
+     "trap": "C6"
+    },
+    {
+     "value": 174,
+     "why": "Used the iterative deepening count $db+(d-1)b^2+\\dots$.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Generated: $b+b^2+b^3+b^4$.\n2. $3+9+27+81=120$."
+  },
+  {
+   "id": "ai-search-complexity-02",
+   "skill": "ai.search-complexity",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Depth-first tree search keeps in memory the root and, for each node on the current path, all $b$ children generated when it was expanded (subtrees already explored are discarded). With $b=4$ and maximum depth $m=5$, what is the largest number of nodes stored at any time?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 21,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1024,
+     "why": "Used $b^m$, the BFS-style level size; DFS keeps only one branch's siblings per level.",
+     "trap": "C2"
+    },
+    {
+     "value": 20,
+     "why": "Forgot the root ($bm$ only).",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Stored only the current path ($m+1$ nodes) and none of the unexpanded siblings.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. At depth 5 the path has 5 expanded ancestors (depths 0â€“4), each with 4 stored children.\n2. Storage $=1+bm=1+4\\cdot 5=21$, i.e. $O(bm)$."
+  },
+  {
+   "id": "ai-search-complexity-03",
+   "skill": "ai.search-complexity",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "With $b=10$ and goal depth $d=5$, worst-case BFS (goal test on generation) generates $b+b^2+\\dots+b^5$ nodes and IDS generates $5b+4b^2+3b^3+2b^4+b^5$. About how many more nodes does IDS generate than BFS?",
+   "figure": null,
+   "options": [
+    {
+     "text": "About 5 times as many",
+     "correct": false,
+     "why": "Assumed every level is regenerated $d$ times; only the shallow, small levels are repeated often.",
+     "trap": "C6"
+    },
+    {
+     "text": "About twice as many",
+     "correct": false,
+     "why": "Doubling would happen for $b=2$ (ratio about $b/(b-1)$); for $b=10$ the overhead is near $10/9$.",
+     "trap": "C4"
+    },
+    {
+     "text": "Exactly the same number",
+     "correct": false,
+     "why": "IDS does regenerate shallow levels; the overhead is small but not zero.",
+     "trap": "C8"
+    },
+    {
+     "text": "About 11% more",
+     "correct": true,
+     "why": "IDS: 123,450; BFS: 111,110; ratio â‰ˆ 1.11."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS: $10+100+1000+10^4+10^5=111{,}110$.\n2. IDS: $50+400+3000+20000+100000=123{,}450$.\n3. Ratio â‰ˆ 1.11, about 11% more."
+  },
+  {
+   "id": "ai-search-complexity-04",
+   "skill": "ai.search-complexity",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "With branching factor $b$, shallowest goal depth $d$, maximum depth $m$, optimal cost $C^*$ and minimum step cost $\\varepsilon$, which complexity statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "BFS time is $O(b^d)$ (goal test on generation).",
+     "correct": true,
+     "why": "It generates every level up to $d$, dominated by $b^d$."
+    },
+    {
+     "text": "DFS space is $O(b^m)$.",
+     "correct": false,
+     "why": "Swapped time and space: DFS time is $O(b^m)$ but it stores only $O(bm)$ nodes.",
+     "trap": "C2"
+    },
+    {
+     "text": "UCS time is $O(b^{1+\\lfloor C^*/\\varepsilon\\rfloor})$.",
+     "correct": true,
+     "why": "UCS explores every node with $g<C^*$; such paths have at most $\\lfloor C^*/\\varepsilon\\rfloor$ steps, plus one level of generation."
+    },
+    {
+     "text": "BFS space is $O(b^d)$.",
+     "correct": true,
+     "why": "BFS keeps the whole frontier, which holds a full level of about $b^d$ nodes."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS: time and space $O(b^d)$.\n2. DFS: time $O(b^m)$, space $O(bm)$.\n3. IDS: time $O(b^d)$, space $O(bd)$.\n4. UCS: $O(b^{1+\\lfloor C^*/\\varepsilon\\rfloor})$."
+  },
+  {
+   "id": "ai-search-complexity-05",
+   "skill": "ai.search-complexity",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "BFS must keep about $b^d$ nodes in memory. With $b=10$, goal depth $d=6$ and 1 KB per node, roughly how much memory is needed, and how much would IDS need?",
+   "figure": null,
+   "options": [
+    {
+     "text": "About 1 MB for BFS; about 60 KB for IDS",
+     "correct": false,
+     "why": "Used $10^3$ nodes (depth 3) for BFS; $b^d=10^6$.",
+     "trap": "C6"
+    },
+    {
+     "text": "About 1 TB for BFS; about 1 GB for IDS",
+     "correct": false,
+     "why": "Multiplied by an extra $10^3$ and gave IDS exponential memory; IDS memory is linear in $d$.",
+     "trap": "C4"
+    },
+    {
+     "text": "About 1 GB for both",
+     "correct": false,
+     "why": "Gave IDS the BFS memory; IDS keeps only one path with its siblings, $O(bd)$.",
+     "trap": "C2"
+    },
+    {
+     "text": "About 1 GB for BFS; about 60 KB for IDS",
+     "correct": true,
+     "why": "$10^6$ nodes Ã— 1 KB â‰ˆ 1 GB; IDS stores about $bd=60$ nodes â‰ˆ 60 KB."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS: $b^d=10^6$ nodes Ã— 1 KB â‰ˆ 1 GB.\n2. IDS: $bd=60$ nodes Ã— 1 KB â‰ˆ 60 KB."
+  }
+ ]
+}

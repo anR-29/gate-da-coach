@@ -283,6 +283,11 @@ section.card { overflow-x: auto; }
 .countdown b { font-size: 44px; font-weight: 600; line-height: 1; letter-spacing: -.03em; margin-right: 10px; }
 .countdown span { color: var(--muted); font-size: 14px; }
 
+.t72.ok { color: var(--good); }
+.t72.near { color: var(--warn); }
+.t72.far { color: var(--bad); }
+.t72bar, .t72mini { position: relative; overflow: visible; }
+.t72bar i, .t72mini i { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--bad); border-radius: 1px; }
 .chart { width: 100%; height: auto; }
 .cbar { fill: var(--faint); }
 .cline { fill: none; stroke: var(--ink); stroke-width: 2; }

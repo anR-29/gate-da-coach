@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611020516';
+import { addEvent, allEvents, cfg } from './store.js?v=202611020526';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -127,9 +127,85 @@ export function skillStats(state) {
 
 export function weakSkills(state) {
   const st = skillStats(state);
+  const impact = (id) => (1 - st[id].ok / st[id].n) * subjectWeightPerSkill(id);
   return Object.entries(st)
     .filter(([id, s]) => s.n >= 3 && s.ok / s.n < 0.6 && content.skills[id])
-    .map(([id]) => id);
+    .map(([id]) => id)
+    .sort((a, b) => impact(b) - impact(a));
+}
+
+// ---------- target 72 ----------
+
+export const TARGET = 72;
+// Average marks per paper in GATE DA 2024–2026 (sums to 100).
+export const SUBJECTS = {
+  'Probability & Statistics': { areas: ['ps'], marks: 18.3 },
+  'Programming, DS & Algorithms': { areas: ['py', 'dsa'], marks: 16 },
+  'General Aptitude': { areas: ['ga'], marks: 15 },
+  'Machine Learning': { areas: ['ml'], marks: 13.7 },
+  'Databases & Warehousing': { areas: ['db'], marks: 12 },
+  'Linear Algebra': { areas: ['la'], marks: 10 },
+  'Artificial Intelligence': { areas: ['ai'], marks: 8 },
+  'Calculus & Optimization': { areas: ['calc'], marks: 7 },
+};
+const NEG = 0.5 / 3; // about half the marks are MCQ, and a wrong MCQ costs a third
+const MIN_N = 10;
+
+function subjectOfArea(area) {
+  return Object.keys(SUBJECTS).find((s) => SUBJECTS[s].areas.includes(area));
+}
+
+function subjectWeightPerSkill(skillId) {
+  const sk = content.skills[skillId];
+  const subj = sk && subjectOfArea(sk.area);
+  if (!subj) return 0;
+  const n = Object.values(content.skills).filter((s) => SUBJECTS[subj].areas.includes(s.area)).length || 1;
+  return SUBJECTS[subj].marks / n;
+}
+
+// Expected exam marks per subject from recent first-pass accuracy (last 60 unseen attempts).
+export function target72(state) {
+  const rows = [];
+  const all = state.attempts.filter((a) => a.mode !== 'repair' && !a.repeated && content.skills[a.skill]);
+  for (const [name, s] of Object.entries(SUBJECTS)) {
+    const mine = all.filter((a) => s.areas.includes(content.skills[a.skill].area)).slice(-60);
+    const n = mine.length;
+    const ok = mine.filter((a) => a.correct).length;
+    const acc = n ? ok / n : null;
+    const known = n >= MIN_N;
+    const expected = known ? Math.max(0, s.marks * (acc - (1 - acc) * NEG)) : null;
+    rows.push({ name, marks: s.marks, n, acc, known, expected });
+  }
+  const knownRows = rows.filter((r) => r.known);
+  const accAll = knownRows.length ? knownRows.reduce((t, r) => t + r.acc * r.n, 0) / knownRows.reduce((t, r) => t + r.n, 0) : null;
+  for (const r of rows) {
+    r.assumed = !r.known && accAll !== null;
+    if (r.assumed) r.expected = Math.max(0, r.marks * (accAll - (1 - accAll) * NEG));
+    // marks recoverable by lifting this subject to 85% accuracy
+    const now = r.expected ?? 0;
+    r.gain = Math.max(0, r.marks * (0.85 - (0.15) * NEG) - now);
+  }
+  const total = accAll === null ? null : rows.reduce((t, r) => t + (r.expected || 0), 0);
+  return {
+    rows: rows.sort((a, b) => b.gain - a.gain),
+    total,
+    knownMarks: knownRows.reduce((t, r) => t + r.marks, 0),
+    accAll,
+  };
+}
+
+// Skills whose repair would add the most expected marks.
+export function focusSkills(state, k = 3) {
+  const st = skillStats(state);
+  const scored = Object.entries(st)
+    .filter(([id, s]) => content.skills[id] && s.n >= 3 && s.ok / s.n < 0.75)
+    .map(([id, s]) => ({ id, acc: s.ok / s.n, n: s.n, impact: (1 - s.ok / s.n) * subjectWeightPerSkill(id) }));
+  for (const c of Object.values(state.cards)) {
+    if (!c.mastered && content.skills[c.skill] && !st[c.skill]) {
+      scored.push({ id: c.skill, acc: null, n: 0, impact: subjectWeightPerSkill(c.skill) * (0.5 + 0.1 * c.failures) });
+    }
+  }
+  return scored.sort((a, b) => b.impact - a.impact).slice(0, k);
 }
 
 // ---------- plan position ----------

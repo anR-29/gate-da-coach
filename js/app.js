@@ -1,9 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020516';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020526';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-} from './engine.js?v=202611020516';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020516';
+  TARGET, target72, focusSkills,
+} from './engine.js?v=202611020526';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020526';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -118,6 +119,7 @@ function viewToday() {
       </div>
       ${content.bySkill && sessionSkillsCount(day) === 0 ? '<p class="banner">Is din ke sawaal abhi bank me nahi hain. Revision aur GA chalenge; topic content agle update me aayega.</p>' : ''}
     </section>
+    ${focusCard(state)}
     <section class="card">
       <h2>Aaj ka flow</h2>
       <ol class="flow">
@@ -132,6 +134,41 @@ function viewToday() {
   `);
   document.getElementById('start').onclick = () => startSession(day, {});
   document.getElementById('fallback').onclick = () => startSession(day, { fallback: true });
+}
+
+// The 2–3 skills whose repair adds the most expected marks toward 72.
+function focusCard(state) {
+  const f = focusSkills(state);
+  if (!f.length) return '';
+  const t = target72(state);
+  return `<section class="card">
+      <h2>Aaj ka ${TARGET} focus</h2>
+      <p class="muted">${t.total !== null ? `Abhi ka estimate <b>${t.total.toFixed(0)}/100</b> · ${TARGET} tak <b>${Math.max(0, TARGET - t.total).toFixed(0)} marks</b> ka gap. ` : ''}Ye skills sabse zyada marks wapas laayengi — aaj revision/mixed me ye pehle aayengi.</p>
+      <ul class="links">${f.map((x) => {
+        const s = content.skills[x.id];
+        return `<li><b>${esc(s.title)}</b> <span class="muted small">${esc(s.subject)}${x.acc !== null ? ` · accuracy ${Math.round(x.acc * 100)}% (${x.n})` : ' · revision card due'}</span>${s.theory ? ` · <a class="small" href="#/theory/${esc(s.theory)}">theory</a>` : ''}</li>`;
+      }).join('')}</ul>
+    </section>`;
+}
+
+function target72Card(state) {
+  const t = target72(state);
+  const est = t.total;
+  const tone = est === null ? '' : est >= TARGET ? 'ok' : est >= TARGET - 10 ? 'near' : 'far';
+  return `<section class="card">
+      <h2>Target ${TARGET}</h2>
+      ${est === null
+        ? '<p class="muted">Estimate ke liye kisi subject me kam se kam 10 unseen attempts chahiye.</p>'
+        : `<div class="countdown"><b class="t72 ${tone}">${est.toFixed(0)}</b><span>/100 estimated · ${est >= TARGET ? `${TARGET} ke upar ✓` : `${TARGET} tak ${(TARGET - est).toFixed(0)} marks`}</span></div>
+           <div class="bar t72bar"><div style="width:${Math.min(100, est)}%"></div><i style="left:${TARGET}%"></i></div>`}
+      <table class="tbl"><thead><tr><th>Subject</th><th>Paper marks</th><th>Accuracy</th><th>Expected</th><th>85% pe +marks</th></tr></thead><tbody>
+      ${t.rows.map((r) => `<tr><td>${esc(r.name)}</td><td>${r.marks}</td>
+        <td>${r.acc === null ? '—' : `${Math.round(r.acc * 100)}%`} <span class="muted small">(${r.n})</span></td>
+        <td>${r.expected === null ? '—' : `${r.expected.toFixed(1)}${r.assumed ? ' <span class="muted small">assumed</span>' : ''}`}</td>
+        <td>${r.gain ? `<b>+${r.gain.toFixed(1)}</b>` : '—'}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="muted small">Practice accuracy × har subject ke average GATE DA marks (2024–26), MCQ negative marking ke saath. Jin subjects me 10 se kam attempts hain unke liye tumhari overall accuracy maani gayi hai ("assumed"). Ye sirf direction batata hai — asli readiness fresh 180-min mocks se hi pata chalegi.</p>
+    </section>`;
 }
 
 function sessionSkillsCount(day) {
@@ -507,6 +544,7 @@ function viewProgress() {
       <div class="bar"><div style="width:${planPct}%"></div></div>
       <p>Plan: <b>${ps.doneCount}/${ps.total}</b> din poore · ab Day ${ps.current.day} · ${ps.behind ? `<span class="hot">${ps.behind} din peeche</span>` : 'schedule pe'} · projected finish <b>${fmtDate(ps.projectedEnd)}</b> (${ps.bufferDays >= 0 ? ps.bufferDays + ' din buffer' : 'exam ke baad!'})</p>
     </section>
+    ${target72Card(state)}
     <section class="card">
       <h2>Pichhle 21 din</h2>
       ${chart(days)}
@@ -531,8 +569,15 @@ function viewProgress() {
     </section>
     <section class="card">
       <h2>Mocks</h2>
-      ${state.mocks.length ? `<table class="tbl"><thead><tr><th>Date</th><th>Source</th><th>Fresh</th><th>Net</th></tr></thead><tbody>${state.mocks.map((m) => `<tr><td>${fmtDate(m.date)}</td><td>${esc(m.source)}</td><td>${m.fresh ? 'yes' : 'no'}</td><td><b>${m.net}</b></td></tr>`).join('')}</tbody></table>` : '<p class="muted">Abhi koi mock nahi.</p>'}
-      <p class="muted small">Readiness sirf fresh 180-min papers se: pichhle 5 fresh me kitne 72+ the. Ye guarantee nahi hai.</p>
+      ${state.mocks.length ? `<table class="tbl"><thead><tr><th>Date</th><th>Source</th><th>Fresh</th><th>Net</th><th>vs ${TARGET}</th></tr></thead><tbody>${state.mocks.map((m) => `<tr><td>${fmtDate(m.date)}</td><td>${esc(m.source)}</td><td>${m.fresh ? 'yes' : 'no'}</td><td><b>${m.net}</b></td><td><div class="minibar t72mini"><div style="width:${Math.min(100, m.net)}%"></div><i style="left:${TARGET}%"></i></div> ${m.net >= TARGET ? '✓' : `−${(TARGET - m.net).toFixed(0)}`}</td></tr>`).join('')}</tbody></table>` : '<p class="muted">Abhi koi mock nahi.</p>'}
+      ${(() => {
+        const fresh = state.mocks.filter((m) => m.fresh).slice(-5);
+        if (!fresh.length) return '';
+        const hit = fresh.filter((m) => m.net >= TARGET).length;
+        const sorted = fresh.map((m) => m.net).sort((a, b) => a - b);
+        return `<p><b>Last ${fresh.length} fresh mocks:</b> ${hit}/${fresh.length} ne ${TARGET}+ kiya · median ${sorted[Math.floor(sorted.length / 2)]} · lowest ${sorted[0]}</p>`;
+      })()}
+      <p class="muted small">Readiness sirf fresh 180-min papers se: pichhle 5 fresh me kitne ${TARGET}+ the. Lagaatar 5 me 5 = strong milestone, guarantee nahi.</p>
     </section>
     <section class="card">
       <h2>Day log</h2>
@@ -649,7 +694,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611020516');
+  const store = await import('./store.js?v=202611020526');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
