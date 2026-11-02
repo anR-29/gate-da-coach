@@ -1,12 +1,13 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611020526';
+import { addEvent, allEvents, cfg } from './store.js?v=202611020540';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
 export const REVIEW_CAP = 10;
 export const REPAIRS_PER_SKILL = 2;
-const AREAS = ['ps', 'la', 'calc', 'py', 'dsa', 'db', 'ml', 'ai', 'ga'];
+// Question files; a file's "area" field (not its name) decides the subject, so an area can span files.
+const AREAS = ['ps', 'la', 'calc', 'py', 'dsa', 'dsa2', 'db', 'ml', 'ml2', 'ai', 'ga'];
 
 export const content = { plan: null, skills: {}, questions: {}, bySkill: {}, theory: new Set() };
 
@@ -19,7 +20,7 @@ export async function loadContent() {
       if (!r.ok) continue;
       const j = await r.json();
       for (const [id, s] of Object.entries(j.skills || {})) {
-        content.skills[id] = { id, area, ...s };
+        content.skills[id] = { id, area: j.area || area, ...s };
         if (s.theory) content.theory.add(s.theory);
       }
       for (const q of j.questions || []) {

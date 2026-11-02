@@ -1,10 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020526';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020540';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills,
-} from './engine.js?v=202611020526';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020526';
+} from './engine.js?v=202611020540';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020540';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -446,7 +446,11 @@ function viewRevision() {
 
 // ---------- theory & recall ----------
 
-const AREA_NAMES = { ps: 'Probability & Statistics', la: 'Linear Algebra', calc: 'Calculus & Optimization', py: 'Python & DSA', ga: 'General Aptitude' };
+const AREA_NAMES = {
+  ps: 'Probability & Statistics', la: 'Linear Algebra', calc: 'Calculus & Optimization', py: 'Python',
+  dsa: 'Data Structures & Algorithms', db: 'Databases & Warehousing', ml: 'Machine Learning', ai: 'Artificial Intelligence',
+  ga: 'General Aptitude',
+};
 
 function theoryIndex() {
   const byArea = {};
@@ -694,7 +698,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611020526');
+  const store = await import('./store.js?v=202611020540');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
