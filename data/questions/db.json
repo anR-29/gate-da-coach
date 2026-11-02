@@ -1,0 +1,4384 @@
+{
+ "area": "db",
+ "skills": {
+  "db.er-tables": {
+   "title": "ER model to relations: minimum number of tables",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    36
+   ],
+   "theory": "db-er-keys",
+   "check": "Strong entity: 1 table. M:N and n-ary: own table. 1:N: FK on the N side. 1:1: FK on either side (one table if total on both). Weak entity: own table, key = owner key + partial key. Multivalued attribute: own table. Composite: flatten."
+  },
+  "db.keys": {
+   "title": "Keys, NULLs and referential integrity",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    36
+   ],
+   "theory": "db-er-keys",
+   "check": "Superkey = any set containing a key; count with inclusion-exclusion. PK: unique and NOT NULL. FK: matches a referenced key or is NULL. Trace ON DELETE CASCADE / SET NULL row by row."
+  },
+  "db.ra-eval": {
+   "title": "Evaluate relational algebra on small tables",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    37
+   ],
+   "theory": "db-relalg",
+   "check": "Apply σ row by row, then π removes duplicate tuples (set semantics). Join count = Σ over common values of (matches in R)×(matches in S). ∪/∩/− need whole-tuple equality."
+  },
+  "db.ra-division": {
+   "title": "Division R ÷ S",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    37
+   ],
+   "theory": "db-relalg",
+   "check": "R(A,B) ÷ S(B) keeps a value a when (a, b) ∈ R for EVERY b in S. Formula: π_A(R) − π_A((π_A(R) × S) − R). Empty S returns π_A(R)."
+  },
+  "db.ra-equiv": {
+   "title": "Reading and rewriting algebra expressions",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    37
+   ],
+   "theory": "db-relalg",
+   "check": "σ cascades and commutes; σ_{p∨q} = σ_p ∪ σ_q; π does not distribute over −; a σ after a join tests one joined tuple, so both conditions refer to the same row."
+  },
+  "db.trc": {
+   "title": "Tuple relational calculus: reading and safety",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    37
+   ],
+   "theory": "db-relalg",
+   "check": "∃ = at least one, ¬∃ = none, ∀x(P(x) → Q(x)) = every x satisfying P also satisfies Q. A query is safe only if every answer comes from values in the database."
+  },
+  "db.sql-joins": {
+   "title": "SQL joins: inner and outer row counts",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    38
+   ],
+   "theory": "db-sql",
+   "check": "Inner join: Σ matches; LEFT adds unmatched left rows; FULL adds both sides' unmatched rows. NULL = NULL is never true in ON. A filter on the right table in WHERE undoes a LEFT JOIN."
+  },
+  "db.sql-subquery": {
+   "title": "Subqueries: IN, EXISTS, ALL, ANY, scalar",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    38
+   ],
+   "theory": "db-sql",
+   "check": "> ALL = greater than the maximum, > ANY = greater than the minimum. NOT IN over a list containing NULL returns no rows; NOT EXISTS is NULL-safe. IN does not duplicate outer rows; a join can."
+  },
+  "db.sql-groupby": {
+   "title": "GROUP BY, HAVING and aggregates with NULL",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    38
+   ],
+   "theory": "db-sql",
+   "check": "Order: FROM → WHERE → GROUP BY → HAVING → SELECT. COUNT(*) counts rows; COUNT(col) and AVG/SUM skip NULL. All NULL keys form one group."
+  },
+  "db.sql-null": {
+   "title": "NULL, three-valued logic, DISTINCT and boundaries",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    38
+   ],
+   "theory": "db-sql",
+   "check": "Comparisons with NULL are UNKNOWN; WHERE keeps only TRUE. TRUE OR UNKNOWN = TRUE, FALSE AND UNKNOWN = FALSE, NOT UNKNOWN = UNKNOWN. DISTINCT treats NULLs as one value. BETWEEN is inclusive."
+  },
+  "db.fd-closure": {
+   "title": "Attribute closure, implied FDs and minimal cover",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    39
+   ],
+   "theory": "db-fd-nf",
+   "check": "X⁺: start from X and keep firing every FD whose whole LHS is inside the set. X → Y holds iff Y ⊆ X⁺. Minimal cover: split RHS, drop extraneous LHS attributes, then drop redundant FDs."
+  },
+  "db.fd-keys": {
+   "title": "Candidate keys, prime attributes and superkeys",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    39
+   ],
+   "theory": "db-fd-nf",
+   "check": "Attributes never on any RHS belong to every key. Grow from them, test closures, keep only minimal sets, and keep searching after the first key."
+  },
+  "db.nf-test": {
+   "title": "2NF, 3NF, BCNF tests and highest normal form",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    39
+   ],
+   "theory": "db-fd-nf",
+   "check": "Find all keys first. BCNF: every nontrivial X → A has X a superkey. 3NF: or A is prime. 2NF: no non-prime attribute depends on a proper subset of a key."
+  },
+  "db.decomp": {
+   "title": "Lossless join and dependency preservation",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    39
+   ],
+   "theory": "db-fd-nf",
+   "check": "Binary split R1, R2 is lossless iff (R1 ∩ R2) → R1 or (R1 ∩ R2) → R2. Preservation: each FD must follow from the FDs projected onto the parts, without joining them."
+  },
+  "db.bplus-order": {
+   "title": "B/B+ tree order, capacity and height",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    40
+   ],
+   "theory": "db-indexing",
+   "check": "Internal B+ node: p·P_block + (p−1)·K ≤ B. Leaf: n·(K + P_rec) + P_next ≤ B. B-tree node also stores a data pointer per key. Max keys with h levels: p^(h−1)·(leaf keys); min uses root ≥ 2 and ⌈p/2⌉ elsewhere."
+  },
+  "db.index-access": {
+   "title": "Index size and block-access counts",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    40
+   ],
+   "theory": "db-indexing",
+   "check": "bfr = ⌊B / record⌋. Sparse (primary) index: one entry per data block; dense: one per record; clustering: one per distinct value. Multilevel: divide by the index bfr until one block; accesses = levels + 1 data block."
+  },
+  "db.index-types": {
+   "title": "Dense, sparse, clustering, secondary; B+ tree vs hash",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    40
+   ],
+   "theory": "db-indexing",
+   "check": "One physical order per file: at most one primary or clustering index, many secondary (always dense). Hash: equality only. B+ tree: equality and range via linked leaves."
+  },
+  "db.dw-schema": {
+   "title": "Star/snowflake schemas, measures, hierarchies and OLAP operations",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    41
+   ],
+   "theory": "db-warehouse",
+   "check": "Fact table = foreign keys to dimensions + numeric measures. Snowflake normalizes dimensions (more tables, more joins). Roll-up climbs a hierarchy, drill-down descends, slice fixes one dimension, dice restricts several."
+  },
+  "db.olap-cube": {
+   "title": "OLAP cube and CUBE/ROLLUP row counts",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    41
+   ],
+   "theory": "db-warehouse",
+   "check": "n dimensions: 2ⁿ cuboids; with Lᵢ hierarchy levels: Π(Lᵢ + 1). CUBE rows with all combinations present: Π(nᵢ + 1). ROLLUP(a, b): (a, b) + (a) + (). With missing combinations, count distinct groups per grouping set."
+  },
+  "db.transform": {
+   "title": "Normalization and discretization",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    41
+   ],
+   "theory": "db-warehouse",
+   "check": "Min-max: (v − min)/(max − min)·(new range) + new min. Z-score: (v − μ)/σ. Decimal scaling: v/10ʲ with the smallest j giving max|v'| < 1. Equal-width bins: width = (max − min)/k."
+  },
+  "db.sampling": {
+   "title": "Sampling and data reduction",
+   "subject": "Database Management and Warehousing",
+   "days": [
+    41
+   ],
+   "theory": "db-warehouse",
+   "check": "SRSWOR: C(N, s) samples, P(tuple chosen) = s/N. SRSWR: P = 1 − (1 − 1/N)ˢ. Stratified: proportional share per stratum. Cluster: pick whole groups."
+  }
+ },
+ "questions": [
+  {
+   "id": "db-er-tables-01",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An ER diagram has three strong entity sets:\n\n- E1 with key `a` and a **multivalued** attribute `phone`,\n- E2 with key `b` and a **composite** attribute `addr(street, city)`,\n- E3 with key `c`.\n\nRelationship R12 between E1 and E2 is many-to-many. Relationship R23 between E2 and E3 is one-to-many (one E2 to many E3), with partial participation on both sides. What is the minimum number of tables needed for a relational schema in 1NF?",
+   "figure": null,
+   "options": [
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Gave the one-to-many R23 its own table; its key b can go into E3 as a foreign key.",
+     "trap": "C6"
+    },
+    {
+     "text": "7",
+     "correct": false,
+     "why": "Made tables for both R23 and the composite attribute; a composite attribute is flattened into columns.",
+     "trap": "C6"
+    },
+    {
+     "text": "5",
+     "correct": true,
+     "why": "E1, E1_phone, E2 (street and city flattened), E3 (with FK b for R23) and R12(a, b)."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Kept `phone` as a column of E1; a multivalued attribute breaks 1NF and needs its own table (a, phone).",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. One table each for E1, E2, E3.\n2. Multivalued `phone` -> extra table (a, phone).\n3. M:N R12 -> table (a, b).\n4. 1:N R23 -> FK `b` in E3; composite `addr` -> columns street, city.\n5. Total 5."
+  },
+  {
+   "id": "db-er-tables-02",
+   "skill": "db.er-tables",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Strong entity sets: Employee (key `eid`) and Project (key `pid`).\n\n- Dependent is a **weak** entity set owned by Employee through the identifying relationship Has (one employee, many dependents).\n- WorksOn is a many-to-many relationship between Employee and Project.\n- Manages is a one-to-one relationship between Employee and Project with partial participation on both sides.\n\nWhat is the minimum number of tables in the relational schema?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Created tables for the identifying relationship Has and for the 1:1 Manages as well.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Created a table for one of Has or Manages; both fold into an existing table.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Folded the weak entity into Employee; a weak entity with many instances per owner needs its own table.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Employee, Project: 2 tables.\n2. Dependent: table (eid, dep_name, ...) with key eid + partial key; Has needs no table.\n3. WorksOn (M:N): table (eid, pid).\n4. Manages (1:1): FK in either side, no table. Total 4."
+  },
+  {
+   "id": "db-er-tables-03",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Building (key `bid`) owns the weak entity set Room, whose partial key is `room_no`. Guest has key `gid`. The relationship Booked between Room and Guest is many-to-many and has a descriptive attribute `date`; a guest books a given room at most once.\n\nWhat is the primary key of the table for Booked?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{bid, room_no, gid, date}",
+     "correct": false,
+     "why": "Added the descriptive attribute; each (room, guest) pair occurs once, so date is not needed for uniqueness.",
+     "trap": "C1"
+    },
+    {
+     "text": "{gid}",
+     "correct": false,
+     "why": "Treated Booked as one-to-many; in M:N a guest can appear with many rooms.",
+     "trap": "C9"
+    },
+    {
+     "text": "{bid, room_no, gid}",
+     "correct": true,
+     "why": "A Room is identified by (bid, room_no); an M:N table's key is the union of the participating keys."
+    },
+    {
+     "text": "{gid, room_no}",
+     "correct": false,
+     "why": "Used the partial key alone; room_no repeats across buildings, so a room is identified only by (bid, room_no).",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Weak entity key = owner key + partial key = (bid, room_no).\n2. M:N table key = keys of both sides = (bid, room_no, gid).\n3. `date` is a non-key column because a pair occurs once."
+  },
+  {
+   "id": "db-er-tables-04",
+   "skill": "db.er-tables",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Department (key `did`) and Employee (key `eid`) are linked by WorksIn: each employee works in exactly one department (total participation of Employee) and a department has many employees. Which statements about the minimal relational design are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "WorksIn is represented by adding `did` as a foreign key column in Employee.",
+     "correct": true,
+     "why": "For 1:N the key of the one side goes into the table of the many side."
+    },
+    {
+     "text": "The foreign key should go into Department, holding the `eid` of its employees.",
+     "correct": false,
+     "why": "Reversed the direction; Department would then need a multivalued column, which breaks 1NF.",
+     "trap": "C11"
+    },
+    {
+     "text": "A minimal design always needs a separate table for every 1:N relationship.",
+     "correct": false,
+     "why": "Over-claim; 1:N folds into the N-side table, and only M:N or n-ary relationships need their own table.",
+     "trap": "C8"
+    },
+    {
+     "text": "Because every employee must have a department, that foreign key can be declared NOT NULL.",
+     "correct": true,
+     "why": "Total participation of the N side is enforced by NOT NULL on the foreign key."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 1:N -> FK on the many side: Employee(eid, ..., did).\n2. Total participation of Employee -> `did` NOT NULL.\n3. No extra table is needed."
+  },
+  {
+   "id": "db-er-tables-05",
+   "skill": "db.er-tables",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An ER diagram has strong entity sets A, B, C, D (keys a, b, c, d).\n\n- A and B are linked by a one-to-one relationship with **total** participation on **both** sides.\n- B and C are linked by a many-to-many relationship.\n- C and D are linked by a one-to-many relationship (one C, many D).\n- D has a multivalued attribute `tag`.\n\nWhat is the minimum number of tables?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Kept A and B as separate tables; with total participation on both sides of a 1:1 they merge into one table.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Also created a table for the 1:N relationship between C and D, whose key fits in D as a foreign key.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Kept `tag` inside D; a multivalued attribute needs its own table in 1NF.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. A + B merge into one table (1:1, total on both sides).\n2. C, D: 2 tables; C-D 1:N -> FK c in D.\n3. B-C M:N: 1 table; D.tag: 1 table.\n4. Total 1 + 2 + 1 + 1 = 5."
+  },
+  {
+   "id": "db-keys-01",
+   "skill": "db.keys",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2025-Q56 style)",
+   "stem": "Which statements about keys and NULLs in the relational model are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A relation has exactly one candidate key.",
+     "correct": false,
+     "why": "A relation can have several candidate keys; only one is chosen as primary key.",
+     "trap": "C8"
+    },
+    {
+     "text": "No attribute of a primary key may be NULL.",
+     "correct": true,
+     "why": "Entity integrity: a primary key must identify every tuple, so each of its attributes is NOT NULL."
+    },
+    {
+     "text": "A foreign key must reference the primary key of a different relation.",
+     "correct": false,
+     "why": "Over-claim; a foreign key may reference its own relation (for example manager_id -> emp_id) and may reference any candidate key.",
+     "trap": "C1"
+    },
+    {
+     "text": "A foreign key value may be NULL unless the column is declared NOT NULL.",
+     "correct": true,
+     "why": "Referential integrity requires a match only for non-NULL foreign key values."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Entity integrity: PK attributes are NOT NULL.\n2. Referential integrity: an FK is NULL or matches an existing key value.\n3. Self-references are allowed; candidate keys can be many."
+  },
+  {
+   "id": "db-keys-02",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Relation R(A, B, C, D, E) has exactly two candidate keys: {A} and {B, C}. How many superkeys does R have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 20,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 24,
+     "why": "Added 16 + 8 without subtracting the 4 sets that contain both A and BC.",
+     "trap": "C6"
+    },
+    {
+     "value": 16,
+     "why": "Counted only the supersets of {A}.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Counted candidate keys instead of superkeys.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Supersets of {A}: $2^4 = 16$.\n2. Supersets of {B, C}: $2^3 = 8$.\n3. Supersets of {A, B, C}: $2^2 = 4$.\n4. Inclusion-exclusion: 16 + 8 - 4 = 20."
+  },
+  {
+   "id": "db-keys-03",
+   "skill": "db.keys",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Consider this instance of Student.\n\n**Student**\n\n| roll | name | email | dept |\n|---|---|---|---|\n| 101 | Anu | anu@x | CS |\n| 102 | Ravi | ravi@x | EE |\n| 103 | Anu | anu2@x | ME |\n| 104 | Kiran | kiran@x | CS |\n\nUsing **only** this instance, which attribute set can be ruled out as a candidate key?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{roll}",
+     "correct": false,
+     "why": "roll is unique here, so the instance cannot rule it out (it also cannot prove it is a key).",
+     "trap": "C1"
+    },
+    {
+     "text": "{email}",
+     "correct": false,
+     "why": "email is unique here, so this instance gives no evidence against it.",
+     "trap": "C1"
+    },
+    {
+     "text": "{name}",
+     "correct": true,
+     "why": "Two different tuples share name = Anu, so {name} cannot be a key of any legal state that includes this instance."
+    },
+    {
+     "text": "{name, dept}",
+     "correct": false,
+     "why": "The two Anu rows differ in dept (CS, ME), so the pair is unique in this instance.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. An instance can disprove a key (a duplicate value) but never prove one.\n2. name repeats (Anu); roll, email and (name, dept) do not.\n3. Only {name} is ruled out."
+  },
+  {
+   "id": "db-keys-04",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The tables are created as follows.\n\n```sql\nCREATE TABLE Dept (did TEXT PRIMARY KEY);\nCREATE TABLE Emp (eid TEXT PRIMARY KEY, did TEXT REFERENCES Dept(did) ON DELETE CASCADE);\nCREATE TABLE Proj (pid TEXT PRIMARY KEY, eid TEXT REFERENCES Emp(eid) ON DELETE SET NULL);\n```\n\n**Dept**\n\n| did |\n|---|\n| d1 |\n| d2 |\n| d3 |\n\n**Emp**\n\n| eid | did |\n|---|---|\n| e1 | d1 |\n| e2 | d1 |\n| e3 | d2 |\n| e4 | d1 |\n| e5 | d3 |\n\n**Proj**\n\n| pid | eid |\n|---|---|\n| p1 | e1 |\n| p2 | e3 |\n| p3 | e2 |\n| p4 | e1 |\n| p5 | NULL |\n\nAfter `DELETE FROM Dept WHERE did = 'd1';`, how many rows of Proj have `eid` NULL?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Counted only the rows set to NULL by the cascade and forgot p5, which was NULL already.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Assumed SET NULL does not fire when the Emp rows are removed by a cascade; cascaded deletes trigger the referencing actions too.",
+     "trap": "C9"
+    },
+    {
+     "value": 0,
+     "why": "Stopped at Emp: thought deleting from Dept cannot affect Proj.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Deleting d1 cascades to Emp rows e1, e2, e4.\n2. Each deleted employee triggers ON DELETE SET NULL in Proj: p1, p3, p4 become NULL.\n3. p5 was already NULL, so 4 rows have NULL eid."
+  },
+  {
+   "id": "db-keys-05",
+   "skill": "db.keys",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Emp(eid, did) has a foreign key `did` referencing Dept(did) with no referential action (the default RESTRICT / NO ACTION). Which operation can violate referential integrity?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Deleting a row from Emp.",
+     "correct": false,
+     "why": "Reversed the direction; removing a referencing row never breaks a reference.",
+     "trap": "C11"
+    },
+    {
+     "text": "Inserting an Emp row whose did is NULL.",
+     "correct": false,
+     "why": "A NULL foreign key needs no match, so it is allowed unless did is declared NOT NULL.",
+     "trap": "C5"
+    },
+    {
+     "text": "Inserting a new row into Dept.",
+     "correct": false,
+     "why": "Reversed the direction; adding a referenced value cannot leave a dangling reference.",
+     "trap": "C11"
+    },
+    {
+     "text": "Deleting a Dept row whose did appears in Emp.",
+     "correct": true,
+     "why": "Emp rows would then point to a department that no longer exists."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Violations come from the referencing side gaining an unmatched value or the referenced side losing a used value.\n2. Deleting a referenced Dept row is the only such operation here."
+  },
+  {
+   "id": "db-keys-06",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Relation R(A, B, C, D, E, F) has exactly two candidate keys: {A, B} and {C}. How many superkeys does R have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 40,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 48,
+     "why": "Added 16 + 32 without subtracting the 8 supersets of {A, B, C}.",
+     "trap": "C6"
+    },
+    {
+     "value": 32,
+     "why": "Counted only supersets of {C}.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Counted candidate keys instead of superkeys.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Supersets of {A, B}: $2^4 = 16$.\n2. Supersets of {C}: $2^5 = 32$.\n3. Supersets of {A, B, C}: $2^3 = 8$.\n4. 16 + 32 - 8 = 40."
+  },
+  {
+   "id": "db-keys-07",
+   "skill": "db.keys",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Table R(A, B) is declared with `PRIMARY KEY (A, B)` and holds one row (1, 2). Each insertion below is tried separately on this table. Which succeed?",
+   "figure": null,
+   "options": [
+    {
+     "text": "(2, 2)",
+     "correct": true,
+     "why": "The pair (2, 2) is new; B may repeat when A differs."
+    },
+    {
+     "text": "(NULL, 2)",
+     "correct": false,
+     "why": "Entity integrity forbids NULL in any primary key attribute.",
+     "trap": "C5"
+    },
+    {
+     "text": "(1, 2)",
+     "correct": false,
+     "why": "Duplicates the existing key value (1, 2).",
+     "trap": "C9"
+    },
+    {
+     "text": "(1, 3)",
+     "correct": true,
+     "why": "The pair (1, 3) differs from (1, 2); a composite key only needs the whole pair to be unique."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A composite primary key requires the combination to be unique and every part NOT NULL.\n2. (1, 3) and (2, 2) are new combinations; (NULL, 2) has a NULL; (1, 2) repeats."
+  },
+  {
+   "id": "db-ra-eval-01",
+   "skill": "db.ra-eval",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (DA-2024-Q31 style)",
+   "stem": "Consider R(A, B) and S(B, C).\n\n**R**\n\n| A | B |\n|---|---|\n| 1 | a |\n| 2 | b |\n| 3 | a |\n| 4 | c |\n\n**S**\n\n| B | C |\n|---|---|\n| a | x |\n| a | y |\n| b | z |\n| d | w |\n\nHow many tuples are in $R \\bowtie S$ (natural join)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Counted the R tuples that find a match; B = a matches two S tuples, so each such R tuple appears twice.",
+     "trap": "C6"
+    },
+    {
+     "value": 16,
+     "why": "Took the Cartesian product; the natural join keeps only pairs with equal B.",
+     "trap": "C10"
+    },
+    {
+     "value": 3,
+     "why": "Counted R tuples with a match but dropped one of the a-rows.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. B = a: 2 R tuples × 2 S tuples = 4.\n2. B = b: 1 × 1 = 1.\n3. B = c and B = d: no partner.\n4. Total 5."
+  },
+  {
+   "id": "db-ra-eval-02",
+   "skill": "db.ra-eval",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**R**\n\n| A | B | C |\n|---|---|---|\n| 1 | 3 | 0 |\n| 2 | 1 | 1 |\n| 1 | 4 | 1 |\n| 3 | 2 | 0 |\n| 2 | 2 | 1 |\n| 4 | 3 | 1 |\n\nHow many tuples are in $\\pi_{A}\\big(\\sigma_{B > 2 \\,\\lor\\, C = 1}(R)\\big)$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Counted the selected rows; π returns a set, so A = 1 and A = 2 appear once each.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Read $\\lor$ as AND; only (1,4,1) and (4,3,1) satisfy both conditions.",
+     "trap": "C2"
+    },
+    {
+     "value": 4,
+     "why": "Used B ≥ 2; the row (3, 2, 0) has B = 2, which fails B > 2.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. σ keeps (1,3,0), (2,1,1), (1,4,1), (2,2,1), (4,3,1).\n2. Their A values: 1, 2, 1, 2, 4.\n3. π removes duplicates: {1, 2, 4}, so 3 tuples."
+  },
+  {
+   "id": "db-ra-eval-03",
+   "skill": "db.ra-eval",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Using the same R(A, B) and S(B, C):\n\n**R**\n\n| A | B |\n|---|---|\n| 1 | a |\n| 2 | b |\n| 3 | a |\n| 4 | c |\n\n**S**\n\n| B | C |\n|---|---|\n| a | x |\n| a | y |\n| b | z |\n| d | w |\n\nHow many tuples are in the **full outer join** of R and S on B?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Padded only the unmatched R tuple (4, c); a full outer join also keeps S's unmatched (d, w).",
+     "trap": "C2"
+    },
+    {
+     "value": 5,
+     "why": "Computed the inner join only.",
+     "trap": "C2"
+    },
+    {
+     "value": 8,
+     "why": "Added |R| + |S| as if every tuple were padded separately; matched tuples combine, and B = a produces 2 × 2 rows.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Inner join: 5 tuples.\n2. Unmatched R: (4, c) -> 1 tuple padded with NULL.\n3. Unmatched S: (d, w) -> 1 tuple.\n4. Total 7."
+  },
+  {
+   "id": "db-ra-eval-04",
+   "skill": "db.ra-eval",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B) has 10 tuples and S(B, C) has 6 tuples. B is the primary key of S. What is the **maximum** possible number of tuples in $R \\bowtie S$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Bounded by the smaller relation; many R tuples may share the same B and join the same S tuple.",
+     "trap": "C11"
+    },
+    {
+     "text": "60",
+     "correct": false,
+     "why": "Ignored the key; 60 is possible only when B repeats in S.",
+     "trap": "C1"
+    },
+    {
+     "text": "16",
+     "correct": false,
+     "why": "Added the sizes as for a union; a join pairs tuples.",
+     "trap": "C10"
+    },
+    {
+     "text": "10",
+     "correct": true,
+     "why": "Each R tuple matches at most one S tuple because B is a key of S."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Each R tuple has at most one partner in S (key).\n2. So |R ⋈ S| ≤ |R| = 10, reached when every B value of R exists in S."
+  },
+  {
+   "id": "db-ra-eval-05",
+   "skill": "db.ra-eval",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B) and S(A, B) are union-compatible.\n\n**R**\n\n| A | B |\n|---|---|\n| 1 | x |\n| 2 | y |\n| 3 | x |\n\n**S**\n\n| A | B |\n|---|---|\n| 2 | y |\n| 3 | y |\n| 4 | x |\n\nWhich expressions return exactly 2 tuples?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$R \\cap S$",
+     "correct": false,
+     "why": "Matched on A only (2 and 3); (3, x) ≠ (3, y), so only (2, y) is common.",
+     "trap": "C10"
+    },
+    {
+     "text": "$R - S$",
+     "correct": true,
+     "why": "(1, x) and (3, x) are in R but not in S."
+    },
+    {
+     "text": "$\\pi_B(R) - \\pi_B(S)$",
+     "correct": false,
+     "why": "Projection first collapses both to {x, y}, so the difference is empty.",
+     "trap": "C6"
+    },
+    {
+     "text": "$\\pi_A(R) \\cap \\pi_A(S)$",
+     "correct": true,
+     "why": "{1, 2, 3} ∩ {2, 3, 4} = {2, 3}."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. R − S = {(1,x), (3,x)}.\n2. R ∩ S = {(2,y)}.\n3. π_A: {1,2,3} ∩ {2,3,4} = {2,3}.\n4. π_B: {x,y} − {x,y} = ∅."
+  },
+  {
+   "id": "db-ra-eval-06",
+   "skill": "db.ra-eval",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A) = {1, 2, 3, 4} and S(C) = {2, 3, 5}. How many tuples are in the theta join $R \\bowtie_{A < C} S$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 9,
+     "why": "Used A ≤ C; the pairs (2, 2) and (3, 3) fail the strict condition.",
+     "trap": "C5"
+    },
+    {
+     "value": 12,
+     "why": "Took the full Cartesian product without applying the condition.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Reversed the comparison and counted A > C.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. A = 1: C ∈ {2, 3, 5} -> 3.\n2. A = 2: {3, 5} -> 2.\n3. A = 3: {5} -> 1.\n4. A = 4: {5} -> 1. Total 7."
+  },
+  {
+   "id": "db-ra-division-01",
+   "skill": "db.ra-division",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2025-Q62 style)",
+   "stem": "**Enroll**\n\n| sid | cid |\n|---|---|\n| s1 | c1 |\n| s1 | c2 |\n| s1 | c3 |\n| s2 | c1 |\n| s2 | c3 |\n| s3 | c1 |\n| s3 | c2 |\n| s4 | c2 |\n\n**Req**\n\n| cid |\n|---|\n| c1 |\n| c2 |\n\nHow many tuples are in $\\text{Enroll} \\div \\text{Req}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Kept students who took at least one required course (∃ instead of ∀).",
+     "trap": "C2"
+    },
+    {
+     "value": 1,
+     "why": "Kept only students whose course set equals Req exactly (s3); division allows extra courses such as s1's c3.",
+     "trap": "C1"
+    },
+    {
+     "value": 3,
+     "why": "Kept students who took c1 (s1, s2, s3) and ignored c2.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. s1: c1 ✓, c2 ✓.\n2. s2: no c2.\n3. s3: c1 ✓, c2 ✓.\n4. s4: no c1.\n5. Result {s1, s3}: 2 tuples."
+  },
+  {
+   "id": "db-ra-division-02",
+   "skill": "db.ra-division",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which expression equals $R(A, B) \\div S(B)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\pi_A(R) - \\pi_A\\big(R - (\\pi_A(R) \\times S)\\big)$",
+     "correct": false,
+     "why": "Swapped the operands of the inner difference; that removes a values having a B outside S.",
+     "trap": "C11"
+    },
+    {
+     "text": "$\\pi_A(R) - \\pi_A\\big((\\pi_A(R) \\times S) - R\\big)$",
+     "correct": true,
+     "why": "(π_A(R) × S) − R lists the missing (a, b) pairs; removing their a values leaves those with no missing pair."
+    },
+    {
+     "text": "$\\pi_A(R \\bowtie S)$",
+     "correct": false,
+     "why": "Returns a values paired with at least one b in S, not with all of them.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\pi_A(R) \\times S$",
+     "correct": false,
+     "why": "This is the set of all candidate pairs, the first step of the formula, not the quotient.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Build every candidate pair π_A(R) × S.\n2. Subtract R to get the missing pairs.\n3. Remove their A values from π_A(R)."
+  },
+  {
+   "id": "db-ra-division-03",
+   "skill": "db.ra-division",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Enroll(sid, cid) is the table below and Req(cid) is **empty**.\n\n**Enroll**\n\n| sid | cid |\n|---|---|\n| s1 | c1 |\n| s1 | c2 |\n| s1 | c3 |\n| s2 | c1 |\n| s2 | c3 |\n| s3 | c1 |\n| s3 | c2 |\n| s4 | c2 |\n\nHow many tuples are in $\\text{Enroll} \\div \\text{Req}$, computed with $\\pi_{sid}(\\text{Enroll}) - \\pi_{sid}\\big((\\pi_{sid}(\\text{Enroll}) \\times \\text{Req}) - \\text{Enroll}\\big)$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Assumed an empty divisor gives an empty result; 'takes every course in an empty set' is vacuously true.",
+     "trap": "C5"
+    },
+    {
+     "value": 8,
+     "why": "Counted the tuples of Enroll instead of distinct sid values.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Reused the answer for Req = {c1, c2}.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. π_sid(Enroll) × ∅ = ∅.\n2. ∅ − Enroll = ∅, so nothing is subtracted.\n3. Result = π_sid(Enroll) = {s1, s2, s3, s4}: 4 tuples."
+  },
+  {
+   "id": "db-ra-division-04",
+   "skill": "db.ra-division",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Supplies(sid, pid) records which supplier supplies which part; Parts(pid, color).\n\nWhat does $\\text{Supplies} \\div \\pi_{pid}\\big(\\sigma_{color = 'red'}(\\text{Parts})\\big)$ return?",
+   "figure": null,
+   "options": [
+    {
+     "text": "sid of suppliers who supply every part",
+     "correct": false,
+     "why": "Dropped the σ; the divisor contains red parts only.",
+     "trap": "C6"
+    },
+    {
+     "text": "sid of suppliers who supply every red part",
+     "correct": true,
+     "why": "The divisor is the set of red parts; division keeps sid values paired with all of them."
+    },
+    {
+     "text": "sid of suppliers who supply only red parts",
+     "correct": false,
+     "why": "Reversed the inclusion; division allows a supplier to supply non-red parts too.",
+     "trap": "C1"
+    },
+    {
+     "text": "sid of suppliers who supply at least one red part",
+     "correct": false,
+     "why": "That is a join followed by projection (∃), not division (∀).",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Divisor = all red pids.\n2. Division keeps sid with (sid, p) ∈ Supplies for every red p.\n3. Extra non-red parts do not matter."
+  },
+  {
+   "id": "db-ra-equiv-01",
+   "skill": "db.ra-equiv",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "For relations R and S with suitable schemas and conditions p, q on R's attributes, which equivalence always holds?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\sigma_{p \\land q}(R) = \\sigma_p(\\sigma_q(R))$",
+     "correct": true,
+     "why": "Selections cascade: a row passes both filters exactly when it satisfies p ∧ q."
+    },
+    {
+     "text": "$\\pi_A(R - S) = \\pi_A(R) - \\pi_A(S)$",
+     "correct": false,
+     "why": "π does not distribute over −: a tuple of R − S can share its A value with a tuple of S.",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\pi_A(\\sigma_{B = 1}(R)) = \\sigma_{B = 1}(\\pi_A(R))$",
+     "correct": false,
+     "why": "After π_A the attribute B no longer exists, so the selection cannot be pushed above the projection.",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\sigma_{p \\lor q}(R) = \\sigma_p(R) \\cap \\sigma_q(R)$",
+     "correct": false,
+     "why": "Swapped ∪ and ∩; OR corresponds to union.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Cascade of σ: σ_{p∧q} = σ_p ∘ σ_q.\n2. σ_{p∨q} = σ_p ∪ σ_q.\n3. π distributes over ∪ but not over − or ∩."
+  },
+  {
+   "id": "db-ra-equiv-02",
+   "skill": "db.ra-equiv",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2024-Q26 style)",
+   "stem": "R and S are union-compatible. Which expressions are **always** equal to $R \\cap S$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(R \\cup S) - (R - S)$",
+     "correct": false,
+     "why": "Removing only R − S from the union leaves S, not R ∩ S.",
+     "trap": "C6"
+    },
+    {
+     "text": "$R - (S - R)$",
+     "correct": false,
+     "why": "S − R has no tuple of R, so this is just R.",
+     "trap": "C11"
+    },
+    {
+     "text": "$S - (S - R)$",
+     "correct": true,
+     "why": "Same identity with the roles swapped; ∩ is symmetric."
+    },
+    {
+     "text": "$R - (R - S)$",
+     "correct": true,
+     "why": "R − S removes the tuples not in S; taking those away from R leaves the common tuples."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. R − (R − S) = R ∩ S, and symmetrically S − (S − R).\n2. (R ∪ S) − (R − S) = S.\n3. R − (S − R) = R."
+  },
+  {
+   "id": "db-ra-equiv-03",
+   "skill": "db.ra-equiv",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2025-Q17 style)",
+   "stem": "Student(sid, name, dept), Enrolled(sid, cid, grade), Course(cid, title, credits).\n\nWhat does $\\pi_{name}\\big(\\sigma_{credits > 3 \\,\\land\\, grade = 'A'}(\\text{Student} \\bowtie \\text{Enrolled} \\bowtie \\text{Course})\\big)$ return?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Names of students who got grade A in at least one course of at least 3 credits",
+     "correct": false,
+     "why": "Read > as ≥; a 3-credit course does not qualify.",
+     "trap": "C5"
+    },
+    {
+     "text": "Names of students who got grade A in at least one course of more than 3 credits",
+     "correct": true,
+     "why": "Each joined tuple is one enrolment; σ needs that same enrolment to have grade A and credits > 3."
+    },
+    {
+     "text": "Names of students who got grade A in every course of more than 3 credits",
+     "correct": false,
+     "why": "σ followed by π is existential; 'every' needs division.",
+     "trap": "C2"
+    },
+    {
+     "text": "Names of students who got an A in some course and took some (possibly other) course of more than 3 credits",
+     "correct": false,
+     "why": "Both conditions are tested on the same joined tuple, so they refer to the same course.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The join pairs each enrolment with its student and course.\n2. σ keeps enrolments with A in a course of credits > 3.\n3. π_name lists such students (as a set)."
+  },
+  {
+   "id": "db-ra-equiv-04",
+   "skill": "db.ra-equiv",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Using Student(sid, name, dept) and Enrolled(sid, cid, grade), which expression gives the sid of students enrolled in **no** course?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\pi_{sid}(\\text{Student} \\bowtie \\text{Enrolled})$",
+     "correct": false,
+     "why": "Gives the students with at least one enrolment, the opposite set.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\pi_{sid}(\\text{Student}) - \\pi_{sid}(\\text{Enrolled})$",
+     "correct": true,
+     "why": "All students minus those appearing in Enrolled."
+    },
+    {
+     "text": "$\\pi_{sid}(\\text{Enrolled}) - \\pi_{sid}(\\text{Student})$",
+     "correct": false,
+     "why": "Reversed the operands; with a valid foreign key this is empty.",
+     "trap": "C11"
+    },
+    {
+     "text": "$\\pi_{sid}(\\sigma_{cid = NULL}(\\text{Student} \\bowtie \\text{Enrolled}))$",
+     "correct": false,
+     "why": "A natural join drops unmatched students, so no NULL cid is produced to select.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 'No enrolment' = all students − enrolled students.\n2. Use set difference on sid."
+  },
+  {
+   "id": "db-ra-equiv-05",
+   "skill": "db.ra-equiv",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Student**\n\n| sid | name | dept |\n|---|---|---|\n| 1 | Asha | CS |\n| 2 | Ravi | EE |\n| 3 | Asha | ME |\n| 4 | Meena | CS |\n\n**Enrolled**\n\n| sid | cid | grade |\n|---|---|---|\n| 1 | c1 | A |\n| 1 | c2 | B |\n| 1 | c3 | B |\n| 2 | c2 | A |\n| 3 | c3 | B |\n| 4 | c2 | A |\n| 2 | c1 | C |\n\n**Course**\n\n| cid | title | credits |\n|---|---|---|\n| c1 | DB | 4 |\n| c2 | ML | 3 |\n| c3 | OS | 4 |\n\nHow many tuples are in $\\pi_{name}\\big(\\sigma_{credits \\ge 4}(\\text{Student} \\bowtie \\text{Enrolled} \\bowtie \\text{Course})\\big)$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Counted distinct students (sid 1, 2, 3); π_name merges the two students named Asha.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Counted the selected joined rows without removing duplicate names.",
+     "trap": "C6"
+    },
+    {
+     "value": 0,
+     "why": "Used credits > 4; both 4-credit courses qualify for ≥ 4.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. Enrolments in 4-credit courses: (1,c1), (1,c3), (2,c1), (3,c3).\n2. Names: Asha, Asha, Ravi, Asha.\n3. Distinct names: {Asha, Ravi} -> 2."
+  },
+  {
+   "id": "db-trc-01",
+   "skill": "db.trc",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Student(sid, name, dept), Enrolled(sid, cid, grade). What does this query return?\n\n$$\\{\\, t.name \\mid t \\in \\text{Student} \\land \\neg \\exists e \\in \\text{Enrolled}\\,(e.sid = t.sid) \\,\\}$$",
+   "figure": null,
+   "options": [
+    {
+     "text": "Names of students enrolled in every course",
+     "correct": false,
+     "why": "Confused ¬∃ with ∀; 'every course' needs ∀ over Course.",
+     "trap": "C2"
+    },
+    {
+     "text": "Names of students enrolled in at least one course",
+     "correct": false,
+     "why": "Dropped the negation in front of ∃.",
+     "trap": "C11"
+    },
+    {
+     "text": "Names of students enrolled in no course",
+     "correct": true,
+     "why": "¬∃ says no Enrolled tuple carries this student's sid."
+    },
+    {
+     "text": "Names of students who have an enrolment with no grade",
+     "correct": false,
+     "why": "The formula compares only sid; it says nothing about grade.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. t ranges over Student.\n2. ¬∃e (e.sid = t.sid): no enrolment row for t.\n3. Output: unenrolled students' names."
+  },
+  {
+   "id": "db-trc-02",
+   "skill": "db.trc",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Supplies(sid, pid), Parts(pid, color). Which formula, combined with $\\exists s \\in \\text{Supplies}\\,(t.sid = s.sid)$, gives suppliers who supply **every red part**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\forall p \\in \\text{Parts}\\,\\big(p.color = 'red' \\Rightarrow \\exists u \\in \\text{Supplies}\\,(u.sid = t.sid \\land u.pid = p.pid)\\big)$",
+     "correct": true,
+     "why": "For each part: if it is red, t supplies it. Non-red parts satisfy the implication trivially."
+    },
+    {
+     "text": "$\\forall p \\in \\text{Parts}\\,\\big(p.color = 'red' \\land \\exists u \\in \\text{Supplies}\\,(u.sid = t.sid \\land u.pid = p.pid)\\big)$",
+     "correct": false,
+     "why": "Used ∧ instead of ⇒; this demands that every part be red, so it is false whenever a non-red part exists.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\forall u \\in \\text{Supplies}\\,\\big(u.sid = t.sid \\Rightarrow \\exists p \\in \\text{Parts}\\,(p.pid = u.pid \\land p.color = 'red')\\big)$",
+     "correct": false,
+     "why": "Converse inclusion: every part t supplies is red ('only red parts').",
+     "trap": "C1"
+    },
+    {
+     "text": "$\\exists p \\in \\text{Parts}\\,\\big(p.color = 'red' \\land \\exists u \\in \\text{Supplies}\\,(u.sid = t.sid \\land u.pid = p.pid)\\big)$",
+     "correct": false,
+     "why": "∃ instead of ∀: at least one red part.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 'Every red part' = ∀p (red(p) ⇒ supplies(t, p)).\n2. ∀ with ⇒, ∃ with ∧ is the standard pairing.\n3. Reversing the implication gives 'only red parts'."
+  },
+  {
+   "id": "db-trc-03",
+   "skill": "db.trc",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R and S are union-compatible relations. Which tuple relational calculus expressions are **unsafe**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{\\, t \\mid t \\in R \\lor t \\in S \\,\\}$",
+     "correct": false,
+     "why": "Each disjunct ranges over a stored relation, so the answer is R ∪ S.",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\{\\, t \\mid \\neg (t \\in R) \\,\\}$",
+     "correct": true,
+     "why": "Every tuple outside R qualifies, including values from the infinite domain."
+    },
+    {
+     "text": "$\\{\\, t \\mid t \\in R \\lor \\neg (t \\in S) \\,\\}$",
+     "correct": true,
+     "why": "The second disjunct admits any tuple not in S, which is infinite."
+    },
+    {
+     "text": "$\\{\\, t \\mid t \\in R \\land \\neg (t \\in S) \\,\\}$",
+     "correct": false,
+     "why": "t is bound to R first, so the answer is a subset of R (this is R − S).",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Safe means every answer value comes from the database (or constants in the query).\n2. A negated membership is safe only when t is already bound by a positive atom in a conjunction.\n3. Unsafe: ¬(t ∈ R) alone and t ∈ R ∨ ¬(t ∈ S)."
+  },
+  {
+   "id": "db-trc-04",
+   "skill": "db.trc",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statement about the expressive power of **safe** tuple relational calculus is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It is equivalent to basic relational algebra (σ, π, ×, ∪, −, ρ).",
+     "correct": true,
+     "why": "Codd's theorem: safe TRC, safe DRC and relational algebra express the same queries."
+    },
+    {
+     "text": "It is strictly weaker than relational algebra because it has no division.",
+     "correct": false,
+     "why": "Division is written in TRC with ∀ and ⇒.",
+     "trap": "C9"
+    },
+    {
+     "text": "It can express SQL aggregates such as COUNT and AVG.",
+     "correct": false,
+     "why": "Neither basic algebra nor TRC has aggregation.",
+     "trap": "C1"
+    },
+    {
+     "text": "It is strictly more powerful than relational algebra because it has ∀.",
+     "correct": false,
+     "why": "∀ can be rewritten with ¬∃, which algebra expresses using difference and division.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Safe TRC = safe DRC = relational algebra (relational completeness).\n2. Aggregation and recursion lie outside all three."
+  },
+  {
+   "id": "db-trc-05",
+   "skill": "db.trc",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Student**\n\n| sid | name | dept |\n|---|---|---|\n| 1 | Asha | CS |\n| 2 | Ravi | EE |\n| 3 | Asha | ME |\n| 4 | Meena | CS |\n\n**Enrolled**\n\n| sid | cid | grade |\n|---|---|---|\n| 1 | c1 | A |\n| 1 | c2 | B |\n| 1 | c3 | B |\n| 2 | c2 | A |\n| 3 | c3 | B |\n| 4 | c2 | A |\n| 2 | c1 | C |\n\n**Course**\n\n| cid | title | credits |\n|---|---|---|\n| c1 | DB | 4 |\n| c2 | ML | 3 |\n| c3 | OS | 4 |\n\nHow many tuples does this query return?\n\n$$\\{\\, t \\mid t \\in \\text{Student} \\land \\forall c \\in \\text{Course}\\,\\big(c.credits = 4 \\Rightarrow \\exists e \\in \\text{Enrolled}\\,(e.sid = t.sid \\land e.cid = c.cid)\\big) \\,\\}$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Read ∀ as ∃: counted students enrolled in at least one 4-credit course (sid 1, 2, 3).",
+     "trap": "C2"
+    },
+    {
+     "value": 0,
+     "why": "Read ⇒ as ∧, which requires every course to have 4 credits; c2 has 3, so nobody qualifies.",
+     "trap": "C2"
+    },
+    {
+     "value": 2,
+     "why": "Counted distinct names of the ∃ version instead of evaluating ∀ per student tuple.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. 4-credit courses: c1, c3.\n2. sid 1 has c1 and c3 ✓; sid 2 has c1 only; sid 3 has c3 only; sid 4 neither.\n3. One Student tuple qualifies."
+  },
+  {
+   "id": "db-sql-joins-01",
+   "skill": "db.sql-joins",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | name | did |\n|---|---|---|\n| 1 | A | 10 |\n| 2 | B | 20 |\n| 3 | C | 10 |\n| 4 | D | NULL |\n| 5 | E | 40 |\n\n**Dept**\n\n| did | dname |\n|---|---|\n| 10 | CS |\n| 20 | EE |\n| 30 | ME |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*)\nFROM Emp e LEFT JOIN Dept d ON e.did = d.did;\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Computed an inner join; LEFT JOIN also keeps employees 4 and 5, padded with NULL.",
+     "trap": "C2"
+    },
+    {
+     "value": 6,
+     "why": "Computed a full outer join; department 30 has no employee but is the right table here.",
+     "trap": "C2"
+    },
+    {
+     "value": 4,
+     "why": "Kept employee 5 (did 40) but dropped employee 4, as if a NULL did removed the row; a LEFT JOIN keeps every left row.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. Matches: 1→CS, 2→EE, 3→CS (3 rows).\n2. Unmatched left rows 4 (NULL) and 5 (40) are kept with NULLs.\n3. 5 rows."
+  },
+  {
+   "id": "db-sql-joins-02",
+   "skill": "db.sql-joins",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | name | did |\n|---|---|---|\n| 1 | A | 10 |\n| 2 | B | 20 |\n| 3 | C | 10 |\n| 4 | D | NULL |\n| 5 | E | 40 |\n\n**Dept**\n\n| did | dname |\n|---|---|\n| 10 | CS |\n| 20 | EE |\n| 30 | ME |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*)\nFROM Emp e FULL OUTER JOIN Dept d ON e.did = d.did;\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Stopped at the LEFT JOIN; FULL also keeps department 30 (ME), which has no employee.",
+     "trap": "C2"
+    },
+    {
+     "value": 4,
+     "why": "Computed only the RIGHT JOIN (3 matches + ME).",
+     "trap": "C2"
+    },
+    {
+     "value": 15,
+     "why": "Counted the Cartesian product 5 × 3.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Matched rows: 3.\n2. Unmatched Emp rows: 4, 5 -> 2.\n3. Unmatched Dept row: 30 -> 1.\n4. Total 6."
+  },
+  {
+   "id": "db-sql-joins-03",
+   "skill": "db.sql-joins",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | name | did |\n|---|---|---|\n| 1 | A | 10 |\n| 2 | B | 20 |\n| 3 | C | 10 |\n| 4 | D | NULL |\n| 5 | E | 40 |\n\n**Dept**\n\n| did | dname |\n|---|---|\n| 10 | CS |\n| 20 | EE |\n| 30 | ME |\n\nQuery P:\n\n```sql\nSELECT COUNT(*)\nFROM Emp e LEFT JOIN Dept d\n  ON e.did = d.did AND d.dname = 'CS';\n```\n\nQuery Q:\n\n```sql\nSELECT COUNT(*)\nFROM Emp e LEFT JOIN Dept d ON e.did = d.did\nWHERE d.dname = 'CS';\n```\n\nWhat do P and Q return, in that order?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3 and 2",
+     "correct": false,
+     "why": "Counted only rows with any matching department in P; the LEFT JOIN keeps all 5 Emp rows.",
+     "trap": "C6"
+    },
+    {
+     "text": "5 and 2",
+     "correct": true,
+     "why": "In P the filter is part of the match, so every Emp row survives; in Q the WHERE removes rows whose dname is not CS, including NULL-padded ones."
+    },
+    {
+     "text": "2 and 2",
+     "correct": false,
+     "why": "Treated a condition in ON like a WHERE filter; ON only decides matching in an outer join.",
+     "trap": "C9"
+    },
+    {
+     "text": "5 and 5",
+     "correct": false,
+     "why": "Assumed WHERE keeps the NULL-padded rows; d.dname = 'CS' is UNKNOWN for them, so they are dropped.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. P: only employees 1 and 3 match a CS row; the other 3 rows stay, padded with NULL -> 5.\n2. Q: join first (5 rows), then WHERE keeps dname = 'CS' -> employees 1 and 3 -> 2."
+  },
+  {
+   "id": "db-sql-joins-04",
+   "skill": "db.sql-joins",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**T1**\n\n| x |\n|---|\n| 1 |\n| 1 |\n| 2 |\n| 3 |\n| NULL |\n\n**T2**\n\n| x |\n|---|\n| 1 |\n| 2 |\n| 2 |\n| NULL |\n| NULL |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*)\nFROM T1 JOIN T2 ON T1.x = T2.x;\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Matched the NULL of T1 with the two NULLs of T2; NULL = NULL is UNKNOWN, so they never join.",
+     "trap": "C5"
+    },
+    {
+     "value": 2,
+     "why": "Counted distinct matching values (1 and 2) instead of matching row pairs.",
+     "trap": "C6"
+    },
+    {
+     "value": 25,
+     "why": "Counted the Cartesian product 5 × 5.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. x = 1: 2 rows × 1 row = 2.\n2. x = 2: 1 × 2 = 2.\n3. x = 3: no partner; NULLs never match.\n4. Total 4."
+  },
+  {
+   "id": "db-sql-joins-05",
+   "skill": "db.sql-joins",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | name | did |\n|---|---|---|\n| 1 | Asha | 10 |\n| 2 | Bala | 20 |\n| 3 | Chen | 10 |\n| 4 | Dev | 30 |\n\n**Dept**\n\n| did | name |\n|---|---|\n| 10 | CS |\n| 20 | EE |\n| 30 | ME |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*)\nFROM Emp NATURAL JOIN Dept;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "12",
+     "correct": false,
+     "why": "Computed the Cartesian product 4 × 3.",
+     "trap": "C6"
+    },
+    {
+     "text": "0",
+     "correct": true,
+     "why": "NATURAL JOIN equates every common column: did **and** name. No employee name equals a department name."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Joined on did only; both tables also have a column called name.",
+     "trap": "C10"
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Counted the departments; the join condition includes name as well.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Common columns: did, name.\n2. Condition: Emp.did = Dept.did AND Emp.name = Dept.name.\n3. No row satisfies both -> 0."
+  },
+  {
+   "id": "db-sql-subquery-01",
+   "skill": "db.sql-subquery",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (DA-2025-Q33 style)",
+   "stem": "**Emp**\n\n| eid | dept | salary |\n|---|---|---|\n| 1 | CS | 50 |\n| 2 | CS | 70 |\n| 3 | CS | 70 |\n| 4 | EE | 40 |\n| 5 | EE | 60 |\n| 6 | ME | 55 |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*)\nFROM Emp e\nWHERE e.salary = (SELECT MAX(salary)\n                  FROM Emp\n                  WHERE dept = e.dept);\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Counted one top earner per department; CS has two employees tied at 70.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Ignored the correlation and compared with the overall maximum 70.",
+     "trap": "C9"
+    },
+    {
+     "value": 6,
+     "why": "Assumed every row equals its own department's maximum.",
+     "trap": "C8"
+    }
+   ],
+   "solution": "1. Maxima: CS 70, EE 60, ME 55.\n2. Matching rows: eid 2, 3 (CS), 5 (EE), 6 (ME).\n3. Count 4."
+  },
+  {
+   "id": "db-sql-subquery-02",
+   "skill": "db.sql-subquery",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | salary |\n|---|---|---|\n| 1 | CS | 50 |\n| 2 | CS | 70 |\n| 3 | CS | 70 |\n| 4 | EE | 40 |\n| 5 | EE | 60 |\n| 6 | ME | 55 |\n\nQuery P:\n\n```sql\nSELECT COUNT(*) FROM Emp\nWHERE salary > ALL (SELECT salary FROM Emp WHERE dept = 'EE');\n```\n\nQuery Q:\n\n```sql\nSELECT COUNT(*) FROM Emp\nWHERE salary > ANY (SELECT salary FROM Emp WHERE dept = 'EE');\n```\n\nWhat do P and Q return, in that order?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3 and 5",
+     "correct": false,
+     "why": "Used ≥ for ALL, which wrongly includes the 60 itself.",
+     "trap": "C5"
+    },
+    {
+     "text": "2 and 5",
+     "correct": true,
+     "why": "> ALL means above the EE maximum 60 (two rows of 70); > ANY means above the EE minimum 40 (5 rows)."
+    },
+    {
+     "text": "2 and 6",
+     "correct": false,
+     "why": "Used ≥ for ANY, which wrongly includes the 40 itself.",
+     "trap": "C5"
+    },
+    {
+     "text": "5 and 2",
+     "correct": false,
+     "why": "Swapped ALL and ANY: ALL compares with the maximum, ANY with the minimum.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. EE salaries: {40, 60}.\n2. > ALL ⇔ > 60: rows 70, 70 -> 2.\n3. > ANY ⇔ > 40: 50, 70, 70, 60, 55 -> 5."
+  },
+  {
+   "id": "db-sql-subquery-03",
+   "skill": "db.sql-subquery",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**A**\n\n| x |\n|---|\n| 1 |\n| 2 |\n| 3 |\n| 4 |\n\n**B**\n\n| y |\n|---|\n| 2 |\n| 4 |\n| NULL |\n\nQuery P:\n\n```sql\nSELECT COUNT(*) FROM A\nWHERE x NOT IN (SELECT y FROM B);\n```\n\nQuery Q:\n\n```sql\nSELECT COUNT(*) FROM A\nWHERE NOT EXISTS (SELECT * FROM B WHERE B.y = A.x);\n```\n\nWhat do P and Q return, in that order?",
+   "figure": null,
+   "options": [
+    {
+     "text": "0 and 2",
+     "correct": true,
+     "why": "For x = 1, `1 NOT IN (2, 4, NULL)` is 1≠2 AND 1≠4 AND 1≠NULL = UNKNOWN, so P keeps nothing; NOT EXISTS finds no equal row for 1 and 3."
+    },
+    {
+     "text": "2 and 0",
+     "correct": false,
+     "why": "Swapped the behaviours of NOT IN and NOT EXISTS.",
+     "trap": "C2"
+    },
+    {
+     "text": "2 and 2",
+     "correct": false,
+     "why": "Ignored the NULL in B; with a NULL in the list NOT IN can never be TRUE.",
+     "trap": "C5"
+    },
+    {
+     "text": "0 and 0",
+     "correct": false,
+     "why": "Assumed the NULL breaks NOT EXISTS too; B.y = A.x is simply not TRUE for the NULL row, so it adds no match.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. NOT IN expands to a chain of ≠ joined by AND; x ≠ NULL is UNKNOWN.\n2. So P returns 0.\n3. NOT EXISTS: x = 1 and x = 3 have no equal row in B -> 2."
+  },
+  {
+   "id": "db-sql-subquery-04",
+   "skill": "db.sql-subquery",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | salary |\n|---|---|---|\n| 1 | CS | 50 |\n| 2 | CS | 70 |\n| 3 | CS | 70 |\n| 4 | EE | 40 |\n| 5 | EE | 60 |\n| 6 | ME | 55 |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*) FROM Emp\nWHERE dept IN (SELECT dept FROM Emp WHERE salary >= 60);\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Used > 60, which drops EE (its top salary is exactly 60).",
+     "trap": "C5"
+    },
+    {
+     "value": 8,
+     "why": "Rewrote IN as a join; the subquery lists CS twice, and a join would repeat the CS employees.",
+     "trap": "C9"
+    },
+    {
+     "value": 2,
+     "why": "Counted the qualifying departments (CS, EE) instead of the employees in them.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Subquery: depts with a salary ≥ 60 -> CS, CS, EE.\n2. IN tests membership, so duplicates do not matter.\n3. Employees in CS or EE: 3 + 2 = 5."
+  },
+  {
+   "id": "db-sql-subquery-05",
+   "skill": "db.sql-subquery",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | salary |\n|---|---|---|\n| 1 | CS | 50 |\n| 2 | CS | 70 |\n| 3 | CS | 70 |\n| 4 | EE | 40 |\n| 5 | EE | 60 |\n| 6 | ME | 55 |\n\nQuery Q1:\n\n```sql\nSELECT dept FROM Emp\nGROUP BY dept\nHAVING MIN(salary) >= 50;\n```\n\nQuery Q2:\n\n```sql\nSELECT DISTINCT dept FROM Emp\nWHERE salary >= 50;\n```\n\nQuery Q3:\n\n```sql\nSELECT DISTINCT dept FROM Emp e1\nWHERE NOT EXISTS (SELECT * FROM Emp e2\n                  WHERE e2.dept = e1.dept\n                    AND e2.salary < 50);\n```\n\nQuery Q4:\n\n```sql\nSELECT dept FROM Emp\nGROUP BY dept\nHAVING MIN(salary) > 50;\n```\n\nWhich queries return exactly the departments in which **every** employee earns at least 50?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Q1",
+     "correct": true,
+     "why": "A department qualifies when its smallest salary is at least 50: CS (50) and ME (55)."
+    },
+    {
+     "text": "Q2",
+     "correct": false,
+     "why": "Tests 'some employee earns ≥ 50', so EE (60) wrongly appears.",
+     "trap": "C2"
+    },
+    {
+     "text": "Q3",
+     "correct": true,
+     "why": "'No employee of the department earns below 50' is the same as 'all earn ≥ 50'."
+    },
+    {
+     "text": "Q4",
+     "correct": false,
+     "why": "Strict > drops CS, whose minimum is exactly 50.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Wanted: CS (50, 70, 70) and ME (55); EE has 40.\n2. ∀ can be written as MIN(...) ≥ 50 or as NOT EXISTS a counterexample.\n3. WHERE salary ≥ 50 tests ∃; > 50 drops CS."
+  },
+  {
+   "id": "db-sql-groupby-01",
+   "skill": "db.sql-groupby",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Sales**\n\n| id | region | product | amount |\n|---|---|---|---|\n| 1 | N | p1 | 100 |\n| 2 | N | p2 | NULL |\n| 3 | S | p1 | 200 |\n| 4 | S | p1 | 50 |\n| 5 | E | p2 | NULL |\n| 6 | N | p1 | 300 |\n| 7 | W | p3 | 40 |\n| 8 | E | p3 | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*)\nFROM (SELECT region\n      FROM Sales\n      GROUP BY region\n      HAVING COUNT(amount) >= 2) AS g;\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Used COUNT(*); region E has 2 rows but both amounts are NULL, so COUNT(amount) = 0.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Counted all regions; HAVING removes E (0) and W (1).",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Used COUNT(amount) > 2, which drops S (exactly 2).",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. COUNT(amount) per region: N 2, S 2, E 0, W 1.\n2. HAVING ≥ 2 keeps N and S.\n3. Outer COUNT = 2."
+  },
+  {
+   "id": "db-sql-groupby-02",
+   "skill": "db.sql-groupby",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Sales**\n\n| id | region | product | amount |\n|---|---|---|---|\n| 1 | N | p1 | 100 |\n| 2 | N | p2 | NULL |\n| 3 | S | p1 | 200 |\n| 4 | S | p1 | 50 |\n| 5 | E | p2 | NULL |\n| 6 | N | p1 | 300 |\n| 7 | W | p3 | 40 |\n| 8 | E | p3 | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT AVG(amount) FROM Sales WHERE region = 'N';\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 200,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 133.33,
+     "why": "Divided the sum 400 by 3 rows; AVG skips the NULL amount and divides by 2.",
+     "trap": "C6"
+    },
+    {
+     "value": 400,
+     "why": "Returned the SUM instead of the average.",
+     "trap": "C3"
+    },
+    {
+     "value": 138,
+     "why": "Averaged all non-NULL amounts of the table (690 / 5); the WHERE clause keeps region N only.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Region N amounts: 100, NULL, 300.\n2. AVG ignores NULL: (100 + 300) / 2 = 200."
+  },
+  {
+   "id": "db-sql-groupby-03",
+   "skill": "db.sql-groupby",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Sales**\n\n| id | region | product | amount |\n|---|---|---|---|\n| 1 | N | p1 | 100 |\n| 2 | N | p2 | NULL |\n| 3 | S | p1 | 200 |\n| 4 | S | p1 | 50 |\n| 5 | E | p2 | NULL |\n| 6 | N | p1 | 300 |\n| 7 | W | p3 | 40 |\n| 8 | E | p3 | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT region, SUM(amount)\nFROM Sales\nWHERE amount > 60\nGROUP BY region\nHAVING SUM(amount) > 200;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "(N, 400) and (S, 250)",
+     "correct": false,
+     "why": "Applied HAVING without the WHERE filter; 50 is removed before grouping, so S sums to 200.",
+     "trap": "C9"
+    },
+    {
+     "text": "(N, 400) and (S, 200)",
+     "correct": false,
+     "why": "Read HAVING > 200 as ≥ 200.",
+     "trap": "C5"
+    },
+    {
+     "text": "(N, 400) only",
+     "correct": true,
+     "why": "WHERE keeps 100, 200, 300; sums are N 400, S 200; HAVING > 200 keeps only N."
+    },
+    {
+     "text": "(N, 400) and (E, NULL)",
+     "correct": false,
+     "why": "Kept E's NULL amounts; amount > 60 is UNKNOWN for NULL, so WHERE removes those rows and E never forms a group.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. WHERE amount > 60: rows 1 (N 100), 3 (S 200), 6 (N 300).\n2. GROUP BY: N 400, S 200.\n3. HAVING SUM > 200: N only."
+  },
+  {
+   "id": "db-sql-groupby-04",
+   "skill": "db.sql-groupby",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Sales**\n\n| id | region | product | amount |\n|---|---|---|---|\n| 1 | N | p1 | 100 |\n| 2 | N | p2 | NULL |\n| 3 | S | p1 | 200 |\n| 4 | S | p1 | 50 |\n| 5 | E | p2 | NULL |\n| 6 | N | p1 | 300 |\n| 7 | W | p3 | 40 |\n| 8 | E | p3 | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*), COUNT(amount), COUNT(DISTINCT product)\nFROM Sales;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "8, 8, 3",
+     "correct": false,
+     "why": "Assumed COUNT(col) counts NULL values; only COUNT(*) does.",
+     "trap": "C9"
+    },
+    {
+     "text": "8, 5, 8",
+     "correct": false,
+     "why": "Ignored DISTINCT in the third count.",
+     "trap": "C6"
+    },
+    {
+     "text": "5, 5, 3",
+     "correct": false,
+     "why": "Assumed COUNT(*) also skips rows containing a NULL.",
+     "trap": "C9"
+    },
+    {
+     "text": "8, 5, 3",
+     "correct": true,
+     "why": "COUNT(*) counts rows; COUNT(amount) skips 3 NULLs; there are 3 distinct products."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 8 rows.\n2. Non-NULL amounts: 100, 200, 50, 300, 40 -> 5.\n3. Products p1, p2, p3 -> 3."
+  },
+  {
+   "id": "db-sql-groupby-05",
+   "skill": "db.sql-groupby",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**T**\n\n| g | v |\n|---|---|\n| a | 1 |\n| NULL | 2 |\n| b | 3 |\n| NULL | 4 |\n| a | 5 |\n\nHow many rows does this query return?\n\n```sql\nSELECT g, SUM(v)\nFROM T\nGROUP BY g;\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Put each NULL in its own group; GROUP BY places all NULL keys in one group.",
+     "trap": "C5"
+    },
+    {
+     "value": 2,
+     "why": "Dropped the NULL group; GROUP BY keeps it as a group with g = NULL.",
+     "trap": "C9"
+    },
+    {
+     "value": 5,
+     "why": "Counted rows instead of groups.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Groups: a (1, 5), b (3), NULL (2, 4).\n2. 3 rows: (a, 6), (b, 3), (NULL, 6)."
+  },
+  {
+   "id": "db-sql-null-01",
+   "skill": "db.sql-null",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**T**\n\n| a |\n|---|\n| 1 |\n| NULL |\n| 3 |\n| NULL |\n| 5 |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*) FROM T\nWHERE a > 2 OR a <= 2;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Kept one of the NULL rows; both NULL rows behave the same way.",
+     "trap": "C5"
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Counted only a > 2 (3 and 5).",
+     "trap": "C6"
+    },
+    {
+     "text": "3",
+     "correct": true,
+     "why": "For the NULL rows both comparisons are UNKNOWN, and UNKNOWN OR UNKNOWN is UNKNOWN, so WHERE drops them."
+    },
+    {
+     "text": "5",
+     "correct": false,
+     "why": "Treated the condition as a tautology; it is not TRUE when a is NULL.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. a = 1, 3, 5: one side is TRUE.\n2. a = NULL: UNKNOWN OR UNKNOWN = UNKNOWN.\n3. WHERE keeps TRUE only -> 3."
+  },
+  {
+   "id": "db-sql-null-02",
+   "skill": "db.sql-null",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "In SQL's three-valued logic, which expressions evaluate to **TRUE**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`TRUE OR UNKNOWN`",
+     "correct": true,
+     "why": "One TRUE operand makes OR TRUE whatever the other is."
+    },
+    {
+     "text": "`NULL = NULL`",
+     "correct": false,
+     "why": "Any comparison with NULL is UNKNOWN, even with another NULL.",
+     "trap": "C5"
+    },
+    {
+     "text": "`NULL IS NULL`",
+     "correct": true,
+     "why": "IS NULL is the NULL test and returns TRUE or FALSE, never UNKNOWN."
+    },
+    {
+     "text": "`FALSE AND UNKNOWN`",
+     "correct": false,
+     "why": "This is FALSE, not TRUE; mixed up the AND and OR tables.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Comparisons with NULL -> UNKNOWN.\n2. OR: TRUE dominates; AND: FALSE dominates.\n3. IS NULL is two-valued."
+  },
+  {
+   "id": "db-sql-null-03",
+   "skill": "db.sql-null",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**T**\n\n| a |\n|---|\n| 1 |\n| NULL |\n| 1 |\n| 2 |\n| NULL |\n| 2 |\n| 3 |\n\nHow many rows does this query return?\n\n```sql\nSELECT DISTINCT a FROM T;\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Dropped NULL, as COUNT(DISTINCT a) would; SELECT DISTINCT keeps one NULL row.",
+     "trap": "C9"
+    },
+    {
+     "value": 5,
+     "why": "Kept each NULL separately; DISTINCT treats NULLs as duplicates of each other.",
+     "trap": "C5"
+    },
+    {
+     "value": 7,
+     "why": "Ignored DISTINCT.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Values: 1, 2, 3 and NULL.\n2. DISTINCT keeps one row each -> 4.\n3. Contrast: COUNT(DISTINCT a) = 3."
+  },
+  {
+   "id": "db-sql-null-04",
+   "skill": "db.sql-null",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | salary | bonus |\n|---|---|---|\n| 1 | 100 | NULL |\n| 2 | 200 | 20 |\n| 3 | NULL | 10 |\n| 4 | 150 | 0 |\n| 5 | NULL | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*) FROM Emp\nWHERE NOT (salary > 120 AND bonus > 5);\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Turned UNKNOWN into FALSE before applying NOT, so rows 3 and 5 became TRUE; NOT UNKNOWN stays UNKNOWN.",
+     "trap": "C5"
+    },
+    {
+     "value": 3,
+     "why": "Treated the NULL salary of row 3 as failing (FALSE) but kept row 5 UNKNOWN.",
+     "trap": "C5"
+    },
+    {
+     "value": 1,
+     "why": "Evaluated row 1 as UNKNOWN; salary 100 > 120 is FALSE, so the AND is FALSE whatever bonus is.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Row 1: FALSE AND UNKNOWN = FALSE -> NOT -> TRUE ✓.\n2. Row 2: TRUE AND TRUE -> NOT -> FALSE.\n3. Row 3: UNKNOWN AND TRUE = UNKNOWN -> UNKNOWN.\n4. Row 4: TRUE AND FALSE = FALSE -> TRUE ✓.\n5. Row 5: UNKNOWN. Count 2."
+  },
+  {
+   "id": "db-sql-null-05",
+   "skill": "db.sql-null",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | salary | bonus |\n|---|---|---|\n| 1 | 100 | NULL |\n| 2 | 200 | 20 |\n| 3 | NULL | 10 |\n| 4 | 150 | 0 |\n| 5 | NULL | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*) FROM Emp\nWHERE salary BETWEEN 100 AND 150;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "2",
+     "correct": true,
+     "why": "BETWEEN is inclusive at both ends: salaries 100 and 150 qualify."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Counted the NULL salaries as inside the range; NULL BETWEEN ... is UNKNOWN.",
+     "trap": "C5"
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Treated BETWEEN as a half-open range, dropping one endpoint.",
+     "trap": "C5"
+    },
+    {
+     "text": "0",
+     "correct": false,
+     "why": "Treated BETWEEN as strict at both ends.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BETWEEN a AND b ⇔ ≥ a AND ≤ b.\n2. Salaries 100 and 150 pass; 200 fails; NULLs are UNKNOWN.\n3. Count 2."
+  },
+  {
+   "id": "db-sql-null-06",
+   "skill": "db.sql-null",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | salary | bonus |\n|---|---|---|\n| 1 | 100 | NULL |\n| 2 | 200 | 20 |\n| 3 | NULL | 10 |\n| 4 | 150 | 0 |\n| 5 | NULL | NULL |\n\nWhat does this query return?\n\n```sql\nSELECT COUNT(*), SUM(salary), MAX(salary)\nFROM Emp\nWHERE salary > 500;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "NULL, NULL, NULL",
+     "correct": false,
+     "why": "COUNT never returns NULL; it returns 0 for no rows.",
+     "trap": "C9"
+    },
+    {
+     "text": "0, 0, 0",
+     "correct": false,
+     "why": "Assumed SUM and MAX default to 0 on an empty input.",
+     "trap": "C5"
+    },
+    {
+     "text": "0, NULL, NULL",
+     "correct": true,
+     "why": "No row qualifies; COUNT of an empty set is 0, while SUM and MAX of an empty set are NULL."
+    },
+    {
+     "text": "No row is returned",
+     "correct": false,
+     "why": "An aggregate query without GROUP BY always returns exactly one row.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. WHERE removes every row.\n2. Without GROUP BY the aggregates still produce one row.\n3. COUNT -> 0; SUM, MAX -> NULL."
+  },
+  {
+   "id": "db-fd-closure-01",
+   "skill": "db.fd-closure",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "For R(A, B, C, D, E, F) with $F = \\{A \\to B,\\; B \\to C,\\; CD \\to E,\\; E \\to F\\}$, what is $\\{A\\}^+$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{A, B}",
+     "correct": false,
+     "why": "Stopped after one step; B → C fires next.",
+     "trap": "C6"
+    },
+    {
+     "text": "{A, B, C}",
+     "correct": true,
+     "why": "A → B, then B → C; CD → E needs D, which is never added."
+    },
+    {
+     "text": "{A, B, C, D, E, F}",
+     "correct": false,
+     "why": "Assumed A is a key; D can never be derived since it is on no RHS.",
+     "trap": "C1"
+    },
+    {
+     "text": "{A, B, C, E, F}",
+     "correct": false,
+     "why": "Fired CD → E with only C present; the whole LHS must be in the set.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Start {A}.\n2. A → B: {A, B}. B → C: {A, B, C}.\n3. CD → E needs D: stop. $\\{A\\}^+ = \\{A, B, C\\}$."
+  },
+  {
+   "id": "db-fd-closure-02",
+   "skill": "db.fd-closure",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2024-Q46 style)",
+   "stem": "For R(A, B, C, D, E) with $F = \\{A \\to BC,\\; CD \\to E,\\; B \\to D,\\; E \\to A\\}$, which FDs are implied by F?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$A \\to E$",
+     "correct": true,
+     "why": "A⁺: A → BC, B → D, then CD → E; so E ∈ A⁺."
+    },
+    {
+     "text": "$C \\to E$",
+     "correct": false,
+     "why": "Fired CD → E with C alone; C⁺ = {C} because no FD has C alone as its LHS.",
+     "trap": "C1"
+    },
+    {
+     "text": "$D \\to A$",
+     "correct": false,
+     "why": "Reversed a chain: A leads to D, but D⁺ = {D}.",
+     "trap": "C1"
+    },
+    {
+     "text": "$B \\to E$",
+     "correct": false,
+     "why": "B⁺ = {B, D}; CD → E also needs C, which B cannot reach.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A⁺ = {A, B, C, D, E}.\n2. C⁺ = {C}; B⁺ = {B, D}; D⁺ = {D}.\n3. X → Y holds iff Y ⊆ X⁺, so only A → E is implied."
+  },
+  {
+   "id": "db-fd-closure-03",
+   "skill": "db.fd-closure",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "For R(A, B, C, D, E, F, G) with $F = \\{A \\to B,\\; BC \\to D,\\; D \\to EF,\\; F \\to G,\\; G \\to A\\}$, how many attributes are in $\\{D\\}^+$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Stopped at {D, E, F, G}; G → A and then A → B continue the chain.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Added C as well; C is on no RHS, so only C itself can give C.",
+     "trap": "C1"
+    },
+    {
+     "value": 3,
+     "why": "Applied only D → EF.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. D → EF: {D, E, F}.\n2. F → G, G → A, A → B: {A, B, D, E, F, G}.\n3. BC → D needs C: stop. Size 6."
+  },
+  {
+   "id": "db-fd-closure-04",
+   "skill": "db.fd-closure",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Let $F = \\{A \\to B,\\; AB \\to C,\\; D \\to AC\\}$ and $G = \\{A \\to BC,\\; D \\to A\\}$. Which is true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "F and G are equivalent.",
+     "correct": true,
+     "why": "Under F: A⁺ = ABC and D⁺ = ABCD, giving G's FDs; under G: A⁺ = ABC and D⁺ = ABCD, giving F's FDs."
+    },
+    {
+     "text": "Neither covers the other.",
+     "correct": false,
+     "why": "Compared the FD lists syntactically; equivalence is about closures.",
+     "trap": "C10"
+    },
+    {
+     "text": "F covers G, but G does not cover F.",
+     "correct": false,
+     "why": "Checked only one direction; D → AC also follows from G (D → A → BC).",
+     "trap": "C1"
+    },
+    {
+     "text": "G covers F, but F does not cover G.",
+     "correct": false,
+     "why": "Checked only one direction; A → BC follows from F via A → B and AB → C.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. F ⊨ G: A⁺_F = {A,B,C} ⊇ BC; D⁺_F ⊇ A.\n2. G ⊨ F: A⁺_G ⊇ B, C; D⁺_G = {D,A,B,C} ⊇ AC.\n3. Both directions hold."
+  },
+  {
+   "id": "db-fd-closure-05",
+   "skill": "db.fd-closure",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which is a minimal (canonical) cover of $F = \\{A \\to BC,\\; B \\to C,\\; A \\to B,\\; AB \\to C\\}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{A \\to B,\\; B \\to C\\}$",
+     "correct": true,
+     "why": "A → C follows from A → B, B → C, and AB → C reduces to B → C; both are redundant."
+    },
+    {
+     "text": "$\\{A \\to BC,\\; B \\to C\\}$",
+     "correct": false,
+     "why": "Kept the extraneous C in A → BC; A → B and B → C already give it.",
+     "trap": "C6"
+    },
+    {
+     "text": "$\\{A \\to C,\\; B \\to C\\}$",
+     "correct": false,
+     "why": "Dropped A → B, which nothing else implies.",
+     "trap": "C8"
+    },
+    {
+     "text": "$\\{A \\to B,\\; AB \\to C\\}$",
+     "correct": false,
+     "why": "Did not test the LHS of AB → C: B alone determines C, so A is extraneous.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Split: A → B, A → C, B → C, AB → C.\n2. AB → C: A is extraneous (B → C) -> duplicate of B → C.\n3. A → C is implied by A → B, B → C. Result {A → B, B → C}."
+  },
+  {
+   "id": "db-fd-closure-06",
+   "skill": "db.fd-closure",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "For R(A, B, C, D, E) with $F = \\{AB \\to C,\\; A \\to D,\\; D \\to B,\\; C \\to E,\\; AD \\to E\\}$, how many FDs are in a minimal cover (single attribute on each right side)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Removed no FD: AD → E reduces to A → E, which follows from A → C and C → E.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Also dropped A → D or D → B; neither follows from the others.",
+     "trap": "C8"
+    },
+    {
+     "value": 6,
+     "why": "Split some FD into two by mistake; every RHS here is already a single attribute.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. AB → C: A⁺ = {A, D, B, C, E} ∋ C, so B is extraneous -> A → C.\n2. AD → E: A → E, implied by A → C, C → E -> drop.\n3. Cover: {A → C, A → D, D → B, C → E}: 4 FDs."
+  },
+  {
+   "id": "db-fd-closure-07",
+   "skill": "db.fd-closure",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which inference about functional dependencies is **not** valid in general?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If $X \\to Y$ then $XZ \\to YZ$",
+     "correct": false,
+     "why": "This is augmentation, one of Armstrong's axioms.",
+     "trap": "C9"
+    },
+    {
+     "text": "If $X \\to Y$ and $X \\to Z$ then $X \\to YZ$",
+     "correct": false,
+     "why": "This is the union rule, derived from augmentation and transitivity.",
+     "trap": "C9"
+    },
+    {
+     "text": "If $X \\to Y$ and $Y \\to Z$ then $X \\to Z$",
+     "correct": false,
+     "why": "This is transitivity, an Armstrong axiom.",
+     "trap": "C9"
+    },
+    {
+     "text": "If $AB \\to C$ then $A \\to C$",
+     "correct": true,
+     "why": "The LHS cannot be split; C may depend on A and B together (for example C = A + B)."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Armstrong: reflexivity, augmentation, transitivity.\n2. Derived: union, decomposition (of the RHS), pseudo-transitivity.\n3. Splitting the LHS is not sound."
+  },
+  {
+   "id": "db-fd-keys-01",
+   "skill": "db.fd-keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "How many candidate keys does R(A, B, C, D, E) have under $F = \\{AB \\to C,\\; C \\to D,\\; D \\to E,\\; E \\to A\\}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Stopped at the first key AB; B with any of A, C, D, E reaches everything.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Found AB and BC but did not test BD and BE.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Missed BE: E → A lets E stand in for A, so (BE)⁺ = ABCDE as well.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. B is on no RHS, so B is in every key; B⁺ = {B}.\n2. (AB)⁺, (BC)⁺, (BD)⁺, (BE)⁺ all reach ABCDE (the cycle C → D → E → A, AB → C).\n3. Keys: AB, BC, BD, BE -> 4."
+  },
+  {
+   "id": "db-fd-keys-02",
+   "skill": "db.fd-keys",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "What is the candidate key of R(A, B, C, D) under $F = \\{A \\to B,\\; B \\to C,\\; C \\to D\\}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{A, B}",
+     "correct": false,
+     "why": "A superkey but not minimal; A alone already determines everything.",
+     "trap": "C1"
+    },
+    {
+     "text": "{B}",
+     "correct": false,
+     "why": "B⁺ = {B, C, D} misses A.",
+     "trap": "C6"
+    },
+    {
+     "text": "{D}",
+     "correct": false,
+     "why": "Read the chain backwards; D⁺ = {D}.",
+     "trap": "C11"
+    },
+    {
+     "text": "{A}",
+     "correct": true,
+     "why": "A⁺ = {A, B, C, D}, and A is on no RHS, so it must be in every key."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A appears on no RHS -> in every key.\n2. A⁺ = ABCD -> {A} is the only key."
+  },
+  {
+   "id": "db-fd-keys-03",
+   "skill": "db.fd-keys",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "How many **prime** attributes does R(A, B, C, D, E, F) have under $F = \\{AB \\to C,\\; C \\to A,\\; D \\to E,\\; E \\to F\\}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Used only the key ABD; BCD is a second key, which makes C prime as well.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Counted only B and D, the attributes on no RHS.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Assumed every attribute is prime; E and F are in no key.",
+     "trap": "C8"
+    }
+   ],
+   "solution": "1. B, D are on no RHS: (BD)⁺ = {B, D, E, F}.\n2. Add A: ABD is a key; add C: (BCD)⁺ = all, also a key.\n3. Prime = A, B, C, D -> 4."
+  },
+  {
+   "id": "db-fd-keys-04",
+   "skill": "db.fd-keys",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "For R(A, B, C, D, E) with $F = \\{AB \\to C,\\; C \\to D,\\; D \\to A,\\; E \\to B\\}$, which sets are candidate keys?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{B, E}",
+     "correct": false,
+     "why": "(BE)⁺ = {B, E}; AB → C needs A, which BE cannot produce.",
+     "trap": "C6"
+    },
+    {
+     "text": "{A, E}",
+     "correct": true,
+     "why": "E → B, AB → C, C → D: (AE)⁺ = ABCDE, and neither A nor E alone works."
+    },
+    {
+     "text": "{D, E}",
+     "correct": true,
+     "why": "D → A, E → B, AB → C: (DE)⁺ = ABCDE; minimal."
+    },
+    {
+     "text": "{A, B, E}",
+     "correct": false,
+     "why": "A superkey, not minimal: B is derivable from E.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. E is on no RHS -> in every key; E⁺ = {E, B}.\n2. Adding A, C or D completes the cycle: keys AE, CE, DE.\n3. ABE contains AE, so it is not minimal."
+  },
+  {
+   "id": "db-fd-keys-05",
+   "skill": "db.fd-keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "How many candidate keys does R(A, B, C, D, E, F) have under $F = \\{A \\to B,\\; B \\to C,\\; C \\to A,\\; D \\to E,\\; E \\to F,\\; F \\to D\\}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Added the choices 3 + 3; a key picks one from each cycle, so the choices multiply.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Took keys from one cycle only; no attribute of {A, B, C} reaches D, E or F.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Gave one key per cycle instead of one attribute from each cycle per key.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. {A, B, C} and {D, E, F} are two separate cycles.\n2. A key needs one attribute from each.\n3. 3 × 3 = 9 keys."
+  },
+  {
+   "id": "db-fd-keys-06",
+   "skill": "db.fd-keys",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "How many superkeys does R(A, B, C, D) have under $F = \\{A \\to B,\\; B \\to A\\}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Added 2 + 2 without removing ABCD, which contains both keys.",
+     "trap": "C6"
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Counted only the whole relation ABCD.",
+     "trap": "C6"
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Counted candidate keys, not superkeys.",
+     "trap": "C10"
+    },
+    {
+     "text": "3",
+     "correct": true,
+     "why": "Keys ACD and BCD; superkeys ACD, BCD, ABCD."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. C, D are on no RHS; (CD)⁺ = CD.\n2. Keys: ACD, BCD.\n3. Superkeys: ACD, ABCD (from ACD) and BCD, ABCD -> 2 + 2 − 1 = 3."
+  },
+  {
+   "id": "db-nf-test-01",
+   "skill": "db.nf-test",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "What is the highest normal form of R(A, B, C, D) under $F = \\{AB \\to C,\\; C \\to D\\}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "1NF (not 2NF)",
+     "correct": false,
+     "why": "Treated C → D as a partial dependency; C is not part of the key AB, so it is transitive, not partial.",
+     "trap": "C9"
+    },
+    {
+     "text": "2NF (not 3NF)",
+     "correct": true,
+     "why": "Key AB; no non-prime attribute depends on A or B alone, but C → D is transitive (C not a superkey, D non-prime)."
+    },
+    {
+     "text": "3NF (not BCNF)",
+     "correct": false,
+     "why": "3NF needs C to be a superkey or D prime; neither holds.",
+     "trap": "C1"
+    },
+    {
+     "text": "BCNF",
+     "correct": false,
+     "why": "C → D has a non-superkey LHS.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Key: AB.\n2. Proper subsets A, B determine nothing -> 2NF.\n3. C → D: C not a superkey, D non-prime -> not 3NF.\n4. Highest: 2NF."
+  },
+  {
+   "id": "db-nf-test-02",
+   "skill": "db.nf-test",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "What is the highest normal form of R(A, B, C) under $F = \\{AB \\to C,\\; C \\to B\\}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "1NF (not 2NF)",
+     "correct": false,
+     "why": "No partial dependency on a non-prime attribute exists; every attribute is prime.",
+     "trap": "C6"
+    },
+    {
+     "text": "2NF (not 3NF)",
+     "correct": false,
+     "why": "All attributes are prime (keys AB and AC), so 3NF holds.",
+     "trap": "C6"
+    },
+    {
+     "text": "3NF (not BCNF)",
+     "correct": true,
+     "why": "Keys AB, AC make B prime, so C → B satisfies 3NF; C is not a superkey, so BCNF fails."
+    },
+    {
+     "text": "BCNF",
+     "correct": false,
+     "why": "Forgot that C → B has a LHS that is not a superkey; prime RHS is enough only for 3NF.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Keys: AB and AC.\n2. C → B: C not a superkey, but B is prime -> 3NF holds.\n3. BCNF fails. Highest: 3NF."
+  },
+  {
+   "id": "db-nf-test-03",
+   "skill": "db.nf-test",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2025-Q57 style)",
+   "stem": "For R(A, B, C, D, E) with $F = \\{AE \\to B,\\; B \\to D,\\; D \\to A,\\; C \\to E\\}$, which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "R is in 2NF.",
+     "correct": false,
+     "why": "Missed the partial dependency C → E: C is a proper subset of key AC and E is non-prime.",
+     "trap": "C9"
+    },
+    {
+     "text": "AC, BC and CD are all candidate keys.",
+     "correct": true,
+     "why": "C → E; then A (with E) gives B, B gives D, D gives A, so each of AC, BC, CD reaches all five."
+    },
+    {
+     "text": "E is a prime attribute.",
+     "correct": false,
+     "why": "E is in no key; it is always derived from C.",
+     "trap": "C6"
+    },
+    {
+     "text": "R is not in 3NF.",
+     "correct": true,
+     "why": "It is not even in 2NF, so it cannot be in 3NF."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. C is on no RHS; C⁺ = {C, E}.\n2. Keys: AC, BC, CD; prime = {A, B, C, D}.\n3. C → E: proper subset of a key -> non-prime E -> partial -> not 2NF."
+  },
+  {
+   "id": "db-nf-test-04",
+   "skill": "db.nf-test",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statement is always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Every relation with exactly two attributes is in BCNF.",
+     "correct": true,
+     "why": "Any nontrivial FD is A → B or B → A, and its LHS is then a key of the pair."
+    },
+    {
+     "text": "A BCNF decomposition always preserves all dependencies.",
+     "correct": false,
+     "why": "Only 3NF synthesis guarantees preservation; BCNF can lose an FD.",
+     "trap": "C8"
+    },
+    {
+     "text": "Every relation in 3NF is in BCNF.",
+     "correct": false,
+     "why": "Converse of 'BCNF ⇒ 3NF'; R(A,B,C) with AB → C, C → B is 3NF but not BCNF.",
+     "trap": "C1"
+    },
+    {
+     "text": "If every attribute is prime, the relation is in BCNF.",
+     "correct": false,
+     "why": "That only guarantees 3NF; a FD with a non-superkey LHS still breaks BCNF.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Two attributes: any nontrivial FD has a key as LHS.\n2. BCNF ⊂ 3NF ⊂ 2NF, strictly.\n3. All-prime gives 3NF, not BCNF."
+  },
+  {
+   "id": "db-nf-test-05",
+   "skill": "db.nf-test",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "What is the highest normal form of R(A, B, C, D, E) under $F = \\{A \\to BCDE,\\; BC \\to A,\\; D \\to E\\}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "1NF (not 2NF)",
+     "correct": false,
+     "why": "No non-prime attribute depends on B or C alone, so there is no partial dependency.",
+     "trap": "C9"
+    },
+    {
+     "text": "2NF (not 3NF)",
+     "correct": true,
+     "why": "Keys A and BC; D → E is transitive (D not a superkey, E non-prime), but nothing depends on part of a key."
+    },
+    {
+     "text": "3NF (not BCNF)",
+     "correct": false,
+     "why": "D → E violates 3NF because D is not a superkey and E is not prime.",
+     "trap": "C1"
+    },
+    {
+     "text": "BCNF",
+     "correct": false,
+     "why": "D → E has a non-superkey LHS.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Keys: A, BC (BC → A).\n2. B⁺ = B, C⁺ = C -> no partial dependency -> 2NF.\n3. D → E: transitive -> not 3NF."
+  },
+  {
+   "id": "db-nf-test-06",
+   "skill": "db.nf-test",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A relation R is in 3NF if, for every nontrivial FD $X \\to A$ that holds on R, at least one of the following holds:",
+   "figure": null,
+   "options": [
+    {
+     "text": "X is not a proper subset of any candidate key.",
+     "correct": false,
+     "why": "That is the 2NF idea (no partial dependency), and it applies only to non-prime A.",
+     "trap": "C2"
+    },
+    {
+     "text": "X is a superkey.",
+     "correct": false,
+     "why": "That is the BCNF condition, which is stricter.",
+     "trap": "C2"
+    },
+    {
+     "text": "X is a superkey, or A is a non-prime attribute.",
+     "correct": false,
+     "why": "Flipped prime to non-prime; non-prime RHS with non-superkey LHS is exactly a 3NF violation.",
+     "trap": "C11"
+    },
+    {
+     "text": "X is a superkey, or A is a prime attribute.",
+     "correct": true,
+     "why": "This is the 3NF condition; dropping the second clause gives BCNF."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BCNF: X superkey.\n2. 3NF: X superkey OR A prime.\n3. 2NF: no non-prime A depends on part of a key."
+  },
+  {
+   "id": "db-decomp-01",
+   "skill": "db.decomp",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B, C) with $F = \\{A \\to B\\}$ is decomposed into R1(A, B) and R2(A, C). Which is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Lossy, because B → A does not hold.",
+     "correct": false,
+     "why": "Reversed the test; it asks whether the common attribute determines a part.",
+     "trap": "C11"
+    },
+    {
+     "text": "Lossless only if A → C also holds.",
+     "correct": false,
+     "why": "The test needs the common attribute to determine one part, not both; A → AB is enough.",
+     "trap": "C1"
+    },
+    {
+     "text": "Lossless, because R1 ∩ R2 = {A} and A → AB = R1.",
+     "correct": true,
+     "why": "The common attribute is a key of R1, which is the binary lossless test."
+    },
+    {
+     "text": "Lossy, because C does not appear in R1.",
+     "correct": false,
+     "why": "Each part need not hold every attribute; only the common attributes matter.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. R1 ∩ R2 = {A}.\n2. A⁺ = {A, B} ⊇ R1.\n3. So the join is lossless."
+  },
+  {
+   "id": "db-decomp-02",
+   "skill": "db.decomp",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B, C, D) with $F = \\{A \\to B,\\; C \\to D\\}$ is decomposed into R1(A, B) and R2(B, C, D). Which is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Lossy and not dependency preserving",
+     "correct": false,
+     "why": "Each FD's attributes sit inside a single part, so both are preserved.",
+     "trap": "C6"
+    },
+    {
+     "text": "Lossless and dependency preserving",
+     "correct": false,
+     "why": "The common attribute B determines neither R1 nor R2 (B⁺ = {B}).",
+     "trap": "C1"
+    },
+    {
+     "text": "Lossless but not dependency preserving",
+     "correct": false,
+     "why": "Both FDs fit inside one part, and the lossless test fails.",
+     "trap": "C2"
+    },
+    {
+     "text": "Lossy and dependency preserving",
+     "correct": true,
+     "why": "B⁺ = {B} fails the lossless test; A → B lies in R1 and C → D in R2."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. R1 ∩ R2 = {B}; B⁺ = {B} -> lossy.\n2. A → B ⊆ R1, C → D ⊆ R2 -> preserved."
+  },
+  {
+   "id": "db-decomp-03",
+   "skill": "db.decomp",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B, C, D) has $F = \\{A \\to B,\\; B \\to C,\\; C \\to D\\}$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{AB, AC, AD} is a lossless decomposition.",
+     "correct": true,
+     "why": "A is a key of R and sits in every part; the joins on A are lossless."
+    },
+    {
+     "text": "{AB, AC, AD} preserves B → C.",
+     "correct": false,
+     "why": "The projections give only A → B, A → C, A → D; from these B⁺ = {B}.",
+     "trap": "C1"
+    },
+    {
+     "text": "{AB, CD} is lossless.",
+     "correct": false,
+     "why": "The parts share no attribute, so the join is a Cartesian product.",
+     "trap": "C6"
+    },
+    {
+     "text": "{AB, BC, CD} is lossless and dependency preserving.",
+     "correct": true,
+     "why": "Each FD lies inside one part, and B → C, C → D make each successive join lossless."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Lossless: chase or binary test step by step.\n2. {AB, AC, AD}: all FDs from A; B → C is not derivable -> not preserved.\n3. {AB, CD}: no common attribute -> lossy."
+  },
+  {
+   "id": "db-decomp-04",
+   "skill": "db.decomp",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (DA-2025-Q16 style)",
+   "stem": "A decomposition of R into R1, …, Rk is **not** dependency preserving. What does this imply for enforcing every FD of R on updates?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Some FD can be checked only after joining some of the decomposed relations.",
+     "correct": true,
+     "why": "A lost FD cannot be tested on any single Ri or derived from the per-relation FDs."
+    },
+    {
+     "text": "The decomposition must also be lossy.",
+     "correct": false,
+     "why": "Preservation and losslessness are independent properties.",
+     "trap": "C8"
+    },
+    {
+     "text": "Every FD can still be checked on a single relation.",
+     "correct": false,
+     "why": "That is exactly what dependency preservation guarantees, and it fails here.",
+     "trap": "C1"
+    },
+    {
+     "text": "The lost FDs can never be enforced in any way.",
+     "correct": false,
+     "why": "They can be enforced, but only by computing a join (costly).",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Preservation: (∪ F_i)⁺ = F⁺.\n2. When it fails, a lost FD spans relations, so a join is needed to check it."
+  },
+  {
+   "id": "db-decomp-05",
+   "skill": "db.decomp",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B, C) has $F = \\{AB \\to C,\\; C \\to B\\}$. It is decomposed into R1(B, C) and R2(A, C). Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The decomposition preserves AB → C.",
+     "correct": false,
+     "why": "Projections give only C → B on R1 and nothing nontrivial on R2; AB → C cannot be derived.",
+     "trap": "C1"
+    },
+    {
+     "text": "The decomposition is lossless.",
+     "correct": true,
+     "why": "R1 ∩ R2 = {C} and C → B, so C is a key of R1."
+    },
+    {
+     "text": "No decomposition of R into smaller BCNF relations preserves AB → C.",
+     "correct": true,
+     "why": "AB → C needs A, B, C together, but any relation holding all three violates BCNF by C → B."
+    },
+    {
+     "text": "R is already in BCNF.",
+     "correct": false,
+     "why": "C → B has LHS C, which is not a superkey (keys are AB and AC).",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Keys AB, AC; C → B breaks BCNF (R is 3NF).\n2. {BC, AC}: lossless (C → B).\n3. AB → C is lost: the classic BCNF vs preservation trade-off."
+  },
+  {
+   "id": "db-decomp-06",
+   "skill": "db.decomp",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B, C, D, E) has $F = \\{A \\to B,\\; B \\to C,\\; D \\to E\\}$. How many of these decompositions are lossless-join?\n\n1. {AB, BC, ADE}\n2. {AB, CD, ADE}\n3. {ABC, DE}\n4. {ABCD, DE}",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Accepted {AB, CD, ADE}; joining AB with ADE is fine, but CD shares only D, and D does not determine C.",
+     "trap": "C1"
+    },
+    {
+     "value": 1,
+     "why": "Rejected {AB, BC, ADE}; AB ⋈ BC is lossless (B → C) and the result shares A, a key of ABC, with ADE.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Accepted {ABC, DE}, whose parts share no attribute.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. {AB, BC, ADE}: B → BC, then A → ABC: lossless.\n2. {AB, CD, ADE}: C is reachable only through B → C, which is not in any part with D; chase leaves no full row: lossy.\n3. {ABC, DE}: no common attribute: lossy.\n4. {ABCD, DE}: D → DE: lossless. Count 2."
+  },
+  {
+   "id": "db-bplus-order-01",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree index uses disk blocks of 1024 bytes. A search key takes 10 bytes and a block (child) pointer 8 bytes. What is the maximum number of child pointers an internal node can hold?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 57,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 56,
+     "why": "Took ⌊1024 / 18⌋, counting a key for every pointer; a node with p pointers has only p − 1 keys.",
+     "trap": "C6"
+    },
+    {
+     "value": 128,
+     "why": "Counted pointers only (1024 / 8) and left no room for keys.",
+     "trap": "C6"
+    },
+    {
+     "value": 58,
+     "why": "Rounded up; 18 × 58 − 10 = 1034 bytes exceeds the block.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. $8p + 10(p - 1) \\le 1024$.\n2. $18p \\le 1034 \\Rightarrow p \\le 57.4$.\n3. p = 57."
+  },
+  {
+   "id": "db-bplus-order-02",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "B+ tree leaf nodes are 512-byte blocks. Each leaf stores (key, record pointer) pairs with a 10-byte key and a 12-byte record pointer, plus one 8-byte pointer to the next leaf. What is the maximum number of keys per leaf?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 22,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 23,
+     "why": "Forgot the next-leaf pointer: ⌊512 / 22⌋ = 23, but 23 × 22 + 8 = 514 > 512.",
+     "trap": "C6"
+    },
+    {
+     "value": 28,
+     "why": "Used the 8-byte block pointer in place of the 12-byte record pointer: ⌊(512 − 8) / 18⌋ = 28.",
+     "trap": "C3"
+    },
+    {
+     "value": 21,
+     "why": "Reserved space for two sibling pointers; a leaf has one next pointer here.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $22n + 8 \\le 512$.\n2. $n \\le 22.9$.\n3. n = 22."
+  },
+  {
+   "id": "db-bplus-order-03",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "In a B+ tree, each internal node has at most 5 children and each leaf holds at most 4 keys. The tree has 3 levels (root, one internal level, leaves). What is the maximum number of keys stored in the leaves?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 100,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 125,
+     "why": "Put 5 keys per leaf; leaves hold at most 4.",
+     "trap": "C3"
+    },
+    {
+     "value": 124,
+     "why": "Used the B-tree count $5^3 - 1$; in a B+ tree all keys sit in the leaves.",
+     "trap": "C3"
+    },
+    {
+     "value": 80,
+     "why": "Counted 4 keys in each of 20 leaves, as if the root had only 4 children.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Root: up to 5 children (the internal level).\n2. Each internal node: up to 5 leaf children -> 25 leaves.\n3. 25 leaves × 4 keys = 100."
+  },
+  {
+   "id": "db-bplus-order-04",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree has order 5: an internal node has at most 5 children, a leaf at most 4 keys. Every node except the root is at least half full (internal ≥ 3 children, leaf ≥ 2 keys); the root needs at least 2 children. What is the **minimum** number of keys in such a tree with exactly 3 levels?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 12,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 18,
+     "why": "Gave the root 3 children like other internal nodes; the root needs only 2.",
+     "trap": "C5"
+    },
+    {
+     "value": 8,
+     "why": "Gave internal nodes only 2 children; non-root nodes need ⌈5/2⌉ = 3.",
+     "trap": "C5"
+    },
+    {
+     "value": 100,
+     "why": "Computed the maximum instead of the minimum.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. Root: 2 children.\n2. Level 2: 2 nodes × 3 children = 6 leaves.\n3. Leaves: 6 × 2 keys = 12."
+  },
+  {
+   "id": "db-bplus-order-05",
+   "skill": "db.bplus-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree has fanout 50 (internal nodes) and leaves holding 49 keys. What is the minimum number of levels, including the leaf level, needed to index 100,000 keys?",
+   "figure": null,
+   "options": [
+    {
+     "text": "17",
+     "correct": false,
+     "why": "Used a binary tree height, $\\lceil \\log_2 100000 \\rceil$.",
+     "trap": "C3"
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Took $\\lfloor \\log_{50} 100000 \\rfloor = 2$; levels must be rounded up.",
+     "trap": "C6"
+    },
+    {
+     "text": "3",
+     "correct": true,
+     "why": "2041 leaves -> 41 internal nodes -> 1 root: 3 levels."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Counted the data-record level as a tree level.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Leaves: ⌈100000 / 49⌉ = 2041.\n2. Next level: ⌈2041 / 50⌉ = 41.\n3. Next: ⌈41 / 50⌉ = 1 (root). Levels = 3."
+  },
+  {
+   "id": "db-bplus-order-06",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A **B-tree** (not B+) node fits in a 512-byte block. Each key takes 9 bytes, each data (record) pointer 7 bytes and each child pointer 6 bytes. A node with p children stores p − 1 keys, each with its data pointer. What is the maximum p?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 24,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 34,
+     "why": "Used the B+ internal-node formula without data pointers: 6p + 9(p − 1) ≤ 512.",
+     "trap": "C3"
+    },
+    {
+     "value": 23,
+     "why": "Took ⌊512 / 22⌋, charging a key and data pointer for every child.",
+     "trap": "C6"
+    },
+    {
+     "value": 25,
+     "why": "Rounded up; 22 × 25 − 16 = 534 > 512.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. $6p + (9 + 7)(p - 1) \\le 512$.\n2. $22p \\le 528 \\Rightarrow p = 24$."
+  },
+  {
+   "id": "db-index-access-01",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file of 30,000 records (100 bytes each, unspanned) is sorted on its key and stored in 1024-byte blocks. A sparse primary index has 15-byte entries (key + block pointer). How many blocks does the (single-level) index occupy?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 45,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 442,
+     "why": "Built a dense index (one entry per record); a primary index is sparse, one entry per data block.",
+     "trap": "C2"
+    },
+    {
+     "value": 44,
+     "why": "Used ⌊3000 / 68⌋; the last partly filled block still counts.",
+     "trap": "C6"
+    },
+    {
+     "value": 300,
+     "why": "Divided the 3000 entries by the data bfr 10 instead of the index bfr 68.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Data bfr = ⌊1024/100⌋ = 10 -> 3000 data blocks.\n2. Index bfr = ⌊1024/15⌋ = 68.\n3. Entries = 3000 -> ⌈3000/68⌉ = 45 blocks."
+  },
+  {
+   "id": "db-index-access-02",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file sorted on key K occupies 3000 blocks and has no index. How many block accesses does a binary search on K need in the worst case?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 12,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3000,
+     "why": "Used a linear scan; the file is sorted, so binary search applies.",
+     "trap": "C3"
+    },
+    {
+     "value": 1500,
+     "why": "Used the average linear-scan cost.",
+     "trap": "C3"
+    },
+    {
+     "value": 11,
+     "why": "Used ⌊log₂ 3000⌋; the worst case needs the ceiling.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Binary search over blocks: ⌈log₂ 3000⌉.\n2. $2^{11} = 2048 < 3000 \\le 4096 = 2^{12}$ -> 12."
+  },
+  {
+   "id": "db-index-access-03",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A sorted file has 50,000 records of 200 bytes in 2048-byte blocks (unspanned). A **multilevel** sparse primary index is built with 16-byte entries until the top level fits in one block. How many block accesses does a search for one record need?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Counted the index levels only; reading the data block is one more access.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Binary-searched a single-level index (⌈log₂ 40⌉ + 1); the multilevel index needs one access per level.",
+     "trap": "C3"
+    },
+    {
+     "value": 4,
+     "why": "Added an extra index level; 40 first-level entries fit in one block.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Data bfr 10 -> 5000 blocks; index bfr 128.\n2. Level 1: ⌈5000/128⌉ = 40 blocks; level 2: 1 block.\n3. Accesses = 2 index + 1 data = 3."
+  },
+  {
+   "id": "db-index-access-04",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The same 50,000-record file (2048-byte blocks, 16-byte index entries) gets a **multilevel dense secondary index** on a non-ordering key. How many block accesses does a search for one record need?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Forgot the final data-block access.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Binary-searched the 391-block first level (⌈log₂ 391⌉ + 1) instead of using the multilevel index.",
+     "trap": "C3"
+    },
+    {
+     "value": 5,
+     "why": "Added a fourth index level; 4 second-level blocks fit under one root block.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Dense: 50,000 entries / 128 per block = 391 blocks.\n2. Level 2: ⌈391/128⌉ = 4; level 3: 1.\n3. 3 index accesses + 1 data = 4."
+  },
+  {
+   "id": "db-index-access-05",
+   "skill": "db.index-access",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file of 50,000 employee records is physically sorted on `dept`, a non-key field with 500 distinct values (100 records each). How many entries does a clustering index on `dept` have?",
+   "figure": null,
+   "options": [
+    {
+     "text": "500",
+     "correct": true,
+     "why": "A clustering index has one entry per distinct value of the ordering field."
+    },
+    {
+     "text": "50,000",
+     "correct": false,
+     "why": "Built a dense index with one entry per record.",
+     "trap": "C2"
+    },
+    {
+     "text": "The number of data blocks",
+     "correct": false,
+     "why": "That is a primary (sparse) index on a key field.",
+     "trap": "C2"
+    },
+    {
+     "text": "100",
+     "correct": false,
+     "why": "Used records per value instead of the number of values.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Clustering index: ordering field is not a key.\n2. One entry per distinct value, pointing to its first block -> 500."
+  },
+  {
+   "id": "db-index-types-01",
+   "skill": "db.index-types",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2024-Q55 style)",
+   "stem": "A table has a B+ tree index and a hash index, both on `salary`. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The hash index answers `salary BETWEEN 40000 AND 60000` efficiently.",
+     "correct": false,
+     "why": "Hashing scatters neighbouring values, so a range needs a full scan.",
+     "trap": "C9"
+    },
+    {
+     "text": "The B+ tree's leaves are not linked, so ranges need repeated root-to-leaf searches.",
+     "correct": false,
+     "why": "B+ tree leaves are chained, which is exactly what makes range scans cheap.",
+     "trap": "C9"
+    },
+    {
+     "text": "The B+ tree answers `salary BETWEEN 40000 AND 60000` efficiently.",
+     "correct": true,
+     "why": "Find 40000 in a leaf, then follow the linked leaves until 60000."
+    },
+    {
+     "text": "The hash index answers `salary = 50000` in an expected constant number of block accesses.",
+     "correct": true,
+     "why": "Hashing the value leads straight to its bucket."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Hash: equality only.\n2. B+ tree: equality in O(height) and ranges by scanning linked leaves."
+  },
+  {
+   "id": "db-index-types-02",
+   "skill": "db.index-types",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which index can be **sparse** (one entry per block rather than per record)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A secondary index on a non-ordering key field",
+     "correct": false,
+     "why": "Records are not in key order, so every record needs its own entry: secondary indexes are dense.",
+     "trap": "C9"
+    },
+    {
+     "text": "A dense index",
+     "correct": false,
+     "why": "Dense and sparse are opposites by definition.",
+     "trap": "C10"
+    },
+    {
+     "text": "A primary index on the ordering key of a sorted file",
+     "correct": true,
+     "why": "Records are in key order, so the first key of each block is enough."
+    },
+    {
+     "text": "Any index on an unsorted heap file",
+     "correct": false,
+     "why": "Without physical order, a block's anchor says nothing about the other records.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sparse needs the file sorted on the indexed field.\n2. Primary (and clustering) indexes can be sparse; secondary indexes are dense."
+  },
+  {
+   "id": "db-index-types-03",
+   "skill": "db.index-types",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statements about indexes on a single data file are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A dense index has one entry per data block.",
+     "correct": false,
+     "why": "Swapped dense and sparse: dense has one entry per record (or search-key value).",
+     "trap": "C2"
+    },
+    {
+     "text": "The file can have several secondary indexes.",
+     "correct": true,
+     "why": "Secondary indexes do not depend on physical order."
+    },
+    {
+     "text": "The file can have at most one primary or clustering index.",
+     "correct": true,
+     "why": "Both rely on the physical order, and a file has only one."
+    },
+    {
+     "text": "A clustering index is defined on a key field.",
+     "correct": false,
+     "why": "Swapped primary and clustering: a clustering index is on a non-key ordering field.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Primary: ordering key field. Clustering: ordering non-key field.\n2. Only one ordering, so only one of these.\n3. Secondary: any number, dense."
+  },
+  {
+   "id": "db-index-types-04",
+   "skill": "db.index-types",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statement about B-trees and B+ trees with the same block size is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "B+ tree internal nodes store no data pointers, so they have a larger fanout than B-tree nodes.",
+     "correct": true,
+     "why": "Space saved from data pointers holds more keys and child pointers."
+    },
+    {
+     "text": "A B-tree supports a sorted sequential scan more efficiently than a B+ tree.",
+     "correct": false,
+     "why": "Swapped them: the B+ tree's linked leaves give the sequential scan.",
+     "trap": "C2"
+    },
+    {
+     "text": "In a B+ tree each key value appears exactly once in the tree.",
+     "correct": false,
+     "why": "Keys in internal nodes are copies of leaf keys used for routing.",
+     "trap": "C9"
+    },
+    {
+     "text": "A B-tree search always has to reach a leaf.",
+     "correct": false,
+     "why": "A B-tree key may be found in an internal node, ending the search early.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. B+ tree: all data pointers in leaves; leaves linked.\n2. Internal nodes: keys + child pointers only -> higher fanout, lower height."
+  },
+  {
+   "id": "db-dw-schema-01",
+   "skill": "db.dw-schema",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A retail star schema has a Sales fact table and dimension tables Time, Product and Store. Which attribute belongs in the **fact** table as a measure?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`month_name`",
+     "correct": false,
+     "why": "A level of the time hierarchy, stored in the Time dimension.",
+     "trap": "C2"
+    },
+    {
+     "text": "`units_sold`",
+     "correct": true,
+     "why": "A numeric, aggregatable value recorded per (time, product, store) is a measure."
+    },
+    {
+     "text": "`store_city`",
+     "correct": false,
+     "why": "Describes a store; it belongs in the Store dimension.",
+     "trap": "C2"
+    },
+    {
+     "text": "`product_brand`",
+     "correct": false,
+     "why": "A descriptive attribute of a product; it belongs in the Product dimension.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Fact table: dimension keys + measures.\n2. Dimension tables: descriptive attributes and hierarchy levels."
+  },
+  {
+   "id": "db-dw-schema-02",
+   "skill": "db.dw-schema",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statements comparing star and snowflake schemas are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A snowflake schema stores more redundant dimension data than a star schema.",
+     "correct": false,
+     "why": "Reversed: the denormalized star schema repeats data; snowflaking removes it.",
+     "trap": "C2"
+    },
+    {
+     "text": "In a star schema, each dimension table holds a foreign key to the fact table.",
+     "correct": false,
+     "why": "Reversed: the fact table holds foreign keys to the dimensions.",
+     "trap": "C11"
+    },
+    {
+     "text": "Queries on a star schema usually need fewer joins.",
+     "correct": true,
+     "why": "Each dimension is one table, so a query joins the fact table once per dimension."
+    },
+    {
+     "text": "A snowflake schema normalizes dimension tables into several related tables.",
+     "correct": true,
+     "why": "For example Store -> City -> State as separate tables."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Star: one denormalized table per dimension.\n2. Snowflake: dimensions normalized -> less redundancy, more joins.\n3. Fact rows reference dimension rows."
+  },
+  {
+   "id": "db-dw-schema-03",
+   "skill": "db.dw-schema",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A bank's fact table stores the **end-of-day account balance** for each (account, day). What kind of measure is the balance?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Not a measure; it belongs in the Account dimension",
+     "correct": false,
+     "why": "It changes daily per account, so it is a fact, not a descriptive attribute.",
+     "trap": "C10"
+    },
+    {
+     "text": "Non-additive: it cannot be summed over any dimension",
+     "correct": false,
+     "why": "Summing balances across accounts on one day is valid.",
+     "trap": "C2"
+    },
+    {
+     "text": "Semi-additive: it can be summed over accounts but not over time",
+     "correct": true,
+     "why": "Total balance of all accounts on a day is meaningful; over time, use average or last value."
+    },
+    {
+     "text": "Additive: it can be summed over every dimension",
+     "correct": false,
+     "why": "Summing one account's balance over 30 days gives a meaningless number.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Additive: SUM valid across all dimensions (sales amount).\n2. Semi-additive: SUM valid across some (balances, stock levels).\n3. Non-additive: ratios, percentages."
+  },
+  {
+   "id": "db-dw-schema-04",
+   "skill": "db.dw-schema",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "In a Sales fact table with dimensions Time, Product and Store, which measures are **fully additive**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "units_in_stock at day end",
+     "correct": false,
+     "why": "A snapshot level: summing it over days double counts; it is semi-additive.",
+     "trap": "C1"
+    },
+    {
+     "text": "profit_margin (%)",
+     "correct": false,
+     "why": "A ratio; the margin of a total is not the sum of margins.",
+     "trap": "C9"
+    },
+    {
+     "text": "quantity_sold",
+     "correct": true,
+     "why": "Counts of items add up across every dimension."
+    },
+    {
+     "text": "sales_amount (₹)",
+     "correct": true,
+     "why": "Sums correctly across time, product and store."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Flow quantities add up everywhere.\n2. Ratios are non-additive (recompute from additive parts).\n3. Stock levels are semi-additive."
+  },
+  {
+   "id": "db-dw-schema-05",
+   "skill": "db.dw-schema",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An analyst views sales by city and then switches to sales by country. Which OLAP operation is this?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Roll-up",
+     "correct": true,
+     "why": "Moving up the location hierarchy (city -> country) aggregates the data."
+    },
+    {
+     "text": "Drill-down",
+     "correct": false,
+     "why": "Reversed: drill-down goes from coarse to fine (country -> city).",
+     "trap": "C11"
+    },
+    {
+     "text": "Pivot",
+     "correct": false,
+     "why": "Pivot only rotates the axes of the view.",
+     "trap": "C10"
+    },
+    {
+     "text": "Slice",
+     "correct": false,
+     "why": "Slice fixes one dimension to a single value; the level of detail does not change.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Roll-up: climb a concept hierarchy (or drop a dimension).\n2. Drill-down: the reverse."
+  },
+  {
+   "id": "db-dw-schema-06",
+   "skill": "db.dw-schema",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "On a cube with dimensions time, location and item, an analyst selects time = Q1, location ∈ {Delhi, Mumbai} and item ∈ {TV, phone}. Which operation is this?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Roll-up",
+     "correct": false,
+     "why": "No aggregation to a coarser level happens.",
+     "trap": "C10"
+    },
+    {
+     "text": "Dice",
+     "correct": true,
+     "why": "Restricting several dimensions to value sets gives a sub-cube."
+    },
+    {
+     "text": "Slice",
+     "correct": false,
+     "why": "Slice fixes a single dimension to one value; here three dimensions are restricted.",
+     "trap": "C2"
+    },
+    {
+     "text": "Drill-down",
+     "correct": false,
+     "why": "No move to a finer level happens.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Slice: one dimension = one value -> (n − 1)-D view.\n2. Dice: conditions on two or more dimensions -> sub-cube."
+  },
+  {
+   "id": "db-dw-schema-07",
+   "skill": "db.dw-schema",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which ordering is a valid concept hierarchy for location, from the most detailed to the most general level?",
+   "figure": null,
+   "options": [
+    {
+     "text": "country < state < city < street",
+     "correct": false,
+     "why": "This lists the levels from general to detailed.",
+     "trap": "C11"
+    },
+    {
+     "text": "city < street < state < country",
+     "correct": false,
+     "why": "Reversed street and city: a city contains streets.",
+     "trap": "C11"
+    },
+    {
+     "text": "street < state < city < country",
+     "correct": false,
+     "why": "Skipped the containment order: a city lies inside a state.",
+     "trap": "C6"
+    },
+    {
+     "text": "street < city < state < country",
+     "correct": true,
+     "why": "Each street lies in one city, each city in one state, each state in one country."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A concept hierarchy maps low-level values to higher-level concepts.\n2. Location: street -> city -> state -> country."
+  },
+  {
+   "id": "db-dw-schema-08",
+   "skill": "db.dw-schema",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A star schema has one fact table and four dimension tables: Time, Location, Product, Customer. It is snowflaked: Location is split into Location, City and State tables, and Product into Product and Category tables. How many tables does the snowflake schema have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Counted the original star schema only.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Counted the new tables but dropped the fact table or one original dimension.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Kept the original Location and Product tables and also added all their snowflaked tables; Location and Product are each one of the split tables.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Fact: 1.\n2. Time 1, Customer 1.\n3. Location 3, Product 2.\n4. Total 8."
+  },
+  {
+   "id": "db-olap-cube-01",
+   "skill": "db.olap-cube",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (DA-2025-Q46 style)",
+   "stem": "Sales(region, product, year, amount) has 4 regions, 3 products and 2 years, and every (region, product, year) combination occurs in the table. How many rows does this query return?\n\n```sql\nSELECT region, product, year, SUM(amount)\nFROM Sales\nGROUP BY CUBE (region, product, year);\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "8",
+     "correct": false,
+     "why": "Counted grouping sets ($2^3$), not rows.",
+     "trap": "C10"
+    },
+    {
+     "text": "60",
+     "correct": true,
+     "why": "Each dimension contributes its values plus the 'all' (NULL) value: (4+1)(3+1)(2+1)."
+    },
+    {
+     "text": "24",
+     "correct": false,
+     "why": "Counted only the base grouping (region, product, year).",
+     "trap": "C6"
+    },
+    {
+     "text": "59",
+     "correct": false,
+     "why": "Left out the grand-total row (all three columns NULL).",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. CUBE = all $2^3$ grouping sets.\n2. Rows = Σ over sets of Π(values) = Π(nᵢ + 1).\n3. 5 × 4 × 3 = 60."
+  },
+  {
+   "id": "db-olap-cube-02",
+   "skill": "db.olap-cube",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Sales**\n\n| city | item | qty |\n|---|---|---|\n| Delhi | TV | 5 |\n| Delhi | Phone | 3 |\n| Pune | TV | 2 |\n| Pune | TV | 4 |\n| Agra | Laptop | 1 |\n\nHow many rows does this query return?\n\n```sql\nSELECT city, item, SUM(qty)\nFROM Sales\nGROUP BY CUBE (city, item);\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 11,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 16,
+     "why": "Used (3+1)(3+1); that holds only when every (city, item) pair occurs, but only 4 of the 9 pairs do.",
+     "trap": "C1"
+    },
+    {
+     "value": 10,
+     "why": "Forgot the grand-total row.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Counted table rows; (Pune, TV) appears twice but forms one group.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. (city, item): 4 distinct pairs.\n2. (city): 3. (item): 3. (): 1.\n3. Total 4 + 3 + 3 + 1 = 11."
+  },
+  {
+   "id": "db-olap-cube-03",
+   "skill": "db.olap-cube",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A data cube has 4 dimensions and no concept hierarchies. How many cuboids (group-by combinations), including the apex and base cuboids, does it have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 16,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 15,
+     "why": "Left out the apex cuboid (the grand total, grouping by nothing).",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Counted dimensions instead of subsets of dimensions.",
+     "trap": "C10"
+    },
+    {
+     "value": 24,
+     "why": "Counted orderings (4!) instead of subsets; a group-by does not depend on column order.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Each cuboid = a subset of the 4 dimensions.\n2. $2^4 = 16$."
+  },
+  {
+   "id": "db-olap-cube-04",
+   "skill": "db.olap-cube",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A cube has three dimensions with concept hierarchies: time (day < month < year), item (item < type) and location (city < country). Counting the 'all' level for each dimension, how many cuboids does the cube have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 36,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Used $2^3$, ignoring the hierarchy levels.",
+     "trap": "C3"
+    },
+    {
+     "value": 12,
+     "why": "Multiplied the level counts 3 × 2 × 2 and forgot the 'all' level of each dimension.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Added the per-dimension choices 4 + 3 + 3 instead of multiplying them.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Cuboids = Π(Lᵢ + 1).\n2. time: 3 + 1 = 4; item: 2 + 1 = 3; location: 2 + 1 = 3.\n3. 4 × 3 × 3 = 36."
+  },
+  {
+   "id": "db-olap-cube-05",
+   "skill": "db.olap-cube",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Sales(year, quarter, amount) contains data for 2 years and all 4 quarters of each. How many rows does this query return?\n\n```sql\nSELECT year, quarter, SUM(amount)\nFROM Sales\nGROUP BY ROLLUP (year, quarter);\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 11,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 15,
+     "why": "Used the CUBE formula (2+1)(4+1); ROLLUP has no (quarter) grouping set.",
+     "trap": "C2"
+    },
+    {
+     "value": 10,
+     "why": "Forgot the grand-total row.",
+     "trap": "C6"
+    },
+    {
+     "value": 8,
+     "why": "Counted only the base grouping (year, quarter).",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. ROLLUP(year, quarter) = {(year, quarter), (year), ()}.\n2. Rows: 8 + 2 + 1 = 11."
+  },
+  {
+   "id": "db-transform-01",
+   "skill": "db.transform",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Income ranges from ₹12,000 to ₹98,000. Using min-max normalization to [0, 1], what is the normalized value of ₹73,600? (Give 3 decimals.)",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.716,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.751,
+     "why": "Divided by the maximum only (73600 / 98000).",
+     "trap": "C3"
+    },
+    {
+     "value": 0.629,
+     "why": "Subtracted the minimum but divided by the maximum instead of the range.",
+     "trap": "C3"
+    },
+    {
+     "value": 0.284,
+     "why": "Measured from the maximum: (98000 − 73600) / 86000.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $v' = \\dfrac{v - \\min}{\\max - \\min}$.\n2. $\\dfrac{73600 - 12000}{86000} = 0.716$."
+  },
+  {
+   "id": "db-transform-02",
+   "skill": "db.transform",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (DA-2024-Q27 style)",
+   "stem": "Income has mean ₹54,000 and standard deviation ₹16,000. What is the z-score of ₹73,600?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.225,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": -1.225,
+     "why": "Subtracted in the wrong order (μ − v).",
+     "trap": "C11"
+    },
+    {
+     "value": 4.6,
+     "why": "Divided the value by σ without subtracting the mean.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.363,
+     "why": "Divided the deviation 19,600 by the mean instead of σ.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $z = (v - \\mu)/\\sigma$.\n2. $(73600 - 54000)/16000 = 1.225$."
+  },
+  {
+   "id": "db-transform-03",
+   "skill": "db.transform",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The attribute values are 2, 4, 4, 4, 5, 5, 7, 9. Using the **population** standard deviation (divide by n), what is the z-score of 9?",
+   "figure": null,
+   "options": [
+    {
+     "text": "2",
+     "correct": true,
+     "why": "Mean 5, variance 32/8 = 4, σ = 2, so z = (9 − 5)/2 = 2."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Stopped at the deviation 9 − 5 without dividing by σ.",
+     "trap": "C6"
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Divided by the variance 4 instead of σ = 2.",
+     "trap": "C4"
+    },
+    {
+     "text": "1.871",
+     "correct": false,
+     "why": "Used the sample standard deviation (divide by n − 1 = 7), against the stated convention.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. μ = 40/8 = 5.\n2. Σ(x − μ)² = 9+1+1+1+0+0+4+16 = 32 -> σ² = 4, σ = 2.\n3. z = 4/2 = 2."
+  },
+  {
+   "id": "db-transform-04",
+   "skill": "db.transform",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An attribute ranges from −986 to 917. Normalization by decimal scaling divides every value by $10^j$. What is the smallest valid j?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3",
+     "correct": true,
+     "why": "The largest |v| is 986; 986/1000 = 0.986 < 1, while 986/100 = 9.86."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Scaled to 9.86, which is not below 1.",
+     "trap": "C5"
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Leaves values near 98.6.",
+     "trap": "C6"
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Valid but not the smallest; 0.0986 over-shrinks the data.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Need max|v| / 10ʲ < 1.\n2. max|v| = 986 -> j = 3."
+  },
+  {
+   "id": "db-transform-05",
+   "skill": "db.transform",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Sorted values: 4, 8, 15, 21, 21, 24, 25, 28, 30, 34. They are split into 3 **equal-width** bins over [4, 34], each bin closed on the left and open on the right (the last bin includes 34). How many values fall in the last bin?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Put 24 in the middle bin; the middle bin is [14, 24), so 24 starts the last bin.",
+     "trap": "C5"
+    },
+    {
+     "value": 3,
+     "why": "Made bins of roughly equal counts (equal-frequency) instead of equal width.",
+     "trap": "C2"
+    },
+    {
+     "value": 2,
+     "why": "Used width (34 − 4)/3 = 10 but started the last bin at 30.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Width = (34 − 4)/3 = 10.\n2. Bins: [4, 14), [14, 24), [24, 34].\n3. Last bin: 24, 25, 28, 30, 34 -> 5."
+  },
+  {
+   "id": "db-transform-06",
+   "skill": "db.transform",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Sorted prices: 4, 8, 9, 15, 21, 21, 24, 25, 26 are put into equal-frequency bins of 3 values each. After **smoothing by bin means**, what does the first bin become?",
+   "figure": null,
+   "options": [
+    {
+     "text": "7, 7, 7",
+     "correct": true,
+     "why": "Bin 1 = {4, 8, 9}; its mean (4 + 8 + 9)/3 = 7 replaces each value."
+    },
+    {
+     "text": "8, 8, 8",
+     "correct": false,
+     "why": "Smoothed by the bin median.",
+     "trap": "C3"
+    },
+    {
+     "text": "4, 8, 9",
+     "correct": false,
+     "why": "Left the bin unchanged.",
+     "trap": "C6"
+    },
+    {
+     "text": "4, 9, 9",
+     "correct": false,
+     "why": "Smoothed by bin boundaries (each value to the nearer of 4 and 9).",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Equal-frequency bins: {4, 8, 9}, {15, 21, 21}, {24, 25, 26}.\n2. Mean of bin 1 = 21/3 = 7.\n3. Every value becomes 7."
+  },
+  {
+   "id": "db-sampling-01",
+   "skill": "db.sampling",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "How many different simple random samples **without replacement** (SRSWOR) of size 3 can be drawn from a table of 10 tuples (order does not matter)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 120,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1000,
+     "why": "Counted ordered draws with replacement ($10^3$).",
+     "trap": "C2"
+    },
+    {
+     "value": 720,
+     "why": "Counted ordered draws (10 × 9 × 8); a sample is a set.",
+     "trap": "C6"
+    },
+    {
+     "value": 30,
+     "why": "Multiplied 10 × 3.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. SRSWOR sample = subset of size 3.\n2. $\\binom{10}{3} = 120$."
+  },
+  {
+   "id": "db-sampling-02",
+   "skill": "db.sampling",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A customer table has 1000 tuples: 600 in segment A, 300 in B and 100 in C. A **proportional stratified** sample of 50 tuples is drawn. How many come from segment C?",
+   "figure": null,
+   "options": [
+    {
+     "text": "5",
+     "correct": true,
+     "why": "C is 10% of the data, so it gets 10% of 50."
+    },
+    {
+     "text": "17",
+     "correct": false,
+     "why": "Split the sample equally across the 3 strata (≈ 50/3).",
+     "trap": "C3"
+    },
+    {
+     "text": "10",
+     "correct": false,
+     "why": "Took 10% of 100 (C's size) instead of 10% of the sample.",
+     "trap": "C3"
+    },
+    {
+     "text": "0",
+     "correct": false,
+     "why": "Assumed a small stratum may be left out; stratified sampling draws from every stratum.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Share of C = 100/1000 = 0.1.\n2. 0.1 × 50 = 5."
+  },
+  {
+   "id": "db-sampling-03",
+   "skill": "db.sampling",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statements about sampling for data reduction are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "SRSWR can include the same tuple more than once.",
+     "correct": true,
+     "why": "Each drawn tuple is put back before the next draw."
+    },
+    {
+     "text": "Stratified sampling draws from every stratum, so rare groups are represented.",
+     "correct": true,
+     "why": "Each stratum gets its own sample."
+    },
+    {
+     "text": "A simple random sample always keeps the proportion of a rare class exactly.",
+     "correct": false,
+     "why": "Over-claim; SRS proportions vary by chance, which is why stratification is used.",
+     "trap": "C1"
+    },
+    {
+     "text": "Cluster sampling selects whole groups, such as entire disk pages.",
+     "correct": true,
+     "why": "Groups are sampled, and every tuple in a chosen group is kept."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. SRSWR: repeats possible.\n2. Cluster: pick groups.\n3. Stratified: sample within each stratum.\n4. SRS only matches proportions on average."
+  },
+  {
+   "id": "db-sampling-04",
+   "skill": "db.sampling",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A sample of 50 tuples is drawn **with replacement** (SRSWR) from a table of 1000 tuples. What is the probability that a particular tuple appears in the sample at least once? (Give 4 decimals.)",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.0488,
+    "tol": 0.0005
+   },
+   "traps": [
+    {
+     "value": 0.05,
+     "why": "Used the without-replacement value s/N = 50/1000.",
+     "trap": "C2"
+    },
+    {
+     "value": 0.001,
+     "why": "Used the probability of being picked in a single draw.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.9512,
+     "why": "Gave the probability of never being picked, $(0.999)^{50}$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. P(not picked in one draw) = 1 − 1/1000.\n2. P(never) = $0.999^{50} = 0.9512$.\n3. P(at least once) = 0.0488."
+  },
+  {
+   "id": "db-sampling-05",
+   "skill": "db.sampling",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which data-reduction technique is **lossless** (the original data can be rebuilt exactly)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A wavelet transform with small coefficients set to zero",
+     "correct": false,
+     "why": "Zeroed coefficients cannot be recovered; this is lossy.",
+     "trap": "C1"
+    },
+    {
+     "text": "Run-length encoding of a sorted column",
+     "correct": true,
+     "why": "Each (value, count) pair expands back to the exact original run."
+    },
+    {
+     "text": "PCA keeping only the top k principal components",
+     "correct": false,
+     "why": "Dropped components lose variance, so reconstruction is approximate.",
+     "trap": "C1"
+    },
+    {
+     "text": "Keeping a 10% random sample",
+     "correct": false,
+     "why": "The other 90% of tuples are gone.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Lossless: encoding that is exactly invertible (run-length, dictionary coding).\n2. PCA truncation, wavelet thresholding and sampling are lossy."
+  }
+ ]
+}
