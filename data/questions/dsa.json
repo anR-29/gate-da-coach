@@ -1,0 +1,2170 @@
+{
+  "area": "dsa",
+  "skills": {
+    "dsa.stack-trace": {
+      "title": "Stack traces and valid pop orders",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        29,
+        35
+      ],
+      "theory": "dsa-linear",
+      "check": "Keep the stack written bottom→top after every operation; pop takes the rightmost. For pop orders with input 1..n: once x is popped, every smaller value still on the stack must come out in decreasing order."
+    },
+    "dsa.queue-deque": {
+      "title": "Queue, circular queue, deque and the two-stack queue",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        29,
+        35
+      ],
+      "theory": "dsa-linear",
+      "check": "Write the queue front→rear after each step; dequeue takes the front. Circular indices move by +1 mod size. Two-stack queue: push to IN; on dequeue, refill OUT from IN only when OUT is empty, then pop OUT."
+    },
+    "dsa.linked-list": {
+      "title": "Linked lists: insert, delete, reverse and pointer updates",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        29,
+        35
+      ],
+      "theory": "dsa-linear",
+      "check": "Draw boxes and arrows; update one pointer at a time in code order. Read a field before you overwrite it. Check the loop condition on the last node (`while p` vs `while p.next`)."
+    },
+    "dsa.tree-traversal": {
+      "title": "Tree traversals and rebuilding a tree from two orders",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        30,
+        35
+      ],
+      "theory": "dsa-trees",
+      "check": "Pre = N L R, in = L N R, post = L R N, level = queue. To rebuild: the first of preorder (last of postorder) is the root; split the inorder at the root and recurse on each side with the same counts."
+    },
+    "dsa.tree-bounds": {
+      "title": "Binary tree height, node and leaf bounds",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        30,
+        35
+      ],
+      "theory": "dsa-trees",
+      "check": "Fix the height convention first (edges: single node = 0). Max nodes at height h: 2^(h+1) − 1. Min height for n nodes: ⌈log₂(n+1)⌉ − 1 = ⌊log₂ n⌋. Leaves = (nodes with 2 children) + 1."
+    },
+    "dsa.bst": {
+      "title": "BST insertion, search paths and deletion",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        30,
+        35
+      ],
+      "theory": "dsa-trees",
+      "check": "Insert one key at a time from the root (smaller left, larger right). A search path is valid only if each key lies inside the open interval set by all earlier keys. Delete with two children: copy the inorder successor (min of right subtree), then delete it."
+    },
+    "dsa.hash-probing": {
+      "title": "Open addressing: linear and quadratic probing traces",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        30,
+        35
+      ],
+      "theory": "dsa-hashing",
+      "check": "Probe i (i = 0, 1, 2, …) looks at (h(k) + i) mod m for linear, (h(k) + i²) mod m for quadratic. Take mod every time, count every slot examined, and stop a search at the first truly empty slot."
+    },
+    "dsa.hash-chaining": {
+      "title": "Chaining, load factor and successful vs unsuccessful search cost",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        30,
+        35
+      ],
+      "theory": "dsa-hashing",
+      "check": "Load factor α = n/m. Successful search: average over the n stored keys (k-th key in a chain costs k). Unsuccessful search: average over the m home slots (a chain costs its length; in open addressing count up to and including the empty slot)."
+    },
+    "dsa.search": {
+      "title": "Linear and binary search: traces and comparison counts",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        31,
+        35
+      ],
+      "theory": "dsa-search-complexity",
+      "check": "Binary search worst case on n sorted items: ⌊log₂ n⌋ + 1 probes. Trace lo, hi, mid = (lo + hi) // 2 row by row until lo > hi. It needs sorted data with O(1) indexing. Linear search: (n + 1)/2 average if present, n if absent."
+    },
+    "dsa.loop-complexity": {
+      "title": "Counting loop iterations and their order of growth",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        31,
+        35
+      ],
+      "theory": "dsa-search-complexity",
+      "check": "Write the inner count as a function of the outer variable, then sum it. Doubling/dividing variables give log terms; a geometric sum is dominated by its largest term. Check the first and last iteration (< vs <=)."
+    },
+    "dsa.growth-order": {
+      "title": "Ordering growth rates and asymptotic notation",
+      "subject": "Programming, Data Structures and Algorithms",
+      "days": [
+        31,
+        35
+      ],
+      "theory": "dsa-search-complexity",
+      "check": "Compare log f: any power of log n < any nᵉ (ε > 0) < n^a·log n < n^b (b > a) < cⁿ. Constant factors in the exponent matter (2^{2n} ≠ O(2ⁿ)); additive constants do not (2^{n+1} = O(2ⁿ)). Big-O needs one c and n₀ for all n ≥ n₀."
+    }
+  },
+  "questions": [
+    {
+      "id": "dsa-stack-trace-01",
+      "skill": "dsa.stack-trace",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An initially empty stack `s` receives these operations in order (`pop` prints the removed value):\n\n```python\npush(5); push(3); pop(); push(8); push(2); pop(); pop(); push(7); pop()\n```\n\nWhat is printed, and what is left on the stack?",
+      "figure": null,
+      "options": [
+        {
+          "text": "3 8 2 7; the stack holds 5",
+          "correct": false,
+          "why": "In the pop–pop pair, removed 8 before 2; the later push (2) is on top and leaves first.",
+          "trap": "C11"
+        },
+        {
+          "text": "3 2 8 7; the stack is empty",
+          "correct": false,
+          "why": "Four pops cannot empty five pushes; 5 was pushed first and is still at the bottom.",
+          "trap": "C6"
+        },
+        {
+          "text": "3 2 8 7; the stack holds 5",
+          "correct": true,
+          "why": "Each pop removes the most recent push still present; 5 is pushed first and never popped."
+        },
+        {
+          "text": "5 3 8 2; the stack holds 7",
+          "correct": false,
+          "why": "Removed the oldest element each time, which is queue (FIFO) behaviour, not a stack.",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. push 5, push 3 → [5, 3]; pop prints 3.\n2. push 8, push 2 → [5, 8, 2]; pop prints 2, pop prints 8.\n3. push 7 → [5, 7]; pop prints 7.\n4. Printed 3 2 8 7; stack holds [5]."
+    },
+    {
+      "id": "dsa-stack-trace-02",
+      "skill": "dsa.stack-trace",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Starting from an empty stack, a letter means *push that letter* and `-` means *pop*:\n\n`a b c - d e - - f g - h - -`\n\nWhat is the **maximum** number of elements in the stack at any moment?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Reported the final size after the last pop, not the peak during the trace.",
+          "trap": "C6"
+        },
+        {
+          "value": 8,
+          "why": "Counted all pushes, ignoring that pops in between shrink the stack.",
+          "trap": "C6"
+        },
+        {
+          "value": 5,
+          "why": "Missed the pop after c, so the stack reached a b d e and then one more.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. a b c → 3; pop → 2; d e → 4; pop pop → 2.\n2. f g → 4; pop → 3; h → 4; pop pop → 2.\n3. The size peaks at 4."
+    },
+    {
+      "id": "dsa-stack-trace-03",
+      "skill": "dsa.stack-trace",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The values 1, 2, 3, 4, 5 are pushed onto a stack **in this order**; pops may be interleaved anywhere, and each popped value is printed. Which of these printed sequences are possible?",
+      "figure": null,
+      "options": [
+        {
+          "text": "4 2 3 1 5",
+          "correct": false,
+          "why": "After 4 is popped, 3 sits above 2, so 2 cannot be printed before 3. Applied 'any order of the leftovers', which a stack forbids.",
+          "trap": "C9"
+        },
+        {
+          "text": "3 2 5 4 1",
+          "correct": true,
+          "why": "Pop 3, 2 after pushing 1–3, then push 4, 5 and pop 5, 4, 1; every pop takes the current top."
+        },
+        {
+          "text": "2 4 3 5 1",
+          "correct": true,
+          "why": "Push 1, 2 and pop 2; push 3, 4 and pop 4, 3; push 5 and pop 5; finally pop 1."
+        },
+        {
+          "text": "1 5 2 4 3",
+          "correct": false,
+          "why": "After 5 is popped the stack is [2, 3, 4]; taking 2 next removes from the bottom, which is FIFO behaviour.",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Rule: when x is popped, all smaller values still on the stack must leave in decreasing order.\n2. 3 2 5 4 1: push 1–3, pop 3, 2; push 4, 5; pop 5, 4, 1. Valid.\n3. 4 2 3 1 5: after 4 leaves, 3 is on top of 2, so 2 cannot come before 3. Invalid.\n4. 2 4 3 5 1: push 1, 2, pop 2; push 3, 4, pop 4, 3; push 5, pop 5, 1. Valid.\n5. 1 5 2 4 3: after 5 leaves, the stack is [2, 3, 4], so 4 must come next, not 2. Invalid."
+    },
+    {
+      "id": "dsa-stack-trace-04",
+      "skill": "dsa.stack-trace",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The values 1, 2, 3, 4 are pushed onto an initially empty stack in this order, with pops allowed at any time; every value is eventually popped and printed. How many different printed sequences are possible?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 14,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 24,
+          "why": "Counted all 4! permutations; a stack forbids patterns such as 3 1 2.",
+          "trap": "C9"
+        },
+        {
+          "value": 5,
+          "why": "Used $C_3$ instead of $C_4$ (off-by-one in the Catalan index).",
+          "trap": "C6"
+        },
+        {
+          "value": 70,
+          "why": "Used $\\binom{8}{4}$ without dividing by $n + 1$.",
+          "trap": "C3"
+        }
+      ],
+      "solution": "1. Valid stack permutations of n inputs are counted by the Catalan number $C_n = \\frac{1}{n+1}\\binom{2n}{n}$.\n2. $C_4 = \\frac{1}{5}\\binom{8}{4} = 14$.\n3. Brute force over all 24 permutations confirms 14."
+    },
+    {
+      "id": "dsa-stack-trace-05",
+      "skill": "dsa.stack-trace",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A postfix expression is evaluated with a stack: an operand is pushed; an operator pops the top value `b`, then the next value `a`, and pushes `a op b`.\n\n`7 2 3 * - 4 2 / +`\n\nWhat value is left on the stack at the end?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 3,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": -0.5,
+          "why": "Used b op a for every operator: 6 − 7 = −1 and 2 / 4 = 0.5; the first popped value is the right operand.",
+          "trap": "C11"
+        },
+        {
+          "value": 1,
+          "why": "Reversed the operands only for the subtraction (6 − 7 = −1), then −1 + 2 = 1.",
+          "trap": "C11"
+        },
+        {
+          "value": 6,
+          "why": "Stopped after the first operator; the trace must continue to the end of the input.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. 7 2 3 → `*` gives 6 → stack [7, 6].\n2. `-` pops b = 6, a = 7 → 1.\n3. 4 2 `/` → 2 → stack [1, 2].\n4. `+` → 3."
+    },
+    {
+      "id": "dsa-stack-trace-06",
+      "skill": "dsa.stack-trace",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What does this program print?\n\n```python\ndef f(s):\n    st, out = [], []\n    for ch in s:\n        if ch.isdigit():\n            st.append(ch)\n        elif st:\n            out.append(st.pop())\n    while st:\n        out.append(st.pop())\n    return \"\".join(out)\n\nprint(f(\"12*34**5*6\"))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "243516",
+          "correct": false,
+          "why": "Emptied the leftover stack bottom-first; the final loop also pops from the top, so 6 comes before 1.",
+          "trap": "C11"
+        },
+        {
+          "text": "243561",
+          "correct": true,
+          "why": "Each `*` pops the latest digit; the final loop empties the stack top-first (6 then 1)."
+        },
+        {
+          "text": "123456",
+          "correct": false,
+          "why": "Treated `pop()` as removing the oldest digit (queue order); `list.pop()` removes the last element.",
+          "trap": "C2"
+        },
+        {
+          "text": "2435",
+          "correct": false,
+          "why": "Stopped at the end of the `for` loop; the `while` loop still pops 6 and 1.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. 1, 2 pushed; `*` pops 2.\n2. 3, 4 pushed; `*` pops 4, `*` pops 3.\n3. 5 pushed; `*` pops 5; 6 pushed.\n4. The final loop pops 6, then 1. Output 243561."
+    },
+    {
+      "id": "dsa-queue-deque-01",
+      "skill": "dsa.queue-deque",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An empty FIFO queue receives: `enqueue(4)`, `enqueue(9)`, `dequeue()`, `enqueue(1)`, `enqueue(6)`, `dequeue()`, `enqueue(3)`, `dequeue()`. Each `dequeue` prints the removed value. What is printed, and what does the queue hold (front → rear)?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Printed 4 9 1; queue is 6, 3",
+          "correct": true,
+          "why": "Each dequeue removes the oldest element; 6 and 3 remain in arrival order."
+        },
+        {
+          "text": "Printed 4 9; queue is 1, 6, 3",
+          "correct": false,
+          "why": "Missed the last dequeue; there are three dequeues in the sequence.",
+          "trap": "C6"
+        },
+        {
+          "text": "Printed 4 9 1; queue is 3, 6",
+          "correct": false,
+          "why": "Listed the remaining elements rear → front; 6 arrived first, so it is at the front.",
+          "trap": "C11"
+        },
+        {
+          "text": "Printed 9 6 3; queue is 4, 1",
+          "correct": false,
+          "why": "Removed the newest element each time, which is stack (LIFO) behaviour.",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. [4, 9] → dequeue prints 4 → [9].\n2. [9, 1, 6] → dequeue prints 9 → [1, 6].\n3. [1, 6, 3] → dequeue prints 1 → [6, 3]."
+    },
+    {
+      "id": "dsa-queue-deque-02",
+      "skill": "dsa.queue-deque",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A circular queue uses an array of 7 slots (indices 0–6). `enqueue` writes at index `rear` and sets `rear = (rear + 1) % 7`; `dequeue` sets `front = (front + 1) % 7`. Initially `front = rear = 4` (empty). After 4 enqueues, 2 dequeues and 2 more enqueues, what is `rear`?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 3,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 10,
+          "why": "Forgot the wrap-around; indices of a circular array are taken mod 7.",
+          "trap": "C9"
+        },
+        {
+          "value": 6,
+          "why": "Reported `front` instead of `rear`; dequeues move only `front`.",
+          "trap": "C2"
+        },
+        {
+          "value": 1,
+          "why": "Subtracted the dequeues from `rear` (4 + 6 − 2); dequeues never change `rear`.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. `rear` moves only on enqueue: 6 enqueues in total.\n2. rear = (4 + 6) mod 7 = 3.\n3. (front = (4 + 2) mod 7 = 6; 4 elements are stored.)"
+    },
+    {
+      "id": "dsa-queue-deque-03",
+      "skill": "dsa.queue-deque",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A queue is built from two stacks IN and OUT. `enqueue(x)` pushes x onto IN. `dequeue()`: if OUT is empty, pop every element of IN and push it onto OUT; then pop OUT.\n\nStarting empty, run: `enqueue(1)`, `enqueue(2)`, `enqueue(3)`, `dequeue()`, `enqueue(4)`, `enqueue(5)`, `dequeue()`, `dequeue()`, `dequeue()`.\n\nWhat is the total number of stack push and pop operations (on both stacks combined)?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 19,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 14,
+          "why": "Counted each transfer as one operation; moving an element is one pop plus one push.",
+          "trap": "C6"
+        },
+        {
+          "value": 9,
+          "why": "Counted only the enqueue pushes and the final OUT pops, ignoring the transfers.",
+          "trap": "C6"
+        },
+        {
+          "value": 10,
+          "why": "Counted only the transfer pops and pushes, not the enqueues and the dequeue pops.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Enqueues: 5 pushes on IN.\n2. First dequeue moves 1, 2, 3 (3 pops + 3 pushes), then pops OUT.\n3. Second and third dequeues pop 2 and 3 from OUT directly.\n4. Fourth dequeue moves 4, 5 (2 pops + 2 pushes), then pops.\n5. Total = 5 + 6 + 4 + 4 = 19."
+    },
+    {
+      "id": "dsa-queue-deque-04",
+      "skill": "dsa.queue-deque",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A queue is built from two stacks: `enqueue(x)` pushes x onto stack IN; `dequeue()` first moves all of IN onto stack OUT (pop from IN, push to OUT) **only if OUT is empty**, then pops OUT. Which statements are correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Any sequence of n enqueue/dequeue operations takes O(n) time in total.",
+          "correct": true,
+          "why": "Every element is moved from IN to OUT at most once, so the total work is linear (amortized O(1) per operation)."
+        },
+        {
+          "text": "A single dequeue can take Θ(n) time in the worst case.",
+          "correct": true,
+          "why": "When OUT is empty and IN holds n elements, all n are moved before the pop."
+        },
+        {
+          "text": "`dequeue` returns the top of IN when OUT is non-empty.",
+          "correct": false,
+          "why": "The top of IN is the newest element; returning it gives LIFO order.",
+          "trap": "C2"
+        },
+        {
+          "text": "After a refill, new enqueues should be pushed onto OUT.",
+          "correct": false,
+          "why": "Pushing onto OUT puts a new element above older ones, so it would be dequeued first. New elements always go to IN.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A refill moves all k elements of IN, so one dequeue can cost Θ(n).\n2. Each element is pushed and popped at most twice in total, so n operations cost O(n): amortized O(1).\n3. The front of the queue is the top of OUT (or the bottom of IN when OUT is empty).\n4. Enqueues always go to IN."
+    },
+    {
+      "id": "dsa-queue-deque-05",
+      "skill": "dsa.queue-deque",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What does this program print?\n\n```python\nfrom collections import deque\nd = deque()\nfor x in [1, 2, 3, 4, 5, 6]:\n    if x % 2:\n        d.appendleft(x)\n    else:\n        d.append(x)\nd.pop()\nd.popleft()\nd.append(d.popleft())\nprint(list(d))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "[2, 1, 3, 4]",
+          "correct": false,
+          "why": "Swapped `append` and `appendleft`, so odd values were placed on the right.",
+          "trap": "C2"
+        },
+        {
+          "text": "[1, 2, 4, 3]",
+          "correct": true,
+          "why": "Odd values go to the left end, even to the right; after removing both ends, the front element 3 is rotated to the back."
+        },
+        {
+          "text": "[4, 3, 1, 2]",
+          "correct": false,
+          "why": "Read the last line as `appendleft(pop())`: moved the back element to the front, the opposite direction.",
+          "trap": "C11"
+        },
+        {
+          "text": "[3, 1, 2, 4]",
+          "correct": false,
+          "why": "Stopped before the last line; `d.append(d.popleft())` still rotates 3 to the end.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. After the loop: [5, 3, 1, 2, 4, 6] (odd values to the left, even to the right).\n2. `pop()` removes 6; `popleft()` removes 5 → [3, 1, 2, 4].\n3. `append(popleft())` moves 3 to the right end → [1, 2, 4, 3]."
+    },
+    {
+      "id": "dsa-linked-list-01",
+      "skill": "dsa.linked-list",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the list (head to tail) after this code runs?\n\n```python\nclass Node:\n    def __init__(self, val, nxt=None):\n        self.val, self.next = val, nxt\n\nhead = None\nfor v in [3, 1, 4, 1, 5]:\n    if v % 2:                      # odd: new head\n        head = Node(v, head)\n    else:                          # even: right after head\n        head.next = Node(v, head.next)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "5 1 4 1 3",
+          "correct": false,
+          "why": "Treated the even case as another head insertion; `head.next = Node(v, head.next)` inserts after the head.",
+          "trap": "C9"
+        },
+        {
+          "text": "5 1 1 4 3",
+          "correct": true,
+          "why": "Odd values become the new head; 4 was placed second when the head was 1, and later heads pushed it further back."
+        },
+        {
+          "text": "3 1 4 1 5",
+          "correct": false,
+          "why": "Appended every value at the tail; `Node(v, head)` puts the new node in front.",
+          "trap": "C2"
+        },
+        {
+          "text": "1 1 4 3",
+          "correct": false,
+          "why": "Stopped before the last value; 5 still becomes the new head.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. 3 → [3]; 1 → [1, 3].\n2. 4 goes after the head → [1, 4, 3].\n3. 1 → [1, 1, 4, 3]; 5 → [5, 1, 1, 4, 3]."
+    },
+    {
+      "id": "dsa-linked-list-02",
+      "skill": "dsa.linked-list",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 1 → 2 → 3 → 4. What list does `rev(head)` return (read from the returned node)?\n\n```python\ndef rev(head):\n    prev, cur = None, head\n    while cur and cur.next:\n        nxt = cur.next\n        cur.next = prev\n        prev, cur = cur, nxt\n    return prev\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "4 → 3 → 2 → 1",
+          "correct": false,
+          "why": "Assumed a correct reversal; the loop needs `while cur:` to process the last node.",
+          "trap": "C6"
+        },
+        {
+          "text": "3 → 2 → 1 → 4",
+          "correct": false,
+          "why": "Assumed 4 stays attached; node 3's `next` was overwritten to 2, so 4 is unreachable.",
+          "trap": "C9"
+        },
+        {
+          "text": "2 → 1",
+          "correct": false,
+          "why": "Stopped one iteration early; node 3 still has a next (4), so it is processed.",
+          "trap": "C6"
+        },
+        {
+          "text": "3 → 2 → 1",
+          "correct": true,
+          "why": "The condition `cur.next` stops the loop on the last node, so 4 is never linked in and `prev` is node 3."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. cur = 1: 1.next = None; prev = 1, cur = 2.\n2. cur = 2: 2.next = 1; prev = 2, cur = 3.\n3. cur = 3: 3.next = 2; prev = 3, cur = 4.\n4. cur = 4 has no next, so the loop stops before relinking 4. Returned: 3 → 2 → 1."
+    },
+    {
+      "id": "dsa-linked-list-03",
+      "skill": "dsa.linked-list",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 2 → 5 → 7 → 1 → 8 → 3 → 6. What does `f(head)` return?\n\n```python\ndef f(head):\n    s, p = 0, head\n    while p and p.next:\n        s += p.val\n        p = p.next.next\n    return s\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 17,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 23,
+          "why": "Also added the last node 6; the condition `p.next` fails there, so the body does not run.",
+          "trap": "C6"
+        },
+        {
+          "value": 9,
+          "why": "Added the second-position nodes (5 + 1 + 3); p starts at the head and jumps two at a time.",
+          "trap": "C6"
+        },
+        {
+          "value": 32,
+          "why": "Summed every node; `p.next.next` skips every other node.",
+          "trap": "C9"
+        }
+      ],
+      "solution": "1. p = 2 (next 5): s = 2, jump to 7.\n2. p = 7 (next 1): s = 9, jump to 8.\n3. p = 8 (next 3): s = 17, jump to 6.\n4. p = 6 has no next: stop. Return 17."
+    },
+    {
+      "id": "dsa-linked-list-04",
+      "skill": "dsa.linked-list",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A singly linked list has n nodes and only a `head` pointer (no tail pointer). Which statements are correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Inserting a new node at the front takes O(1) time.",
+          "correct": true,
+          "why": "Set `new.next = head; head = new`; no traversal is needed."
+        },
+        {
+          "text": "Given only a pointer to a node that is not the last, that node's value can be removed from the list in O(1).",
+          "correct": true,
+          "why": "Copy the successor's value into it and bypass the successor: `p.val = p.next.val; p.next = p.next.next`."
+        },
+        {
+          "text": "Searching a sorted list with binary search takes O(log n) time.",
+          "correct": false,
+          "why": "Binary search needs O(1) access to the middle; in a linked list reaching the middle alone costs Θ(n).",
+          "trap": "C9"
+        },
+        {
+          "text": "Deleting the last node takes O(1) time.",
+          "correct": false,
+          "why": "The second-last node's `next` must become None, and finding it needs a Θ(n) walk. That O(1) holds for a doubly linked list with a tail pointer.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Front insertion: new node points to head; O(1).\n2. Deleting the last node needs its predecessor, found by walking: Θ(n).\n3. No random access, so reaching the middle costs Θ(n); binary search gives no O(log n) bound.\n4. Given a pointer to a non-last node, copy the next node's value into it and unlink the next node: O(1)."
+    },
+    {
+      "id": "dsa-linked-list-05",
+      "skill": "dsa.linked-list",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "In a doubly linked list, `p` is a node with a successor, and `q` is a new node to insert **right after** `p`. Which sequence of assignments does it correctly?",
+      "figure": null,
+      "options": [
+        {
+          "text": "`q.next = p.next; p.next = q; q.prev = p`",
+          "correct": false,
+          "why": "Missed the fourth update: the old successor's `prev` still points to p, so backward traversal skips q.",
+          "trap": "C6"
+        },
+        {
+          "text": "`q.next = p.next; q.prev = p; p.next = q; p.next.prev = q`",
+          "correct": false,
+          "why": "After `p.next = q`, the last line sets `q.prev = q`; the old successor's `prev` still points to p.",
+          "trap": "C6"
+        },
+        {
+          "text": "`p.next = q; q.prev = p; q.next = p.next; p.next.prev = q`",
+          "correct": false,
+          "why": "Overwrote `p.next` first, so `q.next = p.next` makes q point to itself and the old successor is lost.",
+          "trap": "C6"
+        },
+        {
+          "text": "`q.prev = p; q.next = p.next; p.next.prev = q; p.next = q`",
+          "correct": true,
+          "why": "`p.next` is read (twice) while it still points to the old successor, and it is overwritten last."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Fill q's own fields first: `q.prev = p`, `q.next = p.next`.\n2. Fix the old successor: `p.next.prev = q` (p.next is still the old successor).\n3. Finally `p.next = q`.\n4. Any order that overwrites `p.next` before it is read loses the successor."
+    },
+    {
+      "id": "dsa-tree-traversal-01",
+      "skill": "dsa.tree-traversal",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "In a binary tree, A is the root with left child B and right child C. B has left child D and right child E. C has only a right child F, and F has only a left child G. What is the **postorder** traversal?",
+      "figure": null,
+      "options": [
+        {
+          "text": "G F C E D B A",
+          "correct": false,
+          "why": "Reversed the preorder; reversed preorder is N R L read backwards (R L N), not L R N.",
+          "trap": "C10"
+        },
+        {
+          "text": "A B D E C F G",
+          "correct": false,
+          "why": "This is the preorder (node before subtrees).",
+          "trap": "C2"
+        },
+        {
+          "text": "D E B G F C A",
+          "correct": true,
+          "why": "Each node is listed after both of its subtrees; the root A comes last."
+        },
+        {
+          "text": "D B E A C G F",
+          "correct": false,
+          "why": "This is the inorder (node between its subtrees).",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Postorder = left subtree, right subtree, node.\n2. Subtree B: D E B.\n3. Subtree C: (no left), subtree F = G F, then C → G F C.\n4. Root last: D E B G F C A."
+    },
+    {
+      "id": "dsa-tree-traversal-02",
+      "skill": "dsa.tree-traversal",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A binary tree with distinct keys has\n\n- preorder: 1 2 4 5 7 3 6 8 9\n- inorder: 4 2 7 5 1 3 8 6 9\n\nWhat is its postorder?",
+      "figure": null,
+      "options": [
+        {
+          "text": "4 5 7 2 8 9 6 3 1",
+          "correct": false,
+          "why": "Listed 5 before its child 7; in postorder a node comes after its subtree.",
+          "trap": "C6"
+        },
+        {
+          "text": "4 7 5 2 8 9 6 3 1",
+          "correct": true,
+          "why": "Built from root 1 by splitting the inorder at each preorder root, then read L R N."
+        },
+        {
+          "text": "9 8 6 3 7 5 4 2 1",
+          "correct": false,
+          "why": "Reversed the preorder instead of rebuilding the tree; that gives the postorder of the mirror image.",
+          "trap": "C10"
+        },
+        {
+          "text": "4 7 5 2 9 8 6 3 1",
+          "correct": false,
+          "why": "Placed 9 as the left child of 6; inorder 8 6 9 puts 8 on the left and 9 on the right.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Root 1; inorder splits into left {4, 2, 7, 5} and right {3, 8, 6, 9}.\n2. Left: preorder 2 4 5 7 → root 2, left 4, right subtree {7, 5} with root 5 and left child 7.\n3. Right: root 3 with no left child; right subtree {8, 6, 9} has root 6, left 8, right 9.\n4. Postorder: 4 7 5 2 8 9 6 3 1."
+    },
+    {
+      "id": "dsa-tree-traversal-03",
+      "skill": "dsa.tree-traversal",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A binary tree with distinct keys has\n\n- inorder: 4 8 2 9 5 1 6 3 7 11 10\n- postorder: 8 4 9 5 2 6 11 10 7 3 1\n\nWhat is its height? (Height = number of **edges** on the longest root-to-leaf path; a single node has height 0.)",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 5,
+          "why": "Counted nodes on the longest path; the question counts edges.",
+          "trap": "C6"
+        },
+        {
+          "value": 3,
+          "why": "Assumed a balanced shape (⌊log₂ 11⌋ = 3) or missed the chain 7 → 10 → 11; the height must come from the rebuilt tree.",
+          "trap": "C9"
+        },
+        {
+          "value": 2,
+          "why": "Reported the height of the left subtree (root 2) instead of the whole tree.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Root 1 (last in postorder). Left inorder {4 8 2 9 5}, right {6 3 7 11 10}.\n2. Left subtree: root 2; 4 with right child 8; 5 with left child 9 → height 2.\n3. Right subtree: root 3, left 6, right 7; 7 has right child 10; 10 has left child 11 → height 3.\n4. Tree height = 1 + 3 = 4 (path 1-3-7-10-11)."
+    },
+    {
+      "id": "dsa-tree-traversal-04",
+      "skill": "dsa.tree-traversal",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For binary trees with distinct keys, which pairs of traversal sequences **always** determine the tree uniquely?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Preorder and level order",
+          "correct": false,
+          "why": "Neither sequence tells left from right: A with a single child B gives A B in both orders whichever side B is on.",
+          "trap": "C9"
+        },
+        {
+          "text": "Preorder and postorder",
+          "correct": false,
+          "why": "Fails for one-child nodes: A with only a left child B and A with only a right child B share both sequences. Unique only for full binary trees.",
+          "trap": "C9"
+        },
+        {
+          "text": "Inorder and level order",
+          "correct": true,
+          "why": "Level order gives the root of each part (first key of it to appear); inorder splits left and right."
+        },
+        {
+          "text": "Preorder and inorder",
+          "correct": true,
+          "why": "Preorder's first key is the root; its position in the inorder splits the two subtrees, recursively."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inorder fixes left vs right once the root is known; preorder, postorder or level order supply the roots. So any pair containing inorder works.\n2. Without inorder, a root A with a single child B gives preorder A B, postorder B A and level order A B whether B is left or right."
+    },
+    {
+      "id": "dsa-tree-traversal-05",
+      "skill": "dsa.tree-traversal",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Root 10 has left child 20 and right child 30. 20 has left child 40 and right child 50; 50 has left child 70. 30 has only a right child 60, whose children are 80 (left) and 90 (right). What is `bfs(root)[4]`?\n\n```python\nfrom collections import deque\ndef bfs(root):\n    q, out = deque([root]), []\n    while q:\n        n = q.popleft()\n        out.append(n.val)\n        for c in (n.left, n.right):\n            if c:\n                q.append(c)\n    return out\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 50,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 40,
+          "why": "Read index 4 as the fourth value; Python lists are 0-indexed.",
+          "trap": "C6"
+        },
+        {
+          "value": 70,
+          "why": "Gave the fifth value of the preorder (depth-first); a queue visits level by level.",
+          "trap": "C2"
+        },
+        {
+          "value": 80,
+          "why": "Used `pop()` (a stack) instead of `popleft()`; that visits 10 30 60 90 80 …",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. Level order: 10 | 20 30 | 40 50 60 | 70 80 90.\n2. Index 4 is the fifth value: 50."
+    },
+    {
+      "id": "dsa-tree-traversal-06",
+      "skill": "dsa.tree-traversal",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A BST has root 50 with children 30 and 70; 30 has children 20 and 40; 70 has children 60 and 80. What does `g(root)` return?\n\n```python\ndef g(n):\n    if n is None:\n        return []\n    return g(n.right) + [n.val] + g(n.left)\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "[80, 70, 60, 50, 40, 30, 20]",
+          "correct": true,
+          "why": "Right–node–left on a BST lists keys from largest to smallest."
+        },
+        {
+          "text": "[20, 40, 30, 60, 80, 70, 50]",
+          "correct": false,
+          "why": "Gave the postorder; the node is emitted between the subtrees, not after them.",
+          "trap": "C2"
+        },
+        {
+          "text": "[50, 70, 80, 60, 30, 40, 20]",
+          "correct": false,
+          "why": "Put the node before both subtrees (preorder style); here `[n.val]` sits between the two calls.",
+          "trap": "C2"
+        },
+        {
+          "text": "[20, 30, 40, 50, 60, 70, 80]",
+          "correct": false,
+          "why": "That is the ordinary inorder (left first); `g` recurses into the right subtree first.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `g` visits right subtree, node, left subtree: a mirrored inorder.\n2. Inorder of a BST is ascending, so the mirrored inorder is descending: 80 70 60 50 40 30 20."
+    },
+    {
+      "id": "dsa-tree-bounds-01",
+      "skill": "dsa.tree-bounds",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The height of a binary tree is the number of edges on its longest root-to-leaf path (a single node has height 0). What is the maximum number of nodes in a binary tree of height 5?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 63,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 31,
+          "why": "Used $2^h - 1$, which counts only 5 levels; height 5 has 6 levels.",
+          "trap": "C6"
+        },
+        {
+          "value": 64,
+          "why": "Wrote $2^{h+1}$ without subtracting 1.",
+          "trap": "C6"
+        },
+        {
+          "value": 32,
+          "why": "Counted only the nodes on the last level ($2^5$).",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Height 5 means levels 0 to 5, i.e. 6 levels.\n2. A full level i holds $2^i$ nodes.\n3. Total $= 2^0 + \\dots + 2^5 = 2^6 - 1 = 63$."
+    },
+    {
+      "id": "dsa-tree-bounds-02",
+      "skill": "dsa.tree-bounds",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A binary tree has 100 nodes. With height counted in edges (a single node has height 0), what is the **minimum** possible height?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 6,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 7,
+          "why": "Gave the number of levels ($\\lceil \\log_2 101 \\rceil$); height in edges is one less.",
+          "trap": "C6"
+        },
+        {
+          "value": 99,
+          "why": "Gave the maximum height (a chain); the question asks for the minimum.",
+          "trap": "C2"
+        },
+        {
+          "value": 5,
+          "why": "Subtracted 1 from $\\lfloor \\log_2 100 \\rfloor = 6$ to 'convert to edges'; that floor already counts edges, and height 5 holds only 63 nodes.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Height h holds at most $2^{h+1} - 1$ nodes.\n2. h = 5 → 63 < 100; h = 6 → 127 ≥ 100.\n3. Minimum height = 6 $= \\lfloor \\log_2 100 \\rfloor$."
+    },
+    {
+      "id": "dsa-tree-bounds-03",
+      "skill": "dsa.tree-bounds",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "In a binary tree every node has either 0 or 2 children. The tree has 20 leaves. How many nodes does it have in total?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 39,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 40,
+          "why": "Assumed internal nodes equal leaves; there is always one fewer internal node.",
+          "trap": "C6"
+        },
+        {
+          "value": 19,
+          "why": "Gave only the internal nodes.",
+          "trap": "C6"
+        },
+        {
+          "value": 41,
+          "why": "Used internal = leaves + 1, reversing the relation.",
+          "trap": "C11"
+        }
+      ],
+      "solution": "1. In any binary tree, leaves = (nodes with two children) + 1.\n2. With no one-child nodes: internal = 20 − 1 = 19.\n3. Total = 19 + 20 = 39."
+    },
+    {
+      "id": "dsa-tree-bounds-04",
+      "skill": "dsa.tree-bounds",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A binary tree has exactly 10 nodes with two children and exactly 7 nodes with one child. How many leaves does it have?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 11,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 18,
+          "why": "Added the one-child nodes ($n_2 + n_1 + 1$); one-child nodes do not change the leaf count.",
+          "trap": "C9"
+        },
+        {
+          "value": 10,
+          "why": "Equated leaves with two-child nodes, missing the +1.",
+          "trap": "C6"
+        },
+        {
+          "value": 28,
+          "why": "Gave the total number of nodes (10 + 7 + 11).",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Count edges two ways: $n - 1 = 2n_2 + n_1$, with $n = n_0 + n_1 + n_2$.\n2. This gives $n_0 = n_2 + 1$, independent of $n_1$.\n3. Leaves = 10 + 1 = 11."
+    },
+    {
+      "id": "dsa-tree-bounds-05",
+      "skill": "dsa.tree-bounds",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Let a binary tree have n ≥ 1 nodes and height h (edges; a single node has height 0). Which statements are always true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$h \\le n - 1$",
+          "correct": true,
+          "why": "A tree of height h needs at least one node on each of its h + 1 levels; equality for a chain."
+        },
+        {
+          "text": "A complete binary tree with n nodes has height $\\lceil \\log_2 n \\rceil$.",
+          "correct": false,
+          "why": "Ceiling instead of floor: n = 5 gives height 2, not 3. The correct value is $\\lfloor \\log_2 n \\rfloor$.",
+          "trap": "C6"
+        },
+        {
+          "text": "A binary tree of height h has at least $2^h$ nodes.",
+          "correct": false,
+          "why": "Confused the minimum with the maximum level size; a chain of height h has only h + 1 nodes.",
+          "trap": "C2"
+        },
+        {
+          "text": "$h \\ge \\lfloor \\log_2 n \\rfloor$",
+          "correct": true,
+          "why": "From $n \\le 2^{h+1} - 1$, $\\log_2 n < h + 1$, so $\\lfloor \\log_2 n \\rfloor \\le h$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Level i holds at most $2^i$ nodes, so $n \\le 2^{h+1} - 1$, giving $h \\ge \\lfloor \\log_2 n \\rfloor$.\n2. Every level has at least one node, so $n \\ge h + 1$, i.e. $h \\le n - 1$.\n3. A complete tree with 5 nodes has height 2, but $\\lceil \\log_2 5 \\rceil = 3$.\n4. A chain of 5 nodes has height 4 but only 5 < 16 nodes."
+    },
+    {
+      "id": "dsa-bst-01",
+      "skill": "dsa.bst",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The keys 50, 30, 70, 20, 40, 60, 80, 35, 45, 65 are inserted in this order into an empty binary search tree. What is the **preorder** traversal of the result?",
+      "figure": null,
+      "options": [
+        {
+          "text": "20 30 35 40 45 50 60 65 70 80",
+          "correct": false,
+          "why": "This is the inorder, which is always sorted for a BST.",
+          "trap": "C2"
+        },
+        {
+          "text": "50 30 70 20 40 60 80 35 45 65",
+          "correct": false,
+          "why": "Copied the insertion order, which here is the level order; preorder finishes the left subtree before visiting 70.",
+          "trap": "C10"
+        },
+        {
+          "text": "50 30 20 40 35 45 70 60 65 80",
+          "correct": true,
+          "why": "Node, then the whole left subtree, then the right subtree, on the tree built key by key."
+        },
+        {
+          "text": "20 35 45 40 30 65 60 80 70 50",
+          "correct": false,
+          "why": "This is the postorder (node after its subtrees).",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. 50 root; 30, 70 its children; 20, 40 under 30; 60, 80 under 70.\n2. 35, 45 become children of 40; 65 is the right child of 60.\n3. Preorder (N L R): 50 30 20 40 35 45 70 60 65 80."
+    },
+    {
+      "id": "dsa-bst-02",
+      "skill": "dsa.bst",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The keys 15, 9, 22, 4, 12, 18, 30, 11, 13, 10 are inserted in this order into an empty BST. What is the height of the tree (edges on the longest root-to-leaf path; a single node has height 0)?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 5,
+          "why": "Counted nodes on the longest path instead of edges.",
+          "trap": "C6"
+        },
+        {
+          "value": 3,
+          "why": "Assumed a balanced tree (⌊log₂ 10⌋ = 3); a BST's shape depends on the insertion order.",
+          "trap": "C9"
+        },
+        {
+          "value": 2,
+          "why": "Stopped tracing before inserting 11, 13 and 10.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. 15 root; 9, 22 children; 4, 12 under 9; 18, 30 under 22.\n2. 11 and 13 go under 12; 10 goes left of 11.\n3. Longest path 15 → 9 → 12 → 11 → 10: 4 edges."
+    },
+    {
+      "id": "dsa-bst-03",
+      "skill": "dsa.bst",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The keys 15, 9, 22, 4, 12, 18, 30, 11, 13, 10 are inserted in this order into an empty BST. A search for the key 14 compares 14 with each node on its path until it reaches an empty subtree. How many **nodes** are compared?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 5,
+          "why": "Counted the empty subtree as one more node compared.",
+          "trap": "C6"
+        },
+        {
+          "value": 3,
+          "why": "Stopped at 12, as if 14 were found or 12 had no right child; 13 is the right child of 12.",
+          "trap": "C6"
+        },
+        {
+          "value": 10,
+          "why": "Counted every node, as in a linear search; a BST search follows one root-to-leaf path.",
+          "trap": "C9"
+        }
+      ],
+      "solution": "1. Tree: 15 (9 (4, 12 (11 (10), 13)), 22 (18, 30)).\n2. 14 < 15 → 9; 14 > 9 → 12; 14 > 12 → 13; 14 > 13 → empty right subtree.\n3. Nodes compared: 15, 9, 12, 13 → 4."
+    },
+    {
+      "id": "dsa-bst-04",
+      "skill": "dsa.bst",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Each sequence below is claimed to be the sequence of keys examined when searching for 55 in some binary search tree (ending at 55). Which sequences are possible?",
+      "figure": null,
+      "options": [
+        {
+          "text": "90, 20, 85, 30, 95, 55",
+          "correct": false,
+          "why": "Checked only the parent (95 > 30 looks fine); after visiting 85 every later key must be below 85.",
+          "trap": "C9"
+        },
+        {
+          "text": "5, 100, 40, 90, 45, 38, 55",
+          "correct": false,
+          "why": "Checked only that 38 < 45 is a legal left turn; after going right at 40 and 45, every later key must exceed 45.",
+          "trap": "C9"
+        },
+        {
+          "text": "10, 80, 30, 70, 40, 60, 55",
+          "correct": true,
+          "why": "Each key lies inside the interval left by the earlier ones: (10, ∞), (10, 80), (30, 80), (30, 70), (40, 70), (40, 60)."
+        },
+        {
+          "text": "70, 60, 20, 50, 65, 55",
+          "correct": false,
+          "why": "After going left at 60, all later keys must be below 60; 65 is outside the interval (50, 60).",
+          "trap": "C5"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Keep an open interval (lo, hi): after x, set hi = x if 55 < x, else lo = x. Every later key must lie in the interval.\n2. 10, 80, 30, 70, 40, 60: intervals shrink to (40, 60), which contains 55. Valid.\n3. 90, 20, 85, 30, then 95: interval is (30, 85); 95 is outside. Invalid.\n4. 70, 60, 20, 50, then 65: interval is (50, 60); 65 is outside. Invalid.\n5. 5, 100, 40, 90, 45, then 38: interval is (45, 90); 38 is outside. Invalid.\n6. Only the first sequence is possible."
+    },
+    {
+      "id": "dsa-bst-05",
+      "skill": "dsa.bst",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The keys 50, 30, 70, 20, 40, 60, 80, 65 are inserted in this order into an empty BST. Then 50 is deleted: because it has two children, it is replaced by its **inorder successor**, which is removed from its old place. What is the preorder of the new tree?",
+      "figure": null,
+      "options": [
+        {
+          "text": "60 30 20 40 70 80",
+          "correct": false,
+          "why": "Moved 60 up but dropped its subtree; 65 must be reattached as the left child of 70.",
+          "trap": "C6"
+        },
+        {
+          "text": "60 30 20 40 70 65 80",
+          "correct": true,
+          "why": "60 moves to the root and its right child 65 takes its old place under 70."
+        },
+        {
+          "text": "40 30 20 70 60 65 80",
+          "correct": false,
+          "why": "Used the inorder predecessor (max of the left subtree, 40), not the successor.",
+          "trap": "C2"
+        },
+        {
+          "text": "20 30 40 70 60 65 80",
+          "correct": false,
+          "why": "Used the minimum of the whole tree (20); the successor is the minimum of the right subtree.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Successor of 50 = minimum of the right subtree = 60.\n2. Copy 60 into the root; delete 60 from below, so its right child 65 becomes the left child of 70.\n3. Preorder: 60 30 20 40 70 65 80."
+    },
+    {
+      "id": "dsa-hash-probing-01",
+      "skill": "dsa.hash-probing",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A hash table has 10 slots (0–9), $h(k) = k \\bmod 10$ and linear probing. The keys 12, 22, 42, 15, 25, 39, 49 are inserted in this order. In which slot is 49 stored?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 10,
+          "why": "Forgot to wrap around; probe positions are taken mod 10.",
+          "trap": "C9"
+        },
+        {
+          "value": 9,
+          "why": "Gave the home slot of 49; slot 9 already holds 39.",
+          "trap": "C6"
+        },
+        {
+          "value": 1,
+          "why": "Skipped one probe too many; slot 0 is empty and is used first.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. 12→2, 22→3, 42→4 (2, 3 taken), 15→5, 25→6 (5 taken), 39→9.\n2. 49: slot 9 taken; next probe (9 + 1) mod 10 = 0, which is empty.\n3. 49 is in slot 0."
+    },
+    {
+      "id": "dsa-hash-probing-02",
+      "skill": "dsa.hash-probing",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A hash table has 11 slots (0–10) and uses quadratic probing $h(k, i) = (k \\bmod 11 + i^2) \\bmod 11$ for $i = 0, 1, 2, \\dots$. The keys 22, 33, 44, 55, 66 are inserted in this order. In which slot is 66 stored?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Used linear probing (0, 1, 2, 3, 4); the offsets here are i², not i.",
+          "trap": "C2"
+        },
+        {
+          "value": 16,
+          "why": "Forgot the final mod 11 on 0 + 4².",
+          "trap": "C9"
+        },
+        {
+          "value": 9,
+          "why": "Stopped one key early; 9 is where 55 goes.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. All five keys have home slot 0.\n2. 22→0; 33→1; 44: 0, 1, then 4; 55: 0, 1, 4, then 9.\n3. 66: 0, 1, 4, 9 taken; i = 4 gives 16 mod 11 = 5. Slot 5."
+    },
+    {
+      "id": "dsa-hash-probing-03",
+      "skill": "dsa.hash-probing",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table of 7 slots uses $h(k) = k \\bmod 7$ and linear probing. Keys 10, 17, 24 are inserted (all hash to 3). Then 17 is deleted by simply setting its slot back to **empty** (no 'deleted' marker). A search for 24 probes from its home slot and stops at a match or an empty slot. What happens?",
+      "figure": null,
+      "options": [
+        {
+          "text": "24 is reported not found after examining 2 slots.",
+          "correct": true,
+          "why": "The emptied slot 4 cuts the probe chain, so the search stops before slot 5. A 'deleted' marker would prevent this."
+        },
+        {
+          "text": "24 is found in slot 4 after examining 2 slots.",
+          "correct": false,
+          "why": "Assumed later keys shift back on deletion; open addressing does not move other keys.",
+          "trap": "C9"
+        },
+        {
+          "text": "24 is found in slot 5 after examining 3 slots.",
+          "correct": false,
+          "why": "This holds only if deletion leaves a 'deleted' marker; a truly empty slot ends the search.",
+          "trap": "C9"
+        },
+        {
+          "text": "24 is reported not found after examining all 7 slots.",
+          "correct": false,
+          "why": "An unsuccessful search stops at the first empty slot; it does not scan the whole table.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. After inserts: slot 3 = 10, slot 4 = 17, slot 5 = 24.\n2. Deleting 17 empties slot 4.\n3. Search 24: slot 3 holds 10 (no match), slot 4 is empty → stop. 24 is reported missing after 2 probes, although it is in slot 5."
+    },
+    {
+      "id": "dsa-hash-probing-04",
+      "skill": "dsa.hash-probing",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which statements about open addressing are correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Linear probing suffers from primary clustering.",
+          "correct": true,
+          "why": "Any key landing in a run extends it, so runs grow and probe counts rise."
+        },
+        {
+          "text": "The load factor of an open-addressing table can exceed 1.",
+          "correct": false,
+          "why": "That is true only for chaining; with open addressing each key needs its own slot.",
+          "trap": "C9"
+        },
+        {
+          "text": "With quadratic probing, a prime table size and load factor at most 1/2, an insertion always finds an empty slot.",
+          "correct": true,
+          "why": "For prime m the first (m+1)/2 probe offsets $i^2 \\bmod m$ are distinct, more than the number of filled slots."
+        },
+        {
+          "text": "Quadratic probing removes every form of clustering.",
+          "correct": false,
+          "why": "Over-claim: keys with equal home slots share one probe sequence (secondary clustering).",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Linear probing builds long runs of occupied slots (primary clustering).\n2. For prime m, $i^2 \\bmod m$ takes $(m+1)/2$ distinct values, so with α ≤ 1/2 an empty slot is always reached.\n3. In open addressing every key occupies its own slot, so α = n/m ≤ 1.\n4. Quadratic probing still has secondary clustering: keys with the same home slot follow the same sequence."
+    },
+    {
+      "id": "dsa-hash-probing-05",
+      "skill": "dsa.hash-probing",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table has 11 slots, $h(k) = k \\bmod 11$ and linear probing. The keys 5, 16, 27, 6, 38, 17 are inserted in this order into the empty table. Counting every slot examined, **including** the slot where each key is finally placed, what is the total number of probes for all six insertions?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 19,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 13,
+          "why": "Counted only collisions (occupied slots); the question includes the final slot of each key.",
+          "trap": "C6"
+        },
+        {
+          "value": 14,
+          "why": "Stopped before the last insertion; 17 (home slot 6) still needs 5 probes to reach slot 10.",
+          "trap": "C6"
+        },
+        {
+          "value": 6,
+          "why": "Assumed one probe per key, as if every home slot were free (chaining thinking).",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. 5 → slot 5: 1 probe. 16 → 5, 6: 2. 27 → 5, 6, 7: 3.\n2. 6 → 6, 7, 8: 3. 38 (home 5) → 5–9: 5. 17 (home 6) → 6–10: 5.\n3. Total = 1 + 2 + 3 + 3 + 5 + 5 = 19."
+    },
+    {
+      "id": "dsa-hash-chaining-01",
+      "skill": "dsa.hash-chaining",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A hash table with 7 slots uses $h(k) = k \\bmod 7$ and separate chaining. The keys 15, 8, 22, 3, 10, 29, 4 are inserted. How many keys are in the longest chain?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 4,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 1,
+          "why": "Gave the load factor α = 7/7; the longest chain can be far above the average.",
+          "trap": "C3"
+        },
+        {
+          "value": 3,
+          "why": "Missed that 29 mod 7 = 1 also joins slot 1.",
+          "trap": "C6"
+        },
+        {
+          "value": 7,
+          "why": "Assumed all keys collide; only four of them share slot 1.",
+          "trap": "C8"
+        }
+      ],
+      "solution": "1. 15, 8, 22, 29 → slot 1.\n2. 3, 10 → slot 3; 4 → slot 4.\n3. Longest chain: slot 1 with 4 keys."
+    },
+    {
+      "id": "dsa-hash-chaining-02",
+      "skill": "dsa.hash-chaining",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table with 5 slots uses $h(k) = k \\bmod 5$ and chaining; new keys are appended at the **end** of their chain. The keys 10, 21, 15, 31, 7, 20, 12, 26 are inserted in this order. Each stored key is equally likely to be searched for. What is the average number of key comparisons in a **successful** search? (Answer to two decimals.)",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 1.875,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 1.6,
+          "why": "Gave the unsuccessful-search cost α = 8/5 (average chain length over slots).",
+          "trap": "C3"
+        },
+        {
+          "value": 0.875,
+          "why": "Counted comparisons before the match only (k − 1); the matching comparison also counts.",
+          "trap": "C6"
+        },
+        {
+          "value": 1.8,
+          "why": "Used the average-case formula 1 + α/2 instead of the actual chains of this table.",
+          "trap": "C3"
+        }
+      ],
+      "solution": "1. Chains: slot 0: 10, 15, 20; slot 1: 21, 31, 26; slot 2: 7, 12.\n2. The k-th key of a chain needs k comparisons: (1+2+3) + (1+2+3) + (1+2) = 15.\n3. Average over 8 keys: 15/8 = 1.875."
+    },
+    {
+      "id": "dsa-hash-chaining-03",
+      "skill": "dsa.hash-chaining",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table with 6 slots uses $h(k) = k \\bmod 6$ and chaining. It holds the keys 7, 13, 2, 19, 8, 24, 14. A key that is **not** in the table is searched for; its hash value is equally likely to be any of the 6 slots, and the search compares it with every key in that chain (an empty slot costs 0 comparisons). What is the expected number of key comparisons? (Answer to two decimals.)",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 1.17,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 1.86,
+          "why": "Computed the successful-search average (13/7); a missing key scans its whole chain and is averaged over slots.",
+          "trap": "C3"
+        },
+        {
+          "value": 2.33,
+          "why": "Averaged only over the 3 non-empty slots; the empty slots are equally likely and cost 0.",
+          "trap": "C6"
+        },
+        {
+          "value": 2.17,
+          "why": "Added 1 for each slot visit (1 + α); the stem counts key comparisons only.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Chains: slot 0: 24; slot 1: 7, 13, 19; slot 2: 2, 8, 14; slots 3–5 empty.\n2. Unsuccessful cost = chain length: (1 + 3 + 3 + 0 + 0 + 0)/6 = 7/6 ≈ 1.17.\n3. This equals α = n/m."
+    },
+    {
+      "id": "dsa-hash-chaining-04",
+      "skill": "dsa.hash-chaining",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "2000 keys are stored with separate chaining in a table of 500 slots. Under simple uniform hashing, what is the expected number of key comparisons in an **unsuccessful** search?",
+      "figure": null,
+      "options": [
+        {
+          "text": "0.25",
+          "correct": false,
+          "why": "Inverted the load factor (m/n); α is keys per slot.",
+          "trap": "C4"
+        },
+        {
+          "text": "2000",
+          "correct": false,
+          "why": "That is the worst case (all keys in one chain), not the expected value under uniform hashing.",
+          "trap": "C8"
+        },
+        {
+          "text": "4",
+          "correct": true,
+          "why": "An absent key's slot is uniform, and the expected chain length is α = 2000/500."
+        },
+        {
+          "text": "3",
+          "correct": false,
+          "why": "Used the successful-search estimate 1 + α/2.",
+          "trap": "C3"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. α = n/m = 2000/500 = 4.\n2. An unsuccessful search scans a whole chain, of expected length α.\n3. Expected comparisons = 4."
+    },
+    {
+      "id": "dsa-hash-chaining-05",
+      "skill": "dsa.hash-chaining",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which statements about hashing with separate chaining are correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Deleting a key only removes it from its chain; no 'deleted' marker is needed.",
+          "correct": true,
+          "why": "Other keys' search paths stay in their own lists, unlike open addressing."
+        },
+        {
+          "text": "Under uniform hashing, a successful search always costs at least as many comparisons on average as an unsuccessful one.",
+          "correct": false,
+          "why": "Swapped the two costs: unsuccessful ≈ α but successful ≈ 1 + α/2, which is smaller once α > 2.",
+          "trap": "C3"
+        },
+        {
+          "text": "Search takes O(1) time in the worst case.",
+          "correct": false,
+          "why": "Over-claim: O(1) is the expected cost when α is constant; if all keys collide a search is Θ(n).",
+          "trap": "C8"
+        },
+        {
+          "text": "The load factor α can be greater than 1.",
+          "correct": true,
+          "why": "Each slot holds a list, so more keys than slots is fine."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Chains can hold any number of keys, so n > m is allowed.\n2. Deletion removes a node from one list; no markers are needed.\n3. Worst case: all keys in one chain, Θ(n).\n4. Expected costs: unsuccessful α, successful about 1 + α/2; for α = 4 these are 4 and 3."
+    },
+    {
+      "id": "dsa-hash-chaining-06",
+      "skill": "dsa.hash-chaining",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table with 10 slots and linear probing ($h(k) = k \\bmod 10$) holds:\n\n| slot | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| key | 49 | – | 12 | 22 | 42 | 15 | 25 | – | – | 39 |\n\nFor an **unsuccessful** search, the home slot is equally likely to be any of the 10 slots, and the search examines slots until it reaches an empty one, **counting the empty slot**. What is the average number of slots examined?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2.8,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 1.71,
+          "why": "Gave the successful-search average (12 probes over 7 keys).",
+          "trap": "C3"
+        },
+        {
+          "value": 1.8,
+          "why": "Did not count the final empty slot (28 − 10 = 18).",
+          "trap": "C6"
+        },
+        {
+          "value": 2.6,
+          "why": "Did not wrap from slot 9 to 0 and 1; the probe sequence is cyclic.",
+          "trap": "C9"
+        }
+      ],
+      "solution": "1. Probes until empty from each home slot: 0 → 2, 1 → 1, 2 → 6, 3 → 5, 4 → 4, 5 → 3, 6 → 2, 7 → 1, 8 → 1, 9 → 3 (9, 0, 1).\n2. Total = 28, average = 28/10 = 2.8."
+    },
+    {
+      "id": "dsa-search-01",
+      "skill": "dsa.search",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Binary search is run on a sorted array of 100 distinct elements. Each probe compares the key with one array element (equal / less / greater counts as **one** comparison). What is the maximum number of comparisons for any search key, present or absent?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 7,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Used $\\lfloor \\log_2 n \\rfloor$ without the +1 for the last probe.",
+          "trap": "C6"
+        },
+        {
+          "value": 8,
+          "why": "Used $\\lceil \\log_2 n \\rceil + 1$; for n = 100 that overshoots by one.",
+          "trap": "C6"
+        },
+        {
+          "value": 100,
+          "why": "Gave the linear-search worst case.",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. Worst case = $\\lfloor \\log_2 n \\rfloor + 1$.\n2. $\\lfloor \\log_2 100 \\rfloor = 6$, so 7.\n3. Check: 6 probes cover at most 63 elements; 7 cover 127 ≥ 100."
+    },
+    {
+      "id": "dsa-search-02",
+      "skill": "dsa.search",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What does this print?\n\n```python\ndef bs(a, x):\n    lo, hi = 0, len(a) - 1\n    probes = []\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        probes.append(mid)\n        if a[mid] == x:\n            return probes\n        elif a[mid] < x:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return probes\n\na = [3, 8, 11, 15, 19, 24, 30, 36, 41, 47, 52]\nprint(bs(a, 37))\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "[5, 2, 0]",
+          "correct": false,
+          "why": "Moved left when a[mid] < x; a smaller middle element means the key is on the right.",
+          "trap": "C11"
+        },
+        {
+          "text": "[5, 8, 7]",
+          "correct": false,
+          "why": "Rounded the midpoint up ((6 + 7) / 2 → 7); `//` rounds down to 6.",
+          "trap": "C6"
+        },
+        {
+          "text": "[5, 8, 6]",
+          "correct": false,
+          "why": "Stopped once lo and hi became equal; the loop runs while lo <= hi, so index 7 is probed.",
+          "trap": "C6"
+        },
+        {
+          "text": "[5, 8, 6, 7]",
+          "correct": true,
+          "why": "Floor midpoints 5, 8, 6, 7; after index 7 the range is empty, so 37 is absent."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. lo = 0, hi = 10 → mid 5 (24 < 37) → lo = 6.\n2. mid 8 (41 > 37) → hi = 7.\n3. mid 6 (30 < 37) → lo = 7.\n4. mid 7 (36 < 37) → lo = 8 > hi: stop. Output [5, 8, 6, 7]."
+    },
+    {
+      "id": "dsa-search-03",
+      "skill": "dsa.search",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Linear search scans an unsorted array of 20 distinct elements from the left. With probability 0.5 the key is absent; otherwise it is equally likely to be at any of the 20 positions. What is the expected number of comparisons?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 15.25,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 10.5,
+          "why": "Gave only the successful-search average; half the searches are unsuccessful.",
+          "trap": "C3"
+        },
+        {
+          "value": 20,
+          "why": "Gave only the unsuccessful (or worst) case.",
+          "trap": "C3"
+        },
+        {
+          "value": 15,
+          "why": "Used n/2 = 10 for a successful search; the average position is (n + 1)/2.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Present: position i needs i comparisons; average (20 + 1)/2 = 10.5.\n2. Absent: all 20 elements are compared.\n3. Expected = 0.5 × 10.5 + 0.5 × 20 = 15.25."
+    },
+    {
+      "id": "dsa-search-04",
+      "skill": "dsa.search",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which statements about searching are correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "On a sorted singly linked list, binary search still runs in $O(\\log n)$ time.",
+          "correct": false,
+          "why": "Only the comparisons are $O(\\log n)$; walking to each middle node costs Θ(n) in total.",
+          "trap": "C9"
+        },
+        {
+          "text": "On a sorted array with repeated keys, binary search may return an occurrence that is not the leftmost one.",
+          "correct": true,
+          "why": "It stops at the first mid that matches, which can be any copy."
+        },
+        {
+          "text": "On an unsorted array, binary search can report a key as absent even when it is present.",
+          "correct": true,
+          "why": "Halving discards a side based on order; for [5, 1, 9, 3, 7] and key 1 it probes 9, then 5, and stops."
+        },
+        {
+          "text": "Linear search requires the array to be sorted.",
+          "correct": false,
+          "why": "Linear search checks every element in turn and works on any order; sorting only helps to stop early.",
+          "trap": "C1"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. On [5, 1, 9, 3, 7], searching 1 probes 9 then 5 and reports absent: binary search needs sorted input.\n2. A linked list has no O(1) access to the middle, so the time is Θ(n) even if comparisons are $O(\\log n)$.\n3. With duplicates, the first match found need not be the leftmost.\n4. Linear search works on any order."
+    },
+    {
+      "id": "dsa-search-05",
+      "skill": "dsa.search",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Binary search with $mid = \\lfloor (lo + hi)/2 \\rfloor$ is run on a sorted array of 31 distinct elements. How many of the 31 elements are found using **exactly 4** comparisons (one comparison per probe)?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 8,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 16,
+          "why": "Used $2^k$ for k comparisons; the level reached with k comparisons holds $2^{k-1}$ elements.",
+          "trap": "C6"
+        },
+        {
+          "value": 15,
+          "why": "Counted elements found in **at most** 4 comparisons (1 + 2 + 4 + 8).",
+          "trap": "C6"
+        },
+        {
+          "value": 4,
+          "why": "Took the level reached with 3 comparisons.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. With n = 31 the probes form a perfect tree: 1 element at depth 1, 2 at depth 2, 4 at depth 3, 8 at depth 4, 16 at depth 5.\n2. Exactly 4 comparisons: 8 elements."
+    },
+    {
+      "id": "dsa-loop-complexity-01",
+      "skill": "dsa.loop-complexity",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For n = 10, how many times does `count += 1` run?\n\n```python\ncount = 0\nfor i in range(1, n + 1):\n    for j in range(i, n + 1):\n        count += 1\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 55,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 100,
+          "why": "Treated both loops as running n times; the inner loop starts at i.",
+          "trap": "C9"
+        },
+        {
+          "value": 45,
+          "why": "Used n(n − 1)/2; `range(i, n + 1)` includes j = i, so each row has one more.",
+          "trap": "C6"
+        },
+        {
+          "value": 10,
+          "why": "Counted only the outer loop.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. For a given i, j runs from i to n: n − i + 1 times.\n2. Sum over i = 1..10: 10 + 9 + … + 1 = 55 = n(n+1)/2."
+    },
+    {
+      "id": "dsa-loop-complexity-02",
+      "skill": "dsa.loop-complexity",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For n = 100, how many times does `c += 1` run?\n\n```python\nc = 0\ni = 1\nwhile i <= n:\n    for j in range(i):\n        c += 1\n    i *= 2\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 127,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 7,
+          "why": "Counted the outer iterations only; each one runs the inner loop i times.",
+          "trap": "C6"
+        },
+        {
+          "value": 255,
+          "why": "Also included i = 128, which fails `i <= 100`.",
+          "trap": "C5"
+        },
+        {
+          "value": 700,
+          "why": "Assumed the inner loop always runs n times (outer count × 100).",
+          "trap": "C9"
+        }
+      ],
+      "solution": "1. i takes 1, 2, 4, 8, 16, 32, 64 (128 > 100 stops).\n2. Inner loop runs i times: 1 + 2 + … + 64 = 127.\n3. In general the total is below 2n, so Θ(n)."
+    },
+    {
+      "id": "dsa-loop-complexity-03",
+      "skill": "dsa.loop-complexity",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the time complexity of this fragment as a function of n?\n\n```python\ni = n\nwhile i > 1:\n    i = i // 3\n    for j in range(n):\n        pass\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "Θ(log n)",
+          "correct": false,
+          "why": "Counted only the outer loop; the inner loop is n, not constant.",
+          "trap": "C6"
+        },
+        {
+          "text": "Θ(n²)",
+          "correct": false,
+          "why": "Assumed both loops run n times; the outer variable shrinks by a factor of 3.",
+          "trap": "C10"
+        },
+        {
+          "text": "Θ(n log n)",
+          "correct": true,
+          "why": "About $\\log_3 n$ outer iterations, each doing n inner steps."
+        },
+        {
+          "text": "Θ(n)",
+          "correct": false,
+          "why": "Summed as if the inner loop ran i times (a geometric series); it runs n times regardless of i.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. The outer loop divides i by 3 each time: about $\\log_3 n$ iterations.\n2. Each iteration runs the inner loop n times.\n3. Total Θ(n log n)."
+    },
+    {
+      "id": "dsa-loop-complexity-04",
+      "skill": "dsa.loop-complexity",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the time complexity of this fragment?\n\n```python\nfor i in range(1, n + 1):\n    j = i\n    while j < n:\n        j = j * 2\n```",
+      "figure": null,
+      "options": [
+        {
+          "text": "Θ(log n)",
+          "correct": false,
+          "why": "Counted the inner loop for a single i and ignored the outer n iterations.",
+          "trap": "C6"
+        },
+        {
+          "text": "Θ(n log n)",
+          "correct": false,
+          "why": "Took the worst inner count (log n at i = 1) for every i; the inner count shrinks as i grows.",
+          "trap": "C10"
+        },
+        {
+          "text": "Θ(n)",
+          "correct": true,
+          "why": "Most values of i need only a few doublings; the sum of $\\lceil \\log_2(n/i) \\rceil$ stays below about 2n."
+        },
+        {
+          "text": "Θ(n²)",
+          "correct": false,
+          "why": "Treated the doubling loop as running up to n steps.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For a given i, the while loop runs about $\\log_2(n/i)$ times.\n2. Total $\\sum_{i=1}^{n} \\log_2(n/i) = n\\log_2 n - \\log_2 n! \\approx n \\log_2 e$.\n3. So Θ(n): most i are close to n and need few doublings (numerically the count is about 2n)."
+    },
+    {
+      "id": "dsa-loop-complexity-05",
+      "skill": "dsa.loop-complexity",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For n = 8, how many times does `c += 1` run?\n\n```python\nc = 0\nfor i in range(n):\n    for j in range(i):\n        for k in range(j):\n            c += 1\n```",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 56,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 512,
+          "why": "Used n³; the ranges shrink and force k < j < i.",
+          "trap": "C9"
+        },
+        {
+          "value": 84,
+          "why": "Used $\\binom{9}{3}$, as if i ran up to n inclusive.",
+          "trap": "C6"
+        },
+        {
+          "value": 336,
+          "why": "Counted ordered triples (8·7·6); the loops fix the order, so divide by 3!.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. The body runs once for each triple 0 ≤ k < j < i ≤ 7.\n2. That is the number of 3-element subsets of {0, …, 7}: $\\binom{8}{3} = 56$."
+    },
+    {
+      "id": "dsa-growth-order-01",
+      "skill": "dsa.growth-order",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Arrange in increasing order of asymptotic growth: $f_1 = (\\log_2 n)^{10}$, $f_2 = \\sqrt{n}$, $f_3 = n \\log_2 n$, $f_4 = n^{1.1}$.",
+      "figure": null,
+      "options": [
+        {
+          "text": "$f_2, f_1, f_3, f_4$",
+          "correct": false,
+          "why": "Judged from small n (at n = 1024, $10^{10} > 32$); asymptotically every power of log n loses to $\\sqrt n$.",
+          "trap": "C10"
+        },
+        {
+          "text": "$f_1, f_2, f_3, f_4$",
+          "correct": true,
+          "why": "Polylog < any polynomial power; and $n^{0.1}$ eventually beats log n, so $n^{1.1}$ beats $n \\log n$."
+        },
+        {
+          "text": "$f_1, f_2, f_4, f_3$",
+          "correct": false,
+          "why": "Assumed the exponent 1.1 is 'about n'; the extra $n^{0.1}$ outgrows the log factor.",
+          "trap": "C10"
+        },
+        {
+          "text": "$f_4, f_3, f_2, f_1$",
+          "correct": false,
+          "why": "Gave decreasing order instead of increasing.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Any power of log n grows slower than any $n^{\\varepsilon}$: $f_1 < f_2$.\n2. $\\sqrt n < n \\log n$.\n3. $n^{1.1} / (n \\log n) = n^{0.1}/\\log n \\to \\infty$: $f_3 < f_4$.\n4. Order: $f_1, f_2, f_3, f_4$."
+    },
+    {
+      "id": "dsa-growth-order-02",
+      "skill": "dsa.growth-order",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$2^{n+1} = O(2^n)$",
+          "correct": true,
+          "why": "$2^{n+1} = 2 \\cdot 2^n$; the factor 2 is a constant."
+        },
+        {
+          "text": "$3^{\\log_2 n} = O(n)$",
+          "correct": false,
+          "why": "Looks like 'log of n', but $3^{\\log_2 n} = n^{\\log_2 3} \\approx n^{1.585}$.",
+          "trap": "C10"
+        },
+        {
+          "text": "$2^{2n} = O(2^n)$",
+          "correct": false,
+          "why": "A factor in the exponent is not a constant factor: $2^{2n} = 4^n$, and $4^n/2^n = 2^n$ is unbounded.",
+          "trap": "C4"
+        },
+        {
+          "text": "$\\log_2(n!) = \\Theta(n \\log n)$",
+          "correct": true,
+          "why": "$n! \\le n^n$ gives O; $n! \\ge (n/2)^{n/2}$ gives Ω."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $2^{n+1} = 2 \\cdot 2^n$: a constant factor, so $O(2^n)$.\n2. $2^{2n} = 4^n$ and $4^n / 2^n = 2^n \\to \\infty$: not $O(2^n)$.\n3. $\\log n! = \\Theta(n \\log n)$ (Stirling, or $n! \\le n^n$ and $n! \\ge (n/2)^{n/2}$).\n4. $3^{\\log_2 n} = n^{\\log_2 3} \\approx n^{1.585}$, not $O(n)$."
+    },
+    {
+      "id": "dsa-growth-order-03",
+      "skill": "dsa.growth-order",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "$f(n) = 3n^2 + 10n$. What is the **smallest integer** c such that $f(n) \\le c\\,n^2$ for all $n \\ge 5$?",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 3,
+          "why": "Took the leading coefficient only; at n = 5 the term 10n adds 2n², so c = 3 fails.",
+          "trap": "C5"
+        },
+        {
+          "value": 13,
+          "why": "Used n₀ = 1 (3 + 10/1); the stem allows starting at n = 5.",
+          "trap": "C5"
+        },
+        {
+          "value": 4,
+          "why": "c = 4 works only from n = 10 on (3 + 10/n ≤ 4); at n = 5 the ratio is 5.",
+          "trap": "C5"
+        }
+      ],
+      "solution": "1. $f(n)/n^2 = 3 + 10/n$, which decreases in n.\n2. Largest value on $n \\ge 5$ is at n = 5: 3 + 2 = 5.\n3. So c = 5 works and c = 4 fails at n = 5."
+    },
+    {
+      "id": "dsa-growth-order-04",
+      "skill": "dsa.growth-order",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the order of growth of $T(n) = \\sum_{i=1}^{n} \\left\\lfloor \\dfrac{n}{i} \\right\\rfloor$ (for example, the total work of a loop that, for each i, steps through the multiples of i up to n)?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Θ(n log n)",
+          "correct": true,
+          "why": "The sum is n times the harmonic number $H_n \\approx \\ln n$."
+        },
+        {
+          "text": "Θ(n²)",
+          "correct": false,
+          "why": "Bounded each of the n terms by n; the terms shrink like n/i.",
+          "trap": "C9"
+        },
+        {
+          "text": "Θ(n)",
+          "correct": false,
+          "why": "Assumed the harmonic sum converges to a constant; $H_n$ grows like ln n.",
+          "trap": "C6"
+        },
+        {
+          "text": "Θ(log n)",
+          "correct": false,
+          "why": "Kept the harmonic sum but dropped the common factor n.",
+          "trap": "C4"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\sum_{i=1}^{n} n/i = n H_n$, where $H_n = \\Theta(\\log n)$ is the harmonic number.\n2. Floors change the sum by less than n.\n3. $T(n) = \\Theta(n \\log n)$."
+    },
+    {
+      "id": "dsa-growth-order-05",
+      "skill": "dsa.growth-order",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Let $f(n) = n^2$ and $g(n) = n^2$ when n is even, $g(n) = n$ when n is odd. Which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$f(n) = O(g(n))$",
+          "correct": false,
+          "why": "Checked only even n; on odd n the ratio $n^2/n = n$ is unbounded.",
+          "trap": "C1"
+        },
+        {
+          "text": "$g(n) = O(f(n))$",
+          "correct": true,
+          "why": "$g(n) \\le n^2$ for every n."
+        },
+        {
+          "text": "$g(n) = \\Omega(n)$",
+          "correct": true,
+          "why": "Both cases give $g(n) \\ge n$."
+        },
+        {
+          "text": "$g(n)$ is not $\\Omega(n^2)$",
+          "correct": true,
+          "why": "On odd n, $g(n)/n^2 = 1/n \\to 0$, so no constant c > 0 gives $g(n) \\ge c\\,n^2$ for all large n."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $g(n) \\le f(n)$ for all n ≥ 1: $g = O(f)$.\n2. $g(n) \\ge n$ for all n: $g = \\Omega(n)$.\n3. On odd n, $f(n)/g(n) = n$ is unbounded: $f \\ne O(g)$. Equivalently $g(n)/n^2 = 1/n$ on odd n, so $g \\ne \\Omega(n^2)$."
+    }
+  ]
+}
