@@ -1,0 +1,2296 @@
+{
+ "area": "dsa",
+ "skills": {
+  "dsa.sort-passes": {
+   "title": "Array state after k passes (selection, insertion, bubble)",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    32,
+    35
+   ],
+   "theory": "dsa-sorting",
+   "check": "Selection: pass i swaps the minimum of a[i:] into slot i (even if it is already there). Insertion: pass i inserts a[i] into the sorted prefix a[:i]. Bubble: pass p sweeps left to right and parks the p-th largest at the end; small items move left only one slot per pass."
+  },
+  "dsa.sort-swaps": {
+   "title": "Counting swaps, shifts and comparisons",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    32,
+    35
+   ],
+   "theory": "dsa-sorting",
+   "check": "Bubble swaps = insertion shifts = number of inversions. Selection: always n(n-1)/2 comparisons and n-1 swap statements, some of them self-swaps. Insertion comparisons = shifts + (passes whose key stops before index 0). Early-exit bubble sort counts the final no-swap pass."
+  },
+  "dsa.sort-props": {
+   "title": "Stability and best/worst cases of elementary sorts",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    32,
+    35
+   ],
+   "theory": "dsa-sorting",
+   "check": "Stable: insertion (strict >) and bubble (strict >). Unstable: selection (long-range swap). Best case Θ(n): insertion, early-exit bubble on sorted input. Selection is Θ(n²) always. Insertion = Θ(n + inversions); early-exit bubble passes = max leftward distance + 1."
+  },
+  "dsa.sort-merge": {
+   "title": "Merge sort: merge comparisons, passes and properties",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    33,
+    35
+   ],
+   "theory": "dsa-sorting",
+   "check": "Merging runs of sizes m and n costs between min(m, n) and m + n - 1 comparisons; stop counting when one run empties. T(n) = 2T(n/2) + Θ(n) = Θ(n log n) on every input. Bottom-up pass k merges runs of size 2^(k-1)."
+  },
+  "dsa.sort-quick": {
+   "title": "Quicksort: Lomuto partition traces and cost",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    33,
+    35
+   ],
+   "theory": "dsa-sorting",
+   "check": "Lomuto (pivot a[hi]): i starts at lo-1; for each a[j] <= pivot do i += 1 and swap a[i], a[j] (a self-swap when i == j); finally swap a[i+1], a[hi]. One partition of k items makes k-1 comparisons. Sorted, reversed or all-equal input gives n-1 : 0 splits and Θ(n²)."
+  },
+  "dsa.dc-recur": {
+   "title": "Divide and conquer: recurrence to complexity",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    33,
+    35
+   ],
+   "theory": "dsa-sorting",
+   "check": "For T(n) = aT(n/b) + f(n), compare f(n) with n^(log_b a): smaller -> Θ(n^(log_b a)); equal (times log^k) -> multiply by one more log; larger (regular) -> Θ(f(n)). T(n) = T(n-1) + n is Θ(n²); T(n) = T(√n) + 1 is Θ(log log n)."
+  },
+  "dsa.graph-traverse": {
+   "title": "BFS and DFS visit order",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    34,
+    35
+   ],
+   "theory": "dsa-graphs",
+   "check": "BFS: FIFO queue, mark when enqueued, neighbours in the given order; whole level before the next. Recursive DFS: go to the first unvisited neighbour, backtrack only when none is left. A stack DFS that pushes neighbours in list order visits them in reverse order. Valid-order checks: BFS children of u come as a block; DFS may not leave a vertex that still has an unvisited neighbour."
+  },
+  "dsa.graph-bfs-dist": {
+   "title": "BFS levels, unweighted shortest paths and components",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    34,
+    35
+   ],
+   "theory": "dsa-graphs",
+   "check": "BFS level = fewest edges from s; DFS depth is not a distance. Non-tree edges of a BFS tree join levels differing by at most 1. Count shortest paths level by level: paths(v) = sum of paths(u) over neighbours u one level up. Components: run BFS/DFS from every unvisited vertex; isolated vertices count; m >= n - k with equality iff forest."
+  },
+  "dsa.graph-dfs-topo": {
+   "title": "DFS edge classification and topological sort",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    34,
+    35
+   ],
+   "theory": "dsa-graphs",
+   "check": "Directed DFS: tree edge to a new vertex; back edge to an ancestor still open (cycle); forward edge to an already finished descendant (d[u] < d[v]); cross edge to a finished vertex with d[v] < d[u]. Undirected DFS has only tree and back edges. Topological order = reverse finishing order, or Kahn: repeatedly remove an in-degree-0 vertex."
+  },
+  "dsa.graph-dijkstra": {
+   "title": "Dijkstra trace and negative edges",
+   "subject": "Programming, Data Structures and Algorithms",
+   "days": [
+    34,
+    35
+   ],
+   "theory": "dsa-graphs",
+   "check": "Extract the unfinished vertex with the smallest tentative distance, then relax its out-edges: d[v] = min(d[v], d[u] + w). A finalized vertex is never updated again, which is safe only when all weights are >= 0. A negative edge (even without a negative cycle) can make Dijkstra wrong; use Bellman-Ford."
+  }
+ },
+ "questions": [
+  {
+   "id": "dsa-sort-passes-01",
+   "skill": "dsa.sort-passes",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Selection sort below is run on `[29, 13, 41, 7, 36, 18, 52, 4]`. What is the array after the first **2 passes**?\n\n```python\ndef selection_sort(a):\n    n = len(a)\n    for i in range(n - 1):          # one pass per i\n        m = i\n        for j in range(i + 1, n):\n            if a[j] < a[m]:\n                m = j\n        a[i], a[m] = a[m], a[i]\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "`[13, 7, 29, 18, 36, 4, 41, 52]`",
+     "correct": false,
+     "why": "This is bubble sort after 2 passes, which parks maxima at the right end.",
+     "trap": "C2"
+    },
+    {
+     "text": "`[4, 7, 41, 13, 36, 18, 52, 29]`",
+     "correct": true,
+     "why": "Pass 1 swaps 4 with 29; pass 2 swaps 7 with 13. Every other element stays put."
+    },
+    {
+     "text": "`[4, 7, 29, 13, 41, 36, 18, 52]`",
+     "correct": false,
+     "why": "Moved the minima to the front by shifting the rest right; selection sort swaps, so 29 and 13 jump into the vacated slots.",
+     "trap": "C9"
+    },
+    {
+     "text": "`[13, 29, 41, 7, 36, 18, 52, 4]`",
+     "correct": false,
+     "why": "This is insertion sort after 2 passes (insert 13, then 41); selection sort picks the global minimum each pass.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pass 1 (i = 0): minimum of the whole array is 4 at index 7; swap with 29 -> `[4, 13, 41, 7, 36, 18, 52, 29]`.\n2. Pass 2 (i = 1): minimum of a[1:] is 7 at index 3; swap with 13 -> `[4, 7, 41, 13, 36, 18, 52, 29]`."
+  },
+  {
+   "id": "dsa-sort-passes-02",
+   "skill": "dsa.sort-passes",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Insertion sort below is run on `[29, 13, 41, 7, 36, 18, 52, 4]`. One pass is one iteration of the outer loop. What is the array after **3 passes**?\n\n```python\ndef insertion_sort(a):\n    for i in range(1, len(a)):      # pass i inserts a[i]\n        key, j = a[i], i - 1\n        while j >= 0 and a[j] > key:\n            a[j + 1] = a[j]\n            j -= 1\n        a[j + 1] = key\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "`[7, 13, 29, 41, 36, 18, 52, 4]`",
+     "correct": true,
+     "why": "Passes insert 13, 41 and 7 in turn; the prefix of length 4 is sorted and the rest is untouched."
+    },
+    {
+     "text": "`[7, 13, 29, 36, 41, 18, 52, 4]`",
+     "correct": false,
+     "why": "Did one pass too many (also inserted 36).",
+     "trap": "C6"
+    },
+    {
+     "text": "`[4, 7, 13, 41, 36, 18, 52, 29]`",
+     "correct": false,
+     "why": "This is selection sort after 3 passes; insertion sort never looks beyond a[i].",
+     "trap": "C2"
+    },
+    {
+     "text": "`[13, 29, 41, 7, 36, 18, 52, 4]`",
+     "correct": false,
+     "why": "Counted the untouched first element as pass 1, so stopped after inserting 13 and 41 (2 passes).",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. i = 1: insert 13 -> `[13, 29, 41, ...]`.\n2. i = 2: 41 stays.\n3. i = 3: 7 shifts 41, 29, 13 right -> `[7, 13, 29, 41, 36, 18, 52, 4]`.\n4. Only a[:4] is sorted; a[4:] is unchanged."
+  },
+  {
+   "id": "dsa-sort-passes-03",
+   "skill": "dsa.sort-passes",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "The array `[38, 12, 55, 21, 9, 47]` is sorted in ascending order. A *pass* is one iteration of the outer loop (selection: one swap step; insertion: one key inserted; bubble: one left-to-right sweep). Which of the following correctly give the array after **exactly 2 passes**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Selection sort: `[9, 12, 55, 21, 38, 47]`",
+     "correct": true,
+     "why": "Pass 1 swaps 9 and 38. In pass 2 the minimum of a[1:] is 12, already in place, so it swaps with itself; the pass still counts."
+    },
+    {
+     "text": "Insertion sort: `[12, 38, 55, 21, 9, 47]`",
+     "correct": true,
+     "why": "Pass 1 inserts 12 before 38; pass 2 leaves 55 where it is."
+    },
+    {
+     "text": "Bubble sort: `[12, 38, 21, 9, 47, 55]`",
+     "correct": false,
+     "why": "This is the state after only 1 sweep; the second sweep moves 38 past 21 and 9 -> `[12, 21, 9, 38, 47, 55]`.",
+     "trap": "C6"
+    },
+    {
+     "text": "Selection sort: `[9, 12, 21, 55, 38, 47]`",
+     "correct": false,
+     "why": "Skipped the self-swap pass for 12 and counted the next swap as pass 2; that is the state after 3 passes.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Selection: pass 1 -> `[9, 12, 55, 21, 38, 47]`; pass 2 picks 12 at its own index (self-swap), array unchanged.\n2. Insertion: pass 1 -> `[12, 38, 55, ...]`; pass 2 inserts 55, no move.\n3. Bubble: sweep 1 -> `[12, 38, 21, 9, 47, 55]`; sweep 2 -> `[12, 21, 9, 38, 47, 55]`."
+  },
+  {
+   "id": "dsa-sort-passes-04",
+   "skill": "dsa.sort-passes",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Plain bubble sort (each pass compares a[j] and a[j+1] left to right and swaps if a[j] > a[j+1]) is run on `[31, 8, 26, 14, 40, 3, 19, 22]`. After **3 passes**, at which 1-based position is the element `3`?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Assumed the smallest element sinks to the front in one pass, as the largest rises to the end; a small item moves left only one slot per pass.",
+     "trap": "C11"
+    },
+    {
+     "value": 4,
+     "why": "Stopped after 2 passes.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Ran 4 passes.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Assumed only the largest element moves in a pass; every pass also carries 3 one step left.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. 3 starts at position 6.\n2. In each pass the item just left of 3 is larger and is carried past it, so 3 moves left exactly one slot per pass.\n3. After 3 passes: `[8, 14, 3, 19, 22, 26, 31, 40]`, position 3."
+  },
+  {
+   "id": "dsa-sort-passes-05",
+   "skill": "dsa.sort-passes",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "An ascending sort is run on `[6, 9, 2, 8, 1, 7]`. After its second pass the array is `[2, 6, 9, 8, 1, 7]`. Which algorithm was it?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Selection sort",
+     "correct": false,
+     "why": "A sorted prefix is not enough; after 2 selection passes the prefix holds the two smallest items, 1 and 2.",
+     "trap": "C9"
+    },
+    {
+     "text": "Insertion sort",
+     "correct": true,
+     "why": "Pass 1 keeps 9 after 6; pass 2 inserts 2 at the front. Positions 3 onward are untouched."
+    },
+    {
+     "text": "Bubble sort",
+     "correct": false,
+     "why": "Two bubble passes would park 9 and 8 at the right end; here 7 is last.",
+     "trap": "C2"
+    },
+    {
+     "text": "Either selection or insertion sort",
+     "correct": false,
+     "why": "Only insertion fits; selection would have moved 1 to the front in pass 1.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Insertion after 2 passes: `[6, 9, ...]` then 2 goes to the front -> `[2, 6, 9, 8, 1, 7]`.\n2. Selection after 2 passes: `[1, 2, 9, 8, 6, 7]`.\n3. Bubble after 2 passes: `[2, 6, 1, 7, 8, 9]`."
+  },
+  {
+   "id": "dsa-sort-passes-06",
+   "skill": "dsa.sort-passes",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "What is `a` after the first **2 passes** of `sort_max` on `a = [17, 42, 8, 33, 25, 50, 11]`?\n\n```python\ndef sort_max(a):\n    for last in range(len(a) - 1, 0, -1):    # one pass per value of last\n        m = 0\n        for j in range(1, last + 1):\n            if a[j] > a[m]:\n                m = j\n        a[m], a[last] = a[last], a[m]\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "`[17, 11, 8, 33, 25, 42, 50]`",
+     "correct": true,
+     "why": "Pass 1 swaps 50 (index 5) with 11 (index 6); pass 2 swaps 42 (index 1) with 11, now at index 5."
+    },
+    {
+     "text": "`[17, 8, 33, 25, 11, 42, 50]`",
+     "correct": false,
+     "why": "Removed the maxima and shifted the rest left; selection swaps, so 11 jumps into 42's old slot.",
+     "trap": "C9"
+    },
+    {
+     "text": "`[8, 11, 17, 33, 25, 50, 42]`",
+     "correct": false,
+     "why": "Ran the usual minimum-selection; this variant selects the maximum and fills from the right.",
+     "trap": "C2"
+    },
+    {
+     "text": "`[17, 42, 8, 33, 25, 11, 50]`",
+     "correct": false,
+     "why": "Stopped after 1 pass (50 swapped with 11).",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pass 1 (last = 6): max 50 at index 5; swap with a[6] = 11 -> `[17, 42, 8, 33, 25, 11, 50]`.\n2. Pass 2 (last = 5): max of a[:6] is 42 at index 1; swap with a[5] = 11 -> `[17, 11, 8, 33, 25, 42, 50]`."
+  },
+  {
+   "id": "dsa-sort-swaps-01",
+   "skill": "dsa.sort-swaps",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Plain bubble sort (adjacent swap whenever a[j] > a[j+1]) sorts `[7, 3, 9, 1, 5, 2]` in ascending order. How many swaps does it perform in total?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 15,
+     "why": "Counted comparisons, n(n-1)/2 = 15; only out-of-order adjacent pairs are swapped.",
+     "trap": "C2"
+    },
+    {
+     "value": 5,
+     "why": "Counted one swap per pass (n - 1 passes); a pass can swap many times.",
+     "trap": "C3"
+    },
+    {
+     "value": 3,
+     "why": "Counted only the adjacent out-of-order pairs of the input (7-3, 9-1, 5-2); swaps create new adjacent inversions until all pairs are fixed.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Each adjacent swap removes exactly one inversion, so swaps = inversions.\n2. Inversions: 7 -> {3, 1, 5, 2} = 4, 3 -> {1, 2} = 2, 9 -> {1, 5, 2} = 3, 1 -> 0, 5 -> {2} = 1.\n3. Total 10."
+  },
+  {
+   "id": "dsa-sort-swaps-02",
+   "skill": "dsa.sort-swaps",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Selection sort (code below) is run on `[44, 17, 62, 9, 30, 51, 26]`. How many times does the swap line execute with `m != i`, i.e. actually exchange two different elements?\n\n```python\nfor i in range(len(a) - 1):\n    m = i\n    for j in range(i + 1, len(a)):\n        if a[j] < a[m]:\n            m = j\n    a[i], a[m] = a[m], a[i]\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Counted every execution of the swap line (n - 1 = 6); three of them are self-swaps with m == i.",
+     "trap": "C6"
+    },
+    {
+     "value": 11,
+     "why": "Counted inversions; that is the swap count of bubble sort, not selection sort.",
+     "trap": "C3"
+    },
+    {
+     "value": 21,
+     "why": "Counted comparisons, n(n-1)/2.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. i=0: min 9 -> swap with 44: `[9, 17, 62, 44, 30, 51, 26]`.\n2. i=1: 17 already minimal (self-swap).\n3. i=2: 26 <-> 62; i=3: 30 <-> 44 -> `[9, 17, 26, 30, 44, 51, 62]`.\n4. i=4, 5: self-swaps. Real swaps = 3."
+  },
+  {
+   "id": "dsa-sort-swaps-03",
+   "skill": "dsa.sort-swaps",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Insertion sort is run on `[12, 5, 18, 3, 15, 9]`. Count one comparison each time `a[j] > key` is evaluated (the test `j >= 0` is not counted). How many comparisons are made?\n\n```python\nfor i in range(1, len(a)):\n    key, j = a[i], i - 1\n    while j >= 0 and a[j] > key:\n        a[j + 1] = a[j]\n        j -= 1\n    a[j + 1] = key\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 11,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Counted only successful comparisons (= shifts = inversions); each pass that stops early also makes one failing comparison.",
+     "trap": "C6"
+    },
+    {
+     "value": 13,
+     "why": "Added one failing comparison for all 5 passes; when the key (5 and 3) reaches index 0 the loop stops on `j >= 0` without comparing.",
+     "trap": "C1"
+    },
+    {
+     "value": 15,
+     "why": "Used the worst case n(n-1)/2; this input is not reversed.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Shifts = inversions = 8.\n2. Passes for 18, 15, 9 stop on a failing `a[j] > key`: +3.\n3. Passes for 5 and 3 run off the front: no extra comparison.\n4. Total 8 + 3 = 11."
+  },
+  {
+   "id": "dsa-sort-swaps-04",
+   "skill": "dsa.sort-swaps",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "For ascending sorts of an array of n distinct keys, which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The number of swaps in bubble sort equals the number of shifts in insertion sort.",
+     "correct": true,
+     "why": "Both move items by one adjacent exchange at a time, and each removes exactly one inversion."
+    },
+    {
+     "text": "Selection sort exchanges two different elements at most n - 1 times.",
+     "correct": true,
+     "why": "It has n - 1 passes and at most one real swap per pass (self-swaps exchange nothing)."
+    },
+    {
+     "text": "Selection sort makes fewer comparisons on an already sorted array.",
+     "correct": false,
+     "why": "The inner minimum scan always runs to the end: exactly n(n-1)/2 comparisons for every input.",
+     "trap": "C9"
+    },
+    {
+     "text": "Insertion sort always makes exactly (inversions + n - 1) comparisons.",
+     "correct": false,
+     "why": "A pass whose key travels to index 0 ends on `j >= 0` with no failing comparison, so the count can be smaller.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Adjacent exchange removes one inversion -> bubble swaps = insertion shifts = inversions.\n2. Selection: n - 1 passes, one swap statement each; comparisons fixed at n(n-1)/2.\n3. Insertion comparisons = inversions + (number of passes that stop before index 0) <= inversions + n - 1."
+  },
+  {
+   "id": "dsa-sort-swaps-05",
+   "skill": "dsa.sort-swaps",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "How many element shifts (`a[j + 1] = a[j]` executions) does insertion sort make on `[2, 4, 6, 8, 1, 3, 5, 7]`?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 16,
+     "why": "Assumed every element of the first half exceeds every element of the second half (4 x 4 pairs); 2 < 3, 2 < 5 and so on.",
+     "trap": "C3"
+    },
+    {
+     "value": 28,
+     "why": "Used n(n-1)/2, the reversed-array worst case.",
+     "trap": "C3"
+    },
+    {
+     "value": 4,
+     "why": "Counted one move per out-of-place element; each key shifts past every larger item before it.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Shifts = inversions.\n2. 1 is passed by 2, 4, 6, 8 (4); 3 by 4, 6, 8 (3); 5 by 6, 8 (2); 7 by 8 (1).\n3. Total 10."
+  },
+  {
+   "id": "dsa-sort-swaps-06",
+   "skill": "dsa.sort-swaps",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Bubble sort with an early-exit flag is run on `[3, 1, 2, 6, 4, 5, 8, 7]`. How many comparisons `a[j] > a[j + 1]` are made?\n\n```python\nn = len(a)\nfor p in range(n - 1):\n    swapped = False\n    for j in range(n - 1 - p):\n        if a[j] > a[j + 1]:\n            a[j], a[j + 1] = a[j + 1], a[j]\n            swapped = True\n    if not swapped:\n        break\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Stopped after the pass that sorted the array; the loop only learns it is sorted from a full pass with no swap.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Gave the second pass n - 1 = 7 comparisons; pass p scans only n - 1 - p pairs.",
+     "trap": "C3"
+    },
+    {
+     "value": 28,
+     "why": "Ignored the flag and ran all n - 1 passes.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Pass 0 (7 comparisons) swaps 5 times and leaves `[1, 2, ..., 8]`.\n2. Pass 1 (6 comparisons) makes no swap, so the loop breaks.\n3. Total 7 + 6 = 13."
+  },
+  {
+   "id": "dsa-sort-props-01",
+   "skill": "dsa.sort-props",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Each algorithm below is implemented in the standard way for an ascending sort. Which are **stable** (equal keys keep their input order)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Insertion sort with the shift test `a[j] > key`",
+     "correct": true,
+     "why": "An equal key stops the shifting, so the new item lands after its earlier twin."
+    },
+    {
+     "text": "Bubble sort that swaps only when `a[j] > a[j + 1]`",
+     "correct": true,
+     "why": "Equal neighbours are never swapped, so they never pass each other."
+    },
+    {
+     "text": "Selection sort that swaps the minimum into place",
+     "correct": false,
+     "why": "The long-range swap can jump an item over its equal twin, e.g. `[3a, 3b, 1]` -> `[1, 3b, 3a]`.",
+     "trap": "C9"
+    },
+    {
+     "text": "Insertion sort with the shift test `a[j] >= key`",
+     "correct": false,
+     "why": "With >= an equal key is shifted too, so the later twin ends up before the earlier one.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Stability depends on whether equal keys can cross.\n2. Strict comparisons in insertion and bubble sort never move an item past an equal one.\n3. Selection's swap and the `>=` variant both can."
+  },
+  {
+   "id": "dsa-sort-props-02",
+   "skill": "dsa.sort-props",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Selection sort (strict `<` when searching for the minimum) sorts these (key, tag) records by key: `(3,p), (1,q), (3,r), (2,s), (1,t)`. What is the final sequence?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`(1,q), (1,t), (2,s), (3,r), (3,p)`",
+     "correct": true,
+     "why": "Pass 1 swaps (3,p) to index 1; pass 4 swaps it with (3,r) at index 3, so the two 3s end up reversed."
+    },
+    {
+     "text": "`(1,q), (1,t), (2,s), (3,p), (3,r)`",
+     "correct": false,
+     "why": "Assumed selection sort is stable; its long-range swaps can reverse equal keys.",
+     "trap": "C9"
+    },
+    {
+     "text": "`(1,t), (1,q), (2,s), (3,p), (3,r)`",
+     "correct": false,
+     "why": "Picked the last minimum on ties (as `<=` would); with strict `<` the first equal key found stays the minimum.",
+     "trap": "C5"
+    },
+    {
+     "text": "`(1,q), (1,t), (3,r), (2,s), (3,p)`",
+     "correct": false,
+     "why": "Stopped after 2 passes; the outer loop runs n - 1 = 4 passes.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. i=0: min (1,q) at 1 -> swap with (3,p): `(1,q),(3,p),(3,r),(2,s),(1,t)`.\n2. i=1: min (1,t) at 4 -> `(1,q),(1,t),(3,r),(2,s),(3,p)`.\n3. i=2: min (2,s) -> `(1,q),(1,t),(2,s),(3,r),(3,p)`.\n4. i=3: (3,r) is the first 3, self-swap. The 3s are now in reverse input order."
+  },
+  {
+   "id": "dsa-sort-props-03",
+   "skill": "dsa.sort-props",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "The input array of n distinct keys is already in ascending order. Which algorithm then runs in Θ(n) time?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Quicksort with the last element as pivot",
+     "correct": false,
+     "why": "Sorted input is its worst case: every partition is n-1 : 0, giving Θ(n²).",
+     "trap": "C11"
+    },
+    {
+     "text": "Selection sort",
+     "correct": false,
+     "why": "Its minimum scan does not stop early; it always makes n(n-1)/2 comparisons.",
+     "trap": "C9"
+    },
+    {
+     "text": "Bubble sort without an early-exit flag",
+     "correct": false,
+     "why": "Without the flag it still performs all n - 1 passes, Θ(n²) comparisons.",
+     "trap": "C9"
+    },
+    {
+     "text": "Insertion sort",
+     "correct": true,
+     "why": "Each key is compared once with its left neighbour and stays: n - 1 comparisons."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Insertion sort costs Θ(n + inversions); sorted input has 0 inversions.\n2. Selection and flagless bubble sort do Θ(n²) work on every input."
+  },
+  {
+   "id": "dsa-sort-props-04",
+   "skill": "dsa.sort-props",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Insertion sort is run on an array of 12 distinct keys in **descending** order (target: ascending). How many key comparisons `a[j] > key` are made?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 66,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 11,
+     "why": "Gave the best case n - 1; descending input is the worst case.",
+     "trap": "C11"
+    },
+    {
+     "value": 132,
+     "why": "Used n(n - 1) without halving; pass i makes only i comparisons.",
+     "trap": "C3"
+    },
+    {
+     "value": 78,
+     "why": "Used n(n + 1)/2; the sum runs 1 + 2 + ... + (n - 1).",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Pass i (i = 1..11) shifts the key past all i earlier items; it reaches index 0, so there is no failing comparison.\n2. Total = 1 + 2 + ... + 11 = 66."
+  },
+  {
+   "id": "dsa-sort-props-05",
+   "skill": "dsa.sort-props",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "An array of n distinct keys has only O(n) inversions. Which statements are **always** true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Insertion sort finishes in O(n) time.",
+     "correct": true,
+     "why": "Its cost is Θ(n + I) where I is the inversion count, so O(n) here."
+    },
+    {
+     "text": "Selection sort still makes n(n - 1)/2 comparisons.",
+     "correct": true,
+     "why": "Selection's comparison count does not depend on the input order."
+    },
+    {
+     "text": "Bubble sort with an early-exit flag finishes in O(n) time.",
+     "correct": false,
+     "why": "`[2, 3, ..., n, 1]` has only n - 1 inversions, but 1 moves left one slot per pass, so n - 1 passes are needed: Θ(n²).",
+     "trap": "C1"
+    },
+    {
+     "text": "Bubble sort without a flag makes O(n) comparisons.",
+     "correct": false,
+     "why": "Its swaps are O(n) (one per inversion) but it still makes n(n - 1)/2 comparisons.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Insertion: comparisons <= I + n - 1 = O(n).\n2. Selection: fixed n(n-1)/2.\n3. Early-exit bubble needs as many passes as the farthest leftward move, which can be n - 1 with few inversions."
+  },
+  {
+   "id": "dsa-sort-props-06",
+   "skill": "dsa.sort-props",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Bubble sort with an early-exit flag (code of the outer loop: `for p in range(n - 1)`, break after a pass with no swap) is run on `A = [8, 1, 2, 3, 4, 5, 6, 7]` and on `B = [2, 3, 4, 5, 6, 7, 8, 1]`. How many passes are executed for A and for B?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A: 2, B: 7",
+     "correct": true,
+     "why": "A: pass 1 carries 8 to the end, pass 2 finds no swap. B: 1 moves left one slot per pass, needing 7 passes, which is also the loop limit."
+    },
+    {
+     "text": "A: 1, B: 7",
+     "correct": false,
+     "why": "For A, forgot the confirming pass; the flag can only stop the loop after a pass with no swap.",
+     "trap": "C6"
+    },
+    {
+     "text": "A: 2, B: 8",
+     "correct": false,
+     "why": "Added a confirming pass for B; the loop runs at most n - 1 = 7 passes, so it ends without one.",
+     "trap": "C6"
+    },
+    {
+     "text": "A: 7, B: 2",
+     "correct": false,
+     "why": "Reversed the roles: a large item rises to the end in one pass, a small item sinks only one slot per pass.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A: pass 1 moves 8 from index 0 to index 7, array sorted; pass 2 has no swaps -> break. 2 passes.\n2. B: 1 starts at index 7 and moves left one slot per pass, reaching index 0 after pass 7.\n3. The outer loop stops at n - 1 = 7 passes anyway."
+  },
+  {
+   "id": "dsa-sort-merge-01",
+   "skill": "dsa.sort-merge",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "The standard merge step combines the sorted lists `[3, 8, 15, 21]` and `[5, 9, 12, 30, 41]`, comparing the two front items until one list is empty and then copying the rest. How many comparisons are made?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Used the worst-case bound m + n - 1; here the first list empties while 30 and 41 remain, so they are copied free.",
+     "trap": "C3"
+    },
+    {
+     "value": 4,
+     "why": "Used the best-case bound min(m, n); the lists interleave, so more comparisons are needed.",
+     "trap": "C3"
+    },
+    {
+     "value": 9,
+     "why": "Counted one comparison per output item; the leftover items are copied without comparing.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. 3<5, 5<8, 8<9, 9<15, 12<15, 15<30, 21<30: 7 comparisons, output `[3, 5, 8, 9, 12, 15, 21]`.\n2. The first list is empty; copy 30, 41 with no comparison. Total 7."
+  },
+  {
+   "id": "dsa-sort-merge-02",
+   "skill": "dsa.sort-merge",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Top-down merge sort (split at `mid = n // 2`, merge as in the standard step) sorts `[14, 3, 22, 9, 31, 6, 17, 25]`. What is the total number of key comparisons over all merges?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 16,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 17,
+     "why": "Used the worst case n log2 n - n + 1 = 17; the actual count depends on how the runs interleave.",
+     "trap": "C3"
+    },
+    {
+     "value": 24,
+     "why": "Used n log2 n = 24 as if every level cost exactly n comparisons.",
+     "trap": "C3"
+    },
+    {
+     "value": 12,
+     "why": "Skipped the four merges of single items, which cost 1 comparison each.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Size-1 merges: (14,3), (22,9), (31,6), (17,25): 4 comparisons.\n2. `[3,14]+[9,22]`: 3 comparisons; `[6,31]+[17,25]`: 3 comparisons.\n3. `[3,9,14,22]+[6,17,25,31]`: 6 comparisons (31 is copied free).\n4. Total 4 + 6 + 6 = 16."
+  },
+  {
+   "id": "dsa-sort-merge-03",
+   "skill": "dsa.sort-merge",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Top-down merge sort on n keys satisfies $T(n) = 2T(n/2) + cn$. What is its running time on an input that is **already sorted**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\Theta(n)$, because each merge needs only min(m, n) comparisons",
+     "correct": false,
+     "why": "Fewer comparisons do not remove the copying: every level still moves all n items, so each level costs Θ(n).",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\Theta(n \\log n)$",
+     "correct": true,
+     "why": "The recursion always halves and every level copies n items, whatever the input order."
+    },
+    {
+     "text": "$\\Theta(n^2)$, because sorted input is the worst case",
+     "correct": false,
+     "why": "That is quicksort with an end pivot; merge sort's split does not depend on the values.",
+     "trap": "C10"
+    },
+    {
+     "text": "$\\Theta(\\log n)$",
+     "correct": false,
+     "why": "Counted only the recursion depth and forgot the Θ(n) work per level.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Splits are by position, so the tree always has about log2 n levels.\n2. Each level copies all n items: Θ(n) per level.\n3. Total Θ(n log n) on every input."
+  },
+  {
+   "id": "dsa-sort-merge-04",
+   "skill": "dsa.sort-merge",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Bottom-up merge sort first merges adjacent runs of size 1, then of size 2, and so on; each such sweep is one pass. What is the array `[27, 10, 36, 5, 18, 41, 2, 33]` after **2 passes**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`[5, 10, 27, 36, 2, 18, 33, 41]`",
+     "correct": true,
+     "why": "Pass 1 sorts pairs; pass 2 merges them into sorted blocks of 4: [5,10,27,36] and [2,18,33,41]."
+    },
+    {
+     "text": "`[5, 10, 27, 36, 18, 41, 2, 33]`",
+     "correct": false,
+     "why": "Followed top-down recursion and stopped after its third merge call; bottom-up finishes a whole level per pass.",
+     "trap": "C2"
+    },
+    {
+     "text": "`[2, 5, 10, 18, 27, 33, 36, 41]`",
+     "correct": false,
+     "why": "Ran 3 passes; the array is fully sorted only after log2 8 = 3 passes.",
+     "trap": "C6"
+    },
+    {
+     "text": "`[10, 27, 5, 36, 18, 41, 2, 33]`",
+     "correct": false,
+     "why": "This is the state after only 1 pass (pairs sorted).",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pass 1: (27,10)->(10,27), (36,5)->(5,36), (18,41), (2,33).\n2. Pass 2: [10,27]+[5,36] -> [5,10,27,36]; [18,41]+[2,33] -> [2,18,33,41]."
+  },
+  {
+   "id": "dsa-sort-merge-05",
+   "skill": "dsa.sort-merge",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Which statements about the standard array merge sort are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It is stable if, on equal keys, the merge takes the item from the left run.",
+     "correct": true,
+     "why": "The left run holds the earlier items, so ties keep input order."
+    },
+    {
+     "text": "It uses Θ(n) auxiliary space for the merge buffer.",
+     "correct": true,
+     "why": "The array merge copies runs into a temporary buffer of size up to n."
+    },
+    {
+     "text": "It makes the same number of comparisons on every input of size n.",
+     "correct": false,
+     "why": "A merge costs between min(m, n) and m + n - 1 comparisons depending on interleaving; only the copying is fixed.",
+     "trap": "C9"
+    },
+    {
+     "text": "Its worst case is Θ(n log n) but its best case is Θ(n).",
+     "correct": false,
+     "why": "Copying n items per level happens on every input, so the best case is also Θ(n log n).",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Ties from the left run -> stable.\n2. Merge buffer -> Θ(n) extra space.\n3. Comparisons vary (e.g. 12 to 17 for n = 8), time is Θ(n log n) always."
+  },
+  {
+   "id": "dsa-sort-merge-06",
+   "skill": "dsa.sort-merge",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Over all orderings of 8 distinct keys, what is the **maximum** number of key comparisons made by top-down merge sort (split into halves of 4, 2, 1)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 17,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Gave the minimum, using min(m, n) per merge: 4·1 + 2·2 + 4.",
+     "trap": "C11"
+    },
+    {
+     "value": 24,
+     "why": "Used n log2 n; a merge of m + n items costs at most m + n - 1, not m + n.",
+     "trap": "C6"
+    },
+    {
+     "value": 28,
+     "why": "Used n(n - 1)/2, the elementary-sort worst case.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Worst merge of m + n items: m + n - 1 comparisons.\n2. Four merges of 1+1: 4·1 = 4. Two merges of 2+2: 2·3 = 6. One merge of 4+4: 7.\n3. Total 4 + 6 + 7 = 17 (= n log2 n - n + 1)."
+  },
+  {
+   "id": "dsa-sort-quick-01",
+   "skill": "dsa.sort-quick",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "`partition(a, 0, 7)` below is called on `a = [12, 7, 25, 3, 19, 8, 30, 14]`. What is `a` afterwards?\n\n```python\ndef partition(a, lo, hi):\n    pivot = a[hi]\n    i = lo - 1\n    for j in range(lo, hi):\n        if a[j] <= pivot:\n            i += 1\n            a[i], a[j] = a[j], a[i]      # swap line 1 (runs even if i == j)\n    a[i + 1], a[hi] = a[hi], a[i + 1]    # swap line 2\n    return i + 1\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "`[12, 7, 3, 8, 19, 25, 30, 14]`",
+     "correct": false,
+     "why": "Forgot swap line 2; the pivot must be moved into its final slot i + 1.",
+     "trap": "C6"
+    },
+    {
+     "text": "`[12, 7, 3, 8, 14, 25, 30, 19]`",
+     "correct": true,
+     "why": "12 and 7 self-swap, 3 and 8 are swapped into slots 2 and 3, then the pivot 14 is swapped with 19 into slot 4."
+    },
+    {
+     "text": "`[12, 7, 3, 8, 14, 25, 19, 30]`",
+     "correct": false,
+     "why": "Assumed the larger items keep their order; the final pivot swap sends 19 to the end.",
+     "trap": "C9"
+    },
+    {
+     "text": "`[12, 7, 3, 14, 19, 25, 30, 8]`",
+     "correct": false,
+     "why": "Swapped the pivot with a[i] instead of a[i + 1], throwing out the last small item.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. j=0,1: 12, 7 <= 14 -> i = 0, 1 (self-swaps).\n2. j=3: 3 -> i = 2, swap with 25. j=5: 8 -> i = 3, swap with 25.\n3. Now `[12, 7, 3, 8, 19, 25, 30, 14]`; swap a[4] and a[7] -> `[12, 7, 3, 8, 14, 25, 30, 19]`, return 4."
+  },
+  {
+   "id": "dsa-sort-quick-02",
+   "skill": "dsa.sort-quick",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "`partition(a, 0, 6)` (code below) is called on `a = [4, 9, 2, 11, 6, 15, 10]`. Counting **every** execution of swap line 1 (self-swaps included) and of swap line 2, how many swaps are executed?\n\n```python\ndef partition(a, lo, hi):\n    pivot = a[hi]\n    i = lo - 1\n    for j in range(lo, hi):\n        if a[j] <= pivot:\n            i += 1\n            a[i], a[j] = a[j], a[i]      # swap line 1 (runs even if i == j)\n    a[i + 1], a[hi] = a[hi], a[i + 1]    # swap line 2\n    return i + 1\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Skipped the three self-swaps for 4, 9 and 2; the stated convention counts them.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Left out the final pivot swap (swap line 2).",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Counted comparisons (hi - lo = 6) instead of swaps.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. 4, 9, 2 <= 10: i = 0, 1, 2 with i == j each time: 3 self-swaps.\n2. 6 <= 10: i = 3, swap with 11: 1 swap.\n3. Swap line 2 places 10 at index 4: 1 swap.\n4. Total 5; array `[4, 9, 2, 6, 10, 15, 11]`."
+  },
+  {
+   "id": "dsa-sort-quick-03",
+   "skill": "dsa.sort-quick",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Quicksort with the Lomuto `partition` (pivot = last element) sorts `[1, 2, 3, 4, 5, 6, 7, 8, 9]`. How many comparisons `a[j] <= pivot` are made in total?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 36,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 45,
+     "why": "Summed 1 + ... + 9; a partition of k items makes only k - 1 comparisons, so the sum is 8 + 7 + ... + 1.",
+     "trap": "C6"
+    },
+    {
+     "value": 72,
+     "why": "Used n(n - 1) without halving.",
+     "trap": "C3"
+    },
+    {
+     "value": 8,
+     "why": "Counted one comparison per partition call; each call compares every non-pivot item with the pivot.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. The pivot is always the maximum, so each split is (k - 1) : 0.\n2. Partition sizes 9, 8, ..., 2 cost 8, 7, ..., 1 comparisons.\n3. Total 36."
+  },
+  {
+   "id": "dsa-sort-quick-04",
+   "skill": "dsa.sort-quick",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "In the same run (Lomuto quicksort on `[1, 2, ..., 9]`), how many swaps are executed in total if **every** execution of swap line 1 and swap line 2 counts, self-swaps included?\n\n```python\ndef partition(a, lo, hi):\n    pivot = a[hi]\n    i = lo - 1\n    for j in range(lo, hi):\n        if a[j] <= pivot:\n            i += 1\n            a[i], a[j] = a[j], a[i]      # swap line 1 (runs even if i == j)\n    a[i + 1], a[hi] = a[hi], a[i + 1]    # swap line 2\n    return i + 1\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 44,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Counted only swaps that move items; on sorted input every swap is a self-swap, but the convention counts them.",
+     "trap": "C6"
+    },
+    {
+     "value": 36,
+     "why": "Counted swap line 1 only; each of the 8 partition calls also runs swap line 2.",
+     "trap": "C6"
+    },
+    {
+     "value": 8,
+     "why": "Counted only the pivot swaps.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. A call on k sorted items: all k - 1 items are <= pivot, so swap line 1 runs k - 1 times (i == j each time), plus 1 pivot swap: k swaps.\n2. Calls on sizes 9, 8, ..., 2: 9 + 8 + ... + 2 = 44."
+  },
+  {
+   "id": "dsa-sort-quick-05",
+   "skill": "dsa.sort-quick",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Quicksort uses the Lomuto `partition` above (pivot = last element, test `a[j] <= pivot`). For which inputs of n keys is its running time Θ(n²)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Keys already in ascending order",
+     "correct": true,
+     "why": "The pivot is the maximum each time: splits n - 1 : 0, total Θ(n²)."
+    },
+    {
+     "text": "Keys in descending order",
+     "correct": true,
+     "why": "The pivot is the minimum in the first call, so the split is 0 : n - 1; the descending structure keeps the splits lopsided."
+    },
+    {
+     "text": "All n keys equal",
+     "correct": true,
+     "why": "With `<=` every key goes left, so the pivot lands at hi and the split is n - 1 : 0 every time."
+    },
+    {
+     "text": "A uniformly random permutation (expected time)",
+     "correct": false,
+     "why": "Random input gives expected Θ(n log n); the bad cases need an adversarial or highly ordered input.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Θ(n²) arises when the pivot is always near an end.\n2. Sorted, reversed and all-equal arrays all do this with a last-element pivot and `<=`.\n3. Expected time on random input is Θ(n log n)."
+  },
+  {
+   "id": "dsa-sort-quick-06",
+   "skill": "dsa.sort-quick",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "The keys 1 to 8 are stored in some order and **one** partition step of quicksort is applied (any pivot, any partition scheme that puts the pivot in its final place with smaller keys left and larger keys right). Which arrays could be the result?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`[3, 1, 2, 4, 8, 6, 5, 7]`",
+     "correct": true,
+     "why": "4 sits at index 3 with {1, 2, 3} to its left and {5, ..., 8} to its right."
+    },
+    {
+     "text": "`[1, 5, 3, 2, 4, 8, 6, 7]`",
+     "correct": true,
+     "why": "1 at index 0 works as the pivot: nothing smaller, everything to its right is larger."
+    },
+    {
+     "text": "`[2, 4, 1, 3, 7, 5, 8, 6]`",
+     "correct": false,
+     "why": "No key has only smaller keys before it and only larger after it; the halves look split but 4 sits left of 3 and 7 left of 5.",
+     "trap": "C10"
+    },
+    {
+     "text": "`[4, 2, 1, 5, 3, 7, 8, 6]`",
+     "correct": false,
+     "why": "5 has 3 on its right and 7 has 6 on its right; no key is in its sorted position with the split property.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. After a partition, the pivot is in its sorted position k, all keys before it are smaller and all after are larger.\n2. Check each key for that property: array 1 has 4, array 2 has 1, arrays 3 and 4 have none."
+  },
+  {
+   "id": "dsa-sort-quick-07",
+   "skill": "dsa.sort-quick",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Suppose every partition of quicksort splits the remaining items in the ratio 1 : 9. What is the running time?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\Theta(n)$",
+     "correct": false,
+     "why": "Treated it like $T(n) = T(9n/10) + cn$ with one subproblem; quicksort recurses on both parts.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\Theta(n \\log^2 n)$",
+     "correct": false,
+     "why": "Multiplied an extra log for the uneven split; the uneven ratio changes only the log base.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\Theta(n^2)$, since the split is unbalanced",
+     "correct": false,
+     "why": "Any constant-ratio split still gives depth Θ(log n); only n - 1 : 0 type splits give Θ(n²).",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\Theta(n \\log n)$",
+     "correct": true,
+     "why": "Each level of the recursion tree costs at most cn and the depth is $\\log_{10/9} n = \\Theta(\\log n)$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $T(n) = T(n/10) + T(9n/10) + cn$.\n2. Every level of the tree sums to at most cn; the deepest path has $\\log_{10/9} n$ levels.\n3. So Θ(n log n)."
+  },
+  {
+   "id": "dsa-dc-recur-01",
+   "skill": "dsa.dc-recur",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A divide-and-conquer algorithm solves a problem of size n by solving 3 subproblems of size n/2 and combining in Θ(n) time: $T(n) = 3T(n/2) + \\Theta(n)$. What is T(n)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\Theta(n)$",
+     "correct": false,
+     "why": "Took the combine cost as the answer; that holds only when f(n) dominates $n^{\\log_b a}$.",
+     "trap": "C11"
+    },
+    {
+     "text": "$\\Theta(n \\log n)$",
+     "correct": false,
+     "why": "Pattern-matched merge sort; that needs a = 2 subproblems, not 3.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\Theta(n^{\\log_2 3})$",
+     "correct": true,
+     "why": "$n^{\\log_2 3} \\approx n^{1.585}$ grows faster than f(n) = n, so the leaves dominate (case 1)."
+    },
+    {
+     "text": "$\\Theta(n^{1.5})$",
+     "correct": false,
+     "why": "Used the exponent a/b = 3/2 instead of $\\log_b a = \\log_2 3$.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. a = 3, b = 2, so $n^{\\log_2 3} \\approx n^{1.585}$.\n2. f(n) = n is polynomially smaller -> case 1.\n3. T(n) = Θ(n^{log_2 3})."
+  },
+  {
+   "id": "dsa-dc-recur-02",
+   "skill": "dsa.dc-recur",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Solve $T(n) = 4T(n/2) + n^2$.",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\Theta(n^2)$",
+     "correct": false,
+     "why": "Missed that f(n) equals $n^{\\log_2 4} = n^2$; the tie adds a log factor.",
+     "trap": "C5"
+    },
+    {
+     "text": "$\\Theta(n^2 \\log n)$",
+     "correct": true,
+     "why": "Case 2: each of the log2 n levels costs n²."
+    },
+    {
+     "text": "$\\Theta(n^3)$",
+     "correct": false,
+     "why": "Treated 4 subproblems as adding one to the exponent; the exponent is log2 4 = 2.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\Theta(n^2 \\log^2 n)$",
+     "correct": false,
+     "why": "Added a log twice; with f(n) = Θ(n^{log_b a}) exactly, only one log appears.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $n^{\\log_2 4} = n^2 = f(n)$.\n2. Every level of the recursion tree costs $4^i (n/2^i)^2 = n^2$.\n3. log2 n levels -> Θ(n² log n)."
+  },
+  {
+   "id": "dsa-dc-recur-03",
+   "skill": "dsa.dc-recur",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "How many times is `f` called in total (including the first call) when `f(32)` is evaluated?\n\n```python\ndef f(n):\n    if n <= 1:\n        return 1\n    return f(n // 2) + f(n // 2) + n\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 63,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 32,
+     "why": "Counted only the leaf calls f(1); the internal calls also count.",
+     "trap": "C6"
+    },
+    {
+     "value": 31,
+     "why": "Counted only the internal calls (those that recurse).",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Counted the recursion depth log2 32 + 1; each call makes two calls, not one.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. C(n) = 1 + 2C(n/2), C(1) = 1.\n2. Levels hold 1, 2, 4, 8, 16, 32 calls.\n3. Total 2·32 - 1 = 63."
+  },
+  {
+   "id": "dsa-dc-recur-04",
+   "skill": "dsa.dc-recur",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "What value does `f(32)` return?\n\n```python\ndef f(n):\n    if n <= 1:\n        return 1\n    return f(n // 2) + f(n // 2) + n\n```",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 192,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 160,
+     "why": "Used n log2 n = 160 and dropped the 32 leaves that each return 1.",
+     "trap": "C6"
+    },
+    {
+     "value": 63,
+     "why": "Gave the number of calls, not the returned value (or solved it as if f made one recursive call).",
+     "trap": "C2"
+    },
+    {
+     "value": 32,
+     "why": "Returned only the top-level n, forgetting that both recursive results are added too.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. f(n) = 2f(n/2) + n, f(1) = 1.\n2. Levels 0..4 each add 32 (5 levels: 160); the 32 leaves add 32.\n3. f(32) = 160 + 32 = 192."
+  },
+  {
+   "id": "dsa-dc-recur-05",
+   "skill": "dsa.dc-recur",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Which recurrences have solution $T(n) = \\Theta(n \\log n)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$T(n) = 2T(n/2) + n$",
+     "correct": true,
+     "why": "Case 2 of the master theorem: n per level, log n levels."
+    },
+    {
+     "text": "$T(n) = T(n/3) + T(2n/3) + n$",
+     "correct": true,
+     "why": "Each level of the tree costs at most n and the depth is $\\log_{3/2} n$, so Θ(n log n)."
+    },
+    {
+     "text": "$T(n) = 2T(n/2) + n \\log n$",
+     "correct": false,
+     "why": "Here every level costs about n log n, giving Θ(n log² n).",
+     "trap": "C3"
+    },
+    {
+     "text": "$T(n) = T(n - 1) + n$",
+     "correct": false,
+     "why": "Subtracting 1 (quicksort worst case) gives n + (n-1) + ... = Θ(n²).",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Balanced or constant-ratio splits with linear combine -> Θ(n log n).\n2. f(n) = n log n with a = 2, b = 2 -> Θ(n log² n).\n3. T(n-1) + n -> Θ(n²)."
+  },
+  {
+   "id": "dsa-dc-recur-06",
+   "skill": "dsa.dc-recur",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "To multiply two n × n matrices, an algorithm splits each into four n/2 × n/2 blocks, makes **7** recursive block multiplications and does Θ(n²) extra additions. What is its running time?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\Theta(n^2 \\log n)$",
+     "correct": false,
+     "why": "Assumed the Θ(n²) combine matches $n^{\\log_b a}$; $\\log_2 7 \\approx 2.81 > 2$, so the leaves dominate.",
+     "trap": "C5"
+    },
+    {
+     "text": "$\\Theta(n^{\\log_2 7})$",
+     "correct": true,
+     "why": "T(n) = 7T(n/2) + Θ(n²) and n² is polynomially smaller than $n^{2.81}$."
+    },
+    {
+     "text": "$\\Theta(n^{7/2})$",
+     "correct": false,
+     "why": "Used a/b = 7/2 as the exponent instead of $\\log_2 7$.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\Theta(n^3)$",
+     "correct": false,
+     "why": "Used 8 block products, the plain block method; this algorithm needs only 7.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. T(n) = 7T(n/2) + Θ(n²).\n2. $n^{\\log_2 7} \\approx n^{2.81}$ beats n² -> case 1.\n3. T(n) = Θ(n^{log_2 7})."
+  },
+  {
+   "id": "dsa-dc-recur-07",
+   "skill": "dsa.dc-recur",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Solve $T(n) = T(\\sqrt{n}) + 1$ with $T(2) = 1$.",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\Theta(\\log \\log n)$",
+     "correct": true,
+     "why": "Put n = 2^m: S(m) = S(m/2) + 1, so S(m) = Θ(log m) = Θ(log log n)."
+    },
+    {
+     "text": "$\\Theta(\\sqrt{n})$",
+     "correct": false,
+     "why": "Confused the size of the subproblem with the cost of the recursion.",
+     "trap": "C10"
+    },
+    {
+     "text": "$\\Theta(1)$",
+     "correct": false,
+     "why": "Assumed a constant number of square roots reaches 2; it takes log2 log2 n of them.",
+     "trap": "C8"
+    },
+    {
+     "text": "$\\Theta(\\log n)$",
+     "correct": false,
+     "why": "Treated √n like n/2; the square root shrinks n much faster.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Let n = 2^m, S(m) = T(2^m).\n2. S(m) = S(m/2) + 1 -> S(m) = Θ(log m).\n3. T(n) = Θ(log log n); e.g. n = 2^64 needs 6 square roots."
+  },
+  {
+   "id": "dsa-graph-traverse-01",
+   "skill": "dsa.graph-traverse",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Breadth-first search starts at A on the undirected graph shown. Neighbours are always taken in alphabetical order and a vertex is marked visited when it is enqueued. What is the order in which vertices are visited?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 295 165\" width=\"295\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><line x1=\"37\" y1=\"72\" x2=\"93\" y2=\"33\"/><line x1=\"37\" y1=\"88\" x2=\"93\" y2=\"127\"/><line x1=\"39\" y1=\"80\" x2=\"91\" y2=\"80\"/><line x1=\"119\" y1=\"25\" x2=\"171\" y2=\"25\"/><line x1=\"117\" y1=\"33\" x2=\"173\" y2=\"72\"/><line x1=\"119\" y1=\"135\" x2=\"171\" y2=\"135\"/><line x1=\"197\" y1=\"33\" x2=\"253\" y2=\"72\"/><line x1=\"119\" y1=\"80\" x2=\"171\" y2=\"80\"/><line x1=\"199\" y1=\"80\" x2=\"251\" y2=\"80\"/><line x1=\"197\" y1=\"127\" x2=\"253\" y2=\"88\"/><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">A</text><circle cx=\"105\" cy=\"25\" r=\"13\"/><text x=\"105\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">B</text><circle cx=\"105\" cy=\"80\" r=\"13\"/><text x=\"105\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">E</text><circle cx=\"105\" cy=\"135\" r=\"13\"/><text x=\"105\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">C</text><circle cx=\"185\" cy=\"25\" r=\"13\"/><text x=\"185\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">D</text><circle cx=\"185\" cy=\"80\" r=\"13\"/><text x=\"185\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">F</text><circle cx=\"185\" cy=\"135\" r=\"13\"/><text x=\"185\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">G</text><circle cx=\"265\" cy=\"80\" r=\"13\"/><text x=\"265\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">H</text></svg>",
+   "options": [
+    {
+     "text": "A B D H F E G C",
+     "correct": false,
+     "why": "This is the depth-first order; BFS finishes a whole level before going deeper.",
+     "trap": "C2"
+    },
+    {
+     "text": "A E C B F G D H",
+     "correct": false,
+     "why": "Took neighbours in reverse alphabetical order.",
+     "trap": "C11"
+    },
+    {
+     "text": "A B C E D F H G",
+     "correct": false,
+     "why": "Placed H right after F; G was enqueued (by C) before H (by D), and a FIFO queue keeps that order.",
+     "trap": "C2"
+    },
+    {
+     "text": "A B C E D F G H",
+     "correct": true,
+     "why": "Level 1 (B, C, E), then B adds D, F, C adds G, and finally D adds H."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Dequeue A: enqueue B, C, E.\n2. B: enqueue D, F. C: enqueue G. E: F already marked.\n3. D: enqueue H. Order A B C E D F G H."
+  },
+  {
+   "id": "dsa-graph-traverse-02",
+   "skill": "dsa.graph-traverse",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Recursive depth-first search starts at A on the undirected graph shown, taking neighbours in alphabetical order. In what order are vertices first visited?\n\n```python\ndef dfs(u):\n    visited.add(u); out.append(u)\n    for v in sorted(adj[u]):\n        if v not in visited:\n            dfs(v)\n```",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 295 165\" width=\"295\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><line x1=\"37\" y1=\"72\" x2=\"93\" y2=\"33\"/><line x1=\"37\" y1=\"88\" x2=\"93\" y2=\"127\"/><line x1=\"39\" y1=\"80\" x2=\"91\" y2=\"80\"/><line x1=\"119\" y1=\"25\" x2=\"171\" y2=\"25\"/><line x1=\"117\" y1=\"33\" x2=\"173\" y2=\"72\"/><line x1=\"119\" y1=\"135\" x2=\"171\" y2=\"135\"/><line x1=\"197\" y1=\"33\" x2=\"253\" y2=\"72\"/><line x1=\"119\" y1=\"80\" x2=\"171\" y2=\"80\"/><line x1=\"199\" y1=\"80\" x2=\"251\" y2=\"80\"/><line x1=\"197\" y1=\"127\" x2=\"253\" y2=\"88\"/><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">A</text><circle cx=\"105\" cy=\"25\" r=\"13\"/><text x=\"105\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">B</text><circle cx=\"105\" cy=\"80\" r=\"13\"/><text x=\"105\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">E</text><circle cx=\"105\" cy=\"135\" r=\"13\"/><text x=\"105\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">C</text><circle cx=\"185\" cy=\"25\" r=\"13\"/><text x=\"185\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">D</text><circle cx=\"185\" cy=\"80\" r=\"13\"/><text x=\"185\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">F</text><circle cx=\"185\" cy=\"135\" r=\"13\"/><text x=\"185\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">G</text><circle cx=\"265\" cy=\"80\" r=\"13\"/><text x=\"265\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">H</text></svg>",
+   "options": [
+    {
+     "text": "A B C E D F G H",
+     "correct": false,
+     "why": "This is the BFS order; DFS dives to the first unvisited neighbour immediately.",
+     "trap": "C2"
+    },
+    {
+     "text": "A E F H G C D B",
+     "correct": false,
+     "why": "This is a stack DFS that pushes all neighbours in alphabetical order, so it pops the last one (E) first.",
+     "trap": "C9"
+    },
+    {
+     "text": "A B D H F E G C",
+     "correct": true,
+     "why": "A -> B -> D -> H -> F -> E; back at H go to G -> C."
+    },
+    {
+     "text": "A B D H F G C E",
+     "correct": false,
+     "why": "Returned from F to H too early; F still had the unvisited neighbour E.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A -> B (first) -> D -> H (B is visited).\n2. H's first unvisited neighbour is F; F -> E (B is visited). E has nothing new.\n3. Back to H -> G -> C. Order A B D H F E G C."
+  },
+  {
+   "id": "dsa-graph-traverse-03",
+   "skill": "dsa.graph-traverse",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "For the graph shown, which sequences are possible depth-first visit orders starting at A, for **some** order of the adjacency lists?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 295 165\" width=\"295\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><line x1=\"37\" y1=\"72\" x2=\"93\" y2=\"33\"/><line x1=\"37\" y1=\"88\" x2=\"93\" y2=\"127\"/><line x1=\"39\" y1=\"80\" x2=\"91\" y2=\"80\"/><line x1=\"119\" y1=\"25\" x2=\"171\" y2=\"25\"/><line x1=\"117\" y1=\"33\" x2=\"173\" y2=\"72\"/><line x1=\"119\" y1=\"135\" x2=\"171\" y2=\"135\"/><line x1=\"197\" y1=\"33\" x2=\"253\" y2=\"72\"/><line x1=\"119\" y1=\"80\" x2=\"171\" y2=\"80\"/><line x1=\"199\" y1=\"80\" x2=\"251\" y2=\"80\"/><line x1=\"197\" y1=\"127\" x2=\"253\" y2=\"88\"/><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">A</text><circle cx=\"105\" cy=\"25\" r=\"13\"/><text x=\"105\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">B</text><circle cx=\"105\" cy=\"80\" r=\"13\"/><text x=\"105\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">E</text><circle cx=\"105\" cy=\"135\" r=\"13\"/><text x=\"105\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">C</text><circle cx=\"185\" cy=\"25\" r=\"13\"/><text x=\"185\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">D</text><circle cx=\"185\" cy=\"80\" r=\"13\"/><text x=\"185\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">F</text><circle cx=\"185\" cy=\"135\" r=\"13\"/><text x=\"185\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">G</text><circle cx=\"265\" cy=\"80\" r=\"13\"/><text x=\"265\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">H</text></svg>",
+   "options": [
+    {
+     "text": "A C G H F E B D",
+     "correct": true,
+     "why": "A -> C -> G -> H -> F -> E; E is a dead end, back to F -> B -> D."
+    },
+    {
+     "text": "A E F B D H G C",
+     "correct": true,
+     "why": "A -> E -> F -> B -> D -> H -> G -> C, every step goes to a neighbour of the current vertex."
+    },
+    {
+     "text": "A B D H G C E F",
+     "correct": false,
+     "why": "After C the search backtracks to G and then H, and H still has the unvisited neighbour F; E cannot come before F.",
+     "trap": "C6"
+    },
+    {
+     "text": "A B C E D F G H",
+     "correct": false,
+     "why": "This is a BFS order; after A, B the DFS must go to a neighbour of B (D or F), not to C.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Check each step: the next vertex must be adjacent to the deepest vertex on the current path that still has unvisited neighbours.\n2. Orders 1 and 2 pass. Order 3 fails at E (H still has F). Order 4 fails at C (B still has D, F)."
+  },
+  {
+   "id": "dsa-graph-traverse-04",
+   "skill": "dsa.graph-traverse",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "For the graph shown, which sequences are possible breadth-first visit orders starting at A, for **some** order of the adjacency lists?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 295 165\" width=\"295\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><line x1=\"37\" y1=\"72\" x2=\"93\" y2=\"33\"/><line x1=\"37\" y1=\"88\" x2=\"93\" y2=\"127\"/><line x1=\"39\" y1=\"80\" x2=\"91\" y2=\"80\"/><line x1=\"119\" y1=\"25\" x2=\"171\" y2=\"25\"/><line x1=\"117\" y1=\"33\" x2=\"173\" y2=\"72\"/><line x1=\"119\" y1=\"135\" x2=\"171\" y2=\"135\"/><line x1=\"197\" y1=\"33\" x2=\"253\" y2=\"72\"/><line x1=\"119\" y1=\"80\" x2=\"171\" y2=\"80\"/><line x1=\"199\" y1=\"80\" x2=\"251\" y2=\"80\"/><line x1=\"197\" y1=\"127\" x2=\"253\" y2=\"88\"/><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">A</text><circle cx=\"105\" cy=\"25\" r=\"13\"/><text x=\"105\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">B</text><circle cx=\"105\" cy=\"80\" r=\"13\"/><text x=\"105\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">E</text><circle cx=\"105\" cy=\"135\" r=\"13\"/><text x=\"105\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">C</text><circle cx=\"185\" cy=\"25\" r=\"13\"/><text x=\"185\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">D</text><circle cx=\"185\" cy=\"80\" r=\"13\"/><text x=\"185\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">F</text><circle cx=\"185\" cy=\"135\" r=\"13\"/><text x=\"185\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">G</text><circle cx=\"265\" cy=\"80\" r=\"13\"/><text x=\"265\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">H</text></svg>",
+   "options": [
+    {
+     "text": "A E C B F G D H",
+     "correct": true,
+     "why": "Level 1 as E, C, B; E adds F, C adds G, B adds D; then F adds H."
+    },
+    {
+     "text": "A B C E F D G H",
+     "correct": true,
+     "why": "Level 1 as B, C, E; B adds F and D (any order within B's block), C adds G; then F adds H."
+    },
+    {
+     "text": "A B C E D F H G",
+     "correct": false,
+     "why": "H comes before G, but G was enqueued by C, which is dequeued before D or F could enqueue H.",
+     "trap": "C2"
+    },
+    {
+     "text": "A B E C G D F H",
+     "correct": false,
+     "why": "B is dequeued first, so its new neighbours D and F must be enqueued before C's neighbour G.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. In BFS the new neighbours of each dequeued vertex form one block, and blocks appear in the order their parents were dequeued.\n2. Orders 1 and 2 satisfy this. Order 3 puts H (level 3) before G (level 2). Order 4 puts C's child G before B's children."
+  },
+  {
+   "id": "dsa-graph-traverse-05",
+   "skill": "dsa.graph-traverse",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A directed graph is stored as adjacency lists, and DFS scans each list **in the stored order**:\n\n```python\nadj = {0: [2, 1], 1: [3], 2: [4, 1], 3: [0, 5],\n       4: [3], 5: [], 6: [5, 4]}\n```\n\nThe driver calls the recursive DFS on vertex 0, then on every still-unvisited vertex in increasing order. What is the order of first visits?",
+   "figure": null,
+   "options": [
+    {
+     "text": "0 1 3 5 2 4 6",
+     "correct": false,
+     "why": "Sorted each adjacency list first; the lists must be scanned in stored order (2 before 1).",
+     "trap": "C9"
+    },
+    {
+     "text": "0 2 1 4 3 5 6",
+     "correct": false,
+     "why": "This is BFS from 0 (then 6); DFS follows 2 -> 4 before visiting 1.",
+     "trap": "C2"
+    },
+    {
+     "text": "0 2 4 3 5 1",
+     "correct": false,
+     "why": "Stopped after the first tree; vertex 6 is unreachable from 0 and is visited by the restart.",
+     "trap": "C6"
+    },
+    {
+     "text": "0 2 4 3 5 1 6",
+     "correct": true,
+     "why": "0 -> 2 -> 4 -> 3 (0 seen) -> 5; back to 2 -> 1 (3 seen); restart at 6."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 0 -> 2 (first in list) -> 4 -> 3; 3's list: 0 visited, 5 new -> 5.\n2. Back to 2: next is 1; 1's only neighbour 3 is visited.\n3. Back to 0: 1 visited. Restart at 6, its neighbours are visited. Order 0 2 4 3 5 1 6."
+  },
+  {
+   "id": "dsa-graph-traverse-06",
+   "skill": "dsa.graph-traverse",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "BFS from A runs on the graph shown with alphabetical adjacency lists. A vertex is removed from the queue before its neighbours are added. What is the largest number of vertices that are in the queue at the same time?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 295 165\" width=\"295\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><line x1=\"37\" y1=\"72\" x2=\"93\" y2=\"33\"/><line x1=\"37\" y1=\"88\" x2=\"93\" y2=\"127\"/><line x1=\"39\" y1=\"80\" x2=\"91\" y2=\"80\"/><line x1=\"119\" y1=\"25\" x2=\"171\" y2=\"25\"/><line x1=\"117\" y1=\"33\" x2=\"173\" y2=\"72\"/><line x1=\"119\" y1=\"135\" x2=\"171\" y2=\"135\"/><line x1=\"197\" y1=\"33\" x2=\"253\" y2=\"72\"/><line x1=\"119\" y1=\"80\" x2=\"171\" y2=\"80\"/><line x1=\"199\" y1=\"80\" x2=\"251\" y2=\"80\"/><line x1=\"197\" y1=\"127\" x2=\"253\" y2=\"88\"/><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">A</text><circle cx=\"105\" cy=\"25\" r=\"13\"/><text x=\"105\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">B</text><circle cx=\"105\" cy=\"80\" r=\"13\"/><text x=\"105\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">E</text><circle cx=\"105\" cy=\"135\" r=\"13\"/><text x=\"105\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">C</text><circle cx=\"185\" cy=\"25\" r=\"13\"/><text x=\"185\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">D</text><circle cx=\"185\" cy=\"80\" r=\"13\"/><text x=\"185\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">F</text><circle cx=\"185\" cy=\"135\" r=\"13\"/><text x=\"185\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">G</text><circle cx=\"265\" cy=\"80\" r=\"13\"/><text x=\"265\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">H</text></svg>",
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Took the largest degree (A, B, F, H have 3); the queue also holds vertices left over from the previous level.",
+     "trap": "C3"
+    },
+    {
+     "value": 5,
+     "why": "Kept the vertex being processed in the queue while adding its neighbours; it is removed first.",
+     "trap": "C6"
+    },
+    {
+     "value": 8,
+     "why": "Assumed every vertex is in the queue at once; vertices leave as they are processed.",
+     "trap": "C8"
+    }
+   ],
+   "solution": "1. [A] -> remove A, add B, C, E: [B, C, E].\n2. Remove B, add D, F: [C, E, D, F] (4).\n3. Remove C, add G: [E, D, F, G] (4). Then the queue only shrinks except D adding H: [F, G, H].\n4. Maximum 4."
+  },
+  {
+   "id": "dsa-graph-bfs-dist-01",
+   "skill": "dsa.graph-bfs-dist",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "An undirected graph on vertices 1 to 9 has edges 1-2, 1-3, 2-4, 3-4, 3-5, 4-6, 5-7, 6-8, 7-8, 8-9. BFS starts at vertex 1. What is the BFS level (distance in edges) of vertex 9?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Read the depth of 9 in the DFS tree (1-2-4-3-5-7-8-9); DFS paths are not shortest paths.",
+     "trap": "C2"
+    },
+    {
+     "value": 6,
+     "why": "Counted vertices on the path 1-2-4-6-8-9 instead of edges.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Gave the level of 8, the parent of 9.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Level 1: 2, 3. Level 2: 4, 5. Level 3: 6, 7. Level 4: 8. Level 5: 9.\n2. A shortest path is 1-2-4-6-8-9 with 5 edges."
+  },
+  {
+   "id": "dsa-graph-bfs-dist-02",
+   "skill": "dsa.graph-bfs-dist",
+   "type": "NAT",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "An undirected graph has vertices 1 to 12 and edges 1-2, 2-3, 4-5, 6-7, 7-8, 8-6, 9-10. How many connected components does it have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Counted only the components that contain edges; isolated vertices 11 and 12 are components too.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Used n - m = 12 - 7; that formula holds only for a forest, and 6-7-8 is a cycle.",
+     "trap": "C3"
+    },
+    {
+     "value": 7,
+     "why": "Counted the number of edges.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Components: {1,2,3}, {4,5}, {6,7,8}, {9,10}, {11}, {12}.\n2. Total 6. (A forest would give n - m; the triangle adds one extra edge.)"
+  },
+  {
+   "id": "dsa-graph-bfs-dist-03",
+   "skill": "dsa.graph-bfs-dist",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "BFS is run from s on a connected, undirected, unweighted graph, giving levels d(v). Which statement is always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Every edge not in the BFS tree joins two vertices of the same level.",
+     "correct": false,
+     "why": "A non-tree edge can also join adjacent levels, e.g. a vertex with two parents one level up.",
+     "trap": "C1"
+    },
+    {
+     "text": "The depth of v in a DFS tree from s also equals d(v).",
+     "correct": false,
+     "why": "DFS can reach v by a long detour; only BFS depths are shortest distances.",
+     "trap": "C2"
+    },
+    {
+     "text": "BFS levels give shortest paths even when edges have different positive weights.",
+     "correct": false,
+     "why": "BFS counts edges, not weights; weighted graphs need Dijkstra.",
+     "trap": "C9"
+    },
+    {
+     "text": "For every edge (u, v) of the graph, |d(u) - d(v)| <= 1.",
+     "correct": true,
+     "why": "If d(v) were >= d(u) + 2, BFS would have reached v from u one level earlier."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. When u is dequeued, every unvisited neighbour gets level d(u) + 1.\n2. So a neighbour of u has level at most d(u) + 1, and by symmetry |d(u) - d(v)| <= 1."
+  },
+  {
+   "id": "dsa-graph-bfs-dist-04",
+   "skill": "dsa.graph-bfs-dist",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "An undirected simple graph has n vertices, m edges and k connected components. Which statements are always true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "m >= n - k",
+     "correct": true,
+     "why": "Each component with c vertices needs at least c - 1 edges to be connected; summing gives n - k."
+    },
+    {
+     "text": "If m = n - k, the graph has no cycle.",
+     "correct": true,
+     "why": "Every component has exactly c - 1 edges, so every component is a tree."
+    },
+    {
+     "text": "k = n - m",
+     "correct": false,
+     "why": "This holds only for forests; a cycle adds an edge without merging components.",
+     "trap": "C3"
+    },
+    {
+     "text": "Adding any new edge reduces k by exactly 1.",
+     "correct": false,
+     "why": "An edge inside an existing component leaves k unchanged.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Spanning trees of the components use n - k edges, so m >= n - k.\n2. Equality means no extra edge: a forest.\n3. Extra edges create cycles without changing k."
+  },
+  {
+   "id": "dsa-graph-bfs-dist-05",
+   "skill": "dsa.graph-bfs-dist",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "In the undirected graph shown, how many **different shortest paths** are there from A to H?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 295 165\" width=\"295\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><line x1=\"37\" y1=\"72\" x2=\"93\" y2=\"33\"/><line x1=\"37\" y1=\"88\" x2=\"93\" y2=\"127\"/><line x1=\"39\" y1=\"80\" x2=\"91\" y2=\"80\"/><line x1=\"119\" y1=\"25\" x2=\"171\" y2=\"25\"/><line x1=\"117\" y1=\"33\" x2=\"173\" y2=\"72\"/><line x1=\"119\" y1=\"135\" x2=\"171\" y2=\"135\"/><line x1=\"197\" y1=\"33\" x2=\"253\" y2=\"72\"/><line x1=\"119\" y1=\"80\" x2=\"171\" y2=\"80\"/><line x1=\"199\" y1=\"80\" x2=\"251\" y2=\"80\"/><line x1=\"197\" y1=\"127\" x2=\"253\" y2=\"88\"/><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">A</text><circle cx=\"105\" cy=\"25\" r=\"13\"/><text x=\"105\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">B</text><circle cx=\"105\" cy=\"80\" r=\"13\"/><text x=\"105\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">E</text><circle cx=\"105\" cy=\"135\" r=\"13\"/><text x=\"105\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">C</text><circle cx=\"185\" cy=\"25\" r=\"13\"/><text x=\"185\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">D</text><circle cx=\"185\" cy=\"80\" r=\"13\"/><text x=\"185\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">F</text><circle cx=\"185\" cy=\"135\" r=\"13\"/><text x=\"185\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">G</text><circle cx=\"265\" cy=\"80\" r=\"13\"/><text x=\"265\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">H</text></svg>",
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Counted one path through each of H's neighbours D, F, G; F is reached by two shortest paths (via B and via E).",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Gave only the BFS-tree path; BFS keeps one parent but several shortest paths can exist.",
+     "trap": "C9"
+    },
+    {
+     "value": 5,
+     "why": "Also counted a longer path such as A-E-F-B-D-H; only paths with exactly d(H) = 3 edges count.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. Levels: A 0; B, C, E 1; D, F, G 2; H 3.\n2. Path counts: D 1 (via B), F 2 (via B, E), G 1 (via C).\n3. H = 1 + 2 + 1 = 4: A-B-D-H, A-B-F-H, A-E-F-H, A-C-G-H."
+  },
+  {
+   "id": "dsa-graph-bfs-dist-06",
+   "skill": "dsa.graph-bfs-dist",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A **directed** graph has edges s→a, s→b, a→c, b→d, c→e, d→c, f→s, g→b, e→a, d→h. BFS runs from s along edge directions. How many vertices are at distance exactly 2 from s?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Ignored edge directions; f→s and g→b cannot be used from s, and e is reached only via c.",
+     "trap": "C11"
+    },
+    {
+     "value": 5,
+     "why": "Counted all vertices within distance 2, including s, a and b.",
+     "trap": "C5"
+    },
+    {
+     "value": 3,
+     "why": "Put e at distance 2 using the edge e→a backwards; e is reached by s→a→c→e at distance 3.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. Level 1: a, b.\n2. Level 2: c (from a), d (from b).\n3. Level 3: e (from c), h (from d). f and g are unreachable.\n4. Answer 2."
+  },
+  {
+   "id": "dsa-graph-dfs-topo-01",
+   "skill": "dsa.graph-dfs-topo",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A directed graph has edges a→b, a→c, b→d, d→a, a→d, c→d, c→e, e→c, f→e, f→g, g→f, e→b. DFS starts at a, scans out-neighbours in alphabetical order, and restarts from the alphabetically smallest unvisited vertex when a tree is finished. How many **cross edges** does this DFS produce?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Missed f→e, the edge from the second DFS tree into the first; edges between trees are cross edges.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Also called a→d a cross edge; d is a finished descendant of a (via b), so a→d is a forward edge.",
+     "trap": "C2"
+    },
+    {
+     "value": 6,
+     "why": "Lumped the back edges d→a, e→c, g→f in with the cross edges; they point to open ancestors.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Tree a(1): b(2) -> d(3), d→a back; d, b finish. a→c tree; c→d cross (d finished, d[d] < d[c]); c→e tree; e→b cross, e→c back. a→d forward.\n2. Second tree f: f→e cross, f→g tree, g→f back.\n3. Cross edges: c→d, e→b, f→e = 3."
+  },
+  {
+   "id": "dsa-graph-dfs-topo-02",
+   "skill": "dsa.graph-dfs-topo",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A directed graph has edges a→b, a→c, b→d, d→a, a→d, c→d, c→e, e→c, f→e, f→g, g→f, e→b. DFS starts at a, scans out-neighbours in alphabetical order, and restarts from the alphabetically smallest unvisited vertex when a tree is finished. What type is the edge a→d?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Tree edge",
+     "correct": false,
+     "why": "d is first discovered through b (a→b→d) because b comes before d in a's list.",
+     "trap": "C6"
+    },
+    {
+     "text": "Back edge",
+     "correct": false,
+     "why": "Reversed the direction: d→a is the back edge, a→d goes from ancestor to descendant.",
+     "trap": "C11"
+    },
+    {
+     "text": "Forward edge",
+     "correct": true,
+     "why": "When a scans d, d is already finished and was discovered after a: a descendant, not via a tree edge."
+    },
+    {
+     "text": "Cross edge",
+     "correct": false,
+     "why": "Cross edges go to finished vertices discovered earlier (d[v] < d[u]); here d[d] = 3 > d[a] = 1.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. a (d=1) -> b (2) -> d (3); d finishes at 4.\n2. a later scans d: finished and d[a] < d[d], so a→d is a forward edge."
+  },
+  {
+   "id": "dsa-graph-dfs-topo-03",
+   "skill": "dsa.graph-dfs-topo",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Which statements about depth-first search are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A directed graph has a cycle if and only if some DFS of it produces a back edge.",
+     "correct": true,
+     "why": "A back edge closes a cycle with tree edges; conversely the first vertex of a cycle to be discovered gets a back edge from the cycle."
+    },
+    {
+     "text": "DFS of an undirected graph produces only tree edges and back edges.",
+     "correct": true,
+     "why": "An undirected edge to a finished vertex would have been explored from that vertex first, so forward and cross edges cannot appear."
+    },
+    {
+     "text": "For a cross edge u→v, d[v] > d[u].",
+     "correct": false,
+     "why": "A cross edge goes to a vertex discovered and finished earlier: d[v] < f[v] < d[u].",
+     "trap": "C11"
+    },
+    {
+     "text": "A DFS of a DAG may produce a back edge if the start vertex is chosen badly.",
+     "correct": false,
+     "why": "A back edge always closes a cycle, so no DFS of a DAG has one.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Back edge <=> cycle (directed).\n2. Undirected: only tree and back edges.\n3. Cross edge: v already finished, so d[v] < d[u]."
+  },
+  {
+   "id": "dsa-graph-dfs-topo-04",
+   "skill": "dsa.graph-dfs-topo",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A DAG has edges p→q, p→r, q→s, r→s, s→t, u→r, u→v, v→t. Kahn's algorithm repeatedly removes the **alphabetically smallest** vertex whose current in-degree is 0. What order does it output?",
+   "figure": null,
+   "options": [
+    {
+     "text": "p q u r s v t",
+     "correct": true,
+     "why": "p, then q (s still waits for r), then u frees r and v; r frees s; s before v alphabetically; v frees t."
+    },
+    {
+     "text": "p u q r v s t",
+     "correct": false,
+     "why": "Used a FIFO queue in discovery order instead of always taking the smallest available vertex.",
+     "trap": "C2"
+    },
+    {
+     "text": "p q r s t u v",
+     "correct": false,
+     "why": "Plain alphabetical order breaks the edge u→r: r cannot come before u.",
+     "trap": "C9"
+    },
+    {
+     "text": "u v p r q s t",
+     "correct": false,
+     "why": "This is the DFS reverse-finishing order; it is a valid order but not the one this rule produces.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. In-degree 0: p, u. Take p -> q becomes free.\n2. Available {q, u}: take q. Then u -> r, v free.\n3. Available {r, v}: r -> s free. Available {s, v}: s. Then v -> t. Order p q u r s v t."
+  },
+  {
+   "id": "dsa-graph-dfs-topo-05",
+   "skill": "dsa.graph-dfs-topo",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "How many topological orderings does the DAG with vertices a, b, c, d, e, f and edges a→b, a→c, b→d, c→d, e→f have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 30,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Counted only the orders of a, b, c, d; e and f can be interleaved anywhere.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Kept e f together as one block (2 x 5 slots); e and f need not be adjacent.",
+     "trap": "C6"
+    },
+    {
+     "value": 720,
+     "why": "Counted all 6! permutations, ignoring the edge constraints.",
+     "trap": "C1"
+    }
+   ],
+   "solution": "1. Part {a, b, c, d}: a first, d last, b and c either way: 2 orders.\n2. e before f: choose their 2 positions among 6: C(6, 2) = 15.\n3. Total 2 x 15 = 30."
+  },
+  {
+   "id": "dsa-graph-dfs-topo-06",
+   "skill": "dsa.graph-dfs-topo",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "The DAG has edges p→q, p→r, q→s, r→s, s→t, u→r, u→v, v→t. DFS (alphabetical adjacency, restarts from the smallest unvisited vertex) appends each vertex to a list when it **finishes**, and the topological order is that list reversed. What is the output?",
+   "figure": null,
+   "options": [
+    {
+     "text": "t s q r p v u",
+     "correct": false,
+     "why": "Gave the finishing order without reversing it; it lists every sink first.",
+     "trap": "C11"
+    },
+    {
+     "text": "p q s t r u v",
+     "correct": false,
+     "why": "Gave the discovery (preorder) order; u→r is violated because r appears before u.",
+     "trap": "C2"
+    },
+    {
+     "text": "u v p r q s t",
+     "correct": true,
+     "why": "Finishing order is t, s, q, r, p, v, u; reversed it gives u v p r q s t."
+    },
+    {
+     "text": "p q u r s v t",
+     "correct": false,
+     "why": "This is Kahn's smallest-first order; the DFS method gives a different valid order.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. DFS p: q -> s -> t; t, s, q finish; r (s done) finishes; p finishes.\n2. Restart u: r done, v (t done) finishes; u finishes.\n3. Finish order t s q r p v u; reversed: u v p r q s t."
+  },
+  {
+   "id": "dsa-graph-dijkstra-01",
+   "skill": "dsa.graph-dijkstra",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "The weighted directed graph shown has edges s→a (4), s→b (1), b→a (2), a→c (1), b→c (5), b→d (8), c→d (3), d→t (2), c→t (7). What is the shortest-path distance from s to t?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 310 165\" width=\"310\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><defs><marker id=\"dj\" viewBox=\"0 0 8 8\" refX=\"8\" refY=\"4\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0 0L8 4L0 8z\" fill=\"currentColor\"/></marker></defs><line x1=\"37\" y1=\"72\" x2=\"98\" y2=\"33\" marker-end=\"url(#dj)\"/><text x=\"72\" y=\"64\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">4</text><line x1=\"37\" y1=\"88\" x2=\"98\" y2=\"127\" marker-end=\"url(#dj)\"/><text x=\"63\" y=\"119\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">1</text><line x1=\"110\" y1=\"121\" x2=\"110\" y2=\"39\" marker-end=\"url(#dj)\"/><text x=\"119\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">2</text><line x1=\"124\" y1=\"25\" x2=\"181\" y2=\"25\" marker-end=\"url(#dj)\"/><text x=\"152\" y=\"38\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">1</text><line x1=\"119\" y1=\"124\" x2=\"186\" y2=\"36\" marker-end=\"url(#dj)\"/><text x=\"160\" y=\"90\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">5</text><line x1=\"124\" y1=\"135\" x2=\"181\" y2=\"135\" marker-end=\"url(#dj)\"/><text x=\"152\" y=\"148\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">8</text><line x1=\"195\" y1=\"39\" x2=\"195\" y2=\"121\" marker-end=\"url(#dj)\"/><text x=\"186\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">3</text><line x1=\"207\" y1=\"127\" x2=\"268\" y2=\"88\" marker-end=\"url(#dj)\"/><text x=\"242\" y=\"119\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">2</text><line x1=\"207\" y1=\"33\" x2=\"268\" y2=\"72\" marker-end=\"url(#dj)\"/><text x=\"233\" y=\"64\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">7</text><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">s</text><circle cx=\"110\" cy=\"25\" r=\"13\"/><text x=\"110\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">a</text><circle cx=\"110\" cy=\"135\" r=\"13\"/><text x=\"110\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">b</text><circle cx=\"195\" cy=\"25\" r=\"13\"/><text x=\"195\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">c</text><circle cx=\"195\" cy=\"135\" r=\"13\"/><text x=\"195\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">d</text><circle cx=\"280\" cy=\"80\" r=\"13\"/><text x=\"280\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">t</text></svg>",
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 10,
+     "why": "Took s→a (4) directly; the route s→b→a costs only 3.",
+     "trap": "C6"
+    },
+    {
+     "value": 11,
+     "why": "Took the path with the fewest edges, s→b→d→t, as BFS would; weights decide here.",
+     "trap": "C2"
+    },
+    {
+     "value": 12,
+     "why": "Used s→a→c→t; going c→d→t (5) is cheaper than c→t (7).",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. d[b] = 1, d[a] = min(4, 1 + 2) = 3, d[c] = min(1 + 5, 3 + 1) = 4.\n2. d[d] = min(1 + 8, 4 + 3) = 7.\n3. d[t] = min(4 + 7, 7 + 2) = 9 via s→b→a→c→d→t."
+  },
+  {
+   "id": "dsa-graph-dijkstra-02",
+   "skill": "dsa.graph-dijkstra",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Dijkstra's algorithm runs from s on the graph shown (edges s→a (4), s→b (1), b→a (2), a→c (1), b→c (5), b→d (8), c→d (3), d→t (2), c→t (7)). Each time `d[v]` is set to a strictly smaller value counts as one update; the first change from ∞ also counts. How many times is `d[d]` updated?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 310 165\" width=\"310\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><defs><marker id=\"dj\" viewBox=\"0 0 8 8\" refX=\"8\" refY=\"4\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0 0L8 4L0 8z\" fill=\"currentColor\"/></marker></defs><line x1=\"37\" y1=\"72\" x2=\"98\" y2=\"33\" marker-end=\"url(#dj)\"/><text x=\"72\" y=\"64\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">4</text><line x1=\"37\" y1=\"88\" x2=\"98\" y2=\"127\" marker-end=\"url(#dj)\"/><text x=\"63\" y=\"119\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">1</text><line x1=\"110\" y1=\"121\" x2=\"110\" y2=\"39\" marker-end=\"url(#dj)\"/><text x=\"119\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">2</text><line x1=\"124\" y1=\"25\" x2=\"181\" y2=\"25\" marker-end=\"url(#dj)\"/><text x=\"152\" y=\"38\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">1</text><line x1=\"119\" y1=\"124\" x2=\"186\" y2=\"36\" marker-end=\"url(#dj)\"/><text x=\"160\" y=\"90\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">5</text><line x1=\"124\" y1=\"135\" x2=\"181\" y2=\"135\" marker-end=\"url(#dj)\"/><text x=\"152\" y=\"148\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">8</text><line x1=\"195\" y1=\"39\" x2=\"195\" y2=\"121\" marker-end=\"url(#dj)\"/><text x=\"186\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">3</text><line x1=\"207\" y1=\"127\" x2=\"268\" y2=\"88\" marker-end=\"url(#dj)\"/><text x=\"242\" y=\"119\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">2</text><line x1=\"207\" y1=\"33\" x2=\"268\" y2=\"72\" marker-end=\"url(#dj)\"/><text x=\"233\" y=\"64\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">7</text><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">s</text><circle cx=\"110\" cy=\"25\" r=\"13\"/><text x=\"110\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">a</text><circle cx=\"110\" cy=\"135\" r=\"13\"/><text x=\"110\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">b</text><circle cx=\"195\" cy=\"25\" r=\"13\"/><text x=\"195\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">c</text><circle cx=\"195\" cy=\"135\" r=\"13\"/><text x=\"195\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">d</text><circle cx=\"280\" cy=\"80\" r=\"13\"/><text x=\"280\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">t</text></svg>",
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Counted only the improvement 9 → 7 and not the first assignment ∞ → 9.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Also counted d's extraction as an update; extracting a vertex does not change its value.",
+     "trap": "C6"
+    },
+    {
+     "value": 0,
+     "why": "Assumed d is set only once, when it is extracted; values change during relaxations of b and c.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Extract s: d[a] = 4, d[b] = 1.\n2. Extract b: d[a] = 3, d[c] = 6, **d[d] = 9** (update 1).\n3. Extract a: d[c] = 4.\n4. Extract c: **d[d] = 7** (update 2), d[t] = 11. Extract d: d[t] = 9. Total 2."
+  },
+  {
+   "id": "dsa-graph-dijkstra-03",
+   "skill": "dsa.graph-dijkstra",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Dijkstra's algorithm runs from s on the graph shown (edges s→a (4), s→b (1), b→a (2), a→c (1), b→c (5), b→d (8), c→d (3), d→t (2), c→t (7)). Right after the **third** vertex is extracted and its edges relaxed, what are the tentative values (d[c], d[d], d[t])?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 310 165\" width=\"310\" font-family=\"sans-serif\" font-size=\"13\" fill=\"none\" stroke=\"currentColor\"><defs><marker id=\"dj\" viewBox=\"0 0 8 8\" refX=\"8\" refY=\"4\" markerWidth=\"7\" markerHeight=\"7\" orient=\"auto\"><path d=\"M0 0L8 4L0 8z\" fill=\"currentColor\"/></marker></defs><line x1=\"37\" y1=\"72\" x2=\"98\" y2=\"33\" marker-end=\"url(#dj)\"/><text x=\"72\" y=\"64\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">4</text><line x1=\"37\" y1=\"88\" x2=\"98\" y2=\"127\" marker-end=\"url(#dj)\"/><text x=\"63\" y=\"119\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">1</text><line x1=\"110\" y1=\"121\" x2=\"110\" y2=\"39\" marker-end=\"url(#dj)\"/><text x=\"119\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">2</text><line x1=\"124\" y1=\"25\" x2=\"181\" y2=\"25\" marker-end=\"url(#dj)\"/><text x=\"152\" y=\"38\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">1</text><line x1=\"119\" y1=\"124\" x2=\"186\" y2=\"36\" marker-end=\"url(#dj)\"/><text x=\"160\" y=\"90\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">5</text><line x1=\"124\" y1=\"135\" x2=\"181\" y2=\"135\" marker-end=\"url(#dj)\"/><text x=\"152\" y=\"148\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">8</text><line x1=\"195\" y1=\"39\" x2=\"195\" y2=\"121\" marker-end=\"url(#dj)\"/><text x=\"186\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">3</text><line x1=\"207\" y1=\"127\" x2=\"268\" y2=\"88\" marker-end=\"url(#dj)\"/><text x=\"242\" y=\"119\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">2</text><line x1=\"207\" y1=\"33\" x2=\"268\" y2=\"72\" marker-end=\"url(#dj)\"/><text x=\"233\" y=\"64\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">7</text><circle cx=\"25\" cy=\"80\" r=\"13\"/><text x=\"25\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">s</text><circle cx=\"110\" cy=\"25\" r=\"13\"/><text x=\"110\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">a</text><circle cx=\"110\" cy=\"135\" r=\"13\"/><text x=\"110\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">b</text><circle cx=\"195\" cy=\"25\" r=\"13\"/><text x=\"195\" y=\"29\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">c</text><circle cx=\"195\" cy=\"135\" r=\"13\"/><text x=\"195\" y=\"139\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">d</text><circle cx=\"280\" cy=\"80\" r=\"13\"/><text x=\"280\" y=\"84\" text-anchor=\"middle\" fill=\"currentColor\" stroke=\"none\">t</text></svg>",
+   "options": [
+    {
+     "text": "(6, 9, ∞)",
+     "correct": false,
+     "why": "Did not relax a's out-edge a→c (3 + 1 = 4) after extracting a.",
+     "trap": "C6"
+    },
+    {
+     "text": "(4, 7, 9)",
+     "correct": false,
+     "why": "These are the final distances; c and d have not been extracted yet.",
+     "trap": "C6"
+    },
+    {
+     "text": "(4, 9, 11)",
+     "correct": false,
+     "why": "Relaxed c's edge c→t before c was extracted; only extracted vertices relax their edges.",
+     "trap": "C6"
+    },
+    {
+     "text": "(4, 9, ∞)",
+     "correct": true,
+     "why": "s, b, a are extracted; a lowers c to 4; d still holds 9 from b and t is not yet reached."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Extract s (0): a = 4, b = 1.\n2. Extract b (1): a = 3, c = 6, d = 9.\n3. Extract a (3): a→c lowers c to 4 (a has no edge to d or t).\n4. Snapshot: c = 4, d = 9, t = ∞."
+  },
+  {
+   "id": "dsa-graph-dijkstra-04",
+   "skill": "dsa.graph-dijkstra",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "A directed graph has edges s→a (2), s→b (5), a→c (3), b→a (-4), c→t (1). Dijkstra's algorithm (a vertex, once extracted, is never updated again) runs from s. What distance does it report for t, and what is the true shortest distance?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Reports 6; true distance 6",
+     "correct": false,
+     "why": "Missed the path s→b→a→c→t = 5 - 4 + 3 + 1 = 5; a negative edge can make a longer-hop path cheaper.",
+     "trap": "C9"
+    },
+    {
+     "text": "Neither: a negative cycle makes the distance undefined",
+     "correct": false,
+     "why": "There is a negative edge but no cycle at all; distances are well defined (Bellman-Ford finds them).",
+     "trap": "C2"
+    },
+    {
+     "text": "Reports 6; true distance 5",
+     "correct": true,
+     "why": "a (2) is finalized before b (5); the later relaxation b→a gives 1 but a is closed, so c and t keep 5 and 6. True path s→b→a→c→t = 5."
+    },
+    {
+     "text": "Reports 5; true distance 5",
+     "correct": false,
+     "why": "Assumed relaxing b→a reopens a and propagates; standard Dijkstra never revisits an extracted vertex.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Extract s: a = 2, b = 5. Extract a: c = 5. Extract b: a would become 1, but a is finalized.\n2. Extract c: t = 6. Reported d[t] = 6.\n3. True: s→b→a→c→t = 5 - 4 + 3 + 1 = 5."
+  },
+  {
+   "id": "dsa-graph-dijkstra-05",
+   "skill": "dsa.graph-dijkstra",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE algorithms style)",
+   "stem": "Which statements about single-source shortest paths are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Dijkstra's algorithm is correct whenever all edge weights are non-negative.",
+     "correct": true,
+     "why": "With w >= 0 no path through an unextracted vertex can beat the current minimum, so each extracted value is final."
+    },
+    {
+     "text": "Bellman-Ford handles negative edges as long as no negative cycle is reachable from the source.",
+     "correct": true,
+     "why": "n - 1 rounds of relaxing every edge cover every simple path."
+    },
+    {
+     "text": "Adding the same constant to every edge weight removes negative edges and keeps the shortest paths unchanged.",
+     "correct": false,
+     "why": "A path with k edges gains k·c, so paths with more edges are penalised and the shortest path can change.",
+     "trap": "C9"
+    },
+    {
+     "text": "Dijkstra's algorithm works with negative edges provided the graph has no negative cycle.",
+     "correct": false,
+     "why": "No negative cycle is enough for Bellman-Ford, not for Dijkstra; a single negative edge can already break it.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Dijkstra's greedy step needs w >= 0.\n2. Bellman-Ford needs only the absence of reachable negative cycles.\n3. Reweighting by a constant favours fewer-edge paths; Johnson's method uses vertex potentials instead."
+  }
+ ]
+}

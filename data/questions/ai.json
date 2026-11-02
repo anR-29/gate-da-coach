@@ -35,7 +35,7 @@
     57
    ],
    "theory": "ai-uninformed",
-   "check": "Limits 0,1,â€¦,d; each iteration is a fresh DFS from the root. Generated nodes: dÂ·b + (dâˆ’1)bÂ² + â€¦ + 1Â·b^d = O(b^d); memory O(bd)."
+   "check": "Limits 0,1,…,d; each iteration is a fresh DFS from the root. Generated nodes: d·b + (d−1)b² + … + 1·b^d = O(b^d); memory O(bd)."
   },
   "ai.search-props": {
    "title": "Completeness and optimality of uninformed search",
@@ -44,7 +44,7 @@
     57
    ],
    "theory": "ai-uninformed",
-   "check": "BFS/UCS/IDS complete (finite b); DFS not with infinite paths. Optimal: BFS/IDS for unit costs, UCS for costs â‰¥ Îµ > 0; DFS never guaranteed."
+   "check": "BFS/UCS/IDS complete (finite b); DFS not with infinite paths. Optimal: BFS/IDS for unit costs, UCS for costs ≥ ε > 0; DFS never guaranteed."
   },
   "ai.search-complexity": {
    "title": "Time and space in b, d, m",
@@ -53,7 +53,7 @@
     57
    ],
    "theory": "ai-uninformed",
-   "check": "BFS time and space O(b^d) (O(b^{d+1}) with late goal test); DFS time O(b^m), space O(bm); IDS O(b^d) time, O(bd) space; UCS O(b^{1+âŒŠC*/ÎµâŒ‹})."
+   "check": "BFS time and space O(b^d) (O(b^{d+1}) with late goal test); DFS time O(b^m), space O(bm); IDS O(b^d) time, O(bd) space; UCS O(b^{1+⌊C*/ε⌋})."
   }
  },
  "questions": [
@@ -70,7 +70,7 @@
     {
      "text": "S, A, C, F, G",
      "correct": false,
-     "why": "This is the depth-first order: it follows A â†’ C â†’ F â†’ G instead of finishing each level.",
+     "why": "This is the depth-first order: it follows A → C → F → G instead of finishing each level.",
      "trap": "C2"
     },
     {
@@ -82,7 +82,7 @@
     {
      "text": "S, A, B, C, D, E, F, G",
      "correct": true,
-     "why": "FIFO queue: S â†’ (A, B) â†’ A adds C, D â†’ B adds only E (D is already queued) â†’ C adds F â†’ D adds G; E and F are dequeued before G."
+     "why": "FIFO queue: S → (A, B) → A adds C, D → B adds only E (D is already queued) → C adds F → D adds G; E and F are dequeued before G."
     },
     {
      "text": "S, A, D, G",
@@ -93,7 +93,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Queue after S: A, B.\n2. A â†’ add C, D. B â†’ D already queued, add E.\n3. C â†’ add F. D â†’ add G. E â†’ G already queued.\n4. F, then G is dequeued and passes the goal test: S, A, B, C, D, E, F, G."
+   "solution": "1. Queue after S: A, B.\n2. A → add C, D. B → D already queued, add E.\n3. C → add F. D → add G. E → G already queued.\n4. F, then G is dequeued and passes the goal test: S, A, B, C, D, E, F, G."
   },
   {
    "id": "ai-uninformed-order-02",
@@ -120,7 +120,7 @@
     {
      "text": "S, A, C, F, G",
      "correct": true,
-     "why": "S â†’ A (first alphabetically) â†’ C (first unvisited neighbour of A) â†’ F â†’ G, which is the goal."
+     "why": "S → A (first alphabetically) → C (first unvisited neighbour of A) → F → G, which is the goal."
     },
     {
      "text": "S, B, E, G",
@@ -131,7 +131,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. S â†’ A (A < B).\n2. A's unvisited neighbours: C, D â†’ go to C.\n3. C â†’ F â†’ G (goal). Order S, A, C, F, G; the path found has 4 edges, not the shortest."
+   "solution": "1. S → A (A < B).\n2. A's unvisited neighbours: C, D → go to C.\n3. C → F → G (goal). Order S, A, C, F, G; the path found has 4 edges, not the shortest."
   },
   {
    "id": "ai-uninformed-order-03",
@@ -169,7 +169,7 @@
      "trap": "C6"
     }
    ],
-   "solution": "1. BFS (level order): A, B, C, D, E, F, G, H, I, J â†’ $n_B=10$.\n2. DFS: A, B, D, H, I, E, J â†’ $n_D=7$.\n3. $n_B-n_D=3$."
+   "solution": "1. BFS (level order): A, B, C, D, E, F, G, H, I, J → $n_B=10$.\n2. DFS: A, B, D, H, I, E, J → $n_D=7$.\n3. $n_B-n_D=3$."
   },
   {
    "id": "ai-uninformed-order-04",
@@ -200,13 +200,13 @@
     {
      "text": "DFS returns a longer path to $G$ than BFS.",
      "correct": false,
-     "why": "In a tree each node has exactly one path from the root, so both return Aâ€“Câ€“G.",
+     "why": "In a tree each node has exactly one path from the root, so both return A–C–G.",
      "trap": "C9"
     }
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. BFS: A, B, C, D, E, F, G â†’ 7.\n2. DFS: A, B, E, J, F, K, L, C, G â†’ 9.\n3. Paths in a tree are unique, so both return A â†’ C â†’ G."
+   "solution": "1. BFS: A, B, C, D, E, F, G → 7.\n2. DFS: A, B, E, J, F, K, L, C, G → 9.\n3. Paths in a tree are unique, so both return A → C → G."
   },
   {
    "id": "ai-uninformed-order-05",
@@ -219,32 +219,32 @@
    "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 315 160\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 73L90 37M34 87L91 133M108 38L152 82M148 89L37 81M169 98L211 132M112 140L208 140M229 133L281 92M112 30L208 30M229 37L281 78\" fill=\"none\" stroke=\"currentColor\"/><path d=\"M90 37L86 44L81 38zM91 133L82 131L87 124zM152 82L143 79L149 73zM37 81L45 77L45 85zM211 132L202 130L207 124zM208 140L200 144L200 136zM281 92L277 101L272 94zM208 30L200 34L200 26zM281 78L272 76L277 69z\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"80\" r=\"12\"/><circle cx=\"100\" cy=\"30\" r=\"12\"/><circle cx=\"160\" cy=\"90\" r=\"12\"/><circle cx=\"100\" cy=\"140\" r=\"12\"/><circle cx=\"220\" cy=\"140\" r=\"12\"/><circle cx=\"220\" cy=\"30\" r=\"12\"/><circle cx=\"290\" cy=\"85\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"84\">S</text><text x=\"100\" y=\"34\">A</text><text x=\"160\" y=\"94\">B</text><text x=\"100\" y=\"144\">C</text><text x=\"220\" y=\"144\">D</text><text x=\"220\" y=\"34\">E</text><text x=\"290\" y=\"89\">G</text></g></svg>",
    "options": [
     {
-     "text": "S â†’ A â†’ B â†’ S â†’ C â†’ D â†’ G",
+     "text": "S → A → B → S → C → D → G",
      "correct": false,
-     "why": "Followed the edge B â†’ S back to the visited start; graph search skips visited nodes, so no cycle enters the path.",
+     "why": "Followed the edge B → S back to the visited start; graph search skips visited nodes, so no cycle enters the path.",
      "trap": "C9"
     },
     {
-     "text": "S â†’ C â†’ D â†’ G",
+     "text": "S → C → D → G",
      "correct": false,
      "why": "Tried C before A; alphabetical order puts A first at S.",
      "trap": "C6"
     },
     {
-     "text": "S â†’ A â†’ E â†’ G",
+     "text": "S → A → E → G",
      "correct": false,
      "why": "That is the fewest-edge path BFS would return; DFS commits to A's first successor B before trying E.",
      "trap": "C2"
     },
     {
-     "text": "S â†’ A â†’ B â†’ D â†’ G",
+     "text": "S → A → B → D → G",
      "correct": true,
      "why": "From S go to A, from A to B (B < E); B's successor S is visited, so go to D, then G."
     }
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. S â†’ A (A < C).\n2. A â†’ B (B < E).\n3. B: S already visited, so â†’ D.\n4. D â†’ G. Path S, A, B, D, G (4 edges), while BFS would find S, A, E, G (3 edges)."
+   "solution": "1. S → A (A < C).\n2. A → B (B < E).\n3. B: S already visited, so → D.\n4. D → G. Path S, A, B, D, G (4 edges), while BFS would find S, A, E, G (3 edges)."
   },
   {
    "id": "ai-uninformed-order-06",
@@ -265,13 +265,13 @@
     {
      "text": "S, A, C, B, E, D, S, G",
      "correct": false,
-     "why": "Re-added S through the edge B â†’ S; graph search never re-adds an expanded node.",
+     "why": "Re-added S through the edge B → S; graph search never re-adds an expanded node.",
      "trap": "C9"
     },
     {
      "text": "S, A, C, B, E, D, G",
      "correct": true,
-     "why": "Queue: S â†’ A, C â†’ (A adds B, E) â†’ C adds D â†’ B adds nothing new (S expanded, D queued) â†’ E adds G â†’ D â†’ G."
+     "why": "Queue: S → A, C → (A adds B, E) → C adds D → B adds nothing new (S expanded, D queued) → E adds G → D → G."
     },
     {
      "text": "S, A, C, B, E",
@@ -282,7 +282,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Expand S: queue A, C.\n2. A: add B, E. C: add D.\n3. B: S expanded, D queued â†’ nothing. E: add G.\n4. D: G queued â†’ nothing. Dequeue G. Order S, A, C, B, E, D, G."
+   "solution": "1. Expand S: queue A, C.\n2. A: add B, E. C: add D.\n3. B: S expanded, D queued → nothing. E: add G.\n4. D: G queued → nothing. Dequeue G. Order S, A, C, B, E, D, G."
   },
   {
    "id": "ai-goal-test-01",
@@ -315,7 +315,7 @@
      "trap": "C6"
     }
    ],
-   "solution": "1. Expand S (gen A, B), A (gen C, D), B (gen E), C (gen F).\n2. Expand D: generates G, which passes the goal test.\n3. Expanded: S, A, B, C, D â†’ 5."
+   "solution": "1. Expand S (gen A, B), A (gen C, D), B (gen E), C (gen F).\n2. Expand D: generates G, which passes the goal test.\n3. Expanded: S, A, B, C, D → 5."
   },
   {
    "id": "ai-goal-test-02",
@@ -353,7 +353,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Test on generation: stop when the goal is created â†’ $b+b^2+\\dots+b^d=O(b^d)$.\n2. Test on expansion: all depth-$d$ nodes ahead of the goal are expanded â†’ adds up to $b^{d+1}$ nodes.\n3. So $O(b^{d+1})$."
+   "solution": "1. Test on generation: stop when the goal is created → $b+b^2+\\dots+b^d=O(b^d)$.\n2. Test on expansion: all depth-$d$ nodes ahead of the goal are expanded → adds up to $b^{d+1}$ nodes.\n3. So $O(b^{d+1})$."
   },
   {
    "id": "ai-goal-test-03",
@@ -386,7 +386,7 @@
      "trap": "C6"
     }
    ],
-   "solution": "1. Before the goal is dequeued, all of depths 0â€“3 have been generated: $1+2+4+8=15$.\n2. The 7 depth-3 nodes ahead of the goal are expanded, adding $7\\times 2=14$ nodes.\n3. Total $15+14=29$."
+   "solution": "1. Before the goal is dequeued, all of depths 0–3 have been generated: $1+2+4+8=15$.\n2. The 7 depth-3 nodes ahead of the goal are expanded, adding $7\\times 2=14$ nodes.\n3. Total $15+14=29$."
   },
   {
    "id": "ai-goal-test-04",
@@ -444,7 +444,7 @@
     {
      "text": "With the goal test on expansion, the returned path costs 6.",
      "correct": true,
-     "why": "G is popped with $g=6$ via Sâ€“Bâ€“Câ€“G, after C (3) and D (5)."
+     "why": "G is popped with $g=6$ via S–B–C–G, after C (3) and D (5)."
     },
     {
      "text": "Both placements return the same path because UCS orders the frontier by cost.",
@@ -453,15 +453,15 @@
      "trap": "C8"
     },
     {
-     "text": "With the goal test on expansion, the returned path is Sâ€“Aâ€“Câ€“G.",
+     "text": "With the goal test on expansion, the returned path is S–A–C–G.",
      "correct": false,
-     "why": "Sâ€“Aâ€“Câ€“G costs 7; C is reached more cheaply via B (cost 3), so the parent of C is B.",
+     "why": "S–A–C–G costs 7; C is reached more cheaply via B (cost 3), so the parent of C is B.",
      "trap": "C6"
     }
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Pop S: A=2, B=2. Pop A (tie, alphabetical): C=4, G=8 â† early test stops here (cost 8).\n2. Otherwise pop B: Câ†’3, D=5. Pop C: Gâ†’6. Pop D: G stays 6.\n3. Pop G at 6 via Sâ€“Bâ€“Câ€“G."
+   "solution": "1. Pop S: A=2, B=2. Pop A (tie, alphabetical): C=4, G=8 ← early test stops here (cost 8).\n2. Otherwise pop B: C→3, D=5. Pop C: G→6. Pop D: G stays 6.\n3. Pop G at 6 via S–B–C–G."
   },
   {
    "id": "ai-ucs-trace-01",
@@ -493,13 +493,13 @@
     {
      "text": "S, A, C, B, D, G",
      "correct": false,
-     "why": "Treated Aâ€“C (cost 5) as cheaper than reaching B via A (1+2=3); UCS orders by total path cost $g$, not single edge weights.",
+     "why": "Treated A–C (cost 5) as cheaper than reaching B via A (1+2=3); UCS orders by total path cost $g$, not single edge weights.",
      "trap": "C3"
     }
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Expand S: A=1, B=4, G=12.\n2. A: Bâ†’3, C=6. B: Câ†’4, D=8.\n3. C: Dâ†’6, Gâ†’10. D: Gâ†’8.\n4. Pop G at 8. Order S, A, B, C, D, G."
+   "solution": "1. Expand S: A=1, B=4, G=12.\n2. A: B→3, C=6. B: C→4, D=8.\n3. C: D→6, G→10. D: G→8.\n4. Pop G at 8. Order S, A, B, C, D, G."
   },
   {
    "id": "ai-ucs-trace-02",
@@ -518,21 +518,21 @@
    "traps": [
     {
      "value": 12,
-     "why": "Returned the direct edge Sâ€“G: that is what BFS (fewest edges) or a goal test on generation gives.",
+     "why": "Returned the direct edge S–G: that is what BFS (fewest edges) or a goal test on generation gives.",
      "trap": "C6"
     },
     {
      "value": 10,
-     "why": "Took G when it was first improved via C (4+6), or went A â†’ C directly (1+5+2+2); D at cost 6 is popped first and lowers G to 8.",
+     "why": "Took G when it was first improved via C (4+6), or went A → C directly (1+5+2+2); D at cost 6 is popped first and lowers G to 8.",
      "trap": "C6"
     },
     {
      "value": 11,
-     "why": "Used Sâ€“Bâ€“Dâ€“G with the edge Sâ€“B (4), missing that B is cheaper via A (3) and that Câ€“D is a shortcut.",
+     "why": "Used S–B–D–G with the edge S–B (4), missing that B is cheaper via A (3) and that C–D is a shortcut.",
      "trap": "C3"
     }
    ],
-   "solution": "1. Cheapest costs: A=1, B=3, C=4, D=6.\n2. G via D: 6+2=8, via C: 10, direct: 12.\n3. Path Sâ€“Aâ€“Bâ€“Câ€“Dâ€“G, cost 8."
+   "solution": "1. Cheapest costs: A=1, B=3, C=4, D=6.\n2. G via D: 6+2=8, via C: 10, direct: 12.\n3. Path S–A–B–C–D–G, cost 8."
   },
   {
    "id": "ai-ucs-trace-03",
@@ -547,12 +547,12 @@
     {
      "text": "BFS (fewest edges) returns a path of cost 12.",
      "correct": true,
-     "why": "Sâ€“G is a single edge, so BFS returns it, ignoring its cost."
+     "why": "S–G is a single edge, so BFS returns it, ignoring its cost."
     },
     {
      "text": "UCS with the goal test on expansion returns a path of cost 8.",
      "correct": true,
-     "why": "G is popped only when its cost is 8, via Sâ€“Aâ€“Bâ€“Câ€“Dâ€“G."
+     "why": "G is popped only when its cost is 8, via S–A–B–C–D–G."
     },
     {
      "text": "UCS with the goal test on generation also returns cost 8.",
@@ -569,7 +569,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. BFS: S â†’ G directly (cost 12).\n2. UCS (test on pop): costs A 1, B 3, C 4, D 6, G 8.\n3. Testing on generation stops at the cost-12 copy of G."
+   "solution": "1. BFS: S → G directly (cost 12).\n2. UCS (test on pop): costs A 1, B 3, C 4, D 6, G 8.\n3. Testing on generation stops at the cost-12 copy of G."
   },
   {
    "id": "ai-ucs-trace-04",
@@ -578,7 +578,7 @@
    "marks": 1,
    "level": 1,
    "source": "Drill · GATE-pattern (original)",
-   "stem": "Uniform-cost search (goal test on pop, frontier costs lowered when a cheaper path is found) runs from $S$ to $G$ on the undirected graph with edges Sâ€“A (3), Sâ€“B (1), Bâ€“A (1), Aâ€“G (2), Bâ€“C (4), Câ€“G (1). What is $g(A)$ at the moment $A$ is expanded?",
+   "stem": "Uniform-cost search (goal test on pop, frontier costs lowered when a cheaper path is found) runs from $S$ to $G$ on the undirected graph with edges S–A (3), S–B (1), B–A (1), A–G (2), B–C (4), C–G (1). What is $g(A)$ at the moment $A$ is expanded?",
    "figure": null,
    "options": [],
    "answer": {
@@ -593,7 +593,7 @@
     },
     {
      "value": 1,
-     "why": "Used the single edge weight Bâ€“A instead of the total path cost from S.",
+     "why": "Used the single edge weight B–A instead of the total path cost from S.",
      "trap": "C3"
     },
     {
@@ -640,7 +640,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. S: A=2, B=2.\n2. A (tie â†’ alphabetical): C=4, G=8. B: Câ†’3, D=5.\n3. C (3): Gâ†’6. D (5): G stays 6.\n4. G popped at 6."
+   "solution": "1. S: A=2, B=2.\n2. A (tie → alphabetical): C=4, G=8. B: C→3, D=5.\n3. C (3): G→6. D (5): G stays 6.\n4. G popped at 6."
   },
   {
    "id": "ai-ids-01",
@@ -701,7 +701,7 @@
      "trap": "C9"
     }
    ],
-   "solution": "1. Iterations use limits 0, 1, 2, 3, 4.\n2. Each starts at the root â†’ 5 visits."
+   "solution": "1. Iterations use limits 0, 1, 2, 3, 4.\n2. Each starts at the root → 5 visits."
   },
   {
    "id": "ai-ids-03",
@@ -739,7 +739,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Limit 0: A.\n2. Limit 1: A, B, C.\n3. Limit 2: A, B, D, E, C, F â†’ stop at F."
+   "solution": "1. Limit 0: A.\n2. Limit 1: A, B, C.\n3. Limit 2: A, B, D, E, C, F → stop at F."
   },
   {
    "id": "ai-ids-04",
@@ -853,7 +853,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Unit costs â‡’ shallowest goal = cheapest goal.\n2. BFS explores level by level, so it is complete (finite $b$) and returns the shallowest goal.\n3. DFS is incomplete with infinite paths; greedy ignores $g$."
+   "solution": "1. Unit costs ⇒ shallowest goal = cheapest goal.\n2. BFS explores level by level, so it is complete (finite $b$) and returns the shallowest goal.\n3. DFS is incomplete with infinite paths; greedy ignores $g$."
   },
   {
    "id": "ai-search-props-02",
@@ -927,7 +927,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Optimality needs costs â‰¥ Îµ > 0 and the goal test on expansion.\n2. Negative costs break the 'popped = final' property.\n3. Equal costs: $g\\propto$ depth, so UCS behaves like BFS."
+   "solution": "1. Optimality needs costs ≥ ε > 0 and the goal test on expansion.\n2. Negative costs break the 'popped = final' property.\n3. Equal costs: $g\\propto$ depth, so UCS behaves like BFS."
   },
   {
    "id": "ai-search-props-04",
@@ -965,7 +965,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Each iteration is DFS with limit $\\ell$ â†’ memory $O(bd)$.\n2. Total generated $= db+(d-1)b^2+\\dots+1\\cdot b^d=O(b^d)$.\n3. Finds the shallowest goal â†’ optimal only for unit costs."
+   "solution": "1. Each iteration is DFS with limit $\\ell$ → memory $O(bd)$.\n2. Total generated $= db+(d-1)b^2+\\dots+1\\cdot b^d=O(b^d)$.\n3. Finds the shallowest goal → optimal only for unit costs."
   },
   {
    "id": "ai-search-props-05",
@@ -980,7 +980,7 @@
     {
      "text": "Uniform-cost search",
      "correct": true,
-     "why": "UCS expands in increasing path cost $g$ and tests the goal when popped, so the first goal popped is a cheapest one (costs â‰¥ Îµ > 0)."
+     "why": "UCS expands in increasing path cost $g$ and tests the goal when popped, so the first goal popped is a cheapest one (costs ≥ ε > 0)."
     },
     {
      "text": "Iterative deepening search",
@@ -1003,7 +1003,7 @@
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. Unequal costs: fewest edges â‰  cheapest.\n2. UCS orders by $g$ and is optimal for costs â‰¥ Îµ > 0."
+   "solution": "1. Unequal costs: fewest edges ≠ cheapest.\n2. UCS orders by $g$ and is optimal for costs ≥ ε > 0."
   },
   {
    "id": "ai-search-complexity-01",
@@ -1074,7 +1074,7 @@
      "trap": "C6"
     }
    ],
-   "solution": "1. At depth 5 the path has 5 expanded ancestors (depths 0â€“4), each with 4 stored children.\n2. Storage $=1+bm=1+4\\cdot 5=21$, i.e. $O(bm)$."
+   "solution": "1. At depth 5 the path has 5 expanded ancestors (depths 0–4), each with 4 stored children.\n2. Storage $=1+bm=1+4\\cdot 5=21$, i.e. $O(bm)$."
   },
   {
    "id": "ai-search-complexity-03",
@@ -1107,12 +1107,12 @@
     {
      "text": "About 11% more",
      "correct": true,
-     "why": "IDS: 123,450; BFS: 111,110; ratio â‰ˆ 1.11."
+     "why": "IDS: 123,450; BFS: 111,110; ratio ≈ 1.11."
     }
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. BFS: $10+100+1000+10^4+10^5=111{,}110$.\n2. IDS: $50+400+3000+20000+100000=123{,}450$.\n3. Ratio â‰ˆ 1.11, about 11% more."
+   "solution": "1. BFS: $10+100+1000+10^4+10^5=111{,}110$.\n2. IDS: $50+400+3000+20000+100000=123{,}450$.\n3. Ratio ≈ 1.11, about 11% more."
   },
   {
    "id": "ai-search-complexity-04",
@@ -1181,12 +1181,12 @@
     {
      "text": "About 1 GB for BFS; about 60 KB for IDS",
      "correct": true,
-     "why": "$10^6$ nodes Ã— 1 KB â‰ˆ 1 GB; IDS stores about $bd=60$ nodes â‰ˆ 60 KB."
+     "why": "$10^6$ nodes × 1 KB ≈ 1 GB; IDS stores about $bd=60$ nodes ≈ 60 KB."
     }
    ],
    "answer": null,
    "traps": [],
-   "solution": "1. BFS: $b^d=10^6$ nodes Ã— 1 KB â‰ˆ 1 GB.\n2. IDS: $bd=60$ nodes Ã— 1 KB â‰ˆ 60 KB."
+   "solution": "1. BFS: $b^d=10^6$ nodes × 1 KB ≈ 1 GB.\n2. IDS: $bd=60$ nodes × 1 KB ≈ 60 KB."
   }
  ]
 }
