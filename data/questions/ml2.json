@@ -1,0 +1,2816 @@
+{
+ "area": "ml",
+ "skills": {
+  "ml.nn-perceptron": {
+   "title": "Perceptron: update rule, convergence and XOR",
+   "subject": "Machine Learning",
+   "days": [
+    50
+   ],
+   "theory": "ml-nn",
+   "check": "Mistake when y(w·x + b) ≤ 0 (zero counts). Update w ← w + ηyx, b ← b + ηy, in the given order. Converges only on linearly separable data (≤ (R/γ)² mistakes); XOR is not separable."
+  },
+  "ml.nn-forward": {
+   "title": "Feed-forward pass with ReLU and sigmoid",
+   "subject": "Machine Learning",
+   "days": [
+    50
+   ],
+   "theory": "ml-nn",
+   "check": "Layer by layer: z = Wx + b (rows of W = units), then the activation element-wise. ReLU zeroes negatives. Without a nonlinearity any stack of layers collapses to one linear map."
+  },
+  "ml.nn-params": {
+   "title": "Parameter counts and layer shapes",
+   "subject": "Machine Learning",
+   "days": [
+    50
+   ],
+   "theory": "ml-nn",
+   "check": "A dense layer from n_in to n_out has n_in·n_out weights + n_out biases; W is n_out × n_in in z = Wx + b. The input layer has no parameters. Sum over layers."
+  },
+  "ml.nn-backprop": {
+   "title": "Backpropagation and ReLU gating",
+   "subject": "Machine Learning",
+   "days": [
+    51
+   ],
+   "theory": "ml-nn",
+   "check": "Go backward: δ_out = ∂L/∂ŷ; δ_hidden = (Wᵀδ_next) ⊙ φ'(z); ∂L/∂W = δ xᵀ, ∂L/∂b = δ. ReLU' is 1 for z > 0 and 0 for z < 0, so an inactive unit passes back nothing."
+  },
+  "ml.nn-sgd": {
+   "title": "Loss gradients (MSE, cross-entropy) and one SGD step",
+   "subject": "Machine Learning",
+   "days": [
+    51
+   ],
+   "theory": "ml-nn",
+   "check": "½(ŷ−y)² → (ŷ−y)·∂ŷ; (ŷ−y)² → 2(ŷ−y)·∂ŷ. Sigmoid or softmax + cross-entropy → ∂L/∂z = p − y (σ' cancels). Step: w ← w − η∇L (minus sign)."
+  },
+  "ml.cluster-kmeans": {
+   "title": "k-means: iteration trace, objective, initialization",
+   "subject": "Machine Learning",
+   "days": [
+    52
+   ],
+   "theory": "ml-clustering",
+   "check": "Assign each point to the nearest centroid (squared Euclidean), then move each centroid to the mean of its points. Neither step raises the SSE, so Lloyd's algorithm converges, but only to a local minimum that depends on the start."
+  },
+  "ml.cluster-kmedoids": {
+   "title": "k-medoids: medoid, cost and outlier robustness",
+   "subject": "Machine Learning",
+   "days": [
+    52
+   ],
+   "theory": "ml-clustering",
+   "check": "The medoid is the data point with the smallest total dissimilarity to the others in its cluster. Cost = Σ distances (not squared) to the assigned medoid. PAM tries medoid↔non-medoid swaps and keeps those that lower the cost."
+  },
+  "ml.cluster-linkage": {
+   "title": "Agglomerative clustering: linkage merges and heights",
+   "subject": "Machine Learning",
+   "days": [
+    53
+   ],
+   "theory": "ml-clustering",
+   "check": "Merge the closest pair of clusters each step. Single = min cross-pair distance, complete = max, average = mean of all |X|·|Y| cross pairs. The merge height is that linkage distance; recompute only the rows of the new cluster."
+  },
+  "ml.cluster-dendrogram": {
+   "title": "Hierarchical clustering: dendrograms and linkage behaviour",
+   "subject": "Machine Learning",
+   "days": [
+    53
+   ],
+   "theory": "ml-clustering",
+   "check": "n points need n − 1 merges. Cut a dendrogram at height h: clusters = n − (merges at height ≤ h). Single linkage chains (it equals the MST); complete linkage gives compact clusters. For fixed clusters: single ≤ average ≤ complete."
+  },
+  "ml.pca-variance": {
+   "title": "PCA: variance along PCs and explained variance",
+   "subject": "Machine Learning",
+   "days": [
+    54
+   ],
+   "theory": "ml-pca",
+   "check": "Center, form the covariance C, take eigenpairs. Variance along PC k = λ_k (λ_1 = λmax). Variance along unit u = uᵀCu. Explained ratio = Σ kept λ / trace(C); reconstruction MSE = Σ dropped λ."
+  },
+  "ml.pca-lda": {
+   "title": "PCA setup (centering, SVD) and PCA vs LDA",
+   "subject": "Machine Learning",
+   "days": [
+    54
+   ],
+   "theory": "ml-pca",
+   "check": "Center first, or PC1 points at the mean. Centered X = UΣVᵀ: PCs = columns of V, λ_k = σ_k²/n. PCA is unsupervised (max variance); LDA is supervised (max between/within class scatter, at most C − 1 directions)."
+  },
+  "ml.select-framing": {
+   "title": "Framing: regression vs classification, supervised vs unsupervised",
+   "subject": "Machine Learning",
+   "days": [
+    55
+   ],
+   "theory": "ml-selection",
+   "check": "Look at the target: a real-valued quantity → regression; a label from a finite set (even if written as numbers) → classification; no target → unsupervised (clustering, PCA). A probability of a yes/no event is still classification."
+  },
+  "ml.select-algo": {
+   "title": "Generative vs discriminative; choosing an algorithm",
+   "subject": "Machine Learning",
+   "days": [
+    55
+   ],
+   "theory": "ml-selection",
+   "check": "Generative models P(x | y)P(y) (Naive Bayes, LDA/QDA); discriminative models P(y | x) or a boundary (logistic regression, SVM, perceptron, kNN, trees). Match the method to the stated constraint: labels?, interpretability, data size, scaling, linear vs nonlinear boundary."
+  }
+ },
+ "questions": [
+  {
+   "id": "ml-nn-perceptron-01",
+   "skill": "ml.nn-perceptron",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A perceptron with weights $w = (w_1, w_2)$ and bias $b$ starts at $w = (0, 0)$, $b = 0$, learning rate $\\eta = 1$. On each point (in the order below) it updates $w \\leftarrow w + y\\,x$, $b \\leftarrow b + y$ whenever $y(w \\cdot x + b) \\le 0$.\n\n| point | $x_1$ | $x_2$ | $y$ |\n|---|---|---|---|\n| 1 | 1 | 2 | +1 |\n| 2 | 2 | −1 | −1 |\n| 3 | −1 | −2 | −1 |\n| 4 | 0 | 1 | +1 |\n\nWhat is $w_2$ after one pass over the four points?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Used the strict test $y(w\\cdot x+b) < 0$; at $w = 0$ every score is 0, so nothing ever updates.",
+     "trap": "C5"
+    },
+    {
+     "value": -5,
+     "why": "Subtracted $yx$ instead of adding it; the update moves $w$ toward $x$ for $y = +1$.",
+     "trap": "C11"
+    },
+    {
+     "value": 2,
+     "why": "Stopped after the first update; point 2 is still misclassified by $w = (1,2), b = 1$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Point 1: $w\\cdot x + b = 0$, so $y\\cdot 0 \\le 0$ is a mistake: $w = (1, 2)$, $b = 1$.\n2. Point 2: $2 - 2 + 1 = 1$, $y = -1$ gives $-1 \\le 0$: $w = (1,2) - (2,-1) = (-1, 3)$, $b = 0$.\n3. Point 3: $1 - 6 = -5$, $y(-5) = 5 > 0$: no update. Point 4: $3 > 0$: no update.\n4. $w_2 = 3$."
+  },
+  {
+   "id": "ml-nn-perceptron-02",
+   "skill": "ml.nn-perceptron",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Inputs $x_1, x_2 \\in \\{0, 1\\}$. A threshold unit outputs 1 when $x_1 + x_2 - 1.5 > 0$ and 0 otherwise. Which Boolean function does it compute?",
+   "figure": null,
+   "options": [
+    {
+     "text": "XOR",
+     "correct": false,
+     "why": "XOR is not linearly separable, so no single threshold unit computes it.",
+     "trap": "C8"
+    },
+    {
+     "text": "NAND",
+     "correct": false,
+     "why": "NAND is the negation; it needs weights $-1, -1$ and bias $+1.5$, the opposite signs.",
+     "trap": "C11"
+    },
+    {
+     "text": "AND",
+     "correct": true,
+     "why": "Only $x_1 = x_2 = 1$ gives $2 - 1.5 > 0$; every other input gives a negative score."
+    },
+    {
+     "text": "OR",
+     "correct": false,
+     "why": "OR needs a threshold between 0 and 1 (for example $-0.5$); with $-1.5$ one active input is not enough.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sums: (0,0) → 0, (0,1) and (1,0) → 1, (1,1) → 2.\n2. Only the sum 2 exceeds 1.5.\n3. Output 1 only for (1,1): AND."
+  },
+  {
+   "id": "ml-nn-perceptron-03",
+   "skill": "ml.nn-perceptron",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statement about the XOR function of two binary inputs is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The perceptron learning rule finds a separating line for XOR if run for enough epochs.",
+     "correct": false,
+     "why": "Convergence needs linear separability; on XOR the weights keep cycling forever.",
+     "trap": "C1"
+    },
+    {
+     "text": "A single perceptron cannot compute XOR, but a network with one hidden layer of two threshold units can.",
+     "correct": true,
+     "why": "XOR is not linearly separable; OR and NAND as hidden units followed by AND give XOR."
+    },
+    {
+     "text": "Adding a bias term to a single perceptron makes XOR separable.",
+     "correct": false,
+     "why": "A bias only shifts the line; the diagonal pattern still cannot be split by any line.",
+     "trap": "C9"
+    },
+    {
+     "text": "XOR needs at least two hidden layers.",
+     "correct": false,
+     "why": "Over-claim: one hidden layer of two units already suffices.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The positives (0,1), (1,0) and negatives (0,0), (1,1) sit on opposite diagonals of a square.\n2. No line separates them, so no single perceptron works.\n3. Two hidden threshold units (OR and NAND) followed by an AND unit compute XOR."
+  },
+  {
+   "id": "ml-nn-perceptron-04",
+   "skill": "ml.nn-perceptron",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The perceptron algorithm is run on a training set where $\\lVert x_i \\rVert \\le R$ for all points. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "On separable data the final weight vector is the maximum-margin separator.",
+     "correct": false,
+     "why": "That is the hard-margin SVM; the perceptron stops at the first separating $w$ it reaches.",
+     "trap": "C9"
+    },
+    {
+     "text": "On separable data the final weight vector does not depend on the order of the points.",
+     "correct": false,
+     "why": "Different orders give different update sequences and usually different separators.",
+     "trap": "C8"
+    },
+    {
+     "text": "If the data are not linearly separable, the algorithm never completes a pass without an update.",
+     "correct": true,
+     "why": "Any fixed $w$ misclassifies some point, so every pass contains at least one update."
+    },
+    {
+     "text": "If the data are separable with margin $\\gamma$, the total number of updates is at most $(R/\\gamma)^2$.",
+     "correct": true,
+     "why": "This is the perceptron convergence (Novikoff) bound."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Novikoff: if some unit $w^*$ separates the data with margin $\\gamma$, mistakes ≤ $(R/\\gamma)^2$.\n2. On non-separable data some point is always misclassified, so updates never stop.\n3. The final hyperplane depends on presentation order and is not the max-margin one (that is the hard-margin SVM)."
+  },
+  {
+   "id": "ml-nn-perceptron-05",
+   "skill": "ml.nn-perceptron",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A perceptron starts at $w = (0, 0)$, $b = 0$, $\\eta = 1$, and cycles through the points below in this order, updating $w \\leftarrow w + yx$, $b \\leftarrow b + y$ whenever $y(w\\cdot x + b) \\le 0$. It stops after a full pass with no update.\n\n| point | $x_1$ | $x_2$ | $y$ |\n|---|---|---|---|\n| 1 | 1 | 1 | +1 |\n| 2 | 2 | 0 | +1 |\n| 3 | 0 | 2 | −1 |\n| 4 | −1 | 1 | −1 |\n\nHow many updates does it make in total?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Counted only the first pass.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Counted passes that contained an update instead of the updates themselves.",
+     "trap": "C6"
+    },
+    {
+     "value": 0,
+     "why": "Used the strict test $< 0$; from $w = 0$ every score is 0 and nothing updates.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. Pass 1: updates on points 1 and 3, giving $w = (1, -1)$, $b = 0$.\n2. Pass 2: point 1 scores 0 (update to $(2,0)$, $b=1$); point 3 scores 1 (update to $(2,-2)$, $b=0$).\n3. Pass 3: point 1 scores 0 (update to $(3,-1)$, $b=1$); the rest are correct.\n4. Pass 4 has no update. Total 2 + 2 + 1 = 5."
+  },
+  {
+   "id": "ml-nn-perceptron-06",
+   "skill": "ml.nn-perceptron",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Training points satisfy $\\lVert x_i \\rVert \\le 3$ and are separated by a unit vector $w^*$ with margin $y_i (w^* \\cdot x_i) \\ge 0.5$ for all $i$. What is the perceptron convergence bound on the number of mistakes?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 36,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Forgot to square $R/\\gamma$.",
+     "trap": "C4"
+    },
+    {
+     "value": 18,
+     "why": "Used $R^2/\\gamma = 9/0.5$; the margin must be squared too, $(R/\\gamma)^2$.",
+     "trap": "C3"
+    },
+    {
+     "value": 1.5,
+     "why": "Computed $R\\gamma$ instead of $R/\\gamma$.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. Bound $= (R/\\gamma)^2$.\n2. $R/\\gamma = 3/0.5 = 6$.\n3. Bound $= 36$."
+  },
+  {
+   "id": "ml-nn-forward-01",
+   "skill": "ml.nn-forward",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A network has one hidden layer of 2 ReLU units and a linear output:\n\n$$h = \\mathrm{ReLU}(W_1 x + b_1),\\quad \\hat y = v^\\top h + c$$\n\nwith $W_1 = \\begin{pmatrix} 2 & 1 \\\\ -1 & 3 \\end{pmatrix}$, $b_1 = (1, 0)^\\top$, $v = (3, -2)^\\top$, $c = 0.5$. Find $\\hat y$ for $x = (1, -2)^\\top$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3.5,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 17.5,
+     "why": "Skipped the ReLU; the second unit's $-7$ must be zeroed, not multiplied by $-2$.",
+     "trap": "C9"
+    },
+    {
+     "value": 0.5,
+     "why": "Dropped $b_1$; the first pre-activation is then 0 and the unit contributes nothing.",
+     "trap": "C6"
+    },
+    {
+     "value": 15.5,
+     "why": "Multiplied by $W_1^\\top$; each row of $W_1$ holds one hidden unit's weights.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $W_1 x = (2 - 2,\\; -1 - 6) = (0, -7)$; add $b_1$: $(1, -7)$.\n2. ReLU: $h = (1, 0)$.\n3. $\\hat y = 3(1) - 2(0) + 0.5 = 3.5$."
+  },
+  {
+   "id": "ml-nn-forward-02",
+   "skill": "ml.nn-forward",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A network maps $x \\in \\mathbb{R}^{10}$ through three layers $x \\to W_1 x + b_1 \\to W_2(\\cdot) + b_2 \\to W_3(\\cdot) + b_3$ with **no** activation functions. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Its decision boundary is piecewise linear with up to three pieces.",
+     "correct": false,
+     "why": "Pieces come from ReLU kinks; with no activation the boundary is a single hyperplane.",
+     "trap": "C9"
+    },
+    {
+     "text": "It computes an affine function $Ax + d$ and can be replaced by a single layer.",
+     "correct": true,
+     "why": "Products and sums of affine maps are affine: $A = W_3W_2W_1$."
+    },
+    {
+     "text": "It can represent XOR because it has hidden layers.",
+     "correct": false,
+     "why": "Hidden layers help only with a nonlinearity; an affine map still draws one hyperplane.",
+     "trap": "C1"
+    },
+    {
+     "text": "It is more expressive than one layer because it has more parameters.",
+     "correct": false,
+     "why": "More parameters do not add functions here; the product $W_3W_2W_1$ is just another matrix.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $W_3(W_2(W_1x + b_1) + b_2) + b_3 = (W_3W_2W_1)x + (W_3W_2b_1 + W_3b_2 + b_3)$.\n2. That is one affine map $Ax + d$.\n3. Depth adds nothing without a nonlinearity."
+  },
+  {
+   "id": "ml-nn-forward-03",
+   "skill": "ml.nn-forward",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A hidden layer uses the sigmoid $\\sigma(z) = 1/(1 + e^{-z})$ with $z = Wx$, $W = \\begin{pmatrix} 1 & -1 \\\\ 2 & -2 \\end{pmatrix}$ and no bias. The output is $\\hat y = 4h_1 - 2h_2 + 1$. Find $\\hat y$ for $x = (3, 3)^\\top$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Used $z$ instead of $\\sigma(z)$, or took $\\sigma(0) = 0$ as for ReLU; $\\sigma(0) = 0.5$.",
+     "trap": "C9"
+    },
+    {
+     "value": 3,
+     "why": "Took $\\sigma(0) = 1$ like a step function at 0.",
+     "trap": "C10"
+    },
+    {
+     "value": 4,
+     "why": "Dropped the minus sign on $h_2$: $4(0.5) + 2(0.5) + 1$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $z = (3 - 3,\\; 6 - 6) = (0, 0)$.\n2. $\\sigma(0) = 0.5$, so $h = (0.5, 0.5)$.\n3. $\\hat y = 2 - 1 + 1 = 2$."
+  },
+  {
+   "id": "ml-nn-forward-04",
+   "skill": "ml.nn-forward",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about feed-forward networks are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Adding more linear (activation-free) layers enlarges the set of functions a linear model can represent.",
+     "correct": false,
+     "why": "Composing affine maps stays inside the affine family.",
+     "trap": "C1"
+    },
+    {
+     "text": "A network with one hidden layer of enough ReLU units can approximate any continuous function on a bounded closed set.",
+     "correct": true,
+     "why": "This is the universal approximation theorem."
+    },
+    {
+     "text": "A network with sigmoid hidden units and a linear output is a linear function of its input.",
+     "correct": false,
+     "why": "The output is linear in the hidden activations, not in $x$; the sigmoid is nonlinear.",
+     "trap": "C10"
+    },
+    {
+     "text": "A stack of linear layers without activations computes the same functions as a single linear layer.",
+     "correct": true,
+     "why": "Their composition is one affine map."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Affine maps compose to an affine map, so linear stacks collapse.\n2. One hidden layer with a non-polynomial activation (ReLU, sigmoid) and enough units approximates any continuous function on a compact set.\n3. A sigmoid hidden layer makes the map nonlinear; extra linear layers add no new functions."
+  },
+  {
+   "id": "ml-nn-forward-05",
+   "skill": "ml.nn-forward",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A network has two ReLU hidden layers and a linear output: $h_1 = \\mathrm{ReLU}(W_1x + b_1)$, $h_2 = \\mathrm{ReLU}(W_2h_1 + b_2)$, $\\hat y = v^\\top h_2$, with\n\n$$W_1 = \\begin{pmatrix} 1 & 1 & 0 \\\\ 2 & -1 & 1 \\\\ 0 & 1 & 2 \\end{pmatrix},\\; b_1 = \\begin{pmatrix} -1 \\\\ 0 \\\\ 1 \\end{pmatrix},\\; W_2 = \\begin{pmatrix} 1 & -1 & 2 \\\\ -2 & 1 & 1 \\end{pmatrix},\\; b_2 = \\begin{pmatrix} 0 \\\\ 1 \\end{pmatrix},\\; v = \\begin{pmatrix} 2 \\\\ 3 \\end{pmatrix}.$$\n\nFind $\\hat y$ for $x = (1, 2, -1)^\\top$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Applied no ReLU at all; the negative units must be zeroed in both layers.",
+     "trap": "C9"
+    },
+    {
+     "value": 2,
+     "why": "Applied ReLU in the first layer but forgot it in the second, so $-2$ was multiplied by 3.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Used $h_2 = (4, 2)$ by taking the absolute value of $-2$; ReLU clips negatives to 0.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $W_1x + b_1 = (3 - 1,\\; 2 - 2 - 1,\\; 2 - 2 + 1) = (2, -1, 1)$, so $h_1 = (2, 0, 1)$.\n2. $W_2h_1 + b_2 = (2 - 0 + 2,\\; -4 + 0 + 1 + 1) = (4, -2)$, so $h_2 = (4, 0)$.\n3. $\\hat y = 2 \\cdot 4 + 3 \\cdot 0 = 8$."
+  },
+  {
+   "id": "ml-nn-forward-06",
+   "skill": "ml.nn-forward",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For a scalar input $x$, what does $f(x) = \\mathrm{ReLU}(x) - \\mathrm{ReLU}(-x)$ compute?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\max(x, 0)$",
+     "correct": false,
+     "why": "Ignored the second term; for $x < 0$ it contributes $x$, not 0.",
+     "trap": "C6"
+    },
+    {
+     "text": "$|x|$",
+     "correct": false,
+     "why": "$|x|$ is the sum $\\mathrm{ReLU}(x) + \\mathrm{ReLU}(-x)$; the minus flips the negative branch.",
+     "trap": "C11"
+    },
+    {
+     "text": "$x$ for every real $x$",
+     "correct": true,
+     "why": "For $x \\ge 0$ it is $x - 0$; for $x < 0$ it is $0 - (-x) = x$."
+    },
+    {
+     "text": "$0$ for every $x$",
+     "correct": false,
+     "why": "Treated $\\mathrm{ReLU}(-x)$ as $\\mathrm{ReLU}(x)$; they are active on opposite sides.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. For $x \\ge 0$: $x - 0 = x$.\n2. For $x < 0$: $0 - (-x) = x$.\n3. So $f(x) = x$."
+  },
+  {
+   "id": "ml-nn-params-01",
+   "skill": "ml.nn-params",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A fully connected network has layer sizes 784 → 128 → 64 → 10, with a bias on every unit of the hidden and output layers. How many trainable parameters does it have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 109386,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 109184,
+     "why": "Counted weights only and forgot the 128 + 64 + 10 biases.",
+     "trap": "C6"
+    },
+    {
+     "value": 110170,
+     "why": "Also gave the 784 input units biases; inputs carry no parameters.",
+     "trap": "C6"
+    },
+    {
+     "value": 986,
+     "why": "Counted units (784 + 128 + 64 + 10) instead of connections.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. 784·128 + 128 = 100480.\n2. 128·64 + 64 = 8256.\n3. 64·10 + 10 = 650.\n4. Total 109386."
+  },
+  {
+   "id": "ml-nn-params-02",
+   "skill": "ml.nn-params",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A network has 5 inputs, one hidden layer of 3 units and 2 output units, fully connected, with biases on hidden and output units. How many trainable parameters are there?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 26,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 21,
+     "why": "Left out the 5 biases.",
+     "trap": "C6"
+    },
+    {
+     "value": 31,
+     "why": "Added 5 biases for the input units; the input layer has no parameters.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Counted units instead of weights and biases.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Input → hidden: 5·3 + 3 = 18.\n2. Hidden → output: 3·2 + 2 = 8.\n3. Total 26."
+  },
+  {
+   "id": "ml-nn-params-03",
+   "skill": "ml.nn-params",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A dense layer takes $x \\in \\mathbb{R}^8$ to $z = Wx + b \\in \\mathbb{R}^5$. What are the shapes of $W$ and $b$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$W$ is $8 \\times 5$, $b \\in \\mathbb{R}^8$",
+     "correct": false,
+     "why": "Both shapes taken from the input side; rows and bias length follow the outputs.",
+     "trap": "C2"
+    },
+    {
+     "text": "$W$ is $5 \\times 8$, $b \\in \\mathbb{R}^5$",
+     "correct": true,
+     "why": "One row of 8 weights per output unit, one bias per output unit."
+    },
+    {
+     "text": "$W$ is $8 \\times 5$, $b \\in \\mathbb{R}^5$",
+     "correct": false,
+     "why": "That is the shape for the row-vector convention $xW$; with $Wx$ the rows are the outputs.",
+     "trap": "C6"
+    },
+    {
+     "text": "$W$ is $5 \\times 8$, $b \\in \\mathbb{R}^8$",
+     "correct": false,
+     "why": "Biases belong to the output units, not the inputs.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $z$ has 5 entries, so $W$ has 5 rows and $b$ has 5 entries.\n2. $Wx$ needs 8 columns to match $x$.\n3. $W$ is $5 \\times 8$, $b \\in \\mathbb{R}^5$."
+  },
+  {
+   "id": "ml-nn-params-04",
+   "skill": "ml.nn-params",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A network has 10 inputs, one hidden layer of $H$ units and 3 outputs, fully connected, with biases on hidden and output units. It has 185 trainable parameters. Find $H$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 14,
+     "why": "Forgot the $H$ hidden biases: $13H + 3 = 185$ gives 14.",
+     "trap": "C6"
+    },
+    {
+     "value": 13.2,
+     "why": "Forgot the 3 output biases: $14H = 185$.",
+     "trap": "C6"
+    },
+    {
+     "value": 14.2,
+     "why": "Ignored all biases: $13H = 185$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Parameters $= 10H + H + 3H + 3 = 14H + 3$.\n2. $14H + 3 = 185$ gives $H = 13$."
+  },
+  {
+   "id": "ml-nn-params-05",
+   "skill": "ml.nn-params",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A fully connected network maps 4 inputs to $H$ hidden units to 2 outputs, with biases on hidden and output units, and computes $h = \\phi(W_1x + b_1)$, $\\hat y = W_2h + b_2$. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$W_1$ has shape $4 \\times H$.",
+     "correct": false,
+     "why": "In $W_1x$ with $x \\in \\mathbb{R}^4$, $W_1$ is $H \\times 4$.",
+     "trap": "C6"
+    },
+    {
+     "text": "Removing every bias removes exactly 2 parameters.",
+     "correct": false,
+     "why": "There is one bias per hidden and output unit: $H + 2$ of them.",
+     "trap": "C6"
+    },
+    {
+     "text": "The second layer has $2H + 2$ parameters.",
+     "correct": true,
+     "why": "$W_2$ is $2 \\times H$ plus 2 biases."
+    },
+    {
+     "text": "For $H = 10$ the network has 72 trainable parameters.",
+     "correct": true,
+     "why": "$7H + 2 = 72$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Total $= 4H + H + 2H + 2 = 7H + 2$; for $H = 10$ that is 72.\n2. The second layer has $2H$ weights and 2 biases.\n3. Biases number $H + 2$, and $W_1$ is $H \\times 4$."
+  },
+  {
+   "id": "ml-nn-backprop-01",
+   "skill": "ml.nn-backprop",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A network with 2 ReLU hidden units:\n\n$$h = \\mathrm{ReLU}(Wx + b),\\quad \\hat y = v^\\top h,\\quad L = \\tfrac12(\\hat y - y)^2$$\n\nwith $W = \\begin{pmatrix} 1 & -1 \\\\ 2 & 1 \\end{pmatrix}$ (row $i$ = hidden unit $i$), $b = (0.5, -1)^\\top$, $v = (2, 3)^\\top$, input $x = (1, 2)^\\top$ and target $y = 7$.\n\nFind $\\partial L / \\partial W_{22}$ (unit 2, input 2).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 12,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Left out the outgoing weight $v_2 = 3$ in the chain.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Multiplied by $x_1$ instead of $x_2$; $W_{22}$ connects input 2.",
+     "trap": "C6"
+    },
+    {
+     "value": -12,
+     "why": "Used $y - \\hat y$ as the output error; the loss gradient is $\\hat y - y$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $z = Wx + b = (1 - 2 + 0.5,\\; 2 + 2 - 1) = (-0.5, 3)$, so $h = (0, 3)$ and $\\hat y = 9$.\n2. $\\partial L/\\partial \\hat y = \\hat y - y = 2$.\n3. Unit 2 is active: $\\partial L/\\partial z_2 = 2 \\cdot v_2 \\cdot 1 = 6$.\n4. $\\partial L/\\partial W_{22} = 6 \\cdot x_2 = 12$."
+  },
+  {
+   "id": "ml-nn-backprop-02",
+   "skill": "ml.nn-backprop",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Same network as before:\n\n$$h = \\mathrm{ReLU}(Wx + b),\\quad \\hat y = v^\\top h,\\quad L = \\tfrac12(\\hat y - y)^2$$\n\nwith $W = \\begin{pmatrix} 1 & -1 \\\\ 2 & 1 \\end{pmatrix}$ (row $i$ = hidden unit $i$), $b = (0.5, -1)^\\top$, $v = (2, 3)^\\top$, input $x = (1, 2)^\\top$ and target $y = 7$.\n\nFind $\\partial L / \\partial W_{12}$ (unit 1, input 2).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Ignored the ReLU gate: $2 \\cdot v_1 \\cdot x_2 = 8$; an inactive unit passes back zero.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Ignored the gate and used $x_1$: $2 \\cdot 2 \\cdot 1$.",
+     "trap": "C9"
+    },
+    {
+     "value": -8,
+     "why": "Ignored the gate and used $y - \\hat y$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $z_1 = 1 - 2 + 0.5 = -0.5 < 0$, so unit 1 outputs 0.\n2. ReLU$'(z_1) = 0$ blocks the gradient.\n3. $\\partial L/\\partial W_{12} = 2 \\cdot v_1 \\cdot 0 \\cdot x_2 = 0$."
+  },
+  {
+   "id": "ml-nn-backprop-03",
+   "skill": "ml.nn-backprop",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "During training, a ReLU hidden unit has a negative pre-activation $z = w^\\top x + b$ for **every** training input. What happens to $w$ and $b$ under gradient descent?",
+   "figure": null,
+   "options": [
+    {
+     "text": "They receive gradient $-1$ times the upstream error, which pushes $z$ back above 0.",
+     "correct": false,
+     "why": "ReLU's slope for $z < 0$ is 0, not $-1$; that would be a different activation.",
+     "trap": "C11"
+    },
+    {
+     "text": "$w$ stops changing but $b$ keeps receiving gradient because the bias input is always 1.",
+     "correct": false,
+     "why": "$\\partial L/\\partial b = \\delta$ itself, and $\\delta$ is 0 through the gate.",
+     "trap": "C6"
+    },
+    {
+     "text": "They shrink slowly toward zero until the unit becomes active again.",
+     "correct": false,
+     "why": "Nothing pushes them; a zero gradient means no change at all (only weight decay would shrink them).",
+     "trap": "C9"
+    },
+    {
+     "text": "They receive zero gradient and never change, so the unit stays inactive.",
+     "correct": true,
+     "why": "Every input lands on the flat part of ReLU, so $\\delta = 0$ and nothing updates."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. ReLU$'(z) = 0$ for $z < 0$.\n2. So $\\partial L/\\partial w = \\delta\\,x = 0$ and $\\partial L/\\partial b = 0$ on every input.\n3. The unit never changes: a dead ReLU."
+  },
+  {
+   "id": "ml-nn-backprop-04",
+   "skill": "ml.nn-backprop",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A scalar network computes $\\hat y = w_2\\,\\mathrm{ReLU}(w_1 x + b_1)$ with loss $L = (\\hat y - y)^2$ (no factor ½). With $w_1 = 1.5$, $b_1 = -1$, $w_2 = -2$, $x = 3$ and $y = 1$, find $\\partial L / \\partial w_1$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 96,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 48,
+     "why": "Dropped the factor 2 from differentiating the square; there is no ½ here.",
+     "trap": "C4"
+    },
+    {
+     "value": 32,
+     "why": "Forgot the input factor $x$ in $\\partial z_1/\\partial w_1$.",
+     "trap": "C6"
+    },
+    {
+     "value": -96,
+     "why": "Lost the sign of $w_2 = -2$ or used $y - \\hat y$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $z_1 = 4.5 - 1 = 3.5 > 0$, $h = 3.5$, $\\hat y = -7$.\n2. $\\partial L/\\partial \\hat y = 2(\\hat y - y) = -16$.\n3. $\\partial L/\\partial w_1 = -16 \\cdot w_2 \\cdot 1 \\cdot x = -16 \\cdot (-2) \\cdot 3 = 96$."
+  },
+  {
+   "id": "ml-nn-backprop-05",
+   "skill": "ml.nn-backprop",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A binary classifier has 2 ReLU hidden units, $h = \\mathrm{ReLU}(W_1x + b_1)$ with $b_1 = 0$ at the current step, and output $p = \\sigma(v^\\top h + c)$ trained with cross-entropy $L = -[y\\ln p + (1-y)\\ln(1-p)]$. Here $W_1 = \\begin{pmatrix} 2 & 1 \\\\ 1 & 3 \\end{pmatrix}$, $v = (2, -1)^\\top$, $c = -2$, $x = (1, -1)^\\top$, $y = 1$. Find $\\partial L/\\partial b_{1,1}$, the gradient for the bias of hidden unit 1.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Used $y - p$ as the output error.",
+     "trap": "C11"
+    },
+    {
+     "value": -0.25,
+     "why": "Multiplied by an extra $\\sigma'(0) = 0.25$; with cross-entropy the sigmoid derivative cancels.",
+     "trap": "C3"
+    },
+    {
+     "value": -0.5,
+     "why": "Stopped at the output error and left out $v_1 = 2$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $z = W_1x = (1, -2)$, $h = (1, 0)$; output logit $2 - 0 - 2 = 0$, so $p = 0.5$.\n2. Sigmoid with cross-entropy: $\\partial L/\\partial(\\text{logit}) = p - y = -0.5$.\n3. Unit 1 is active: $\\partial L/\\partial b_{1,1} = -0.5 \\cdot v_1 \\cdot 1 = -1$."
+  },
+  {
+   "id": "ml-nn-backprop-06",
+   "skill": "ml.nn-backprop",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about backpropagation in ReLU networks are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "If all weights in a hidden layer start equal, the units in that layer get equal gradients and remain identical.",
+     "correct": true,
+     "why": "Identical units see identical upstream errors; random initialization breaks this symmetry."
+    },
+    {
+     "text": "The local gradient of ReLU is 1 where the unit is active and 0 where it is inactive.",
+     "correct": true,
+     "why": "ReLU is the identity for $z > 0$ and constant 0 for $z < 0$."
+    },
+    {
+     "text": "A larger learning rate revives a ReLU unit that is dead on all inputs.",
+     "correct": false,
+     "why": "The step is learning rate × gradient, and the gradient is exactly 0.",
+     "trap": "C9"
+    },
+    {
+     "text": "A unit with $z < 0$ still passes its upstream gradient times its outgoing weight to the previous layer.",
+     "correct": false,
+     "why": "The gate multiplies by ReLU$'(z) = 0$, so nothing passes through.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. ReLU$'(z)$ is 1 for $z > 0$ and 0 for $z < 0$.\n2. Equal initial weights give equal hidden units equal gradients, so they stay equal (symmetry).\n3. An inactive unit sends no gradient backward, and a zero gradient does not depend on the learning rate."
+  },
+  {
+   "id": "ml-nn-sgd-01",
+   "skill": "ml.nn-sgd",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A linear unit $\\hat y = w^\\top x + b$ is trained with $L = \\tfrac12(\\hat y - y)^2$. Currently $w = (1, -1)^\\top$, $b = 0$. One SGD step with learning rate $\\eta = 0.1$ is taken on the example $x = (2, 1)^\\top$, $y = 3$. What is the new $w_1$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.4,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.6,
+     "why": "Added the gradient (ascent); SGD subtracts $\\eta\\nabla L$.",
+     "trap": "C11"
+    },
+    {
+     "value": 1.2,
+     "why": "Forgot the factor $x_1 = 2$ in $\\partial \\hat y/\\partial w_1$.",
+     "trap": "C6"
+    },
+    {
+     "value": 1.8,
+     "why": "Doubled the gradient as if the loss had no ½.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. $\\hat y = 2 - 1 = 1$, error $\\hat y - y = -2$.\n2. $\\partial L/\\partial w_1 = -2 \\cdot x_1 = -4$.\n3. $w_1 \\leftarrow 1 - 0.1(-4) = 1.4$."
+  },
+  {
+   "id": "ml-nn-sgd-02",
+   "skill": "ml.nn-sgd",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Logistic regression $p = \\sigma(w^\\top x + b)$ is trained with cross-entropy $L = -[y\\ln p + (1-y)\\ln(1-p)]$. Starting from $w = (0, 0)^\\top$, $b = 0$, one SGD step with $\\eta = 0.5$ is taken on $x = (1, 2)^\\top$, $y = 1$. What is the new $w_2$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.5,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.125,
+     "why": "Multiplied by an extra $\\sigma'(0) = 0.25$; with cross-entropy the gradient is just $(p - y)x$.",
+     "trap": "C3"
+    },
+    {
+     "value": -0.5,
+     "why": "Used $(y - p)x$ as the gradient, which moves the wrong way.",
+     "trap": "C11"
+    },
+    {
+     "value": 0.25,
+     "why": "Used $x_1 = 1$ instead of $x_2 = 2$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $p = \\sigma(0) = 0.5$.\n2. $\\nabla_w L = (p - y)x = -0.5\\,(1, 2) = (-0.5, -1)$.\n3. $w_2 \\leftarrow 0 - 0.5(-1) = 0.5$."
+  },
+  {
+   "id": "ml-nn-sgd-03",
+   "skill": "ml.nn-sgd",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A $K$-class softmax output $p_k = e^{z_k}/\\sum_j e^{z_j}$ is trained with cross-entropy $L = -\\sum_k y_k \\ln p_k$ against a one-hot target $y$. What is $\\partial L/\\partial z_k$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$-y_k / p_k$",
+     "correct": false,
+     "why": "That is $\\partial L/\\partial p_k$; the chain through the softmax is missing.",
+     "trap": "C6"
+    },
+    {
+     "text": "$(p_k - y_k)\\,p_k(1 - p_k)$",
+     "correct": false,
+     "why": "That extra factor appears with squared error, not cross-entropy.",
+     "trap": "C3"
+    },
+    {
+     "text": "$p_k - y_k$",
+     "correct": true,
+     "why": "The softmax Jacobian and the log combine to this clean form."
+    },
+    {
+     "text": "$y_k - p_k$",
+     "correct": false,
+     "why": "Sign reversed; this is the negative gradient (the descent direction).",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\partial p_j/\\partial z_k = p_j(\\mathbb{1}[j = k] - p_k)$.\n2. $\\partial L/\\partial z_k = -\\sum_j y_j(\\mathbb{1}[j=k] - p_k) = -y_k + p_k$.\n3. So $p_k - y_k$."
+  },
+  {
+   "id": "ml-nn-sgd-04",
+   "skill": "ml.nn-sgd",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A 3-class softmax classifier produces logits $z = (\\ln 2,\\; 0,\\; 0)$. The true class is class 2 (one-hot $y = (0, 1, 0)$) and the loss is cross-entropy. Find $\\partial L/\\partial z_2$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -0.75,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.75,
+     "why": "Used $y_2 - p_2$.",
+     "trap": "C11"
+    },
+    {
+     "value": 0.25,
+     "why": "Wrote $p_2$ and forgot to subtract $y_2 = 1$.",
+     "trap": "C6"
+    },
+    {
+     "value": -4,
+     "why": "Gave $\\partial L/\\partial p_2 = -1/p_2$, not the gradient with respect to the logit.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $e^{z} = (2, 1, 1)$, sum 4, so $p = (0.5, 0.25, 0.25)$.\n2. $\\partial L/\\partial z_2 = p_2 - y_2 = 0.25 - 1 = -0.75$."
+  },
+  {
+   "id": "ml-nn-sgd-05",
+   "skill": "ml.nn-sgd",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A unit outputs $p = \\sigma(z)$ for a binary target $y$. Compare squared error $L_{SE} = \\tfrac12(p - y)^2$ with cross-entropy $L_{CE}$. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Squared error with a sigmoid output gives a convex loss in $w$ for logistic regression.",
+     "correct": false,
+     "why": "It is non-convex; that is one reason cross-entropy is used.",
+     "trap": "C9"
+    },
+    {
+     "text": "With cross-entropy, the gradient is 0 when $y = 1$ and $p \\approx 0$.",
+     "correct": false,
+     "why": "There $p - y \\approx -1$, the largest possible magnitude.",
+     "trap": "C8"
+    },
+    {
+     "text": "$\\partial L_{CE}/\\partial z = p - y$.",
+     "correct": true,
+     "why": "The $\\sigma'$ factor cancels with the $1/p$ from the log."
+    },
+    {
+     "text": "$\\partial L_{SE}/\\partial z = (p - y)\\,p(1 - p)$, so learning stalls when the sigmoid saturates.",
+     "correct": true,
+     "why": "The factor $p(1 - p)$ goes to 0 at both ends."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\partial L_{SE}/\\partial z = (p - y)\\,p(1-p)$, which is tiny when $p$ is near 0 or 1, even if wrong.\n2. $\\partial L_{CE}/\\partial z = p - y$, which is largest when the prediction is confidently wrong.\n3. Squared error on a sigmoid is not convex in $w$; cross-entropy is."
+  },
+  {
+   "id": "ml-nn-sgd-06",
+   "skill": "ml.nn-sgd",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A one-weight model $\\hat y = wx$ is trained with $L = (\\hat y - y)^2$. With $w = 2$, one SGD step on $(x, y) = (1.5, 2)$ uses $\\eta = 0.1$. What is the new $w$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.7,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 1.85,
+     "why": "Dropped the factor 2 from the square.",
+     "trap": "C4"
+    },
+    {
+     "value": 2.3,
+     "why": "Moved along the gradient instead of against it.",
+     "trap": "C11"
+    },
+    {
+     "value": 1.8,
+     "why": "Forgot the factor $x = 1.5$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $\\hat y = 3$, $\\hat y - y = 1$.\n2. $\\partial L/\\partial w = 2(1)(1.5) = 3$.\n3. $w \\leftarrow 2 - 0.1 \\cdot 3 = 1.7$."
+  },
+  {
+   "id": "ml-cluster-kmeans-01",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 1, 2, 4, 7, 8, 10. k-means with $k = 2$ starts with centroids $c_1 = 2$ and $c_2 = 4$. After one assignment step and one update step, what is the new $c_2$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7.25,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 7.5,
+     "why": "Took the median of the cluster; k-means updates to the mean.",
+     "trap": "C3"
+    },
+    {
+     "value": 5.33,
+     "why": "Averaged all six points instead of only those assigned to $c_2$.",
+     "trap": "C6"
+    },
+    {
+     "value": 8.33,
+     "why": "Left 4 out of cluster 2; 4 is at distance 0 from $c_2$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Boundary is the midpoint 3: points 1, 2 go to $c_1$; 4, 7, 8, 10 go to $c_2$.\n2. New $c_2 = (4 + 7 + 8 + 10)/4 = 29/4 = 7.25$."
+  },
+  {
+   "id": "ml-cluster-kmeans-02",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "k-means with $k = 2$ runs on the points below, starting from $\\mu_1 = A$ and $\\mu_2 = D$.\n\n| point | A | B | C | D | E |\n|---|---|---|---|---|---|\n| $x$ | 1 | 2 | 4 | 5 | 1 |\n| $y$ | 1 | 1 | 3 | 4 | 3 |\n\nAfter one assignment step and one centroid update, what is the within-cluster sum of squared distances (SSE) of the current assignment to the **updated** centroids? (Give 2 decimals.)",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4.33,
+    "tol": 0.02
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Measured SSE to the initial centroids $A$ and $D$, before the update step.",
+     "trap": "C6"
+    },
+    {
+     "value": 4.48,
+     "why": "Summed plain distances instead of squared distances.",
+     "trap": "C4"
+    },
+    {
+     "value": 3.33,
+     "why": "Added only cluster 1's SSE.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Squared distances to $A$ / $D$: B 1 / 18, C 13 / 2, E 4 / 17. Clusters $\\{A, B, E\\}$ and $\\{C, D\\}$.\n2. New centroids $(4/3, 5/3)$ and $(4.5, 3.5)$.\n3. SSE: cluster 1 gives $5/9 + 8/9 + 17/9 = 10/3$; cluster 2 gives $0.5 + 0.5 = 1$.\n4. Total $13/3 \\approx 4.33$."
+  },
+  {
+   "id": "ml-cluster-kmeans-03",
+   "skill": "ml.cluster-kmeans",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statement about Lloyd's k-means algorithm is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It always reaches the global minimum of the SSE.",
+     "correct": false,
+     "why": "Over-claim; different starts can stop at different local minima.",
+     "trap": "C8"
+    },
+    {
+     "text": "Neither the assignment step nor the update step increases the SSE, so the algorithm terminates, possibly at a local minimum.",
+     "correct": true,
+     "why": "Each step minimizes SSE over one set of variables with the other fixed."
+    },
+    {
+     "text": "The update step can increase the SSE when a cluster gains points.",
+     "correct": false,
+     "why": "For a fixed assignment the mean is the SSE minimizer, so moving to it never hurts.",
+     "trap": "C8"
+    },
+    {
+     "text": "The final clusters do not depend on the initial centroids.",
+     "correct": false,
+     "why": "They often do; that is why multiple restarts or k-means++ are used.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Assignment: each point moves to its nearest centroid, so SSE cannot rise.\n2. Update: the mean minimizes the sum of squared distances within a cluster, so SSE cannot rise.\n3. Finite partitions, so it stops, but possibly at a local minimum."
+  },
+  {
+   "id": "ml-cluster-kmeans-04",
+   "skill": "ml.cluster-kmeans",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about k-means initialization and objective are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Two runs with different initial centroids can end with different clusterings and different SSE.",
+     "correct": true,
+     "why": "Lloyd's algorithm only finds a local minimum."
+    },
+    {
+     "text": "A Lloyd run with $k + 1$ clusters always ends with a lower SSE than a run with $k$ clusters.",
+     "correct": false,
+     "why": "True only for the optimal SSE; a poorly initialised run can stop at a worse local minimum.",
+     "trap": "C8"
+    },
+    {
+     "text": "k-means separates two concentric rings well because each ring has its own mean.",
+     "correct": false,
+     "why": "Both rings share the same centre; k-means splits space into convex Voronoi cells.",
+     "trap": "C9"
+    },
+    {
+     "text": "k-means++ chooses each new initial centre with probability proportional to its squared distance from the nearest centre already chosen.",
+     "correct": true,
+     "why": "This $D^2$ weighting spreads the seeds out."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Different starts can converge to different local minima.\n2. k-means++ samples each new seed with probability ∝ $D(x)^2$, the squared distance to the nearest chosen seed.\n3. The **optimal** SSE falls with $k$, but a particular Lloyd run with $k+1$ can end worse than one with $k$.\n4. k-means favours compact convex clusters, not rings."
+  },
+  {
+   "id": "ml-cluster-kmeans-05",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 1, 2, 3, 8, 9, 10, 25. k-means with $k = 2$ starts with $c_1 = 1$, $c_2 = 2$ and runs until assignments stop changing. What is the final $c_2$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 9.5,
+     "why": "Stopped after the first iteration (or took the median of {8, 9, 10, 25}); the update uses the mean and must be repeated.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Reported the other centroid, $c_1$.",
+     "trap": "C6"
+    },
+    {
+     "value": 8.29,
+     "why": "Averaged all seven points.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Iter 1: only 1 goes to $c_1$; $c_2 = 57/6 = 9.5$.\n2. Iter 2: 1, 2, 3 go to $c_1 = 1$ (2 and 3 are nearer 1 than 9.5); $c_2 = (8+9+10+25)/4 = 13$, $c_1 = 2$.\n3. Iter 3: 8 is at distance 6 from 2 and 5 from 13, so nothing changes. Final $c_2 = 13$."
+  },
+  {
+   "id": "ml-cluster-kmeans-06",
+   "skill": "ml.cluster-kmeans",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A customer data set has two features: annual income (in rupees, range about 2–50 lakh) and age (in years, 20–70). k-means with Euclidean distance is run on the raw values. What is the most likely effect?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Clusters are formed mostly by age, because age has the smaller range.",
+     "correct": false,
+     "why": "Reversed; the large-range feature dominates.",
+     "trap": "C11"
+    },
+    {
+     "text": "k-means will fail to converge on unscaled data.",
+     "correct": false,
+     "why": "It still converges; the result is just distorted.",
+     "trap": "C8"
+    },
+    {
+     "text": "Clusters are formed almost entirely by income, because its differences dominate the distance.",
+     "correct": true,
+     "why": "k-means is not scale-invariant; standardize first."
+    },
+    {
+     "text": "Scaling has no effect, because k-means uses means rather than distances.",
+     "correct": false,
+     "why": "The assignment step uses distances, which depend on units.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Squared differences in income (order $10^{11}$) dwarf those in age (order $10^3$).\n2. Distances, and so clusters, depend almost only on income.\n3. Standardize features first."
+  },
+  {
+   "id": "ml-cluster-kmedoids-01",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A cluster contains the one-dimensional points 1, 3, 4, 5, 20. Using absolute distance $|x - m|$, which value is the cluster's medoid?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6.6,
+     "why": "Gave the mean; a medoid must be one of the data points.",
+     "trap": "C3"
+    },
+    {
+     "value": 5,
+     "why": "Picked the data point nearest the mean (6.6); the outlier 20 pulls the mean, not the medoid.",
+     "trap": "C3"
+    },
+    {
+     "value": 21,
+     "why": "Reported the minimum total distance instead of the medoid itself.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Total distance from each candidate: 1 → 28, 3 → 22, 4 → 21, 5 → 22, 20 → 67.\n2. The smallest is 4, so the medoid is 4."
+  },
+  {
+   "id": "ml-cluster-kmedoids-02",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A single cluster holds the points below. Its medoid is chosen to minimize the total **Manhattan** distance to the cluster's points. What is that minimum total distance?\n\n| point | A | B | C | D | E |\n|---|---|---|---|---|---|\n| $x$ | 0 | 1 | 0 | 1 | 6 |\n| $y$ | 0 | 0 | 2 | 1 | 5 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 14,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 46,
+     "why": "Summed squared Euclidean distances from D; k-medoids here uses plain Manhattan distance.",
+     "trap": "C4"
+    },
+    {
+     "value": 16.4,
+     "why": "Measured from the mean (1.6, 1.6); the medoid must be a data point.",
+     "trap": "C3"
+    },
+    {
+     "value": 15,
+     "why": "Took B as the medoid without comparing all candidates.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Totals: A 16, B 15, C 16, D 14, E 39.\n2. D is the medoid, cost 14 (A 2, B 1, C 2, D 0, E 9)."
+  },
+  {
+   "id": "ml-cluster-kmedoids-03",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A cluster has 9 points near the origin and 1 far outlier. Why is k-medoids usually less affected by the outlier than k-means?",
+   "figure": null,
+   "options": [
+    {
+     "text": "k-medoids deletes outliers before clustering.",
+     "correct": false,
+     "why": "It keeps every point; robustness comes from the choice of centre.",
+     "trap": "C9"
+    },
+    {
+     "text": "The medoid must be an actual data point minimizing the sum of (unsquared) dissimilarities, so one far point cannot drag it into empty space.",
+     "correct": true,
+     "why": "Like a median, it resists extreme values."
+    },
+    {
+     "text": "k-medoids always uses Manhattan distance, which ignores far points.",
+     "correct": false,
+     "why": "Any dissimilarity can be used, and no distance ignores far points.",
+     "trap": "C1"
+    },
+    {
+     "text": "k-medoids uses squared distances, which shrink the outlier's influence.",
+     "correct": false,
+     "why": "Squaring enlarges large distances; that is k-means' weakness.",
+     "trap": "C4"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. k-means moves the centre to the mean, which shifts by (outlier offset)/n and is fitted with squared distances.\n2. k-medoids must pick an actual point and sums plain distances.\n3. The outlier cannot become the medoid and barely moves which point is cheapest."
+  },
+  {
+   "id": "ml-cluster-kmedoids-04",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about k-medoids (PAM) are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It can run from a dissimilarity matrix alone, without coordinates.",
+     "correct": true,
+     "why": "Costs use only $d(x_i, x_j)$, never averages of coordinates."
+    },
+    {
+     "text": "The medoid is always the data point closest to the cluster mean.",
+     "correct": false,
+     "why": "An outlier moves the mean; the medoid minimizes total distance, which can pick a different point.",
+     "trap": "C3"
+    },
+    {
+     "text": "Every cluster centre is one of the data points.",
+     "correct": true,
+     "why": "That is the definition of a medoid."
+    },
+    {
+     "text": "Each iteration is cheaper than a k-means iteration on the same data.",
+     "correct": false,
+     "why": "Evaluating all medoid/non-medoid swaps costs about $O(k(n-k)^2)$, far more than $O(nk)$.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Medoids are always data points.\n2. Only pairwise dissimilarities are needed, so it works on categorical data or a given distance matrix.\n3. A PAM swap pass costs about $O(k(n-k)^2)$, more than a k-means iteration's $O(nk)$.\n4. The medoid need not be the point nearest the mean."
+  },
+  {
+   "id": "ml-cluster-kmedoids-05",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 1, 2, 3, 10, 11, 15. k-medoids with $k = 2$ and absolute distance currently has medoids $\\{2, 3\\}$. PAM evaluates swapping medoid 3 with the non-medoid 11. What is the total cost of the configuration after this swap?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 28,
+     "why": "Gave the cost before the swap.",
+     "trap": "C6"
+    },
+    {
+     "value": 21,
+     "why": "Gave the decrease in cost (28 − 7), not the new cost.",
+     "trap": "C6"
+    },
+    {
+     "value": 19,
+     "why": "Used squared distances; k-medoids here sums absolute distances.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. With medoids {2, 11}: 1 → 1, 2 → 0, 3 → 1, 10 → 1, 11 → 0, 15 → 4.\n2. Total 7 (the old cost was 28, so the swap is accepted)."
+  },
+  {
+   "id": "ml-cluster-linkage-01",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Five points have the distance matrix below. Agglomerative clustering with **single linkage** is run until one cluster remains. At what height (linkage distance) does the final merge occur?\n\n| | A | B | C | D | E |\n|---|---|---|---|---|---|\n| A | 0 | 2 | 6 | 10 | 9 |\n| B | 2 | 0 | 5 | 9 | 8 |\n| C | 6 | 5 | 0 | 4 | 5 |\n| D | 10 | 9 | 4 | 0 | 3 |\n| E | 9 | 8 | 5 | 3 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 10,
+     "why": "Used complete linkage (largest cross distance).",
+     "trap": "C2"
+    },
+    {
+     "value": 7.83,
+     "why": "Used average linkage: 47/6.",
+     "trap": "C3"
+    },
+    {
+     "value": 4,
+     "why": "Gave the height of the third merge, not the last.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Merge A–B at 2, then D–E at 3.\n2. C to {D,E}: min(4, 5) = 4; C to {A,B}: min(6, 5) = 5. Merge C with {D,E} at 4.\n3. {A,B} to {C,D,E}: min(6, 10, 9, 5, 9, 8) = 5. Final height 5."
+  },
+  {
+   "id": "ml-cluster-linkage-02",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Using the same distance matrix with **complete linkage**, at what height does point C join another cluster?\n\n| | A | B | C | D | E |\n|---|---|---|---|---|---|\n| A | 0 | 2 | 6 | 10 | 9 |\n| B | 2 | 0 | 5 | 9 | 8 |\n| C | 6 | 5 | 0 | 4 | 5 |\n| D | 10 | 9 | 4 | 0 | 3 |\n| E | 9 | 8 | 5 | 3 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Took the minimum (single linkage) distance from C to {D, E}.",
+     "trap": "C2"
+    },
+    {
+     "value": 4.5,
+     "why": "Averaged C's distances to D and E (average linkage).",
+     "trap": "C3"
+    },
+    {
+     "value": 6,
+     "why": "Compared to {A,B} only; C joins the cluster with the smaller complete-linkage distance, {D,E}.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. A–B at 2, D–E at 3.\n2. C to {D,E}: max(4, 5) = 5; C to {A,B}: max(6, 5) = 6.\n3. C joins {D,E} at height 5 (the final merge is at 10)."
+  },
+  {
+   "id": "ml-cluster-linkage-03",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Using the same distance matrix with **average linkage** (UPGMA), at what height does the final merge occur? Give 2 decimals.\n\n| | A | B | C | D | E |\n|---|---|---|---|---|---|\n| A | 0 | 2 | 6 | 10 | 9 |\n| B | 2 | 0 | 5 | 9 | 8 |\n| C | 6 | 5 | 0 | 4 | 5 |\n| D | 10 | 9 | 4 | 0 | 3 |\n| E | 9 | 8 | 5 | 3 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7.83,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Used single linkage.",
+     "trap": "C2"
+    },
+    {
+     "value": 10,
+     "why": "Used complete linkage.",
+     "trap": "C2"
+    },
+    {
+     "value": 7.25,
+     "why": "Averaged the two sub-cluster distances 5.5 (to C) and 9 (to {D,E}) equally; UPGMA weights all six point pairs.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. A–B at 2, D–E at 3; C joins {D,E} at $(4 + 5)/2 = 4.5$ (vs 5.5 to {A,B}).\n2. {A,B} to {C,D,E}: mean of 6, 10, 9, 5, 9, 8 = 47/6.\n3. Height ≈ 7.83."
+  },
+  {
+   "id": "ml-cluster-linkage-04",
+   "skill": "ml.cluster-linkage",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional points: 0, 2, 3, 7, 12, 13. Agglomerative clustering with **complete linkage** first forms {2, 3}, {12, 13} and then {0, 2, 3}. Which merge happens next?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{7} joins {0, 2, 3} at height 4",
+     "correct": false,
+     "why": "That is the single-linkage choice (nearest point 3).",
+     "trap": "C2"
+    },
+    {
+     "text": "{7} joins {12, 13} at height 6",
+     "correct": true,
+     "why": "Largest distances: 7 to the left cluster, 6 to the right; the smaller wins."
+    },
+    {
+     "text": "{7} joins {12, 13} at height 5",
+     "correct": false,
+     "why": "Right partner but used the nearest point (single-linkage height).",
+     "trap": "C2"
+    },
+    {
+     "text": "{7} joins {0, 2, 3} at height 7",
+     "correct": false,
+     "why": "Correct complete distance, but complete linkage merges the pair with the **smallest** such distance, which is 6.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Current clusters: {0, 2, 3}, {7}, {12, 13}.\n2. Complete linkage: 7 to {0,2,3} = max(7, 5, 4) = 7; 7 to {12,13} = max(5, 6) = 6; {0,2,3} to {12,13} = 13.\n3. Smallest is 6: {7} joins {12, 13} at height 6."
+  },
+  {
+   "id": "ml-cluster-linkage-05",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional points: 1, 2, 4, 8, 9, 15. Single-linkage agglomerative clustering builds a dendrogram, which is cut at height 2.5. How many clusters result?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Used complete linkage, where 4 joins {1, 2} only at height 3.",
+     "trap": "C2"
+    },
+    {
+     "value": 2,
+     "why": "Also applied the merge at height 4, which lies above the cut.",
+     "trap": "C5"
+    },
+    {
+     "value": 6,
+     "why": "Forgot that merges below the cut have already happened.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Merges: {1,2} at 1, {8,9} at 1, {1,2,4} at 2, then {1,2,4}+{8,9} at 4, then 15 at 6.\n2. Merges at or below 2.5: three, so 6 − 3 = 3 clusters: {1,2,4}, {8,9}, {15}."
+  },
+  {
+   "id": "ml-cluster-linkage-06",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "On the real line, cluster $X = \\{1, 4\\}$ and cluster $Y = \\{6, 13\\}$. What is the **complete-linkage** distance between $X$ and $Y$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 12,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Took the minimum (single linkage).",
+     "trap": "C2"
+    },
+    {
+     "value": 7,
+     "why": "Took the mean of the cross distances (average linkage), which here also equals the centroid distance.",
+     "trap": "C3"
+    },
+    {
+     "value": 9,
+     "why": "Used the distance from the far end of one cluster to the near end of the other.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Cross distances: 5, 12, 2, 9.\n2. Complete linkage takes the maximum: 12."
+  },
+  {
+   "id": "ml-cluster-dendrogram-01",
+   "skill": "ml.cluster-dendrogram",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The dendrogram shows agglomerative clustering of A–E; the vertical axis is the merge height. If the dendrogram is cut at height 2, how many clusters are obtained?",
+   "figure": "<svg viewBox=\"0 0 310 210\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M40 180V150H100V180M220 180V135H280V180M250 135V90H160V180M70 150V30H205V90\"/><path d=\"M22 180V30M18 180h4M18 150h4M18 120h4M18 90h4M18 60h4M18 30h4\"/><g fill=\"currentColor\" stroke=\"none\"><text x=\"36\" y=\"198\">A</text><text x=\"96\" y=\"198\">B</text><text x=\"156\" y=\"198\">C</text><text x=\"216\" y=\"198\">D</text><text x=\"276\" y=\"198\">E</text><text x=\"6\" y=\"184\">0</text><text x=\"6\" y=\"154\">1</text><text x=\"6\" y=\"124\">2</text><text x=\"6\" y=\"94\">3</text><text x=\"6\" y=\"64\">4</text><text x=\"6\" y=\"34\">5</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Counted the merges below the cut instead of the resulting clusters.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Applied only the lowest merge (A–B); D–E at 1.5 is also below 2.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Treated the cut as making every leaf its own cluster.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Merges below height 2: A–B at 1 and D–E at 1.5.\n2. 5 points − 2 merges = 3 clusters: {A,B}, {C}, {D,E}."
+  },
+  {
+   "id": "ml-cluster-dendrogram-02",
+   "skill": "ml.cluster-dendrogram",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Agglomerative hierarchical clustering starts with 10 singleton clusters and merges two clusters per step. How many merge steps are needed to reach one cluster?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 10,
+     "why": "Counted one merge per point; the last cluster needs no partner.",
+     "trap": "C6"
+    },
+    {
+     "value": 45,
+     "why": "Counted the pairwise distances $\\binom{10}{2}$, not merges.",
+     "trap": "C10"
+    },
+    {
+     "value": 5,
+     "why": "Assumed each step pairs up all clusters at once (like a tournament round).",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Each merge reduces the number of clusters by exactly 1.\n2. From 10 to 1 needs 9 merges (the dendrogram has 9 internal nodes)."
+  },
+  {
+   "id": "ml-cluster-dendrogram-03",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Two dense groups of points are joined by a thin line of evenly spaced points. Which linkage is most likely to merge the two groups early into one long cluster?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Complete linkage",
+     "correct": false,
+     "why": "Swapped: complete uses the farthest pair and resists chaining, favouring compact clusters.",
+     "trap": "C2"
+    },
+    {
+     "text": "Average linkage",
+     "correct": false,
+     "why": "Averaging over all pairs dilutes the few close bridge pairs.",
+     "trap": "C3"
+    },
+    {
+     "text": "Single linkage",
+     "correct": true,
+     "why": "Its min-distance rule follows the bridge point by point: the chaining effect."
+    },
+    {
+     "text": "Ward's linkage",
+     "correct": false,
+     "why": "Ward merges to minimize the increase in within-cluster variance, which penalizes long stretched clusters.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Single linkage only needs one close pair, so the bridge links the groups step by step (chaining).\n2. Complete linkage looks at the farthest pair, which stays large for the two groups."
+  },
+  {
+   "id": "ml-cluster-dendrogram-04",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which procedure gives the same $k$ clusters as single-linkage agglomerative clustering stopped at $k$ clusters (assume distinct distances)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Build a minimum spanning tree and delete its $k - 1$ lightest edges.",
+     "correct": false,
+     "why": "Direction reversed; the light edges are the earliest merges.",
+     "trap": "C11"
+    },
+    {
+     "text": "Run k-means with $k$ clusters from random centres.",
+     "correct": false,
+     "why": "k-means minimizes SSE and gives convex cells, not linkage components.",
+     "trap": "C10"
+    },
+    {
+     "text": "Repeatedly merge the pair of clusters whose farthest points are closest.",
+     "correct": false,
+     "why": "That is complete linkage.",
+     "trap": "C2"
+    },
+    {
+     "text": "Build a minimum spanning tree of the points and delete its $k - 1$ heaviest edges.",
+     "correct": true,
+     "why": "Single linkage is Kruskal's MST algorithm stopped early."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Single-linkage merges follow Kruskal's algorithm on the complete distance graph.\n2. So the merge heights are the MST edge weights.\n3. Removing the $k - 1$ heaviest MST edges leaves the same $k$ components."
+  },
+  {
+   "id": "ml-cluster-dendrogram-05",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about linkage criteria are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The merge heights of single-linkage clustering equal the edge weights of a minimum spanning tree.",
+     "correct": true,
+     "why": "Each merge adds the shortest edge joining two components, as in Kruskal."
+    },
+    {
+     "text": "Single linkage is less prone to chaining than complete linkage.",
+     "correct": false,
+     "why": "Reversed: single linkage is the one that chains.",
+     "trap": "C2"
+    },
+    {
+     "text": "For any two clusters, single-linkage distance ≤ average-linkage distance ≤ complete-linkage distance.",
+     "correct": true,
+     "why": "Minimum ≤ mean ≤ maximum of the same set of cross distances."
+    },
+    {
+     "text": "Complete-linkage distance is the distance between the two cluster centroids.",
+     "correct": false,
+     "why": "That is centroid linkage; complete uses the farthest pair.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. For fixed clusters $X, Y$: min ≤ mean ≤ max of the cross distances.\n2. Single-linkage merge heights are the MST edge weights.\n3. Complete linkage uses the farthest pair, not centroids.\n4. Single linkage chains; complete linkage resists chaining."
+  },
+  {
+   "id": "ml-cluster-dendrogram-06",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about hierarchical clustering are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Merge heights always increase from step to step, whatever linkage is used.",
+     "correct": false,
+     "why": "True for single, complete and average; centroid linkage can give an inversion (a later merge lower).",
+     "trap": "C8"
+    },
+    {
+     "text": "Agglomerative clustering is bottom-up; divisive clustering starts with all points in one cluster and splits.",
+     "correct": true,
+     "why": "These are the two directions of building the hierarchy."
+    },
+    {
+     "text": "The number of clusters need not be fixed in advance; it is chosen by cutting the dendrogram.",
+     "correct": true,
+     "why": "One dendrogram gives every $k$ from 1 to $n$."
+    },
+    {
+     "text": "A merge made early can be undone later if it increases the total within-cluster distance.",
+     "correct": false,
+     "why": "Greedy hierarchical methods never revisit a merge; that is a known weakness.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Agglomerative is bottom-up (n singletons → 1); divisive is top-down.\n2. The number of clusters is chosen after the fact by cutting the dendrogram.\n3. Single, complete and average linkage give monotone merge heights; centroid linkage can produce inversions.\n4. Merges are never undone."
+  },
+  {
+   "id": "ml-pca-variance-01",
+   "skill": "ml.pca-variance",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The covariance matrix of a centered two-feature data set is $C = \\begin{pmatrix} 5 & 2 \\\\ 2 & 2 \\end{pmatrix}$. What is the variance of the data projected on the first principal component?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Took the largest diagonal entry; that is the variance along the $x_1$ axis, not along PC1.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Gave the trace, the total variance over both PCs.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Gave the smaller eigenvalue (PC2).",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. trace = 7, det = 10 − 4 = 6, so $\\lambda^2 - 7\\lambda + 6 = 0$.\n2. $\\lambda = 6, 1$.\n3. Variance along PC1 = $\\lambda_{\\max} = 6$."
+  },
+  {
+   "id": "ml-pca-variance-02",
+   "skill": "ml.pca-variance",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A centered 3-feature data set has covariance $C = \\begin{pmatrix} 6 & 0 & 0 \\\\ 0 & 3 & 1 \\\\ 0 & 1 & 3 \\end{pmatrix}$. What fraction of the total variance is retained by the first **two** principal components? Give 3 decimals.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.833,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.5,
+     "why": "Kept only the first PC: 6/12.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.75,
+     "why": "Used the two largest diagonal entries (6 + 3); diagonal entries are not eigenvalues when features correlate.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.167,
+     "why": "Computed the fraction lost (2/12), not retained.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. Block structure: eigenvalue 6, plus the eigenvalues of $\\begin{pmatrix} 3 & 1 \\\\ 1 & 3 \\end{pmatrix}$, which are 4 and 2.\n2. Total = trace = 12.\n3. Top two: $(6 + 4)/12 = 0.833$."
+  },
+  {
+   "id": "ml-pca-variance-03",
+   "skill": "ml.pca-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Four points in the plane: (0, 0), (2, 2), (4, 2), (2, 0). Using the covariance with divisor $n$ (that is, $\\frac1n\\sum$), find the variance of the data along the first principal component. Give 2 decimals.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.62,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 7.61,
+     "why": "Skipped centering and used raw second moments $\\begin{pmatrix} 6 & 3 \\\\ 3 & 2 \\end{pmatrix}$.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Gave the trace (total variance), not the top eigenvalue.",
+     "trap": "C6"
+    },
+    {
+     "value": 3.49,
+     "why": "Used divisor $n - 1 = 3$; the question fixes divisor $n$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Mean (2, 1); centered points (−2, −1), (0, 1), (2, 1), (0, −1).\n2. $C = \\frac14\\begin{pmatrix} 8 & 4 \\\\ 4 & 4 \\end{pmatrix} = \\begin{pmatrix} 2 & 1 \\\\ 1 & 1 \\end{pmatrix}$.\n3. $\\lambda^2 - 3\\lambda + 1 = 0$, so $\\lambda_{\\max} = (3 + \\sqrt5)/2 \\approx 2.62$."
+  },
+  {
+   "id": "ml-pca-variance-04",
+   "skill": "ml.pca-variance",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Centered data have covariance $C = \\begin{pmatrix} 5 & 2 \\\\ 2 & 2 \\end{pmatrix}$. What is the variance of the projections $u^\\top x$ onto the direction of $(1, 1)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "6",
+     "correct": false,
+     "why": "That is $\\lambda_{\\max}$, the variance along PC1; $(1, 1)$ is not the top eigenvector.",
+     "trap": "C10"
+    },
+    {
+     "text": "7",
+     "correct": false,
+     "why": "That is the trace, the total variance in all directions.",
+     "trap": "C6"
+    },
+    {
+     "text": "5.5",
+     "correct": true,
+     "why": "$u^\\top C u$ with the unit vector $u = (1,1)/\\sqrt2$."
+    },
+    {
+     "text": "11",
+     "correct": false,
+     "why": "Used the unnormalized vector $(1, 1)$; that doubles the value.",
+     "trap": "C4"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Normalize: $u = (1, 1)/\\sqrt2$.\n2. $u^\\top C u = \\frac12(5 + 2 + 2 + 2) = 5.5$.\n3. It is below $\\lambda_{\\max} = 6$, as it must be."
+  },
+  {
+   "id": "ml-pca-variance-05",
+   "skill": "ml.pca-variance",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "PCA is applied to centered data with covariance matrix $C$. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The first principal component is the direction of minimum projected variance.",
+     "correct": false,
+     "why": "Reversed; that is the last PC.",
+     "trap": "C11"
+    },
+    {
+     "text": "The variances along all the principal components add up to the trace of $C$.",
+     "correct": true,
+     "why": "Σλ = trace, the total variance."
+    },
+    {
+     "text": "Multiplying one feature by 10 leaves the principal directions unchanged.",
+     "correct": false,
+     "why": "It multiplies that feature's variance by 100 and tilts PC1 toward it; standardize if units differ.",
+     "trap": "C8"
+    },
+    {
+     "text": "The principal directions are mutually orthogonal eigenvectors of $C$.",
+     "correct": true,
+     "why": "$C$ is symmetric, so its eigenvectors can be chosen orthonormal."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. PCs are orthonormal eigenvectors of the symmetric matrix $C$.\n2. Σ variances along all PCs = Σ λ = trace(C).\n3. PCA is not scale-invariant.\n4. PC1 maximizes, not minimizes, projected variance."
+  },
+  {
+   "id": "ml-pca-variance-06",
+   "skill": "ml.pca-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A centered 4-feature data set has covariance eigenvalues 7, 2, 0.5, 0.5 (divisor $n$). Each point is projected onto the first principal component only and mapped back. What is the mean squared reconstruction error per point, $\\frac1n\\sum_i \\lVert x_i - \\hat x_i \\rVert^2$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Gave the variance kept by PC1, not the variance lost.",
+     "trap": "C11"
+    },
+    {
+     "value": 0.3,
+     "why": "Gave the fraction lost (3/10) instead of the error itself.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Counted only the second eigenvalue as lost.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. The error equals the variance in the dropped directions.\n2. $2 + 0.5 + 0.5 = 3$."
+  },
+  {
+   "id": "ml-pca-lda-01",
+   "skill": "ml.pca-lda",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "All points of a data set lie near $(100, 100)$ with a small spread along $(1, -1)$. PCA is run **without** subtracting the mean (eigenvectors of $\\frac1n X^\\top X$). What does the first direction found approximately point along?",
+   "figure": null,
+   "options": [
+    {
+     "text": "No direction; uncentered PCA has no eigenvectors",
+     "correct": false,
+     "why": "$X^\\top X$ is symmetric and always has eigenvectors.",
+     "trap": "C8"
+    },
+    {
+     "text": "$(1, -1)/\\sqrt2$, the true direction of spread",
+     "correct": false,
+     "why": "That is what centered PCA would find.",
+     "trap": "C1"
+    },
+    {
+     "text": "$(1, 0)$, the first coordinate axis",
+     "correct": false,
+     "why": "Nothing in the data favours the $x_1$ axis.",
+     "trap": "C10"
+    },
+    {
+     "text": "$(1, 1)/\\sqrt2$, toward the mean",
+     "correct": true,
+     "why": "The $\\mu\\mu^\\top$ term swamps the true spread, so the result points at the mean."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Uncentered second moment = covariance + $\\mu\\mu^\\top$.\n2. $\\mu\\mu^\\top$ is huge (about $2 \\times 10^4$ along $(1,1)$), so it dominates.\n3. The top direction is close to $\\mu$, i.e. $(1, 1)$."
+  },
+  {
+   "id": "ml-pca-lda-02",
+   "skill": "ml.pca-lda",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Linear discriminant analysis (LDA) is applied to 10-dimensional data with 3 classes. What is the maximum number of discriminant directions it can produce?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Used the number of classes; the class means span at most $C - 1$ dimensions.",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Used the feature dimension; that is PCA's limit, not LDA's.",
+     "trap": "C9"
+    },
+    {
+     "value": 9,
+     "why": "Used $d - 1$ instead of $C - 1$.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. The between-class scatter $S_B$ is a sum of $C$ rank-one terms whose weighted deviations sum to zero.\n2. So rank$(S_B) \\le C - 1 = 2$.\n3. At most 2 directions."
+  },
+  {
+   "id": "ml-pca-lda-03",
+   "skill": "ml.pca-lda",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements comparing PCA and LDA are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "PCA is unsupervised; LDA uses class labels.",
+     "correct": true,
+     "why": "LDA's objective is built from class means and class scatter."
+    },
+    {
+     "text": "LDA chooses directions that maximize between-class scatter relative to within-class scatter.",
+     "correct": true,
+     "why": "This is Fisher's criterion."
+    },
+    {
+     "text": "The top PCA direction always gives the best class separation.",
+     "correct": false,
+     "why": "High variance can lie across classes, not between them; PCA never looks at labels.",
+     "trap": "C1"
+    },
+    {
+     "text": "Both methods can return as many directions as there are features, whatever the number of classes.",
+     "correct": false,
+     "why": "True for PCA only; LDA is capped at $C - 1$.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. PCA ignores labels; LDA needs them.\n2. PCA maximizes total variance; LDA maximizes between-class over within-class scatter.\n3. LDA gives at most $C - 1$ directions; PCA gives up to $d$.\n4. Top PCA directions need not separate classes."
+  },
+  {
+   "id": "ml-pca-lda-04",
+   "skill": "ml.pca-lda",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Two classes in 2D are elongated along the $x_1$ axis (spread ±10) and separated only along $x_2$ (class means at $x_2 = -1$ and $x_2 = +1$, spread ±0.3). Each method reduces the data to one dimension. What happens?",
+   "figure": null,
+   "options": [
+    {
+     "text": "PCA keeps $x_2$ and LDA keeps $x_1$.",
+     "correct": false,
+     "why": "The two methods are swapped.",
+     "trap": "C2"
+    },
+    {
+     "text": "Both keep $x_2$, because that is where the classes differ.",
+     "correct": false,
+     "why": "PCA never sees labels; it follows the larger variance along $x_1$.",
+     "trap": "C1"
+    },
+    {
+     "text": "PCA keeps $x_1$ and mixes the classes; LDA keeps $x_2$ and separates them.",
+     "correct": true,
+     "why": "PCA follows variance, LDA follows the Fisher ratio."
+    },
+    {
+     "text": "Both keep $x_1$, because it has the largest variance.",
+     "correct": false,
+     "why": "LDA scores directions by between/within class scatter, not total variance.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Total variance is largest along $x_1$, so PCA keeps $x_1$.\n2. On $x_1$ both classes overlap completely.\n3. LDA's Fisher ratio is large along $x_2$ (big mean gap, small within-class spread), so it keeps $x_2$."
+  },
+  {
+   "id": "ml-pca-lda-05",
+   "skill": "ml.pca-lda",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A centered data matrix $X$ ($n = 5$ rows, one per point) has singular values 10, 5 and 1. Using covariance $\\frac1n X^\\top X$, what is the variance along the first principal component?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 20,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 10,
+     "why": "Used the singular value itself; eigenvalues of $X^\\top X$ are $\\sigma^2$.",
+     "trap": "C4"
+    },
+    {
+     "value": 2,
+     "why": "Divided $\\sigma_1$ by $n$ without squaring.",
+     "trap": "C4"
+    },
+    {
+     "value": 25,
+     "why": "Divided by $n - 1 = 4$; the stated covariance uses $n$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $X = U\\Sigma V^\\top$ gives $X^\\top X = V\\Sigma^2V^\\top$.\n2. Eigenvalues of $\\frac1n X^\\top X$ are $\\sigma_k^2/n$.\n3. $\\lambda_1 = 100/5 = 20$."
+  },
+  {
+   "id": "ml-pca-lda-06",
+   "skill": "ml.pca-lda",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A data set has features in very different units (height in cm, income in rupees, age in years). Before PCA, which step is usually needed so that the components are not dominated by one feature?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Nothing; PCA is invariant to rescaling features.",
+     "correct": false,
+     "why": "PCA is not scale-invariant.",
+     "trap": "C8"
+    },
+    {
+     "text": "Sort each feature in increasing order.",
+     "correct": false,
+     "why": "Sorting breaks the link between a point's features.",
+     "trap": "C10"
+    },
+    {
+     "text": "Only subtract the mean of each feature.",
+     "correct": false,
+     "why": "Centering is needed but leaves the unit scale; income would still dominate.",
+     "trap": "C6"
+    },
+    {
+     "text": "Standardize each feature (subtract the mean, divide by its standard deviation).",
+     "correct": true,
+     "why": "Then every feature has variance 1 and the PCs reflect correlations, not units."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. PCA follows variance, and variance depends on units.\n2. Standardize each feature to mean 0 and variance 1.\n3. That is PCA on the correlation matrix."
+  },
+  {
+   "id": "ml-select-framing-01",
+   "skill": "ml.select-framing",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A weather service wants to predict tomorrow's maximum temperature (in °C) from today's readings, using ten years of daily records. How should the task be framed?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Supervised regression",
+     "correct": true,
+     "why": "The target is a continuous quantity and labelled history exists."
+    },
+    {
+     "text": "Unsupervised clustering",
+     "correct": false,
+     "why": "There is a known target in the training data, so this is supervised.",
+     "trap": "C2"
+    },
+    {
+     "text": "Dimensionality reduction",
+     "correct": false,
+     "why": "Reducing features does not predict a target by itself.",
+     "trap": "C9"
+    },
+    {
+     "text": "Supervised classification",
+     "correct": false,
+     "why": "Classification predicts a label from a finite set; temperature is continuous.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The target is a real number.\n2. Past records give input–target pairs, so it is supervised.\n3. Supervised regression."
+  },
+  {
+   "id": "ml-select-framing-02",
+   "skill": "ml.select-framing",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which of the following are **classification** tasks?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Predicting the number of days until a machine fails",
+     "correct": false,
+     "why": "A count/duration with meaningful size: regression.",
+     "trap": "C10"
+    },
+    {
+     "text": "Predicting whether a loan applicant will default (yes/no)",
+     "correct": true,
+     "why": "Binary label."
+    },
+    {
+     "text": "Recognizing which digit 0–9 a handwritten image shows",
+     "correct": true,
+     "why": "Ten unordered labels; predicting 4.6 would be meaningless."
+    },
+    {
+     "text": "Predicting the selling price of a house",
+     "correct": false,
+     "why": "Price is a continuous quantity: regression.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Default yes/no: two labels.\n2. Digit 0–9: ten labels; the numerals are names, not quantities.\n3. Days until failure and house price are quantities: regression."
+  },
+  {
+   "id": "ml-select-framing-03",
+   "skill": "ml.select-framing",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A retailer has purchase histories of 50,000 customers but no labels, and wants to discover groups of customers with similar behaviour. Which approach fits?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Unsupervised clustering",
+     "correct": true,
+     "why": "Groups are discovered from the features alone."
+    },
+    {
+     "text": "Logistic regression",
+     "correct": false,
+     "why": "A supervised classifier; it needs labels.",
+     "trap": "C10"
+    },
+    {
+     "text": "Linear regression",
+     "correct": false,
+     "why": "There is no numeric target to predict.",
+     "trap": "C9"
+    },
+    {
+     "text": "Supervised classification",
+     "correct": false,
+     "why": "Classification needs labelled examples of each group, which do not exist.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. No target variable is given.\n2. The goal is to find groups.\n3. Unsupervised clustering (k-means, hierarchical)."
+  },
+  {
+   "id": "ml-select-framing-04",
+   "skill": "ml.select-framing",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which of these are **supervised** learning set-ups?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Predicting a student's exam score from study hours using past students' records",
+     "correct": true,
+     "why": "Input–target pairs: supervised regression."
+    },
+    {
+     "text": "Training a spam filter on emails marked spam / not spam",
+     "correct": true,
+     "why": "Labelled examples: supervised classification."
+    },
+    {
+     "text": "Segmenting a market with k-means",
+     "correct": false,
+     "why": "k-means uses no labels.",
+     "trap": "C2"
+    },
+    {
+     "text": "Compressing images with PCA",
+     "correct": false,
+     "why": "PCA uses no target; it is unsupervised.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Spam filter and exam-score model learn from labelled pairs.\n2. PCA and k-means use only the features."
+  },
+  {
+   "id": "ml-select-framing-05",
+   "skill": "ml.select-framing",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Despite its name, for which kind of task is logistic regression used?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Clustering unlabelled data",
+     "correct": false,
+     "why": "It is trained on labelled data.",
+     "trap": "C2"
+    },
+    {
+     "text": "Dimensionality reduction",
+     "correct": false,
+     "why": "It does not produce a lower-dimensional representation.",
+     "trap": "C9"
+    },
+    {
+     "text": "Classification (it models the probability of a class)",
+     "correct": true,
+     "why": "The output is a class probability."
+    },
+    {
+     "text": "Regression of a continuous target",
+     "correct": false,
+     "why": "The name is misleading; the target is a class label.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. It models $P(y = 1 \\mid x) = \\sigma(w^\\top x + b)$.\n2. Thresholding this probability gives a class.\n3. So it is a classifier."
+  },
+  {
+   "id": "ml-select-framing-06",
+   "skill": "ml.select-framing",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "An ad platform wants, for each impression, the probability that the user clicks. Training data record each impression with clicked = 1 or 0. Which framing and loss are most appropriate?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Regression, because the output is a number between 0 and 1",
+     "correct": false,
+     "why": "A probability output does not make the target continuous; the labels are 0/1 events.",
+     "trap": "C10"
+    },
+    {
+     "text": "Binary classification with a probabilistic output, trained with cross-entropy",
+     "correct": true,
+     "why": "Labels are 0/1; a calibrated $P(y = 1 \\mid x)$ comes from log loss."
+    },
+    {
+     "text": "Multi-class classification with one class per user",
+     "correct": false,
+     "why": "The prediction is click vs no click, not user identity.",
+     "trap": "C9"
+    },
+    {
+     "text": "Clustering impressions into clickers and non-clickers",
+     "correct": false,
+     "why": "Labels exist, so the task is supervised.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Each training target is a binary label.\n2. Predicting $P(\\text{click})$ is probabilistic classification.\n3. Train with cross-entropy (log loss), e.g. logistic regression."
+  },
+  {
+   "id": "ml-select-algo-01",
+   "skill": "ml.select-algo",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which of the following classifiers is **generative**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Naive Bayes",
+     "correct": true,
+     "why": "It models class priors and class-conditional feature distributions."
+    },
+    {
+     "text": "Perceptron",
+     "correct": false,
+     "why": "It learns a separating hyperplane only.",
+     "trap": "C9"
+    },
+    {
+     "text": "Support vector machine",
+     "correct": false,
+     "why": "It finds a max-margin boundary and models no distribution of $x$.",
+     "trap": "C9"
+    },
+    {
+     "text": "Logistic regression",
+     "correct": false,
+     "why": "It models $P(y \\mid x)$ directly: discriminative (the classic NB partner, swapped).",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A generative model specifies $P(x \\mid y)$ and $P(y)$ and applies Bayes' rule.\n2. Naive Bayes does exactly this.\n3. The others model $P(y \\mid x)$ or a boundary."
+  },
+  {
+   "id": "ml-select-algo-02",
+   "skill": "ml.select-algo",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about generative and discriminative classifiers are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Gaussian class-conditionals with a shared covariance matrix lead to a posterior $P(y \\mid x)$ of logistic (sigmoid-of-linear) form.",
+     "correct": true,
+     "why": "The quadratic terms cancel, leaving $\\sigma(w^\\top x + b)$."
+    },
+    {
+     "text": "Naive Bayes makes no independence assumption about the features.",
+     "correct": false,
+     "why": "It assumes the features are conditionally independent given the class.",
+     "trap": "C9"
+    },
+    {
+     "text": "A discriminative model such as logistic regression learns $P(y \\mid x)$ without modelling $P(x)$.",
+     "correct": true,
+     "why": "It fits the conditional directly."
+    },
+    {
+     "text": "A generative model learns $P(x \\mid y)$ and $P(y)$, so it can also generate new $x$ for a class.",
+     "correct": true,
+     "why": "It models the joint distribution."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Generative: model $P(x, y) = P(x \\mid y)P(y)$; can sample $x$.\n2. Discriminative: model $P(y \\mid x)$ directly.\n3. Gaussian classes with a shared covariance give a posterior of logistic form, so a linear boundary.\n4. Naive Bayes assumes conditional independence."
+  },
+  {
+   "id": "ml-select-algo-03",
+   "skill": "ml.select-algo",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A bank needs a credit-approval model whose decisions a loan officer can read as simple if–then rules. Which method fits best?",
+   "figure": null,
+   "options": [
+    {
+     "text": "k-means clustering",
+     "correct": false,
+     "why": "Unsupervised; it does not use the approve/reject labels.",
+     "trap": "C2"
+    },
+    {
+     "text": "A deep neural network",
+     "correct": false,
+     "why": "Accurate perhaps, but its decisions are not readable rules.",
+     "trap": "C9"
+    },
+    {
+     "text": "A shallow decision tree",
+     "correct": true,
+     "why": "Each root-to-leaf path reads as an if–then rule."
+    },
+    {
+     "text": "k-nearest neighbours",
+     "correct": false,
+     "why": "Decisions come from neighbours, not explicit rules.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The constraint is interpretability as rules.\n2. A decision tree's root-to-leaf paths are if–then rules."
+  },
+  {
+   "id": "ml-select-algo-04",
+   "skill": "ml.select-algo",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A text classifier must be trained on only 200 labelled documents with 20,000 word-count features, must output class probabilities, and must train in seconds. Which method is the most sensible first choice?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A multilayer perceptron with several hidden layers",
+     "correct": false,
+     "why": "Far too many parameters for 200 examples; it would overfit.",
+     "trap": "C9"
+    },
+    {
+     "text": "Multinomial Naive Bayes",
+     "correct": true,
+     "why": "Few parameters per feature, one-pass training, probabilistic output."
+    },
+    {
+     "text": "k-nearest neighbours with Euclidean distance",
+     "correct": false,
+     "why": "Distances in 20,000 sparse dimensions are poor and it gives crude probabilities.",
+     "trap": "C9"
+    },
+    {
+     "text": "k-means with $k$ = number of classes",
+     "correct": false,
+     "why": "Ignores the labels; clusters need not match classes.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Very few examples and many sparse features favour a high-bias, low-variance model.\n2. Naive Bayes estimates each word's class-conditional rate separately, trains in one pass and gives probabilities."
+  },
+  {
+   "id": "ml-select-algo-05",
+   "skill": "ml.select-algo",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about choosing and using methods are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "PCA can be used directly as a classifier by thresholding the first component.",
+     "correct": false,
+     "why": "PCA ignores labels; its components need not separate classes.",
+     "trap": "C9"
+    },
+    {
+     "text": "k-nearest neighbours usually needs features on comparable scales.",
+     "correct": true,
+     "why": "A large-range feature would dominate the distance."
+    },
+    {
+     "text": "Linear regression can fit $y = ax^2 + bx + c$ if $x^2$ is added as a feature.",
+     "correct": true,
+     "why": "The model stays linear in the weights."
+    },
+    {
+     "text": "k-means requires class labels for the training points.",
+     "correct": false,
+     "why": "It is unsupervised; that is kNN's need, a look-alike name.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. kNN is distance-based, so feature scales matter.\n2. Linear regression is linear in parameters; adding $x^2$ as a feature fits a parabola.\n3. k-means needs no labels.\n4. PCA produces features, not class predictions."
+  },
+  {
+   "id": "ml-select-algo-06",
+   "skill": "ml.select-algo",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A generative classifier models each class as a Gaussian. If the two classes share the **same** covariance matrix, what is the shape of the Bayes decision boundary?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A hyperplane (linear boundary)",
+     "correct": true,
+     "why": "Shared covariance cancels the quadratic terms."
+    },
+    {
+     "text": "There is no boundary; generative models cannot classify",
+     "correct": false,
+     "why": "Bayes' rule turns $P(x \\mid y)P(y)$ into $P(y \\mid x)$.",
+     "trap": "C8"
+    },
+    {
+     "text": "A quadratic surface",
+     "correct": false,
+     "why": "That needs different class covariances (QDA).",
+     "trap": "C1"
+    },
+    {
+     "text": "A circle centred at the overall mean",
+     "correct": false,
+     "why": "No such constraint follows from the model.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\ln P(x \\mid 1) - \\ln P(x \\mid 0)$: the $x^\\top \\Sigma^{-1} x$ terms cancel.\n2. What remains is linear in $x$: a hyperplane (LDA).\n3. Different covariances leave a quadratic term (QDA)."
+  }
+ ]
+}

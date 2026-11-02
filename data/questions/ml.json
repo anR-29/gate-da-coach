@@ -1,0 +1,2656 @@
+{
+ "area": "ml",
+ "skills": {
+  "ml.linreg-origin": {
+   "title": "Least squares line through the origin",
+   "subject": "Machine Learning",
+   "days": [
+    43,
+    49
+   ],
+   "theory": "ml-regression",
+   "check": "Model y = wx (no intercept): minimise Σ(y − wx)², set derivative to 0, w = Σxy/Σx². For y = w·φ(x) use w = Σφ(x)y/Σφ(x)². Residuals satisfy Σx·e = 0, not Σe = 0."
+  },
+  "ml.linreg-ols": {
+   "title": "Least squares with intercept, residuals and R²",
+   "subject": "Machine Learning",
+   "days": [
+    43,
+    49
+   ],
+   "theory": "ml-regression",
+   "check": "b = Sxy/Sxx with centred sums, a = ȳ − b·x̄. Normal equations: Σy = na + bΣx, Σxy = aΣx + bΣx². With an intercept Σe = 0 and the line passes through (x̄, ȳ). R² = Sxy²/(Sxx·Syy) = 1 − SSE/SST."
+  },
+  "ml.ridge": {
+   "title": "Ridge regression: closed form and shrinkage",
+   "subject": "Machine Learning",
+   "days": [
+    43,
+    49
+   ],
+   "theory": "ml-regression",
+   "check": "Minimise Σ(y − wx)² + λw². 1-D: w = Σxy/(Σx² + λ). Matrix: w = (XᵀX + λI)⁻¹Xᵀy. Larger λ: smaller weights (never exactly 0), more bias, less variance, higher training error. Standardise features first; intercept is not penalised."
+  },
+  "ml.logistic": {
+   "title": "Logistic regression: sigmoid, log-odds, boundary, loss",
+   "subject": "Machine Learning",
+   "days": [
+    44,
+    49
+   ],
+   "theory": "ml-classifiers",
+   "check": "p = σ(z), z = wᵀx + b, σ(z) = 1/(1 + e^−z). log(p/(1−p)) = z. Threshold 0.5 ⇔ z = 0 (linear boundary); threshold t ⇔ z = ln(t/(1−t)). σ′ = σ(1 − σ). Loss −[y ln p + (1−y) ln(1−p)], gradient (p − y)x."
+  },
+  "ml.knn": {
+   "title": "k-nearest neighbours: classify, effect of k, scaling",
+   "subject": "Machine Learning",
+   "days": [
+    44,
+    49
+   ],
+   "theory": "ml-classifiers",
+   "check": "List distances from the query, sort, take the k smallest, majority vote (regression: mean). Small k: low bias, high variance (k = 1 has zero training error). Large k: smoother, more bias; k = n predicts the overall majority. Scale features first: the largest-range feature dominates distance."
+  },
+  "ml.naive-bayes": {
+   "title": "Naive Bayes: posterior with priors, smoothing, error",
+   "subject": "Machine Learning",
+   "days": [
+    45,
+    49
+   ],
+   "theory": "ml-generative",
+   "check": "Score each class: P(c)·Π P(xⱼ|c); normalise by the sum over classes. Never drop the prior. Laplace: (count + 1)/(N_c + V). Probability of error at x = 1 − max posterior. Assumption: features independent given the class."
+  },
+  "ml.lda": {
+   "title": "LDA: Fisher direction, shared covariance, linear boundary",
+   "subject": "Machine Learning",
+   "days": [
+    45,
+    49
+   ],
+   "theory": "ml-generative",
+   "check": "Fisher direction w ∝ S_W⁻¹(μ₁ − μ₂); maximises (wᵀ(μ₁−μ₂))²/(wᵀS_W w). Gaussian classes with a shared covariance give a linear boundary (x² terms cancel); unequal covariances give QDA. 1-D threshold: (μ₁+μ₂)/2 + σ² ln(π₁/π₂)/(μ₂ − μ₁). At most K − 1 directions."
+  },
+  "ml.svm-margin": {
+   "title": "SVM: margin 2/‖w‖ and support vectors",
+   "subject": "Machine Learning",
+   "days": [
+    46,
+    49
+   ],
+   "theory": "ml-svm",
+   "check": "Margin hyperplanes wᵀx + b = ±1; width between them 2/‖w‖ (Euclidean norm, not squared). Distance of x to the boundary |wᵀx + b|/‖w‖. Max margin ⇔ min ½‖w‖² s.t. yᵢ(wᵀxᵢ + b) ≥ 1. Support vectors have yf(x) = 1; only they fix the solution."
+  },
+  "ml.svm-soft": {
+   "title": "Soft-margin SVM, C, hinge loss and kernels",
+   "subject": "Machine Learning",
+   "days": [
+    46,
+    49
+   ],
+   "theory": "ml-svm",
+   "check": "Soft margin: min ½‖w‖² + CΣξᵢ, ξᵢ = max(0, 1 − yᵢf(xᵢ)) (hinge). Large C: few violations, narrow margin, high variance; small C: wide margin, more slack. Kernel K(x,z) = φ(x)ᵀφ(z): polynomial (1 + xᵀz)^p, RBF exp(−γ‖x − z‖²). K must be PSD (Mercer)."
+  },
+  "ml.tree-split": {
+   "title": "Decision trees: entropy, Gini, information gain",
+   "subject": "Machine Learning",
+   "days": [
+    47,
+    49
+   ],
+   "theory": "ml-trees-bias",
+   "check": "Entropy H = −Σ pᵢ log₂ pᵢ (binary max 1). Gini = 1 − Σ pᵢ² (binary max 0.5). Gain = parent impurity − Σ (nₖ/n)·child impurity — weight by child size. Pick the split with the largest gain. IG ≥ 0 and favours many-valued attributes."
+  },
+  "ml.bias-variance": {
+   "title": "Bias–variance trade-off",
+   "subject": "Machine Learning",
+   "days": [
+    47,
+    49
+   ],
+   "theory": "ml-trees-bias",
+   "check": "Expected test MSE = bias² + variance + noise variance (square the bias; noise SD must be squared). High train and test error: high bias (underfit). Low train, high test: high variance (overfit). More complexity: bias ↓, variance ↑, test error U-shaped. More data/regularisation/larger k/bagging cut variance."
+  },
+  "ml.cv": {
+   "title": "Leave-one-out and k-fold cross-validation",
+   "subject": "Machine Learning",
+   "days": [
+    48,
+    49
+   ],
+   "theory": "ml-validation",
+   "check": "k-fold: k fits per candidate, each on (k−1)/k of the data; LOOCV: k = n fits, each on n − 1 points, deterministic. Fits = folds × candidates (+1 final refit if asked). CV error = average of held-out errors. LOOCV for k-NN: classify each point using the others only (never itself)."
+  },
+  "ml.leakage": {
+   "title": "Data leakage in validation",
+   "subject": "Machine Learning",
+   "days": [
+    48,
+    49
+   ],
+   "theory": "ml-validation",
+   "check": "Anything learned from data (scaling stats, imputation, feature selection, oversampling, tuning) must be fitted inside each training fold only. Drop features recorded after the outcome. Split by group (patient, user) when rows are related; for time series, train on the past and test on the future. Report on an untouched test set."
+  }
+ },
+ "questions": [
+  {
+   "id": "ml-linreg-origin-01",
+   "skill": "ml.linreg-origin",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A model $\\hat y = wx$ (no intercept) is fitted by least squares to the data below.\n\n| $x$ | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|\n| $y$ | 2 | 3 | 7 | 8 |\n\nThe value of $w$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.03,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 2.2,
+     "why": "Used the slope formula with an intercept, $S_{xy}/S_{xx} = 11/5$; the model has no intercept.",
+     "trap": "C3"
+    },
+    {
+     "value": 2.0,
+     "why": "Took $\\sum y / \\sum x = 20/10$; the least squares slope weights each point by $x$.",
+     "trap": "C10"
+    },
+    {
+     "value": 6.1,
+     "why": "Divided $\\sum xy$ by $\\sum x$ instead of $\\sum x^2$.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. $\\sum xy = 2 + 6 + 21 + 32 = 61$, $\\sum x^2 = 1 + 4 + 9 + 16 = 30$.\n2. $w = \\sum xy / \\sum x^2 = 61/30 \\approx 2.03$."
+  },
+  {
+   "id": "ml-linreg-origin-02",
+   "skill": "ml.linreg-origin",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For data $(x_i, y_i)$, $i = 1, \\dots, n$, the model $\\hat y = wx$ is fitted by minimising $\\sum_i (y_i - w x_i)^2$. The minimiser $w$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\dfrac{\\sum x_i y_i}{\\sum x_i^2}$",
+     "correct": true,
+     "why": "Setting the derivative to zero gives $\\sum x_i(y_i - wx_i) = 0$."
+    },
+    {
+     "text": "$\\dfrac{\\sum (x_i-\\bar x)(y_i-\\bar y)}{\\sum (x_i-\\bar x)^2}$",
+     "correct": false,
+     "why": "This is the slope when an intercept is also fitted; centring only appears with an intercept.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\dfrac{\\sum y_i}{\\sum x_i}$",
+     "correct": false,
+     "why": "Ratio of totals; it solves $\\sum (y_i - wx_i) = 0$, not the least squares condition.",
+     "trap": "C10"
+    },
+    {
+     "text": "$\\dfrac{\\sum x_i^2}{\\sum x_i y_i}$",
+     "correct": false,
+     "why": "The correct ratio inverted; solve $w\\sum x_i^2 = \\sum x_i y_i$ for $w$ carefully.",
+     "trap": "C4"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\frac{d}{dw}\\sum (y_i - wx_i)^2 = -2\\sum x_i(y_i - wx_i) = 0$.\n2. So $w\\sum x_i^2 = \\sum x_i y_i$, giving $w = \\sum x_i y_i / \\sum x_i^2$."
+  },
+  {
+   "id": "ml-linreg-origin-03",
+   "skill": "ml.linreg-origin",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The model $\\hat y = wx$ (no intercept) is fitted by least squares to\n\n| $x$ | 1 | 2 | 4 |\n|---|---|---|---|\n| $y$ | 2 | 3 | 9 |\n\nThe minimum value of the sum of squared residuals $\\sum (y_i - wx_i)^2$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.81,
+    "tol": 0.02
+   },
+   "traps": [
+    {
+     "value": 1.14,
+     "why": "Fitted a line with an intercept ($S_{yy} - S_{xy}^2/S_{xx}$); the model is forced through the origin.",
+     "trap": "C3"
+    },
+    {
+     "value": 2.0,
+     "why": "Used $w = \\sum y/\\sum x = 2$ instead of the least squares $w = 44/21$.",
+     "trap": "C10"
+    },
+    {
+     "value": 92.19,
+     "why": "Reported the explained part $(\\sum xy)^2/\\sum x^2$ instead of subtracting it from $\\sum y^2$.",
+     "trap": "C2"
+    },
+    {
+     "value": -0.67,
+     "why": "Added the raw residuals $\\sum (y - wx)$; the question asks for squared residuals.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $\\sum xy = 44$, $\\sum x^2 = 21$, so $w = 44/21 \\approx 2.095$.\n2. $SSE = \\sum y^2 - (\\sum xy)^2/\\sum x^2 = 94 - 1936/21 \\approx 1.81$.\n3. Check: residuals $-0.095, -1.190, 0.619$; squares add to $1.81$."
+  },
+  {
+   "id": "ml-linreg-origin-04",
+   "skill": "ml.linreg-origin",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A least squares line $\\hat y = wx$ **without intercept** is fitted to data with not all $x_i = 0$. Let $e_i = y_i - wx_i$. Which statements are **always** true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\sum_i x_i e_i = 0$",
+     "correct": true,
+     "why": "This is exactly the zero-derivative condition for $w$."
+    },
+    {
+     "text": "$\\sum_i e_i = 0$",
+     "correct": false,
+     "why": "That condition comes from the intercept's normal equation; with no intercept it can fail (e.g. $x = 1, 2$, $y = 1, 1$ gives $\\sum e = 0.2$).",
+     "trap": "C1"
+    },
+    {
+     "text": "The fitted line passes through $(\\bar x, \\bar y)$",
+     "correct": false,
+     "why": "Holds only for a model with an intercept; here the line is pinned at the origin.",
+     "trap": "C9"
+    },
+    {
+     "text": "If every $x_i$ is doubled (the $y_i$ unchanged), the new $w$ is half the old $w$",
+     "correct": true,
+     "why": "$w' = 2\\sum xy / (4\\sum x^2) = w/2$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The normal equation is $\\sum x_i e_i = 0$ (residuals are orthogonal to the single feature).\n2. There is no intercept, so there is no equation forcing $\\sum e_i = 0$ or passing through $(\\bar x, \\bar y)$.\n3. Replacing $x$ by $2x$: $w' = \\sum 2x_i y_i / \\sum 4x_i^2 = w/2$."
+  },
+  {
+   "id": "ml-linreg-origin-05",
+   "skill": "ml.linreg-origin",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The model $\\hat y = w x^2$ is fitted by least squares to the points $(1, 3)$ and $(2, 10)$. The value of $w$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$23/5$",
+     "correct": false,
+     "why": "Used $\\sum xy/\\sum x^2$, the formula for the linear feature $x$, not $x^2$.",
+     "trap": "C3"
+    },
+    {
+     "text": "$43/17$",
+     "correct": true,
+     "why": "With feature $\\phi = x^2$: $w = \\sum x^2 y / \\sum x^4 = 43/17$."
+    },
+    {
+     "text": "$43/5$",
+     "correct": false,
+     "why": "Numerator right but divided by $\\sum x^2$; the denominator must be $\\sum \\phi^2 = \\sum x^4$.",
+     "trap": "C4"
+    },
+    {
+     "text": "$13/5$",
+     "correct": false,
+     "why": "Used $\\sum y / \\sum x^2$; each point must be weighted by its feature value.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The feature is $\\phi = x^2$: values 1 and 4.\n2. $w = \\sum \\phi y / \\sum \\phi^2 = (3 + 40)/(1 + 16) = 43/17 \\approx 2.53$."
+  },
+  {
+   "id": "ml-linreg-ols-01",
+   "skill": "ml.linreg-ols",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A line $\\hat y = a + bx$ is fitted by ordinary least squares to\n\n| $x$ | 1 | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|---|\n| $y$ | 3 | 4 | 6 | 8 | 9 |\n\nThe intercept $a$ is ______ (round to one decimal).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.2,
+    "tol": 0.05
+   },
+   "traps": [
+    {
+     "value": 1.6,
+     "why": "Reported the slope $b$ instead of the intercept.",
+     "trap": "C2"
+    },
+    {
+     "value": 10.8,
+     "why": "Used $a = \\bar y + b\\bar x$; the intercept is $\\bar y - b\\bar x$.",
+     "trap": "C11"
+    },
+    {
+     "value": 6.0,
+     "why": "Took $a = \\bar y$; that is the intercept only when $\\bar x = 0$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $\\bar x = 3$, $\\bar y = 6$.\n2. $S_{xy} = 6 + 2 + 0 + 2 + 6 = 16$, $S_{xx} = 10$, so $b = 1.6$.\n3. $a = \\bar y - b\\bar x = 6 - 4.8 = 1.2$."
+  },
+  {
+   "id": "ml-linreg-ols-02",
+   "skill": "ml.linreg-ols",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A simple linear regression $\\hat y = a + bx$ (with intercept) is fitted by least squares to\n\n| $x$ | 1 | 2 | 3 | 4 |\n|---|---|---|---|---|\n| $y$ | 1 | 3 | 2 | 6 |\n\nThe coefficient of determination $R^2$ of the fit is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.7,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.84,
+     "why": "Reported the correlation $r = \\sqrt{0.7}$; $R^2$ is its square.",
+     "trap": "C4"
+    },
+    {
+     "value": 0.3,
+     "why": "Reported $SSE/SST$; $R^2 = 1 - SSE/SST$.",
+     "trap": "C2"
+    },
+    {
+     "value": 1.4,
+     "why": "Reported the slope $b = S_{xy}/S_{xx}$ instead of $R^2$.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. $\\bar x = 2.5$, $\\bar y = 3$.\n2. $S_{xy} = 3 + 0 - 0.5 + 4.5 = 7$, $S_{xx} = 5$, $S_{yy} = 4 + 0 + 1 + 9 = 14$.\n3. $R^2 = S_{xy}^2/(S_{xx}S_{yy}) = 49/70 = 0.70$."
+  },
+  {
+   "id": "ml-linreg-ols-03",
+   "skill": "ml.linreg-ols",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For $n$ points, minimising $\\sum_i (y_i - a - bx_i)^2$ over $a$ and $b$ gives the normal equations",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\sum y_i = a + b\\sum x_i$ and $\\sum x_iy_i = a\\sum x_i + b\\sum x_i^2$",
+     "correct": false,
+     "why": "Summing the constant $a$ over $n$ points gives $na$, not $a$.",
+     "trap": "C6"
+    },
+    {
+     "text": "$\\sum y_i = na + b\\sum x_i$ and $\\sum x_iy_i = a\\sum x_i + b\\sum x_i^2$",
+     "correct": true,
+     "why": "Set both partial derivatives to zero and expand the sums."
+    },
+    {
+     "text": "$\\sum y_i = na + b\\sum x_i$ and $\\sum x_iy_i = a\\sum x_i^2 + b\\sum x_i$",
+     "correct": false,
+     "why": "Swapped the coefficients of $a$ and $b$ in the second equation; $a$ is multiplied by $x_i$ once, $b$ by $x_i^2$.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\sum x_iy_i = b\\sum x_i^2$ only",
+     "correct": false,
+     "why": "This is the single equation of the no-intercept model; with an intercept there are two equations.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\partial/\\partial a$: $\\sum (y_i - a - bx_i) = 0 \\Rightarrow \\sum y_i = na + b\\sum x_i$.\n2. $\\partial/\\partial b$: $\\sum x_i(y_i - a - bx_i) = 0 \\Rightarrow \\sum x_iy_i = a\\sum x_i + b\\sum x_i^2$."
+  },
+  {
+   "id": "ml-linreg-ols-04",
+   "skill": "ml.linreg-ols",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "An OLS line $\\hat y = a + bx$ **with intercept** is fitted to $n \\ge 3$ points (not all $x_i$ equal). Let $e_i = y_i - \\hat y_i$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\sum_i e_i = 0$",
+     "correct": true,
+     "why": "This is the normal equation for $a$."
+    },
+    {
+     "text": "The line passes through $(\\bar x, \\bar y)$",
+     "correct": true,
+     "why": "Divide the first normal equation by $n$: $\\bar y = a + b\\bar x$."
+    },
+    {
+     "text": "$\\sum_i y_i e_i = 0$",
+     "correct": false,
+     "why": "Look-alike of $\\sum \\hat y_i e_i = 0$; with $y_i$ it equals $\\sum e_i^2 > 0$ for an imperfect fit.",
+     "trap": "C10"
+    },
+    {
+     "text": "The training $R^2$ can be negative",
+     "correct": false,
+     "why": "With an intercept, OLS can always do at least as well as $\\hat y = \\bar y$, so training $R^2 \\ge 0$.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The $a$-equation gives $\\sum e_i = 0$; dividing $\\sum y = na + b\\sum x$ by $n$ gives $\\bar y = a + b\\bar x$.\n2. $\\sum y_i e_i = \\sum (\\hat y_i + e_i)e_i = \\sum e_i^2$, which is positive unless the fit is perfect.\n3. With an intercept, $SST = SSR + SSE$, so training $R^2 = 1 - SSE/SST \\in [0, 1]$."
+  },
+  {
+   "id": "ml-linreg-ols-05",
+   "skill": "ml.linreg-ols",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For a fit $\\hat y = a + bx$ on $n = 4$ points, the summary statistics are $\\sum x = 10$, $\\sum x^2 = 30$, $\\sum y = 20$, $\\sum xy = 65$. The least squares estimates are",
+   "figure": null,
+   "options": [
+    {
+     "text": "$a = -2.5,\\ b = 3$",
+     "correct": true,
+     "why": "Solves both normal equations: $4(-2.5) + 30 = 20$ and $10(-2.5) + 90 = 65$."
+    },
+    {
+     "text": "$a = 2.5,\\ b = 3$",
+     "correct": false,
+     "why": "Sign slip when back-substituting: $4a = 20 - 30 = -10$.",
+     "trap": "C11"
+    },
+    {
+     "text": "$a = 0,\\ b = 13/6$",
+     "correct": false,
+     "why": "Used the through-origin slope $\\sum xy/\\sum x^2 = 65/30$; the model has an intercept.",
+     "trap": "C3"
+    },
+    {
+     "text": "$a = 3,\\ b = -2.5$",
+     "correct": false,
+     "why": "Solved correctly but swapped which value is the intercept and which is the slope.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Normal equations: $4a + 10b = 20$ and $10a + 30b = 65$.\n2. Multiply the first by 2.5: $10a + 25b = 50$. Subtract: $5b = 15$, $b = 3$.\n3. $a = (20 - 30)/4 = -2.5$."
+  },
+  {
+   "id": "ml-linreg-ols-06",
+   "skill": "ml.linreg-ols",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "An OLS line $\\hat y = a + bx$ (with intercept) is fitted to\n\n| $x$ | 0 | 1 | 2 | 3 |\n|---|---|---|---|---|\n| $y$ | 1 | 1 | 4 | 6 |\n\nThe residual $e = y - \\hat y$ at the point $x = 3$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.3,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": -0.3,
+     "why": "Computed $\\hat y - y$; the residual is observed minus fitted.",
+     "trap": "C11"
+    },
+    {
+     "value": 0.21,
+     "why": "Fitted through the origin ($w = 27/14$); the model has an intercept.",
+     "trap": "C3"
+    },
+    {
+     "value": 5.7,
+     "why": "Reported the fitted value $\\hat y(3)$ instead of the residual.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. $\\bar x = 1.5$, $\\bar y = 3$; $S_{xy} = 3 + 1 + 0.5 + 4.5 = 9$, $S_{xx} = 5$, so $b = 1.8$.\n2. $a = 3 - 1.8 \\times 1.5 = 0.3$.\n3. $\\hat y(3) = 0.3 + 5.4 = 5.7$, so $e = 6 - 5.7 = 0.3$."
+  },
+  {
+   "id": "ml-ridge-01",
+   "skill": "ml.ridge",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Ridge regression without intercept minimises $\\sum_i (y_i - wx_i)^2 + \\lambda w^2$. With $\\lambda = 4$ and the data\n\n| $x$ | 1 | 2 | 1 |\n|---|---|---|---|\n| $y$ | 2 | 3 | 2 |\n\nthe fitted $w$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.0,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1.67,
+     "why": "Ignored the penalty and gave the OLS value $10/6$.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.71,
+     "why": "Dropped the factor 2 from the loss derivative only, giving $\\sum x^2 + 2\\lambda$; both terms carry a 2 that cancels.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.45,
+     "why": "Added $\\lambda^2$ instead of $\\lambda$ to the denominator.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. Derivative: $-2\\sum x(y - wx) + 2\\lambda w = 0 \\Rightarrow w = \\sum xy/(\\sum x^2 + \\lambda)$.\n2. $\\sum xy = 10$, $\\sum x^2 = 6$, so $w = 10/(6 + 4) = 1$."
+  },
+  {
+   "id": "ml-ridge-02",
+   "skill": "ml.ridge",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "In ridge regression the penalty $\\lambda\\lVert w\\rVert^2$ is increased from a small value to a very large value. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Bias falls and variance rises",
+     "correct": false,
+     "why": "Direction reversed: a stronger penalty restricts the model, raising bias and lowering variance.",
+     "trap": "C11"
+    },
+    {
+     "text": "Some weights become exactly zero, so ridge selects features",
+     "correct": false,
+     "why": "That is the lasso ($\\ell_1$) penalty; the ridge ($\\ell_2$) penalty only shrinks weights.",
+     "trap": "C2"
+    },
+    {
+     "text": "Weights shrink toward zero; bias rises and variance falls",
+     "correct": true,
+     "why": "The penalty trades a little bias for lower variance."
+    },
+    {
+     "text": "The training error decreases",
+     "correct": false,
+     "why": "Training error is lowest at $\\lambda = 0$ (OLS); adding a penalty cannot lower it.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Larger $\\lambda$ pulls every weight toward 0: the model gets simpler.\n2. A simpler model has higher bias and lower variance; training error can only stay the same or rise.\n3. The squared penalty is smooth, so weights shrink but do not hit exactly 0 (that is the lasso's $\\ell_1$ penalty)."
+  },
+  {
+   "id": "ml-ridge-03",
+   "skill": "ml.ridge",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Let $X$ be an $n \\times d$ design matrix and $\\lambda > 0$. Which statements about ridge regression $\\min_w \\lVert y - Xw\\rVert^2 + \\lambda\\lVert w\\rVert^2$ are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$w = (X^\\top X + \\lambda I)^{-1}X^\\top y$",
+     "correct": true,
+     "why": "Setting the gradient to zero gives $(X^\\top X + \\lambda I)w = X^\\top y$."
+    },
+    {
+     "text": "$X^\\top X + \\lambda I$ is invertible even when $X^\\top X$ is singular (e.g. $d > n$)",
+     "correct": true,
+     "why": "Its eigenvalues are those of $X^\\top X$ plus $\\lambda$, all positive."
+    },
+    {
+     "text": "Rescaling one feature (e.g. metres to centimetres) leaves the fitted predictions unchanged, so standardising is unnecessary",
+     "correct": false,
+     "why": "True for OLS but not ridge: the rescaled feature needs a smaller weight, so it is penalised less.",
+     "trap": "C9"
+    },
+    {
+     "text": "Increasing $\\lambda$ can lower the training error",
+     "correct": false,
+     "why": "OLS ($\\lambda = 0$) already minimises training error; a penalty can only raise it.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Gradient: $-2X^\\top(y - Xw) + 2\\lambda w = 0 \\Rightarrow (X^\\top X + \\lambda I)w = X^\\top y$.\n2. $X^\\top X$ is positive semidefinite, so $X^\\top X + \\lambda I$ has eigenvalues $\\ge \\lambda > 0$: always invertible.\n3. The penalty depends on the size of each weight, which depends on feature units: standardise first.\n4. Training error is minimised at $\\lambda = 0$ and is non-decreasing in $\\lambda$."
+  },
+  {
+   "id": "ml-ridge-04",
+   "skill": "ml.ridge",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For the inputs $x = 1, 2, 3$ (any targets $y$ with $\\sum x_iy_i \\ne 0$), a no-intercept ridge fit $w_\\lambda = \\arg\\min_w \\sum (y_i - wx_i)^2 + \\lambda w^2$ is compared with the OLS fit $w_0$. The value of $\\lambda$ for which $w_\\lambda = w_0/2$ is ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 14,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Set $\\lambda = \\sum x^2/2$; halving needs the denominator to double, i.e. $\\lambda = \\sum x^2$.",
+     "trap": "C6"
+    },
+    {
+     "value": 3.74,
+     "why": "Took $\\lambda = \\sqrt{\\sum x^2}$, as if the penalty were $\\lambda^2$.",
+     "trap": "C4"
+    },
+    {
+     "value": 6,
+     "why": "Used $\\sum x = 6$ instead of $\\sum x^2 = 14$.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. $w_\\lambda = \\sum xy/(\\sum x^2 + \\lambda)$ and $w_0 = \\sum xy/\\sum x^2$.\n2. $w_\\lambda/w_0 = \\sum x^2/(\\sum x^2 + \\lambda) = 1/2 \\Rightarrow \\lambda = \\sum x^2 = 14$."
+  },
+  {
+   "id": "ml-ridge-05",
+   "skill": "ml.ridge",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A ridge fit with two features and no intercept has\n$$X^\\top X = \\begin{pmatrix} 4 & 0 \\\\ 0 & 9 \\end{pmatrix}, \\quad X^\\top y = \\begin{pmatrix} 8 \\\\ 9 \\end{pmatrix}, \\quad \\lambda = 5.$$\nThe ridge weight vector $(w_1, w_2)$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(2,\\ 1)$",
+     "correct": false,
+     "why": "These are the OLS weights $(X^\\top X)^{-1}X^\\top y$; the penalty was ignored.",
+     "trap": "C6"
+    },
+    {
+     "text": "$(8/29,\\ 9/34)$",
+     "correct": false,
+     "why": "Added $\\lambda^2 = 25$ to the diagonal instead of $\\lambda$.",
+     "trap": "C4"
+    },
+    {
+     "text": "$(8/9,\\ 9/14)$",
+     "correct": true,
+     "why": "Each diagonal gains $\\lambda$: $w_j = (X^\\top y)_j/((X^\\top X)_{jj} + 5)$."
+    },
+    {
+     "text": "$(1/3,\\ 1/6)$",
+     "correct": false,
+     "why": "Divided the OLS weights by $1 + \\lambda$; the shrink factor is $d_j/(d_j + \\lambda)$, which differs per feature.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $X^\\top X + \\lambda I = \\mathrm{diag}(9, 14)$.\n2. $w = (8/9,\\ 9/14)$. The OLS weights are $(2, 1)$.\n3. Shrink factors $4/9$ and $9/14$: the feature with the smaller $\\sum x^2$ shrinks more."
+  },
+  {
+   "id": "ml-logistic-01",
+   "skill": "ml.logistic",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A logistic regression model has weights $w = (2, -1)$ and bias $b = 0.5$. For the input $x = (1, 2)$, the predicted probability $P(y = 1 \\mid x) = \\sigma(w^\\top x + b)$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.62,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.38,
+     "why": "Computed $1/(1 + e^{z})$, i.e. $\\sigma(-z)$; the sigmoid uses $e^{-z}$.",
+     "trap": "C11"
+    },
+    {
+     "value": 0.5,
+     "why": "Reported the score $z = 0.5$ instead of $\\sigma(z)$ (or dropped the bias, getting $\\sigma(0)$).",
+     "trap": "C6"
+    },
+    {
+     "value": 0.99,
+     "why": "Lost the minus sign on $w_2$: $z = 2 + 2 + 0.5 = 4.5$, $\\sigma(4.5) \\approx 0.99$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $z = 2(1) + (-1)(2) + 0.5 = 0.5$.\n2. $\\sigma(0.5) = 1/(1 + e^{-0.5}) = 1/1.6065 \\approx 0.62$."
+  },
+  {
+   "id": "ml-logistic-02",
+   "skill": "ml.logistic",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For an input $x$ a logistic regression model outputs $P(y = 1 \\mid x) = 0.8$. The value of $w^\\top x + b$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$4$",
+     "correct": false,
+     "why": "That is the odds $p/(1-p)$; the score is the log of the odds.",
+     "trap": "C6"
+    },
+    {
+     "text": "$\\ln 0.8$",
+     "correct": false,
+     "why": "Took the log of the probability, not of the odds.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\ln 0.25$",
+     "correct": false,
+     "why": "Inverted the odds ($(1-p)/p$), which flips the sign of the score.",
+     "trap": "C11"
+    },
+    {
+     "text": "$\\ln 4$",
+     "correct": true,
+     "why": "$\\sigma^{-1}(p) = \\ln\\frac{p}{1-p} = \\ln\\frac{0.8}{0.2}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The logit is the log-odds: $w^\\top x + b = \\ln\\frac{p}{1-p}$.\n2. $\\ln(0.8/0.2) = \\ln 4 \\approx 1.386$."
+  },
+  {
+   "id": "ml-logistic-03",
+   "skill": "ml.logistic",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A logistic regression classifier uses $P(y = 1 \\mid x) = \\sigma(3x_1 - 2x_2 - 6)$ and predicts class 1 only when this probability is **at least 0.8**. On the line $x_2 = 0$, the smallest $x_1$ that is predicted as class 1 is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.46,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 2.0,
+     "why": "Used the default boundary $z = 0$ (threshold 0.5) instead of threshold 0.8.",
+     "trap": "C5"
+    },
+    {
+     "value": 1.54,
+     "why": "Moved $\\ln 4$ to the wrong side: $3x_1 = 6 - \\ln 4$.",
+     "trap": "C11"
+    },
+    {
+     "value": 2.27,
+     "why": "Set $z = 0.8$; the threshold applies to $\\sigma(z)$, so $z$ must equal $\\ln(0.8/0.2)$.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $\\sigma(z) \\ge 0.8 \\iff z \\ge \\ln(0.8/0.2) = \\ln 4 \\approx 1.386$.\n2. With $x_2 = 0$: $3x_1 - 6 \\ge 1.386 \\Rightarrow x_1 \\ge 7.386/3 \\approx 2.46$."
+  },
+  {
+   "id": "ml-logistic-04",
+   "skill": "ml.logistic",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "At some point $z_0$, the sigmoid $\\sigma(z) = 1/(1 + e^{-z})$ takes the value $\\sigma(z_0) = 0.8$. The derivative $\\sigma'(z_0)$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "0.16",
+     "correct": true,
+     "why": "$\\sigma' = \\sigma(1 - \\sigma) = 0.8 \\times 0.2$."
+    },
+    {
+     "text": "0.8",
+     "correct": false,
+     "why": "Treated the sigmoid like $e^z$, whose derivative equals itself.",
+     "trap": "C9"
+    },
+    {
+     "text": "0.2",
+     "correct": false,
+     "why": "Kept only the $(1 - \\sigma)$ factor and dropped $\\sigma$.",
+     "trap": "C6"
+    },
+    {
+     "text": "0.64",
+     "correct": false,
+     "why": "Computed $\\sigma^2$ instead of $\\sigma(1 - \\sigma)$.",
+     "trap": "C4"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))$.\n2. $0.8 \\times 0.2 = 0.16$."
+  },
+  {
+   "id": "ml-logistic-05",
+   "skill": "ml.logistic",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A logistic regression model gives these predicted probabilities $\\hat p = P(y = 1 \\mid x)$ on three training points:\n\n| point | true $y$ | $\\hat p$ |\n|---|---|---|\n| A | 1 | 0.8 |\n| B | 0 | 0.4 |\n| C | 1 | 0.5 |\n\nThe **total** (summed, not averaged) cross-entropy loss $-\\sum [y\\ln\\hat p + (1-y)\\ln(1-\\hat p)]$ with natural log is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.43,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1.83,
+     "why": "Used $-\\ln 0.4$ for point B; when $y = 0$ the loss uses $1 - \\hat p$.",
+     "trap": "C2"
+    },
+    {
+     "value": 0.48,
+     "why": "Averaged over the three points; the question asks for the sum.",
+     "trap": "C6"
+    },
+    {
+     "value": 2.06,
+     "why": "Used $\\log_2$ instead of the natural log.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. A: $-\\ln 0.8 = 0.223$.\n2. B ($y = 0$): $-\\ln(1 - 0.4) = -\\ln 0.6 = 0.511$.\n3. C: $-\\ln 0.5 = 0.693$.\n4. Total $\\approx 1.43$."
+  },
+  {
+   "id": "ml-logistic-06",
+   "skill": "ml.logistic",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Binary logistic regression with $\\hat p = \\sigma(w^\\top x + b)$ is trained by minimising the cross-entropy loss. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The gradient of the per-example loss with respect to $w$ is $(\\hat p - y)\\,x$",
+     "correct": true,
+     "why": "The $\\sigma(1-\\sigma)$ factor cancels against the log terms."
+    },
+    {
+     "text": "With threshold 0.5 the decision boundary is linear in $x$",
+     "correct": true,
+     "why": "$\\sigma(z) \\ge 0.5$ exactly when $z = w^\\top x + b \\ge 0$."
+    },
+    {
+     "text": "The predicted probability $\\hat p$ is a linear function of $x$",
+     "correct": false,
+     "why": "Only the log-odds is linear; $\\hat p = \\sigma(\\cdot)$ is S-shaped and bounded in (0, 1).",
+     "trap": "C9"
+    },
+    {
+     "text": "On linearly separable data, unregularised training converges to finite weights",
+     "correct": false,
+     "why": "Scaling up a separating $w$ always lowers the loss, so the weights diverge.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. For one point, $\\partial L/\\partial z = \\hat p - y$ (using $\\sigma' = \\sigma(1-\\sigma)$), so $\\nabla_w L = (\\hat p - y)x$.\n2. $\\hat p \\ge 0.5 \\iff w^\\top x + b \\ge 0$: a hyperplane.\n3. $\\hat p$ itself is a non-linear (S-shaped) function of $x$.\n4. On separable data the loss keeps falling as $\\lVert w\\rVert \\to \\infty$, so no finite minimiser exists without regularisation."
+  },
+  {
+   "id": "ml-knn-01",
+   "skill": "ml.knn",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A k-NN classifier with Euclidean distance uses the training set below.\n\n| point | $x_1$ | $x_2$ | class |\n|---|---|---|---|\n| P1 | 1 | 0 | A |\n| P2 | 1 | 1 | B |\n| P3 | 0 | 2 | B |\n| P4 | 2 | 1 | A |\n| P5 | −2 | −2 | A |\n| P6 | 3 | 0 | B |\n| P7 | 3 | 1 | A |\n\nThe query point is $(0, 0)$. With $k = 3$, the predicted class is",
+   "figure": null,
+   "options": [
+    {
+     "text": "A, because the single nearest point P1 is A",
+     "correct": false,
+     "why": "That is the $k = 1$ answer; with $k = 3$ the vote is A, B, B.",
+     "trap": "C6"
+    },
+    {
+     "text": "B",
+     "correct": true,
+     "why": "The three nearest points are P1 (A), P2 (B), P3 (B): two votes for B."
+    },
+    {
+     "text": "A, because A is the majority class in the training set",
+     "correct": false,
+     "why": "Used all 7 points (4 A vs 3 B), i.e. $k = n$; only the 3 nearest vote.",
+     "trap": "C9"
+    },
+    {
+     "text": "No decision: the vote is tied",
+     "correct": false,
+     "why": "With an odd $k$ and two classes a tie cannot occur; recount the three nearest.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Squared distances from $(0,0)$: P1 1, P2 2, P3 4, P4 5, P5 8, P6 9, P7 10.\n2. Three nearest: P1 (A), P2 (B), P3 (B).\n3. Majority is B."
+  },
+  {
+   "id": "ml-knn-02",
+   "skill": "ml.knn",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Use the same kind of k-NN classifier (Euclidean distance, majority vote) on the training set below.\n\n| point | $x_1$ | $x_2$ | class |\n|---|---|---|---|\n| P1 | 1 | 0 | A |\n| P2 | 1 | 1 | B |\n| P3 | 0 | 2 | B |\n| P4 | 2 | 1 | A |\n| P5 | −2 | −2 | A |\n| P6 | 3 | 0 | B |\n| P7 | 3 | 1 | A |\n\nThe query point is $(0, 0)$. For which values of $k$ is the predicted class **A**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$k = 1$",
+     "correct": true,
+     "why": "Nearest point P1 is A."
+    },
+    {
+     "text": "$k = 3$",
+     "correct": false,
+     "why": "The 3 nearest are A, B, B, so the vote is B; P4 (A) is fourth, not third.",
+     "trap": "C6"
+    },
+    {
+     "text": "$k = 5$",
+     "correct": true,
+     "why": "Adds P4 and P5 (both A): 3 A against 2 B."
+    },
+    {
+     "text": "$k = 7$",
+     "correct": true,
+     "why": "All points vote: 4 A against 3 B."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sorted by squared distance: P1 A (1), P2 B (2), P3 B (4), P4 A (5), P5 A (8), P6 B (9), P7 A (10).\n2. $k = 1$: A. $k = 3$: A, B, B gives B. $k = 5$: 3 A vs 2 B gives A. $k = 7$: 4 A vs 3 B gives A."
+  },
+  {
+   "id": "ml-knn-03",
+   "skill": "ml.knn",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A 1-NN classifier uses two features: age (years, range 20 to 60) and salary (rupees, range 20000 to 100000).\n\n| point | age | salary | class |\n|---|---|---|---|\n| P | 25 | 50000 | A |\n| Q | 55 | 52000 | B |\n\nThe query is age 53, salary 40000. Compare the prediction using raw Euclidean distance with the prediction after min–max scaling each feature to $[0, 1]$ using the given ranges.",
+   "figure": null,
+   "options": [
+    {
+     "text": "A in both cases",
+     "correct": false,
+     "why": "Ignored that scaling changes which feature dominates; after scaling the 28-year age gap matters.",
+     "trap": "C9"
+    },
+    {
+     "text": "B in both cases",
+     "correct": false,
+     "why": "Unscaled, the salary gap (10000 vs 12000) swamps the age gap, so P is nearer.",
+     "trap": "C9"
+    },
+    {
+     "text": "A without scaling, B after scaling",
+     "correct": true,
+     "why": "Raw distance is driven by salary (P nearer); scaled distance is driven by age (Q nearer)."
+    },
+    {
+     "text": "B without scaling, A after scaling",
+     "correct": false,
+     "why": "Swapped the two cases: raw distances are about 10000 to P and 12000 to Q.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Raw: distance to P $\\approx 10000$, to Q $\\approx 12000$ (salary dominates). Predict A.\n2. Scaled: P differs by $(0.7, 0.125)$, $d^2 \\approx 0.506$; Q differs by $(0.05, 0.15)$, $d^2 = 0.025$. Predict B."
+  },
+  {
+   "id": "ml-knn-04",
+   "skill": "ml.knn",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statement about the number of neighbours $k$ in k-NN classification is correct (assume no duplicate training points)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$k = 1$ gives the highest bias",
+     "correct": false,
+     "why": "Reversed: $k = 1$ fits the training labels exactly, which is low bias and high variance.",
+     "trap": "C11"
+    },
+    {
+     "text": "Increasing $k$ makes the decision boundary smoother and raises bias",
+     "correct": true,
+     "why": "Each prediction averages more neighbours, so local detail is lost."
+    },
+    {
+     "text": "$k = n$ gives the lowest training error",
+     "correct": false,
+     "why": "With $k = n$ every point gets the majority label: maximum training error. $k = 1$ gives zero.",
+     "trap": "C11"
+    },
+    {
+     "text": "Training k-NN costs $O(nd)$ while predicting a point costs $O(1)$",
+     "correct": false,
+     "why": "Swapped: training only stores the data; prediction needs $O(nd)$ distance computations.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $k = 1$ copies each training label, so training error is 0 and the boundary is jagged: high variance, low bias.\n2. Increasing $k$ averages over more points: smoother boundary, more bias. $k = n$ always predicts the majority class."
+  },
+  {
+   "id": "ml-knn-05",
+   "skill": "ml.knn",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "k-NN **regression** with $k = 3$ (prediction = mean target of the 3 nearest points, distance $|x - x_0|$) uses\n\n| $x$ | 1 | 2 | 4 | 7 | 9 |\n|---|---|---|---|---|---|\n| $y$ | 3 | 5 | 4 | 10 | 8 |\n\nThe prediction at $x_0 = 5$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6.33,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Used only the nearest neighbour ($k = 1$).",
+     "trap": "C6"
+    },
+    {
+     "value": 6.0,
+     "why": "Averaged all five targets, i.e. $k = n$.",
+     "trap": "C9"
+    },
+    {
+     "value": 4.33,
+     "why": "Averaged the neighbours' $x$ values instead of their $y$ values.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Distances: 4, 3, 1, 2, 4.\n2. Three nearest: $x = 4$ ($y = 4$), $x = 7$ ($y = 10$), $x = 2$ ($y = 5$).\n3. Mean $= 19/3 \\approx 6.33$."
+  },
+  {
+   "id": "ml-naive-bayes-01",
+   "skill": "ml.naive-bayes",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A naive Bayes spam filter uses two binary features $W_1$, $W_2$ (word present). From training: $P(\\text{spam}) = 0.3$,\n$P(W_1{=}1 \\mid \\text{spam}) = 0.6$, $P(W_2{=}1 \\mid \\text{spam}) = 0.5$, $P(W_1{=}1 \\mid \\text{ham}) = 0.2$, $P(W_2{=}1 \\mid \\text{ham}) = 0.3$.\n\nAn email has $W_1 = 1$ and $W_2 = 1$. The posterior $P(\\text{spam} \\mid W_1{=}1, W_2{=}1)$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.68,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.83,
+     "why": "Ignored the priors: $0.30/(0.30 + 0.06)$. Spam is the rarer class, so its prior must pull the posterior down.",
+     "trap": "C7"
+    },
+    {
+     "value": 0.09,
+     "why": "Stopped at the unnormalised spam score; divide by the sum of both class scores.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.3,
+     "why": "Returned the prior $P(\\text{spam})$; the evidence was not used.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Spam score: $0.3 \\times 0.6 \\times 0.5 = 0.09$.\n2. Ham score: $0.7 \\times 0.2 \\times 0.3 = 0.042$.\n3. Posterior $= 0.09/(0.09 + 0.042) \\approx 0.68$."
+  },
+  {
+   "id": "ml-naive-bayes-02",
+   "skill": "ml.naive-bayes",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A naive Bayes classifier (maximum-likelihood estimates, no smoothing) is trained on\n\n| # | Outlook | Wind | Play |\n|---|---|---|---|\n| 1 | Sunny | Weak | Yes |\n| 2 | Sunny | Strong | No |\n| 3 | Rain | Weak | Yes |\n| 4 | Rain | Strong | No |\n| 5 | Sunny | Weak | Yes |\n| 6 | Rain | Weak | Yes |\n| 7 | Sunny | Strong | No |\n| 8 | Rain | Weak | No |\n| 9 | Rain | Strong | No |\n| 10 | Sunny | Weak | No |\n\nFor a new day with Outlook = Sunny and Wind = Weak, the classifier predicts the class with the larger posterior. According to the model's posterior, the probability that this prediction is wrong is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.33,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.25,
+     "why": "Dropped the priors: likelihoods $0.5$ vs $1/6$ give posterior $0.75$. The No class is more common and must get weight 0.6.",
+     "trap": "C7"
+    },
+    {
+     "value": 0.67,
+     "why": "Reported the maximum posterior; the error probability is $1 - \\max$.",
+     "trap": "C2"
+    },
+    {
+     "value": 0.1,
+     "why": "Reported the smaller unnormalised score; divide by the total $0.3$ first.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Priors: $P(\\text{Yes}) = 4/10$, $P(\\text{No}) = 6/10$.\n2. Yes: $0.4 \\times \\frac{2}{4} \\times \\frac{4}{4} = 0.2$. No: $0.6 \\times \\frac{3}{6} \\times \\frac{2}{6} = 0.1$.\n3. $P(\\text{Yes} \\mid x) = 0.2/0.3 = 2/3$, so predict Yes.\n4. Error probability $= 1 - 2/3 \\approx 0.33$."
+  },
+  {
+   "id": "ml-naive-bayes-03",
+   "skill": "ml.naive-bayes",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A multinomial naive Bayes text classifier uses Laplace (add-one) smoothing. In class $C$ the training documents contain 20 word tokens in total, and the word *free* occurs 3 times. The vocabulary has $V = 10$ distinct words. The smoothed estimate of $P(\\textit{free} \\mid C)$ is ______ (round to three decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.133,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.15,
+     "why": "No smoothing: $3/20$.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.19,
+     "why": "Added 1 to the denominator instead of $V$: $4/21$. The probabilities would not sum to 1.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.182,
+     "why": "Added 2 to the denominator (Bernoulli two-outcome rule) instead of $V = 10$.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Add one to every word's count: the total grows by $V = 10$.\n2. $P(\\textit{free} \\mid C) = (3 + 1)/(20 + 10) = 4/30 \\approx 0.133$."
+  },
+  {
+   "id": "ml-naive-bayes-04",
+   "skill": "ml.naive-bayes",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The \"naive\" assumption of the naive Bayes classifier with class $Y$ and features $X_1, \\dots, X_d$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "The features are mutually independent: $P(x) = \\prod_j P(x_j)$",
+     "correct": false,
+     "why": "The assumption is about independence *given the class*; marginal independence is a different condition.",
+     "trap": "C7"
+    },
+    {
+     "text": "All classes are equally likely",
+     "correct": false,
+     "why": "NB uses the class prior $P(y)$; it does not assume it is uniform.",
+     "trap": "C1"
+    },
+    {
+     "text": "$P(x_1, \\dots, x_d \\mid y) = \\prod_j P(x_j \\mid y)$",
+     "correct": true,
+     "why": "Features are conditionally independent given the class."
+    },
+    {
+     "text": "Each class is Gaussian with a covariance matrix shared by all classes",
+     "correct": false,
+     "why": "That is the LDA model, not naive Bayes.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Naive Bayes factorises $P(x \\mid y) = \\prod_j P(x_j \\mid y)$.\n2. This is conditional independence given the class; the features may still be dependent marginally."
+  },
+  {
+   "id": "ml-naive-bayes-05",
+   "skill": "ml.naive-bayes",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about naive Bayes classifiers are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Without smoothing, one feature value never seen with class $c$ in training forces $P(c \\mid x) = 0$",
+     "correct": true,
+     "why": "A single zero factor makes the product for $c$ zero."
+    },
+    {
+     "text": "When classes are imbalanced the prior should be ignored to avoid bias toward the large class",
+     "correct": false,
+     "why": "The prior is part of Bayes' rule; dropping it gives wrong posteriors.",
+     "trap": "C7"
+    },
+    {
+     "text": "If a feature is copied into the data twice, NB counts its evidence twice",
+     "correct": true,
+     "why": "Each copy contributes its own factor $P(x_j \\mid c)$."
+    },
+    {
+     "text": "Add-one smoothing changes the estimate for a frequent word much more than for a never-seen word",
+     "correct": false,
+     "why": "Reversed: going from 0 to 1 is a huge relative change; going from 500 to 501 is tiny.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Without smoothing, an unseen feature value gives $P(x_j \\mid c) = 0$, which zeroes the whole product for class $c$.\n2. A duplicated feature enters the product twice, so its evidence is counted twice and posteriors become overconfident.\n3. Priors matter whenever classes are imbalanced; they are part of the score.\n4. Add-one smoothing changes a rare count far more (in relative terms) than a large count."
+  },
+  {
+   "id": "ml-naive-bayes-06",
+   "skill": "ml.naive-bayes",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A one-feature Bayes classifier has class-conditional densities $X \\mid C_1 \\sim N(0, 1)$ and $X \\mid C_2 \\sim N(2, 1)$, with priors $P(C_1) = 0.8$, $P(C_2) = 0.2$. It predicts $C_1$ when $P(C_1 \\mid x) > P(C_2 \\mid x)$. The decision threshold on $x$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$1$",
+     "correct": false,
+     "why": "Midpoint of the means: correct only for equal priors.",
+     "trap": "C7"
+    },
+    {
+     "text": "$1 + \\frac{\\ln 4}{2}$",
+     "correct": true,
+     "why": "Solving $2x - 2 = \\ln(0.8/0.2)$; $C_1$ gets more of the line because it is more likely."
+    },
+    {
+     "text": "$1 - \\frac{\\ln 4}{2}$",
+     "correct": false,
+     "why": "Shifted the wrong way; a larger $P(C_1)$ enlarges the $C_1$ region toward $C_2$.",
+     "trap": "C11"
+    },
+    {
+     "text": "$1 + \\ln 4$",
+     "correct": false,
+     "why": "Dropped the division by 2 when solving $2x - 2 = \\ln 4$.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Equate log scores: $\\ln 0.8 - x^2/2 = \\ln 0.2 - (x-2)^2/2$.\n2. $(x^2 - (x-2)^2)/2 = 2x - 2 = \\ln 4$.\n3. $x = 1 + \\frac{\\ln 4}{2} \\approx 1.69$. The larger prior moves the boundary toward $C_2$'s mean."
+  },
+  {
+   "id": "ml-lda-01",
+   "skill": "ml.lda",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Two classes have means $\\mu_1 = (1, 2)$ and $\\mu_2 = (3, 1)$ and pooled within-class scatter matrix\n$$S_W = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}.$$\nUp to a non-zero scale factor, the Fisher LDA projection direction is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(-2, 1)$",
+     "correct": false,
+     "why": "Used $\\mu_1 - \\mu_2$ alone; that is optimal only when $S_W$ is a multiple of $I$.",
+     "trap": "C6"
+    },
+    {
+     "text": "$(-3, 0)$",
+     "correct": false,
+     "why": "Multiplied by $S_W$ instead of $S_W^{-1}$.",
+     "trap": "C4"
+    },
+    {
+     "text": "$(5, -4)$",
+     "correct": true,
+     "why": "$S_W^{-1}(\\mu_1 - \\mu_2) = \\frac13(-5, 4)$; sign and scale do not change the direction."
+    },
+    {
+     "text": "$(1, 2)$",
+     "correct": false,
+     "why": "This is perpendicular to $\\mu_1 - \\mu_2$, i.e. a boundary direction, not the projection direction.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\mu_1 - \\mu_2 = (-2, 1)$.\n2. $S_W^{-1} = \\frac13\\begin{pmatrix} 2 & -1 \\\\ -1 & 2 \\end{pmatrix}$.\n3. $w \\propto S_W^{-1}(\\mu_1 - \\mu_2) = \\frac13(-5, 4)$, i.e. the direction of $(5, -4)$."
+  },
+  {
+   "id": "ml-lda-02",
+   "skill": "ml.lda",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Linear discriminant analysis models each class as a multivariate Gaussian. Its decision boundary between two classes is a hyperplane because",
+   "figure": null,
+   "options": [
+    {
+     "text": "each class has its own covariance matrix",
+     "correct": false,
+     "why": "Separate covariances leave the quadratic terms in: that is QDA with a quadratic boundary.",
+     "trap": "C2"
+    },
+    {
+     "text": "the features are assumed independent given the class",
+     "correct": false,
+     "why": "That is the naive Bayes assumption; LDA allows correlated features.",
+     "trap": "C9"
+    },
+    {
+     "text": "the class priors must be equal",
+     "correct": false,
+     "why": "Unequal priors only shift the hyperplane by a constant; the boundary stays linear.",
+     "trap": "C1"
+    },
+    {
+     "text": "all classes share one covariance matrix, so the quadratic terms cancel",
+     "correct": true,
+     "why": "With a common $\\Sigma$ the $x^\\top\\Sigma^{-1}x$ terms are identical and drop out."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Log of each class density contains $-\\frac12 x^\\top\\Sigma_k^{-1}x$.\n2. If $\\Sigma_1 = \\Sigma_2 = \\Sigma$, this quadratic term is the same for both classes and cancels in the log-ratio, leaving a linear function of $x$."
+  },
+  {
+   "id": "ml-lda-03",
+   "skill": "ml.lda",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-feature LDA: class $A$ has $X \\sim N(2, 4)$ and class $B$ has $X \\sim N(6, 4)$ (variance 4 in both). Priors are $P(A) = 0.75$, $P(B) = 0.25$. The classifier predicts $A$ for $x$ below a threshold $t$ and $B$ above it. The value of $t$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5.1,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 4.0,
+     "why": "Took the midpoint of the means, which ignores the unequal priors.",
+     "trap": "C7"
+    },
+    {
+     "value": 2.9,
+     "why": "Shifted toward class $A$; the more likely class $A$ should claim more of the line.",
+     "trap": "C11"
+    },
+    {
+     "value": 4.55,
+     "why": "Used $\\sigma = 2$ in place of $\\sigma^2 = 4$ in the shift term.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. Equal log scores: $\\ln 0.75 - \\frac{(t-2)^2}{8} = \\ln 0.25 - \\frac{(t-6)^2}{8}$.\n2. Expanding: $\\frac{(t-2)^2 - (t-6)^2}{8} = \\frac{8t - 32}{8} = t - 4 = \\ln 3$.\n3. $t = 4 + \\ln 3 \\approx 5.10$ (formula: midpoint $+ \\sigma^2\\ln(\\pi_A/\\pi_B)/(\\mu_B - \\mu_A)$)."
+  },
+  {
+   "id": "ml-lda-04",
+   "skill": "ml.lda",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-feature data: class $A = \\{1, 2, 3\\}$, class $B = \\{6, 7, 8\\}$. Define the scatter of a class as $s^2 = \\sum (x - \\bar x)^2$ over its points. The Fisher criterion $J = (\\bar x_A - \\bar x_B)^2/(s_A^2 + s_B^2)$ equals ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6.25,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1.25,
+     "why": "Did not square the mean difference: $5/4$.",
+     "trap": "C4"
+    },
+    {
+     "value": 12.5,
+     "why": "Divided by one class's scatter only.",
+     "trap": "C6"
+    },
+    {
+     "value": 18.75,
+     "why": "Used variances ($s^2/n$) instead of the scatters defined in the question.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $\\bar x_A = 2$, $\\bar x_B = 7$, difference $-5$, squared $25$.\n2. $s_A^2 = 1 + 0 + 1 = 2$, $s_B^2 = 2$.\n3. $J = 25/4 = 6.25$."
+  },
+  {
+   "id": "ml-lda-05",
+   "skill": "ml.lda",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about Fisher's linear discriminant analysis are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It maximises $\\dfrac{(w^\\top(\\mu_1-\\mu_2))^2}{w^\\top S_W w}$",
+     "correct": true,
+     "why": "This ratio is the Fisher criterion; its maximiser is $S_W^{-1}(\\mu_1 - \\mu_2)$."
+    },
+    {
+     "text": "With $K$ classes it yields at most $K - 1$ discriminant directions",
+     "correct": true,
+     "why": "$S_B$ is built from $K$ means around their overall mean, so its rank is at most $K - 1$."
+    },
+    {
+     "text": "Like PCA, it is unsupervised and finds the direction of largest total variance",
+     "correct": false,
+     "why": "Swapped with PCA: LDA uses class labels and targets separation, not total variance.",
+     "trap": "C2"
+    },
+    {
+     "text": "Its linear boundary stays optimal even when the two classes have very different covariance matrices",
+     "correct": false,
+     "why": "With unequal covariances the Bayes boundary is quadratic (QDA); LDA is then only an approximation.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Fisher's direction maximises between-class separation divided by within-class spread along $w$.\n2. The between-class scatter for $K$ classes has rank at most $K - 1$, so LDA gives at most $K - 1$ useful directions.\n3. LDA uses labels (supervised); PCA does not.\n4. LDA's linear boundary is Bayes-optimal only under the shared-covariance Gaussian model."
+  },
+  {
+   "id": "ml-svm-margin-01",
+   "skill": "ml.svm-margin",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A hard-margin linear SVM has learned $w = (3, 4)$ and $b = -2$, with margin hyperplanes $w^\\top x + b = \\pm 1$. The width of the margin (distance between the two margin hyperplanes) is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.4,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.2,
+     "why": "Computed $1/\\lVert w\\rVert$, the distance from the boundary to one margin hyperplane only.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.08,
+     "why": "Used $2/\\lVert w\\rVert^2$; the width uses the norm, not its square.",
+     "trap": "C4"
+    },
+    {
+     "value": 0.29,
+     "why": "Used the $\\ell_1$ norm $3 + 4 = 7$ instead of the Euclidean norm.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $\\lVert w\\rVert = \\sqrt{9 + 16} = 5$.\n2. Width $= 2/\\lVert w\\rVert = 0.4$."
+  },
+  {
+   "id": "ml-svm-margin-02",
+   "skill": "ml.svm-margin",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A hard-margin linear SVM is trained on\n\n| point | $x_1$ | $x_2$ | label |\n|---|---|---|---|\n| A | 2 | 2 | +1 |\n| B | 3 | 3 | +1 |\n| C | 0 | 0 | −1 |\n| D | −1 | 0 | −1 |\n\nThe width of the optimal margin, $2/\\lVert w\\rVert$, is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.83,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1.41,
+     "why": "Gave the distance from the boundary to a support vector, $1/\\lVert w\\rVert$; the full width is twice that.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.71,
+     "why": "Reported $\\lVert w\\rVert$ itself instead of $2/\\lVert w\\rVert$.",
+     "trap": "C4"
+    },
+    {
+     "value": 4.0,
+     "why": "Used $2/\\lVert w\\rVert^2 = 2/0.5$.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. The closest opposite-class pair is A and C, at distance $\\sqrt 8$; all other pairs are farther, so A and C are the support vectors.\n2. $w \\propto (2,2) - (0,0)$: with $w^\\top A + b = 1$ and $w^\\top C + b = -1$ we get $b = -1$, $w = (0.5, 0.5)$.\n3. $\\lVert w\\rVert = 1/\\sqrt 2$, width $= 2\\sqrt 2 \\approx 2.83$ (equal to $|AC|$)."
+  },
+  {
+   "id": "ml-svm-margin-03",
+   "skill": "ml.svm-margin",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "In a hard-margin linear SVM, the support vectors are",
+   "figure": null,
+   "options": [
+    {
+     "text": "all training points, since each one constrains $w$",
+     "correct": false,
+     "why": "Points strictly outside the margin have $\\alpha_i = 0$ and could be deleted without changing $w$.",
+     "trap": "C1"
+    },
+    {
+     "text": "the points farthest from the decision boundary",
+     "correct": false,
+     "why": "Reversed: the closest points (on the margin) are the ones that matter.",
+     "trap": "C11"
+    },
+    {
+     "text": "the training points with $\\alpha_i > 0$, lying on $w^\\top x + b = \\pm 1$",
+     "correct": true,
+     "why": "Only these appear in $w = \\sum \\alpha_i y_i x_i$."
+    },
+    {
+     "text": "the misclassified training points",
+     "correct": false,
+     "why": "A hard-margin SVM has no misclassified training points; that idea belongs to soft margins.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. In the dual, $w = \\sum_i \\alpha_i y_i x_i$ and only points with $\\alpha_i > 0$ contribute.\n2. Those points satisfy $y_i(w^\\top x_i + b) = 1$: they lie on the margin hyperplanes."
+  },
+  {
+   "id": "ml-svm-margin-04",
+   "skill": "ml.svm-margin",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The hard-margin SVM trained on the six points below has decision function $f(x) = x_1 - x_2$ (so $w = (1, -1)$, $b = 0$).\n\n| point | $x_1$ | $x_2$ | label |\n|---|---|---|---|\n| P1 | 1 | 0 | +1 |\n| P2 | 2 | 1 | +1 |\n| P3 | 3 | 0 | +1 |\n| Q1 | 0 | 1 | −1 |\n| Q2 | 1 | 2 | −1 |\n| Q3 | 0 | 3 | −1 |\n\nHow many training points lie on the margin hyperplanes $f(x) = \\pm 1$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Assumed exactly one support vector per class; several points can lie on the same margin line.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Counted every point; P3 and Q3 have $y f(x) = 3 > 1$, outside the margin.",
+     "trap": "C1"
+    },
+    {
+     "value": 0,
+     "why": "Looked for points with $f(x) = 0$ (on the boundary) instead of $f(x) = \\pm 1$.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. $y f(x)$: P1 1, P2 1, P3 3, Q1 1, Q2 1, Q3 3.\n2. Points with $y f(x) = 1$: P1, P2, Q1, Q2. Count $= 4$."
+  },
+  {
+   "id": "ml-svm-margin-05",
+   "skill": "ml.svm-margin",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A linear classifier has boundary $6x_1 + 8x_2 - 10 = 0$. The Euclidean distance of the point $(3, 4)$ from this boundary is",
+   "figure": null,
+   "options": [
+    {
+     "text": "4",
+     "correct": true,
+     "why": "$|w^\\top x + b|/\\lVert w\\rVert = 40/10$."
+    },
+    {
+     "text": "40",
+     "correct": false,
+     "why": "Reported the raw score $|w^\\top x + b|$ without dividing by $\\lVert w\\rVert$.",
+     "trap": "C6"
+    },
+    {
+     "text": "0.4",
+     "correct": false,
+     "why": "Divided by $\\lVert w\\rVert^2 = 100$ instead of $\\lVert w\\rVert$.",
+     "trap": "C4"
+    },
+    {
+     "text": "$40/14$",
+     "correct": false,
+     "why": "Divided by the $\\ell_1$ norm $6 + 8$ instead of the Euclidean norm.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $|6(3) + 8(4) - 10| = 40$.\n2. $\\lVert w\\rVert = \\sqrt{36 + 64} = 10$. Distance $= 40/10 = 4$."
+  },
+  {
+   "id": "ml-svm-margin-06",
+   "skill": "ml.svm-margin",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about the hard-margin linear SVM $\\min \\frac12\\lVert w\\rVert^2$ subject to $y_i(w^\\top x_i + b) \\ge 1$ are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Removing a training point that is not a support vector leaves $w$ and $b$ unchanged",
+     "correct": true,
+     "why": "Its constraint is inactive, so the optimum does not depend on it."
+    },
+    {
+     "text": "Multiplying $w$ and $b$ by $c > 0$ gives a different decision boundary",
+     "correct": false,
+     "why": "$cw^\\top x + cb = 0$ is the same set of points; only the functional margin scales.",
+     "trap": "C9"
+    },
+    {
+     "text": "Maximising the margin $2/\\lVert w\\rVert$ is equivalent to minimising $\\frac12\\lVert w\\rVert^2$",
+     "correct": true,
+     "why": "Both are monotone transformations of $\\lVert w\\rVert$."
+    },
+    {
+     "text": "The distance between the two margin hyperplanes is $1/\\lVert w\\rVert$",
+     "correct": false,
+     "why": "$1/\\lVert w\\rVert$ is the half-width (boundary to one margin line).",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Non-support vectors have $\\alpha_i = 0$: deleting one leaves the optimum unchanged.\n2. $(cw, cb)$ describes the same hyperplane; the constraint $y f = 1$ on support vectors fixes the scale.\n3. Maximising $2/\\lVert w\\rVert$ is the same as minimising $\\lVert w\\rVert$, hence $\\frac12\\lVert w\\rVert^2$.\n4. The two margin hyperplanes are $2/\\lVert w\\rVert$ apart, not $1/\\lVert w\\rVert$."
+  },
+  {
+   "id": "ml-svm-soft-01",
+   "skill": "ml.svm-soft",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "In a soft-margin SVM, $\\min \\frac12\\lVert w\\rVert^2 + C\\sum_i \\xi_i$, the hyperparameter $C$ is increased. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The margin becomes wider and more points are allowed inside it",
+     "correct": false,
+     "why": "Reversed: that happens when $C$ is decreased.",
+     "trap": "C11"
+    },
+    {
+     "text": "Margin violations are penalised more, so the margin tends to shrink and variance rises",
+     "correct": true,
+     "why": "Slack costs more, so the fit hugs the training data."
+    },
+    {
+     "text": "As $C \\to 0$ the solution approaches the hard-margin SVM",
+     "correct": false,
+     "why": "The hard margin is the limit $C \\to \\infty$ (no slack tolerated).",
+     "trap": "C11"
+    },
+    {
+     "text": "$C$ sets the width of the RBF kernel",
+     "correct": false,
+     "why": "That is $\\gamma$ (or $\\sigma$); $C$ weights the slack penalty.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Larger $C$ makes each unit of slack more expensive, so the optimiser accepts a smaller margin to avoid violations.\n2. Fitting the training data more tightly lowers bias and raises variance. As $C \\to \\infty$ the hard-margin SVM is recovered (if the data are separable)."
+  },
+  {
+   "id": "ml-svm-soft-02",
+   "skill": "ml.svm-soft",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A soft-margin SVM with $C = 2$ is evaluated at $w = (1, 1)$, $b = -3$ on\n\n| point | $x_1$ | $x_2$ | label |\n|---|---|---|---|\n| A | 2 | 2 | +1 |\n| B | 1 | 1 | −1 |\n| C | 1 | 1.5 | +1 |\n| D | 3 | 1 | −1 |\n\nThe value of the objective $\\frac12\\lVert w\\rVert^2 + C\\sum_i \\xi_i$, with $\\xi_i = \\max(0, 1 - y_i(w^\\top x_i + b))$, is ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 9,
+     "why": "Dropped the $\\frac12$ in front of $\\lVert w\\rVert^2$.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Counted violating points (2) instead of summing their slack values.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Used $\\max(0, -yf)$ (perceptron loss); the hinge has a margin of 1: $\\max(0, 1 - yf)$.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $f = x_1 + x_2 - 3$: A 1, B $-1$, C $-0.5$, D 1.\n2. $y f$: A 1, B 1, C $-0.5$, D $-1$. Slacks: 0, 0, 1.5, 2; sum 3.5.\n3. Objective $= \\frac12(2) + 2(3.5) = 8$."
+  },
+  {
+   "id": "ml-svm-soft-03",
+   "skill": "ml.svm-soft",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A linear classifier gives scores $f(x)$ on three points:\n\n| point | label $y$ | $f(x)$ |\n|---|---|---|\n| 1 | +1 | 2.0 |\n| 2 | −1 | −0.4 |\n| 3 | +1 | −0.5 |\n\nThe total hinge loss $\\sum \\max(0, 1 - y f(x))$ is ______ (round to one decimal).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2.1,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 1.5,
+     "why": "Counted only the misclassified point; a correctly classified point with $yf < 1$ also has loss.",
+     "trap": "C5"
+    },
+    {
+     "value": 0.5,
+     "why": "Used $\\max(0, -yf)$ (perceptron loss) without the margin term 1.",
+     "trap": "C3"
+    },
+    {
+     "value": 2.9,
+     "why": "Sign slip on point 2: used $1 + yf = 1.4$ instead of $1 - yf = 0.6$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. Point 1: $1 - 2 < 0$, loss 0.\n2. Point 2: $y f = 0.4$, loss $0.6$ (correct side but inside the margin).\n3. Point 3: $y f = -0.5$, loss $1.5$. Total $2.1$."
+  },
+  {
+   "id": "ml-svm-soft-04",
+   "skill": "ml.svm-soft",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For $x = (1, 2)$ and $z = (3, 1)$, the polynomial kernel $K(x, z) = (1 + x^\\top z)^2$ equals ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 36,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Forgot the square.",
+     "trap": "C6"
+    },
+    {
+     "value": 26,
+     "why": "Computed $1 + (x^\\top z)^2$; the 1 is inside the bracket.",
+     "trap": "C3"
+    },
+    {
+     "value": 25,
+     "why": "Dropped the constant 1: $(x^\\top z)^2$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $x^\\top z = 3 + 2 = 5$.\n2. $K = (1 + 5)^2 = 36$."
+  },
+  {
+   "id": "ml-svm-soft-05",
+   "skill": "ml.svm-soft",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about kernel SVMs are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The RBF kernel corresponds to an infinite-dimensional feature map",
+     "correct": true,
+     "why": "Its Taylor expansion has terms of every degree."
+    },
+    {
+     "text": "Training a kernel SVM requires computing $\\phi(x)$ explicitly for every point",
+     "correct": false,
+     "why": "The whole point of the kernel trick is to use $K(x, z)$ instead of $\\phi$.",
+     "trap": "C9"
+    },
+    {
+     "text": "XOR-labelled points in 2-D can be separated with a degree-2 polynomial kernel",
+     "correct": true,
+     "why": "The product feature $x_1x_2$ (with $x_1, x_2$) separates them linearly."
+    },
+    {
+     "text": "Any real function $K(x, z)$ can be used as a kernel",
+     "correct": false,
+     "why": "It must be an inner product in some space: symmetric PSD Gram matrices are required.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. RBF: $e^{-\\gamma\\lVert x-z\\rVert^2}$ expands into an infinite series, so its feature space is infinite-dimensional.\n2. The kernel trick only needs inner products $K(x_i, x_j)$; $\\phi$ is never computed.\n3. XOR labels ($(0,0),(1,1)$ vs $(0,1),(1,0)$) are separated by the feature $x_1x_2$, which a degree-2 kernel contains.\n4. A valid kernel must give a symmetric positive semidefinite Gram matrix (Mercer)."
+  },
+  {
+   "id": "ml-svm-soft-06",
+   "skill": "ml.svm-soft",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "An RBF kernel $K(x, z) = \\exp(-\\gamma\\lVert x - z\\rVert^2)$ with $\\gamma = 0.5$ is applied to $x = (1, 2)$ and $z = (2, 0)$. The value of $K(x, z)$ is ______ (round to three decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.082,
+    "tol": 0.002
+   },
+   "traps": [
+    {
+     "value": 0.327,
+     "why": "Used the distance $\\sqrt 5$ instead of the squared distance 5.",
+     "trap": "C4"
+    },
+    {
+     "value": 0.0067,
+     "why": "Dropped $\\gamma$, computing $e^{-5}$.",
+     "trap": "C6"
+    },
+    {
+     "value": 12.18,
+     "why": "Lost the minus sign in the exponent: $e^{2.5}$. A kernel similarity of this form lies in $(0, 1]$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $x - z = (-1, 2)$, $\\lVert x - z\\rVert^2 = 1 + 4 = 5$.\n2. $K = e^{-0.5 \\times 5} = e^{-2.5} \\approx 0.082$."
+  },
+  {
+   "id": "ml-tree-split-01",
+   "skill": "ml.tree-split",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A decision-tree node contains 6 positive and 2 negative examples. Its entropy, using $\\log_2$, is ______ (round to three decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.811,
+    "tol": 0.003
+   },
+   "traps": [
+    {
+     "value": 0.562,
+     "why": "Used the natural log instead of $\\log_2$.",
+     "trap": "C10"
+    },
+    {
+     "value": 0.375,
+     "why": "Computed the Gini index $1 - 0.75^2 - 0.25^2$, not the entropy.",
+     "trap": "C2"
+    },
+    {
+     "value": 0.25,
+     "why": "Computed the misclassification rate $1 - \\max p$.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $p_+ = 0.75$, $p_- = 0.25$.\n2. $H = -0.75\\log_2 0.75 - 0.25\\log_2 0.25 = 0.311 + 0.5 = 0.811$."
+  },
+  {
+   "id": "ml-tree-split-02",
+   "skill": "ml.tree-split",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A node holds 10 examples from three classes with counts 3, 3 and 4. Its Gini impurity is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.66,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.34,
+     "why": "Stopped at $\\sum p_i^2$; Gini is $1 - \\sum p_i^2$.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.6,
+     "why": "Computed misclassification error $1 - \\max p_i$.",
+     "trap": "C3"
+    },
+    {
+     "value": 1.57,
+     "why": "Computed the entropy in bits instead of the Gini index.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Proportions $0.3, 0.3, 0.4$.\n2. Gini $= 1 - (0.09 + 0.09 + 0.16) = 0.66$."
+  },
+  {
+   "id": "ml-tree-split-03",
+   "skill": "ml.tree-split",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A node has 5 positive and 5 negative examples. A split sends 4 examples (all positive) to the left child and 6 examples (1 positive, 5 negative) to the right child. The information gain of this split, using entropy in bits, is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.61,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.67,
+     "why": "Averaged the two child entropies equally; weight them by child size (4/10 and 6/10).",
+     "trap": "C6"
+    },
+    {
+     "value": 0.39,
+     "why": "Reported the weighted child entropy instead of subtracting it from the parent's entropy.",
+     "trap": "C2"
+    },
+    {
+     "value": 0.35,
+     "why": "Forgot to weight by size and to keep the parent: $1 - 0.650$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Parent entropy $= 1$.\n2. Left: pure, $H = 0$. Right: $H(1/6) = -\\frac16\\log_2\\frac16 - \\frac56\\log_2\\frac56 \\approx 0.650$.\n3. Weighted child entropy $= 0.4(0) + 0.6(0.650) = 0.390$.\n4. Gain $= 1 - 0.390 \\approx 0.61$."
+  },
+  {
+   "id": "ml-tree-split-04",
+   "skill": "ml.tree-split",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "An ID3 tree chooses the root split by information gain on\n\n| # | $X_1$ | $X_2$ | $X_3$ | $Y$ |\n|---|---|---|---|---|\n| 1 | 1 | 1 | 1 | + |\n| 2 | 1 | 1 | 1 | + |\n| 3 | 1 | 1 | 0 | + |\n| 4 | 0 | 1 | 0 | + |\n| 5 | 1 | 0 | 1 | − |\n| 6 | 0 | 1 | 0 | − |\n| 7 | 0 | 1 | 1 | − |\n| 8 | 0 | 0 | 0 | − |\n\nWhich attribute is chosen at the root?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$X_1$",
+     "correct": false,
+     "why": "Both $X_1$ children have a 3:1 majority, but neither is pure; its gain 0.189 is below $X_2$'s 0.311.",
+     "trap": "C9"
+    },
+    {
+     "text": "$X_2$",
+     "correct": true,
+     "why": "Gain 0.311 is the largest: one child is pure and holds 2 of the 8 examples."
+    },
+    {
+     "text": "$X_3$",
+     "correct": false,
+     "why": "Its children keep the parent's 50:50 mix, so its gain is 0, the smallest.",
+     "trap": "C11"
+    },
+    {
+     "text": "$X_1$ and $X_2$ tie",
+     "correct": false,
+     "why": "They tie only on misclassification error (2/8 each); entropy separates them.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Parent: 4+, 4−, $H = 1$.\n2. $X_1$: (3+,1−) and (1+,3−), gain $= 1 - 0.811 = 0.189$.\n3. $X_2$: (4+,2−) and (0+,2−), gain $= 1 - \\frac68(0.918) = 0.311$.\n4. $X_3$: (2+,2−) and (2+,2−), gain 0. Choose $X_2$."
+  },
+  {
+   "id": "ml-tree-split-05",
+   "skill": "ml.tree-split",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about impurity measures for decision trees are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "For two classes, entropy (in bits) is at most 1, reached when both classes are equally frequent",
+     "correct": true,
+     "why": "$H(0.5) = 1$ is the maximum of the binary entropy."
+    },
+    {
+     "text": "For two classes, the Gini index is at most 1",
+     "correct": false,
+     "why": "Binary Gini $= 2p(1-p) \\le 0.5$; the scale differs from entropy's.",
+     "trap": "C4"
+    },
+    {
+     "text": "Information gain can be negative for a badly chosen split",
+     "correct": false,
+     "why": "By concavity of entropy, splitting never increases weighted impurity, so gain $\\ge 0$.",
+     "trap": "C8"
+    },
+    {
+     "text": "Information gain favours attributes with many distinct values",
+     "correct": true,
+     "why": "Such splits create small pure children; gain ratio penalises them."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Binary entropy peaks at $p = 0.5$ with value $1$ bit.\n2. Binary Gini $= 2p(1-p)$ peaks at $0.5$, not 1.\n3. Entropy is concave, so the weighted child entropy never exceeds the parent's: gain $\\ge 0$.\n4. A many-valued attribute (e.g. an ID) splits into tiny pure children, so raw gain favours it; C4.5's gain ratio corrects this."
+  },
+  {
+   "id": "ml-tree-split-06",
+   "skill": "ml.tree-split",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A node has 6 examples of class A and 4 of class B. A split produces a left child with 4 A and 0 B, and a right child with 2 A and 4 B. The decrease in Gini impurity achieved by the split (parent Gini minus size-weighted child Gini) is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.21,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.27,
+     "why": "Reported the weighted child Gini, not the decrease.",
+     "trap": "C2"
+    },
+    {
+     "value": 0.26,
+     "why": "Averaged the child Gini values equally instead of weighting by 4/10 and 6/10.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.42,
+     "why": "Computed the entropy-based information gain instead of the Gini decrease.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Parent Gini $= 1 - 0.36 - 0.16 = 0.48$.\n2. Left: 0. Right: $1 - (1/3)^2 - (2/3)^2 = 4/9 \\approx 0.444$.\n3. Weighted $= 0.6 \\times 0.444 = 0.267$.\n4. Decrease $= 0.48 - 0.267 \\approx 0.21$."
+  },
+  {
+   "id": "ml-bias-variance-01",
+   "skill": "ml.bias-variance",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A regression model has training MSE 40 and validation MSE 42, while a simple domain baseline achieves about 5 on both. The most likely diagnosis is",
+   "figure": null,
+   "options": [
+    {
+     "text": "High bias: the model underfits",
+     "correct": true,
+     "why": "Both errors are high and nearly equal, so the model is too simple."
+    },
+    {
+     "text": "High variance: the model overfits",
+     "correct": false,
+     "why": "Overfitting shows low training error with a large gap to validation error; here the gap is tiny.",
+     "trap": "C2"
+    },
+    {
+     "text": "Collecting more training data will reduce the error substantially",
+     "correct": false,
+     "why": "More data mainly cuts variance; a biased model stays biased.",
+     "trap": "C9"
+    },
+    {
+     "text": "Reduce model complexity, for example by increasing regularisation",
+     "correct": false,
+     "why": "That raises bias further; an underfitting model needs more capacity.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Training and validation errors are close, so variance is small.\n2. Both are far worse than achievable: the model cannot fit even the training data, which is high bias (underfitting).\n3. The fix is more capacity or better features, not more data."
+  },
+  {
+   "id": "ml-bias-variance-02",
+   "skill": "ml.bias-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "At a test input $x_0$, a learning method has bias $E[\\hat f(x_0)] - f(x_0) = 0.3$ and variance $\\mathrm{Var}(\\hat f(x_0)) = 0.05$ (over training sets). The observation is $y = f(x_0) + \\varepsilon$ with noise **standard deviation** $0.2$, independent of the training set. The expected squared prediction error $E[(y - \\hat f(x_0))^2]$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.18,
+    "tol": 0.005
+   },
+   "traps": [
+    {
+     "value": 0.34,
+     "why": "Added the noise standard deviation 0.2 instead of its variance 0.04.",
+     "trap": "C4"
+    },
+    {
+     "value": 0.39,
+     "why": "Added the bias 0.3 without squaring it.",
+     "trap": "C4"
+    },
+    {
+     "value": 0.14,
+     "why": "Left out the irreducible noise term.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $E[(y - \\hat f)^2] = \\text{bias}^2 + \\text{variance} + \\sigma^2$.\n2. $= 0.09 + 0.05 + 0.04 = 0.18$."
+  },
+  {
+   "id": "ml-bias-variance-03",
+   "skill": "ml.bias-variance",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A single observation $X \\sim N(\\theta, 4)$ with $\\theta = 4$ is used to estimate $\\theta$ by the shrunk estimator $T = 0.5X$. The mean squared error $E[(T - \\theta)^2]$ is ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Used $\\mathrm{Var}(0.5X) = 0.5 \\times 4$; constants come out squared.",
+     "trap": "C4"
+    },
+    {
+     "value": 1,
+     "why": "Kept only the variance; $T$ is biased, so bias$^2$ must be added.",
+     "trap": "C6"
+    },
+    {
+     "value": -1,
+     "why": "Added the signed bias $-2$ instead of its square.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. Bias: $E[T] - \\theta = 2 - 4 = -2$, so bias$^2 = 4$.\n2. Variance: $0.5^2 \\times 4 = 1$.\n3. MSE $= 4 + 1 = 5$ (the unbiased $X$ has MSE 4, so here shrinkage hurts)."
+  },
+  {
+   "id": "ml-bias-variance-04",
+   "skill": "ml.bias-variance",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which of the following changes usually **reduce the variance** of the learned model (possibly at the cost of more bias)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Increasing $k$ in k-NN",
+     "correct": true,
+     "why": "Averaging more labels makes predictions less sensitive to individual points."
+    },
+    {
+     "text": "Growing the decision tree to a greater depth",
+     "correct": false,
+     "why": "Deeper trees carve smaller regions that chase noise: variance rises.",
+     "trap": "C11"
+    },
+    {
+     "text": "Increasing $\\lambda$ in ridge regression",
+     "correct": true,
+     "why": "Stronger shrinkage restricts the weights."
+    },
+    {
+     "text": "Increasing $C$ in a soft-margin SVM",
+     "correct": false,
+     "why": "Larger $C$ punishes slack harder, so the boundary follows the training points more: variance rises.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Larger $k$ in k-NN averages over more neighbours: smoother, lower variance.\n2. Larger ridge $\\lambda$ shrinks the weights: lower variance.\n3. A deeper tree and a larger SVM $C$ both let the model fit the training data more closely: variance goes up."
+  },
+  {
+   "id": "ml-bias-variance-05",
+   "skill": "ml.bias-variance",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "As model complexity (for example polynomial degree) increases on a fixed training set, which pattern is typical?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Training and test error both decrease steadily",
+     "correct": false,
+     "why": "Test error eventually rises as the model starts to fit noise.",
+     "trap": "C1"
+    },
+    {
+     "text": "Test error falls steadily while training error is U-shaped",
+     "correct": false,
+     "why": "Swapped the two curves; it is the test error that is U-shaped.",
+     "trap": "C2"
+    },
+    {
+     "text": "Training error falls steadily while test error is U-shaped",
+     "correct": true,
+     "why": "Bias falls with complexity but variance grows, so test error has a minimum in between."
+    },
+    {
+     "text": "Bias increases and variance decreases",
+     "correct": false,
+     "why": "Reversed: complexity lowers bias and raises variance.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Training error keeps falling: a richer model can always fit the training set at least as well.\n2. Test error first falls (bias drops) and then rises (variance grows): a U shape."
+  },
+  {
+   "id": "ml-cv-01",
+   "skill": "ml.cv",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A practitioner tunes the regularisation strength over 4 candidate values using 5-fold cross-validation, then refits the chosen model once on the full training set. The total number of times a model is trained is ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 21,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 20,
+     "why": "Counted the CV fits but not the final refit the question includes.",
+     "trap": "C6"
+    },
+    {
+     "value": 9,
+     "why": "Added folds and candidates ($5 + 4$) instead of multiplying.",
+     "trap": "C3"
+    },
+    {
+     "value": 6,
+     "why": "Counted one fit per fold plus the refit, ignoring the 4 candidates.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Each candidate needs one fit per fold: $4 \\times 5 = 20$.\n2. Plus one final refit: $21$."
+  },
+  {
+   "id": "ml-cv-02",
+   "skill": "ml.cv",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A dataset has $n = 50$ points. Leave-one-out cross-validation is used to compare polynomial regression models of degree 1, 2 and 3. Not counting any final refit, the total number of model fits is ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 150,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 50,
+     "why": "Counted the fits for one model only.",
+     "trap": "C6"
+    },
+    {
+     "value": 147,
+     "why": "Used $n - 1 = 49$ fits per model; there are $n$ held-out points, each training set having $n - 1$ points.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Counted one fit per model, as with a single train/validation split.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. LOOCV trains once per held-out point: 50 fits per model.\n2. Three models: $3 \\times 50 = 150$."
+  },
+  {
+   "id": "ml-cv-03",
+   "skill": "ml.cv",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A 1-nearest-neighbour classifier (distance $|x - x'|$) is evaluated by leave-one-out cross-validation on\n\n| $x$ | 1 | 2 | 4 | 5 | 9 | 10 |\n|---|---|---|---|---|---|---|\n| class | A | A | B | B | A | B |\n\nThe LOOCV error rate is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.33,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Let each point be its own nearest neighbour; that is the training error of 1-NN, always 0.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Reported the number of errors instead of the error rate.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.67,
+     "why": "Reported the LOOCV accuracy $4/6$ instead of the error rate.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Leave each point out and find its nearest other point: 1→2 (A, right), 2→1 (A, right), 4→5 (B, right), 5→4 (B, right).\n2. 9→10 (B, wrong), 10→9 (A, wrong).\n3. Error rate $= 2/6 \\approx 0.33$."
+  },
+  {
+   "id": "ml-cv-04",
+   "skill": "ml.cv",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statement comparing leave-one-out cross-validation (LOOCV) with 10-fold cross-validation on $n$ points ($n \\gg 10$) is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "LOOCV is randomised, so repeated runs give different estimates",
+     "correct": false,
+     "why": "There is only one way to leave out each single point; LOOCV is deterministic.",
+     "trap": "C9"
+    },
+    {
+     "text": "10-fold CV needs $n/10$ model fits",
+     "correct": false,
+     "why": "It needs 10 fits (one per fold); each fold holds $n/10$ points.",
+     "trap": "C6"
+    },
+    {
+     "text": "LOOCV needs $n$ fits; its estimate has lower bias but can have higher variance than 10-fold",
+     "correct": true,
+     "why": "Training sets of size $n - 1$ are almost the full data, but they are nearly identical to each other."
+    },
+    {
+     "text": "Increasing the number of folds $k$ makes each training set smaller",
+     "correct": false,
+     "why": "Reversed: training sets have $(k-1)n/k$ points, which grows with $k$.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. LOOCV fits $n$ models, each on $n - 1$ points, so its estimate is nearly unbiased; the fits overlap heavily, which can make the estimate high-variance.\n2. LOOCV has no random split, so it is deterministic. 10-fold needs exactly 10 fits, each on $0.9n$ points."
+  },
+  {
+   "id": "ml-cv-05",
+   "skill": "ml.cv",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A model predicts every target by the **mean of the training targets** (it ignores the inputs). Its leave-one-out cross-validation mean squared error on the targets $y = 2, 4, 6, 8$ is ______ (round to two decimals).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8.89,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Used the overall mean 5 for every point, which is the training MSE; the held-out point must be left out of the mean.",
+     "trap": "C6"
+    },
+    {
+     "value": 6.67,
+     "why": "Scaled the training MSE by $n/(n-1) = 4/3$; each residual is scaled by $4/3$, so the MSE scales by $(4/3)^2$.",
+     "trap": "C4"
+    },
+    {
+     "value": 35.56,
+     "why": "Summed the four squared errors instead of averaging them.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Leave out 2: mean of 4, 6, 8 is 6, error $-4$. Leave out 4: mean $16/3$, error $-4/3$.\n2. Leave out 6: mean $14/3$, error $4/3$. Leave out 8: mean 4, error 4.\n3. LOOCV MSE $= (16 + 16/9 + 16/9 + 16)/4 \\approx 8.89$."
+  },
+  {
+   "id": "ml-leakage-01",
+   "skill": "ml.leakage",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Features are standardised to zero mean and unit variance before training a k-NN classifier evaluated with 5-fold cross-validation. Which procedure avoids data leakage?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Compute mean and SD on the whole dataset once, then run 5-fold CV",
+     "correct": false,
+     "why": "The held-out fold's values then influence the scaling, so the CV score is optimistic.",
+     "trap": "C9"
+    },
+    {
+     "text": "In each fold, fit one scaler on the training folds and a separate scaler on the held-out fold",
+     "correct": false,
+     "why": "Fitting on the held-out fold uses its statistics, which are unknown at prediction time.",
+     "trap": "C3"
+    },
+    {
+     "text": "In each fold, fit the scaler on the training folds only and apply that same scaler to the held-out fold",
+     "correct": true,
+     "why": "The held-out fold is treated exactly like future unseen data."
+    },
+    {
+     "text": "Skip scaling: k-NN predictions do not depend on feature scale",
+     "correct": false,
+     "why": "Distances depend heavily on scale; the largest-range feature dominates.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. The mean and SD are parameters learned from data, so they must come from the training folds only.\n2. Inside each fold: fit the scaler on the 4 training folds, transform both those folds and the held-out fold with it."
+  },
+  {
+   "id": "ml-leakage-02",
+   "skill": "ml.leakage",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which of the following procedures leak information from the evaluation data into training (making the reported score optimistic)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Choosing the 20 features most correlated with the label on the full dataset, then running 10-fold CV on those features",
+     "correct": true,
+     "why": "Selection already saw the held-out labels; it must be repeated inside each fold."
+    },
+    {
+     "text": "Predicting whether a customer will complain, using a feature *refund_issued* that is recorded after a complaint is resolved",
+     "correct": true,
+     "why": "The feature is a consequence of the target and is unavailable at prediction time."
+    },
+    {
+     "text": "Tuning hyperparameters with CV on the training set and reporting accuracy once on a held-out test set never used before",
+     "correct": false,
+     "why": "This is the standard leak-free protocol: the test set influences nothing.",
+     "trap": "C9"
+    },
+    {
+     "text": "Random k-fold CV on daily sales data, so the model for one fold is trained on days after the days it is tested on",
+     "correct": true,
+     "why": "Future information is used to predict the past; use forward-chaining splits."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Selecting features by their correlation with the label on all rows uses the held-out labels.\n2. A feature recorded after the outcome (refund issued after a complaint) encodes the label.\n3. Random folds on time-ordered data let the model train on the future.\n4. Tuning on validation folds and reporting once on an untouched test set is the correct protocol."
+  },
+  {
+   "id": "ml-leakage-03",
+   "skill": "ml.leakage",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A medical dataset has 5 scans per patient (500 scans from 100 patients). A classifier is evaluated with 5-fold CV over randomly shuffled scans and scores far higher than it later does on new patients. Which change best fixes the evaluation?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Use stratified 5-fold CV so each fold has the same class balance",
+     "correct": false,
+     "why": "Stratification balances labels but still splits a patient's scans across folds.",
+     "trap": "C10"
+    },
+    {
+     "text": "Split folds by patient, so all scans of one patient are in the same fold",
+     "correct": true,
+     "why": "This matches deployment, where every patient is new."
+    },
+    {
+     "text": "Increase to 20 folds",
+     "correct": false,
+     "why": "More folds still spread each patient's scans over training and validation.",
+     "trap": "C9"
+    },
+    {
+     "text": "Use leave-one-out CV over scans",
+     "correct": false,
+     "why": "Leaving out one scan keeps the patient's other 4 scans in training: the leak gets worse.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Scans of the same patient are highly similar, so random folds put near-copies in both training and validation.\n2. Group k-fold assigns all scans of a patient to one fold, so validation patients are truly unseen."
+  },
+  {
+   "id": "ml-leakage-04",
+   "skill": "ml.leakage",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "To avoid look-ahead leakage on 100 days of data, a forecaster uses forward-chaining evaluation: for each $t = 60, 61, \\dots, 99$ it trains on days $1, \\dots, t$ and tests on day $t + 1$. The number of models trained is ______.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 40,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 39,
+     "why": "Computed $99 - 60$ and forgot to include both endpoints.",
+     "trap": "C6"
+    },
+    {
+     "value": 100,
+     "why": "Counted one model per day of data.",
+     "trap": "C6"
+    },
+    {
+     "value": 60,
+     "why": "Counted the size of the first training window instead of the number of test days.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. One model per value of $t$.\n2. $t$ runs from 60 to 99: $99 - 60 + 1 = 40$."
+  },
+  {
+   "id": "ml-leakage-05",
+   "skill": "ml.leakage",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A churn model scores 99% accuracy in cross-validation but only 61% after deployment, while the data distribution has not changed. The most likely cause is",
+   "figure": null,
+   "options": [
+    {
+     "text": "Leakage: some training feature or preprocessing step carried information about the label",
+     "correct": true,
+     "why": "Leaked information inflates CV but is missing at prediction time."
+    },
+    {
+     "text": "The model has high bias",
+     "correct": false,
+     "why": "High bias would show low accuracy in CV too, not 99%.",
+     "trap": "C11"
+    },
+    {
+     "text": "Cross-validation is always optimistic by about this much",
+     "correct": false,
+     "why": "Properly done CV is nearly unbiased; a 38-point gap signals a flaw.",
+     "trap": "C8"
+    },
+    {
+     "text": "Too few folds were used",
+     "correct": false,
+     "why": "Fewer folds make CV slightly pessimistic (smaller training sets), not wildly optimistic.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A huge drop with no distribution shift suggests the CV score was inflated.\n2. Typical culprit: a feature (or preprocessing step) that carries label information which is not available at prediction time."
+  }
+ ]
+}
