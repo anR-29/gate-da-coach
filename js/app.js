@@ -1,10 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611041128';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611041851';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort,
-} from './engine.js?v=202611041128';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611041128';
+} from './engine.js?v=202611041851';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611041851';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -787,7 +787,8 @@ async function viewTheory(id) {
   const texts = Object.fromEntries(await Promise.all(ids.map(async (n) => [n, await getNote(n)])));
   if (tok !== viewToken) return;
   set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ka short note: core ideas, shortcuts, traps, recall.</p>
-      <input id="tsearch" class="search" type="search" placeholder="Topic dhoondo… (jaise eigen, SQL, Bayes)" aria-label="Theory search"></section>` +
+      <input id="tsearch" class="search" type="search" placeholder="Topic dhoondo… (jaise eigen, SQL, Bayes)" aria-label="Theory search">
+      <p id="tnone" class="muted" hidden>Kuch nahi mila. Doosra shabd try karo (jaise "rank", "join", "entropy").</p></section>` +
     Object.entries(idx).map(([area, list]) => `
       <section class="card tsec"><h2>${AREA_NAMES[area] || area}</h2><ul class="links">
         ${[...list.values()].map((e) => `<li data-q="${esc((noteTitle(e.id, texts[e.id]) + ' ' + e.skills.join(' ')).toLowerCase())}"><a href="#/theory/${esc(e.id)}">${esc(noteTitle(e.id, texts[e.id]))}</a>
@@ -805,6 +806,7 @@ async function viewTheory(id) {
       });
       sec.hidden = !shown;
     });
+    document.getElementById('tnone').hidden = !q || !!main.querySelector('.tsec:not([hidden])');
   };
 }
 
@@ -1089,7 +1091,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611041128');
+  const store = await import('./store.js?v=202611041851');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
