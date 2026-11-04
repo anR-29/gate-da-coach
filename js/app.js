@@ -1,10 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611041108';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611041128';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts,
-} from './engine.js?v=202611041108';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611041108';
+  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort,
+} from './engine.js?v=202611041128';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611041128';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -84,11 +84,14 @@ function renderChrome() {
 function dayRow(state, d, ps, viewing) {
   const st = dayStatus(state, d.day);
   const isCur = d.day === ps.current.day;
-  const mark = st.fallback ? '<span class="dmark fb" title="Fallback used">F</span>'
-    : st.done ? '<span class="dmark ok" title="Done">✓</span>' : '';
-  const re = st.reattempts ? `<span class="dmark re" title="Re-attempted ${st.reattempts}×">↻${st.reattempts > 1 ? st.reattempts : ''}</span>` : '';
-  const sub = [d.date ? fmtDate(d.date) : 'done before app', d.isMock ? 'mock' : '', isCur ? 'today' : ''].filter(Boolean).join(' · ');
-  return `<a class="week ${isCur ? 'current' : ''} ${String(viewing) === String(d.day) ? 'active' : ''} ${d.isMock ? 'mock' : ''} ${st.done ? 'done' : ''}" href="#/day/${d.day}" title="${esc(d.title)}">
+  const mark = st.fallback ? '<span class="dmark fb" title="Fallback use hua">F</span>'
+    : st.done ? '<span class="dmark ok" title="Done">✓</span>'
+      : st.partial ? '<span class="dmark part" title="Adhoora — topic baaki">◐</span>' : '';
+  const re = st.reattempts ? `<span class="dmark re" title="${st.reattempts}× re-attempt">↻${st.reattempts > 1 ? st.reattempts : ''}</span>` : '';
+  const late = isCur && d.date && d.date < today();
+  const sub = [d.date ? `planned ${fmtDate(d.date)}` : 'app se pehle', d.isMock ? 'mock' : '', isCur ? (late ? 'abhi (late)' : 'abhi') : ''].filter(Boolean).join(' · ');
+  // only the current day is a tab stop, so keyboard users don't tab through 100+ rows
+  return `<a class="week ${isCur ? 'current' : ''} ${String(viewing) === String(d.day) ? 'active' : ''} ${d.isMock ? 'mock' : ''} ${st.done ? 'done' : ''}" href="#/day/${d.day}" title="${esc(d.title)}" ${isCur ? '' : 'tabindex="-1"'}>
       <span class="day-icon">${d.day}</span>
       <span class="wtext"><strong>${esc(d.title)}</strong><small>${sub}</small></span>
       <span class="wmarks">${re}${mark}</span>
@@ -141,8 +144,12 @@ function viewDay(n) {
   const busy = running
     ? `<div class="banner warn">Day ${running.day} ka session abhi chal raha hai. <a href="#/today"><b>Wahi continue karo</b></a> ya pehle use band karo — ek time pe ek hi session.</div>`
     : '';
+  const late = isCur && day.date && day.date < today();
   const status = [
-    st.done ? '<span class="chip ok">✓ Done</span>' : isCur ? '<span class="chip">Aaj ka din</span>' : n > ps.current.day ? '<span class="chip">Aage ka din</span>' : '<span class="chip hot">Baaki</span>',
+    st.done ? '<span class="chip ok">✓ Done</span>'
+      : st.partial ? '<span class="chip warnchip">◐ Adhoora — topic baaki</span>'
+        : isCur ? `<span class="chip">${late ? 'Abhi ka din (planned date nikal gayi)' : 'Abhi ka din'}</span>`
+          : n > ps.current.day ? '<span class="chip">Aage ka din</span>' : '<span class="chip hot">Baaki</span>',
     st.fallback ? '<span class="chip warnchip">Fallback use hua</span>' : '',
     st.reattempts ? `<span class="chip">↻ ${st.reattempts}× re-attempt</span>` : '',
   ].join('');
@@ -152,7 +159,7 @@ function viewDay(n) {
   set(`
     ${behind}${busy}
     <section class="card hero">
-      <div class="eyebrow">Day ${day.day} · ${esc(day.subject)} · ${day.date ? fmtDate(day.date) : 'app se pehle'}</div>
+      <div class="eyebrow">Day ${day.day} · ${esc(day.subject)} · ${day.date ? `planned ${fmtDate(day.date)}` : 'app se pehle'}</div>
       <h1>${esc(day.title)}</h1>
       <div class="chips">${status}</div>
       ${day.alsoCovers.length ? `<p class="muted">Isme ye bhi shamil: ${day.alsoCovers.map(esc).join('; ')}</p>` : ''}
@@ -163,6 +170,7 @@ function viewDay(n) {
         <span class="chip">GA: ${esc(day.gaLabel)}</span>
         <span class="chip ${due.length ? 'hot' : ''}">${due.length} revision card due</span>
       </div>
+      ${orderCard()}
       <div class="actions">
         <button class="primary" id="start" ${running ? 'disabled' : ''}>${reattempt ? `Day ${day.day} re-attempt karo` : `Day ${day.day} shuru karo`}</button>
         <button id="fallback" ${running ? 'disabled' : ''}>${reattempt ? 'Re-attempt (Fallback 50 min)' : 'Fallback (50 min)'}</button>
@@ -171,20 +179,23 @@ function viewDay(n) {
       ${reattempt ? '<p class="hint">Re-attempt me naye variants pehle aate hain; khatam hone pe dekhe hue sawaal "repeat" tag ke saath aate hain (fresh accuracy me nahi ginte). Plan progress nahi badlega.</p>' : ''}
       ${noContent ? '<p class="banner">Is din ke topic ke sawaal abhi bank me nahi hain. Revision aur GA chalenge.</p>' : ''}
     </section>
-    ${orderCard()}
     ${isCur ? focusCard(state) : ''}
     ${dayAttempts(state, n)}
   `);
   bindOrder();
-  document.getElementById('start').onclick = () => startSession(day, { reattempt });
+  const start = document.getElementById('start');
+  start.onclick = () => startSession(day, { reattempt });
   document.getElementById('fallback').onclick = () => startSession(day, { fallback: true, reattempt });
+  if (!running && !orderOpen) start.focus({ preventScroll: true });
 }
+
+let orderOpen = false; // keep the order picker open while it is being edited
 
 // Lets the student pick which part of the day comes first; remembered as the default.
 function orderCard() {
   const order = getOrder();
-  return `<section class="card">
-      <h2>Aaj kis order me?</h2>
+  return `<details class="ordercard" id="ordercard" ${orderOpen ? 'open' : ''}>
+      <summary><span class="muted">Order:</span> ${order.map((p) => MODE_LABEL[p]).join(' → ')} <span class="link">badlo</span></summary>
       <p class="muted small">Upar wala part pehle chalega. Galat answer ka repair variant hamesha turant aata hai. Ye order agle dinon ke liye bhi yaad rahega.</p>
       <ol class="order" id="order">
         ${order.map((p, i) => `<li data-p="${p}"><span class="onum">${i + 1}</span><span class="olabel">${esc(PARTS[p])}</span>
@@ -192,13 +203,14 @@ function orderCard() {
           <button type="button" class="btn icon-only" data-mv="1" ${i === order.length - 1 ? 'disabled' : ''} aria-label="Neeche">↓</button></li>`).join('')}
       </ol>
       <div class="actions"><button type="button" id="order-first-rev">Revision pehle</button><button type="button" id="order-first-topic">Topic pehle</button><button type="button" id="order-first-ga">GA pehle</button></div>
-    </section>`;
+    </details>`;
 }
 
 function bindOrder() {
   const el = document.getElementById('order');
   if (!el) return;
-  const save = (o) => { setOrder(o); route(); };
+  document.getElementById('ordercard').addEventListener('toggle', (e) => { orderOpen = e.target.open; });
+  const save = (o) => { setOrder(o); orderOpen = true; route(); };
   el.querySelectorAll('button[data-mv]').forEach((b) => {
     b.onclick = () => {
       const o = getOrder();
@@ -230,12 +242,17 @@ function dayAttempts(state, n) {
       ${[...groups.entries()].reverse().map(([key, arr]) => {
         const l = log(arr[0].sid, arr[0].date);
         const ok = arr.filter((a) => a.correct).length;
-        const tag = l ? (l.mode === 'reattempt' ? 're-attempt' : l.mode) : 'chal raha / log nahi';
-        return `<details ${groups.size === 1 ? 'open' : ''}><summary>${fmtDate(arr[0].date)} · ${esc(tag)}${l && l.fallback && l.mode === 'reattempt' ? ' · fallback' : ''} · ${ok}/${arr.length} sahi</summary>
-          <ol class="alist">${arr.map((a) => {
-            const s = content.skills[a.skill];
-            return `<li><a href="#/attempt/${esc(a.id)}"><span class="${a.correct ? 'okc' : 'noc'}">${a.correct ? '✓' : '✗'}</span> ${esc(s ? s.title : a.skill)}</a> <span class="muted small">${esc(a.mode)}${a.conf === 'Guess' ? ' · guess' : ''}${a.repeated ? ' · repeat' : ''}</span></li>`;
-          }).join('')}</ol></details>`;
+        const tag = l ? (l.mode === 'reattempt' ? 're-attempt' : String(l.mode).startsWith('history') ? 'chat (pehle)' : l.mode) : 'chal raha / log nahi';
+        const SECTIONS = [['Topic', ['diag', 'topic']], ['Mixed', ['mixed']], ['GA', ['ga']], ['Revision cards', ['review']], ['Repair variants', ['repair']]];
+        const item = (a) => {
+          const s = content.skills[a.skill];
+          return `<li><a href="#/attempt/${esc(a.id)}"><span class="${a.correct ? 'okc' : 'noc'}">${a.correct ? '✓' : '✗'}</span> ${esc(s ? s.title : a.skill)}</a> <span class="muted small">${a.conf === 'Guess' ? 'guess' : ''}${a.repeated ? ' · repeat' : ''}</span></li>`;
+        };
+        return `<details ${groups.size === 1 ? 'open' : ''}><summary>${fmtDate(arr[0].date)} · ${esc(tag)}${l && l.fallback && l.mode === 'reattempt' ? ' · fallback' : ''}${l && l.partial ? ' · adhoora' : ''} · ${ok}/${arr.length} sahi</summary>
+          ${SECTIONS.map(([name, modes]) => {
+            const part = arr.filter((a) => modes.includes(a.mode));
+            return part.length ? `<h3 class="ahead">${name} <span class="muted small">${part.filter((a) => a.correct).length}/${part.length}</span></h3><ol class="alist">${part.map(item).join('')}</ol>` : '';
+          }).join('')}</details>`;
       }).join('')}
     </section>`;
 }
@@ -262,16 +279,17 @@ function target72Card(state) {
   return `<section class="card">
       <h2>Target ${TARGET}</h2>
       ${est === null
-        ? '<p class="muted">Estimate ke liye kisi subject me kam se kam 10 unseen attempts chahiye.</p>'
-        : `<div class="countdown"><b class="t72 ${tone}">${est.toFixed(0)}</b><span>/100 estimated · ${est >= TARGET ? `${TARGET} ke upar ✓` : `${TARGET} tak ${(TARGET - est).toFixed(0)} marks`}</span></div>
-           <div class="bar t72bar"><div style="width:${Math.min(100, est)}%"></div><i style="left:${TARGET}%"></i></div>`}
+        ? '<p class="muted">Kisi bhi subject me 3 unseen attempts hote hi yahan estimate aa jaayega.</p>'
+        : `<div class="countdown"><b class="t72 ${tone}">${t.lowData ? '~' : ''}${est.toFixed(0)}</b><span>/100${t.lowData && t.band ? ` ± ${t.band}` : ''} estimated · ${est >= TARGET ? `${TARGET} ke upar ✓` : `${TARGET} tak ${(TARGET - est).toFixed(0)} marks`}</span></div>
+           <div class="bar t72bar"><div style="width:${Math.min(100, est)}%"></div><i style="left:${TARGET}%"></i></div>
+           ${t.lowData ? '<p class="banner warn">Kam data — abhi ye sirf provisional hai. ~60+ attempts ke baad number bharose layak hoga.</p>' : ''}`}
       <table class="tbl"><thead><tr><th>Subject</th><th>Paper marks</th><th>Accuracy</th><th>Expected</th><th>85% pe +marks</th></tr></thead><tbody>
-      ${t.rows.map((r) => `<tr><td>${esc(r.name)}</td><td>${r.marks}</td>
-        <td>${r.acc === null ? '—' : `${Math.round(r.acc * 100)}%`} <span class="muted small">(${r.n})</span></td>
+      ${t.rows.map((r) => `<tr class="${r.n ? '' : 'nodata'}"><td>${esc(r.name)}</td><td>${r.marks}</td>
+        <td>${r.acc === null ? '—' : `${Math.round(r.acc * 100)}%`} <span class="muted small">(${r.n}${r.n && r.lowData ? ', kam data' : ''})</span></td>
         <td>${r.expected === null ? '—' : `${r.expected.toFixed(1)}${r.assumed ? ' <span class="muted small">assumed</span>' : ''}`}</td>
-        <td>${r.gain ? `<b>+${r.gain.toFixed(1)}</b>` : '—'}</td></tr>`).join('')}
+        <td>${r.gain === null ? '<span class="muted small">data nahi</span>' : r.gain ? `<b>+${r.gain.toFixed(1)}</b>` : '—'}</td></tr>`).join('')}
       </tbody></table>
-      <p class="muted small">Practice accuracy × har subject ke average GATE DA marks (2024–26), MCQ negative marking ke saath. Jin subjects me 10 se kam attempts hain unke liye tumhari overall accuracy maani gayi hai ("assumed"). Ye sirf direction batata hai — asli readiness fresh 180-min mocks se hi pata chalegi.</p>
+      <p class="muted small">Practice accuracy × har subject ke average GATE DA marks (2024–26), MCQ negative marking ke saath. 3–9 attempts = "kam data". Jis subject ke 3 se kam attempts hain uske liye tumhari overall accuracy maani gayi hai ("assumed"). Ye sirf direction batata hai — asli readiness fresh 180-min mocks se hi pata chalegi.</p>
     </section>`;
 }
 
@@ -292,11 +310,56 @@ function startSession(day, opts) {
   else location.hash = '#/today';
 }
 
+const MODE_LABEL = { review: 'Revision', diag: 'Brush-up', topic: 'Topic', mixed: 'Mixed', ga: 'GA', repair: 'Repair' };
+const PART_OF_MODE = { review: 'review', diag: 'topic', topic: 'topic', mixed: 'mixed', ga: 'ga', repair: null };
+
+// The question that was on screen before a reload or a look at a past attempt, if still unanswered.
+function restoreCurrent(state) {
+  const c = session.cur;
+  if (!c || !content.questions[c.qid]) return null;
+  if (sessionAttempts(session, state).some((a) => a.qid === c.qid)) return null;
+  return { q: content.questions[c.qid], skill: c.skill, mode: c.mode, label: c.label, repeated: c.repeated, shownAt: Date.now() };
+}
+
+// Progress of each part in the chosen order, e.g. "Revision 3/10 · Topic 0/14 · Mixed 0/6 · GA 0/8".
+function partProgress(state, counts, t) {
+  const leftDue = Math.max(0, Math.min(
+    dueCards(state).filter((c) => !counts.reviewedToday.has(c.skill)).length,
+    session.reviewCap - counts.review,
+  ));
+  const parts = {
+    review: [counts.review, counts.review + leftDue],
+    topic: [counts.topic, t.topic],
+    mixed: [counts.mixed, t.mixed],
+    ga: [counts.ga, t.ga],
+  };
+  const order = session.mode === 'revision' ? ['review'] : session.order || ['review', 'topic', 'mixed', 'ga'];
+  const on = current ? PART_OF_MODE[current.mode] : null;
+  return order
+    .filter((p) => parts[p][1] > 0 || parts[p][0] > 0)
+    .map((p) => `<span class="${p === on ? 'on' : parts[p][0] >= parts[p][1] ? 'fin' : ''}">${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}</span>`)
+    .join('') + (counts.repair ? `<span>+${counts.repair} repair</span>` : '');
+}
+
+function stopSession() {
+  if (!confirm('Aaj ke naye sawaal yahin band karein? Abhi tak ka kaam save hai; bache hue repair kal revision me aayenge.')) return;
+  session.stopped = true;
+  session.repairQueue = [];
+  session.cur = null;
+  current = null;
+  feedback = null;
+  saveSession(session);
+  route();
+}
+
 function renderSession(state) {
-  if (!current || (feedback === null && !current.q)) {
-    const it = nextItem(session, state);
-    current = it ? { ...it, shownAt: Date.now() } : null;
+  if (!current) {
+    const restored = restoreCurrent(state);
+    const it = restored || nextItem(session, state);
+    current = it ? { ...it, shownAt: it.shownAt || Date.now() } : null;
     feedback = null;
+    session.cur = current ? { qid: current.q.id, skill: current.skill, mode: current.mode, label: current.label, repeated: current.repeated } : null;
+    if (!restored) session.sel = null;
     saveSession(session);
   }
   if (!current) return renderEnd(state);
@@ -304,75 +367,102 @@ function renderSession(state) {
   const t = targets(session, counts);
   const q = current.q;
   const skill = content.skills[q.skill] || {};
-  const total = t.topic + t.mixed + t.ga;
-  const doneMain = Math.min(counts.topic, t.topic) + Math.min(counts.mixed, t.mixed) + Math.min(counts.ga, t.ga);
-  const mins = Math.floor(session.activeMs / 60000);
   const done = sessionAttempts(session, state);
   const last = done[done.length - 1];
+  const isMsq = q.type === 'MSQ';
+  const shown = !!feedback;
 
   set(`
     <div class="sessionbar">
-      <span>Day ${session.day}${session.mode !== 'normal' ? ` · ${session.mode}` : ''}${session.reattempt ? ' · re-attempt' : ''}</span>
-      <span>Revision ${counts.review}</span>
-      <span>Main ${doneMain}/${total}</span>
-      <span>Repair ${counts.repair}</span>
-      <span>${mins}/${session.capMin} min</span>
-      ${last ? `<a class="link" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}
-      <button class="link" id="stop">Din band karo</button>
+      <span class="sb-day">Day ${session.day}${session.mode === 'fallback' ? ' · fallback' : session.mode === 'revision' ? ' · revision' : ''}${session.reattempt ? ' · ↻' : ''}</span>
+      <span class="sb-parts">${partProgress(state, counts, t)}</span>
+      <span class="sb-links">${last ? `<a class="link" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}<button class="link" id="stop">Din band karo</button></span>
+      <details class="sb-more"><summary aria-label="Aur options">⋯</summary><div>
+        ${last ? `<a class="button" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}
+        <button type="button" id="stop2">Din band karo</button>
+      </div></details>
     </div>
     ${t.note ? `<div class="banner">${esc(t.note)}</div>` : ''}
     <section class="card q">
-      <div class="eyebrow">${esc(current.label)} · ${esc(skill.title || q.skill)}</div>
-      <div class="meta">[${esc(q.source || 'Drill')}] · ${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''}${current.repeated ? ' · <span class="hot">repeat (fresh evidence nahi)</span>' : ''}</div>
+      <div class="eyebrow">${esc(current.label)}${shown ? ` · ${esc(skill.title || q.skill)}` : ''}</div>
+      <div class="meta"><span>[${esc(q.source || 'Drill')}]</span><span class="qtype ${isMsq ? 'msq' : ''}">${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''}</span>${current.repeated ? '<span class="hot">repeat · fresh evidence nahi</span>' : ''}</div>
       <div class="stem">${md(q.stem)}</div>
       ${q.figure ? `<div class="figure">${q.figure}</div>` : ''}
-      <form id="answer">
+      <form id="answer" autocomplete="off">
         ${q.type === 'NAT'
-          ? `<label class="nat">Answer <input id="nat" inputmode="decimal" autocomplete="off" placeholder="Ek number, jaise 0.25" ${feedback ? 'disabled' : ''}></label>`
+          ? `<label class="nat"><span>Answer <span class="muted small">· ${esc(natHint(q))}</span></span><input id="nat" inputmode="decimal" placeholder="Ek number" ${shown ? 'disabled' : ''}></label>`
           : `<div class="opts">${q.options.map((o, i) => `
-              <label class="opt" data-i="${i}">
-                <input type="${q.type === 'MSQ' ? 'checkbox' : 'radio'}" name="opt" value="${i}" ${feedback ? 'disabled' : ''}>
-                <span class="key">${'ABCD'[i]}</span><span class="otext">${md(o.text, true)}</span>
+              <label class="opt ${isMsq ? 'msq' : ''}" data-i="${i}">
+                <input class="vh" type="${isMsq ? 'checkbox' : 'radio'}" name="opt" value="${i}" ${shown ? 'disabled' : ''}>
+                <span class="key">${'ABCD'[i]}</span><span class="otext">${md(bigFrac(o.text), true)}</span>
               </label>`).join('')}</div>`}
-        ${q.type === 'MSQ' ? '<p class="hint">MSQ: ek ya zyada sahi. Poora exact set chahiye.</p>' : ''}
-        <div class="conf" ${feedback ? 'hidden' : ''}>
+        ${isMsq ? '<p class="hint"><b>MSQ:</b> ek ya zyada sahi. Poora exact set chahiye, partial marks nahi.</p>' : ''}
+        <div class="conf" ${shown ? 'hidden' : ''} role="radiogroup" aria-label="Confidence">
           <span>Confidence:</span>
-          ${['Sure', 'Likely', 'Guess'].map((c) => `<label><input type="radio" name="conf" value="${c}"> ${c}</label>`).join('')}
+          ${['Sure', 'Likely', 'Guess'].map((c) => `<label><input class="vh" type="radio" name="conf" value="${c}"> ${c}</label>`).join('')}
         </div>
-        <div class="err" id="err"></div>
-        ${feedback ? '' : '<button class="primary" type="submit">Submit</button>'}
+        <div class="err" id="err" role="alert"></div>
+        ${shown ? '' : `<p class="hint keys">Keyboard: ${q.type === 'NAT' ? 'number likho' : `1–4 ya A–D${isMsq ? ' (toggle)' : ''}`} · S / L / G confidence · Enter = submit, phir Enter = next</p>`}
       </form>
       <div id="fb"></div>
     </section>
+    <div class="actionbar">${shown
+      ? '<button class="primary" type="button" id="next">Next →</button>'
+      : '<button class="primary" type="submit" form="answer" id="submitbtn">Submit</button>'}</div>
   `);
 
-  document.getElementById('stop').onclick = () => {
-    if (confirm('Aaj ke naye sawaal band karke log pe chalein?')) {
-      session.capMin = 0;
-      session.repairQueue = [];
-      current = null;
-      saveSession(session);
-      route();
-    }
-  };
-  if (feedback) return renderFeedback();
+  document.getElementById('stop').onclick = stopSession;
+  document.getElementById('stop2').onclick = stopSession;
+  if (shown) return renderFeedback();
 
-  document.getElementById('answer').onsubmit = (ev) => {
+  const form = document.getElementById('answer');
+  if (session.sel) {
+    if (q.type === 'NAT') document.getElementById('nat').value = session.sel.v ?? '';
+    else form.querySelectorAll('input[name=opt]').forEach((x) => { x.checked = (session.sel.v || []).includes(Number(x.value)); });
+    const c = session.sel.conf && form.querySelector(`input[name=conf][value=${session.sel.conf}]`);
+    if (c) c.checked = true;
+  }
+  const remember = () => {
+    document.getElementById('err').textContent = '';
+    session.sel = readForm(q);
+    saveSession(session);
+  };
+  form.addEventListener('change', remember);
+  form.addEventListener('input', remember);
+  form.onsubmit = (ev) => {
     ev.preventDefault();
     const err = document.getElementById('err');
-    const conf = (document.querySelector('input[name=conf]:checked') || {}).value;
-    let resp;
-    if (q.type === 'NAT') resp = document.getElementById('nat').value;
-    else resp = [...document.querySelectorAll('input[name=opt]:checked')].map((x) => Number(x.value));
-    if (!conf) return (err.textContent = 'Pehle confidence chuno: Sure, Likely ya Guess.');
+    const { v: resp, conf } = readForm(q);
+    if (q.type !== 'NAT' && !resp.length) return (err.textContent = 'Pehle koi option chuno.');
+    if (q.type === 'NAT' && !String(resp).trim()) return (err.textContent = 'Pehle answer likho.');
+    if (!conf) return (err.textContent = 'Confidence chuno: Sure, Likely ya Guess (S / L / G).');
     const out = submit(session, current, resp, conf, Date.now() - current.shownAt);
     if (!out.valid) {
-      err.textContent = q.type === 'NAT' ? 'GATE NAT me sirf ek number jaata hai (koi range, fraction ya expression nahi).' : 'Koi option chuno.';
+      err.textContent = String(resp).includes(',')
+        ? 'Comma nahi — decimal ke liye point (.) use karo, jaise 0.25.'
+        : 'GATE NAT me sirf ek number jaata hai (range, fraction ya expression nahi).';
       return;
     }
     feedback = { ...out, resp, conf };
+    session.cur = null;
+    session.sel = null;
+    saveSession(session);
     renderSession(derive());
   };
+  if (q.type === 'NAT') document.getElementById('nat').focus({ preventScroll: true });
+}
+
+function readForm(q) {
+  const conf = (document.querySelector('input[name=conf]:checked') || {}).value;
+  const v = q.type === 'NAT'
+    ? document.getElementById('nat').value
+    : [...document.querySelectorAll('input[name=opt]:checked')].map((x) => Number(x.value));
+  return { v, conf };
+}
+
+// Inline \frac renders tiny inside options; display-style fractions are easier to read.
+function bigFrac(text) {
+  return String(text).replace(/\\frac/g, '\\dfrac');
 }
 
 function renderFeedback() {
@@ -381,7 +471,7 @@ function renderFeedback() {
   const skill = content.skills[q.skill] || {};
   let detail = '';
   if (q.type === 'NAT') {
-    if (q.type === 'NAT') document.getElementById('nat').value = f.resp;
+    document.getElementById('nat').value = f.resp;
     detail = `<p>Tumhara answer: <b>${esc(f.resp)}</b> · Sahi: <b>${esc(q.answer.value)}</b>${q.answer.tol ? ` (± ${q.answer.tol})` : ''}</p>
       ${f.trap ? `<div class="why bad"><b>Ye galti lag rahi hai:</b> ${md(f.trap.why, true)}</div>` : ''}`;
   } else {
@@ -392,26 +482,25 @@ function renderFeedback() {
       el.querySelector('input').checked = picked;
       el.classList.add(o.correct ? 'right' : picked ? 'wrong' : 'plain');
     });
-    const rows = q.options.map((o, i) => {
+    detail = q.options.map((o, i) => {
       const picked = f.resp.includes(i);
       if (q.type === 'MCQ' && !picked && !o.correct) return '';
-      const tag = o.correct ? (picked ? '✓ tumne chuna, sahi' : '✓ sahi option') : '✗ tumne chuna';
       if (q.type === 'MSQ') {
         const t = o.correct ? (picked ? '✓ chuna, sahi' : '✗ chhoot gaya (ye sahi tha)') : picked ? '✗ chuna, galat' : '✓ nahi chuna, theek';
         return `<div class="why ${(o.correct === picked) ? 'good' : 'bad'}"><b>${'ABCD'[i]} — ${t}:</b> ${md(o.why, true)}</div>`;
       }
+      const tag = o.correct ? (picked ? '✓ tumne chuna, sahi' : '✓ sahi option') : '✗ tumne chuna';
       return `<div class="why ${o.correct ? 'good' : 'bad'}"><b>${'ABCD'[i]} — ${tag}:</b> ${md(o.why, true)}</div>`;
-    });
-    detail = rows.join('');
+    }).join('');
   }
-  const trapTags = (f.traps || []).map((c) => `<span class="chip hot">${esc(c)} · ${esc(TRAP_CLASSES[c] || '')}</span>`).join('');
+  const trapTags = (f.traps || []).map((c) => `<span class="chip hot" title="${esc(c)}">${esc(TRAP_CLASSES[c] || c)}</span>`).join('');
   const verdict = f.correct
     ? (f.conf === 'Guess' ? '<div class="verdict ok">Sahi — lekin Guess tha, isliye revision card bana diya.</div>' : '<div class="verdict ok">Sahi ✓</div>')
     : `<div class="verdict no">Galat ✗</div>${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}`;
   const next = f.repairQueued
-    ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga. Check: ${esc(skill.check || '')}</p>`
+    ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga. Check: ${md(skill.check || '', true)}</p>`
     : f.stopSkill
-      ? `<p class="banner warn">Is skill pe aaj ke repair khatam. Ye kal revision me aayegi. Pehle theory dekh lo.</p>`
+      ? '<p class="banner warn">Is skill pe aaj ke repair khatam. Ye kal revision me aayegi. Pehle theory dekh lo.</p>'
       : '';
   const theory = f.showTheory && skill.theory ? `<p><a href="#/theory/${esc(skill.theory)}" target="_blank">📖 ${esc(skill.title)} — theory (new tab)</a></p>` : '';
   const fb = document.getElementById('fb');
@@ -419,14 +508,16 @@ function renderFeedback() {
     ${verdict}
     ${detail}
     <details ${f.correct ? '' : 'open'}><summary>Solution</summary><div class="sol">${md(q.solution)}</div></details>
-    ${next}${theory}
-    <button class="primary" id="next">Next →</button>`;
+    ${next}${theory}`;
   typeset(fb);
-  document.getElementById('next').onclick = () => {
+  const nextBtn = document.getElementById('next');
+  nextBtn.onclick = () => {
     current = null;
     feedback = null;
     route();
   };
+  fb.querySelector('.verdict')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  nextBtn.focus({ preventScroll: true });
 }
 
 function renderEnd(state) {
@@ -434,45 +525,54 @@ function renderEnd(state) {
   if (session.mode === 'revision') {
     session.ended = true;
     saveSession(session);
-    set(`<section class="card"><h1>Revision done</h1><p>${c.review} cards reviewed today.</p><a class="button" href="#/revision">Revision cards</a></section>`);
+    set(`<section class="card"><h1>Revision ho gaya ✓</h1><p>Aaj ${c.review} card dekhe${c.repair ? `, ${c.repair} repair variant` : ''}.</p>
+      <div class="actions"><a class="button" href="#/revision">Revision cards</a><a class="button" href="#/today">Today</a></div></section>`);
     session = null;
     return;
   }
   const newCards = Object.values(state.cards).filter((x) => x.opened === session.date).length;
+  const short = topicShort(session, state) && !session.reattempt;
+  const why = session.stopped ? 'khud band kiya' : timeUp(session) ? 'time cap poora' : 'target poora';
   set(`
     <section class="card">
-      <div class="eyebrow">Day ${session.day} · ${timeUp(session) ? 'time cap' : 'target'} poora</div>
-      <h1>Aaj ke naye sawaal band</h1>
+      <div class="eyebrow">Day ${session.day} · ${why}</div>
+      <h1>${session.stopped ? 'Session band' : 'Aaj ke naye sawaal poore'}</h1>
       <div class="stats">
         <div><b>${c.attempts}</b><span>attempts</span></div>
         <div><b>${pct(c.firstPassOk, c.firstPass)}</b><span>first-pass (${c.firstPassOk}/${c.firstPass})</span></div>
         <div><b>${c.review}</b><span>revision</span></div>
         <div><b>${c.repair}</b><span>repair variants</span></div>
-        <div><b>${newCards}</b><span>new cards</span></div>
+        <div><b>${newCards}</b><span>naye cards</span></div>
       </div>
       <form id="log">
-        <label>Focused ghante (breaks nahi) <input id="hours" type="number" step="0.25" min="0" max="12" value="${(session.activeMs / 3600000).toFixed(2)}"></label>
-        <label>Anxiety 1–5
-          <select id="anx">${[1, 2, 3, 4, 5].map((n) => `<option ${n === 3 ? 'selected' : ''}>${n}</option>`).join('')}</select>
-        </label>
+        ${short ? `<fieldset class="choice"><legend>Topic part abhi baaki hai (${c.topic}/${session.base.topic}). Is din ko kya maanein?</legend>
+          <label><input type="radio" name="dstate" value="partial" checked> ◐ Adhoora — kal yahi din continue karunga</label>
+          <label><input type="radio" name="dstate" value="done"> ✓ Done mark karo, aage badho</label></fieldset>` : ''}
+        <label>Focused ghante (breaks nahi) <input id="hours" type="number" step="any" min="0" max="16" value="${(session.activeMs / 3600000).toFixed(2)}"></label>
+        <fieldset class="anx"><legend>Anxiety (1–5)</legend><div class="pills">
+          ${[1, 2, 3, 4, 5].map((n) => `<label><input class="vh" type="radio" name="anx" value="${n}" ${n === 3 ? 'checked' : ''}><span>${n}</span></label>`).join('')}
+        </div></fieldset>
         <p class="hint">1 calm · 2 halki nervousness · 3 galti pe frustration, phir wapas · 4 baar baar ruk jaana · 5 aage nahi badh paaye</p>
         <label>Notes (optional) <textarea id="notes" rows="2"></textarea></label>
-        <button class="primary" type="submit">Save karke din band karo</button>
+        <button class="primary" type="submit">Save karke band karo</button>
       </form>
     </section>`);
   document.getElementById('log').onsubmit = (ev) => {
     ev.preventDefault();
+    const form = ev.target;
+    const partial = short && form.dstate.value === 'partial';
     endSession(session, {
       hours: Number(document.getElementById('hours').value) || 0,
-      anxiety: Number(document.getElementById('anx').value),
+      anxiety: Number(form.anx.value),
       notes: document.getElementById('notes').value.trim(),
+      partial,
     });
     const closedDay = session.day;
     session = null;
     sync();
-    set(`<section class="card"><h1>Day closed ✓</h1><p>Progress save ho gaya. Kal ke due cards Revision tab me dikhenge.</p>
-      <div class="actions"><a class="button" href="#/days">All days</a><a class="button" href="#/progress">Progress dekho</a></div>
-      <p class="muted small">Day ${closedDay} ke saare attempts dobara dekhne ke liye All days → Day ${closedDay}.</p></section>`);
+    set(`<section class="card"><h1>${partial ? `Day ${closedDay} adhoora save hua ◐` : 'Day closed ✓'}</h1>
+      <p>${partial ? `Kal Today me yahi Day ${closedDay} khulega, taaki topic part poora ho.` : 'Progress save ho gaya. Kal ke due cards Revision tab me dikhenge.'}</p>
+      <div class="actions"><a class="button" href="#/day/${closedDay}">Day ${closedDay} ke attempts</a><a class="button" href="#/progress">Progress dekho</a></div></section>`);
   };
 }
 
@@ -500,16 +600,17 @@ function viewAttempt(id) {
       const picked = resp.includes(k);
       const cls = o.correct ? 'right' : picked ? 'wrong' : 'plain';
       const tag = o.correct ? (picked ? '✓ tumne chuna, sahi' : '✓ sahi tha') : picked ? '✗ tumne chuna' : '';
-      return `<div class="opt ${cls}"><span class="key">${'ABCD'[k]}</span><span class="otext">${md(o.text, true)}
-          <div class="why ${o.correct ? 'good' : picked ? 'bad' : ''}">${tag ? `<b>${tag}:</b> ` : ''}${md(o.why, true)}${!o.correct && o.trap ? ` <span class="muted small">(${esc(o.trap)})</span>` : ''}</div></span></div>`;
+      return `<div class="opt ${cls} ${q.type === 'MSQ' ? 'msq' : ''}"><span class="key">${'ABCD'[k]}</span><span class="otext">${md(bigFrac(o.text), true)}
+          <div class="why ${o.correct ? 'good' : picked ? 'bad' : ''}">${tag ? `<b>${tag}:</b> ` : ''}${md(o.why, true)}${!o.correct && o.trap ? ` <span class="muted small">· ${esc(TRAP_CLASSES[o.trap] || o.trap)}</span>` : ''}</div></span></div>`;
     }).join('')}</div>`;
   }
-  const trapTags = (a.traps || []).map((c) => `<span class="chip hot">${esc(c)} · ${esc(TRAP_CLASSES[c] || '')}</span>`).join('');
+  const trapTags = (a.traps || []).map((c) => `<span class="chip hot" title="${esc(c)}">${esc(TRAP_CLASSES[c] || c)}</span>`).join('');
   set(`
     <div class="sessionbar">
-      ${prev ? `<a class="link" href="#/attempt/${esc(prev.id)}">← Pichla</a>` : ''}
+      ${prev ? `<a class="link" href="#/attempt/${esc(prev.id)}" id="prevA">← Pichla</a>` : ''}
       <span>${i + 1} / ${siblings.length}</span>
-      ${next ? `<a class="link" href="#/attempt/${esc(next.id)}">Agla →</a>` : ''}
+      ${next ? `<a class="link" href="#/attempt/${esc(next.id)}" id="nextA">Agla →</a>` : ''}
+      <span class="muted small hidem">← → keys bhi chalti hain</span>
     </div>
     <section class="card q">
       <div class="eyebrow">Day ${a.day} · ${fmtDate(a.date)} · ${esc(a.mode)} · ${esc(skill.title || q.skill)}</div>
@@ -563,12 +664,12 @@ function renderMockDay(day, ps) {
       <form id="mock" class="grid2">
         <label>Source <input id="src" value="${day.officialPaperYear ? `GATE DA ${day.officialPaperYear}` : ''}"></label>
         <label>Fresh (pehle nahi dekha)? <select id="fresh"><option value="0" ${day.officialPaperYear ? 'selected' : ''}>No</option><option value="1" ${day.officialPaperYear ? '' : 'selected'}>Yes</option></select></label>
-        <label>Net marks /100 <input id="net" type="number" step="0.01"></label>
+        <label>Net marks /100 <input id="net" type="number" step="any"></label>
         <label>Attempted <input id="att" type="number"></label>
         <label>Correct <input id="cor" type="number"></label>
-        <label>Negative marks <input id="neg" type="number" step="0.01"></label>
+        <label>Negative marks <input id="neg" type="number" step="any" min="0"></label>
         <label>Anxiety 1–5 <input id="anx" type="number" min="1" max="5" value="3"></label>
-        <label>Hours <input id="hrs" type="number" step="0.25" value="4.5"></label>
+        <label>Hours <input id="hrs" type="number" step="any" min="0" value="4.5"></label>
         <label class="span2">Time loss / selection errors / notes <textarea id="notes" rows="3"></textarea></label>
         <button class="primary span2" type="submit">Mock save karo</button>
       </form>
@@ -614,7 +715,8 @@ function viewRevision() {
         <div><b>${active.length}</b><span>active</span></div>
         <div><b>${mastered.length}</b><span>mastered</span></div>
       </div>
-      <button class="primary" id="rev" ${due.length ? '' : 'disabled'}>Sirf revision karo (max 10, 45 min)</button>
+      ${activeSession() ? `<div class="banner warn">Day ${session.day} ka session abhi chal raha hai. <a href="#/today"><b>Wahi continue karo</b></a> — usme bhi revision cards aate hain. Ek time pe ek hi session.</div>` : ''}
+      <button class="primary" id="rev" ${due.length && !activeSession() ? '' : 'disabled'}>Sirf revision karo (max 10, 45 min)</button>
     </section>
     <section class="card">
       <table class="tbl"><thead><tr><th>Skill</th><th>Pass</th><th>Fails</th><th>Due</th><th></th></tr></thead>
@@ -622,6 +724,7 @@ function viewRevision() {
       ${mastered.length ? `<details><summary>Mastered (${mastered.length})</summary><table class="tbl"><tbody>${mastered.map(row).join('')}</tbody></table></details>` : ''}
     </section>`);
   document.getElementById('rev').onclick = () => {
+    if (activeSession()) return;
     const ps = planStatus(state);
     session = newSession(ps.current, { revisionOnly: true });
     current = null;
@@ -650,41 +753,79 @@ function theoryIndex() {
   return byArea;
 }
 
-async function viewTheory(id) {
-  if (id) {
-    const tok = viewToken;
-    set('<section class="card"><p class="muted">Loading…</p></section>');
+// Theory notes are fetched once per visit and kept in memory.
+const noteCache = new Map();
+
+async function getNote(id) {
+  if (noteCache.has(id)) return noteCache.get(id);
+  try {
     const r = await fetch(`data/theory/${id}.md`, { cache: 'no-cache' });
-    const text = r.ok ? await r.text() : '# Not found\nIs topic ki theory abhi nahi bani.';
+    const text = r.ok ? await r.text() : null;
+    if (text) noteCache.set(id, text);
+    return text;
+  } catch {
+    return null;
+  }
+}
+
+function noteTitle(id, text) {
+  return (text && (text.match(/^#\s+(.+)$/m) || [])[1]) || id;
+}
+
+async function viewTheory(id) {
+  const tok = viewToken;
+  if (id) {
+    set('<section class="card"><p class="muted">Loading…</p></section>');
+    const text = await getNote(id);
     if (tok !== viewToken) return;
-    set(`<p><a href="#/theory">← All theory</a></p><article class="card prose">${md(text)}</article>`);
+    set(`<p><a href="#/theory">← Saari theory</a></p><article class="card prose">${md(text || '# Nahi mila\nIs topic ki theory abhi nahi bani, ya internet nahi hai.')}</article>`);
     return;
   }
   const idx = theoryIndex();
-  set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ka short note: core ideas, shortcuts, traps, recall.</p></section>` +
+  const ids = Object.values(idx).flatMap((list) => [...list.keys()]);
+  set('<section class="card"><h1>Theory</h1><p class="muted">Loading…</p></section>');
+  const texts = Object.fromEntries(await Promise.all(ids.map(async (n) => [n, await getNote(n)])));
+  if (tok !== viewToken) return;
+  set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ka short note: core ideas, shortcuts, traps, recall.</p>
+      <input id="tsearch" class="search" type="search" placeholder="Topic dhoondo… (jaise eigen, SQL, Bayes)" aria-label="Theory search"></section>` +
     Object.entries(idx).map(([area, list]) => `
-      <section class="card"><h2>${AREA_NAMES[area] || area}</h2><ul class="links">
-        ${[...list.values()].map((e) => `<li><a href="#/theory/${esc(e.id)}">${esc(e.id)}</a> <span class="muted small">${e.days.size ? 'Day ' + [...e.days].sort((a, b) => a - b).join(', ') + ' · ' : ''}${esc(e.skills.slice(0, 3).join(' · '))}${e.skills.length > 3 ? '…' : ''}</span></li>`).join('')}
+      <section class="card tsec"><h2>${AREA_NAMES[area] || area}</h2><ul class="links">
+        ${[...list.values()].map((e) => `<li data-q="${esc((noteTitle(e.id, texts[e.id]) + ' ' + e.skills.join(' ')).toLowerCase())}"><a href="#/theory/${esc(e.id)}">${esc(noteTitle(e.id, texts[e.id]))}</a>
+          <span class="muted small">${e.days.size ? 'Day ' + [...e.days].sort((a, b) => a - b).join(', ') + ' · ' : ''}${esc(e.skills.slice(0, 3).join(' · '))}${e.skills.length > 3 ? '…' : ''}</span></li>`).join('')}
       </ul></section>`).join(''));
+  const box = document.getElementById('tsearch');
+  box.oninput = () => {
+    const q = box.value.trim().toLowerCase();
+    main.querySelectorAll('.tsec').forEach((sec) => {
+      let shown = 0;
+      sec.querySelectorAll('li').forEach((li) => {
+        const hit = !q || li.dataset.q.includes(q);
+        li.hidden = !hit;
+        shown += hit;
+      });
+      sec.hidden = !shown;
+    });
+  };
 }
 
 async function viewRecall() {
-  set('<section class="card"><p class="muted">Recall sheet bana raha hoon…</p></section>');
+  const tok = viewToken;
+  set('<section class="card"><h1>Recall sheet</h1><p class="muted">Recall sheet bana raha hoon…</p></section>');
   const idx = theoryIndex();
   const state = derive();
   const traps = Object.values(state.cards).filter((c) => !c.mastered)
     .map((c) => content.skills[c.skill]).filter((s) => s && s.check);
-  let html = `<section class="card"><h1>Recall sheet</h1><p class="muted">Har topic ki sabse zaroori lines, aur kahan se padhna hai. Exam se pehle roz ek baar.</p></section>`;
-  if (traps.length) {
-    html += `<section class="card"><h2>Tumhare active traps</h2><ul>${traps.map((s) => `<li><b>${esc(s.title)}:</b> ${md(s.check, true)} <a class="small" href="#/theory/${esc(s.theory)}">theory</a></li>`).join('')}</ul></section>`;
-  }
-  const tok = viewToken;
   const ids = Object.values(idx).flatMap((list) => [...list.keys()]);
-  const texts = Object.fromEntries(await Promise.all(ids.map(async (id) => {
-    const r = await fetch(`data/theory/${id}.md`, { cache: 'no-cache' });
-    return [id, r.ok ? await r.text() : null];
-  })));
+  const texts = Object.fromEntries(await Promise.all(ids.map(async (n) => [n, await getNote(n)])));
   if (tok !== viewToken) return;
+  const missing = ids.filter((n) => !texts[n]).length;
+  const areas = Object.keys(idx);
+  let html = `<section class="card"><h1>Recall sheet</h1><p class="muted">Har topic ki sabse zaroori lines, aur kahan se padhna hai. Exam se pehle roz ek baar.</p>
+    <div class="chips jump">${traps.length ? '<button type="button" class="chip" data-jump="r-traps">Tumhare traps</button>' : ''}${areas.map((a) => `<button type="button" class="chip" data-jump="r-${a}">${AREA_NAMES[a] || a}</button>`).join('')}</div>
+    ${missing ? `<p class="banner warn">${missing} notes load nahi hue (internet?). Baaki neeche hain.</p>` : ''}</section>`;
+  if (traps.length) {
+    html += `<section class="card" id="r-traps"><h2>Tumhare active traps</h2><ul>${traps.map((s) => `<li><b>${esc(s.title)}:</b> ${md(s.check, true)} <a class="small" href="#/theory/${esc(s.theory)}">theory</a></li>`).join('')}</ul></section>`;
+  }
   for (const [area, list] of Object.entries(idx)) {
     let block = '';
     for (const e of list.values()) {
@@ -692,13 +833,16 @@ async function viewRecall() {
       if (!text) continue;
       const m = text.match(/##\s*Recall\s*\n([\s\S]*?)(\n##\s|$)/i);
       if (!m) continue;
-      const title = (text.match(/^#\s+(.+)$/m) || [, e.id])[1];
       const days = [...e.days].sort((a, b) => a - b);
-      block += `<div class="recall"><h3><a href="#/theory/${esc(e.id)}">${esc(title)}</a>${days.length ? ` <span class="muted small">Day ${days.join(', ')}</span>` : ''}</h3>${md(m[1])}</div>`;
+      block += `<div class="recall"><h3><a href="#/theory/${esc(e.id)}">${esc(noteTitle(e.id, text))}</a>${days.length ? ` <span class="muted small">Day ${days.join(', ')}</span>` : ''}</h3>${md(m[1])}</div>`;
     }
-    if (block) html += `<section class="card"><h2>${AREA_NAMES[area] || area}</h2>${block}</section>`;
+    if (block) html += `<section class="card" id="r-${area}"><h2>${AREA_NAMES[area] || area}</h2>${block}</section>`;
   }
   set(html);
+  // jump buttons scroll in place (a #anchor would be read as a route)
+  main.querySelectorAll('[data-jump]').forEach((b) => {
+    b.onclick = () => document.getElementById(b.dataset.jump)?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
 }
 
 // ---------- progress ----------
@@ -798,7 +942,7 @@ function trapProfile(state) {
       <h2>Trap profile</h2>
       <p class="muted small">GATE papers 2024–26 me har sawaal in 11 trap classes me aata hai. Ye tumhari galtiyon ka breakdown hai.</p>
       ${rows.length ? `<table class="tbl"><thead><tr><th>Trap class</th><th>Galtiyan</th><th></th></tr></thead><tbody>
-        ${rows.map(([c, n]) => `<tr><td><b>${esc(c)}</b> ${esc(TRAP_CLASSES[c] || '')}</td><td>${n}</td><td><div class="minibar"><div style="width:${(100 * n) / rows[0][1]}%"></div></div> ${pct(n, total)}</td></tr>`).join('')}
+        ${rows.map(([c, n]) => `<tr><td><b>${esc(TRAP_CLASSES[c] || c)}</b> <span class="muted small">${esc(c)}</span></td><td>${n}</td><td><div class="minibar"><div style="width:${(100 * n) / rows[0][1]}%"></div></div> ${pct(n, total)}</td></tr>`).join('')}
       </tbody></table>` : '<p class="muted">Abhi tagged galtiyan nahi hain. Naye banks (DSA, DBMS, ML, AI) ke har galat option pe trap class hai.</p>'}
     </section>`;
 }
@@ -860,7 +1004,10 @@ function viewSettings() {
     msg.textContent = syncState.status === 'ok' ? 'Saved and synced ✓' : syncState.message;
   };
   document.getElementById('test').onclick = async () => {
-    setCfg({ token: document.getElementById('token').value.trim() });
+    const token = document.getElementById('token').value.trim();
+    if (!token) { msg.textContent = 'Token khaali hai — pehle upar ke steps se token banao aur paste karo.'; return; }
+    setCfg({ token });
+    msg.textContent = 'Check kar raha hoon…';
     try { msg.textContent = await testConnection(); } catch (e) { msg.textContent = e.message; }
   };
   document.getElementById('exp').onclick = () => {
@@ -876,6 +1023,58 @@ function viewSettings() {
   };
 }
 
+// ---------- keyboard ----------
+// Question screen: 1–4 / A–D pick (MSQ toggles), S/L/G confidence, Enter submits then goes next.
+// Attempt review: ← → move between attempts.
+
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+  const k = e.key.toLowerCase();
+  const tag = (e.target.tagName || '').toLowerCase();
+  const typing = tag === 'textarea' || tag === 'select' || (tag === 'input' && !['radio', 'checkbox'].includes(e.target.type));
+
+  if (location.hash.startsWith('#/attempt/') && !typing) {
+    const to = k === 'arrowleft' ? document.getElementById('prevA') : k === 'arrowright' ? document.getElementById('nextA') : null;
+    if (to) { e.preventDefault(); location.hash = to.getAttribute('href'); }
+    return;
+  }
+  const form = document.getElementById('answer');
+  if (!form || !current) return;
+  if (feedback) {
+    // a focused button/link already handles Enter natively; clicking again would skip a question
+    if ((k === 'enter' && !['a', 'summary', 'button'].includes(tag)) || k === 'n') {
+      e.preventDefault();
+      document.getElementById('next')?.click();
+    }
+    return;
+  }
+  const conf = { s: 'Sure', l: 'Likely', g: 'Guess' }[k];
+  if (conf) {
+    const c = form.querySelector(`input[name=conf][value=${conf}]`);
+    if (c) {
+      e.preventDefault();
+      c.checked = true;
+      c.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    return;
+  }
+  if (typing) return; // in the NAT box, Enter submits the form natively
+  const idx = k.length === 1 ? Math.max('1234'.indexOf(k), 'abcd'.indexOf(k)) : -1;
+  if (idx >= 0) {
+    const opt = form.querySelectorAll('input[name=opt]')[idx];
+    if (opt) {
+      e.preventDefault();
+      opt.checked = opt.type === 'checkbox' ? !opt.checked : true;
+      opt.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    return;
+  }
+  if (k === 'enter' && tag !== 'button' && tag !== 'a' && tag !== 'summary') {
+    e.preventDefault();
+    form.requestSubmit();
+  }
+});
+
 // ---------- active-time clock ----------
 
 ['click', 'keydown', 'touchstart', 'scroll'].forEach((t) => window.addEventListener(t, () => (lastInput = Date.now()), { passive: true }));
@@ -890,13 +1089,17 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611041108');
+  const store = await import('./store.js?v=202611041128');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
   onChange(() => { renderSync(); renderChrome(); });
   renderSync();
   document.getElementById('syncbtn').onclick = () => sync();
+  document.getElementById('skip').onclick = () => {
+    const target = main.querySelector('#start, #submitbtn, #next, #nat, input, button, a') || main;
+    target.focus();
+  };
   window.addEventListener('hashchange', route);
   route();
   await sync();

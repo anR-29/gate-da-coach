@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611041108';
+import { addEvent, allEvents, cfg } from './store.js?v=202611041128';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -74,7 +74,8 @@ export function derive() {
       applyCard(cards, e);
     } else if (e.type === 'daylog') {
       // the first completion decides plan progress; re-attempts are kept in logList only
-      if (!dayLogs[e.day]) dayLogs[e.day] = e;
+      // a day counts as done at its first non-partial log (partial = topic part left for later)
+      if (!dayLogs[e.day] && !e.partial) dayLogs[e.day] = e;
       logList.push(e);
     } else if (e.type === 'mock') {
       mocks.push(e);
@@ -89,6 +90,7 @@ export function dayStatus(state, dayNum) {
   const first = state.dayLogs[dayNum];
   return {
     done: !!first || dayNum < 18,
+    partial: !first && dayNum >= 18 && logs.some((l) => l.partial),
     fallback: logs.some((l) => l.mode === 'fallback' || l.fallback),
     reattempts: logs.filter((l) => l.mode === 'reattempt').length,
     history: first ? String(first.mode || '').startsWith('history') : dayNum < 18,
@@ -190,9 +192,10 @@ export function target72(state) {
     const n = mine.length;
     const ok = mine.filter((a) => a.correct).length;
     const acc = n ? ok / n : null;
-    const known = n >= MIN_N;
+    const known = n >= 3; // 3–9 attempts give a provisional, low-data value
+    const lowData = n < MIN_N;
     const expected = known ? Math.max(0, s.marks * (acc - (1 - acc) * NEG)) : null;
-    rows.push({ name, marks: s.marks, n, acc, known, expected });
+    rows.push({ name, marks: s.marks, n, acc, known, lowData, expected });
   }
   const knownRows = rows.filter((r) => r.known);
   const accAll = knownRows.length ? knownRows.reduce((t, r) => t + r.acc * r.n, 0) / knownRows.reduce((t, r) => t + r.n, 0) : null;
@@ -200,15 +203,18 @@ export function target72(state) {
     r.assumed = !r.known && accAll !== null;
     if (r.assumed) r.expected = Math.max(0, r.marks * (accAll - (1 - accAll) * NEG));
     // marks recoverable by lifting this subject to 85% accuracy
-    const now = r.expected ?? 0;
-    r.gain = Math.max(0, r.marks * (0.85 - (0.15) * NEG) - now);
+    // no gain figure without any data of the subject's own
+    r.gain = r.n ? Math.max(0, r.marks * (0.85 - (0.15) * NEG) - (r.expected ?? 0)) : null;
   }
   const total = accAll === null ? null : rows.reduce((t, r) => t + (r.expected || 0), 0);
+  const nTotal = rows.reduce((t, r) => t + r.n, 0);
   return {
-    rows: rows.sort((a, b) => b.gain - a.gain),
+    rows: rows.sort((a, b) => (b.gain ?? -1) - (a.gain ?? -1)),
     total,
     knownMarks: knownRows.reduce((t, r) => t + r.marks, 0),
     accAll,
+    lowData: nTotal < 60 || rows.some((r) => r.known && r.lowData),
+    band: nTotal ? Math.min(15, Math.round(40 / Math.sqrt(nTotal))) : null,
   };
 }
 
@@ -392,7 +398,7 @@ function rotate(list, n) {
 }
 
 export function nextItem(session, state) {
-  if (session.ended) return null;
+  if (session.ended || session.stopped) return null;
   const counts = sessionCounts(session, state);
   const t = targets(session, counts);
 
@@ -454,8 +460,18 @@ export function nextItem(session, state) {
 
 // ---------- grading ----------
 
+// How a NAT answer should be entered, worked out from the key's tolerance.
+export function natHint(q) {
+  const { value, tol = 0 } = q.answer;
+  if (Number.isInteger(value) && tol < 0.5) return 'Integer answer';
+  if (!tol) return 'Exact value (decimal me)';
+  const places = Math.max(0, Math.ceil(-Math.log10(tol * 2)));
+  return places ? `${places} decimal tak (jaise ${(0.123456).toFixed(places)})` : 'Integer tak round karo';
+}
+
 export function parseNat(raw) {
-  const s = String(raw).trim().replace(/,/g, '');
+  const s = String(raw).trim();
+  if (s.includes(',')) return null;
   if (!/^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s)) return null;
   return Number(s);
 }
@@ -543,12 +559,20 @@ export function submit(session, item, response, conf, ms) {
   return out;
 }
 
-export function endSession(session, { hours, anxiety, notes }) {
+// True when the day's topic part is clearly unfinished (less than half of its target).
+export function topicShort(session, state) {
+  if (session.mode === 'revision' || !session.topicSkills.length) return false;
+  const c = sessionCounts(session, state);
+  return c.topic < Math.ceil(session.base.topic / 2);
+}
+
+export function endSession(session, { hours, anxiety, notes, partial = false }) {
   const state = derive();
   const c = sessionCounts(session, state);
   addEvent('daylog', {
     day: session.day, date: session.date, hours, anxiety, notes, mode: session.reattempt ? 'reattempt' : session.mode,
     fallback: session.mode === 'fallback', sid: session.sid, order: session.order,
+    partial: !!partial && !session.reattempt, stopped: !!session.stopped, topicDone: c.topic, topicTarget: session.base.topic,
     attempts: c.attempts, correct: c.correct, firstPass: c.firstPass, firstPassOk: c.firstPassOk,
   });
   session.ended = true;

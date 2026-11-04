@@ -179,7 +179,7 @@ let running = null;
 export function sync() {
   if (!cfg.token) {
     syncState.status = 'off';
-    syncState.message = 'No GitHub token on this device. Progress is saved only in this browser.';
+    syncState.message = 'Is device pe GitHub token nahi hai. Progress sirf is browser me save ho raha hai.';
     emit();
     return Promise.resolve();
   }
@@ -223,9 +223,11 @@ async function doSync() {
 
 export async function testConnection() {
   const r = await fetch(`${API}/repos/${cfg.owner}/${cfg.repo}`, { headers: headers() });
-  if (!r.ok) throw new Error(`GitHub said ${r.status}. Check the token and that it can access ${cfg.owner}/${cfg.repo}.`);
+  if (r.status === 401) throw new Error('Token galat ya expire ho gaya hai. Naya fine-grained token banao.');
+  if (r.status === 404 || r.status === 403) throw new Error(`Token ko ${cfg.owner}/${cfg.repo} ka access nahi hai. Token me ye repo select karo, Contents: Read and write.`);
+  if (!r.ok) throw new Error(`GitHub ne error diya (${r.status}). Thodi der baad try karo.`);
   const j = await r.json();
-  return j.private ? 'Connected (private repo).' : 'Connected, but the repo is PUBLIC. Make it private.';
+  return j.private ? 'Connected ✓ (private repo).' : 'Connected, lekin repo PUBLIC hai — ise private karo.';
 }
 
 export function exportJson() {
