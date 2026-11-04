@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611020540';
+import { addEvent, allEvents, cfg } from './store.js?v=202611041108';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -60,6 +60,7 @@ export function derive() {
   const events = allEvents();
   const cards = {};
   const dayLogs = {};
+  const logList = [];
   const seen = {};
   const attempts = [];
   const mocks = [];
@@ -72,12 +73,28 @@ export function derive() {
     } else if (e.type === 'card') {
       applyCard(cards, e);
     } else if (e.type === 'daylog') {
-      dayLogs[e.day] = e;
+      // the first completion decides plan progress; re-attempts are kept in logList only
+      if (!dayLogs[e.day]) dayLogs[e.day] = e;
+      logList.push(e);
     } else if (e.type === 'mock') {
       mocks.push(e);
     }
   }
-  return { cards, dayLogs, seen, attempts, mocks };
+  return { cards, dayLogs, logList, seen, attempts, mocks };
+}
+
+// Status of one plan day for lists: done, fallback, re-attempt count, attempts.
+export function dayStatus(state, dayNum) {
+  const logs = state.logList.filter((l) => l.day === dayNum);
+  const first = state.dayLogs[dayNum];
+  return {
+    done: !!first || dayNum < 18,
+    fallback: logs.some((l) => l.mode === 'fallback' || l.fallback),
+    reattempts: logs.filter((l) => l.mode === 'reattempt').length,
+    history: first ? String(first.mode || '').startsWith('history') : dayNum < 18,
+    logs,
+    attempts: state.attempts.filter((a) => a.day === dayNum),
+  };
 }
 
 function applyCard(cards, e) {
@@ -242,6 +259,27 @@ export function skillsForDays(dayNums) {
     .map((s) => s.id);
 }
 
+export const PARTS = {
+  review: 'Revision cards',
+  topic: 'Brush-up + today’s topic',
+  mixed: 'Mixed older topics',
+  ga: 'General Aptitude',
+};
+const DEFAULT_ORDER = ['review', 'topic', 'mixed', 'ga'];
+const LS_ORDER = 'gdc.order';
+
+export function getOrder() {
+  try {
+    const o = JSON.parse(localStorage.getItem(LS_ORDER) || 'null');
+    if (Array.isArray(o) && o.length === DEFAULT_ORDER.length && DEFAULT_ORDER.every((p) => o.includes(p))) return o;
+  } catch {}
+  return [...DEFAULT_ORDER];
+}
+
+export function setOrder(order) {
+  try { localStorage.setItem(LS_ORDER, JSON.stringify(order)); } catch {}
+}
+
 export function newSession(day, opts = {}) {
   const fallback = !!opts.fallback;
   const revisionOnly = !!opts.revisionOnly;
@@ -262,6 +300,9 @@ export function newSession(day, opts = {}) {
     repairQueue: [],
     served: [],
     mode: revisionOnly ? 'revision' : fallback ? 'fallback' : 'normal',
+    reattempt: !!opts.reattempt,
+    order: opts.order || getOrder(),
+    sid: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     ended: false,
   };
   saveSession(session);
@@ -285,8 +326,13 @@ export function saveSession(s) {
   }
 }
 
+export function sessionAttempts(session, state) {
+  // sessions before ids existed are matched by date and day
+  return state.attempts.filter((a) => (session.sid ? a.sid === session.sid : a.date === session.date && a.day === session.day));
+}
+
 export function sessionCounts(session, state) {
-  const mine = state.attempts.filter((a) => a.date === session.date && a.day === session.day);
+  const mine = sessionAttempts(session, state);
   const count = (m) => mine.filter((a) => a.mode === m).length;
   const firstPass = mine.filter((a) => ['diag', 'topic', 'mixed'].includes(a.mode) && !a.repeated);
   const fpOk = firstPass.filter((a) => a.correct && a.conf !== 'Guess').length;
@@ -358,39 +404,50 @@ export function nextItem(session, state) {
   }
   if (timeUp(session)) return null;
 
-  const due = dueCards(state).filter((c) => !counts.reviewedToday.has(c.skill));
-  if (due.length && counts.review < session.reviewCap) {
-    const c = due[0];
-    const picked = pickQuestion(c.skill, session, state);
-    if (picked) return { ...picked, skill: c.skill, mode: 'review', label: 'Delayed revision · fresh variant' };
-  }
-  if (session.mode === 'revision') return null;
-
+  // a re-attempted day may reuse questions already seen (they are flagged as repeats)
+  const ok = (picked) => picked && (!picked.repeated || session.reattempt);
   const topic = session.topicSkills;
-  if (counts.topic < t.topic && topic.length) {
-    const mode = counts.diag < 3 && session.mode === 'normal' ? 'diag' : 'topic';
-    for (let i = 0; i < topic.length; i++) {
-      const skill = rotate(topic, counts.topic + i);
-      const level = mode === 'diag' ? 1 : counts.topic < t.topic / 2 ? 1 : 2;
-      const picked = pickQuestion(skill, session, state, level);
-      if (picked && !picked.repeated) return { ...picked, skill, mode, label: mode === 'diag' ? 'Closed-book brush-up' : 'Today’s topic' };
-    }
-  }
-
-  const mixedPool = [...new Set([...weakSkills(state), ...session.spacedSkills])].filter((s) => !topic.includes(s));
-  if (counts.mixed < t.mixed && mixedPool.length) {
-    for (let i = 0; i < mixedPool.length; i++) {
-      const skill = rotate(mixedPool, counts.mixed + i);
-      const picked = pickQuestion(skill, session, state, 2);
-      if (picked && !picked.repeated) return { ...picked, skill, mode: 'mixed', label: 'Mixed · older topic' };
-    }
-  }
-
-  if (counts.ga < t.ga) {
-    const gaSkills = Object.keys(content.skills).filter((s) => s.startsWith('ga.'));
-    const skill = counts.ga % 3 === 2 ? rotate(gaSkills, counts.ga) : session.gaSkill;
-    const picked = pickQuestion(skill, session, state) || pickQuestion(session.gaSkill, session, state);
-    if (picked) return { ...picked, skill: picked.q.skill, mode: 'ga', label: 'General Aptitude' };
+  const parts = {
+    review() {
+      const due = dueCards(state).filter((c) => !counts.reviewedToday.has(c.skill));
+      if (!due.length || counts.review >= session.reviewCap) return null;
+      const c = due[0];
+      const picked = pickQuestion(c.skill, session, state);
+      return picked ? { ...picked, skill: c.skill, mode: 'review', label: 'Delayed revision · fresh variant' } : null;
+    },
+    topic() {
+      if (counts.topic >= t.topic || !topic.length) return null;
+      const mode = counts.diag < 3 && session.mode === 'normal' ? 'diag' : 'topic';
+      for (let i = 0; i < topic.length; i++) {
+        const skill = rotate(topic, counts.topic + i);
+        const level = mode === 'diag' ? 1 : counts.topic < t.topic / 2 ? 1 : 2;
+        const picked = pickQuestion(skill, session, state, level);
+        if (ok(picked)) return { ...picked, skill, mode, label: mode === 'diag' ? 'Closed-book brush-up' : 'Today’s topic' };
+      }
+      return null;
+    },
+    mixed() {
+      const pool = [...new Set([...weakSkills(state), ...session.spacedSkills])].filter((s) => !topic.includes(s));
+      if (counts.mixed >= t.mixed || !pool.length) return null;
+      for (let i = 0; i < pool.length; i++) {
+        const skill = rotate(pool, counts.mixed + i);
+        const picked = pickQuestion(skill, session, state, 2);
+        if (ok(picked)) return { ...picked, skill, mode: 'mixed', label: 'Mixed · older topic' };
+      }
+      return null;
+    },
+    ga() {
+      if (counts.ga >= t.ga) return null;
+      const gaSkills = Object.keys(content.skills).filter((s) => s.startsWith('ga.'));
+      const skill = counts.ga % 3 === 2 ? rotate(gaSkills, counts.ga) : session.gaSkill;
+      const picked = pickQuestion(skill, session, state) || pickQuestion(session.gaSkill, session, state);
+      return picked ? { ...picked, skill: picked.q.skill, mode: 'ga', label: 'General Aptitude' } : null;
+    },
+  };
+  const order = session.mode === 'revision' ? ['review'] : session.order || DEFAULT_ORDER;
+  for (const part of order) {
+    const item = parts[part]?.();
+    if (item) return item;
   }
   return null;
 }
@@ -450,7 +507,7 @@ export function submit(session, item, response, conf, ms) {
   const traps = trapsOf(q, g);
   addEvent('attempt', {
     qid: q.id, skill: q.skill, subject: skill?.subject || '', day: session.day, date,
-    mode: item.mode, resp: response, correct: g.correct, conf, repeated: item.repeated, ms,
+    mode: item.mode, resp: response, correct: g.correct, conf, repeated: item.repeated, ms, sid: session.sid,
     ...(traps.length ? { traps } : {}),
   });
 
@@ -490,7 +547,8 @@ export function endSession(session, { hours, anxiety, notes }) {
   const state = derive();
   const c = sessionCounts(session, state);
   addEvent('daylog', {
-    day: session.day, date: session.date, hours, anxiety, notes, mode: session.mode,
+    day: session.day, date: session.date, hours, anxiety, notes, mode: session.reattempt ? 'reattempt' : session.mode,
+    fallback: session.mode === 'fallback', sid: session.sid, order: session.order,
     attempts: c.attempts, correct: c.correct, firstPass: c.firstPass, firstPassOk: c.firstPassOk,
   });
   session.ended = true;

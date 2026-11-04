@@ -1,10 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611020540';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611041108';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-  TARGET, target72, focusSkills,
-} from './engine.js?v=202611020540';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611020540';
+  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts,
+} from './engine.js?v=202611041108';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611041108';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -16,7 +16,11 @@ let lastInput = Date.now();
 
 // ---------- shell ----------
 
-const CRUMBS = { today: 'Today', revision: 'Revision cards', theory: 'Theory', recall: 'Recall sheet', progress: 'Progress', settings: 'Settings' };
+const CRUMBS = {
+  today: 'Today', day: 'Day', days: 'All days', attempt: 'Attempt review', revision: 'Revision cards',
+  theory: 'Theory', recall: 'Recall sheet', progress: 'Progress', settings: 'Settings',
+};
+const NAV_OF = { day: 'days', attempt: 'days' };
 
 let viewToken = 0; // async views drop their result if the user has navigated away
 
@@ -25,12 +29,16 @@ function route() {
   const hash = location.hash.replace(/^#\/?/, '') || 'today';
   const [view, arg] = hash.split('/');
   const known = CRUMBS[view] ? view : 'today';
-  document.querySelectorAll('[data-view]').forEach((a) => a.classList.toggle('active', a.dataset.view === known));
-  document.getElementById('crumb').textContent = arg ? `${CRUMBS[known]} · ${decodeURIComponent(arg)}` : CRUMBS[known];
-  const views = { today: viewToday, revision: viewRevision, theory: viewTheory, recall: viewRecall, progress: viewProgress, settings: viewSettings };
-  views[known](arg ? decodeURIComponent(arg) : null);
+  const nav = NAV_OF[known] || known;
+  document.querySelectorAll('[data-view]').forEach((a) => a.classList.toggle('active', a.dataset.view === nav));
+  document.getElementById('crumb').textContent = arg && known !== 'attempt' ? `${CRUMBS[known]} · ${decodeURIComponent(arg)}` : CRUMBS[known];
+  const views = {
+    today: viewToday, day: (a) => viewDay(Number(a)), days: viewDays, attempt: viewAttempt,
+    revision: viewRevision, theory: viewTheory, recall: viewRecall, progress: viewProgress, settings: viewSettings,
+  };
   main.scrollTo(0, 0);
   window.scrollTo(0, 0);
+  views[known](arg ? decodeURIComponent(arg) : null);
   renderChrome();
 }
 
@@ -55,18 +63,36 @@ function renderChrome() {
   document.getElementById('c-today').textContent = `Day ${ps.current.day}`;
   document.getElementById('c-theory').textContent = content.theory.size || '';
   document.getElementById('examdays').textContent = `${ps.daysToExam} days to GATE`;
-  const upcoming = content.plan.days.filter((d) => d.seq >= ps.current.seq).slice(0, 6);
-  document.getElementById('weeknav').innerHTML = upcoming.map((d, i) => `
-    <a class="week ${i === 0 ? 'active' : ''} ${d.isMock ? 'mock' : ''}" href="#/today" title="${esc(d.title)}">
-      <span class="day-icon">${d.day}</span>
-      <span><strong>${esc(d.title)}</strong><small>${fmtDate(d.date)}${d.isMock ? ' · mock' : ''}</small></span>
-    </a>`).join('');
+  const nav = document.getElementById('weeknav');
+  const viewing = (location.hash.match(/^#\/day\/(\d+)/) || [])[1];
+  const firstRender = !nav.dataset.ready;
+  nav.innerHTML = content.plan.days.map((d) => dayRow(state, d, ps, viewing)).join('');
+  nav.dataset.ready = '1';
+  if (firstRender) {
+    const cur = nav.querySelector('.week.current');
+    if (cur) cur.scrollIntoView({ block: 'center' });
+  }
   const planPct = Math.round((100 * ps.doneCount) / ps.total);
   document.getElementById('sideprog').innerHTML = `
     <strong>Plan ${ps.doneCount}/${ps.total} days</strong>
     <div class="bar"><div style="width:${planPct}%"></div></div>
     <div class="small">${ps.behind ? `<span class="hot">${ps.behind} day(s) behind</span> · ` : ''}finish ${fmtDate(ps.projectedEnd)}<br>${ps.bufferDays >= 0 ? `${ps.bufferDays} days buffer before exam` : 'past the exam date!'}</div>`;
   renderTimer();
+}
+
+// One row of the all-days list (sidebar and the Days page).
+function dayRow(state, d, ps, viewing) {
+  const st = dayStatus(state, d.day);
+  const isCur = d.day === ps.current.day;
+  const mark = st.fallback ? '<span class="dmark fb" title="Fallback used">F</span>'
+    : st.done ? '<span class="dmark ok" title="Done">✓</span>' : '';
+  const re = st.reattempts ? `<span class="dmark re" title="Re-attempted ${st.reattempts}×">↻${st.reattempts > 1 ? st.reattempts : ''}</span>` : '';
+  const sub = [d.date ? fmtDate(d.date) : 'done before app', d.isMock ? 'mock' : '', isCur ? 'today' : ''].filter(Boolean).join(' · ');
+  return `<a class="week ${isCur ? 'current' : ''} ${String(viewing) === String(d.day) ? 'active' : ''} ${d.isMock ? 'mock' : ''} ${st.done ? 'done' : ''}" href="#/day/${d.day}" title="${esc(d.title)}">
+      <span class="day-icon">${d.day}</span>
+      <span class="wtext"><strong>${esc(d.title)}</strong><small>${sub}</small></span>
+      <span class="wmarks">${re}${mark}</span>
+    </a>`;
 }
 
 function renderTimer() {
@@ -83,27 +109,52 @@ function set(html) {
 
 // ---------- today ----------
 
+function activeSession() {
+  session = session || loadSession();
+  return session && !session.ended ? session : null;
+}
+
+// Today = the running session if there is one, else the current plan day's page.
 function viewToday() {
   const state = derive();
+  if (activeSession()) return renderSession(state);
+  viewDay(planStatus(state).current.day);
+}
+
+function viewDay(n) {
+  const state = derive();
   const ps = planStatus(state);
-  const day = ps.current;
-  session = session || loadSession();
-  if (session && session.day !== day.day && session.mode !== 'revision') session = null;
+  const day = content.plan.days.find((d) => d.day === n);
+  if (!day) return set('<section class="card"><h1>Ye din plan me nahi hai</h1><a class="button" href="#/days">All days</a></section>');
+  const running = activeSession();
+  if (running && running.day === n && running.mode !== 'revision') return renderSession(state);
 
-  if (session && !session.ended) return renderSession(state);
-
+  const st = dayStatus(state, n);
+  const isCur = n === ps.current.day;
   // weekly checkpoints (38 questions) run as a normal mixed session; only full papers use the mock form
-  if (day.isMock && day.questionTarget >= 65) return renderMockDay(day, ps);
+  if (day.isMock && day.questionTarget >= 65 && !running) return renderMockDay(day, ps);
 
   const due = dueCards(state);
-  const behind = ps.behind > 0
+  const behind = isCur && ps.behind > 0
     ? `<div class="banner warn">Tum plan se <b>${ps.behind} din peeche</b> ho. Is speed se plan ${fmtDate(ps.projectedEnd)} ko khatam hoga${ps.bufferDays < 10 ? ` — exam se sirf ${Math.max(ps.bufferDays, 0)} din pehle` : ''}. Aaj time kam hai toh <b>Fallback</b> lo.</div>`
     : '';
+  const busy = running
+    ? `<div class="banner warn">Day ${running.day} ka session abhi chal raha hai. <a href="#/today"><b>Wahi continue karo</b></a> ya pehle use band karo — ek time pe ek hi session.</div>`
+    : '';
+  const status = [
+    st.done ? '<span class="chip ok">✓ Done</span>' : isCur ? '<span class="chip">Aaj ka din</span>' : n > ps.current.day ? '<span class="chip">Aage ka din</span>' : '<span class="chip hot">Baaki</span>',
+    st.fallback ? '<span class="chip warnchip">Fallback use hua</span>' : '',
+    st.reattempts ? `<span class="chip">↻ ${st.reattempts}× re-attempt</span>` : '',
+  ].join('');
+  const reattempt = st.done;
+  const noContent = sessionSkillsCount(day) === 0;
+
   set(`
-    ${behind}
+    ${behind}${busy}
     <section class="card hero">
-      <div class="eyebrow">Day ${day.day} · ${esc(day.subject)} · ${fmtDate(day.date)}</div>
+      <div class="eyebrow">Day ${day.day} · ${esc(day.subject)} · ${day.date ? fmtDate(day.date) : 'app se pehle'}</div>
       <h1>${esc(day.title)}</h1>
+      <div class="chips">${status}</div>
       ${day.alsoCovers.length ? `<p class="muted">Isme ye bhi shamil: ${day.alsoCovers.map(esc).join('; ')}</p>` : ''}
       <p><b>Goal:</b> ${esc(day.objective)}</p>
       <div class="chips">
@@ -113,27 +164,80 @@ function viewToday() {
         <span class="chip ${due.length ? 'hot' : ''}">${due.length} revision card due</span>
       </div>
       <div class="actions">
-        <button class="primary" id="start">Day ${day.day} shuru karo</button>
-        <button id="fallback">Fallback (50 min)</button>
-        <a class="button" href="#/theory/${esc(firstTheory(day))}">Theory padho</a>
+        <button class="primary" id="start" ${running ? 'disabled' : ''}>${reattempt ? `Day ${day.day} re-attempt karo` : `Day ${day.day} shuru karo`}</button>
+        <button id="fallback" ${running ? 'disabled' : ''}>${reattempt ? 'Re-attempt (Fallback 50 min)' : 'Fallback (50 min)'}</button>
+        ${firstTheory(day) ? `<a class="button" href="#/theory/${esc(firstTheory(day))}">Theory padho</a>` : ''}
       </div>
-      ${content.bySkill && sessionSkillsCount(day) === 0 ? '<p class="banner">Is din ke sawaal abhi bank me nahi hain. Revision aur GA chalenge; topic content agle update me aayega.</p>' : ''}
+      ${reattempt ? '<p class="hint">Re-attempt me naye variants pehle aate hain; khatam hone pe dekhe hue sawaal "repeat" tag ke saath aate hain (fresh accuracy me nahi ginte). Plan progress nahi badlega.</p>' : ''}
+      ${noContent ? '<p class="banner">Is din ke topic ke sawaal abhi bank me nahi hain. Revision aur GA chalenge.</p>' : ''}
     </section>
-    ${focusCard(state)}
-    <section class="card">
-      <h2>Aaj ka flow</h2>
-      <ol class="flow">
-        <li><b>Revision cards</b> — due cards, max 10, har card pe naya variant</li>
-        <li><b>Brush-up</b> — 3 closed-book sawaal</li>
-        <li><b>Today’s topic + mixed</b> — accuracy ke hisaab se target badlega</li>
-        <li><b>GA</b> — ${esc(day.gaLabel)}</li>
-        <li><b>Galti pe</b> — tumhare chune option ki galti, phir usi skill ka fresh variant</li>
-        <li><b>Log</b> — ghante aur anxiety, phir din band</li>
-      </ol>
-    </section>
+    ${orderCard()}
+    ${isCur ? focusCard(state) : ''}
+    ${dayAttempts(state, n)}
   `);
-  document.getElementById('start').onclick = () => startSession(day, {});
-  document.getElementById('fallback').onclick = () => startSession(day, { fallback: true });
+  bindOrder();
+  document.getElementById('start').onclick = () => startSession(day, { reattempt });
+  document.getElementById('fallback').onclick = () => startSession(day, { fallback: true, reattempt });
+}
+
+// Lets the student pick which part of the day comes first; remembered as the default.
+function orderCard() {
+  const order = getOrder();
+  return `<section class="card">
+      <h2>Aaj kis order me?</h2>
+      <p class="muted small">Upar wala part pehle chalega. Galat answer ka repair variant hamesha turant aata hai. Ye order agle dinon ke liye bhi yaad rahega.</p>
+      <ol class="order" id="order">
+        ${order.map((p, i) => `<li data-p="${p}"><span class="onum">${i + 1}</span><span class="olabel">${esc(PARTS[p])}</span>
+          <button type="button" class="btn icon-only" data-mv="-1" ${i === 0 ? 'disabled' : ''} aria-label="Upar">↑</button>
+          <button type="button" class="btn icon-only" data-mv="1" ${i === order.length - 1 ? 'disabled' : ''} aria-label="Neeche">↓</button></li>`).join('')}
+      </ol>
+      <div class="actions"><button type="button" id="order-first-rev">Revision pehle</button><button type="button" id="order-first-topic">Topic pehle</button><button type="button" id="order-first-ga">GA pehle</button></div>
+    </section>`;
+}
+
+function bindOrder() {
+  const el = document.getElementById('order');
+  if (!el) return;
+  const save = (o) => { setOrder(o); route(); };
+  el.querySelectorAll('button[data-mv]').forEach((b) => {
+    b.onclick = () => {
+      const o = getOrder();
+      const i = o.indexOf(b.closest('li').dataset.p);
+      const j = i + Number(b.dataset.mv);
+      [o[i], o[j]] = [o[j], o[i]];
+      save(o);
+    };
+  });
+  const first = (p) => () => save([p, ...getOrder().filter((x) => x !== p)]);
+  document.getElementById('order-first-rev').onclick = first('review');
+  document.getElementById('order-first-topic').onclick = first('topic');
+  document.getElementById('order-first-ga').onclick = first('ga');
+}
+
+// Every attempt made on this plan day, grouped by session, each linking to its review.
+function dayAttempts(state, n) {
+  const list = state.attempts.filter((a) => a.day === n);
+  if (!list.length) return '';
+  const groups = new Map();
+  for (const a of list) {
+    const key = a.sid || a.date;
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(a);
+  }
+  const log = (sid, date) => state.logList.find((l) => l.day === n && (l.sid ? l.sid === sid : l.date === date));
+  return `<section class="card">
+      <h2>Is din ke attempts</h2>
+      ${[...groups.entries()].reverse().map(([key, arr]) => {
+        const l = log(arr[0].sid, arr[0].date);
+        const ok = arr.filter((a) => a.correct).length;
+        const tag = l ? (l.mode === 'reattempt' ? 're-attempt' : l.mode) : 'chal raha / log nahi';
+        return `<details ${groups.size === 1 ? 'open' : ''}><summary>${fmtDate(arr[0].date)} · ${esc(tag)}${l && l.fallback && l.mode === 'reattempt' ? ' · fallback' : ''} · ${ok}/${arr.length} sahi</summary>
+          <ol class="alist">${arr.map((a) => {
+            const s = content.skills[a.skill];
+            return `<li><a href="#/attempt/${esc(a.id)}"><span class="${a.correct ? 'okc' : 'noc'}">${a.correct ? '✓' : '✗'}</span> ${esc(s ? s.title : a.skill)}</a> <span class="muted small">${esc(a.mode)}${a.conf === 'Guess' ? ' · guess' : ''}${a.repeated ? ' · repeat' : ''}</span></li>`;
+          }).join('')}</ol></details>`;
+      }).join('')}
+    </section>`;
 }
 
 // The 2–3 skills whose repair adds the most expected marks toward 72.
@@ -184,7 +288,8 @@ function startSession(day, opts) {
   session = newSession(day, opts);
   current = null;
   feedback = null;
-  route();
+  if (location.hash === '#/today') route();
+  else location.hash = '#/today';
 }
 
 function renderSession(state) {
@@ -202,14 +307,17 @@ function renderSession(state) {
   const total = t.topic + t.mixed + t.ga;
   const doneMain = Math.min(counts.topic, t.topic) + Math.min(counts.mixed, t.mixed) + Math.min(counts.ga, t.ga);
   const mins = Math.floor(session.activeMs / 60000);
+  const done = sessionAttempts(session, state);
+  const last = done[done.length - 1];
 
   set(`
     <div class="sessionbar">
-      <span>Day ${session.day}${session.mode !== 'normal' ? ` · ${session.mode}` : ''}</span>
+      <span>Day ${session.day}${session.mode !== 'normal' ? ` · ${session.mode}` : ''}${session.reattempt ? ' · re-attempt' : ''}</span>
       <span>Revision ${counts.review}</span>
       <span>Main ${doneMain}/${total}</span>
       <span>Repair ${counts.repair}</span>
       <span>${mins}/${session.capMin} min</span>
+      ${last ? `<a class="link" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}
       <button class="link" id="stop">Din band karo</button>
     </div>
     ${t.note ? `<div class="banner">${esc(t.note)}</div>` : ''}
@@ -359,10 +467,87 @@ function renderEnd(state) {
       anxiety: Number(document.getElementById('anx').value),
       notes: document.getElementById('notes').value.trim(),
     });
+    const closedDay = session.day;
     session = null;
     sync();
-    set(`<section class="card"><h1>Day closed ✓</h1><p>Progress save ho gaya. Kal ke due cards Revision tab me dikhenge.</p><a class="button" href="#/progress">Progress dekho</a></section>`);
+    set(`<section class="card"><h1>Day closed ✓</h1><p>Progress save ho gaya. Kal ke due cards Revision tab me dikhenge.</p>
+      <div class="actions"><a class="button" href="#/days">All days</a><a class="button" href="#/progress">Progress dekho</a></div>
+      <p class="muted small">Day ${closedDay} ke saare attempts dobara dekhne ke liye All days → Day ${closedDay}.</p></section>`);
   };
+}
+
+// Read-only review of one past attempt: your answer, every option's explanation, solution, prev/next.
+function viewAttempt(id) {
+  const state = derive();
+  const a = state.attempts.find((x) => x.id === id);
+  const q = a && content.questions[a.qid];
+  if (!q) return set('<section class="card"><h1>Attempt nahi mila</h1><a class="button" href="#/days">All days</a></section>');
+  const skill = content.skills[q.skill] || {};
+  const siblings = state.attempts.filter((x) => (a.sid ? x.sid === a.sid : x.date === a.date && x.day === a.day));
+  const i = siblings.findIndex((x) => x.id === id);
+  const prev = siblings[i - 1];
+  const next = siblings[i + 1];
+  const running = activeSession();
+  const back = running && a.sid === running.sid ? '<a class="button primary-link" href="#/today">Session pe wapas →</a>' : `<a class="button" href="#/day/${a.day}">Day ${a.day} pe wapas</a>`;
+  const resp = Array.isArray(a.resp) ? a.resp : [];
+  let body = '';
+  if (q.type === 'NAT') {
+    const trap = (q.traps || []).find((t) => Number(a.resp) === t.value);
+    body = `<p>Tumhara answer: <b>${esc(a.resp)}</b> · Sahi: <b>${esc(q.answer.value)}</b>${q.answer.tol ? ` (± ${q.answer.tol})` : ''}</p>
+      ${trap ? `<div class="why bad"><b>Ye galti lag rahi hai:</b> ${md(trap.why, true)}</div>` : ''}`;
+  } else {
+    body = `<div class="opts">${q.options.map((o, k) => {
+      const picked = resp.includes(k);
+      const cls = o.correct ? 'right' : picked ? 'wrong' : 'plain';
+      const tag = o.correct ? (picked ? '✓ tumne chuna, sahi' : '✓ sahi tha') : picked ? '✗ tumne chuna' : '';
+      return `<div class="opt ${cls}"><span class="key">${'ABCD'[k]}</span><span class="otext">${md(o.text, true)}
+          <div class="why ${o.correct ? 'good' : picked ? 'bad' : ''}">${tag ? `<b>${tag}:</b> ` : ''}${md(o.why, true)}${!o.correct && o.trap ? ` <span class="muted small">(${esc(o.trap)})</span>` : ''}</div></span></div>`;
+    }).join('')}</div>`;
+  }
+  const trapTags = (a.traps || []).map((c) => `<span class="chip hot">${esc(c)} · ${esc(TRAP_CLASSES[c] || '')}</span>`).join('');
+  set(`
+    <div class="sessionbar">
+      ${prev ? `<a class="link" href="#/attempt/${esc(prev.id)}">← Pichla</a>` : ''}
+      <span>${i + 1} / ${siblings.length}</span>
+      ${next ? `<a class="link" href="#/attempt/${esc(next.id)}">Agla →</a>` : ''}
+    </div>
+    <section class="card q">
+      <div class="eyebrow">Day ${a.day} · ${fmtDate(a.date)} · ${esc(a.mode)} · ${esc(skill.title || q.skill)}</div>
+      <div class="meta">[${esc(q.source || 'Drill')}] · ${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''} · confidence ${esc(a.conf)} · ${Math.round((a.ms || 0) / 1000)} s${a.repeated ? ' · repeat' : ''}</div>
+      <div class="verdict ${a.correct ? 'ok' : 'no'}" style="border-top:0;padding-top:0;margin-top:0">${a.correct ? 'Sahi ✓' : 'Galat ✗'}</div>
+      ${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}
+      <div class="stem">${md(q.stem)}</div>
+      ${q.figure ? `<div class="figure">${q.figure}</div>` : ''}
+      ${body}
+      <details open><summary>Solution</summary><div class="sol">${md(q.solution)}</div></details>
+      ${skill.theory ? `<p><a href="#/theory/${esc(skill.theory)}">📖 ${esc(skill.title)} — theory</a></p>` : ''}
+      <div class="actions">${back}</div>
+    </section>`);
+}
+
+// Every plan day in one scrollable list, plus where Fallback was used.
+function viewDays() {
+  const state = derive();
+  const ps = planStatus(state);
+  const all = content.plan.days.map((d) => ({ d, st: dayStatus(state, d.day) }));
+  const fb = all.filter((x) => x.st.fallback);
+  const re = all.filter((x) => x.st.reattempts);
+  set(`
+    <section class="card">
+      <h1>All days</h1>
+      <div class="stats">
+        <div><b>${ps.doneCount}/${ps.total}</b><span>din poore</span></div>
+        <div><b>${fb.length}</b><span>Fallback wale din</span></div>
+        <div><b>${re.reduce((t, x) => t + x.st.reattempts, 0)}</b><span>re-attempts</span></div>
+      </div>
+      ${fb.length ? `<p><b>Fallback use hua:</b> ${fb.map((x) => `<a href="#/day/${x.d.day}">Day ${x.d.day}</a>`).join(', ')}</p>` : '<p class="muted">Abhi tak koi Fallback din nahi.</p>'}
+      <p class="muted small">✓ done · <b>F</b> fallback use hua · ↻ re-attempt · peela = full mock</p>
+    </section>
+    <section class="card">
+      <div class="week-nav daylist">${content.plan.days.map((d) => dayRow(state, d, ps, null)).join('')}</div>
+    </section>`);
+  const cur = main.querySelector('.daylist .week.current');
+  if (cur) cur.scrollIntoView({ block: 'center' });
 }
 
 function renderMockDay(day, ps) {
@@ -537,8 +722,14 @@ function viewProgress() {
     const fp = at.filter((a) => a.mode !== 'repair' && !a.repeated);
     days.push({ d, n: at.length, acc: fp.length ? fp.filter((a) => a.correct && a.conf !== 'Guess').length / fp.length : null });
   }
-  const logs = Object.values(state.dayLogs).sort((a, b) => a.day - b.day);
+  const logs = state.logList.slice().sort((a, b) => a.day - b.day || a.ts - b.ts);
   const hours = logs.reduce((s, l) => s + (l.hours || 0), 0);
+  const modeTag = (l) => {
+    if (l.mode === 'reattempt') return `↻ re-attempt${l.fallback ? ' · <b class="warnchip-t">fallback</b>' : ''}`;
+    if (l.mode === 'fallback') return '<b class="warnchip-t">fallback</b>';
+    if (String(l.mode || '').startsWith('history')) return 'chat (pehle)';
+    return l.mode || 'normal';
+  };
   const cards = Object.values(state.cards);
   const planPct = Math.round((100 * ps.doneCount) / ps.total);
 
@@ -585,8 +776,9 @@ function viewProgress() {
     </section>
     <section class="card">
       <h2>Day log</h2>
-      <table class="tbl"><thead><tr><th>Day</th><th>Date</th><th>Hours</th><th>Anxiety</th><th>First-pass</th></tr></thead><tbody>
-      ${logs.slice().reverse().map((l) => `<tr><td>${l.day}</td><td>${fmtDate(l.date)}</td><td>${l.hours ?? '—'}</td><td>${l.anxiety ?? '—'}</td><td>${l.firstPass ? pct(l.firstPassOk, l.firstPass) : '—'}</td></tr>`).join('')}
+      <p class="muted small">Fallback wale din: ${logs.filter((l) => l.mode === 'fallback' || l.fallback).map((l) => `<a href="#/day/${l.day}">Day ${l.day}</a>`).join(', ') || 'koi nahi'} · <a href="#/days">All days</a></p>
+      <table class="tbl"><thead><tr><th>Day</th><th>Date</th><th>Type</th><th>Hours</th><th>Anxiety</th><th>First-pass</th></tr></thead><tbody>
+      ${logs.slice().reverse().map((l) => `<tr><td><a href="#/day/${l.day}">${l.day}</a></td><td>${fmtDate(l.date)}</td><td>${modeTag(l)}</td><td>${l.hours ?? '—'}</td><td>${l.anxiety ?? '—'}</td><td>${l.firstPass ? pct(l.firstPassOk, l.firstPass) : '—'}</td></tr>`).join('')}
       </tbody></table>
     </section>`);
 }
@@ -698,7 +890,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611020540');
+  const store = await import('./store.js?v=202611041108');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
