@@ -2,9 +2,9 @@
 // GA 10 (5 x 1 + 5 x 2 marks) and technical 55 (25 x 1 + 30 x 2 marks), built from unseen bank
 // questions of the subjects studied before the mock day. MCQ wrong = -1/3 of its marks; MSQ/NAT no negative.
 
-import { content, derive, grade, trapsOf, parseNat, today, SUBJECTS, TARGET } from './engine.js?v=202611061742';
-import { addEvent, sync } from './store.js?v=202611061742';
-import { md, typeset, esc, fmtDate } from './render.js?v=202611061742';
+import { content, derive, grade, trapsOf, parseNat, today, SUBJECTS, TARGET } from './engine.js?v=202611061815';
+import { addEvent, allEvents, sync } from './store.js?v=202611061815';
+import { md, typeset, esc, fmtDate } from './render.js?v=202611061815';
 
 const LS_MOCK = 'gdc.mock';
 export const MOCK_MIN = 180;
@@ -122,16 +122,33 @@ export function buildPaper(dayNum, state) {
 
 // ---------- state ----------
 
+// The running mock: this device's copy, or a paused one synced from another device.
+// A pause writes a snapshot event; submit ("mock") or quit ("mockend") closes it everywhere.
 export function loadMock() {
+  let local = null;
   try {
-    const m = JSON.parse(localStorage.getItem(LS_MOCK) || 'null');
-    return m && m.items && m.items.length ? m : null;
-  } catch {
-    return null;
+    local = JSON.parse(localStorage.getItem(LS_MOCK) || 'null');
+    if (!local || !local.items || !local.items.length) local = null;
+  } catch {}
+  const events = allEvents();
+  const closed = new Set(events.filter((e) => (e.type === 'mock' || e.type === 'mockend') && e.sid).map((e) => e.sid));
+  if (local && closed.has(local.sid)) {
+    clearMock();
+    local = null;
   }
+  let remote = null;
+  for (const e of events) {
+    if (e.type === 'mockstate' && e.snap && !closed.has(e.sid) && (!remote || e.ts > remote.ts)) remote = e;
+  }
+  if (remote && (!local || (local.sid === remote.sid && (remote.snap.updated || 0) > (local.updated || 0)))) {
+    local = { ...remote.snap, paused: true, pauseAt: remote.snap.pauseAt || Date.now() };
+    try { localStorage.setItem(LS_MOCK, JSON.stringify(local)); } catch {}
+  }
+  return local;
 }
 
 function saveMock(m) {
+  m.updated = Date.now();
   try { localStorage.setItem(LS_MOCK, JSON.stringify(m)); } catch {}
 }
 
@@ -211,6 +228,7 @@ function submitMock(m, auto) {
     day: m.day, date, sid: m.sid, source: 'App mock (bank ke unseen sawaal)', fresh: rows.filter((r) => r.it.repeated).length <= 6,
     net: round2(s.net), max: s.max, attempted: s.attempted, correct: s.correct, negative: round2(s.negative),
     durationMs: Math.round(m.elapsed), auto: !!auto, qids: rows.map((r) => r.q.id),
+    pauses: m.pauses || 0, pausedMs: Math.round(m.pausedMs || 0),
   });
   addEvent('daylog', {
     day: m.day, date, hours: round2(m.elapsed / 3600000), anxiety: null, notes: '', mode: 'mock', sid: m.sid,
@@ -266,6 +284,7 @@ export function showExam(m) {
     const now = Date.now();
     const d = Math.min(now - last, 120000); // a sleeping laptop does not eat the clock
     last = now;
+    if (exam.paused) return; // paused: the clock and per-question time stand still
     exam.elapsed += d;
     exam.timeOn[exam.cur] = (exam.timeOn[exam.cur] || 0) + d;
     saveMock(exam);
@@ -298,8 +317,69 @@ function palette() {
     <p class="small"><button type="button" class="link" id="mxquit">Mock chhodo (kuch save nahi hoga)</button></p>`;
 }
 
+// Pause: the timer stops and the question is hidden. The snapshot is synced, so the
+// paper can be continued from the same point on another device.
+function pause() {
+  if (!exam || exam.paused || !natOk()) return;
+  exam.paused = true;
+  exam.pauseAt = Date.now();
+  exam.pauses = (exam.pauses || 0) + 1;
+  saveMock(exam);
+  const { paused, ...snap } = exam;
+  addEvent('mockstate', { sid: exam.sid, day: exam.day, snap: { ...snap, paused: true } });
+  sync();
+  renderExam();
+}
+
+function resume() {
+  if (!exam || !exam.paused) return;
+  exam.pausedMs = (exam.pausedMs || 0) + Math.max(0, Date.now() - (exam.pauseAt || Date.now()));
+  exam.paused = false;
+  exam.pauseAt = null;
+  saveMock(exam);
+  renderExam();
+}
+
+function quitMock() {
+  if (!confirm('Mock chhod dein? Is paper ke answers save nahi honge aur score nahi banega.')) return;
+  const { day, sid } = exam;
+  stopExam();
+  exam = null;
+  clearMock();
+  addEvent('mockend', { sid, day, why: 'quit' }); // closes a synced pause on other devices too
+  sync();
+  const to = `#/day/${day}`;
+  if (location.hash === to) window.dispatchEvent(new HashChangeEvent('hashchange'));
+  else location.hash = to;
+}
+
+function renderPaused() {
+  const m = exam;
+  const c = counts();
+  set(`<div id="mockexam" class="mockexam">
+    <section class="card hero mxpaused">
+      <div class="eyebrow">Day ${m.day} · Full mock</div>
+      <h1>⏸ Mock paused</h1>
+      <div class="stats">
+        <div><b>${fmtClock(m.limitMs - m.elapsed)}</b><span>time baaki</span></div>
+        <div><b>${c.an + c.am}/${m.items.length}</b><span>answered</span></div>
+        <div><b>${m.pauses || 1}</b><span>pause</span></div>
+      </div>
+      <p class="muted">Timer ruka hua hai aur sawaal chhupe hain. Ye pause sync ho gaya hai — doosre device pe app kholo toh wahi paper isi jagah se continue hoga (dono pe Settings me token chahiye).</p>
+      <p class="banner warn">Asli GATE me pause nahi hota. Result me pause ki ginti aur time likha jaayega — koshish karo ek hi baithak me poora karne ki.</p>
+      <div class="actions">
+        <button type="button" class="primary" id="mxresume">▶ Resume</button>
+        <button type="button" id="mxquit">Mock chhodo</button>
+      </div>
+    </section></div>`);
+  document.getElementById('mxresume').onclick = resume;
+  document.getElementById('mxquit').onclick = quitMock;
+  document.getElementById('mxresume').focus();
+}
+
 function renderExam() {
   const m = exam;
+  if (m.paused) return renderPaused();
   const i = m.cur;
   const it = m.items[i];
   const q = content.questions[it.qid];
@@ -317,6 +397,7 @@ function renderExam() {
         <a class="pt mxpaljump" href="javascript:void(0)" id="mxpaljump">Palette ↓</a>
       </span>
       <span class="mxclock" id="mxclock"></span>
+      <button type="button" id="mxpause" title="Pause (P)" aria-label="Pause">⏸<span class="lg"> Pause</span></button>
       <button type="button" class="primary" id="mxsubmit">Submit</button>
     </div>
     <div class="mxgrid">
@@ -398,16 +479,7 @@ function go(i) {
 function bindPalette() {
   document.querySelectorAll('#mxpal [data-go]').forEach((b) => { b.onclick = () => natOk() && go(Number(b.dataset.go)); });
   const quit = document.getElementById('mxquit');
-  if (quit) quit.onclick = () => {
-    if (!confirm('Mock chhod dein? Is paper ke answers save nahi honge aur score nahi banega.')) return;
-    const day = exam.day;
-    stopExam();
-    exam = null;
-    clearMock();
-    const to = `#/day/${day}`;
-    if (location.hash === to) window.dispatchEvent(new HashChangeEvent('hashchange'));
-    else location.hash = to;
-  };
+  if (quit) quit.onclick = quitMock;
 }
 
 function bindExam() {
@@ -427,6 +499,7 @@ function bindExam() {
   };
   document.querySelectorAll('.mxsec [data-go]').forEach((b) => { b.onclick = () => natOk() && go(Number(b.dataset.go)); });
   document.getElementById('mxpaljump').onclick = () => document.getElementById('mxpal').scrollIntoView({ block: 'start', behavior: 'smooth' });
+  document.getElementById('mxpause').onclick = pause;
   document.getElementById('mxsubmit').onclick = () => {
     const c = counts();
     const left = fmtClock(exam.limitMs - exam.elapsed);
@@ -458,6 +531,8 @@ function onKey(e) {
   const typing = tag === 'textarea' || (tag === 'input' && !['radio', 'checkbox'].includes(e.target.type));
   if (typing) return;
   const k = e.key.toLowerCase();
+  if (exam.paused) return;
+  if (k === 'p') { e.preventDefault(); return pause(); }
   if (k === 'arrowright') { e.preventDefault(); return next(); }
   if (k === 'arrowleft') { e.preventDefault(); return natOk() && go(exam.cur - 1); }
   if (k === 'm') { e.preventDefault(); return document.getElementById('mxmark').click(); }
@@ -554,6 +629,7 @@ export function viewMockResult(sid) {
       <div class="eyebrow">Day ${ev.day} · Full mock result · ${fmtDate(ev.date)}</div>
       <h1>${fmtMarks(s.net)} / ${s.max}</h1>
       ${ev.auto ? '<p class="banner warn">Time khatam — paper apne aap submit hua.</p>' : ''}
+      ${ev.pauses ? `<p class="banner">⏸ ${ev.pauses} baar pause kiya (kul ${Math.round((ev.pausedMs || 0) / 60000)} min). Asli exam me pause nahi hota — agla mock bina pause ke try karo.</p>` : ''}
       <div class="bar t72bar"><div style="width:${Math.max(0, Math.min(100, pct))}%"></div><i style="left:${TARGET}%"></i></div>
       <p class="t72 ${tone}"><b>${pct >= TARGET ? `Target ${TARGET} ke upar ✓` : `Target ${TARGET} tak ${fmtMarks((TARGET / 100) * s.max - s.net)} marks`}</b></p>
       <div class="stats">

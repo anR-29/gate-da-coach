@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061742';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061815';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611061742';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061742';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611061742';
+} from './engine.js?v=202611061815';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061815';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611061815';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -747,7 +747,7 @@ function renderMockDay(day, state, running) {
         <li>Pattern GATE jaisa: pehle GA (Q1–10), phir technical. Har section me pehle 1-mark, phir 2-mark sawaal.</li>
         <li><b>Negative:</b> galat MCQ pe 1-mark me −1/3, 2-mark me −2/3. MSQ aur NAT me negative nahi. MSQ me poora sahi set chahiye.</li>
         <li>Sawaal bank ke wo sawaal hain jo tumne app me abhi tak nahi dekhe.</li>
-        <li>Refresh ya tab band hone pe bhi answers save rehte hain. Timer sirf tab band hone pe rukta hai, isliye ek hi baithak me poora karo.</li>
+        <li>Refresh ya tab band hone pe bhi answers save rehte hain. <b>⏸ Pause</b> se timer rukta hai aur paper sync ho jaata hai — doosre device pe wahi se continue kar sakte ho. Asli exam me pause nahi hota, isliye kam use karo.</li>
         <li>Submit ke baad: score, subject-wise marks, time kahan gaya, aur har sawaal ka explanation. Galat sawaal revision cards me jaate hain.</li>
       </ol>
       <div class="actions">
@@ -1239,7 +1239,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611061742');
+  const store = await import('./store.js?v=202611061815');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

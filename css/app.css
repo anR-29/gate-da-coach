@@ -461,7 +461,8 @@ body.exam .shell > main > * { max-width: 1180px; }
   .mxsec { flex: 1 1 0; min-width: 0; overflow-x: auto; scrollbar-width: none; }
   .mxsec .pt { flex: none; padding: 5px 9px; }
   .mxclock { flex: none; font-size: 13px; padding: 5px 8px; }
-  .mxbar #mxsubmit { flex: none; padding: 0 12px; min-height: 36px; }
+  .mxbar #mxsubmit, .mxbar #mxpause { flex: none; padding: 0 12px; min-height: 36px; }
+  .mxbar #mxpause .lg { display: none; }
   .mxactions button { flex: 1 1 calc(50% - 8px); }
   .mxactions #mxnext { margin-left: 0; }
   .mxnums { grid-template-columns: repeat(6, 1fr); }
