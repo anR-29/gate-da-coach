@@ -379,6 +379,29 @@ section.card { overflow-x: auto; }
 .links a { text-decoration: none; font-weight: 500; }
 .links a:hover { text-decoration: underline; }
 .prose { font-size: 15px; line-height: 1.7; }
+/* lesson / short-note switch */
+.ltabs { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin: 4px 0 6px; }
+.ltabs a { padding: 8px 14px; border-radius: 9px; font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: none; min-height: 36px; display: inline-flex; align-items: center; }
+.ltabs a.on { background: var(--primary-bg); color: var(--primary-fg); }
+.ltabs a:not(.on):hover { background: var(--hover); color: var(--ink); }
+#ljump { margin: 10px 0 14px; }
+@media (max-width: 700px) {
+  #ljump { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  #ljump .chip { flex: none; }
+}
+.lesson h2 { padding-top: 18px; border-top: 1px solid var(--line-subtle); scroll-margin-top: 12px; }
+.lesson h3 { margin-top: 26px; }
+.lesson blockquote { margin: 12px 0; padding: 8px 14px; border-left: 3px solid var(--mark); background: var(--mark-bg); border-radius: 0 10px 10px 0; color: var(--ink); }
+.lesson blockquote p { margin: 4px 0; }
+.lesson pre { background: var(--hover); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-size: 13px; line-height: 1.5; }
+.lesson details { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; margin: 10px 0 18px; background: var(--panel); }
+.lesson details > summary { cursor: pointer; font-weight: 600; color: var(--info); min-height: 28px; }
+.lesson details[open] > summary { margin-bottom: 6px; }
+.fig { margin: 22px 0; color: var(--ink); }
+.fig svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; }
+.fig figcaption { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
+.learn .links li { margin: 8px 0; }
+.learn .links a[data-title] { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .prose h1 { font-size: 26px; }
 .prose h2 { margin-top: 34px; }
 .prose li { margin: 6px 0; }

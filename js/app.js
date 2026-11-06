@@ -1,10 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611041851';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061112';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort,
-} from './engine.js?v=202611041851';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611041851';
+} from './engine.js?v=202611061112';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061112';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -27,7 +27,7 @@ let viewToken = 0; // async views drop their result if the user has navigated aw
 function route() {
   viewToken++;
   const hash = location.hash.replace(/^#\/?/, '') || 'today';
-  const [view, arg] = hash.split('/');
+  const [view, arg, sub] = hash.split('/');
   const known = CRUMBS[view] ? view : 'today';
   const nav = NAV_OF[known] || known;
   document.querySelectorAll('[data-view]').forEach((a) => a.classList.toggle('active', a.dataset.view === nav));
@@ -38,7 +38,7 @@ function route() {
   };
   main.scrollTo(0, 0);
   window.scrollTo(0, 0);
-  views[known](arg ? decodeURIComponent(arg) : null);
+  views[known](arg ? decodeURIComponent(arg) : null, sub || null);
   renderChrome();
 }
 
@@ -174,14 +174,16 @@ function viewDay(n) {
       <div class="actions">
         <button class="primary" id="start" ${running ? 'disabled' : ''}>${reattempt ? `Day ${day.day} re-attempt karo` : `Day ${day.day} shuru karo`}</button>
         <button id="fallback" ${running ? 'disabled' : ''}>${reattempt ? 'Re-attempt (Fallback 50 min)' : 'Fallback (50 min)'}</button>
-        ${firstTheory(day) ? `<a class="button" href="#/theory/${esc(firstTheory(day))}">Theory padho</a>` : ''}
+        ${!st.done && dayTheories(day).length ? `<a class="button" href="#/theory/${esc(dayTheories(day)[0])}">📖 Pehle samjho</a>` : ''}
       </div>
       ${reattempt ? '<p class="hint">Re-attempt me naye variants pehle aate hain; khatam hone pe dekhe hue sawaal "repeat" tag ke saath aate hain (fresh accuracy me nahi ginte). Plan progress nahi badlega.</p>' : ''}
       ${noContent ? '<p class="banner">Is din ke topic ke sawaal abhi bank me nahi hain. Revision aur GA chalenge.</p>' : ''}
     </section>
+    ${learnCard(day, st)}
     ${isCur ? focusCard(state) : ''}
     ${dayAttempts(state, n)}
   `);
+  fillTitles(main);
   bindOrder();
   const start = document.getElementById('start');
   start.onclick = () => startSession(day, { reattempt });
@@ -297,9 +299,36 @@ function sessionSkillsCount(day) {
   return Object.values(content.skills).filter((s) => (s.days || []).includes(day.day)).length;
 }
 
-function firstTheory(day) {
-  const s = Object.values(content.skills).find((x) => (x.days || []).includes(day.day) && x.theory);
-  return s ? s.theory : '';
+// Theory ids taught on this day (checkpoint days list every topic of the week).
+function dayTheories(day) {
+  return [...new Set(Object.values(content.skills)
+    .filter((x) => (x.days || []).includes(day.day) && x.theory).map((x) => x.theory))];
+}
+
+// "Pehle samjho": the detailed lessons for the day, before the questions.
+function learnCard(day, st) {
+  const ids = dayTheories(day);
+  if (!ids.length) return '';
+  const review = ids.length > 3;
+  return `<section class="card learn">
+      <h2>${review ? 'Is hafte ke topics' : 'Pehle samjho'}</h2>
+      <p class="muted">${st.done || review
+        ? 'Jo topic kamzor lage, uska detailed lesson phir se padho.'
+        : 'Topic naya hai ya theory yaad nahi? Pehle detailed lesson padho (~30 min, picture + solved examples), phir session shuru karo. Session ke beech bhi har sawaal pe lesson ka link milega.'}</p>
+      <ul class="links">${ids.map((id) => `<li><a href="#/theory/${esc(id)}" data-title="${esc(id)}">${esc(id)}</a>
+        <span class="muted small"><a href="#/theory/${esc(id)}/short">short note</a></span></li>`).join('')}</ul>
+    </section>`;
+}
+
+// Fill lesson titles once the notes are fetched (cached after the first time).
+async function fillTitles(root) {
+  const tok = viewToken;
+  for (const a of root.querySelectorAll('[data-title]')) {
+    const id = a.dataset.title;
+    const text = (await getDoc('learn', id)) || (await getDoc('theory', id));
+    if (tok !== viewToken) return;
+    a.textContent = noteTitle(id, text);
+  }
 }
 
 function startSession(day, opts) {
@@ -403,6 +432,7 @@ function renderSession(state) {
         </div>
         <div class="err" id="err" role="alert"></div>
         ${shown ? '' : `<p class="hint keys">Keyboard: ${q.type === 'NAT' ? 'number likho' : `1–4 ya A–D${isMsq ? ' (toggle)' : ''}`} · S / L / G confidence · Enter = submit, phir Enter = next</p>`}
+        ${shown || !skill.theory ? '' : `<p class="hint">Theory nahi aati? <a href="#/theory/${esc(skill.theory)}" target="_blank" rel="noopener">Is topic ka lesson kholo ↗</a> <span class="muted">(naye tab me; session yahin rukega)</span></p>`}
       </form>
       <div id="fb"></div>
     </section>
@@ -502,7 +532,8 @@ function renderFeedback() {
     : f.stopSkill
       ? '<p class="banner warn">Is skill pe aaj ke repair khatam. Ye kal revision me aayegi. Pehle theory dekh lo.</p>'
       : '';
-  const theory = f.showTheory && skill.theory ? `<p><a href="#/theory/${esc(skill.theory)}" target="_blank">📖 ${esc(skill.title)} — theory (new tab)</a></p>` : '';
+  const theory = (f.showTheory || !f.correct || f.conf === 'Guess') && skill.theory
+    ? `<p><a href="#/theory/${esc(skill.theory)}" target="_blank" rel="noopener">📖 Samjho: ${esc(skill.title)} — detailed lesson (naya tab)</a></p>` : '';
   const fb = document.getElementById('fb');
   fb.innerHTML = `
     ${verdict}
@@ -753,46 +784,76 @@ function theoryIndex() {
   return byArea;
 }
 
-// Theory notes are fetched once per visit and kept in memory.
-const noteCache = new Map();
+// Short notes (data/theory) and detailed lessons (data/learn) are fetched once per visit.
+const docCache = new Map();
 
-async function getNote(id) {
-  if (noteCache.has(id)) return noteCache.get(id);
+async function getDoc(kind, id) {
+  const key = `${kind}/${id}`;
+  if (docCache.has(key)) return docCache.get(key);
   try {
-    const r = await fetch(`data/theory/${id}.md`, { cache: 'no-cache' });
+    const r = await fetch(`data/${key}.md`, { cache: 'no-cache' });
     const text = r.ok ? await r.text() : null;
-    if (text) noteCache.set(id, text);
+    docCache.set(key, text); // a missing lesson is remembered too
     return text;
   } catch {
-    return null;
+    return null; // offline: try again next time
   }
 }
+
+const getNote = (id) => getDoc('theory', id);
 
 function noteTitle(id, text) {
   return (text && (text.match(/^#\s+(.+)$/m) || [])[1]) || id;
 }
 
-async function viewTheory(id) {
-  const tok = viewToken;
-  if (id) {
-    set('<section class="card"><p class="muted">Loading…</p></section>');
-    const text = await getNote(id);
-    if (tok !== viewToken) return;
-    set(`<p><a href="#/theory">← Saari theory</a></p><article class="card prose">${md(text || '# Nahi mila\nIs topic ki theory abhi nahi bani, ya internet nahi hai.')}</article>`);
-    return;
+// One topic: the detailed lesson ("Samjho") by default, the short note under /short.
+async function viewNote(id, sub, tok) {
+  set('<section class="card"><p class="muted">Loading…</p></section>');
+  const [lesson, note] = await Promise.all([getDoc('learn', id), getDoc('theory', id)]);
+  if (tok !== viewToken) return;
+  const showShort = sub === 'short' || !lesson;
+  const text = showShort ? note : lesson;
+  const entry = Object.values(theoryIndex()).map((l) => l.get(id)).find(Boolean);
+  const days = entry ? [...entry.days].sort((a, b) => a - b) : [];
+  const tabs = `<div class="ltabs" role="tablist">
+      ${lesson ? `<a role="tab" href="#/theory/${esc(id)}" class="${showShort ? '' : 'on'}" aria-selected="${!showShort}">Samjho (detailed)</a>` : ''}
+      <a role="tab" href="#/theory/${esc(id)}/short" class="${showShort ? 'on' : ''}" aria-selected="${showShort}">Short note</a>
+    </div>`;
+  set(`<p><a href="#/theory">← Saari theory</a>${days.length ? ` · <span class="muted">Practice: ${days.map((d) => `<a href="#/day/${d}">Day ${d}</a>`).join(', ')}</span>` : ''}</p>
+    ${tabs}
+    ${!lesson && note ? '<p class="banner">Is topic ka detailed lesson abhi nahi bana — short note neeche hai.</p>' : ''}
+    <div class="jump chips" id="ljump" hidden></div>
+    <article class="card prose ${showShort ? '' : 'lesson'}">${md(text || '# Nahi mila\nIs topic ki theory abhi nahi bani, ya internet nahi hai.')}</article>
+    ${!showShort ? `<p class="muted">Lesson ho gaya? <a href="#/theory/${esc(id)}/short">Short note</a> se revise karo${days.length ? `, phir <a href="#/day/${days[0]}">Day ${days[0]}</a> ke sawaal karo` : ''}.</p>` : ''}`);
+  // section chips for long lessons; scroll in place because #anchors are routes here
+  const heads = [...main.querySelectorAll('.lesson h2')];
+  const jump = document.getElementById('ljump');
+  if (heads.length > 2) {
+    heads.forEach((h, i) => { h.id = `s${i}`; });
+    jump.innerHTML = heads.map((h, i) => `<button type="button" class="chip" data-s="s${i}">${esc(h.textContent)}</button>`).join('');
+    jump.hidden = false;
+    jump.onclick = (e) => {
+      const b = e.target.closest('[data-s]');
+      if (b) document.getElementById(b.dataset.s).scrollIntoView({ block: 'start', behavior: 'smooth' });
+    };
   }
+}
+
+async function viewTheory(id, sub) {
+  const tok = viewToken;
+  if (id) return viewNote(id, sub, tok);
   const idx = theoryIndex();
   const ids = Object.values(idx).flatMap((list) => [...list.keys()]);
   set('<section class="card"><h1>Theory</h1><p class="muted">Loading…</p></section>');
   const texts = Object.fromEntries(await Promise.all(ids.map(async (n) => [n, await getNote(n)])));
   if (tok !== viewToken) return;
-  set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ka short note: core ideas, shortcuts, traps, recall.</p>
+  set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ke do roop: <b>Samjho</b> — zero se detailed lesson (picture, step-by-step, solved examples), aur <b>Short note</b> — revision ke liye core ideas, shortcuts, traps.</p>
       <input id="tsearch" class="search" type="search" placeholder="Topic dhoondo… (jaise eigen, SQL, Bayes)" aria-label="Theory search">
       <p id="tnone" class="muted" hidden>Kuch nahi mila. Doosra shabd try karo (jaise "rank", "join", "entropy").</p></section>` +
     Object.entries(idx).map(([area, list]) => `
       <section class="card tsec"><h2>${AREA_NAMES[area] || area}</h2><ul class="links">
         ${[...list.values()].map((e) => `<li data-q="${esc((noteTitle(e.id, texts[e.id]) + ' ' + e.skills.join(' ')).toLowerCase())}"><a href="#/theory/${esc(e.id)}">${esc(noteTitle(e.id, texts[e.id]))}</a>
-          <span class="muted small">${e.days.size ? 'Day ' + [...e.days].sort((a, b) => a - b).join(', ') + ' · ' : ''}${esc(e.skills.slice(0, 3).join(' · '))}${e.skills.length > 3 ? '…' : ''}</span></li>`).join('')}
+          <span class="muted small"><a href="#/theory/${esc(e.id)}/short">short note</a> · ${e.days.size ? 'Day ' + [...e.days].sort((a, b) => a - b).join(', ') + ' · ' : ''}${esc(e.skills.slice(0, 3).join(' · '))}${e.skills.length > 3 ? '…' : ''}</span></li>`).join('')}
       </ul></section>`).join(''));
   const box = document.getElementById('tsearch');
   box.oninput = () => {
@@ -1091,7 +1152,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611041851');
+  const store = await import('./store.js?v=202611061112');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

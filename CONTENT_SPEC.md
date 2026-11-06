@@ -115,3 +115,61 @@ Wrong options and NAT `traps` may carry `"trap": "C6"`. The app shows the class 
 **Design patterns seen in real papers:** most MSQs have 2 correct options and some have 1 or 3; never use "all four correct" as a habit. NAT answers are often integers or probabilities in [0, 1]. Mix these naturally so that no answer pattern can be exploited.
 
 GA skills must use these category ids, so they match the plan's GA rotation: `ga.grammar`, `ga.reading`, `ga.numerical`, `ga.di`, `ga.reasoning`, `ga.spatial`. Set `days: []` for GA skills.
+
+## Detailed lessons: `data/learn/<id>.md`
+
+Each theory note `data/theory/<id>.md` is a concise revision sheet. Its lesson `data/learn/<id>.md` (same id) teaches the topic **from zero** to a student who has never studied it, so they can then solve GATE-level questions. The app shows the lesson as **Samjho** and the note as **Short note**.
+
+**Reader.** A GATE DA aspirant who knows school maths (Class 12) but not this topic. They read the lesson once (~25–40 min), then practise.
+
+**Language.** Simple Hinglish in Roman script, the way a friendly tutor talks: Hindi sentence flow, English technical terms (`eigenvalue`, `primary key`, `gradient`). Short sentences. Explain every new term the first time it appears, in plain words, before using it. Never assume a step is obvious; show it. Example tone: "Matrix $A$ ek vector ko ghumata aur kheenchta hai. Kuch special vectors aise hote hain jo sirf kheenchte hain, ghoomte nahi — wahi eigenvectors hain."
+
+**Length.** 1,800–3,500 words. Depth over breadth; cover everything the matching theory note and question skills test.
+
+**Structure (use these `##` headings, in this order):**
+
+```
+# <exactly the same title as data/theory/<id>.md>
+
+> **Time:** ~30 min · **Pehle aana chahiye:** <prerequisites in plain words, or "kuch nahi"> · **Day:** <plan days>
+
+## Ye topic kyun?
+2–4 sentences: what problem it solves, and how GATE DA tests it (question types, typical marks).
+
+## Picture se samjho
+The intuition first, 3Blue1Brown style: a concrete picture or story before any formula.
+1–3 inline SVG figures (rules below). Each figure is followed by 2–4 sentences explaining what to notice.
+
+## Concept step-by-step
+Build the theory in small numbered steps (### 1. …, ### 2. …). Each step: plain-language idea → precise definition or formula → a tiny numeric example worked fully → one line "Dhyan do:" with the common confusion.
+Cover every formula, rule and property in the theory note's Core ideas and Shortcuts, and say *why* it holds (a short derivation or argument, not just the statement).
+
+## Solved examples
+4–6 GATE-pattern examples, easy → hard (at least one MCQ, one MSQ, one NAT). For each:
+**Example k (MCQ/MSQ/NAT, level):** the question.
+**Soch:** how to recognise which idea applies (the "trigger").
+**Solution:** every step, numbered, with arithmetic shown.
+**Galti kahan hoti hai:** the tempting wrong answer and the exact wrong step that produces it.
+All numbers verified by computation (`python -I -c "..."`). Original questions only; never copy official papers or books; never use DA 2026.
+
+## Confusions clear karo
+4–8 Q&A pairs of the form **Q:** … **A:** … for the doubts a beginner actually has (e.g. "AM aur GM me farak kya hai?", "LEFT JOIN me NULL kyun aata hai?").
+
+## Khud try karo
+3–5 short practice problems. Answers hidden:
+<details><summary>Answer dekho</summary>
+
+worked answer in Markdown
+
+</details>
+
+## Ek page me
+A tight summary list (8–12 bullets) of what to remember, then the line:
+"Revision ke liye **Short note** tab dekho."
+```
+
+**Figures (inline SVG).** Wrap each in `<figure class="fig">…<figcaption>caption</figcaption></figure>`. Put a blank line before and after the figure and **no blank lines inside it** (Markdown ends an HTML block at a blank line). Use `viewBox` and no `width`/`height`. Colours only via `currentColor` or `style="fill:var(--mark)"` / `stroke:var(--info)` / `var(--good)` / `var(--bad)` / `var(--muted)` so they work in light and dark mode. Text inside SVG: plain text and Unicode (λ, ², →, ≤); **never `$` or LaTeX inside SVG**. Keep figures simple: axes, arrows, boxes, trees, Venn diagrams, number lines, tables-as-grids. Max ~60 lines per figure. Check every coordinate makes sense (labels inside the viewBox, arrows pointing the right way).
+
+**Math** in `$...$` / `$$...$$` as elsewhere (this is Markdown, so write single backslashes). Code in fenced blocks with a language tag (` ```python `, ` ```sql `).
+
+**Accuracy.** Every formula, number and claim must be correct. Recompute all examples. If the theory note and the lesson disagree, the lesson is wrong until checked.
