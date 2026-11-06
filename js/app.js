@@ -1,10 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061132';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061742';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611061132';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061132';
+} from './engine.js?v=202611061742';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061742';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611061742';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -18,9 +19,9 @@ let lastInput = Date.now();
 
 const CRUMBS = {
   today: 'Today', day: 'Day', days: 'All days', attempt: 'Attempt review', revision: 'Revision cards',
-  theory: 'Theory', recall: 'Recall sheet', progress: 'Progress', settings: 'Settings',
+  theory: 'Theory', recall: 'Recall sheet', progress: 'Progress', settings: 'Settings', mock: 'Mock result',
 };
-const NAV_OF = { day: 'days', attempt: 'days' };
+const NAV_OF = { day: 'days', attempt: 'days', mock: 'days' };
 
 let viewToken = 0; // async views drop their result if the user has navigated away
 
@@ -28,13 +29,20 @@ function route() {
   viewToken++;
   const hash = location.hash.replace(/^#\/?/, '') || 'today';
   const [view, arg, sub] = hash.split('/');
+  // a running full mock locks the app on its paper, like the real exam
+  const live = loadMock();
+  if (live && !(view === 'day' && Number(arg) === live.day)) {
+    location.hash = `#/day/${live.day}`;
+    return;
+  }
   const known = CRUMBS[view] ? view : 'today';
   const nav = NAV_OF[known] || known;
   document.querySelectorAll('[data-view]').forEach((a) => a.classList.toggle('active', a.dataset.view === nav));
-  document.getElementById('crumb').textContent = arg && known !== 'attempt' ? `${CRUMBS[known]} · ${decodeURIComponent(arg)}` : CRUMBS[known];
+  document.getElementById('crumb').textContent = arg && known !== 'attempt' && known !== 'mock' ? `${CRUMBS[known]} · ${decodeURIComponent(arg)}` : CRUMBS[known];
   const views = {
     today: viewToday, day: (a) => viewDay(Number(a)), days: viewDays, attempt: viewAttempt,
     revision: viewRevision, theory: viewTheory, recall: viewRecall, progress: viewProgress, settings: viewSettings,
+    mock: viewMockResult,
   };
   main.scrollTo(0, 0);
   window.scrollTo(0, 0);
@@ -119,6 +127,8 @@ function activeSession() {
 
 // Today = the running session if there is one, else the current plan day's page.
 function viewToday() {
+  const live = loadMock();
+  if (live) return viewDay(live.day);
   const state = derive();
   if (activeSession()) return renderSession(state);
   viewDay(planStatus(state).current.day);
@@ -134,8 +144,8 @@ function viewDay(n) {
 
   const st = dayStatus(state, n);
   const isCur = n === ps.current.day;
-  // weekly checkpoints (38 questions) run as a normal mixed session; only full papers use the mock form
-  if (day.isMock && day.questionTarget >= 65 && !running) return renderMockDay(day, ps);
+  // weekly checkpoints (38 questions) run as a normal mixed session; full papers get the mock screen
+  if (day.isMock && day.questionTarget >= 65) return renderMockDay(day, state, running);
 
   const due = dueCards(state);
   const behind = isCur && ps.behind > 0
@@ -678,7 +688,7 @@ function viewAttempt(id) {
     </div>
     <section class="card q">
       <div class="eyebrow">Day ${a.day} · ${fmtDate(a.date)} · ${esc(a.mode)} · ${esc(skill.title || q.skill)}</div>
-      <div class="meta">[${esc(q.source || 'Drill')}] · ${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''} · confidence ${esc(a.conf)} · ${Math.round((a.ms || 0) / 1000)} s${a.repeated ? ' · repeat' : ''}</div>
+      <div class="meta">[${esc(q.source || 'Drill')}] · ${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''} · ${a.conf ? `confidence ${esc(a.conf)}` : a.mode === 'mock' ? (a.skipped ? 'mock · chhoda' : 'mock') : ''} ·${Math.round((a.ms || 0) / 1000)} s${a.repeated ? ' · repeat' : ''}</div>
       <div class="verdict ${a.correct ? 'ok' : 'no'}" style="border-top:0;padding-top:0;margin-top:0">${a.correct ? 'Sahi ✓' : 'Galat ✗'}</div>
       ${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}
       <div class="stem">${md(q.stem)}</div>
@@ -715,16 +725,47 @@ function viewDays() {
   if (cur) cur.scrollIntoView({ block: 'center' });
 }
 
-function renderMockDay(day, ps) {
+// Full-mock day: the in-app paper (fresh mixed papers) or a score form (official PDFs).
+function renderMockDay(day, state, running) {
+  const live = loadMock();
+  if (live && live.day === day.day) return showExam(live);
+  if (day.officialPaperYear) return renderMockForm(day, false);
+  const past = state.mocks.filter((m) => m.day === day.day);
+  const share = mockShare(day.day);
+  const done = !!state.dayLogs[day.day];
   set(`
     <section class="card hero">
-      <div class="eyebrow">Day ${day.day} · Full mock · ${fmtDate(day.date)}</div>
+      <div class="eyebrow">Day ${day.day} · Full mock · ${day.date ? `planned ${fmtDate(day.date)}` : ''}</div>
       <h1>${esc(day.title)}</h1>
+      ${running ? `<div class="banner warn">Day ${running.day} ka session abhi chal raha hai. <a href="#/today"><b>Pehle use band karo</b></a> — mock ek baar me, akele.</div>` : ''}
+      <div class="chips"><span class="chip">65 sawaal</span><span class="chip">100 marks</span><span class="chip">${MOCK_MIN} min</span>
+        <span class="chip">GA 10 sawaal · 15 marks</span><span class="chip">Technical 55 sawaal · 85 marks</span></div>
+      <p><b>Paper me kya hai:</b> ${share.map((s) => `${esc(s.name)} ~${s.marks}`).join(' · ')} · General Aptitude 15
+        <br><span class="muted small">Sirf Day ${day.day} se pehle padhe subjects. Baaki subjects aage ke mocks me judenge.</span></p>
       <ol class="flow">
-        <li>180 min, exam conditions, ek baar me. Regular blocks aaj nahi.</li>
-        <li>${day.officialPaperYear ? `Official GATE DA ${day.officialPaperYear} paper (PDF tumhare paas hai). Ye paper partially exposed hai — fresh evidence me nahi ginega.` : 'Fresh mixed paper. App ka mock generator agle update me aayega; tab tak koi unseen full paper use karo.'}</li>
-        <li>~75 min scoring aur triage, 15 min log.</li>
+        <li>Ek baar me ${MOCK_MIN} min, asli exam ki tarah. Mock ke dauraan app ke baaki pages band rehte hain.</li>
+        <li>Pattern GATE jaisa: pehle GA (Q1–10), phir technical. Har section me pehle 1-mark, phir 2-mark sawaal.</li>
+        <li><b>Negative:</b> galat MCQ pe 1-mark me −1/3, 2-mark me −2/3. MSQ aur NAT me negative nahi. MSQ me poora sahi set chahiye.</li>
+        <li>Sawaal bank ke wo sawaal hain jo tumne app me abhi tak nahi dekhe.</li>
+        <li>Refresh ya tab band hone pe bhi answers save rehte hain. Timer sirf tab band hone pe rukta hai, isliye ek hi baithak me poora karo.</li>
+        <li>Submit ke baad: score, subject-wise marks, time kahan gaya, aur har sawaal ka explanation. Galat sawaal revision cards me jaate hain.</li>
       </ol>
+      <div class="actions">
+        <button class="primary" id="mstart" ${running ? 'disabled' : ''}>${done ? 'Naya mock paper do' : 'Mock shuru karo'}</button>
+      </div>
+    </section>
+    ${past.length ? `<section class="card"><h2>Pichhle attempts</h2><ul class="links">${past.slice().reverse().map((m) => `<li>${fmtDate(m.date)} · <b>${m.net}/${m.max || 100}</b> · ${m.correct} sahi, ${m.attempted - m.correct} galat
+      ${m.sid ? ` · <a href="#/mock/${esc(m.sid)}">result dekho</a>` : ` <span class="muted small">(${esc(m.source || 'manual')})</span>`}</li>`).join('')}</ul></section>` : ''}
+    <section class="card"><details><summary>Bahar ka paper diya? Score yahan likho</summary><div id="manualmock"></div></details></section>`);
+  document.getElementById('mstart').onclick = () => {
+    if (!confirm(`Mock shuru karein? ${MOCK_MIN} min ka timer turant chalega.`)) return;
+    showExam(startMock(day));
+  };
+  renderMockForm(day, true);
+}
+
+function renderMockForm(day, embedded) {
+  const form = `
       <form id="mock" class="grid2">
         <label>Source <input id="src" value="${day.officialPaperYear ? `GATE DA ${day.officialPaperYear}` : ''}"></label>
         <label>Fresh (pehle nahi dekha)? <select id="fresh"><option value="0" ${day.officialPaperYear ? 'selected' : ''}>No</option><option value="1" ${day.officialPaperYear ? '' : 'selected'}>Yes</option></select></label>
@@ -736,8 +777,21 @@ function renderMockDay(day, ps) {
         <label>Hours <input id="hrs" type="number" step="any" min="0" value="4.5"></label>
         <label class="span2">Time loss / selection errors / notes <textarea id="notes" rows="3"></textarea></label>
         <button class="primary span2" type="submit">Mock save karo</button>
-      </form>
+      </form>`;
+  if (embedded) document.getElementById('manualmock').innerHTML = form;
+  else {
+    set(`
+    <section class="card hero">
+      <div class="eyebrow">Day ${day.day} · Full mock · ${fmtDate(day.date)}</div>
+      <h1>${esc(day.title)}</h1>
+      <ol class="flow">
+        <li>180 min, exam conditions, ek baar me. Regular blocks aaj nahi.</li>
+        <li>Official GATE DA ${day.officialPaperYear} paper (PDF tumhare paas hai). Ye paper partially exposed hai — fresh evidence me nahi ginega.</li>
+        <li>~75 min scoring aur triage, 15 min log.</li>
+      </ol>
+      ${form}
     </section>`);
+  }
   document.getElementById('mock').onsubmit = (ev) => {
     ev.preventDefault();
     const v = (id) => document.getElementById(id).value;
@@ -1185,7 +1239,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611061132');
+  const store = await import('./store.js?v=202611061742');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

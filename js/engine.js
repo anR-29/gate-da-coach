@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611061132';
+import { addEvent, allEvents, cfg } from './store.js?v=202611061742';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -137,7 +137,7 @@ export function dueCards(state, date = today()) {
 export function skillStats(state) {
   const stats = {};
   for (const a of state.attempts) {
-    if (a.mode === 'repair' || a.repeated) continue;
+    if (a.mode === 'repair' || a.repeated || a.skipped) continue;
     const s = (stats[a.skill] ||= { n: 0, ok: 0 });
     s.n++;
     if (a.correct && a.conf !== 'Guess') s.ok++;
@@ -186,7 +186,7 @@ function subjectWeightPerSkill(skillId) {
 // Expected exam marks per subject from recent first-pass accuracy (last 60 unseen attempts).
 export function target72(state) {
   const rows = [];
-  const all = state.attempts.filter((a) => a.mode !== 'repair' && !a.repeated && content.skills[a.skill]);
+  const all = state.attempts.filter((a) => a.mode !== 'repair' && !a.repeated && !a.skipped && content.skills[a.skill]);
   for (const [name, s] of Object.entries(SUBJECTS)) {
     const mine = all.filter((a) => s.areas.includes(content.skills[a.skill].area)).slice(-60);
     const n = mine.length;
@@ -535,7 +535,7 @@ export const TRAP_CLASSES = {
 };
 
 // Trap classes behind a wrong response: chosen wrong options, or the matched NAT trap.
-function trapsOf(q, g) {
+export function trapsOf(q, g) {
   if (g.correct) return [];
   if (q.type === 'NAT') return g.trap?.trap ? [g.trap.trap] : [];
   return g.chosen.map((i) => q.options[i]).filter((o) => !o.correct && o.trap).map((o) => o.trap);
