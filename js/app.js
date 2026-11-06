@@ -1,10 +1,10 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061112';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061132';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort,
-} from './engine.js?v=202611061112';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061112';
+  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
+} from './engine.js?v=202611061132';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061132';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -155,6 +155,7 @@ function viewDay(n) {
   ].join('');
   const reattempt = st.done;
   const noContent = sessionSkillsCount(day) === 0;
+  const carried = reattempt ? 0 : dayCarry(state, n).n; // work already saved for this unfinished day
 
   set(`
     ${behind}${busy}
@@ -172,10 +173,11 @@ function viewDay(n) {
       </div>
       ${orderCard()}
       <div class="actions">
-        <button class="primary" id="start" ${running ? 'disabled' : ''}>${reattempt ? `Day ${day.day} re-attempt karo` : `Day ${day.day} shuru karo`}</button>
+        <button class="primary" id="start" ${running ? 'disabled' : ''}>${reattempt ? `Day ${day.day} re-attempt karo` : carried ? `Day ${day.day} continue karo` : `Day ${day.day} shuru karo`}</button>
         <button id="fallback" ${running ? 'disabled' : ''}>${reattempt ? 'Re-attempt (Fallback 50 min)' : 'Fallback (50 min)'}</button>
         ${!st.done && dayTheories(day).length ? `<a class="button" href="#/theory/${esc(dayTheories(day)[0])}">📖 Pehle samjho</a>` : ''}
       </div>
+      ${carried ? `<p class="hint">Is din ke <b>${carried} sawaal</b> pehle se save hain (kisi bhi device se). Wahin se aage chalega — kuch dobara nahi karna.</p>` : ''}
       ${reattempt ? '<p class="hint">Re-attempt me naye variants pehle aate hain; khatam hone pe dekhe hue sawaal "repeat" tag ke saath aate hain (fresh accuracy me nahi ginte). Plan progress nahi badlega.</p>' : ''}
       ${noContent ? '<p class="banner">Is din ke topic ke sawaal abhi bank me nahi hain. Revision aur GA chalenge.</p>' : ''}
     </section>
@@ -331,7 +333,8 @@ async function fillTitles(root) {
   }
 }
 
-function startSession(day, opts) {
+function startSession(day, opts = {}) {
+  if (!opts.reattempt && !opts.revisionOnly) opts = { ...opts, carryMs: dayCarry(derive(), day.day).ms };
   session = newSession(day, opts);
   current = null;
   feedback = null;
@@ -362,12 +365,38 @@ function partProgress(state, counts, t) {
     mixed: [counts.mixed, t.mixed],
     ga: [counts.ga, t.ga],
   };
-  const order = session.mode === 'revision' ? ['review'] : session.order || ['review', 'topic', 'mixed', 'ga'];
+  const order = session.mode === 'revision' ? ['review'] : session.shownOrder || session.order || ['review', 'topic', 'mixed', 'ga'];
   const on = current ? PART_OF_MODE[current.mode] : null;
+  const switchable = session.mode !== 'revision';
+  // each part is a one-tap switcher: the tapped part's questions come next
   return order
     .filter((p) => parts[p][1] > 0 || parts[p][0] > 0)
-    .map((p) => `<span class="${p === on ? 'on' : parts[p][0] >= parts[p][1] ? 'fin' : ''}">${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}</span>`)
-    .join('') + (counts.repair ? `<span>+${counts.repair} repair</span>` : '');
+    .map((p) => {
+      const fin = parts[p][0] >= parts[p][1];
+      const label = `${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}`;
+      if (!switchable) return `<span class="pt ${p === on ? 'on' : fin ? 'fin' : ''}">${label}</span>`;
+      return `<button type="button" class="pt ${p === on ? 'on' : fin ? 'fin' : ''}" data-part="${p}" ${fin && p !== on ? 'disabled' : ''}
+        aria-pressed="${p === on}" title="${fin ? `${MODE_LABEL[p]} ho gaya` : p === on ? 'Abhi yahi chal raha hai' : `${MODE_LABEL[p]} pe switch karo`}">${fin ? '✓ ' : ''}${label}</button>`;
+    })
+    .join('') + (counts.repair ? `<span class="pt">+${counts.repair} repair</span>` : '');
+}
+
+// Tap a part in the session bar: its questions come next. An unanswered question of another
+// part is put back (it was never recorded); a pending repair still comes first.
+function switchPart(part) {
+  if (!session || session.mode === 'revision') return;
+  const order = session.order || Object.keys(PARTS);
+  session.shownOrder = session.shownOrder || order; // chips keep their places in the bar
+  session.order = [part, ...order.filter((p) => p !== part)];
+  const onRepair = current && current.mode === 'repair';
+  if (current && !feedback && !onRepair && PART_OF_MODE[current.mode] !== part) {
+    current = null;
+    session.cur = null;
+    session.sel = null;
+  }
+  session.switchNote = onRepair && !feedback ? `Pehle ye repair variant, phir ${MODE_LABEL[part]}.` : '';
+  saveSession(session);
+  renderSession(derive());
 }
 
 function stopSession() {
@@ -412,6 +441,7 @@ function renderSession(state) {
       </div></details>
     </div>
     ${t.note ? `<div class="banner">${esc(t.note)}</div>` : ''}
+    ${session.switchNote && current.mode === 'repair' ? `<div class="banner">${esc(session.switchNote)}</div>` : ''}
     <section class="card q">
       <div class="eyebrow">${esc(current.label)}${shown ? ` · ${esc(skill.title || q.skill)}` : ''}</div>
       <div class="meta"><span>[${esc(q.source || 'Drill')}]</span><span class="qtype ${isMsq ? 'msq' : ''}">${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''}</span>${current.repeated ? '<span class="hot">repeat · fresh evidence nahi</span>' : ''}</div>
@@ -443,6 +473,9 @@ function renderSession(state) {
 
   document.getElementById('stop').onclick = stopSession;
   document.getElementById('stop2').onclick = stopSession;
+  main.querySelectorAll('.sb-parts [data-part]').forEach((b) => { b.onclick = () => switchPart(b.dataset.part); });
+  const onChip = main.querySelector('.sb-parts .pt.on'); // keep the running part visible in the phone's scroll row
+  if (onChip) onChip.parentElement.scrollLeft = onChip.offsetLeft - onChip.parentElement.offsetLeft - 8;
   if (shown) return renderFeedback();
 
   const form = document.getElementById('answer');
@@ -1152,7 +1185,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611061112');
+  const store = await import('./store.js?v=202611061132');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

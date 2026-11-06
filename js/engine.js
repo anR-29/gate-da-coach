@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611061112';
+import { addEvent, allEvents, cfg } from './store.js?v=202611061132';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -311,14 +311,35 @@ export function newSession(day, opts = {}) {
     sid: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     ended: false,
   };
+  // continuing an unfinished day: the time already spent counts against today's cap
+  if (opts.carryMs) session.activeMs = Math.min(opts.carryMs, session.capMin * 60000);
   saveSession(session);
   return session;
 }
 
+// Work already done on an unfinished day (all sessions and devices), for "continue" and the time cap.
+export function dayCarry(state, dayNum) {
+  const reSids = new Set(state.logList.filter((l) => l.mode === 'reattempt').map((l) => l.sid));
+  const prev = state.attempts.filter((a) => a.day === dayNum && !a.re && !reSids.has(a.sid));
+  return {
+    n: prev.length,
+    ms: prev.reduce((s, a) => s + Math.min(a.ms || 0, 10 * 60000), 0),
+  };
+}
+
+const STALE_MS = 3 * 86400000;
+
 export function loadSession() {
   try {
     const s = JSON.parse(localStorage.getItem(LS_SESSION) || 'null');
-    return s && s.date === today() && !s.ended ? s : null;
+    if (!s || s.ended) return null;
+    // a session left open past midnight continues; new attempts get today's date
+    if (s.date !== today()) {
+      if (Date.now() - s.started > STALE_MS) return null;
+      s.date = today();
+      saveSession(s);
+    }
+    return s;
   } catch {
     return null;
   }
@@ -334,7 +355,14 @@ export function saveSession(s) {
 
 export function sessionAttempts(session, state) {
   // sessions before ids existed are matched by date and day
-  return state.attempts.filter((a) => (session.sid ? a.sid === session.sid : a.date === session.date && a.day === session.day));
+  if (!session.sid) return state.attempts.filter((a) => a.date === session.date && a.day === session.day);
+  // re-attempts and revision-only runs stand alone
+  if (session.reattempt || session.mode === 'revision') return state.attempts.filter((a) => a.sid === session.sid);
+  // a normal run counts every non-re-attempt attempt of its day, from any session or device,
+  // so a refresh, a new date or another device continues the day instead of restarting it
+  const reSids = new Set(state.logList.filter((l) => l.mode === 'reattempt').map((l) => l.sid));
+  return state.attempts.filter((a) => a.sid === session.sid
+    || (a.day === session.day && !a.re && !reSids.has(a.sid)));
 }
 
 export function sessionCounts(session, state) {
@@ -524,6 +552,7 @@ export function submit(session, item, response, conf, ms) {
   addEvent('attempt', {
     qid: q.id, skill: q.skill, subject: skill?.subject || '', day: session.day, date,
     mode: item.mode, resp: response, correct: g.correct, conf, repeated: item.repeated, ms, sid: session.sid,
+    ...(session.reattempt ? { re: true } : {}),
     ...(traps.length ? { traps } : {}),
   });
 
