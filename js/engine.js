@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611072353';
+import { addEvent, allEvents, cfg } from './store.js?v=202611080012';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -12,13 +12,23 @@ const AREAS = ['ps', 'la', 'calc', 'py', 'dsa', 'dsa2', 'db', 'ml', 'ml2', 'ai',
 export const content = { plan: null, skills: {}, questions: {}, bySkill: {}, theory: new Set() };
 
 export async function loadContent() {
-  const plan = await fetch('data/plan.json', { cache: 'no-cache' }).then((r) => r.json());
-  content.plan = plan;
-  for (const area of AREAS) {
+  // plan, question files and hint files are all fetched at once, then read in order
+  const getJson = async (url) => {
     try {
-      const r = await fetch(`data/questions/${area}.json`, { cache: 'no-cache' });
-      if (!r.ok) continue;
-      const j = await r.json();
+      const r = await fetch(url, { cache: 'no-cache' });
+      return r.ok ? await r.json() : null;
+    } catch {
+      return null;
+    }
+  };
+  const planP = fetch('data/plan.json', { cache: 'no-cache' }).then((r) => r.json());
+  const hintsP = Promise.all(AREAS.map((area) => getJson(`data/hints/${area}.json`)));
+  const files = await Promise.all(AREAS.map((area) => getJson(`data/questions/${area}.json`)));
+  content.plan = await planP;
+  for (const [i, area] of AREAS.entries()) {
+    try {
+      const j = files[i];
+      if (!j) continue;
       for (const [id, s] of Object.entries(j.skills || {})) {
         content.skills[id] = { id, area: j.area || area, ...s };
         if (s.theory) content.theory.add(s.theory);
@@ -32,17 +42,12 @@ export async function loadContent() {
     }
   }
   // per-question hints (data/hints/<file>.json: {qid: [notice, setup, first step]})
-  await Promise.all(AREAS.map(async (area) => {
-    try {
-      const r = await fetch(`data/hints/${area}.json`, { cache: 'no-cache' });
-      if (!r.ok) return;
-      for (const [qid, h] of Object.entries(await r.json())) {
-        if (content.questions[qid] && Array.isArray(h) && h.length === 3) content.questions[qid].hints = h;
-      }
-    } catch {
-      // hints are optional; the app falls back to generic ones
+  // hints are optional; without them the app falls back to generic ones
+  for (const hints of await hintsP) {
+    for (const [qid, h] of Object.entries(hints || {})) {
+      if (content.questions[qid] && Array.isArray(h) && h.length === 3) content.questions[qid].hints = h;
     }
-  }));
+  }
 }
 
 // ---------- dates ----------

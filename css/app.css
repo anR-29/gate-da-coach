@@ -495,6 +495,22 @@ body.exam .shell > main > * { max-width: 1180px; }
   .mxnums { grid-template-columns: repeat(6, 1fr); }
   .pn { min-height: 40px; }
 }
+/* step-by-step lesson player */
+.sdots { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 14px; }
+.sdot { width: 26px; height: 8px; min-height: 0; min-width: 0; padding: 0; border-radius: 4px; border: 0; background: var(--line); cursor: pointer; }
+.sdot.done { background: var(--good-line); }
+.sdot.on { background: var(--mark); }
+.stepcard h1 { margin-top: 6px; }
+.stepcard .stitle { margin: 4px 0 14px; border: 0; padding: 0; }
+.ttag { display: inline-block; font-size: 12px; font-weight: 600; color: var(--mark); background: var(--mark-bg); border-radius: 999px; padding: 3px 10px; margin: 6px 0 10px; }
+.trybox .stem { font-size: 15.5px; }
+.piece { padding: 2px 0 6px; }
+.say { display: block; margin: 18px 0 6px; font-size: 14px; }
+.say textarea { display: block; width: 100%; margin-top: 6px; font: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); resize: vertical; box-sizing: border-box; }
+.mynotes li { margin: 6px 0; }
+.guess { display: block; width: 100%; box-sizing: border-box; font: inherit; font-size: 14px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); color: var(--ink); }
+details.pic { margin: 14px 0; border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; }
+details.pic > summary { cursor: pointer; font-weight: 600; }
 .learn .links li { margin: 8px 0; }
 .learn .links a[data-title] { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .prose h1 { font-size: 26px; }

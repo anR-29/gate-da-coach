@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072353';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611080012';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611072353';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072353';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072353';
+  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade,
+} from './engine.js?v=202611080012';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611080012';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611080012';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -1077,17 +1077,18 @@ function theoryIndex() {
 // Short notes (data/theory) and detailed lessons (data/learn) are fetched once per visit.
 const docCache = new Map();
 
-async function getDoc(kind, id) {
+function getDoc(kind, id) {
   const key = `${kind}/${id}`;
-  if (docCache.has(key)) return docCache.get(key);
-  try {
-    const r = await fetch(`data/${key}.md`, { cache: 'no-cache' });
-    const text = r.ok ? await r.text() : null;
-    docCache.set(key, text); // a missing lesson is remembered too
-    return text;
-  } catch {
-    return null; // offline: try again next time
+  // the promise is cached, so two renders at once share one download
+  if (!docCache.has(key)) {
+    docCache.set(key, fetch(`data/${key}.md`, { cache: 'no-cache' })
+      .then((r) => (r.ok ? r.text() : null)) // a missing lesson is remembered too
+      .catch(() => {
+        docCache.delete(key); // offline: try again next time
+        return null;
+      }));
   }
+  return docCache.get(key);
 }
 
 const getNote = (id) => getDoc('theory', id);
@@ -1096,19 +1097,225 @@ function noteTitle(id, text) {
   return (text && (text.match(/^#\s+(.+)$/m) || [])[1]) || id;
 }
 
+function theoryTabs(id, hasLesson, on) {
+  const tab = (key, href, label) => `<a role="tab" href="${href}" class="${on === key ? 'on' : ''}" aria-selected="${on === key}">${label}</a>`;
+  return `<div class="ltabs" role="tablist">
+      ${hasLesson ? tab('steps', `#/theory/${esc(id)}`, 'Step-by-step') + tab('full', `#/theory/${esc(id)}/full`, 'Poora lesson') : ''}
+      ${tab('short', `#/theory/${esc(id)}/short`, 'Short note')}
+    </div>`;
+}
+
+// ---------- step-by-step lesson player ----------
+// Built for how this student learns: a small question first (try before reading), then only
+// the theory piece that answers it, then "say it in one line" — one step at a time.
+// Only the current card is rendered and typeset, so long lessons stay light.
+
+const LS_STEPS = 'gdc.steps';
+
+function stepStore(id, patch) {
+  let all = {};
+  try { all = JSON.parse(localStorage.getItem(LS_STEPS) || '{}'); } catch {}
+  const s = { k: 0, notes: {}, ...(all[id] || {}) };
+  if (!patch) return s;
+  all[id] = { ...s, ...patch };
+  try { localStorage.setItem(LS_STEPS, JSON.stringify(all)); } catch {}
+  return all[id];
+}
+
+const lessonCache = new Map(); // id -> parsed lesson (parsed once per visit)
+
+function parseLesson(id, text) {
+  if (lessonCache.has(id)) return lessonCache.get(id);
+  const art = document.createElement('article');
+  art.innerHTML = md(text);
+  const sections = {};
+  const steps = [];
+  let sec = '';
+  let cur = null;
+  for (const el of [...art.children]) {
+    if (el.tagName === 'H2') { sec = el.textContent.trim(); cur = null; sections[sec] = []; continue; }
+    if (el.tagName === 'H3' && /^Concept/i.test(sec)) { cur = { h: el, title: el.textContent.replace(/^\d+\.\s*/, ''), els: [], qs: [] }; steps.push(cur); continue; }
+    if (cur) cur.els.push(el);
+    else if (sec) sections[sec].push(el);
+  }
+  const title = art.querySelector('h1')?.textContent || id;
+  // each question of this topic goes to the step that teaches it (level 1 first); a step
+  // holds at most 3, and an overflow question goes to its next-best step if that fits well
+  const qs = Object.values(content.questions)
+    .filter((q) => content.skills[q.skill]?.theory === id)
+    .sort((a, b) => (a.level || 1) - (b.level || 1));
+  const byH = new Map(steps.map((s) => [s.h, s]));
+  for (const q of qs) {
+    const ranked = rankLessonBlocks(art, q.id).filter((x) => byH.has(x.b.h));
+    const top = ranked[0]?.s || 0;
+    const pick = ranked.find((x, i) => byH.get(x.b.h).qs.length < 3 && (i === 0 || x.s >= top * 0.85));
+    if (pick) byH.get(pick.b.h).qs.push(q);
+  }
+  const parsed = { title, sections, steps };
+  lessonCache.set(id, parsed);
+  return parsed;
+}
+
+const elsHtml = (els) => els.map((e) => e.outerHTML).join('');
+
+function viewSteps(id, text, days) {
+  const L = parseLesson(id, text);
+  const n = L.steps.length;
+  if (!n) { location.hash = `#/theory/${id}/full`; return; }
+  let st = stepStore(id);
+  let k = Math.min(st.k, n + 1); // 0 = intro, 1..n = steps, n+1 = summary
+  let phase = 'try';
+  let qi = 0;
+  let res = null;
+
+  const render = () => {
+    const dots = Array.from({ length: n + 2 }, (_, i) => `<button type="button" class="sdot ${i === k ? 'on' : i < k ? 'done' : ''}" data-k="${i}" aria-label="${i === 0 ? 'Shuruaat' : i > n ? 'Summary' : `Step ${i}`}"></button>`).join('');
+    let body = '';
+    if (k === 0) {
+      const why = L.sections['Ye topic kyun?'] || [];
+      const pic = L.sections['Picture se samjho'] || [];
+      body = `<div class="eyebrow">Shuruaat · ${n} chhote steps · har step: pehle ek sawaal, phir theory ka tukda</div>
+        <h1>${esc(L.title)}</h1>
+        <div class="prose lesson">${elsHtml(why)}</div>
+        ${pic.length ? `<details class="pic"><summary>🖼️ Picture se samjho (1–2 min)</summary><div class="prose lesson">${elsHtml(pic)}</div></details>` : ''}
+        <div class="actions"><button class="primary" id="snext">Step 1 shuru karo →</button></div>
+        <p class="muted small">Har step me pehle bina theory ke try karo — galat hona theek hai, wahi yaad rehta hai. Poora lesson ek saath padhna ho toh "Poora lesson" tab.</p>`;
+    } else if (k > n) {
+      const notes = L.steps.map((s, i) => ({ s, t: st.notes[i + 1] })).filter((x) => x.t);
+      body = `<div class="eyebrow">Ho gaya · ${n}/${n} steps</div>
+        <h1>Shabaash 🎉</h1>
+        ${notes.length ? `<h2>Tumhare apne shabdon me</h2><ul class="mynotes">${notes.map((x) => `<li><b>${esc(x.s.title)}:</b> ${esc(x.t)}</li>`).join('')}</ul>` : ''}
+        <h2>Ek page me</h2><div class="prose lesson">${elsHtml(L.sections['Ek page me'] || [])}</div>
+        <div class="actions">
+          ${days.length ? `<a class="button primary" href="#/day/${days[0]}">Ab Day ${days[0]} ke sawaal →</a>` : ''}
+          <a class="button" href="#/theory/${esc(id)}/short">Short note</a>
+          <button type="button" id="sredo">Shuru se dobara</button>
+        </div>`;
+    } else {
+      const s = L.steps[k - 1];
+      const q = s.qs[qi];
+      const head = `<div class="eyebrow">Step ${k}/${n}</div><h2 class="stitle">${esc(s.title)}</h2>`;
+      if (phase === 'try' && q) {
+        const isMsq = q.type === 'MSQ';
+        body = `${head}
+          <div class="trybox">
+            <div class="ttag">Pehle khud try karo — theory baad me</div>
+            <div class="stem">${md(q.stem)}</div>
+            ${q.figure ? `<div class="figure">${q.figure}</div>` : ''}
+            <form id="sform" autocomplete="off">
+              ${q.type === 'NAT'
+                ? `<label class="nat"><span>Answer <span class="muted small">· ${esc(natHint(q))}</span></span><input id="snat" inputmode="decimal" placeholder="Ek number"></label>`
+                : `<div class="opts">${q.options.map((o, i) => `<label class="opt ${isMsq ? 'msq' : ''}"><input class="vh" type="${isMsq ? 'checkbox' : 'radio'}" name="sopt" value="${i}"><span class="key">${'ABCD'[i]}</span><span class="otext">${md(bigFrac(o.text), true)}</span></label>`).join('')}</div>`}
+              ${isMsq ? '<p class="hint"><b>MSQ:</b> ek ya zyada sahi.</p>' : ''}
+              <div class="err" id="serr"></div>
+              <div class="actions"><button class="primary" type="submit">Check karo</button>
+                <button type="button" class="link" id="sskip">Pata nahi — seedha samjhao</button></div>
+            </form>
+          </div>`;
+      } else if (phase === 'try') {
+        // no practice question teaches this step: predict first, then reveal
+        body = `${head}
+          <div class="trybox">
+            <div class="ttag">Pehle socho — 20 second</div>
+            <p>"<b>${esc(s.title)}</b>" — tumhe kya lagta hai iska matlab ya rule kya hoga? Ek line me andaza likho, galat bhi chalega. Andaza lagane ke baad padha hua zyada yaad rehta hai.</p>
+            <textarea id="sguess" rows="2" class="guess" placeholder="mera andaza…"></textarea>
+            <div class="actions"><button class="primary" id="sreveal">Ab dikhao</button></div>
+          </div>`;
+      } else {
+        const verdict = res && res.guess
+          ? `<p class="muted small">Tumhara andaza: "${esc(res.guess)}" — ab neeche se milao.</p>`
+          : res
+          ? res.correct
+            ? '<div class="verdict ok">Sahi ✓ — ab dekho ye kyun kaam karta hai.</div>'
+            : `<div class="verdict no">Abhi nahi hua — bilkul theek. Neeche ka tukda isi ke liye hai.</div>${res.why ? `<div class="why bad">${md(res.why, true)}</div>` : ''}`
+          : '';
+        body = `${head}${verdict}
+          <div class="ttag">Ab samjho</div>
+          <div class="prose lesson piece">${elsHtml(s.els)}</div>
+          ${q && res ? `<details><summary>Us sawaal ka solution</summary><div class="sol">${md(q.solution)}</div></details>` : ''}
+          <label class="say"><span><b>Ek line me khud bolo:</b> is step ka idea apne shabdon me (bol pao toh samjhe ho)</span>
+            <textarea id="ssay" rows="2" placeholder="jaise: dot product 0 matlab 90°">${esc(st.notes[k] || '')}</textarea></label>
+          <div class="actions">
+            <button class="primary" id="snext">${k < n ? 'Samajh aaya → agla step' : 'Samajh aaya → summary'}</button>
+            ${s.qs.length > qi + 1 ? '<button type="button" id="smore">Ek aur sawaal isi pe</button>' : ''}
+          </div>`;
+      }
+    }
+    set(`<p><a href="#/theory">← Saari theory</a>${days.length ? ` · <span class="muted">Practice: ${days.map((d) => `<a href="#/day/${d}">Day ${d}</a>`).join(', ')}</span>` : ''}</p>
+      ${theoryTabs(id, true, 'steps')}
+      <div class="sdots">${dots}</div>
+      <section class="card stepcard">${body}</section>`);
+    bind();
+  };
+
+  const go = (to) => {
+    k = Math.max(0, Math.min(n + 1, to));
+    phase = 'try';
+    qi = 0;
+    res = null;
+    st = stepStore(id, { k });
+    render();
+    main.scrollTo(0, 0);
+    window.scrollTo(0, 0);
+  };
+
+  const bind = () => {
+    main.querySelectorAll('.sdot').forEach((b) => { b.onclick = () => go(Number(b.dataset.k)); });
+    const say = document.getElementById('ssay');
+    if (say) say.oninput = () => { st = stepStore(id, { notes: { ...st.notes, [k]: say.value.trim() } }); };
+    const next = document.getElementById('snext');
+    if (next) next.onclick = () => go(k + 1);
+    const redo = document.getElementById('sredo');
+    if (redo) redo.onclick = () => go(0);
+    const more = document.getElementById('smore');
+    if (more) more.onclick = () => { qi++; phase = 'try'; res = null; render(); };
+    const skip = document.getElementById('sskip');
+    if (skip) skip.onclick = () => { phase = 'learn'; res = null; render(); };
+    const reveal = document.getElementById('sreveal');
+    if (reveal) reveal.onclick = () => {
+      const g = document.getElementById('sguess').value.trim();
+      res = g ? { guess: g } : null;
+      phase = 'learn';
+      render();
+    };
+    const form = document.getElementById('sform');
+    if (form) {
+      form.onsubmit = (ev) => {
+        ev.preventDefault();
+        const q = L.steps[k - 1].qs[qi];
+        const resp = q.type === 'NAT'
+          ? document.getElementById('snat').value
+          : [...form.querySelectorAll('input[name=sopt]:checked')].map((x) => Number(x.value));
+        const g = grade(q, resp);
+        if (!g.valid) {
+          document.getElementById('serr').textContent = q.type === 'NAT' ? 'Ek number likho (decimal ke liye point).' : 'Pehle koi option chuno.';
+          return;
+        }
+        const wrongPick = q.type !== 'NAT' && !g.correct ? q.options[(g.chosen || []).find((i) => !q.options[i].correct)] : null;
+        res = { correct: g.correct, why: q.type === 'NAT' ? (g.trap ? g.trap.why : '') : wrongPick?.why || '' };
+        // a learning try: marks the question seen (practice prefers fresh ones); no accuracy, no cards
+        window.__store.addEvent('attempt', { qid: q.id, skill: q.skill, subject: content.skills[q.skill]?.subject || '', day: 0,
+          date: today(), mode: 'learn', resp, correct: g.correct, conf: null, repeated: false, ms: 0, sid: 'theory' });
+        phase = 'learn';
+        render();
+      };
+    }
+  };
+  render();
+}
+
 // One topic: the detailed lesson ("Samjho") by default, the short note under /short.
 async function viewNote(id, sub, tok) {
   set('<section class="card"><p class="muted">Loading…</p></section>');
   const [lesson, note] = await Promise.all([getDoc('learn', id), getDoc('theory', id)]);
   if (tok !== viewToken) return;
-  const showShort = sub === 'short' || !lesson;
-  const text = showShort ? note : lesson;
   const entry = Object.values(theoryIndex()).map((l) => l.get(id)).find(Boolean);
   const days = entry ? [...entry.days].sort((a, b) => a - b) : [];
-  const tabs = `<div class="ltabs" role="tablist">
-      ${lesson ? `<a role="tab" href="#/theory/${esc(id)}" class="${showShort ? '' : 'on'}" aria-selected="${!showShort}">Samjho (detailed)</a>` : ''}
-      <a role="tab" href="#/theory/${esc(id)}/short" class="${showShort ? 'on' : ''}" aria-selected="${showShort}">Short note</a>
-    </div>`;
+  // default view of a lesson: the step-by-step player (question first, theory in small pieces)
+  if (lesson && !sub) return viewSteps(id, lesson, days);
+  const showShort = sub === 'short' || !lesson;
+  const text = showShort ? note : lesson;
+  const tabs = theoryTabs(id, !!lesson, showShort ? 'short' : 'full');
   set(`<p><a href="#/theory">← Saari theory</a>${days.length ? ` · <span class="muted">Practice: ${days.map((d) => `<a href="#/day/${d}">Day ${d}</a>`).join(', ')}</span>` : ''}</p>
     ${tabs}
     ${!lesson && note ? '<p class="banner">Is topic ka detailed lesson abhi nahi bana — short note neeche hai.</p>' : ''}
@@ -1201,10 +1408,12 @@ async function showLessonPiece(q, skill) {
   typeset(box);
 }
 
-function matchLessonBlock(art, qid) {
-  const q = content.questions[qid];
-  const sk = q ? content.skills[q.skill] : content.skills[qid];
-  if (!sk || !art) return null;
+// Word index of a lesson's blocks, built once per parsed lesson (matching many questions
+// against one lesson must not re-read it every time).
+const blockIndex = new WeakMap();
+
+function lessonBlocks(art) {
+  if (blockIndex.has(art)) return blockIndex.get(art);
   const skip = /^(Ye topic kyun|Ek page me|Khud try karo|Solved examples|Confusions)/i;
   const blocks = [];
   let section = '';
@@ -1214,32 +1423,46 @@ function matchLessonBlock(art, qid) {
     const els = [h];
     for (let n = h.nextElementSibling; n && !/^H[1-3]$/.test(n.tagName); n = n.nextElementSibling) els.push(n);
     if (els.length < 2) continue; // a heading with nothing under it
-    blocks.push({ h, els, section, head: words(h.textContent), body: words(els.slice(1).map((e) => e.textContent).join(' ')) });
+    const body = words(els.slice(1).map((e) => e.textContent).join(' '));
+    const counts = new Map();
+    body.forEach((t) => counts.set(t, (counts.get(t) || 0) + 1));
+    blocks.push({ h, els, section, head: new Set(words(h.textContent)), counts, len: body.length });
   }
-  if (!blocks.length) return null;
+  const df = new Map();
+  blocks.forEach((b) => new Set([...b.head, ...b.counts.keys()]).forEach((t) => df.set(t, (df.get(t) || 0) + 1)));
+  const idx = { blocks, df };
+  blockIndex.set(art, idx);
+  return idx;
+}
+
+// Lesson blocks ranked by how well they teach this question (best first; [] if none fits).
+function rankLessonBlocks(art, qid) {
+  const q = content.questions[qid];
+  const sk = q ? content.skills[q.skill] : content.skills[qid];
+  if (!sk || !art) return [];
+  const { blocks, df } = lessonBlocks(art);
+  if (!blocks.length) return [];
+  const hint = PART_HINT[sk.id] && blocks.find((b) => PART_HINT[sk.id].test(b.h.textContent));
+  if (hint) return [{ b: hint, s: 1 }];
   const want = new Map();
   const add = (text, w) => words(text).forEach((t) => want.set(t, Math.max(want.get(t) || 0, w)));
   add(q ? `${q.stem} ${q.solution || ''}` : '', 1);
   add(sk.check, 1.5);
   add(sk.title, 2.5);
-  const df = new Map();
-  blocks.forEach((b) => new Set([...b.head, ...b.body]).forEach((t) => df.set(t, (df.get(t) || 0) + 1)));
   const score = (b) => {
-    const body = new Map();
-    b.body.forEach((t) => body.set(t, (body.get(t) || 0) + 1));
-    const head = new Set(b.head);
     let s = 0;
     for (const [t, w] of want) {
       const idf = Math.log(1 + blocks.length / (df.get(t) || blocks.length));
-      s += w * idf * ((head.has(t) ? 3 : 0) + Math.min(body.get(t) || 0, 3) * 0.6);
+      s += w * idf * ((b.head.has(t) ? 3 : 0) + Math.min(b.counts.get(t) || 0, 3) * 0.6);
     }
     // concept steps teach; solved examples come second
-    return s * (/^Concept/i.test(b.section) ? 1.25 : 1) / Math.sqrt(1 + b.body.length / 120);
+    return s * (/^Concept/i.test(b.section) ? 1.25 : 1) / Math.sqrt(1 + b.len / 120);
   };
-  const hint = PART_HINT[sk.id] && blocks.find((b) => PART_HINT[sk.id].test(b.h.textContent));
-  const best = hint ? { b: hint, s: 1 } : blocks.map((b) => ({ b, s: score(b) })).sort((x, y) => y.s - x.s)[0];
-  if (!best || best.s <= 0) return null;
-  return best.b;
+  return blocks.map((b) => ({ b, s: score(b) })).filter((x) => x.s > 0).sort((x, y) => y.s - x.s);
+}
+
+function matchLessonBlock(art, qid) {
+  return rankLessonBlocks(art, qid)[0]?.b || null;
 }
 
 // Link from a question to the lesson part it needs.
@@ -1255,7 +1478,7 @@ async function viewTheory(id, sub) {
   set('<section class="card"><h1>Theory</h1><p class="muted">Loading…</p></section>');
   const texts = Object.fromEntries(await Promise.all(ids.map(async (n) => [n, await getNote(n)])));
   if (tok !== viewToken) return;
-  set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ke do roop: <b>Samjho</b> — zero se detailed lesson (picture, step-by-step, solved examples), aur <b>Short note</b> — revision ke liye core ideas, shortcuts, traps.</p>
+  set(`<section class="card"><h1>Theory</h1><p class="muted">Har topic ke teen roop: <b>Step-by-step</b> — ek baar me ek chhota step: pehle khud sawaal try karo, phir sirf wahi theory ka tukda, phir ek line me khud bolo · <b>Poora lesson</b> — sab ek page pe (picture, solved examples) · <b>Short note</b> — revision ke liye.</p>
       <input id="tsearch" class="search" type="search" placeholder="Topic dhoondo… (jaise eigen, SQL, Bayes)" aria-label="Theory search">
       <p id="tnone" class="muted" hidden>Kuch nahi mila. Doosra shabd try karo (jaise "rank", "join", "entropy").</p></section>` +
     Object.entries(idx).map(([area, list]) => `
@@ -1597,7 +1820,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611072353');
+  const store = await import('./store.js?v=202611080012');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
