@@ -1,0 +1,382 @@
+{
+"ml-nn-perceptron-01": [
+  "Start $w=0, b=0$ se hai aur test me $\\le 0$ likha hai — matlab score exactly 0 bhi mistake hai. Points ko diye gaye order me ek-ek karke chalao.",
+  "Har point pe score $s = y(w_1x_1 + w_2x_2 + b)$ nikalo. Agar $s \\le 0$: $w \\leftarrow w + yx$, $b \\leftarrow b + y$; warna kuch mat badlo.",
+  "Point 1: score 0, to update: $w=(1,2)$, $b=1$. Ab point 2 pe isi naye $w$ se score nikalo. Trap: $yx$ add karna hai, subtract nahi; aur pehle update ke baad ruk mat jaana."
+],
+"ml-nn-perceptron-02": [
+  "Inputs sirf 0/1 hain, to sirf 4 cases check karne hain. Dekho kitne active inputs pe $x_1 + x_2$ threshold 1.5 ko cross karta hai.",
+  "Charon inputs $(0,0),(0,1),(1,0),(1,1)$ ke liye $x_1+x_2-1.5$ nikalo; positive ho to output 1. Phir truth table ko AND/OR/NAND/XOR se match karo.",
+  "$(0,1)$: $1-1.5=-0.5<0$, output 0. Baaki teen cases khud karo. Trap: ek active input se OR jaisa lag sakta hai, par yahan threshold 1.5 hai, 0.5 nahi."
+],
+"ml-nn-perceptron-03": [
+  "XOR ke positive points $(0,1),(1,0)$ aur negative $(0,0),(1,1)$ square ke opposite diagonals pe hain. Socho: kya ek seedhi line inhe alag kar sakti hai?",
+  "Rule: single perceptron = ek line (hyperplane); perceptron rule sirf linearly separable data pe converge karta hai. Hidden layer ke units (jaise OR, NAND) mila kar non-linear boundary banti hai.",
+  "Bias option dekho: bias sirf line ko shift karta hai, diagonal pattern phir bhi nahi tootta. Trap: 'enough epochs' ya 'two hidden layers zaroori' jaise over-claims pe dhyan do."
+],
+"ml-nn-perceptron-04": [
+  "MSQ hai — har statement ko alag se judge karo. Keywords: 'maximum-margin', 'order of points', 'not separable', aur bound $(R/\\gamma)^2$.",
+  "Perceptron pehle separating $w$ pe ruk jaata hai (max-margin SVM ka kaam hai). Novikoff bound: separable with margin $\\gamma$ ho to mistakes $\\le (R/\\gamma)^2$.",
+  "Non-separable case: koi bhi fixed $w$ kisi point ko galat classify karega, to kya koi pass bina update ke pura ho sakta hai? Trap: final $w$ ko order se independent maan lena."
+],
+"ml-nn-perceptron-05": [
+  "Yahan ek pass nahi, jab tak ek pura pass bina update ke na ho tab tak cycle karna hai. Gin-na hai total updates, passes nahi.",
+  "Har point pe $s = y(w\\cdot x + b)$; $s \\le 0$ ho to $w \\leftarrow w + yx$, $b \\leftarrow b + y$ aur counter +1. Har pass ke end me $w, b$ likh lo.",
+  "Pass 1: point 1 (score 0) aur point 3 pe update, end me $w=(1,-1)$, $b=0$. Ab pass 2 shuru karo. Trap: score exactly 0 bhi mistake hai ($\\le 0$)."
+],
+"ml-nn-perceptron-06": [
+  "Ye perceptron convergence (Novikoff) bound ka sawaal hai: $R$ = max norm $= 3$, margin $\\gamma = 0.5$.",
+  "Bound: mistakes $\\le (R/\\gamma)^2$ — pura ratio square hota hai.",
+  "Pehle $R/\\gamma = 3/0.5$ nikalo, phir us ratio ko square karo. Trap: $R^2/\\gamma$ mat karo — $\\gamma$ bhi square hota hai; aur square lagana mat bhoolo."
+],
+"ml-nn-forward-01": [
+  "Ek hidden ReLU layer, phir linear output. $W_1$ ki har row ek hidden unit hai, aur ReLU negative pre-activation ko 0 kar deta hai.",
+  "$z = W_1x + b_1$, $h = \\max(z, 0)$ element-wise, phir $\\hat y = v^\\top h + c = 3h_1 - 2h_2 + 0.5$.",
+  "Unit 1: $z_1 = 2(1) + 1(-2) + 1 = 1$. Ab unit 2 ka $z_2$ nikalo aur ReLU lagao. Trap: ReLU skip karke negative $z_2$ ko $-2$ se multiply mat karna."
+],
+"ml-nn-forward-02": [
+  "Dhyan do: teeno layers ke beech **koi activation nahi** hai. Socho affine maps ko compose karne pe kya milta hai.",
+  "Expand karo: $W_3(W_2(W_1x + b_1) + b_2) + b_3 = (W_3W_2W_1)x + (\\text{constant})$ — ye kis type ka function hai?",
+  "Iska decision boundary ek hyperplane hi hoga. Trap: 'zyada layers/parameters = zyada expressive' sirf nonlinearity ke saath sach hai; ReLU ke bina kinks ya XOR nahi aate."
+],
+"ml-nn-forward-03": [
+  "Pehle $z = Wx$ dekho: $x = (3,3)$ aur har row ke weights opposite sign ke hain. Sigmoid ki value ek khaas point pe yaad rakhni hai.",
+  "$z_1 = 1\\cdot3 - 1\\cdot3$, $z_2 = 2\\cdot3 - 2\\cdot3$; phir $h_i = \\sigma(z_i) = 1/(1+e^{-z_i})$, aur $\\hat y = 4h_1 - 2h_2 + 1$.",
+  "Dono $z$ zero aate hain, to $h_i = \\sigma(0) = 1/(1+1)$. Ab $\\hat y$ me daalo. Trap: $\\sigma(0)$ ko 0 (ReLU jaisa) ya 1 (step jaisa) mat lo, aur $-2h_2$ ka minus mat chhodo."
+],
+"ml-nn-forward-04": [
+  "MSQ — har statement alag judge karo. Do ideas hain: activation ke bina layers collapse hoti hain, aur universal approximation theorem.",
+  "Rule: affine ka composition affine hi rehta hai. Ek hidden layer + non-polynomial activation (ReLU/sigmoid) + enough units = compact set pe koi bhi continuous function approximate.",
+  "Sigmoid option: output $h$ me linear hai, par kya $x$ me bhi linear hai jab $h = \\sigma(Wx)$? Trap: 'more linear layers = more functions' wala jhaansa."
+],
+"ml-nn-forward-05": [
+  "Do ReLU layers hain — ReLU **dono** layers ke baad lagana hai. $W_1$ ke 3 rows = 3 units, $W_2$ ke 2 rows = 2 units.",
+  "$h_1 = \\max(W_1x + b_1, 0)$, $h_2 = \\max(W_2h_1 + b_2, 0)$, $\\hat y = 2h_{2,1} + 3h_{2,2}$.",
+  "Layer 1: $W_1x + b_1 = (2, -1, 1)$, to $h_1 = (2, 0, 1)$. Ab layer 2 karo. Trap: second layer me ReLU bhoolna, ya negative ko abs value bana dena — ReLU use 0 karta hai."
+],
+"ml-nn-forward-06": [
+  "Do ReLU terms hain jo opposite sides pe active hote hain: $\\mathrm{ReLU}(x)$ for $x>0$, $\\mathrm{ReLU}(-x)$ for $x<0$. Dono cases alag dekho.",
+  "Case $x \\ge 0$: $\\mathrm{ReLU}(x) = x$, $\\mathrm{ReLU}(-x) = 0$. Case $x < 0$: $\\mathrm{ReLU}(x) = 0$, $\\mathrm{ReLU}(-x) = -x$.",
+  "Ek number try karo, jaise $x = -2$: $f = 0 - \\mathrm{ReLU}(2)$. Ab $x = 2$ bhi karo aur compare karo. Trap: $|x|$ to sum $\\mathrm{ReLU}(x) + \\mathrm{ReLU}(-x)$ hota hai, difference nahi."
+],
+"ml-nn-params-01": [
+  "Layer sizes 784 → 128 → 64 → 10 hain, yaani 3 dense connections. Input layer ka koi parameter nahi hota.",
+  "Har dense layer: $n_{in}\\cdot n_{out}$ weights + $n_{out}$ biases. Teeno layers ($784\\to128$, $128\\to64$, $64\\to10$) ke liye nikal ke add karo.",
+  "Pehli layer: $784\\cdot128 + 128 = 100480$. Ab baaki do layers karo. Trap: biases bhoolna, ya 784 input units ko bhi bias dena."
+],
+"ml-nn-params-02": [
+  "Teen layers hain: 5 inputs, 3 hidden, 2 outputs — yaani 2 dense connections. Biases sirf hidden aur output units pe hain, inputs pe nahi.",
+  "Har connection: $n_{in}\\cdot n_{out}$ weights + $n_{out}$ biases. Input→hidden aur hidden→output dono ke liye nikal ke add karo.",
+  "Input→hidden: $5\\cdot3 + 3 = 18$. Ab hidden→output karo aur jodo. Trap: units gin lena, ya inputs ko bhi 5 biases de dena."
+],
+"ml-nn-params-03": [
+  "Convention $z = Wx$ hai (column vector $x$), $x\\in\\mathbb{R}^8$ aur $z\\in\\mathbb{R}^5$. Socho kaunsa shape kis side se aata hai.",
+  "Rule: $W$ ke rows = output units, columns = inputs (taaki $Wx$ multiply ho). Bias har output unit ka ek, to $b$ ki length = output size.",
+  "Check karo: $W$ $(r\\times c)$ times $x$ $(8\\times1)$ tabhi chalega jab $c = 8$, aur result me $r$ entries aati hain. Trap: $8\\times5$ wala shape $xW$ (row-vector) convention ka hai."
+],
+"ml-nn-params-04": [
+  "Total 185 diya hai aur hidden size $H$ unknown hai. Parameters ko $H$ ke terms me likh ke equation banao.",
+  "Input→hidden: $10H$ weights + $H$ biases. Hidden→output: $3H$ weights + 3 biases. Sab jodo aur 185 ke barabar rakho.",
+  "Jodne pe $10H + H + 3H + 3 = 14H + 3 = 185$. Ab $H$ solve karo. Trap: hidden biases ($H$) ya output biases (3) bhoolna — tab $H$ galat ya non-integer aata hai."
+],
+"ml-nn-params-05": [
+  "MSQ — har statement alag judge karo. Pehle general formula $H$ ke terms me likh lo: shapes, biases aur total count.",
+  "$h = \\phi(W_1x + b_1)$ me $x\\in\\mathbb{R}^4$, to $W_1$ ka shape $H\\times4$. Layer 2: $W_2$ is $2\\times H$ plus 2 biases. Total biases $= H + 2$.",
+  "Total $= 4H + H + 2H + 2$; ab isme $H = 10$ daal ke option se compare karo. Trap: $W_1$ ko $4\\times H$ likhna, ya biases ko sirf output ke 2 samajhna."
+],
+"ml-nn-backprop-01": [
+  "Pehle forward pass chahiye — dekhna hai ki unit 2 active hai ya nahi. $W_{22}$ unit 2 ko input 2 se jodta hai.",
+  "Chain: $\\partial L/\\partial W_{22} = (\\hat y - y)\\cdot v_2\\cdot \\mathrm{ReLU}'(z_2)\\cdot x_2$.",
+  "Forward: $z = (-0.5, 3)$, $h = (0, 3)$, $\\hat y = 9$, to $\\hat y - y = 2$. Ab chain ke baaki factors lagao. Trap: $v_2$ bhoolna, ya $x_2$ ki jagah $x_1$ lena."
+],
+"ml-nn-backprop-02": [
+  "Same network, par ab unit 1 ka weight $W_{12}$. Sabse pehle dekho unit 1 ka pre-activation $z_1$ positive hai ya negative.",
+  "Chain: $\\partial L/\\partial W_{12} = (\\hat y - y)\\cdot v_1\\cdot \\mathrm{ReLU}'(z_1)\\cdot x_2$, jahan $\\mathrm{ReLU}'(z)$ = 1 agar $z>0$, 0 agar $z<0$.",
+  "$z_1 = 1(1) - 1(2) + 0.5 = -0.5$. Ab socho is $z_1$ pe ReLU gate kya multiply karega. Trap: gate ignore karke seedha $2\\cdot v_1\\cdot x_2$ likh dena."
+],
+"ml-nn-backprop-03": [
+  "Key words: $z < 0$ for **every** training input. ReLU ke flat part pe gradient ka kya hota hai, wahi poochha hai.",
+  "$\\mathrm{ReLU}'(z) = 0$ for $z<0$. To $\\delta = (\\text{upstream})\\cdot 0$, aur $\\partial L/\\partial w = \\delta x$, $\\partial L/\\partial b = \\delta$.",
+  "Bias wala option dekho: $\\partial L/\\partial b = \\delta$ khud hai — kya wo zero se bach sakta hai? Trap: slope $-1$ maan lena, ya bina gradient ke weights ko shrink hota maan lena."
+],
+"ml-nn-backprop-04": [
+  "Scalar chain rule ka sawaal hai. Dhyan: loss $(\\hat y - y)^2$ hai, **½ nahi**, aur $w_2$ negative hai.",
+  "$\\partial L/\\partial w_1 = 2(\\hat y - y)\\cdot w_2\\cdot \\mathrm{ReLU}'(z_1)\\cdot x$, jahan $z_1 = w_1x + b_1$.",
+  "Forward: $z_1 = 4.5 - 1 = 3.5 > 0$, $\\hat y = -2(3.5) = -7$, to $2(\\hat y - y) = -16$. Ab $w_2$ aur $x$ se multiply karo. Trap: factor 2 chhodna, ya sign kho dena."
+],
+"ml-nn-backprop-05": [
+  "Sigmoid output + cross-entropy hai — iska output error bahut simple ho jaata hai. Phir hidden unit 1 tak peeche jaana hai, uska ReLU gate check karke.",
+  "Logit pe $\\partial L/\\partial(\\text{logit}) = p - y$ ($\\sigma'$ cancel). Phir $\\partial L/\\partial b_{1,1} = (p - y)\\cdot v_1\\cdot \\mathrm{ReLU}'(z_1)$.",
+  "Forward: $z = W_1x = (1, -2)$, $h = (1, 0)$, logit $= 2 - 0 - 2 = 0$, to $p = 0.5$. Ab chain lagao. Trap: extra $\\sigma'(0) = 0.25$ multiply karna, ya $y - p$ lena."
+],
+"ml-nn-backprop-06": [
+  "MSQ — har statement ko ReLU ke gradient rule aur symmetry ke idea se alag judge karo.",
+  "$\\mathrm{ReLU}'(z)$ = 1 for $z>0$, 0 for $z<0$. Update step = $\\eta\\times$gradient. Same weights wale units ko same input aur same upstream error milta hai.",
+  "Dead unit pe $\\eta$ badhao: $\\eta\\times 0$ kitna hoga? Aur $z<0$ wala unit peeche kya bhejta hai — gate se multiply karke dekho. Trap: zero gradient ko 'chhota' gradient samajhna."
+],
+"ml-nn-sgd-01": [
+  "Ek SGD step: pehle prediction, phir gradient, phir $w \\leftarrow w - \\eta\\nabla L$. Loss me ½ hai, to square ka 2 cancel ho jaata hai.",
+  "$\\partial L/\\partial w_1 = (\\hat y - y)\\cdot x_1$, aur $w_1^{new} = w_1 - 0.1\\cdot \\partial L/\\partial w_1$.",
+  "$\\hat y = 1(2) + (-1)(1) + 0 = 1$, error $\\hat y - y = -2$. Ab gradient aur update karo. Trap: SGD gradient subtract karta hai, add nahi; aur $x_1 = 2$ ka factor mat chhodo."
+],
+"ml-nn-sgd-02": [
+  "Logistic regression + cross-entropy, start $w = 0, b = 0$. Zero weights pe sigmoid ki value seedhi pata hai.",
+  "Cross-entropy ke saath $\\nabla_w L = (p - y)\\,x$ (koi extra $\\sigma'$ nahi). Update: $w_2 \\leftarrow w_2 - \\eta\\,(p - y)\\,x_2$.",
+  "Logit $= 0$, to $p = \\sigma(0)$; $y = 1$ hai to $p - y$ negative aayega. Ab $x_2 = 2$ aur $\\eta$ lagao. Trap: extra $\\sigma'(0) = 0.25$ multiply karna, ya $x_1$ use karna."
+],
+"ml-nn-sgd-03": [
+  "Gradient logit $z_k$ ke respect me chahiye, $p_k$ ke nahi. Softmax ke through chain rule lagana padega.",
+  "Softmax Jacobian: $\\partial p_j/\\partial z_k = p_j(\\mathbb{1}[j=k] - p_k)$, aur $\\partial L/\\partial p_j = -y_j/p_j$.",
+  "Multiply karke: $\\partial L/\\partial z_k = -\\sum_j y_j(\\mathbb{1}[j=k] - p_k)$; ab one-hot ka $\\sum_j y_j = 1$ use karke simplify karo. Trap: $-y_k/p_k$ sirf $\\partial L/\\partial p_k$ hai."
+],
+"ml-nn-sgd-04": [
+  "Softmax + cross-entropy: logit gradient ka ek simple form hai. Pehle logits $(\\ln 2, 0, 0)$ se probabilities banao.",
+  "$p_k = e^{z_k}/\\sum_j e^{z_j}$, phir $\\partial L/\\partial z_2 = p_2 - y_2$ with $y_2 = 1$.",
+  "$e^{z} = (2, 1, 1)$, sum $= 4$. Ab $p_2$ nikalo aur $y_2$ subtract karo. Trap: sirf $p_2$ likh dena, ya $-1/p_2$ dena (wo $p$ ke respect me hai, logit nahi)."
+],
+"ml-nn-sgd-05": [
+  "MSQ — dono losses ka $\\partial L/\\partial z$ compare karna hai, aur dekhna hai saturated sigmoid ($p\\approx0$ ya 1) pe kya hota hai.",
+  "SE: $\\partial L/\\partial z = (p - y)\\,p(1-p)$. CE: $\\sigma'$ cancel hokar $p - y$. Convexity in $w$: logistic + CE convex hai, sigmoid + SE nahi.",
+  "Check: $y=1, p\\approx0$ pe CE gradient $p - y \\approx$ kitna? Aur SE ka factor $p(1-p)$ ends pe kya hota hai? Trap: confidently wrong prediction pe gradient zero maan lena."
+],
+"ml-nn-sgd-06": [
+  "Ek weight, ek SGD step. Dhyan: loss $(\\hat y - y)^2$ hai — ½ nahi hai, to differentiate karne pe factor 2 bachega.",
+  "$\\partial L/\\partial w = 2(\\hat y - y)\\cdot x$, aur $w^{new} = w - \\eta\\cdot \\partial L/\\partial w$ with $\\eta = 0.1$.",
+  "$\\hat y = 2(1.5) = 3$, to $\\hat y - y = 1$. Ab gradient aur update karo. Trap: factor 2 ya $x = 1.5$ bhoolna, ya gradient ko add kar dena."
+],
+"ml-cluster-kmeans-01": [
+  "1-D k-means, sirf ek iteration: pehle har point ko nearest centroid ($2$ ya $4$) do, phir $c_2$ ko uske points ke mean pe le jao.",
+  "1-D me boundary dono centroids ka midpoint hai: $(2+4)/2 = 3$. Uske ek taraf $c_1$, doosri taraf $c_2$. Phir $c_2^{new}$ = $c_2$ wale points ka mean.",
+  "1 aur 2 midpoint se chhote hain → $c_1$; 4 khud $c_2$ pe hai (distance 0) → $c_2$. Baaki points assign karke mean lo. Trap: median ya saare 6 points ka mean mat lena."
+],
+"ml-cluster-kmeans-02": [
+  "Teen kaam: assign (A, D se distance), update (cluster means), phir SSE **updated** centroids se. Initial A, D se SSE mat nikalna.",
+  "Har point ka squared Euclidean distance A=(1,1) aur D=(5,4) se. Naye centroids = cluster ka mean. SSE = $\\sum$ (point − apna centroid)² dono clusters ka.",
+  "B: A se 1, D se 18; C: A se 13, D se 2; E: A se 4, D se 17. Ab clusters ke means aur SSE nikalo. Trap: squared distance lena hai, plain nahi; aur dono clusters jodna."
+],
+"ml-cluster-kmeans-03": [
+  "Lloyd ke do steps hain: assignment aur update. Socho har step SSE ke saath kya karta hai, aur kya iska end global hota hai.",
+  "Assignment: centroids fixed, har point nearest centroid pe — SSE ghat-ta ya same. Update: assignment fixed, mean hi squared distance ka minimizer hai.",
+  "SSE kabhi badhta nahi aur partitions finite hain — to rukega zaroor. Par kya 'always global minimum' ya 'start se independent' sach hai? Trap: termination ko global optimum samajh lena."
+],
+"ml-cluster-kmeans-04": [
+  "MSQ — har statement alag judge karo: initialization dependence, $k$ vs SSE, rings jaisi shapes, aur k-means++ ka seeding rule.",
+  "Lloyd sirf local minimum deta hai. Optimal SSE $k$ badhne pe girta hai, par ek particular run ka nahi. k-means++: naya seed prob $\\propto D(x)^2$. k-means convex Voronoi cells banata hai.",
+  "Rings wala option: do concentric rings ka mean kahan hoga? Aur '$k+1$ ka run always lower' me 'always' aur 'run' pe dhyan do. Trap: optimal SSE ko kisi bhi run ka SSE maan lena."
+],
+"ml-cluster-kmeans-05": [
+  "Is baar ek iteration nahi — tab tak chalao jab tak assignments change hona band na ho. Data me 25 ek outlier hai jo mean ko kheenchega.",
+  "Har iteration: midpoint $(c_1 + c_2)/2$ se points baanto, phir dono centroids ko apne points ke mean pe le jao. Repeat jab tak koi point cluster na badle.",
+  "Iter 1: midpoint 1.5, to sirf 1 → $c_1$; $c_2 = 57/6 = 9.5$. Ab naye centroids se iter 2 karo. Trap: pehli iteration pe ruk jaana, ya median lena."
+],
+"ml-cluster-kmeans-06": [
+  "Do features ki units bahut alag hain: income lakhs (rupees) me, age years me. Euclidean distance me kaunsa feature hawi hoga?",
+  "Distance$^2$ = (income diff)$^2$ + (age diff)$^2$. Income diff ~ $10^5$–$10^6$ rupees, age diff ~ tens of years — squares ka order compare karo.",
+  "Income ka squared term ~ $10^{11}$, age ka ~ $10^3$; to assignment kis par depend karega? Trap: 'k-means converge nahi karega' — wo karta hai, bas result distort hota hai."
+],
+"ml-cluster-kmedoids-01": [
+  "Medoid ek actual data point hona chahiye (mean nahi). Data me 20 outlier hai — wo mean ko kheenchta hai.",
+  "Har candidate $m \\in \\{1,3,4,5,20\\}$ ke liye total $\\sum |x - m|$ nikalo; jiska total sabse kam, wahi medoid.",
+  "Candidate 3: $2 + 0 + 1 + 2 + 17 = 22$. Ab baaki candidates karo. Trap: mean 6.6 dena, ya mean ke sabse paas wala point le lena; aur total cost nahi, point report karna hai."
+],
+"ml-cluster-kmedoids-02": [
+  "Medoid ek data point hai jiska total **Manhattan** distance sabse kam ho — aur poocha hai wo minimum total, point nahi.",
+  "Manhattan: $|x_1 - x_2| + |y_1 - y_2|$. Har candidate A–E se baaki chaar points ka total nikalo aur minimum lo.",
+  "Candidate B (1,0): A 1, C 3, D 1, E 10, total 15. Ab A, C, D, E bhi try karo. Trap: B pe ruk jaana, mean (1.6, 1.6) use karna, ya squared distance lena."
+],
+"ml-cluster-kmedoids-03": [
+  "9 points origin ke paas aur 1 bahut door. Socho k-means ka centre (mean) aur k-medoids ka centre (medoid) outlier se kitna hilte hain.",
+  "Mean squared distance minimize karta hai aur outlier ka offset/$n$ se khiskta hai. Medoid ek actual point hai jo unsquared distances ka sum minimize karta hai — median jaisa.",
+  "Option check: kya k-medoids outlier delete karta hai, ya sirf Manhattan use karta hai? Trap: squared distances outlier ka asar ghatate nahi — badhaate hain; wo k-means ki kamzori hai."
+],
+"ml-cluster-kmedoids-04": [
+  "MSQ — har statement alag dekho: input kya chahiye, medoid kya hai, aur PAM ki cost kitni hai.",
+  "PAM sirf pairwise $d(x_i, x_j)$ use karta hai, coordinates ka average kabhi nahi. Medoid definition se data point hai. Ek swap pass ~ $O(k(n-k)^2)$ vs k-means ~ $O(nk)$.",
+  "'Closest to the mean' option: points 1, 3, 4, 5, 20 lo — mean 6.6 ke sabse paas 5 hai, par minimum total distance kis point ka hai? Trap: PAM ko k-means se sasta maan lena."
+],
+"ml-cluster-kmedoids-05": [
+  "PAM swap: medoid 3 hata ke 11 ko medoid banao, yaani naye medoids $\\{2, 11\\}$. Poocha hai is naye configuration ki total cost.",
+  "Cost $= \\sum$ har point ka nearest medoid se absolute distance $|x - m|$ (squared nahi).",
+  "Naye medoids $\\{2, 11\\}$ ke saath: 1 → 1, 2 → 0, 3 → 1. Ab 10, 11, 15 karo aur jodo. Trap: purani cost ya cost ki decrease report karna; sirf nayi total cost chahiye."
+],
+"ml-cluster-linkage-01": [
+  "Single linkage: do clusters ki distance = sabse chhota cross-pair distance. Poocha hai **last** merge ki height.",
+  "Har step: sabse chhoti linkage distance wale clusters merge karo, phir naye cluster ki row $\\min$ se update karo: $d(C, X\\cup Y) = \\min(d(C,X), d(C,Y))$.",
+  "Pehle A–B (2), phir D–E (3). Ab C se $\\{D,E\\}$ aur $\\{A,B\\}$ ki single distances nikalo aur aage badho. Trap: third merge ki height ko final samajh lena."
+],
+"ml-cluster-linkage-02": [
+  "Ab **complete linkage** — cluster distance = sabse bada cross-pair distance. Poocha hai C kis height pe kisi cluster se judta hai.",
+  "$d(C, X\\cup Y) = \\max(d(C,X), d(C,Y))$. Har step pe sab cluster pairs me se minimum linkage wala pair merge hota hai.",
+  "Pehle A–B (2), D–E (3). C se $\\{A,B\\}$: $\\max(6, 5) = 6$. Ab C se $\\{D,E\\}$ nikalo aur compare karo. Trap: C–$\\{D,E\\}$ ke liye min lena (wo single linkage hai)."
+],
+"ml-cluster-linkage-03": [
+  "Average linkage (UPGMA): cluster distance = saare cross pairs ka mean. Poocha hai final merge ki height, 2 decimals me.",
+  "$d(X,Y) = \\frac{1}{|X||Y|}\\sum_{a\\in X, b\\in Y} d(a,b)$. Final merge me $\\{A,B\\}$ vs $\\{C,D,E\\}$ ho to $2\\times3 = 6$ pairs ka average.",
+  "A–B (2), D–E (3); phir C judta hai $\\{D,E\\}$ se at $(4+5)/2 = 4.5$ (kyunki $\\{A,B\\}$ se 5.5). Ab final merge ka average nikalo. Trap: 5.5 aur 9 ka seedha average mat lena."
+],
+"ml-cluster-linkage-04": [
+  "Abhi clusters hain $\\{0,2,3\\}$, $\\{7\\}$, $\\{12,13\\}$. **Complete linkage** me cluster distance = farthest pair. Options me partner aur height dono check karne hain.",
+  "Teeno pairs ki complete distance nikalo: $\\{7\\}$–$\\{0,2,3\\}$, $\\{7\\}$–$\\{12,13\\}$, $\\{0,2,3\\}$–$\\{12,13\\}$. Jiski value **sabse chhoti**, wahi merge, aur wahi height.",
+  "$\\{7\\}$ se $\\{0,2,3\\}$: $\\max(7, 5, 4) = 7$. Ab $\\{7\\}$ se $\\{12,13\\}$ ka max nikalo aur compare karo. Trap: nearest point wali (single-linkage) height use karna."
+],
+"ml-cluster-linkage-05": [
+  "Dendrogram ko height 2.5 pe cut karna hai: jo merges height $\\le 2.5$ pe hue, wahi lagenge. Single linkage = nearest points ki distance.",
+  "1-D single linkage me merge heights = adjacent points ke gaps. Clusters $= n - (\\text{height} \\le 2.5\\text{ wale merges})$, yahan $n = 6$.",
+  "Gaps: 1→2 is 1, 2→4 is 2, 4→8 is 4; ab 8→9 aur 9→15 bhi likho aur gino kitne $\\le 2.5$ hain. Trap: height 4 wala merge cut ke upar hai, use mat lagao."
+],
+"ml-cluster-linkage-06": [
+  "Sirf ek distance chahiye: $X = \\{1, 4\\}$ aur $Y = \\{6, 13\\}$ ke beech **complete linkage**, yaani farthest cross pair.",
+  "$d_{complete}(X,Y) = \\max_{a\\in X, b\\in Y} |a - b|$ — saare $2\\times2 = 4$ cross pairs dekho.",
+  "Point 4 se: $|4-6| = 2$, $|4-13| = 9$. Ab point 1 se dono distances nikalo aur max lo. Trap: min (single) ya mean (average) le lena."
+],
+"ml-cluster-dendrogram-01": [
+  "Figure me har horizontal bar ek merge hai, aur uski height left axis se padho. Height 2 pe ek horizontal line socho — jo merges usse neeche hain, wahi hue.",
+  "Rule: clusters $= n - (\\text{merges at height} \\le 2)$, yahan $n = 5$ leaves (A–E).",
+  "A–B ka bar height 1 pe hai — cut se neeche. Ab D–E aur C wale bars ki height padho. Trap: merges ki ginti ko hi clusters ki ginti maan lena."
+],
+"ml-cluster-dendrogram-02": [
+  "Shuru me 10 singleton clusters, aur har step pe sirf **do** clusters merge hote hain. Socho ek merge cluster count ko kitna ghatata hai.",
+  "Rule: har merge clusters ko exactly 1 se kam karta hai. To merges $=$ (shuru ke clusters) $-$ (end ke clusters).",
+  "Chhota example: 3 points → 3 se 2, phir 2 se 1. Ab 10 ke liye yahi karo. Trap: $\\binom{10}{2} = 45$ pairwise distances hain, merges nahi; aur ek round me sab pair nahi hote."
+],
+"ml-cluster-dendrogram-03": [
+  "Do dense groups ke beech ek patli line of evenly spaced points (bridge) hai. Socho kaunsa linkage sirf ek close pair se hi merge kar deta hai.",
+  "Single = min cross distance (ek close pair kaafi). Complete = max (farthest pair). Average = saare pairs ka mean. Ward = within-cluster variance ka increase minimize.",
+  "Bridge ke points chhote-chhote gaps se jude hain. Complete ke liye: do groups ke farthest points ki distance chhoti hogi kya? Har linkage ke liye aise socho. Trap: single aur complete ka behaviour swap kar dena."
+],
+"ml-cluster-dendrogram-04": [
+  "Single linkage aur minimum spanning tree (MST) ka connection poochha hai. Socho Kruskal's algorithm edges ko kis order me add karta hai.",
+  "Single linkage = Kruskal on the complete distance graph: har step sabse chhota edge jo do alag components ko jode. Merge heights = MST edge weights.",
+  "Lightest MST edges = sabse pehle wale merges. $k$ clusters pe rukne ka matlab hai aakhri $k-1$ merges na hona — wo kaunse edges hain? Trap: direction ulta karna; aur complete linkage ka rule yahan mat lagao."
+],
+"ml-cluster-dendrogram-05": [
+  "MSQ — har statement alag judge karo: MST connection, chaining, min/mean/max ka order, aur complete linkage ki definition.",
+  "Same cross distances ke set pe: single = min, average = mean, complete = max. Centroid linkage = centroids ki distance (alag cheez). Single linkage merges = Kruskal ke MST edges.",
+  "Example: $X = \\{1,4\\}$, $Y = \\{6,13\\}$ — cross distances 5, 12, 2, 9. Inke min, mean, max nikal ke inequality wala option check karo. Trap: chaining kis linkage ka issue hai, ye ulta yaad rakhna."
+],
+"ml-cluster-dendrogram-06": [
+  "MSQ — har statement alag dekho. 'Always', 'whatever linkage', 'can be undone' jaise words pe khaas dhyan do.",
+  "Agglomerative = bottom-up, divisive = top-down. Ek dendrogram cut karke koi bhi $k$ milta hai. Greedy merges kabhi revisit nahi hote. Single/complete/average ke merge heights monotone hote hain.",
+  "'Whatever linkage' option: centroid linkage me kya ek later merge pehle wale se neeche ho sakta hai (inversion)? Trap: hierarchical clustering ko k-means jaisa iterative maan lena jo merges sudhaarta hai."
+],
+"ml-pca-variance-01": [
+  "PC1 pe variance poochha hai — ye covariance matrix ka sabse bada eigenvalue hai, diagonal entry nahi.",
+  "2×2 ke liye $\\lambda^2 - (\\text{tr})\\lambda + \\det = 0$; yahan tr $= 5 + 2$, det $= 5\\cdot2 - 2\\cdot2$.",
+  "Equation $\\lambda^2 - 7\\lambda + 6 = 0$ banti hai; ise factor karke bada root lo. Trap: diagonal ki 5 (wo $x_1$ axis ka variance hai) ya trace 7 (total variance) de dena."
+],
+"ml-pca-variance-02": [
+  "Matrix block-diagonal hai: feature 1 baaki do se uncorrelated hai. Fraction retained = (top 2 eigenvalues ka sum) / trace.",
+  "Eigenvalues: 6 (first block), plus $\\begin{pmatrix}3&1\\\\1&3\\end{pmatrix}$ ke do eigenvalues. Total variance $=$ trace $= 6 + 3 + 3 = 12$.",
+  "2×2 block ke liye tr $= 6$, det $= 9 - 1 = 8$; $\\lambda^2 - 6\\lambda + 8 = 0$ solve karo, phir teeno eigenvalues sort karke top 2 lo. Trap: diagonal 6 aur 3 ko eigenvalues maan lena."
+],
+"ml-pca-variance-03": [
+  "Raw points diye hain — pehle **center** karna hai, phir divisor $n = 4$ se covariance, phir uska bada eigenvalue.",
+  "Mean $\\bar x$ nikalo, $\\tilde x_i = x_i - \\bar x$. $C = \\frac14\\sum_i \\tilde x_i\\tilde x_i^\\top$. Phir $\\lambda^2 - (\\text{tr})\\lambda + \\det = 0$ ka bada root.",
+  "Mean $= (2, 1)$, centered points $(-2,-1), (0,1), (2,1), (0,-1)$. Ab $C$ banao aur eigenvalue nikalo. Trap: centering skip karna, ya divisor $n-1$ use karna."
+],
+"ml-pca-variance-04": [
+  "Direction $(1,1)$ diya hai, jo PC1 nahi hai. Kisi bhi direction pe variance $u^\\top C u$ hota hai — par $u$ unit vector hona chahiye.",
+  "$u = (1,1)/\\sqrt2$, aur variance $= u^\\top C u = \\frac12\\,(1,1)\\,C\\,(1,1)^\\top$.",
+  "$(1,1)C(1,1)^\\top$ = $C$ ki saari entries ka sum $= 5 + 2 + 2 + 2$. Ab normalization ka factor lagao. Trap: normalize na karna (value double ho jaati hai), ya $\\lambda_{\\max}$ de dena."
+],
+"ml-pca-variance-05": [
+  "MSQ — har statement alag judge karo: PC1 ka matlab, eigenvalues ka sum, feature scaling ka asar, aur PCs ki orthogonality.",
+  "PC1 = projected variance **maximize** karne wali direction. $\\sum \\lambda_k = \\text{trace}(C)$. $C$ symmetric hai, to eigenvectors orthonormal chun sakte hain. PCA scale-invariant nahi hai.",
+  "Scaling check: feature 1 ko 10 se multiply karo to $C_{11}$ ×100 aur $C_{12}$ ×10 ho jaata hai — kya eigenvectors same rahenge? Trap: PC1 ko minimum variance direction samajhna."
+],
+"ml-pca-variance-06": [
+  "Sirf PC1 rakha, baaki 3 directions drop. Reconstruction error = jo variance drop hua, kept wala nahi.",
+  "Rule: MSE per point $= \\sum_{\\text{dropped}} \\lambda_k$ (divisor $n$). Kept variance $= \\lambda_1$.",
+  "Total variance $= 7 + 2 + 0.5 + 0.5 = 10$, aur PC1 isme se 7 rakhta hai. Ab lost variance nikalo. Trap: fraction lost (ratio) dena, ya kept 7 de dena — error actual variance units me chahiye."
+],
+"ml-pca-lda-01": [
+  "Key word: PCA **without** subtracting the mean, aur saare points $(100,100)$ ke paas hain jabki asli spread chhota hai. Socho $X^\\top X$ me mean ka kitna bada hissa hai.",
+  "Uncentered second moment: $\\frac1n X^\\top X = C + \\mu\\mu^\\top$, jahan $\\mu = (100, 100)$. Top eigenvector us term ki taraf jaayega jo sabse bada hai.",
+  "$\\mu\\mu^\\top$ ka size ~ $\\lVert\\mu\\rVert^2 = 2\\times10^4$, jabki $C$ chhota hai. Ab dekho $\\mu\\mu^\\top$ ka eigenvector kis direction me hai. Trap: centered PCA ka result yahan maan lena."
+],
+"ml-pca-lda-02": [
+  "LDA ki directions class means se aati hain — yahan 3 classes aur 10 features. Limit classes se aati hai ya features se, ye socho.",
+  "Rule: between-class scatter $S_B$ ka rank $\\le C - 1$ (class means ke weighted deviations ka sum zero hota hai). LDA directions $\\le \\min(C - 1, d)$.",
+  "Yahan $C = 3$, $d = 10$ — dono limits nikal ke chhoti wali lo. Trap: number of classes khud, ya $d$ / $d-1$ (wo PCA wali soch hai) le lena."
+],
+"ml-pca-lda-03": [
+  "MSQ — har statement alag judge karo: labels use hote hain ya nahi, objective kya hai, aur kitni directions mil sakti hain.",
+  "PCA: unsupervised, total variance maximize, up to $d$ directions. LDA: supervised, Fisher criterion (between/within class scatter), at most $C - 1$ directions.",
+  "'Top PCA direction always best separation' check karo: agar sabse zyada variance classes ke andar (across) ho, beech me nahi, to? Trap: LDA ko bhi $d$ directions dene wala maan lena."
+],
+"ml-pca-lda-04": [
+  "Data: $x_1$ pe spread ±10 (bada), par classes sirf $x_2$ pe alag hain (means −1, +1, spread ±0.3). PCA labels nahi dekhta, LDA dekhta hai.",
+  "PCA: jis direction me total variance sabse zyada, wahi rakhta hai. LDA: Fisher ratio = (mean gap)² / within-class spread maximize karta hai.",
+  "$x_1$ pe dono classes ka spread same ±10, mean gap 0 — Fisher ratio kitna? $x_2$ pe gap 2, spread 0.3. Ab har method ka choice socho. Trap: PCA ko labels ka fayda dena, ya methods swap karna."
+],
+"ml-pca-lda-05": [
+  "Singular values diye hain, eigenvalues nahi. PCA variance $\\frac1n X^\\top X$ ke eigenvalues hain, aur inka SVD se seedha relation hai.",
+  "$X = U\\Sigma V^\\top \\Rightarrow X^\\top X = V\\Sigma^2V^\\top$, to $\\lambda_k = \\sigma_k^2/n$ with $n = 5$.",
+  "Sabse bada singular value $\\sigma_1 = 10$, to $\\sigma_1^2 = 100$. Ab $n$ se divide karo. Trap: square na karna, ya $n - 1$ se divide karna (question divisor $n$ fix karta hai)."
+],
+"ml-pca-lda-06": [
+  "Features ki units bahut alag hain (cm, rupees, years). PCA variance follow karta hai — aur variance units pe depend karta hai.",
+  "Rule: PCA scale-invariant nahi hai. Har feature ko comparable banane ke liye mean hatao **aur** spread se scale karo — yaani correlation matrix pe PCA.",
+  "'Only subtract the mean' option dekho: centering ke baad bhi income ka variance (rupees²) baaki se kitna bada rahega? Trap: centering ko hi kaafi maan lena."
+],
+"ml-select-framing-01": [
+  "Target dekho: kal ka maximum temperature in °C — ye kis type ki value hai? Aur kya past data me inputs ke saath target recorded hai?",
+  "Rule: real-valued target → regression; finite label set → classification; koi target nahi → unsupervised. Input–target pairs ho to supervised.",
+  "Temperature 31.4 °C jaisi continuous value ho sakti hai, aur 10 saal ke records me har din ka target hai. Ab dono decisions milao. Trap: dimensionality reduction khud kuch predict nahi karta."
+],
+"ml-select-framing-02": [
+  "MSQ — har task ka target dekho: wo finite labels me se ek hai ya ek quantity jiska size matter karta hai?",
+  "Rule: label (yes/no, ya naam jaise digit 0–9) → classification. Count, duration, price jaise quantities → regression, chahe integers hon.",
+  "Digit option: kya 4.6 predict karna meaningful hai? Aur 'days until failure' me 3 vs 30 ka size matter karta hai kya? Trap: numbers dikhe to regression maan lena."
+],
+"ml-select-framing-03": [
+  "Key words: 50,000 customers ka data hai par **no labels**, aur goal hai similar behaviour wale groups 'discover' karna.",
+  "Rule: koi target variable nahi → unsupervised. Groups dhoondhna = clustering (k-means, hierarchical); classification/regression ko labels ya numeric target chahiye.",
+  "Logistic regression aur classification ke options dekho: inhe training ke liye kya chahiye, aur kya wo yahan available hai? Trap: 'groups' sun ke classification soch lena."
+],
+"ml-select-framing-04": [
+  "MSQ — har setup me dekho training data me target/label diya hai ya nahi.",
+  "Rule: input–target pairs se seekhna = supervised (regression ya classification). Sirf features (k-means, PCA) = unsupervised.",
+  "Exam score option: past students ke records me score diya hai — to target hai? Spam filter ke 'marked' emails me? Ab k-means aur PCA bhi aise check karo. Trap: PCA ko supervised maan lena."
+],
+"ml-select-framing-05": [
+  "Naam me 'regression' hai, par dekho model ka output kya represent karta hai: $\\sigma(w^\\top x + b)$ kis cheez ki value hai?",
+  "Logistic regression $P(y = 1\\mid x) = \\sigma(w^\\top x + b)$ model karta hai, $y \\in \\{0, 1\\}$. Training labelled data pe hoti hai.",
+  "Output 0 aur 1 ke beech ek probability hai; isko threshold (jaise 0.5) karne se kya milta hai? Trap: naam dekh ke continuous target ka regression samajh lena."
+],
+"ml-select-framing-06": [
+  "Training targets dekho: clicked = 1 ya 0. Output probability chahiye, par label khud binary event hai.",
+  "Rule: yes/no event ki probability = probabilistic (binary) classification, aur calibrated $P(y=1\\mid x)$ ke liye cross-entropy (log loss) use hota hai.",
+  "'Regression kyunki output 0–1 number hai' option check karo: kya training target kabhi 0.37 hota hai? Trap: probability output ko continuous target samajh lena; labels hain to clustering bhi nahi."
+],
+"ml-select-algo-01": [
+  "Generative vs discriminative: dekho model $x$ ka distribution class ke saath model karta hai ya sirf boundary / $P(y\\mid x)$.",
+  "Generative: $P(x\\mid y)$ aur $P(y)$ model karke Bayes rule se classify (Naive Bayes, LDA/QDA). Discriminative: $P(y\\mid x)$ ya boundary seedha (logistic, SVM, perceptron).",
+  "Har option pe poochho: kya ye $P(x\\mid y)$ estimate karta hai? Perceptron aur SVM sirf hyperplane seekhte hain. Trap: logistic regression aur Naive Bayes ki pair me roles swap kar dena."
+],
+"ml-select-algo-02": [
+  "MSQ — har statement alag judge karo: shared-covariance Gaussian ka posterior, Naive Bayes ka assumption, aur generative/discriminative kya model karte hain.",
+  "Gaussian classes + same $\\Sigma$: $\\ln$ ratio me $x^\\top\\Sigma^{-1}x$ cancel, to posterior $= \\sigma(w^\\top x + b)$. Naive Bayes: features conditionally independent given class. Generative $P(x, y)$ model karta hai.",
+  "Naive Bayes option: naam me 'naive' kis assumption ki wajah se hai? Aur generative model se naya $x$ sample karne ke liye kya chahiye? Trap: NB ko assumption-free samajhna."
+],
+"ml-select-algo-03": [
+  "Constraint padho: loan officer decisions ko simple **if–then rules** ki tarah padh sake. Accuracy nahi, interpretability main hai.",
+  "Rule: method ko stated constraint se match karo. Approve/reject labels hain → supervised. Readable rules wahi deta hai jiska har decision path ek condition chain ho.",
+  "Har option pe poochho: decision ko rule ki tarah likh sakte hain? kNN neighbours se decide karta hai, deep net ke weights rules nahi hain. Trap: k-means labels use hi nahi karta."
+],
+"ml-select-algo-04": [
+  "Teen constraints: sirf 200 labelled docs, 20,000 sparse word-count features, probability output, aur seconds me training.",
+  "Rule: kam data + bahut features → high-bias, low-variance model chahiye. Saath me probabilistic output aur one-pass training — word counts ke liye bana model socho.",
+  "MLP option: 20,000 inputs pe ek hidden layer ke hi kitne parameters honge vs 200 examples? kNN ko 20,000-D sparse distances pe socho. Trap: k-means labels ignore karta hai."
+],
+"ml-select-algo-05": [
+  "MSQ — har statement alag judge karo: PCA labels dekhta hai kya, kNN distance-based hai, linear regression 'linear' kis cheez me hai, aur k-means ko labels chahiye kya.",
+  "kNN distances pe chalta hai → feature scale matter karta hai. Linear regression weights me linear hai, features me nahi. k-means aur PCA unsupervised hain.",
+  "$y = ax^2 + bx + c$ me $x^2$ ko naya feature $z$ maano: kya model $a, b, c$ me linear hai? Trap: k-means aur kNN ke naam confuse karna — labels kise chahiye?"
+],
+"ml-select-algo-06": [
+  "Generative Gaussian classifier, aur key word: dono classes ka **same** covariance $\\Sigma$. Decision boundary = jahan dono posteriors barabar.",
+  "Boundary: $\\ln P(x\\mid1) + \\ln P(1) = \\ln P(x\\mid0) + \\ln P(0)$. Gaussian log me $-\\frac12(x-\\mu_k)^\\top\\Sigma^{-1}(x-\\mu_k)$ term hota hai.",
+  "Dono terms expand karo: $x^\\top\\Sigma^{-1}x$ dono me same hai — subtract karne pe kya bachta hai, $x$ me kis degree ka? Trap: different covariances (QDA) wala result yahan lagana."
+]
+}

@@ -1,0 +1,582 @@
+{
+ "la-subspace-01": [
+  "Har set ke liye teen test: $0$ andar hai?, $+$ ke under closed?, scaling ke under closed? Dekho condition linear hai ya nahi, aur right side $0$ hai ya nahi.",
+  "Rule: homogeneous linear equation ($=0$) ka solution set aur koi bhi span hamesha subspace hota hai. Non-zero right side ($=1$) ya nonlinear condition ($xy=0$) usually fail karti hai.",
+  "Option (D) mein $(0,0,0)$ daalo: kya $0+0+0=1$? Phir $xy=0$ wale set ke do members dhoondo jinka sum set se bahar jaye. Trap: sirf $0$ check karke ruk jaana."
+ ],
+ "la-subspace-02": [
+  "Chaaron sets pe same teen test: zero element andar?, sum andar?, negative scalar se multiply karke bhi andar? Words pe dhyan: $b\\neq0$, $x_1\\ge0$, invertible.",
+  "$Ax=b$ mein $x=0$ daalo: $A0=0$, kya ye $b$ ho sakta hai? Matrices wale options mein zero matrix check karo: kya wo symmetric hai, kya wo invertible hai?",
+  "$x_1\\ge0$ test karo: $(1,0,0,0)$ ko $c=-1$ se multiply karo, kya $x_1\\ge0$ bacha? Trap: sirf addition check karna aur negative scalars bhool jaana."
+ ],
+ "la-subspace-03": [
+  "'Always a subspace' poocha hai aur $b\\neq0$ diya hai. Har option mein zero vector aur closure dono check karo; $\\{0\\}$ ko haath se jod dena kaafi nahi.",
+  "Closure test: $x,y$ set mein hain to $x+cy$ bhi hona chahiye. $Ax=0$ ke liye $A(x+cy)=Ax+cAy$ likho; $Ax=b$ ke liye $A(2x)$ compute karo; norm ball ke liye $2e_1$ dekho.",
+  "Option (C): agar $Ax=b$ to $A(2x)=2b$; kya $2b=b$ ho sakta hai jab $b\\neq0$? Baaki options pe bhi yahi scaling test lagao. Trap: 'zero add kar diya to subspace ban gaya' sochna."
+ ],
+ "la-subspace-04": [
+  "$W_k$ do linear equations se bana hai, par right side mein $k$ hai. Pehle dekho $(0,0,0)$ kis $k$ ke liye dono equations satisfy karta hai.",
+  "Solution set ka dim $=3-(\\text{independent equations})$. $W_k$ = ek particular point + $W_0$ ki direction, yaani $W_0$ ki parallel shifted copy.",
+  "$W_0$ solve karo: $x+y=0$ se $y=-x$, aur $z=2x$; kitne free variables bache? Phir $W_3$ mein $x=3$ leke ek point nikalo. Trap: 'linear equations hain to hamesha subspace' sochna."
+ ],
+ "la-subspace-05": [
+  "Polynomials bhi vectors hain; zero vector yahan zero polynomial hai. Har condition dekho: kisi linear operation ($p(1)$, $p'$) ko $0$ ke barabar rakhti hai, $1$ ke, ya degree pe hai?",
+  "Rule: $L(p)=0$ jahan $L$ linear ho (evaluation, derivative) to subspace; $L(p)=1$ ya 'degree exactly 2' usually fail. Har option mein zero polynomial daal ke shuru karo.",
+  "$p(0)=1$ wale set mein zero polynomial daalo: $p(0)=0$, kya ye $1$ hai? Degree-exact set ke liye $x^2$ aur $-x^2+x$ ka sum dekho. Trap: degree condition ko linear condition samajhna."
+ ],
+ "la-independence-01": [
+  "Teen vectors $\\mathbb{R}^3$ mein: dependent tab jab inse bana $3\\times3$ matrix singular ho. To aisa $k$ chahiye jisse determinant zero ho.",
+  "Vectors columns mein: $\\det\\begin{pmatrix}1&0&1\\\\1&1&0\\\\0&1&k\\end{pmatrix}=0$. First row se cofactor expansion: $1\\cdot(\\ldots)-0\\cdot(\\ldots)+1\\cdot(\\ldots)$.",
+  "Pehla term: $1\\cdot(1\\cdot k-0\\cdot1)=k$. Teesra term $+1\\cdot(1\\cdot1-1\\cdot0)$ nikalo, jodo aur $=0$ rakho. Trap: cofactor sign slip, ya sochna ki zero entry ($k=0$) se dependent ho jaata hai."
+ ],
+ "la-independence-02": [
+  "Independence poore set ki property hai. Har statement ke key words dekho: '4 vectors in $\\mathbb{R}^3$', '$v_3\\notin$ span', 'subset', 'zero vector'.",
+  "Rule: $c_1v_1+\\dots+c_kv_k=0$ ka koi non-trivial solution ho to dependent. $\\mathbb{R}^3$ ke vectors se bane matrix mein max 3 pivots; zero vector ke liye coefficient $1$ lekar dekho.",
+  "Statement (B): maan lo $c_1v_1+c_2v_2+c_3v_3=0$; case $c_3\\neq0$ mein $v_3$ ko baaki do se express karo, kya contradiction aata hai? Case $c_3=0$ bhi socho. Trap: pairwise non-parallel ko independence samajhna."
+ ],
+ "la-independence-03": [
+  "Har naya set $v_1,v_2,v_3$ ke combinations se bana hai. Asli sawal: kis set ka coefficient matrix singular hai?",
+  "Har naye vector ke coefficients ($v_1,v_2,v_3$ ke) ek row banao, phir $3\\times3$ matrix ka det nikalo. Det $\\neq0$ ⇒ independent, det $=0$ ⇒ dependent.",
+  "Option (D): rows $(1,0,0),(1,1,0),(1,1,1)$, triangular, det $=1$. Baaki teen options ke matrices likho aur det check karo. Trap: sums aur differences ko ek jaisa samajhna, unke det alag hain."
+ ],
+ "la-independence-04": [
+  "$5\\times3$ matrix, rank $3$: rank columns ki sankhya ke barabar hai, par rows ki sankhya se kam. Har statement ko is fark se jodo.",
+  "Rank = independent columns ki max sankhya = independent rows ki max sankhya. Nullity $=3-\\text{rank}$; aur $\\operatorname{rank}(A^TA)=\\operatorname{rank}(A)$, jahan $A^TA$ ka size $3\\times3$ hai.",
+  "Rows: 5 rows hain par row space ka dim sirf 3, kya sab 5 independent ho sakti hain? Ab nullity nikalo aur $Ax=0$ wale statement pe lagao. Trap: rows aur columns ki baat mix karna."
+ ],
+ "la-basis-dim-01": [
+  "Span ki dimension = kitne vectors sach mein independent hain. Pehle do coordinates dekho: $(1,2),(2,4),(0,0),(3,6)$, sab multiples hain; kuch vectors baaki ke combinations ho sakte hain.",
+  "Vectors ko rows bana ke row reduce karo: $R_2-2R_1$ aur $R_4-3R_1$. Jitni non-zero rows (pivots) bachen, utni dimension.",
+  "$R_2-2R_1=(0,0,1,1)$, jo bilkul $R_3$ hai. Ab $R_4-3R_1$ nikalo aur dekho wo bhi kisi row ke barabar hai kya. Trap: ek dependency pakad ke ruk jaana, ya bas vectors gin lena."
+ ],
+ "la-basis-dim-02": [
+  "$W$ do linear equations se define hai, $\\mathbb{R}^5$ ke andar. Solution set ki dimension = kitne variables free bachte hain.",
+  "$\\dim W = n-(\\text{independent constraints})$, yahan $n=5$. Check karo dono constraints independent hain: ek $x_1,x_2,x_3$ pe hai, doosra $x_4,x_5$ pe.",
+  "Pehli equation se $x_1=-x_2-x_3$, doosri se $x_4=x_5$. Ab gino kaunse variables apni marzi se choose ho sakte hain. Trap: constraints ki sankhya ko hi dimension bol dena."
+ ],
+ "la-basis-dim-03": [
+  "$3\\times3$ matrices ki poori space ka dim 9 hai. Har subset ke liye gino kitni entries tum freely choose kar sakte ho.",
+  "Symmetric: diagonal + upar wala part free, $n(n+1)/2$. Skew: $a_{ii}=-a_{ii}$ se diagonal $0$, $n(n-1)/2$. Trace $0$: 9 entries pe ek linear constraint.",
+  "Upper-triangular gino: row 1 mein 3, row 2 mein 2, row 3 mein 1 free entry. Ab $n=3$ daal ke baaki formulas nikalo. Trap: skew mein diagonal ko bhi free maan lena."
+ ],
+ "la-basis-dim-04": [
+  "Har statement 'kitne vectors' aur 'span / independent' ke rishte pe hai. Yaad karo: spanning set kam se kam kitna bada, independent set zyada se zyada kitna bada ho sakta hai?",
+  "Rule: spanning set mein $\\ge n$ vectors, independent set mein $\\le n$. Exactly $n$ vectors hon to basis ke liye spanning ya independence mein se ek hi kaafi hai.",
+  "Option (A) test karo: $\\mathbb{R}^2$ ($n=2$) mein kya ek akela vector poora plane span kar sakta hai? (D) ko 'subspace ka basis = 4 independent vectors in $\\mathbb{R}^4$' se socho. Trap: count ignore karna."
+ ],
+ "la-basis-dim-05": [
+  "'Smallest possible' intersection poocha hai. Dono subspaces $\\mathbb{R}^5$ ke andar hain, aur $3+4$ space ki dimension se zyada hai, isliye overlap zaroori hai.",
+  "Formula: $\\dim(W_1\\cap W_2)=\\dim W_1+\\dim W_2-\\dim(W_1+W_2)$, aur $W_1+W_2\\subseteq\\mathbb{R}^5$ isliye $\\dim(W_1+W_2)\\le 5$.",
+  "Intersection tab sabse chhota jab $\\dim(W_1+W_2)$ sabse bada ho. Wo maximum value formula mein daalo. Trap: max/min ulta lena; $W_1\\subseteq W_2$ wala case largest intersection deta hai."
+ ],
+ "la-special-matrices-01": [
+  "$A^2=A$ (idempotent, yaani projection) aur $A\\neq0, I$. Har statement ko is identity se prove karo, ya ek $2\\times2$ counterexample se todo.",
+  "Eigenvalue: $Av=\\lambda v$ pe $A$ do baar lagao, $A^2v=\\lambda^2v$ aur $A^2v=Av=\\lambda v$. Singular: agar $A^{-1}$ exist kare to $A^2=A$ ko $A^{-1}$ se multiply karke dekho.",
+  "$2A$ test: $(2A)^2=4A^2=4A$; kya ye $2A$ hai jab $A\\neq0$? Symmetry ke liye $\\begin{pmatrix}1&1\\\\0&0\\end{pmatrix}$ ka square nikalo. Trap: har projection ko symmetric (orthogonal) maan lena."
+ ],
+ "la-special-matrices-02": [
+  "$N^k=0$ (nilpotent) aur $N\\neq0$. Har statement ko eigenvalues se jodo, aur doubt ho to $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ jaise $2\\times2$ example pe test karo.",
+  "$Nv=\\lambda v$ se $N^kv=\\lambda^kv$, aur $N^k=0$. $I+N$ ke eigenvalues $1+\\lambda$ hote hain; aur symmetric matrix hamesha diagonalizable hoti hai.",
+  "Example $N=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ lo: $N^2=0$ check karo, phir iska rank gino aur rank wale statement se compare karo. Trap: 'saare eigenvalues 0 hain to matrix zero hai' sochna."
+ ],
+ "la-special-matrices-03": [
+  "$3\\times3$ skew-symmetric, aur $3$ odd hai. Det ki do properties saath lagao: transpose se det nahi badalta, aur $-A$ ka det kya hota hai?",
+  "Rules: $\\det A^T=\\det A$ aur $\\det(-A)=(-1)^n\\det A$. Yahan $A^T=-A$, to $\\det A=\\det(A^T)=\\det(-A)$ likho with $n=3$.",
+  "$(-1)^3$ ki value nikalo aur $\\det A=(-1)^3\\det A$ mein daalo; jo equation bane usse $\\det A$ solve karo. Trap: $2\\times2$ case ($\\det=a^2$) ko $3\\times3$ pe generalise kar dena."
+ ],
+ "la-special-matrices-04": [
+  "'Always true' poocha hai. Har expression ka transpose lo: wo khud ke barabar aaye to symmetric, minus khud aaye to skew-symmetric.",
+  "Rules: $(X+Y)^T=X^T+Y^T$, $(XY)^T=Y^TX^T$, $(A^T)^T=A$. Skew ke liye $A^T=-A$ daalo, symmetric ke liye $A^T=A$, $B^T=B$.",
+  "$(AB)^T=B^TA^T=BA$; kya $BA$ hamesha $AB$ hota hai? $A=\\begin{pmatrix}1&1\\\\1&0\\end{pmatrix}$, $B=\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$ se check karo. Trap: transpose mein order na palatna."
+ ],
+ "la-special-matrices-05": [
+  "Idempotent $2\\times2$ matrix (na $0$, na $I$) ke eigenvalues sirf $0$ aur $1$ hote hain. Trace aur det se is baat ko $k$ pe condition banao.",
+  "Eigenvalues $0,1$ ⇒ trace $=1$ aur $\\det=0$. Yahan trace $=3+(-2)$, aur $\\det A=3\\cdot(-2)-k\\cdot(-2)$.",
+  "$\\det A=3\\cdot(-2)-k\\cdot(-2)$ simplify karo aur $0$ rakho, phir $A^2=A$ verify karo. Trap: $-k(-2)$ ko $-2k$ likhna, ya trace $=1$ pe ruk jaana; wo har $k$ ke liye true hai."
+ ],
+ "la-block-matrix-01": [
+  "$M$ block upper-triangular hai, diagonal pe $I_2$. $(1,4)$ entry top-right block $B$ ke andar hai, to dekho $M^5$ mein woh block kaise badalta hai.",
+  "Blocks ko scalars ki tarah multiply karo (order rakh ke): $M^2=\\begin{pmatrix}I&B\\\\0&I\\end{pmatrix}\\begin{pmatrix}I&B\\\\0&I\\end{pmatrix}$. Pattern se $M^k$ ka top-right block nikalo.",
+  "$M^2$ ka top-right $=I\\cdot B+B\\cdot I=2B$. Ab $M^5$ ka top-right block likho; $(1,4)$ entry us block ki $(1,2)$ entry hai. Trap: entry ko power 5 kar dena."
+ ],
+ "la-block-matrix-02": [
+  "Block upper-triangular ka inverse bhi block upper-triangular hoga: $\\begin{pmatrix}X&Y\\\\0&Z\\end{pmatrix}$. Asli sawal sirf top-right $Y$ hai; sizes $p\\neq q$ ho sakte hain, dhyan rakho.",
+  "$\\begin{pmatrix}A&B\\\\0&D\\end{pmatrix}\\begin{pmatrix}X&Y\\\\0&Z\\end{pmatrix}=I$ multiply karo: $AX=I$, $DZ=I$, aur top-right block $AY+BZ=0$.",
+  "$X=A^{-1}$, $Z=D^{-1}$ aate hain; ab $AY+BD^{-1}=0$ ko $Y$ ke liye solve karo (left se $A^{-1}$ lagao). Trap: order badalna; $D^{-1}BA^{-1}$ to $p\\neq q$ pe defined hi nahi."
+ ],
+ "la-block-matrix-03": [
+  "Neeche-left ka $2\\times2$ block poora zero hai, to matrix block upper-triangular hai. Top-right block ($7,-1,5,9$) det pe koi asar nahi daalta.",
+  "$\\det=\\det\\begin{pmatrix}2&1\\\\1&3\\end{pmatrix}\\cdot\\det\\begin{pmatrix}4&1\\\\2&1\\end{pmatrix}$. Product lena hai, sum nahi.",
+  "Pehla block: $2\\cdot3-1\\cdot1=5$. Ab doosre block ka det $4\\cdot1-1\\cdot2$ nikalo aur multiply karo. Trap: block dets ko add karna, ya sirf top-left block le lena."
+ ],
+ "la-block-matrix-04": [
+  "$AB$ ko chaar tarah dekh sakte ho: entries, columns, rows, outer products. Har statement mein sizes check karo: $a_i$ hai $m\\times1$, $b_i^T$ hai $1\\times p$.",
+  "Rule: row $i$ of $AB$ = (row $i$ of $A$)$\\cdot B$; column $j$ of $AB$ = $A\\cdot$(column $j$ of $B$); aur $AB=\\sum_i(\\text{column } i \\text{ of } A)(\\text{row } i \\text{ of } B)$.",
+  "Option (B) ka size check karo: $b_i$ hai $p\\times1$, $a_i^T$ hai $1\\times m$, to $b_ia_i^T$ ka size kya? $AB$ ke size $m\\times p$ se compare karo. Trap: outer product ka order ulta likhna."
+ ],
+ "la-block-matrix-05": [
+  "Product $XY$ tabhi defined hai jab $X$ ke columns = $Y$ ke rows. Har option mein har adjacent pair ke inner sizes compare karo.",
+  "Sizes: $A$ $3\\times2$, $B$ $2\\times4$, $C$ $4\\times3$. Har product ko $(r\\times c)(r\\times c)$ form mein likho aur beech ke do numbers match karo.",
+  "Option (A) $CAB$: $(4\\times3)(3\\times2)$ ok, result $4\\times2$; phir $(4\\times2)(2\\times4)$ ok. Isi tarah baaki teen check karo. Trap: sirf pehla pair check karke chhod dena."
+ ],
+ "la-transpose-inverse-01": [
+  "Har statement transpose/inverse ke ek rule ka test hai. Yaad rakho: product pe dono order ulta karte hain; sum pe inverse distribute nahi hota.",
+  "Rules: $(XY)^T=Y^TX^T$, $(XY)^{-1}=Y^{-1}X^{-1}$, $(X^T)^{-1}=(X^{-1})^T$. Sum wala claim $A=B=I$ jaise simple case pe test karo.",
+  "$A=B=I$ lo: $(A+B)^{-1}=(2I)^{-1}$ nikalo aur $A^{-1}+B^{-1}$ se compare karo. Phir $(AB^T)^T$ pe rule lagao with $X=A$, $Y=B^T$. Trap: inverse mein order na palatna."
+ ],
+ "la-transpose-inverse-02": [
+  "$A^{-1}$ diya hai aur $(2A)^{-1}$ chahiye. $A$ nikalne ki zarurat nahi; bas socho scalar factor inverse ke andar se kaise bahar aata hai.",
+  "Rule: $(cA)^{-1}=\\tfrac1c A^{-1}$, kyunki $(cA)(\\tfrac1cA^{-1})=I$. Yahan $c=2$ aur $A^{-1}=\\begin{pmatrix}4&2\\\\2&3\\end{pmatrix}$.",
+  "Verify karo $(2A)\\cdot(\\tfrac12A^{-1})=I$, phir $\\tfrac12A^{-1}$ ki sirf $(1,1)$ entry nikalo. Trap: $(2A)^{-1}=2A^{-1}$ maan lena, ya ek entry ka reciprocal le lena."
+ ],
+ "la-transpose-inverse-03": [
+  "Do operations hain: pehle transpose, phir inverse. Dono product ka order palat dete hain, to do baar palatne ke baad order kya hoga?",
+  "Step by step: $(AB)^T=B^TA^T$; phir $(XY)^{-1}=Y^{-1}X^{-1}$ lagao with $X=B^T$, $Y=A^T$; end mein $(A^T)^{-1}=(A^{-1})^T$.",
+  "Pehla step: $(AB)^T=B^TA^T$. Ab iska inverse likho, order dhyan se palat ke, aur options se match karo. Trap: order sirf ek baar palatna."
+ ],
+ "la-transpose-inverse-04": [
+  "$A^2-3A+2I=0$ se $A$ ko ek taraf factor karo. Ye equation $A$ ke inverse aur eigenvalues ke baare mein batati hai, par $A$ ko poora fix nahi karti.",
+  "$A^2-3A=-2I$ ⇒ $A(A-3I)=-2I$, ya $A(3I-A)=2I$. Agar $AX=I$ mil jaye to $X=A^{-1}$; eigenvalues $\\lambda^2-3\\lambda+2=0$ follow karte hain.",
+  "$A(3I-A)=2I$ ko 2 se divide karo aur dekho $A^{-1}$ kaunsa expression hai; phir option (B) ka sign compare karo. (A) ke liye $\\operatorname{diag}(1,2)$ try karo. Trap: terms move karte waqt sign slip."
+ ],
+ "la-transpose-inverse-05": [
+  "$A$ invertible hai aur $c\\neq0,1$. Har statement ko seedha multiply karke check karo: kya (claimed inverse) × (matrix) $=I$ aata hai?",
+  "Rules: $(XY)^{-1}=Y^{-1}X^{-1}$, $(cA)^{-1}=\\tfrac1cA^{-1}$, $(A^{-1})^T=(A^T)^{-1}$. $A^TA$ ko $X=A^T$, $Y=A$ ka product samjho.",
+  "(C) ko $c=2$ pe test karo: $(2A)(2A^{-1})$ kya deta hai? (B) ke liye $A^2(A^{-1})^2=AAA^{-1}A^{-1}$ simplify karo. Trap: scalar ko inverse mein waisa hi chhod dena."
+ ],
+ "la-rank-rref-01": [
+  "Rank = row reduce ke baad kitni non-zero rows bachti hain. $R_2$ seedha $R_1$ ka multiple dikhta hai; $R_4$ ko bhi dhyan se dekho.",
+  "Operations: $R_2-2R_1$, $R_4-R_1$, phir naye $R_4$ ko $R_3$ se compare karo. Jo non-zero rows bachen aur independent hon, unki ginti = rank.",
+  "$R_2-2R_1=(0,0,0,0)$. Ab $R_4-R_1$ nikalo aur $R_3=(0,1,1,0)$ se compare karo. Trap: sirf multiples dhoondhna; ek row do rows ka sum bhi ho sakti hai."
+ ],
+ "la-rank-rref-02": [
+  "$3\\times4$ matrix, to rank max 3. Pehle teen columns mein $R_3=R_1+R_2$ jaisa dikhta hai, par har entry check karni padegi, last column bhi.",
+  "Row reduce: $R_2-2R_1$ aur $R_3-3R_1$, phir in dono naye rows ko ek doosre se subtract karo. Pivots gino.",
+  "$R_2-2R_1=(0,1,1,1)$. Ab $R_3-3R_1$ nikalo aur isse compare karo: kya difference zero row hai? Trap: $R_1+R_2=(3,7,4,1)$ ko $R_3$ maan lena; last entry alag hai."
+ ],
+ "la-rank-rref-03": [
+  "$k$ sirf last entry mein hai. Rows 1 aur 2 multiples nahi hain, to rank kam se kam 2; sawal ye hai ki kis $k$ pe teesri row gayab hoti hai.",
+  "Eliminate: $R_2-R_1$, $R_3-R_1$, phir $R_3-2R_2$. Last row $(0,0,\\text{kuch } k \\text{ mein})$ bachegi; wo zero kab hoti hai?",
+  "$R_2-R_1=(0,1,2)$ aur $R_3-R_1=(0,2,k-1)$. Ab $R_3-2R_2$ ki third entry nikalo aur zero rakho. Trap: $R_3-R_1$ mein $k$ se 1 ghatana bhool jaana."
+ ],
+ "la-rank-rref-04": [
+  "'Always true' poocha hai. Har rank identity ko proof se, ya ek chhote counterexample ($I$, $-I$, $B=0$) se test karo.",
+  "Facts: row rank = column rank; $A^TAx=0\\Rightarrow x^TA^TAx=\\lVert Ax\\rVert^2=0$; sum ke liye sirf $\\le$; aur $\\operatorname{rank}(AB)\\le\\min(\\operatorname{rank}A,\\operatorname{rank}B)$.",
+  "(A) ko $A=I$, $B=-I$ pe test karo: $A+B$ ka rank kya? (D) mein $B=0$ lo (wo bhi square hai) aur $AB$ ka rank dekho. Trap: 'square' ko 'invertible' samajh lena."
+ ],
+ "la-rank-rref-05": [
+  "Entries $a_{ij}=i+j$: pehle matrix likho, rows $(2,3,4,5),(3,4,5,6),\\dots$. Har agli row pichli se ek fixed vector se badhti hai.",
+  "Row reduce: $R_2-R_1$, $R_3-R_1$, $R_4-R_1$ karo, aur har difference ko $(1,1,1,1)$ se compare karo.",
+  "$R_2-R_1=(1,1,1,1)$, $R_3-R_1=(2,2,2,2)$. Ab $R_4-R_1$ nikalo, phir gino kitni independent rows bachi ($R_1$ ko mat bhoolna). Trap: 'difference same hai to sab rows ek hi row ke multiples' sochna."
+ ],
+ "la-rank-nullity-01": [
+  "$5\\times7$ matrix: $A$ $\\mathbb{R}^7$ se $\\mathbb{R}^5$ mein map karta hai. Null space $\\mathbb{R}^7$ ke andar rehta hai, to columns ki ginti matter karti hai.",
+  "Rank–nullity: rank + nullity $=n$, jahan $n$ = columns ki sankhya $=7$. Rank $=3$ diya hai.",
+  "Equation likho: $3+\\text{nullity}=7$, aur nullity solve karo. Trap: rows wala $5$ use kar lena; $5-\\text{rank}$ to $A^T$ ki nullity hoti hai."
+ ],
+ "la-rank-nullity-02": [
+  "$A$ ki nullity di hai, $A^T$ ki chahiye. Dono ko jodne wali cheez rank hai: $A$ aur $A^T$ ka rank same hota hai, nullity nahi.",
+  "Do steps: $\\operatorname{rank}A=6-\\text{nullity}(A)$ ($A$ ke 6 columns). Phir $A^T$ ($6\\times4$, yaani 4 columns) pe: nullity$(A^T)=4-\\operatorname{rank}$.",
+  "Pehla step: $\\operatorname{rank}A=6-3=3$. Ab yahi rank $A^T$ ke 4 columns wale rank–nullity mein lagao. Trap: maan lena ki $A^T$ ki nullity bhi $3$ hai."
+ ],
+ "la-rank-nullity-03": [
+  "$3\\times5$ wide matrix: 5 columns, sirf 3 rows. Rank zyada se zyada 3 ho sakta hai; yahi one-to-one aur onto dono decide karta hai.",
+  "One-to-one ⇔ nullity $=0$; onto $\\mathbb{R}^3$ ⇔ rank $=3$. Rank–nullity: nullity $=5-\\operatorname{rank}$, aur $\\operatorname{rank}\\le3$.",
+  "Sabse kam nullity tab jab rank max ho: $5-3$ nikalo. Ab check karo kya nullity 0 ho sakti hai, aur kya '$\\ge3$' guaranteed hai. Trap: rank ko 2 maan ke $5-2$ lena."
+ ],
+ "la-rank-nullity-04": [
+  "$A$ already row-echelon form mein hai: pivots columns 1 aur 3 mein. Koi vector null space mein hai ya nahi, wo seedha $Ax$ compute karke check karo.",
+  "Free variables $x_2,x_4$. Row 2: $x_3+3x_4=0$; row 1: $x_1+2x_2-x_4=0$. Nullity = columns − pivots.",
+  "$(1,0,3,1)$ ko row 2 mein daalo: $x_3+3x_4=3+3$, kya ye zero hai? Ab $(-2,1,0,0)$ ko dono rows mein daalo. Trap: $x_3=-3x_4$ mein sign slip."
+ ],
+ "la-rank-nullity-05": [
+  "$A^2=0$ ka matlab $A(Ax)=0$ har $x$ ke liye: $A$ ka har output wapas $A$ ke null space mein girta hai. $A\\neq0$ bhi diya hai.",
+  "Column space $\\subseteq N(A)$, to $\\operatorname{rank}A\\le\\text{nullity}(A)=3-\\operatorname{rank}A$. Is inequality se rank pe bound nikalo.",
+  "$\\operatorname{rank}A\\le3-\\operatorname{rank}A$ solve karo, aur $A\\neq0$ se rank $\\ge1$ lagao; phir nullity $=3-\\operatorname{rank}$. Trap: rank ko hi nullity bol dena, ya $A^2=0$ ko $A=0$ samajhna."
+ ],
+ "la-solvability-01": [
+  "$3\\times5$, rank 3: rank rows ki sankhya ke barabar, par columns se kam. Existence rows se judi hai, uniqueness columns se.",
+  "Rule: rank $=m$ (rows) ⇒ har $b$ ke liye solution exists; rank $=n$ (columns) ⇒ at most one solution. $A^T$ ($5\\times3$) ke liye $m,n$ swap ho jaate hain.",
+  "Nullity of $A$ $=5-3$ nikalo: agar ye $>0$ hai to ek solution mein null vector jodne se kya hota hai? Phir $A^T$ ki nullity $3-3$ dekho. Trap: existence aur uniqueness mix karna."
+ ],
+ "la-solvability-02": [
+  "$5\\times3$, rank 3: rank columns ki sankhya ke barabar, par rows (5) se kam. Ye tall matrix hai; normal equations ($A^TA$) wale option pe bhi dhyan do.",
+  "Rank $=n$ ⇒ $N(A)=\\{0\\}$, solution ho to unique. Rank $<m$ ⇒ column space $\\mathbb{R}^5$ ka sirf 3-dim hissa. Aur $\\operatorname{rank}(A^TA)=\\operatorname{rank}A$, size $3\\times3$.",
+  "$A^TA$ ka rank 3 aur size $3\\times3$: kya ye invertible hai? Phir socho 3-dim column space kya poora $\\mathbb{R}^5$ cover kar sakta hai. Trap: uniqueness ko existence samajh lena."
+ ],
+ "la-solvability-03": [
+  "Infinitely many solutions ke liye coefficient matrix singular ho aur system consistent rahe. Left sides dekho: teesri equation pehli do ka combination lagti hai.",
+  "Augmented matrix row reduce karo: $R_2-R_1$, $R_3-R_1$, phir $R_3-2R_2$. Last row $(0,0,0\\,|\\,\\ldots)$ banegi; consistent ke liye uska right side zero chahiye.",
+  "$R_2-R_1=(0,1,2\\,|\\,8)$ aur $R_3-R_1=(0,2,4\\,|\\,m-6)$. Ab $R_3-2R_2$ ka right side likho aur zero rakho. Trap: right side combine karte waqt sign slip, ya teesre ka right side doosre jaisa maan lena."
+ ],
+ "la-solvability-04": [
+  "$k$ sirf coefficient mein hai, right sides $3$ aur $6$ fixed. Pehle dekho kis $k$ pe coefficient matrix singular hai, phir us case mein right side check karo.",
+  "$\\det\\begin{pmatrix}1&2\\\\2&k\\end{pmatrix}=k-4$. Det $\\neq0$ ⇒ unique; det $=0$ pe rank $A$ aur rank $[A|b]$ compare karo.",
+  "$k=4$ daalo: doosri equation $2x+4y=6$ ban jaati hai; kya ye pehli ka exact multiple hai, right side samet? Trap: singular dekhte hi 'no solution' maan lena."
+ ],
+ "la-solvability-05": [
+  "Elimination ho chuka hai: last row poori zero hai, pivots columns 1, 2 mein. Har option ko equations mein daal ke, ya rank se judge karo.",
+  "Equations: $x+2z=3$, $y-z=1$, $z$ free. Consistent ⇔ koi $(0\\;0\\;0\\,|\\,c\\neq0)$ row nahi; rank $<3$ unknowns ho to infinitely many.",
+  "$(1,0,1)$ test karo: $x+2z=1+2$ theek, ab $y-z=0-1$ check karo. Phir $z=0$ rakh ke $x,y$ nikalo aur option (A) se milao. Trap: $y-z=1$ mein sign slip."
+ ],
+ "la-solvability-06": [
+  "Sirf $z$ chahiye, poora solution nahi. Elimination se pehle $x$ hatao, phir $y$, taaki ek equation sirf $z$ mein bache.",
+  "$x$ hatao: $R_2-2R_1$ aur $R_3+R_1$ (kyunki $R_3$ mein $-2x$ hai). Phir in do naye equations se $y$ eliminate karo.",
+  "$R_2-2R_1$: $y+3z=11$. $R_3+R_1$: $2y+3z=13$. Ab doosri mein se pehli ka double ghatao aur $z$ nikalo. Trap: back-substitution ke baad $y$ ya $x$ report kar dena."
+ ],
+ "la-rank-rref-06": [
+  "Rows 3 aur 4 ko pehli do rows se compare karo: kya ye $R_1, R_2$ ke sum/difference jaise dikhte hain? Rank pata chale to nullity rank–nullity se aayegi.",
+  "Check karo $R_3-R_1-R_2$ aur $R_4-R_1+R_2$ zero rows hain kya. Phir nullity $=4-\\operatorname{rank}$ (4 columns).",
+  "$R_1+R_2=(1,1,3,0)$; isko $R_3$ se compare karo. Ab $R_1-R_2$ nikalo aur $R_4$ se milao. Trap: 'rows 3 aur 4 ek doosre ke multiple nahi, to independent' sochna."
+ ],
+ "la-det-props-01": [
+  "Do rules ek saath: scalar $2$ poore $3\\times3$ matrix pe laga hai, aur andar inverse hai. Pehle alag karo kya scale ho raha hai aur kya invert.",
+  "$\\det(cB)=c^n\\det B$ with $n=3$, $B=A^{-1}$; aur $\\det(A^{-1})=1/\\det A$.",
+  "$\\det(2A^{-1})=2^3\\cdot\\det(A^{-1})$; $2^3=8$, ab ise $\\det(A^{-1})$ se multiply karo. Trap: $2^3$ ki jagah sirf $2$ lena, ya ise $(2A)^{-1}$ samajh lena."
+ ],
+ "la-det-props-02": [
+  "Do cheezein: $-3$ poore $4\\times4$ matrix ko multiply kar raha hai, aur $A^T$ hai. Size $n=4$ power mein jaayega.",
+  "$\\det(cB)=c^n\\det B$ with $c=-3$, $n=4$; aur $\\det(A^T)=\\det A=-2$.",
+  "Pehle $(-3)^4$ nikalo; even power hai to sign kya hoga? Phir $\\det(A^T)$ se multiply karo. Trap: power $3$ le lena, ya $\\det(A^T)=-\\det A$ maan lena."
+ ],
+ "la-det-props-03": [
+  "'Always true' poocha hai; har statement ek determinant rule hai. Row operations ke teen types (swap, scale, add multiple) alag-alag effect dete hain.",
+  "Rules: row swap ⇒ $\\times(-1)$; ek row ko $c$ se scale ⇒ $\\times c$; ek row mein doosri ka multiple jodna ⇒ koi change nahi. Aur $\\det(AB)=\\det A\\det B$.",
+  "(B) ko $A=B=I_2$ pe test karo: $\\det(2I_2)$ nikalo aur $1+1$ se compare karo. (C) ke liye dono sides ko $\\det A\\cdot\\det B$ ke form mein likho. Trap: 'add multiple' ko 'scale' samajhna."
+ ],
+ "la-det-props-04": [
+  "Teen row operations ek-ek karke hue hain. $\\det A=5$ se shuru karo aur har operation ke baad det track karo.",
+  "Ek row ko 3 se multiply ⇒ det $\\times3$ (not $3^3$); swap ⇒ $\\times(-1)$; ek row mein doosri row ka multiple jodna ⇒ koi change nahi.",
+  "Step (i) ke baad: $5\\times3=15$. Ab steps (ii) aur (iii) ka effect lagao. Trap: single row scaling ke liye $3^3$ lena, ya swap ka sign bhool jaana."
+ ],
+ "la-det-props-05": [
+  "$\\operatorname{adj}A$ ka det poocha hai, $A$ $3\\times3$ hai. Adjugate ko $A$ aur $\\det A$ se jodne wali identity yaad karo.",
+  "$A\\cdot\\operatorname{adj}A=(\\det A)I_3$. Dono sides ka det lo: $\\det A\\cdot\\det(\\operatorname{adj}A)=\\det\\big((\\det A)I_3\\big)$.",
+  "Right side: $\\det(cI_3)=c^3$ with $c=\\det A=3$. Ab dono sides ko $\\det A$ se divide karo. Trap: power $n$ hi rakh dena; divide karne ke baad power $n-1$ bachti hai."
+ ],
+ "la-det-poly-01": [
+  "$\\det(A^2+I)$ chahiye aur eigenvalues diye hain. $A^2+I$ ke eigenvalues $A$ ke eigenvalues se seedhe nikalte hain; det unka product hai.",
+  "Har eigenvalue pe $p(\\lambda)=\\lambda^2+1$ lagao, phir $\\det(A^2+I)=p(1)\\cdot p(2)\\cdot p(-1)$.",
+  "$p(1)=1+1=2$. Ab $p(2)$ aur $p(-1)$ nikalo (dhyan: $(-1)^2=+1$) aur teeno multiply karo. Trap: $\\det A$ ko polynomial mein daalna, ya values add kar dena."
+ ],
+ "la-det-poly-02": [
+  "Polynomial $\\lambda^2-5\\lambda+6$ ko dhyan se dekho aur diye gaye eigenvalues $2, 3$ se compare karo.",
+  "$\\det p(A)=p(2)\\cdot p(3)$ jahan $p(\\lambda)=\\lambda^2-5\\lambda+6$. Polynomial ko factor bhi kar sakte ho.",
+  "$p(\\lambda)$ ko $(\\lambda-a)(\\lambda-b)$ form mein factor karo, phir $\\lambda=2$ aur $\\lambda=3$ daal ke product lo. Trap: $\\det A=6$ ko $p$ mein daalna, ya det ko sum pe tod dena."
+ ],
+ "la-det-poly-03": [
+  "$\\det(A^{-1}+2I)$: pehle $A^{-1}$ ke eigenvalues socho, phir $+2I$ ka effect, phir sabka product.",
+  "$A^{-1}$ ke eigenvalues $1/\\lambda$, to $A^{-1}+2I$ ke $1/\\lambda+2$. $\\det=\\prod(1/\\lambda_i+2)$ over $\\lambda=1,-2,3$.",
+  "$\\lambda=1$: $1+2=3$. $\\lambda=-2$: $-\\tfrac12+2=\\tfrac32$. Ab $\\lambda=3$ wala nikalo aur teeno multiply karo. Trap: $1/\\det A+2$ lagana, ya $1/\\lambda$ ki jagah $-\\lambda$ lena."
+ ],
+ "la-det-poly-04": [
+  "Sirf trace aur det diye hain, $A$ nahi. $\\det(A-I)$ asal mein characteristic polynomial ki value hai ek khaas point pe.",
+  "$\\chi(t)=\\det(A-tI)=t^2-(\\operatorname{tr}A)t+\\det A=t^2-5t+6$, aur $\\det(A-I)=\\chi(1)$. Ya eigenvalues nikal ke $\\prod(\\lambda_i-1)$ lo.",
+  "Eigenvalues: aise do numbers socho jinka sum $5$, product $6$. Ab har ek mein se 1 ghata ke multiply karo. Trap: $\\det A-\\det I$ karna; det linear nahi hai."
+ ],
+ "la-det-poly-05": [
+  "$A^2+A$ ek polynomial in $A$ hai, to $\\det(A^2+A)$ = har eigenvalue pe $\\lambda^2+\\lambda$ ka product. $\\det A$ seedha polynomial mein mat daalo.",
+  "$p(\\lambda)=\\lambda^2+\\lambda=\\lambda(\\lambda+1)$. $\\det(A^2+A)=p(1)\\cdot p(-2)\\cdot p(2)$.",
+  "$p(1)=1+1=2$, $p(-2)=4-2=2$. Ab $p(2)$ nikalo aur teeno ka product lo. Trap: values add karna, ya $(\\det A)^2+\\det A$ lagana."
+ ],
+ "la-eig-trace-det-01": [
+  "Do eigenvalues pata hain ($3$, $3$), teesra chahiye. Trace nikalna easy hai; diagonal entry $4$ eigenvalue nahi, kyunki matrix triangular nahi hai.",
+  "Sum of eigenvalues = trace: $3+3+\\lambda_3=4+4+4$.",
+  "Diagonal jod ke trace nikalo aur equation $\\lambda_3$ ke liye solve karo. Cross-check: $A(1,1,1)^T$ compute karo, kya ye $(1,1,1)^T$ ka multiple hai? Trap: trace se $3$ sirf ek baar ghatana."
+ ],
+ "la-eig-trace-det-02": [
+  "Matrix triangular nahi hai, to diagonal $1, 2$ eigenvalues nahi hain. $2\\times2$ ke liye trace aur det se characteristic equation seedha banti hai.",
+  "$\\lambda^2-(\\text{tr})\\lambda+\\det=0$; yahan tr $=1+2$, det $=1\\cdot2-2\\cdot3$.",
+  "Trace $=3$, det $=-4$: equation $\\lambda^2-3\\lambda-4=0$. Ab factor karo, ya options mein sum $=3$ aur product $=-4$ check karo. Trap: trace aur det ko hi eigenvalues bol dena."
+ ],
+ "la-eig-trace-det-03": [
+  "Matrix dekho: diagonal ke upar sab zero hai, yaani $A$ lower triangular hai. Har option alag judge karo; D mein $A+A^T$ ki shape badal jaati hai.",
+  "Triangular matrix ke eigenvalues = diagonal entries, $\\det$ = unka product. Diagonalizable ke liye repeated $\\lambda=3$ ka GM $=3-\\operatorname{rank}(A-3I)$ nikaal ke AM se compare karo.",
+  "$A-3I=\\begin{pmatrix}-1&0&0\\\\5&0&0\\\\-1&4&0\\end{pmatrix}$ ka rank gino. Trap: $A+A^T$ triangular nahi hai, to uska diagonal $4,6,6$ eigenvalues nahi deta; $\\det(A+A^T-4I)$ check karke dekho."
+ ],
+ "la-eig-trace-det-04": [
+  "Teen eigenvalues mein se ek ($2$) diya hai; baaki do ke liye trace aur det se do equations mil jaati hain.",
+  "$2+\\lambda_2+\\lambda_3=3$ aur $2\\lambda_2\\lambda_3=-12$, yaani $\\lambda_2+\\lambda_3=1$ aur $\\lambda_2\\lambda_3=-6$.",
+  "Ab $t^2-(\\text{sum})t+(\\text{product})=0$, yaani $t^2-t-6=0$ solve karo aur teeno mein smallest chuno. Trap: $-6$ ya $1$ khud eigenvalue nahi — wo baaki do ka product aur sum hain."
+ ],
+ "la-eig-trace-det-05": [
+  "$B$ triangular nahi hai (dono off-diagonal entries non-zero), to diagonal $5,2$ ko seedha eigenvalues mat maano. Har option alag check karo.",
+  "2×2: $\\lambda^2-(\\text{tr})\\lambda+\\det=0$; yahan tr $=7$, det $=5\\cdot2-4\\cdot1=6$. Eigenvector check: $Bx$ nikaalo aur dekho wo $x$ ka multiple hai ya nahi.",
+  "$\\lambda^2-7\\lambda+6=0$ factor karo; option A ke liye $B(4,1)^T$ ka pehla component $5\\cdot4+4\\cdot1$ nikaalo. D: $B-I$ singular tabhi jab $1$ eigenvalue ho. Trap: candidate pair ko trace aur det dono se cross-check karo."
+ ],
+ "la-eig-transform-01": [
+  "Sirf eigenvalues $1,2,-3$ diye hain, matrix nahi. Har option ek transformed matrix ($A^{-1}$, $A+2I$, $3A$, $A^2$) ke baare mein hai — ek-ek eigenvalue transform karke check karo.",
+  "Rule (same eigenvectors): $\\lambda\\mapsto1/\\lambda$, $\\lambda+2$, $3\\lambda$, $\\lambda^2$. Aur $\\det(cA)=c^n\\det A$, yahan $n=3$, $\\det A=1\\cdot2\\cdot(-3)=-6$.",
+  "Option C: $3A$ ke eigenvalues $3\\cdot1,\\,3\\cdot2,\\,3\\cdot(-3)$ — inka product khud nikaal ke $-162$ se milao. Trap: $\\det(3A)=3\\det A$ nahi, $3^3\\det A$ hota hai; aur $(-3)^2$ ka sign dhyan se."
+ ],
+ "la-eig-transform-02": [
+  "$\\operatorname{tr}(A^3)$ chahiye par matrix nahi diya, sirf eigenvalues $2,-1,3$. Trace = eigenvalues ka sum, to pehle $A^3$ ke eigenvalues socho.",
+  "$A^3$ ke eigenvalues $\\lambda_i^3$ hain, isliye $\\operatorname{tr}(A^3)=2^3+(-1)^3+3^3$.",
+  "$2^3=8$, $3^3=27$; ab $(-1)^3$ ka sign dhyan se lagao aur add karo. Trap: $(\\operatorname{tr}A)^3=4^3$ mat karo — trace power ke saath multiplicative nahi hai."
+ ],
+ "la-eig-transform-03": [
+  "$A^{-1}$ ka trace chahiye. Trace eigenvalues ka sum hai, to pehle socho $A^{-1}$ ke eigenvalues $2$ aur $4$ se kaise bante hain.",
+  "$A^{-1}$ ke eigenvalues $1/\\lambda_i$ hain (same eigenvectors), isliye $\\operatorname{tr}(A^{-1})=\\frac1{\\lambda_1}+\\frac1{\\lambda_2}$ with $\\lambda=2,4$.",
+  "$\\tfrac12$ aur $\\tfrac14$ ko common denominator $4$ pe add karo. Trap: $1/(2+4)$ (trace ka inverse) ya $1/\\det A=1/8$ — dono galat hain."
+ ],
+ "la-eig-transform-04": [
+  "$v$ pehle se $A$ ka eigenvector hai; sawaal hai ki $B=(A-2I)^{-1}$ usi $v$ pe kya karta hai. Shift aur inverse kis order mein lage hain, ye dhyan se dekho.",
+  "Pehle $(A-2I)v=Av-2v$ ko $\\lambda$ ke terms mein likho, phir dono side pe $B$ lagao, kyunki $B(A-2I)=I$.",
+  "$(A-2I)v=(\\lambda-2)v$. Ab dono side $B$ se multiply karo aur $Bv$ ke liye solve karo ($\\lambda\\neq2$). Trap: pehle invert karke phir $2$ ghatana ($1/\\lambda-2$) galat order hai."
+ ],
+ "la-eig-transform-05": [
+  "$(A-4I)^2$ ke teeno eigenvalues nikaalne padenge — sirf $A$ ke largest eigenvalue $3$ ko transform karna kaafi nahi.",
+  "Map $\\lambda\\mapsto(\\lambda-4)^2$ har eigenvalue $1,2,3$ pe lagao (same eigenvectors).",
+  "$\\lambda=3$ se $(3-4)^2=1$ milta hai; ab $\\lambda=1$ aur $\\lambda=2$ ke liye bhi nikaalo aur compare karo. Trap: yeh map yahan increasing nahi — jo $\\lambda$ $4$ se sabse door, wahi bada banega."
+ ],
+ "la-rank-one-01": [
+  "$A=uv^T$ outer product hai, to har column $u$ ka multiple hai — rank-one structure. Har option ko isi structure se judge karo.",
+  "Rule: $uv^T$ ke eigenvalues $v^Tu$ aur $0$ ($n-1$ baar); $A^2=u(v^Tu)v^T=(v^Tu)A$.",
+  "$v^Tu=2\\cdot1+(-1)\\cdot2+1\\cdot2$ compute karo, phir A aur B ko isse match karo. Trap: non-zero eigenvalue $v^Tu$ hai, $\\lVert u\\rVert^2=u^Tu$ nahi."
+ ],
+ "la-rank-one-02": [
+  "$I_3+xx^T$ = identity + rank-one matrix. Determinant = eigenvalues ka product, to $I+xx^T$ ke eigenvalues socho.",
+  "Rule: $xx^T$ ke eigenvalues $x^Tx,0,0$; $I$ jodne se har eigenvalue mein $+1$, yaani $1+x^Tx,\\,1,\\,1$.",
+  "$x^Tx=1^2+1^2+2^2=6$; ab teeno eigenvalues likho aur multiply karo. Trap: teeno eigenvalues $1+x^Tx$ nahi hain, aur $+1$ bhoolna bhi galat hai."
+ ],
+ "la-rank-one-03": [
+  "Rank-one $uv^T$ ki saari kahani $v^Tu$ pe tiki hai — pehle wahi number dekho, yahan kuch special ho sakta hai.",
+  "Eigenvalues $v^Tu,0,0$ aur $A^2=(v^Tu)A$. Diagonalizable ke liye GM$(0)=3-\\operatorname{rank}A$ ko AM$(0)$ se compare karo.",
+  "$v^Tu=1\\cdot1+1\\cdot(-1)+0\\cdot3$ compute karo, phir socho $A^2$ kya banta hai. Trap: $\\lVert u\\rVert\\lVert v\\rVert$ singular value hai, eigenvalue nahi."
+ ],
+ "la-rank-one-04": [
+  "$J$ (sab entries 1) $=\\mathbf 1\\mathbf 1^T$, ek rank-one matrix hai. $\\det(J+2I)$ = $J+2I$ ke eigenvalues ka product.",
+  "$\\mathbf 1\\mathbf 1^T$ ke eigenvalues $\\mathbf 1^T\\mathbf 1=5$ aur $0$ (4 baar). $+2I$ har eigenvalue mein $2$ jodta hai.",
+  "Toh $J+2I$ ke eigenvalues: ek $5+2$ aur chaar $0+2$; ab product nikaalo. Trap: sabko $7$ maan lena, ya $J$ ignore karke sirf $2^5$ lena."
+ ],
+ "la-rank-one-05": [
+  "Wahi $u,v$ wala rank-one $A=uv^T$; $A^{10}$ ka trace chahiye — 10 baar multiply mat karo, eigenvalues use karo.",
+  "$A$ ke eigenvalues $v^Tu,0,0$, isliye $A^{10}$ ke $(v^Tu)^{10},0,0$ aur $\\operatorname{tr}(A^{10})=(v^Tu)^{10}$.",
+  "$v^Tu=2\\cdot1+(-1)\\cdot2+1\\cdot2$ compute karo, phir uski 10th power lo. Trap: $A^{10}=(v^Tu)^9A$ use karo to $\\operatorname{tr}A$ se multiply karna mat bhoolo."
+ ],
+ "la-rank-gm-01": [
+  "GM = eigenvalue $2$ ke eigenspace ka dimension. Diagonal pe teeno $2$ hain (AM 3), par upar wala $1$ GM ko kam kar sakta hai.",
+  "GM $=n-\\operatorname{rank}(A-2I)$ with $n=3$. $A-2I$ likho: sirf $(1,2)$ entry $1$ bachti hai, baaki sab zero.",
+  "$A-2I=\\begin{pmatrix}0&1&0\\\\0&0&0\\\\0&0&0\\end{pmatrix}$ ka rank gino, phir $3$ se ghatao. Trap: rank khud GM nahi hai, aur GM ko AM ke barabar mat maano."
+ ],
+ "la-rank-gm-02": [
+  "Chaaron matrices triangular hain, to eigenvalues diagonal pe hi dikh rahe hain. Jahan eigenvalue repeat hota hai, wahan asli test GM vs AM hai.",
+  "Distinct eigenvalues ho to matrix hamesha diagonalizable. Repeated $\\lambda$ ke liye GM $=2-\\operatorname{rank}(A-\\lambda I)$ nikaalo; GM = AM chahiye.",
+  "Option A: $A-2I=\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ ka rank dekho aur GM nikaalo; C ka structure bhi aisa hi hai. Trap: repeated eigenvalue ka matlab automatically non-diagonalizable nahi — D ko alag se check karo."
+ ],
+ "la-rank-gm-03": [
+  "$A$ ke diagonal pe $3$ aur baaki sab $1$ hai. $\\lambda=2$ ke liye $A-2I$ banao — uski shape bahut simple nikalegi.",
+  "GM $=3-\\operatorname{rank}(A-2I)$. Diagonal se $2$ ghatao: $A-2I$ ki har entry $1$ ho jaati hai.",
+  "All-ones $3\\times3$ matrix ki teeno rows same hain — row reduce karke pivots gino, phir $3$ se ghatao. Trap: teen non-zero rows dekh ke rank 3 mat maano, aur rank ko hi GM mat bolo."
+ ],
+ "la-rank-gm-04": [
+  "$A$ triangular nahi hai, to diagonal $2,0$ eigenvalues nahi hain. Options eigenvalues aur diagonalizability dono ke baare mein hain — dono check karne padenge.",
+  "Char. poly $\\lambda^2-(\\text{tr})\\lambda+\\det$: tr $=2$, det $=2\\cdot0-(-1)\\cdot1=1$. Repeated root mile to GM $=2-\\operatorname{rank}(A-\\lambda I)$.",
+  "$\\lambda^2-2\\lambda+1=0$ solve karo, phir us $\\lambda$ ke liye $A-\\lambda I$ likh ke uska rank dekho. Trap: GM ko automatically AM ke barabar maan lena."
+ ],
+ "la-rank-gm-05": [
+  "Char. poly se AM mil gaye: $\\lambda=1$ aur $\\lambda=3$ dono ka AM 2. Diye gaye ranks se GM nikaalna hai, phir har option judge karo.",
+  "GM $=n-\\operatorname{rank}(A-\\lambda I)$ with $n=4$. Invertible iff $0$ eigenvalue nahi hai; $\\det A$ = eigenvalues ka product.",
+  "GM$(1)=4-\\operatorname{rank}(A-I)=4-2$; isi tarah $\\lambda=3$ ke liye nikaalo aur har eigenvalue pe GM = AM check karo. Trap: GM ko rank ke barabar mat maano — GM kabhi AM se zyada nahi hota."
+ ],
+ "la-rank-gm-06": [
+  "$\\lambda=4$ diagonal pe chaar baar hai (AM 4), lekin $(1,2)$ position ka $1$ eigenvectors kam kar deta hai. GM ke liye $A-4I$ ka rank chahiye.",
+  "GM $=5-\\operatorname{rank}(A-4I)$. Diagonal se $4$ ghatao: last entry $9-4=5$ bachti hai, aur upar wala $1$ bhi.",
+  "$A-4I$ ki non-zero rows $(0,1,0,0,0)$ aur $(0,0,0,0,5)$ hain — independent hain ya nahi dekho, rank gino aur $5$ se ghatao. Trap: rank ko hi GM bol dena, ya GM ko AM maan lena."
+ ],
+ "la-eigvec-check-01": [
+  "$A$ ki har row ka sum same hai — all-ones vector ke liye yeh bada clue hai. Baaki vectors ke liye $Av$ compute karke proportionality dekho.",
+  "$v$ eigenvector iff $Av=\\lambda v$ kisi $\\lambda$ ke liye ($v\\neq0$). Equal row sums $s$ ⇒ $A(1,1,1)^T=s(1,1,1)^T$; yahan $s=2+1+1=4$.",
+  "Option B: $A(1,2,0)^T=(2+2,\\;1+4,\\;1+2)^T$ — ise $(1,2,0)^T$ se compare karo; C ke liye bhi aise hi. Trap: scaled vector $(2,2,2)^T$ ko bhi test karo, ignore mat karo."
+ ],
+ "la-eigvec-check-02": [
+  "Rows dekho: $1+2+3$, $3+2+1$, $2+2+2$ — sabka sum same hai. Ek eigenvalue isi se mil jaata hai; baaki do ke liye trace aur det.",
+  "Row sum $6$ ⇒ eigenvalue $6$ (eigenvector $(1,1,1)^T$). Phir $\\lambda_1+\\lambda_2+\\lambda_3=\\operatorname{tr}A=5$ aur product $=\\det A$.",
+  "$\\det A=1(4-2)-2(6-2)+3(6-4)$ evaluate karo; zero aaye to $0$ ek eigenvalue hai, aur teesra trace se nikaalo. Trap: $0$ milte hi use smallest maan ke ruk jaana."
+ ],
+ "la-eigvec-check-03": [
+  "Eigenvalue $2$ diya hai; uska eigenvector $(A-2I)x=0$ ka non-zero solution hai. Options ko $Av=2v$ se seedha bhi check kar sakte ho.",
+  "$A-2I=\\begin{pmatrix}2&1\\\\2&1\\end{pmatrix}$ — dono rows same, to ek hi equation bachti hai: $2x+y=0$.",
+  "$2x+y=0$ mein $x=1$ rakho, $y$ nikaalo aur options se milao; phir $Av$ se verify karo. Trap: $(1,1)^T$ equal row sums wala eigenvector hai — wo $\\lambda=5$ ka hai."
+ ],
+ "la-eigvec-check-04": [
+  "Har row ka sum $3$ hai — socho $A\\mathbf 1$ kya hoga ($\\mathbf 1$ = all-ones vector). Har option isi ek fact se judge hota hai.",
+  "Row sums $s$ ⇒ $A\\mathbf 1=s\\mathbf 1$; phir $A^2\\mathbf 1=s^2\\mathbf 1$ aur $A^{-1}\\mathbf 1=\\frac1s\\mathbf 1$. Kisi matrix $M$ ke row sums = $M\\mathbf 1$ ki entries.",
+  "$s=3$ rakho: $A^2\\mathbf 1=A(3\\mathbf 1)$ simplify karo; $A^{-1}$ ke liye $A\\mathbf 1=3\\mathbf 1$ pe dono taraf $A^{-1}$ lagao. Trap: row sums column sums ke baare mein kuch nahi batate — ek chhota 2×2 example try karo."
+ ],
+ "la-eigvec-check-05": [
+  "$(2,1)^T$ eigenvector hona chahiye, yaani $A(2,1)^T$ ko $(2,1)^T$ ka multiple banna hai. Unknown do hain: $k$ aur $\\lambda$.",
+  "$A(2,1)^T=(2\\cdot2+k\\cdot1,\\;1\\cdot2+4\\cdot1)^T=(4+k,\\,6)^T$, aur yeh $\\lambda(2,1)^T=(2\\lambda,\\lambda)^T$ ke barabar hona chahiye.",
+  "Second component se $\\lambda=6$ milta hai; ab first component $4+k=2\\lambda$ mein daal ke $k$ nikaalo. Trap: $4+k=6$ likhna — first component $\\lambda\\cdot2$ hona chahiye, sirf $\\lambda$ nahi."
+ ],
+ "la-det-props-06": [
+  "$n=3$ aur $\\det A=2$ fixed hai; har option ek alag rule test karta hai — scalar multiple, inverse, transpose, product.",
+  "Rules: $\\det(cA)=c^3\\det A$, $\\det(A^{-1})=1/\\det A$, $\\det(A^T)=\\det A$, aur $\\det(XY)=\\det X\\cdot\\det Y$.",
+  "Option C: $\\det(A^2A^T)=(\\det A)^2\\cdot\\det(A^T)$ — har factor mein $2$ daal ke khud multiply karo. Trap: $\\det(cA)=c\\det A$ likhna; aur odd $n$ pe $(-1)^3$ sign flip karta hai."
+ ],
+ "la-det-poly-06": [
+  "Eigenvalues $1$ aur $3$ diye hain; har option kisi polynomial $p(A)$ ka det, ya khud $p(A)$, ke baare mein hai.",
+  "Rule: $\\det p(A)=p(1)\\cdot p(3)$. Cayley–Hamilton: $A$ apne char. poly $(\\lambda-1)(\\lambda-3)=\\lambda^2-4\\lambda+3$ ko satisfy karta hai.",
+  "Option D: $p(\\lambda)=\\lambda+1$ ko $\\lambda=1$ aur $\\lambda=3$ pe evaluate karke multiply karo, phir $\\det A+1$ se compare karo. Trap: determinant additive nahi hota."
+ ],
+ "la-projection-01": [
+  "$P^2=P$ aur $P^T=P$ ⇒ orthogonal projection, aur rank $r$ strictly $0$ aur $n$ ke beech hai. Har option ko eigenvalues ki nazar se dekho.",
+  "$Pv=\\lambda v$ ⇒ $P^2v=\\lambda^2v=\\lambda v$, to $\\lambda^2=\\lambda$. Eigenvalue $1$ ki count = rank $r$; $\\det$ = eigenvalues ka product, trace = sum.",
+  "$r<n$ hai to $n-r$ eigenvalues $0$ hain — ab $\\det P$ aur $\\operatorname{tr}P$ socho. D ke liye $x=Px+(I-P)x$ likho, dono parts orthogonal hain. Trap: $r<n$ bhool ke $P$ ko $I$ jaisa treat karna."
+ ],
+ "la-projection-02": [
+  "Line pe projection: $Px$ hamesha $a$ ka multiple hota hai. Bas coefficient nikaalna hai, phir third component.",
+  "$Px=\\dfrac{a^Tx}{a^Ta}\\,a$, with $a=(1,2,2)^T$, $x=(3,0,3)^T$, $a^Ta=1+4+4=9$.",
+  "$a^Tx=1\\cdot3+2\\cdot0+2\\cdot3$ compute karo, $9$ se divide karo, phir us coefficient ko $a$ ke third component se multiply karo. Trap: $\\lVert a\\rVert^2$ se divide karna hai, $\\lVert a\\rVert=3$ se nahi."
+ ],
+ "la-projection-03": [
+  "$A$ ke columns $(1,1,1)$ aur $(0,1,-1)$ ka dot product $0$ hai. Orthogonal columns pe projection har column pe alag karke jod sakte ho.",
+  "$p=\\frac{b^Ta_1}{a_1^Ta_1}a_1+\\frac{b^Ta_2}{a_2^Ta_2}a_2$ with $a_1^Ta_1=3$, $a_2^Ta_2=2$. Phir residual $b-p$ ki squared length chahiye.",
+  "$b^Ta_1=1+2+4=7$, $b^Ta_2=2-4=-2$; ab $p$ ke components likho aur $b-p$ nikaalo. Trap: $\\lVert p\\rVert^2$ nahi, residual $\\lVert b-p\\rVert^2$ chahiye; $a_i^Ta_i$ se divide karna mat bhoolo."
+ ],
+ "la-projection-04": [
+  "Sawaal **orthogonal** projection ka hai — sirf idempotent hona kaafi nahi. Har matrix pe do alag test lagane hain.",
+  "Orthogonal projection $\\iff P^2=P$ aur $P^T=P$. Symmetry aankh se dikh jaati hai; $P^2$ ke liye 2×2 multiply karo.",
+  "Option D: $D^T$ likh ke $D$ se compare karo, aur $D^2$ bhi nikaalo; baaki options pe bhi dono test lagao. Trap: in do conditions mein se koi ek akele kaafi nahi."
+ ],
+ "la-projection-05": [
+  "$A$ $5\\times2$ hai, square nahi — $P=A(A^TA)^{-1}A^T$ uske 2-dim column space pe projection hai. Har option ko dimensions se judge karo.",
+  "Projection ka rank = column space ka dimension $=\\operatorname{rank}A$; eigenvalue $1$ column space pe, $0$ uske orthogonal complement pe. Trace = rank.",
+  "Option C: $PA=A(A^TA)^{-1}(A^TA)$ — beech wala part simplify karo. Trap: $(A^TA)^{-1}=A^{-1}(A^T)^{-1}$ tabhi valid hai jab $A^{-1}$ exist kare — $5\\times2$ ke liye check karo."
+ ],
+ "la-orthogonal-01": [
+  "Sirf itna pata hai ki $Q^TQ=I$. Har option ko isi ek equation se derive karke dekho.",
+  "$\\det$ lo: $\\det(Q^T)\\det Q=1$. Length: $\\lVert Qx\\rVert^2=x^TQ^TQx$. Eigenvalues ke liye guarantee $|\\lambda|$ ki hai, $\\lambda$ ki nahi.",
+  "Option C test karne ke liye $90^\\circ$ rotation $\\begin{pmatrix}0&-1\\\\1&0\\end{pmatrix}$ ka char. poly $\\lambda^2+1=0$ solve karo. Trap: real orthogonal matrix ke eigenvalues complex bhi ho sakte hain."
+ ],
+ "la-orthogonal-02": [
+  "Orthogonal matrix ke columns orthonormal hone chahiye: har column unit length, aur dono perpendicular. Pehla column $(0.6,0.8)$ already unit hai.",
+  "Second column $(a,b)$ pe do conditions: $0.6a+0.8b=0$ aur $a^2+b^2=1$.",
+  "Option C check karo: $0.6\\cdot0.8+0.8\\cdot0.6$ zero hai kya? Phir baaki options pe dono conditions lagao. Trap: sirf perpendicular hona kaafi nahi — length bhi $1$ chahiye."
+ ],
+ "la-orthogonal-03": [
+  "Orthogonal $Q$ ka $|\\det Q|$ hamesha fixed hota hai. $3Q$ mein har row $3$ se scale hui hai, aur matrix $4\\times4$ hai.",
+  "$\\det(cQ)=c^n\\det Q$ with $c=3$, $n=4$, aur $|\\det Q|=1$.",
+  "$|\\det(3Q)|=3^4\\cdot|\\det Q|$ — power evaluate karo. Trap: $3\\cdot1$ ya $3\\cdot4$ likhna; $c$ ko $n$ ki power pe raise karna hai."
+ ],
+ "la-orthogonal-04": [
+  "Orthogonal matrices product, inverse, transpose ke under band hain — par addition ke under? Har option ko $M^TM=I$ test se check karo.",
+  "Test: $M$ orthogonal iff $M^TM=I$. D mein $(Q_1Q_2)^T=Q_2^TQ_1^T$ use karo; C mein symmetric ka matlab $Q_1^T=Q_1$.",
+  "Option A ke liye simplest example lo: $Q_1=Q_2=I$ — $Q_1+Q_2$ lengths preserve karta hai? C mein $Q_1^2=Q_1^TQ_1$ likh ke socho. Trap: group property ko addition pe bhi laga dena."
+ ],
+ "la-orthogonal-05": [
+  "$H=I-2uu^T$ ek reflection (Householder) hai. Trace linear hai, to $I_3$ aur $uu^T$ ka trace alag-alag socho.",
+  "$\\operatorname{tr}(I_3)=3$ aur $\\operatorname{tr}(uu^T)=u^Tu$. Check karo $u=\\tfrac13(1,2,2)^T$ unit vector hai ya nahi.",
+  "$u^Tu=\\tfrac19(1+4+4)$ compute karo, phir $\\operatorname{tr}H=3-2\\,u^Tu$ mein daalo. Trap: $\\det H$ ko trace samajh lena, ya $-2uu^T$ ka trace zero maan lena."
+ ],
+ "la-definiteness-01": [
+  "Cross term $4xy$ hai — symmetric matrix banate waqt yeh do off-diagonal entries mein barabar bant jaata hai. Phir definiteness check karo.",
+  "Matrix $\\begin{pmatrix}3&2\\\\2&2\\end{pmatrix}$. 2×2 rule: $a_{11}>0$ aur $\\det>0$ ⇒ PD; $\\det=0$ ⇒ semidefinite; $\\det<0$ ⇒ indefinite.",
+  "Pehla minor $3>0$; ab $\\det=3\\cdot2-2\\cdot2$ nikaalo aur rule se match karo. Trap: off-diagonal pe poora $4$ rakhna — cross term halve karna padta hai."
+ ],
+ "la-definiteness-02": [
+  "'PSD but not PD' ka matlab: form kabhi negative nahi, par kisi non-zero $(x,y)$ pe zero — yaani matrix singular. $k$ isi condition se aayega.",
+  "Symmetric matrix $\\begin{pmatrix}1&k\\\\k&4\\end{pmatrix}$ (cross term $2kxy$ halve hua). Condition: $\\det=1\\cdot4-k^2=0$, saath mein $k>0$.",
+  "$4-k^2=0$ solve karo aur positive root lo. Trap: halve na karne se $\\begin{pmatrix}1&2k\\\\2k&4\\end{pmatrix}$ banta hai jo galat $k$ deta hai; square root lena mat bhoolo."
+ ],
+ "la-definiteness-03": [
+  "$G=A^TA$ Gram matrix hai, size $n\\times n$. Har option ko $x^TGx=\\lVert Ax\\rVert^2$ ki nazar se socho.",
+  "$x^TGx=\\lVert Ax\\rVert^2\\ge0$, zero tabhi jab $Ax=0$. PD ke liye $Ax=0$ ka sirf $x=0$ solution chahiye; aur $\\operatorname{rank}G=\\operatorname{rank}A\\le\\min(m,n)$.",
+  "Option D: $m<n$ ho to $\\operatorname{rank}A\\le m<n$ — kya $Ax=0$ ka non-zero solution banega? C ke liye $A^TAv=\\lambda v$ pe dono taraf $A$ lagao. Trap: Gram matrix ko hamesha PD maan lena."
+ ],
+ "la-definiteness-04": [
+  "$A$ symmetric tridiagonal hai (diagonal $2$, off-diagonal $-1$). Definiteness leading minors ya eigenvalues se decide hoti hai, off-diagonal ke sign se nahi.",
+  "Leading minors: $D_1=2$, $D_2=2\\cdot2-(-1)(-1)$, $D_3=\\det A$. Symmetric matrix ke liye: sab minors $>0$ ⇔ PD ⇔ sab eigenvalues $>0$.",
+  "$D_2=3$; ab $\\det A=2(4-1)-(-1)\\cdot\\det\\begin{pmatrix}-1&-1\\\\0&2\\end{pmatrix}$ evaluate karo. Trap: diagonal ka product det nahi hai — $A$ triangular nahi hai."
+ ],
+ "la-definiteness-05": [
+  "PD ke liye positive entries ya positive diagonal kaafi nahi. Har 2×2 symmetric matrix pe ek hi chhota test lagao.",
+  "2×2 symmetric: PD iff $a_{11}>0$ aur $\\det>0$. $\\det=0$ ho to sirf semidefinite, $\\det<0$ ho to indefinite.",
+  "Option B: $\\det=4\\cdot2-3\\cdot3$ nikaalo aur sign dekho; baaki options ka det bhi isi tarah. Trap: 'saari entries positive hain to PD' — yeh galat shortcut hai."
+ ],
+ "la-rayleigh-01": [
+  "Unit vectors pe $x^TAx$ ka maximum Rayleigh quotient ka max hai — yeh matrix ke ek khaas number ke barabar hota hai, kisi diagonal entry ke nahi.",
+  "Max $=\\lambda_{\\max}(A)$. 2×2 ke liye $\\lambda^2-(\\text{tr})\\lambda+\\det=0$; yahan tr $=6$, det $=9-1=8$.",
+  "$\\lambda^2-6\\lambda+8=0$ factor karo aur bada root lo. Trap: $x=(1,1)^T$ seedha mat daalo — wo unit vector nahi hai ($\\lVert x\\rVert^2=2$)."
+ ],
+ "la-rayleigh-02": [
+  "Constraint $x^2+y^2=1$ ⇒ unit circle pe quadratic form ka minimum, yaani Rayleigh quotient. Pehle form ka symmetric matrix banao.",
+  "Matrix $\\begin{pmatrix}5&2\\\\2&2\\end{pmatrix}$ ($4xy$ halve hoke $2,2$). Minimum $=\\lambda_{\\min}$; tr $=7$, det $=10-4=6$.",
+  "$\\lambda^2-7\\lambda+6=0$ factor karo aur chhota root lo. Trap: chhota diagonal coefficient $2$ minimum nahi hai — wo sirf $(0,1)$ pe value hai."
+ ],
+ "la-rayleigh-03": [
+  "Eigenvalues $-2,1,5$ diye hain; $R(x)$ ki range inhi se decide hoti hai. Option C mein $\\lVert x\\rVert\\le2$ hai, unit sphere nahi — wahan dhyan.",
+  "Rule: $\\lambda_{\\min}\\le R(x)\\le\\lambda_{\\max}$, extremes eigenvectors pe milte hain. Aur $x^TAx=R(x)\\,\\lVert x\\rVert^2$.",
+  "Option C: $\\lVert x\\rVert=2$ pe $x^TAx=4\\,R(x)$ — ab max $R$ se multiply karke $10$ se compare karo. D: $\\lambda=1$ ka eigenvector daal ke socho. Trap: $\\lVert x\\rVert$ se scale karna, $\\lVert x\\rVert^2$ ke bajaye."
+ ],
+ "la-rayleigh-04": [
+  "$A$ diagonal hai, to $x^TAx=2x_1^2-3x_2^2+x_3^2$ seedha likh sakte ho. Sawaal max ka hai — sign ke saath, absolute value nahi.",
+  "Symmetric $A$: $\\max_{\\lVert x\\rVert=1}x^TAx=\\lambda_{\\max}$. Diagonal matrix ke eigenvalues = diagonal entries $2,-3,1$.",
+  "Constraint $x_1^2+x_2^2+x_3^2=1$ hai; socho poora weight kis coordinate pe daalne se $2x_1^2-3x_2^2+x_3^2$ sabse bada hoga. Trap: $|-3|$ bada dikhta hai, par $-3x_2^2$ value ghatata hai."
+ ],
+ "la-rayleigh-05": [
+  "Unit circle pe $f(x)=x^TAx$ ke extremes $A$ ke eigenvalues hain, aur eigenvectors pe milte hain. Har option mein value aur location dono check karo.",
+  "Row sums equal hain ⇒ $(1,1)^T$ eigenvector, eigenvalue = row sum. Doosra eigenvalue trace $4$ se nikaalo; uska eigenvector $(1,-1)^T$ hai.",
+  "$A(1,-1)^T=(2-1,\\;1-2)^T$ compute karke eigenvalue dekho, phir socho wo min hai ya max. Trap: diagonal entries sirf $f(e_i)$ ki values hain — unhe automatically min/max mat maano."
+ ],
+ "la-lu-01": [
+  "Doolittle LU: $L$ ke diagonal pe $1$, aur $U$ = elimination ke baad bachi rows. $u_{22}$ = row 2 ki second entry, elimination ke baad.",
+  "Multiplier $l_{21}=a_{21}/a_{11}=6/2$. Phir $u_{22}=a_{22}-l_{21}\\,u_{12}$, jahan $u_{12}=a_{12}=1$.",
+  "$l_{21}=3$; ab $R_2-3R_1$ karo aur uski second entry dekho. Trap: subtract ki jagah add karna, ya bina eliminate kiye $a_{22}$ copy kar dena."
+ ],
+ "la-lu-02": [
+  "$u_{33}$ elimination ke bilkul end mein milta hai — row 3 ko pehle row 1 se aur phir naye row 2 se reduce karna padega.",
+  "Step 1: $l_{21}=2$, $l_{31}=0/1=0$, to $R_2\\to R_2-2R_1$. Step 2: $l_{32}=(\\text{new }a_{32})/u_{22}$, phir $R_3\\to R_3-l_{32}R_2$.",
+  "$R_2-2R_1=(0,1,1)$, to $u_{22}=1$ aur $l_{32}=3/1=3$. Ab $R_3-3\\cdot(0,1,1)$ karo aur last entry dekho. Trap: $a_{33}=4$ copy karna — row 3 abhi reduce karni baaki hai."
+ ],
+ "la-lu-03": [
+  "Sawaal **no** LU (bina row exchange) ka hai. LU tab fail hota hai jab pivot zero ho aur uske neeche non-zero entry ho — singular hona alag baat hai.",
+  "Doolittle mein $u_{11}=a_{11}$ aur $l_{21}u_{11}=a_{21}$. Agar $a_{11}=0$ par $a_{21}\\neq0$, to yeh equation satisfy hi nahi ho sakti.",
+  "Har option ka $a_{11}$ aur $a_{21}$ dekho; D ke liye $l_{21}=1$ leke $u_{22}=1-1\\cdot1$ nikaalo — factorization bana ya nahi? Trap: singular matrix ka matlab 'LU nahi' maan lena."
+ ],
+ "la-lu-04": [
+  "$A=LU$ given hai, $L$ unit lower triangular. Har option ko $\\det L$, triangular solves aur zero pivot ke angle se dekho.",
+  "$\\det A=\\det L\\cdot\\det U$ with $\\det L=1$, aur triangular ka det = diagonal product. $Ax=b$ ⇒ $L(Ux)=b$; $y=Ux$ rakho.",
+  "Option A ke liye ek invertible matrix lo jiska $a_{11}=0$ ho, jaise $\\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}$ — bina row swap ke pehla pivot milta hai? Trap: invertible ko 'LU without pivoting possible' maan lena."
+ ],
+ "la-lu-05": [
+  "$A=LU$ ki sirf $(3,3)$ entry chahiye, poora product nahi. Yeh $L$ ki row 3 aur $U$ ke column 3 ka dot product hai.",
+  "$a_{33}=l_{31}u_{13}+l_{32}u_{23}+l_{33}u_{33}$, with $L$ ki row 3 $=(-1,3,1)$ aur $U$ ka column 3 $=(1,-1,4)$.",
+  "Pehla term $(-1)(1)=-1$; ab $3\\cdot(-1)$ aur $1\\cdot4$ nikaal ke teeno jodo. Trap: sirf $l_{33}u_{33}$ lena, ya $u_{23}=-1$ ka sign bhoolna."
+ ],
+ "la-lu-06": [
+  "2×2 LU mein ek hi elimination step hai. Options $u_{22}$, $\\det A$ aur $l_{21}$ ke baare mein hain — ek baar eliminate karke sab check ho jaayenge.",
+  "$l_{21}=a_{21}/a_{11}$, $u_{22}=a_{22}-l_{21}a_{12}$, aur $\\det A=u_{11}u_{22}$.",
+  "$l_{21}=3/1$; ab $u_{22}=4-l_{21}\\cdot2$ nikaalo aur $\\det A=1\\cdot4-2\\cdot3$ se cross-check karo. Trap: subtract ki jagah add karna."
+ ],
+ "la-svd-01": [
+  "Singular values $A$ ke eigenvalues nahi hote — yahan $A$ triangular hai par symmetric nahi. Inke liye $A^TA$ chahiye.",
+  "$\\sigma_i=\\sqrt{\\lambda_i(A^TA)}$, with $A^TA=\\begin{pmatrix}3&4\\\\0&5\\end{pmatrix}\\begin{pmatrix}3&0\\\\4&5\\end{pmatrix}$.",
+  "$A^TA=\\begin{pmatrix}25&20\\\\20&25\\end{pmatrix}$; equal row sums se ek eigenvalue $25+20$, doosra $25-20$. Bade wale ka square root lo. Trap: diagonal $5$ ko le lena, ya square root bhoolna."
+ ],
+ "la-svd-02": [
+  "$A=uv^T$ rank-one outer product hai ($3\\times2$). Rank-one matrix ka sirf ek non-zero singular value hota hai — socho wo kis se banta hai.",
+  "$uv^T$ ka non-zero singular value $=\\lVert u\\rVert\\lVert v\\rVert$. $A^TA=\\lVert u\\rVert^2vv^T$, eigenvalues $\\lVert u\\rVert^2\\lVert v\\rVert^2$ aur $0$.",
+  "$\\lVert u\\rVert=\\sqrt{1+4+4}$, $\\lVert v\\rVert=\\sqrt{9+16}$ nikaalo, phir A aur D ko inke product se check karo. Trap: dono norms ko alag-alag singular values maan lena."
+ ],
+ "la-svd-03": [
+  "Har option singular values ka ek alag rule test karta hai: symmetric PSD, max stretch, rank, aur negative eigenvalue wala case.",
+  "$\\sigma_i=\\sqrt{\\lambda_i(A^TA)}\\ge0$. Symmetric $A$ ke liye $A^TA=A^2$, to $\\sigma=|\\lambda|$. Rank = non-zero $\\sigma$ ki count.",
+  "Option D: $A^2$ ke eigenvalues $3^2$ aur $(-2)^2$ ke square roots lo aur compare karo; C mein non-zero singular values gino. Trap: singular value ko negative ho sakne wala maan lena."
+ ],
+ "la-svd-04": [
+  "Saari entries ke squares ka sum = Frobenius norm$^2$. Matrix nahi diya, sirf singular values — to dono ko jodne wali identity chahiye.",
+  "$\\sum a_{ij}^2=\\operatorname{tr}(A^TA)=\\sum\\lambda_i(A^TA)=\\sum\\sigma_i^2$.",
+  "Singular values $3,2,1$ ko square karo ($3^2=9$, …) aur add karo. Trap: bina square kiye add karna, ya poore sum ko square karna."
+ ],
+ "la-svd-05": [
+  "$A$ ke dono columns same hain, $(1,1,0)$ — to rank kitna hoga? Singular values $A^TA$ se aayenge.",
+  "$\\sigma_i=\\sqrt{\\lambda_i(A^TA)}$. $A^TA$ ki $(i,j)$ entry = column $i$ · column $j$; yahan har dot product $1+1+0=2$.",
+  "$A^TA=\\begin{pmatrix}2&2\\\\2&2\\end{pmatrix}$ ke eigenvalues trace aur det se nikaalo, phir square root lo. Trap: $A^TA$ ke eigenvalues ko hi singular values likh dena."
+ ],
+ "la-svd-06": [
+  "General $m\\times n$, rank $r$ matrix hai. Har option ko is fact se judge karo ki singular values $A^TA$ se aate hain, $A$ ke char. poly se nahi.",
+  "$\\sigma_i^2=\\lambda_i(A^TA)$, $\\operatorname{rank}(A^TA)=\\operatorname{rank}A$, $\\lVert Ax\\rVert^2=x^TA^TAx\\le\\sigma_1^2\\lVert x\\rVert^2$; $A^TA$ aur $AA^T$ ke non-zero eigenvalues same.",
+  "Option A ko $\\begin{pmatrix}0&1\\\\0&0\\end{pmatrix}$ pe test karo: eigenvalues diagonal se, singular values $A^TA$ banake — phir compare. Trap: $\\sigma=|\\lambda|$ sirf symmetric (normal) matrices ke liye hai."
+ ]
+}

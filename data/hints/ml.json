@@ -1,0 +1,357 @@
+{
+"ml-linreg-origin-01": [
+  "Model mein intercept nahi hai — line origin se guzarti hai. Isliye centred $S_{xy}/S_{xx}$ wala slope yahan kaam nahi karega.",
+  "$\\sum (y-wx)^2$ ko $w$ se differentiate karke 0 rakho: $w=\\sum xy/\\sum x^2$. Yahan $x = 1,2,3,4$ aur $y = 2,3,7,8$.",
+  "$\\sum x^2 = 1+4+9+16 = 30$. Ab har column ka $x\\cdot y$ jod ke $\\sum xy$ nikaalo. Trap: $\\sum y/\\sum x = 20/10$ mat lo — wo least squares nahi hai."
+],
+"ml-linreg-origin-02": [
+  "Sirf ek parameter $w$ hai aur koi intercept nahi — toh ek hi equation milegi; centring ($\\bar x$, $\\bar y$) ka yahan koi role nahi.",
+  "Derivative zero karo: $\\frac{d}{dw}\\sum (y_i - wx_i)^2 = -2\\sum x_i(y_i - wx_i) = 0$.",
+  "Bracket kholo aur $w$ wale term ko ek taraf le jao, phir $w$ ke liye solve karo. Trap: $\\sum y_i/\\sum x_i$ sirf $\\sum(y_i - wx_i)=0$ solve karta hai — derivative mein $x_i$ ka factor hai."
+],
+"ml-linreg-origin-03": [
+  "Model origin se forced hai, aur poocha hai minimum SSE — sirf $w$ nahi. Pehle best $w$, phir squared residuals ka sum.",
+  "$w=\\sum xy/\\sum x^2$, aur shortcut: $SSE_{\\min} = \\sum y^2 - (\\sum xy)^2/\\sum x^2$.",
+  "$\\sum xy = 2+6+36 = 44$, $\\sum x^2 = 21$, $\\sum y^2 = 94$ — ab shortcut mein daalo. Trap: sirf $(\\sum xy)^2/\\sum x^2$ pe ruk mat jaana, wo explained part hai."
+],
+"ml-linreg-origin-04": [
+  "Intercept nahi hai — toh sirf $w$ ki ek normal equation hai. Har statement ke liye socho: ye isi equation se aata hai ya intercept wali equation se?",
+  "$w$ ki condition: $\\frac{d}{dw}\\sum e_i^2 = -2\\sum x_i e_i = 0$. $\\sum e_i = 0$ aur $(\\bar x,\\bar y)$ wali baatein $\\partial/\\partial a$ se aati hain — kya $a$ is model mein hai?",
+  "Doubling ke liye $w=\\sum xy/\\sum x^2$ mein $x\\to 2x$ daalo: numerator mein factor 2, denominator mein kitna? Shak ho toh $x=1,2$, $y=1,1$ pe $\\sum e_i$ nikaal ke dekho."
+],
+"ml-linreg-origin-05": [
+  "Feature $x$ nahi, $x^2$ hai — model $y = w\\phi$ with $\\phi = x^2$. Isliye simple $\\sum xy/\\sum x^2$ nahi chalega.",
+  "Through-origin formula feature $\\phi$ ke saath: $w = \\sum \\phi y/\\sum \\phi^2 = \\sum x^2 y/\\sum x^4$.",
+  "$\\phi$ values: $x=1\\to 1$, $x=2\\to 4$. Numerator ka pehla term $1\\cdot 3 = 3$; doosra term aur denominator khud nikaalo. Trap: denominator $\\sum\\phi^2$ hai, $\\sum x^2$ nahi."
+],
+"ml-linreg-ols-01": [
+  "Intercept $a$ poocha hai, slope nahi. Pehle slope $b$ chahiye, phir mean point $(\\bar x,\\bar y)$ se $a$.",
+  "$b = S_{xy}/S_{xx}$ (centred sums), phir $a = \\bar y - b\\bar x$. Yahan $\\bar x = 3$, $\\bar y = 6$.",
+  "Deviations: $x-\\bar x = -2,-1,0,1,2$ aur $y-\\bar y = -3,-2,0,2,3$; $S_{xx}=10$. Ab $S_{xy}$ aur $b$ nikaalo. Trap: $a=\\bar y + b\\bar x$ nahi — minus hai."
+],
+"ml-linreg-ols-02": [
+  "Simple regression with intercept mein $R^2$ = correlation $r$ ka square. Line fit kiye bina centred sums se seedha nikal jaata hai.",
+  "$R^2 = S_{xy}^2/(S_{xx}S_{yy})$, jahan $\\bar x = 2.5$, $\\bar y = 3$.",
+  "$x-\\bar x = -1.5,-0.5,0.5,1.5$ aur $y-\\bar y = -2,0,-1,3$; $S_{xx}=5$. Ab $S_{xy}$ aur $S_{yy}$ nikaalo. Trap: $r$ pe ruk mat jaana — $R^2$ uska square hai."
+],
+"ml-linreg-ols-03": [
+  "Do parameters ($a$, $b$) hain, toh do partial derivatives zero karne honge — options ko inhi do equations se match karo.",
+  "$\\partial/\\partial a$: $\\sum(y_i - a - bx_i)=0$; $\\partial/\\partial b$: $\\sum x_i(y_i - a - bx_i)=0$.",
+  "Pehli equation expand karo: constant $a$ ko $n$ points pe jodne se kya milta hai? Trap: doosri equation mein $a$ ke saath $\\sum x_i$ aata hai ya $\\sum x_i^2$ — dhyan se multiply karo."
+],
+"ml-linreg-ols-04": [
+  "Intercept hai — toh $a$ wali normal equation bhi milti hai. Har option ko is equation ya OLS ki orthogonality property se check karo.",
+  "$a$ ki equation: $\\sum (y_i - a - bx_i) = 0$. Aur fitted values residuals ke orthogonal hote hain: $\\sum \\hat y_i e_i = 0$ ($y_i$ nahi, $\\hat y_i$).",
+  "$\\sum y_ie_i$ ke liye $y_i = \\hat y_i + e_i$ likh ke expand karo — kya bachta hai? $R^2$: kya OLS hamesha kam se kam $\\hat y = \\bar y$ ($b=0$) jitna achha fit de sakta hai?"
+],
+"ml-linreg-ols-05": [
+  "Data nahi, sirf sums diye hain — seedha normal equations mein daalna hai, $n=4$ ke saath.",
+  "$\\sum y = na + b\\sum x$ aur $\\sum xy = a\\sum x + b\\sum x^2$, yaani $4a + 10b = 20$ aur $10a + 30b = 65$.",
+  "Pehli equation ko 2.5 se multiply karo: $10a + 25b = 50$; ab doosri mein se subtract karke $b$ nikaalo. Trap: $a$ back-substitute karte waqt sign dhyan se, aur $a$/$b$ swap mat karna."
+],
+"ml-linreg-ols-06": [
+  "Residual = observed − fitted, point $x=3$ pe. Pehle intercept wali line $\\hat y = a + bx$ fit karni hogi.",
+  "$b = S_{xy}/S_{xx}$, $a = \\bar y - b\\bar x$, phir $e = 6 - \\hat y(3)$. Yahan $\\bar x = 1.5$, $\\bar y = 3$.",
+  "$x-\\bar x = -1.5,-0.5,0.5,1.5$ aur $y-\\bar y = -2,-2,1,3$; $S_{xx}=5$. Ab $S_{xy}$, $b$, $a$ nikaalo. Trap: $\\hat y - y$ nahi, $y - \\hat y$ lena hai."
+],
+"ml-ridge-01": [
+  "Penalty $\\lambda w^2$ add hui hai aur intercept nahi — 1-D ridge ka closed form lagega, OLS wala nahi.",
+  "Derivative 0: $-2\\sum x(y-wx) + 2\\lambda w = 0 \\Rightarrow w = \\sum xy/(\\sum x^2 + \\lambda)$, with $\\lambda = 4$.",
+  "$\\sum x^2 = 1+4+1 = 6$. Ab $\\sum xy$ nikaal ke formula mein daalo. Trap: denominator mein $2\\lambda$ ya $\\lambda^2$ mat likho — dono taraf ka 2 cancel hota hai."
+],
+"ml-ridge-02": [
+  "$\\lambda$ chhote se bahut bada ho raha hai — model pe restriction badhi ya ghati? Har option ki direction (bias, variance, training error, exact zero) check karo.",
+  "Rule: bada $\\lambda$ ⇒ weights 0 ki taraf shrink, model simple ⇒ bias ↑, variance ↓. Training error $\\lambda = 0$ (OLS) pe sabse kam hota hai.",
+  "1-D formula $w=\\sum xy/(\\sum x^2+\\lambda)$ dekho: $\\lambda$ kitna bhi bada ho, kya $w$ exactly 0 banta hai? Trap: exact zero / feature selection lasso ($\\ell_1$) ki property hai, ridge ki nahi."
+],
+"ml-ridge-03": [
+  "Char alag claims hain — formula, invertibility, feature scaling, training error. Har ek ko ridge objective ke gradient aur penalty ke nature se judge karo.",
+  "Gradient 0: $-2X^\\top(y-Xw)+2\\lambda w=0 \\Rightarrow (X^\\top X+\\lambda I)w=X^\\top y$. Aur $X^\\top X+\\lambda I$ ke eigenvalues = $X^\\top X$ ke eigenvalues $+\\lambda$.",
+  "$X^\\top X$ PSD hai (eigenvalues $\\ge 0$); $+\\lambda$ ke baad kya sab positive? Metres→cm karne se us feature ka weight 100 guna chhota hoga — penalty $\\lambda w^2$ pe kya asar? Trap: OLS ki scale-invariance ridge pe mat lagao."
+],
+"ml-ridge-04": [
+  "$y$ values diye hi nahi — matlab $\\lambda$ sirf $x$ pe depend karega. Ratio $w_\\lambda/w_0$ lo, $\\sum xy$ cancel ho jaayega.",
+  "$w_\\lambda = \\sum xy/(\\sum x^2+\\lambda)$ aur $w_0 = \\sum xy/\\sum x^2$, toh $w_\\lambda/w_0 = \\sum x^2/(\\sum x^2+\\lambda)$ — ise $1/2$ rakho.",
+  "Ratio $1/2$ ka matlab denominator numerator ka double: $\\sum x^2+\\lambda = 2\\sum x^2$. Ab $x=1,2,3$ se $\\sum x^2$ nikaalo. Trap: $\\sum x$ nahi, squares ka sum chahiye."
+],
+"ml-ridge-05": [
+  "$X^\\top X$ diagonal hai — toh dono weights alag-alag nikal sakte ho, poora matrix inverse karne ki mehnat nahi.",
+  "$w = (X^\\top X+\\lambda I)^{-1}X^\\top y$; diagonal case mein $w_j = (X^\\top y)_j/((X^\\top X)_{jj}+\\lambda)$, with $\\lambda=5$.",
+  "Pehle $X^\\top X + 5I$ likho — har diagonal entry mein 5 jodo, off-diagonal 0 hi rahenge. Phir har $w_j$ nikaalo. Trap: $\\lambda^2 = 25$ mat jodo, aur OLS weights ko $1+\\lambda$ se divide karna galat shortcut hai."
+],
+"ml-logistic-01": [
+  "Do steps: pehle linear score $z = w^\\top x + b$, phir sigmoid se probability. Score khud probability nahi hai.",
+  "$z = 2\\cdot x_1 + (-1)\\cdot x_2 + 0.5$ with $x=(1,2)$, aur $\\sigma(z) = 1/(1+e^{-z})$.",
+  "$z = 2 - 2 + 0.5$. Ab $e^{-z}$ nikaalo ($e^{-0.5}\\approx 0.607$) aur sigmoid mein daalo. Trap: $e^{+z}$ use mat karo, warna $\\sigma(-z)$ mil jaayega."
+],
+"ml-logistic-02": [
+  "Probability $p$ di hai aur score $w^\\top x + b$ poocha hai — sigmoid ko ulta (invert) karna hai.",
+  "Sigmoid ka inverse logit hai: $w^\\top x + b = \\ln\\frac{p}{1-p}$ (log-odds).",
+  "Pehle odds nikaalo: $p = 0.8$, $1-p = 0.2$, toh $p/(1-p)$ kitna? Phir uska log. Trap: odds pe ruk mat jaana; $\\ln p$ ya $\\ln\\frac{1-p}{p}$ bhi galat hai."
+],
+"ml-logistic-03": [
+  "Threshold 0.5 nahi, 0.8 hai — toh boundary $z=0$ pe nahi, kisi positive $z$ pe hogi. Aur $x_2 = 0$ fix hai.",
+  "$\\sigma(z)\\ge t \\iff z \\ge \\ln\\frac{t}{1-t}$. Yahan $z = 3x_1 - 2x_2 - 6$ aur $t = 0.8$.",
+  "$\\ln(0.8/0.2) = \\ln 4 \\approx 1.386$. Ab $x_2=0$ rakh ke $3x_1 - 6 \\ge 1.386$ solve karo. Trap: $z = 0.8$ mat rakho — threshold probability pe hai, score pe nahi."
+],
+"ml-logistic-04": [
+  "Sirf $\\sigma(z_0)$ ki value di hai, $z_0$ nahi — matlab derivative ko $\\sigma$ ke terms mein hi likhna hai, $z_0$ nikaalne ki zaroorat nahi.",
+  "Sigmoid ki khaas property: $\\sigma'(z) = \\sigma(z)\\,(1-\\sigma(z))$.",
+  "Yahan $\\sigma = 0.8$, toh $1-\\sigma = 0.2$ — ab dono factors multiply karo. Trap: $\\sigma^2$ ya sirf $(1-\\sigma)$ mat lo, aur $e^z$ ki tarah 'derivative = khud function' mat samjho."
+],
+"ml-logistic-05": [
+  "Har point ka loss alag nikaalo: $y=1$ pe sirf $-\\ln\\hat p$, $y=0$ pe sirf $-\\ln(1-\\hat p)$. Total chahiye, average nahi.",
+  "A: $-\\ln 0.8$; B ($y=0$): $-\\ln(1-0.4) = -\\ln 0.6$; C: $-\\ln 0.5$ — teeno natural log se jodo.",
+  "$-\\ln 0.8 \\approx 0.223$ aur $-\\ln 0.5 \\approx 0.693$. Ab B ka term nikaal ke teeno jodo. Trap: B ke liye $-\\ln 0.4$ nahi — wahan $y=0$ hai."
+],
+"ml-logistic-06": [
+  "Char claims: gradient ka form, boundary ka shape, $\\hat p$ ka shape, separable data pe weights. Har ek mein $z = w^\\top x + b$ aur $\\sigma(z)$ ko alag karke socho.",
+  "Chain rule: $\\partial L/\\partial z = \\hat p - y$ (kyunki $\\sigma' = \\sigma(1-\\sigma)$ log terms se cancel hota hai), aur $\\partial z/\\partial w = x$. Threshold 0.5 $\\iff z \\ge 0$.",
+  "$\\hat p = \\sigma(z)$ hamesha (0,1) mein bounded hai — kya ye $x$ ka linear function ho sakta hai? Separable data pe: $w$ ko $2w$, $10w$ karne se loss ghatta hai ya badhta hai?"
+],
+"ml-knn-01": [
+  "Query $(0,0)$ aur $k=3$ — sirf 3 sabse nazdeek points vote karenge; na sirf ek nearest, na poora training set.",
+  "Origin se squared distance $= x_1^2 + x_2^2$ (square root ki zaroorat nahi, order same rehta hai). Saare 7 points ke liye nikaal ke sort karo.",
+  "P1: $1+0 = 1$, P2: $1+1 = 2$, P4: $4+1 = 5$. Baaki P3, P5, P6, P7 khud nikaalo, phir top 3 ki classes gino. Trap: sirf P1 dekh ke decide mat karo — wo $k=1$ hai."
+],
+"ml-knn-02": [
+  "Same data, same query — ek baar distances sort kar lo, phir har option ke $k$ ke liye top-$k$ ka vote gino.",
+  "Squared distance $x_1^2+x_2^2$ se sort karo; $k$ odd hai aur 2 classes hain, toh tie nahi hoga.",
+  "P1 = 1, P2 = 2, P3 = 4, P4 = 5. Ab P5, P6, P7 jod ke poori sorted list banao, phir $k=1,3,5,7$ pe vote gino. Trap: P3 aur P4 (4 vs 5) ka order mat bigaadna."
+],
+"ml-knn-03": [
+  "Dono features ki range bilkul alag hai: age ka spread 40, salary ka 80000. Raw Euclidean distance mein kaun sa feature haavi hoga, aur scaling ke baad kya badlega?",
+  "Raw: $d^2 = (\\Delta\\text{age})^2 + (\\Delta\\text{salary})^2$. Min–max: $x' = (x-\\min)/(\\max-\\min)$, yaani age gap ko 40 se aur salary gap ko 80000 se divide karo.",
+  "Query se P: age gap 28, salary gap 10000; Q: age gap 2, salary gap 12000. Ab raw aur scaled dono distances compare karo. Trap: ye maan lena ki scaling se nearest neighbour nahi badalta."
+],
+"ml-knn-04": [
+  "Har option $k$ ke effect (bias/variance, training error) ya k-NN ki cost ke baare mein hai — har jagah direction dhyan se check karo.",
+  "$k=1$: har training point khud ka nearest hai ⇒ training error 0, jagged boundary (low bias, high variance). $k$ badhao ⇒ zyada neighbours ka average.",
+  "$k=n$ pe socho: har query ko kaunsa label milega, aur training error kitna hoga? Cost: k-NN 'training' mein sirf data store karta hai — distances kab compute hote hain?"
+],
+"ml-knn-05": [
+  "Ye regression hai: 3 nearest points ke $y$ ka mean, vote nahi. Distance sirf $x$ pe hai: $|x - 5|$.",
+  "Har $x$ ke liye $|x-5|$ nikaalo, 3 sabse chhote chuno, phir unke $y$ values ka average lo.",
+  "$x=4$ ka distance 1, $x=7$ ka 2; teesra nearest $x=2$ (distance 3) hai ya $x=9$ (distance 4)? Phir unke $y$ jodo. Trap: neighbours ke $x$ ka average mat lo, $y$ ka lo."
+],
+"ml-naive-bayes-01": [
+  "Prior $P(\\text{spam}) = 0.3$ diya hai — spam rare class hai, isliye prior ko score mein multiply karna zaroori hai. Dono classes ke score banake normalise karna hai.",
+  "Score(c) $= P(c)\\cdot P(W_1{=}1\\mid c)\\cdot P(W_2{=}1\\mid c)$, aur posterior = spam score / (spam + ham score). Yahan $P(\\text{ham}) = 0.7$.",
+  "Spam score $= 0.3\\times0.6\\times0.5$. Ab ham score $0.7\\times0.2\\times0.3$ nikaalo aur normalise karo. Trap: priors chhod ke sirf likelihoods ($0.30$ vs $0.06$) compare karna galat hai."
+],
+"ml-naive-bayes-02": [
+  "Do kaam: pehle naive Bayes se dono classes ka posterior, phir 'prediction galat hone ki probability' $= 1 - \\max$ posterior.",
+  "Score(c) $= P(c)\\cdot P(\\text{Sunny}\\mid c)\\cdot P(\\text{Weak}\\mid c)$, sab table se gin ke (no smoothing). Phir dono scores ke sum se divide karo.",
+  "Yes ke 4 rows hain (1, 3, 5, 6): $P(\\text{Yes}) = 0.4$, unme Sunny 2 aur Weak 4. Ab No class (6 rows) ke counts gino. Trap: max posterior hi report mat karna, aur priors mat chhodna."
+],
+"ml-naive-bayes-03": [
+  "Laplace add-one: har word ke count mein 1 judta hai, toh class ka total bhi badhega — vocabulary mein $V = 10$ words hain.",
+  "$P(w\\mid C) = (\\text{count}(w) + 1)/(N_C + V)$, yahan count $=3$, $N_C = 20$, $V = 10$.",
+  "Numerator $3+1 = 4$. Denominator mein sirf 1 nahi, $V$ judta hai — har word ka +1 total mein aata hai. Ab divide karo. Trap: Bernoulli wala +2 bhi yahan nahi lagta."
+],
+"ml-naive-bayes-04": [
+  "'Naive' assumption features ke beech ki dependence ke baare mein hai — aur wo bhi class pata hone ke baad. Priors ya Gaussian shape ki baat alag models ki hai.",
+  "Bayes: $P(y\\mid x)\\propto P(y)\\,P(x_1,\\dots,x_d\\mid y)$. Naive assumption is joint likelihood ko simple product mein todti hai.",
+  "Do options product jaise dikhte hain — ek mein har factor pe condition $\\mid y$ hai, ek mein nahi. Trap: marginal independence aur conditional independence (given class) alag cheezein hain."
+],
+"ml-naive-bayes-05": [
+  "Char claims: zero counts, priors, duplicate feature, smoothing ka asar. Har ek ko NB score $P(c)\\prod_j P(x_j\\mid c)$ pe test karo.",
+  "Score ek product hai: ek factor 0 ⇒ poora product 0. Har feature apna alag factor deta hai, aur prior Bayes rule ka hissa hai.",
+  "Duplicate feature: product mein $P(x_j\\mid c)$ kitni baar aayega? Smoothing: count 0→1 aur 500→501 — relative change kis mein bada hai? Trap: imbalanced data mein prior hataana Bayes rule todna hai."
+],
+"ml-naive-bayes-06": [
+  "Variances barabar hain par priors nahi (0.8 vs 0.2) — toh threshold means ka midpoint 1 nahi rahega. Kis taraf shift hoga?",
+  "Log scores barabar karo: $\\ln 0.8 - x^2/2 = \\ln 0.2 - (x-2)^2/2$.",
+  "$x^2 - (x-2)^2 = 4x - 4$, toh $\\ln 0.8 - \\ln 0.2 = 2x - 2$. Ab $x$ solve karo (2 se divide mat bhoolna). Trap: bada prior boundary ko $C_2$ ki taraf dhakelta hai, ulta nahi."
+],
+"ml-lda-01": [
+  "Fisher direction sirf means ka difference nahi hai — $S_W$ identity nahi hai (off-diagonal 1), isliye correlation ka correction lagega.",
+  "$w \\propto S_W^{-1}(\\mu_1 - \\mu_2)$. 2×2 inverse: $\\frac{1}{\\det}\\begin{pmatrix} d & -b \\\\ -c & a\\end{pmatrix}$, yahan $\\det = 4-1 = 3$.",
+  "$\\mu_1-\\mu_2 = (-2, 1)$ aur $S_W^{-1} = \\frac13\\begin{pmatrix}2&-1\\\\-1&2\\end{pmatrix}$. Ab multiply karo; scale aur sign se direction nahi badalti. Trap: $S_W$ se multiply mat karo, inverse se karo."
+],
+"ml-lda-02": [
+  "Sawaal hai boundary linear kyun hai — Gaussian log-density mein $x$ ka quadratic term kab gayab hota hai, wo socho.",
+  "$\\ln p_k(x)$ mein term $-\\frac12 x^\\top\\Sigma_k^{-1}x$ hota hai. Do classes ke log-ratio mein ye tabhi cancel hoga jab dono ka ye term same ho.",
+  "Har option ko is term pe test karo: alag-alag $\\Sigma_k$ se kya bachega? Priors sirf constant $\\ln\\pi_k$ jodte hain. Trap: 'features independent given class' naive Bayes ki assumption hai, LDA ki nahi."
+],
+"ml-lda-03": [
+  "Variance same (4) hai par prior $A$ ka bada hai — threshold midpoint 4 se hatega. $A$ zyada likely hai, toh uska region badhega ya ghatega?",
+  "Log scores barabar: $\\ln 0.75 - \\frac{(t-2)^2}{8} = \\ln 0.25 - \\frac{(t-6)^2}{8}$ (denominator $2\\sigma^2 = 8$).",
+  "$(t-2)^2 - (t-6)^2 = 8t - 32$, toh $\\ln 0.75 - \\ln 0.25 = t - 4$. Ab $t$ nikaalo. Trap: shift formula mein $\\sigma^2 = 4$ lagta hai, $\\sigma = 2$ nahi."
+],
+"ml-lda-04": [
+  "'Scatter' ki definition stem mein di hai: $\\sum (x-\\bar x)^2$, $n$ se divide nahi. Aur numerator mein means ka difference squared hai.",
+  "$J = (\\bar x_A - \\bar x_B)^2/(s_A^2 + s_B^2)$: pehle dono classes ke means, phir har class ka scatter.",
+  "$\\bar x_A = 2$, $\\bar x_B = 7$; class A ke deviations $-1, 0, 1$, toh $s_A^2 = 2$. Ab $s_B^2$ aur $J$ nikaalo. Trap: variance ($s^2/n$) mat lo, aur difference ka square mat bhoolo."
+],
+"ml-lda-05": [
+  "Char claims: objective, directions ki ginti, PCA se comparison, unequal covariance. Yaad rakho: LDA labels use karta hai aur class separation dhoondhta hai.",
+  "Fisher criterion = between-class separation / within-class spread along $w$. $K$ classes ke liye $S_B$ = $K$ class means ka overall mean ke around scatter.",
+  "$K$ vectors $\\mu_k - \\mu$ ka (weighted) sum zero hota hai — toh $S_B$ ka rank max kitna ho sakta hai? Unequal covariances pe Bayes boundary kaisa banta hai (QDA yaad karo)?"
+],
+"ml-svm-margin-01": [
+  "Dono margin hyperplanes $w^\\top x + b = +1$ aur $-1$ ke beech ki poori doori chahiye — boundary se sirf ek side tak nahi. $b$ ka isme koi role nahi.",
+  "Width $= 2/\\lVert w\\rVert$, jahan $\\lVert w\\rVert$ Euclidean norm hai: $\\sqrt{3^2 + 4^2}$.",
+  "Pehle $\\lVert w\\rVert = \\sqrt{9+16}$ nikaalo, phir 2 ko usse divide karo. Trap: $1/\\lVert w\\rVert$ sirf half-width hai; $\\lVert w\\rVert^2$ ya $3+4$ se divide mat karo."
+],
+"ml-svm-margin-02": [
+  "Hard-margin SVM ka margin opposite classes ke sabse nazdeek points (support vectors) se decide hota hai. Pehle dhoondo kaunsa +1 aur kaunsa −1 point sabse paas hain.",
+  "Agar ek hi pair support vectors hai: $w \\propto x_+ - x_-$, aur $w^\\top x_+ + b = 1$, $w^\\top x_- + b = -1$. Width $= 2/\\lVert w\\rVert$.",
+  "Opposite pairs ki doori: A–C $= \\sqrt 8$, A–D $= \\sqrt{13}$; B wale pairs aur door hain. Ab A, C se $w$ aur $b$ nikaalo. Trap: $1/\\lVert w\\rVert$ half-width hai, poori width nahi."
+],
+"ml-svm-margin-03": [
+  "Support vectors woh points hain jo solution $w$ ko 'pakad' ke rakhte hain — socho kaunse points hata do toh bhi $w$ nahi badlega.",
+  "Dual mein $w = \\sum_i \\alpha_i y_i x_i$; sirf $\\alpha_i > 0$ wale points contribute karte hain, aur unke liye $y_i(w^\\top x_i+b) = 1$.",
+  "Margin se bahut door wala point: uska constraint active hai ya inactive, toh $\\alpha_i$ kya hoga? Trap: hard margin mein training pe koi misclassified point hota hi nahi."
+],
+"ml-svm-margin-04": [
+  "Margin hyperplane pe hone ka matlab $y\\,f(x) = 1$ exactly. Har point ka $y f(x)$ nikaal ke gino — $f(x)=0$ wale points nahi dhoondhne.",
+  "$f(x) = x_1 - x_2$ har point pe nikaalo aur label $y$ se multiply karo: $yf = 1$ ⇒ margin pe, $yf > 1$ ⇒ margin ke bahar.",
+  "P1: $f = 1$, $yf = 1$ (margin pe); P3: $f = 3$, $yf = 3$ (bahar). Baaki chaar points khud check karo. Trap: har class ka sirf ek support vector maan lena galat hai."
+],
+"ml-svm-margin-05": [
+  "Point se hyperplane ki geometric doori chahiye — raw score $w^\\top x + b$ ko norm se normalise karna padega.",
+  "Distance $= |w^\\top x + b|/\\lVert w\\rVert$ with $w = (6, 8)$, $b = -10$, $x = (3,4)$.",
+  "Score: $|6\\cdot3 + 8\\cdot4 - 10| = 40$. Ab $\\lVert w\\rVert = \\sqrt{36+64}$ se divide karo. Trap: $\\lVert w\\rVert^2$ ya $6+8$ se divide mat karna."
+],
+"ml-svm-margin-06": [
+  "Char claims: non-support vector hataana, $(w,b)$ ko scale karna, objective ki equivalence, margin width. Har ek ko constraints aur $2/\\lVert w\\rVert$ se check karo.",
+  "Sirf active constraints ($y_i f(x_i) = 1$) solution decide karte hain. Boundary $\\{x: w^\\top x+b=0\\}$ hai; dono margin lines ke beech doori $2/\\lVert w\\rVert$.",
+  "$cw^\\top x + cb = 0$ aur $w^\\top x + b = 0$ — kya ye same points ka set hai? $2/\\lVert w\\rVert$ badhana aur $\\lVert w\\rVert$ ghataana same cheez hai? Trap: half-width vs full width."
+],
+"ml-svm-soft-01": [
+  "$C$ slack $\\sum\\xi_i$ ka weight hai — $C$ badhane se har violation mehenga ho jaata hai. Har option ki direction isi se check karo.",
+  "Objective $\\frac12\\lVert w\\rVert^2 + C\\sum\\xi_i$: bada $C$ ⇒ slack kam karna priority, chahe margin chhota ho jaaye. $C\\to\\infty$ ⇒ koi slack tolerate nahi.",
+  "Hard margin kis limit mein milta hai — $C\\to 0$ ya $C\\to\\infty$? RBF ki width kaunsa parameter set karta hai — $C$ ya $\\gamma$? Trap: wider margin chhote $C$ ki pehchaan hai."
+],
+"ml-svm-soft-02": [
+  "Objective ke do parts: $\\frac12\\lVert w\\rVert^2$ aur $C$ guna total slack. Har point ka slack (hinge) alag nikaalna hai — sirf violators ginna kaafi nahi.",
+  "$f(x) = x_1 + x_2 - 3$, $\\xi_i = \\max(0, 1 - y_i f(x_i))$, $\\frac12\\lVert w\\rVert^2 = \\frac12(1+1)$, aur $C = 2$.",
+  "A: $f = 1$, $yf = 1$, $\\xi = 0$. C: $f = 1+1.5-3 = -0.5$, $y = +1$, toh $\\xi = 1.5$. B aur D khud nikaalo. Trap: $\\frac12$ mat chhodo, aur hinge mein '1 −' zaroor rakho."
+],
+"ml-svm-soft-03": [
+  "Hinge loss sirf misclassified points pe nahi lagta — sahi side pe hote hue bhi agar $yf < 1$ hai, toh loss hai.",
+  "Har point ka loss $= \\max(0, 1 - y f(x))$. Pehle $y f$ nikaalo, phir 1 mein se ghatao.",
+  "Point 1: $yf = 2$, loss $\\max(0, -1) = 0$. Point 2: $yf = (-1)(-0.4) = 0.4$ — ab iska loss aur point 3 khud nikaalo. Trap: $1 - yf$ lena hai, $1 + yf$ nahi."
+],
+"ml-svm-soft-04": [
+  "Seedha formula hai — pehle dot product $x^\\top z$, phir 1 jodo, phir square. Order dhyan se: 1 bracket ke andar hai.",
+  "$K(x,z) = (1 + x^\\top z)^2$, jahan $x^\\top z = 1\\cdot3 + 2\\cdot1$.",
+  "$x^\\top z = 3 + 2 = 5$. Ab $(1 + 5)$ ka square karo. Trap: $1 + 5^2$ ya sirf $5^2$ nahi — 1 bracket ke andar hai."
+],
+"ml-svm-soft-05": [
+  "Char claims kernel trick ke baare mein: RBF ka feature space, $\\phi$ compute karna, XOR, aur valid kernel ki condition. Har ek ko '$K(x,z) = \\phi(x)^\\top\\phi(z)$' se judge karo.",
+  "Kernel trick: training aur prediction mein sirf $K(x_i,x_j)$ chahiye. Valid kernel ⇒ Gram matrix symmetric PSD (Mercer). RBF $= e^{-\\gamma\\lVert x-z\\rVert^2}$.",
+  "XOR: $(0,0),(1,1)$ ek class, $(0,1),(1,0)$ doosri — feature $x_1x_2$ in charon pe kya values deta hai? RBF mein $e^{2\\gamma x^\\top z}$ ki Taylor series kis degree pe rukti hai?"
+],
+"ml-svm-soft-06": [
+  "RBF ke exponent mein squared distance aata hai, plain distance nahi — aur usse $\\gamma = 0.5$ multiply hoga.",
+  "$K = \\exp(-\\gamma\\lVert x-z\\rVert^2)$ with $x - z = (1-2,\\ 2-0)$.",
+  "$x - z = (-1, 2)$, toh $\\lVert x-z\\rVert^2 = 1 + 4 = 5$. Ab $e^{-0.5\\times 5}$ calculator se nikaalo. Trap: $\\sqrt5$ mat use karo, aur minus sign mat khona — value $(0,1]$ mein honi chahiye."
+],
+"ml-tree-split-01": [
+  "Entropy poochi hai (Gini nahi), aur log base 2. Pehle class proportions nikaalo: 8 examples mein 6 positive, 2 negative.",
+  "$H = -p_+\\log_2 p_+ - p_-\\log_2 p_-$ with $p_+ = 6/8$, $p_- = 2/8$.",
+  "$p_- = 0.25$ wala term: $-0.25\\log_2 0.25 = 0.25\\times 2 = 0.5$. Ab $-0.75\\log_2 0.75$ nikaal ke jodo. Trap: natural log mat lo, aur Gini ($1-\\sum p^2$) se confuse mat ho."
+],
+"ml-tree-split-02": [
+  "Teen classes hain aur Gini poocha hai — har class ki proportion chahiye: counts 3, 3, 4 out of 10.",
+  "Gini $= 1 - \\sum p_i^2$ with $p = 0.3, 0.3, 0.4$.",
+  "$0.3^2 = 0.09$ (do baar) aur $0.4^2 = 0.16$. Ab teeno ka sum 1 mein se ghatao. Trap: sirf $\\sum p_i^2$ pe ruk mat jaana, aur $1 - \\max p$ misclassification error hai, Gini nahi."
+],
+"ml-tree-split-03": [
+  "Information gain = parent entropy − children ki size-weighted entropy. Left child pure hai, toh uska contribution aasaan hai.",
+  "Gain $= H(\\text{parent}) - \\frac{4}{10}H(\\text{left}) - \\frac{6}{10}H(\\text{right})$; right child mein 1+ aur 5−.",
+  "Parent 5:5 hai toh $H = 1$; left pure toh $H = 0$. Ab $H(1/6) = -\\frac16\\log_2\\frac16 - \\frac56\\log_2\\frac56$ nikaalo aur $6/10$ se weight karo. Trap: dono children ka simple average mat lo."
+],
+"ml-tree-split-04": [
+  "Har attribute ($X_1, X_2, X_3$) se split karke children ke +/− counts banao. Parent 4+, 4− hai, toh $H = 1$.",
+  "Gain $= 1 - \\sum_k \\frac{n_k}{8}H(\\text{child}_k)$. Kaam ki values: $H(3/4) \\approx 0.811$, $H(1/3) \\approx 0.918$, $H(1/2) = 1$, pure child ka $H = 0$.",
+  "$X_1 = 1$ wale rows 1, 2, 3, 5 ⇒ (3+, 1−); $X_1 = 0$ ⇒ (1+, 3−). Ab $X_2$ aur $X_3$ ke counts khud gino. Trap: misclassification error dekh ke tie maan lena — entropy se compare karo."
+],
+"ml-tree-split-05": [
+  "Char claims: entropy ka max, Gini ka max, gain ka sign, many-valued attributes. Binary case mein sab ko $p$ ke function ki tarah socho.",
+  "Binary: $H(p) = -p\\log_2 p - (1-p)\\log_2(1-p)$, Gini $= 1 - p^2 - (1-p)^2 = 2p(1-p)$. Gain = parent − weighted children.",
+  "$p = 0.5$ dono formulas mein daal ke max values nikaalo. Entropy concave hai — kya children ka weighted average parent se zyada ho sakta hai? ID jaisa attribute children ko kitna pure banata hai?"
+],
+"ml-tree-split-06": [
+  "Gini ka decrease = parent Gini − children ka size-weighted Gini. Left child (4 A, 0 B) pure hai.",
+  "Parent: $1 - 0.6^2 - 0.4^2$. Right child: $1 - (2/6)^2 - (4/6)^2$. Weights $4/10$ aur $6/10$.",
+  "Parent Gini $= 1 - 0.36 - 0.16 = 0.48$, left $= 0$. Ab right ka Gini nikaal ke 0.6 se multiply karo aur parent se ghatao. Trap: weighted child Gini ko hi decrease mat samjho."
+],
+"ml-bias-variance-01": [
+  "Training MSE 40 aur validation 42 — dono lagbhag barabar, par baseline (≈5) se bahut kharab. Gap chhota hai ya error khud bada hai?",
+  "Rule: train aur validation dono high, gap chhota ⇒ high bias (underfit). Train low, validation high (bada gap) ⇒ high variance (overfit).",
+  "Diagnosis ke baad remedies check karo: zyada data mainly kya ghatata hai — bias ya variance? Regularisation badhane se model simple hota hai ya complex?"
+],
+"ml-bias-variance-02": [
+  "Noise ka standard deviation diya hai, variance nahi. Aur bias ko bhi square karna hai — teen terms jodne hain.",
+  "$E[(y-\\hat f)^2] = \\text{bias}^2 + \\text{variance} + \\sigma^2$, with bias $= 0.3$, variance $= 0.05$, $\\sigma = 0.2$.",
+  "$\\text{bias}^2 = 0.3^2 = 0.09$. Ab $\\sigma^2$ nikaalo aur teeno terms jodo. Trap: SD 0.2 seedha mat jodo, uska square lo."
+],
+"ml-bias-variance-03": [
+  "$T = 0.5X$ shrunk estimator hai, toh biased hai — MSE = bias² + variance, dono chahiye. $N(\\theta, 4)$ mein 4 variance hai.",
+  "$E[T] = 0.5\\,\\theta$, bias $= E[T] - \\theta$, aur $\\mathrm{Var}(aX) = a^2\\,\\mathrm{Var}(X)$.",
+  "$E[T] = 0.5\\times 4 = 2$, toh bias $= 2 - 4 = -2$. Ab bias² aur $\\mathrm{Var}(0.5X)$ nikaal ke jodo. Trap: constant square hoke bahar aata hai ($0.25$, $0.5$ nahi), aur signed bias mat jodo."
+],
+"ml-bias-variance-04": [
+  "Har change ke liye poocho: isse model training points ko kam 'follow' karega (smoother, restricted) ya zyada closely?",
+  "Variance ghatta hai jab model restricted ya averaged ho (zyada neighbours, stronger shrinkage); badhta hai jab capacity badhe.",
+  "Ek-ek karke: tree depth badhane se leaves chhoti hoti hain ya badi? SVM mein bada $C$ slack ko sasta karta hai ya mehenga? Trap: ridge $\\lambda$ aur SVM $C$ ki direction ulti hai."
+],
+"ml-bias-variance-05": [
+  "Do alag curves hain — training error aur test error. Complexity badhne pe har ek ke saath kya hota hai, aur bias/variance kis direction mein jaate hain?",
+  "Rule: complexity ↑ ⇒ bias ↓, variance ↑. Training error sirf fit ki quality dekhta hai; test error ≈ bias² + variance + noise.",
+  "Kya zyada degree wala (richer) model training set ko pehle se kharab fit kar sakta hai? Test error mein bias ghat raha, variance badh raha — sum ka shape kaisa hoga? Trap: dono curves swap karna."
+],
+"ml-cv-01": [
+  "Har candidate value ke liye poora 5-fold CV chalega, aur end mein ek final refit bhi ginti mein shaamil hai.",
+  "Total fits $=$ (candidates) × (folds) + (final refit), yahan 4 candidates aur 5 folds.",
+  "Ek candidate ke liye 5 fits (har fold ek baar held-out). Ab 4 candidates ke liye multiply karo aur refit jodo. Trap: $5 + 4$ jodna nahi, multiply karna hai."
+],
+"ml-cv-02": [
+  "LOOCV mein har point ek baar held-out hota hai — toh har model ke liye utne fits jitne points. Aur 3 models compare ho rahe hain.",
+  "Fits per model $= n = 50$ (har fit $n-1 = 49$ points pe hota hai). Total $=$ models × $n$.",
+  "Degree 1 ke liye 50 fits; degree 2 aur 3 ke liye bhi utne hi. Ab total jodo. Trap: fits ki ginti $n-1$ nahi — $n-1$ sirf training set ka size hai."
+],
+"ml-cv-03": [
+  "LOOCV: har point ko hata ke baaki points se classify karo — point khud apna neighbour nahi ban sakta. Error rate chahiye, sirf count nahi.",
+  "Har $x$ ke liye baaki 5 points mein sabse nazdeek dhoondo; class match na ho toh error. Error rate $=$ errors/6.",
+  "$x=1$: nearest $x=2$ (A) — sahi. $x=2$: nearest $x=1$ (A) — sahi. Ab 4, 5, 9, 10 khud check karo. Trap: accuracy aur error rate mein confuse mat ho."
+],
+"ml-cv-04": [
+  "Har option ek property ke baare mein hai: randomness, fits ki ginti, bias/variance, training set ka size. LOOCV ko '$n$-fold CV' maan ke check karo.",
+  "$k$-fold: $k$ fits, har ek $(k-1)n/k$ points pe. LOOCV ($k = n$): $n$ fits, har ek $n-1$ points pe, aur ek point chhodne ka sirf ek hi tareeka.",
+  "10-fold mein fits 10 hain ya $n/10$? $k$ badhane pe $(k-1)n/k$ badhta hai ya ghatta? LOOCV ke training sets lagbhag identical hain — estimate ke variance pe iska kya asar?"
+],
+"ml-cv-05": [
+  "Model training targets ka mean predict karta hai — LOOCV mein held-out point mean se bahar rahega, toh har fold ka mean alag hoga.",
+  "Har $i$ ke liye: prediction $=$ baaki 3 targets ka mean, error $= y_i -$ prediction. LOOCV MSE = chaaron squared errors ka average.",
+  "2 hatao: mean $(4+6+8)/3 = 6$, error $-4$. 4 hatao: mean $16/3$, error $-4/3$. Ab 6 aur 8 ke liye karo, phir squares ka average. Trap: overall mean 5 sab pe mat lagao."
+],
+"ml-leakage-01": [
+  "Mean aur SD bhi data se 'learn' hote hain — sawaal hai ye kis data se aayein taaki held-out fold sach mein unseen rahe.",
+  "Rule: data se fit hone wali har preprocessing sirf training folds pe fit karo; held-out fold pe usi ko sirf apply (transform) karo, naya fit nahi.",
+  "Har option se poocho: kya held-out fold ki values scaler ke mean/SD mein ghus gayi? Trap: k-NN scale-invariant nahi hai — distance bade-range wala feature dominate karta hai."
+],
+"ml-leakage-02": [
+  "Har procedure ke liye poocho: kya evaluation data (held-out labels, future days, outcome ke baad ki info) training ya feature choice mein kahin use hua?",
+  "Leak-free rule: feature selection/tuning sirf training folds ke andar; features prediction time pe available hone chahiye; time series mein train past pe, test future pe.",
+  "Ek-ek karke: full data pe label-correlation se features chunte waqt held-out labels dikhe? *refund_issued* complaint se pehle record hota hai ya baad? Random folds mein training days test days ke baad ke ho sakte hain?"
+],
+"ml-leakage-03": [
+  "Ek patient ke 5 scans lagbhag same hote hain. Random shuffle mein kya ek patient ke scans training aur validation dono mein pahunch jaate hain?",
+  "Rule: related rows (same patient) ho toh group-wise split karo — evaluation deployment jaisa ho, jahan har patient naya hai.",
+  "Har option pe socho: kya ye change ek patient ke scans ko training aur validation mein bantne se rokta hai? Trap: stratification sirf class balance theek karti hai; LOOCV over scans leak aur badhata hai."
+],
+"ml-leakage-04": [
+  "Har $t$ ke liye ek model train hota hai — toh models ki ginti = $t$ ki kitni values hain. Training window ka size nahi poocha.",
+  "$t = a, a+1, \\dots, b$ mein values ki ginti $= b - a + 1$; yahan $a = 60$, $b = 99$.",
+  "Chhota check: $t = 60, 61, 62$ mein 3 values hain, jabki $62 - 60 = 2$ — isliye +1 zaroori hai. Ab 60 se 99 pe lagao. Trap: ek endpoint chhod dena."
+],
+"ml-leakage-05": [
+  "CV mein 99% aur deployment mein 61%, jabki distribution same hai — itna bada gap batata hai ki CV score khud inflate hua tha.",
+  "Rule: theek se kiya CV lagbhag unbiased hota hai. CV high aur real low (bina shift) ⇒ training mein koi information thi jo prediction time pe nahi milti.",
+  "Har option check karo: high bias hota toh CV accuracy kaisi hoti? Kam folds CV ko wildly optimistic banaate hain ya thoda pessimistic? Trap: 'CV hamesha itna optimistic hota hai' — galat."
+]
+}

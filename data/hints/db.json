@@ -1,0 +1,587 @@
+{
+ "db-er-tables-01": [
+  "Stem me do khaas attributes hain: `phone` **multivalued** hai aur `addr` **composite**. 1NF me dono alag tarah handle hote hain — saath me R12 (M:N) aur R23 (1:N) ki cardinality bhi dekho.",
+  "Rule: har strong entity = 1 table; M:N = apni table; 1:N = 'one' side ki key N-side table me FK; multivalued attribute = alag table (key, attr); composite = columns me flatten.",
+  "Shuru karo: E1, E2, E3 = 3 tables. Ab R12, R23, `phone`, `addr` ko ek-ek karke decide karo. Trap: 1:N R23 ke liye alag table banana — `b` ko E3 me FK daal sakte ho."
+ ],
+ "db-er-tables-02": [
+  "Teen relationships hain: Has (weak entity Dependent ka identifying), WorksOn (M:N), Manages (1:1, partial). Har ek ke liye socho: apni table chahiye ya kisi existing table me fold ho jaata hai?",
+  "Rule: weak entity ki apni table, key = owner key `eid` + partial key; identifying relationship ki alag table nahi. M:N ki apni table. 1:1 me FK kisi bhi side daal do.",
+  "Employee, Project = 2 tables, Dependent = ek aur. Ab WorksOn aur Manages decide karo. Trap: Dependent ko Employee me merge karna — ek employee ke kai dependents hain, to alag table chahiye."
+ ],
+ "db-er-tables-03": [
+  "Room **weak** entity hai — sirf `room_no` se room identify nahi hota. Booked M:N hai, aur 'a guest books a given room at most once' line `date` ke role ke baare me bata rahi hai.",
+  "Rule: weak entity ki key = owner key + partial key. M:N relationship table ki key = dono participating entities ki keys ka union; descriptive attribute tabhi key me jaata hai jab pair repeat ho sake.",
+  "Pehle Room ki full key likho: `room_no` har building me repeat ho sakta hai, to owner Building ki key bhi chahiye. Ab Guest side jodo aur socho `date` ki zaroorat hai ya nahi. Trap: sirf `gid` lena, jaise ye 1:N ho."
+ ],
+ "db-er-tables-04": [
+  "WorksIn 1:N hai (ek department, kai employees) aur Employee side pe **total** participation hai. Har statement ko isi cardinality aur participation se judge karo.",
+  "Rule: 1:N me 'one' side ki key 'many' side ki table me FK banti hai, alag table nahi chahiye. N-side ki total participation = us FK pe NOT NULL constraint.",
+  "Option B test karo: Department me `eid` rakhein to ek department ke kai eid ek hi cell me aayenge — kya 1NF bachega? Trap: 'always needs a separate table' jaise over-claim ko true maan lena."
+ ],
+ "db-er-tables-05": [
+  "A–B 1:1 hai aur **dono side total** participation — ye khaas case hai. Iske alawa B–C M:N, C–D 1:N aur D ka multivalued `tag` bhi count me aayega.",
+  "Rule: 1:1 with total on both sides = dono entities ek hi table me merge. M:N = apni table. 1:N = FK `c` N-side (D) me. Multivalued `tag` = alag table (d, tag).",
+  "Pehle A+B ko ek table gino, phir C aur D ki ek-ek table. Ab B–C aur `tag` ke liye decide karke add karo. Trap: C–D 1:N ke liye alag table bana dena."
+ ],
+ "db-keys-01": [
+  "Ye statements entity integrity (PK) aur referential integrity (FK) ke rules test kar rahe hain. 'exactly one', 'must reference a different relation' jaise strong words pe dhyan do.",
+  "Rules: PK ka koi bhi attribute NULL nahi ho sakta. FK value ya NULL hoti hai ya kisi existing referenced key se match karti hai. Candidate keys kai ho sakti hain; PK unme se ek chuni jaati hai.",
+  "Option C test karo: Emp(emp_id, manager_id) me manager_id → emp_id — ye kis relation ko refer kar raha hai? Trap: 'exactly' / 'must' wale over-claims ko jaldi true maan lena."
+ ],
+ "db-keys-02": [
+  "Superkey = koi bhi attribute set jisme kam se kam ek candidate key ho. Yahan do keys hain, {A} aur {B, C} — dono ke supersets gino, par jo sets dono ko contain karte hain wo double count honge.",
+  "Inclusion-exclusion: (supersets of A) + (supersets of BC) − (supersets of ABC). n attributes me k fixed hon to supersets $=2^{n-k}$; yahan $n=5$.",
+  "Supersets of {A}: baaki 4 attributes free, to $2^4=16$. Ab {B, C} aur {A, B, C} ke liye same formula lagao. Trap: overlap subtract karna bhool jaana."
+ ],
+ "db-keys-03": [
+  "'Using **only** this instance' — ek instance key ko prove nahi kar sakta, sirf disprove kar sakta hai. To dhundo kis attribute set ki value do alag rows me same hai.",
+  "Rule: agar do alag tuples set X pe same values rakhte hain, to X candidate key nahi ho sakta. Har option ke columns me duplicate check karo.",
+  "`roll` column: 101, 102, 103, 104 — sab alag, to isse rule out nahi kar sakte. Ab `name`, `email` aur (`name`, `dept`) ko row by row dekho. Trap: pair (`name`, `dept`) me sirf `name` dekh kar reject karna."
+ ],
+ "db-keys-04": [
+  "Delete Dept me ho raha hai, par sawal Proj ka hai — beech me Emp hai. Dono FKs ke actions (CASCADE aur SET NULL) milkar ek chain banate hain.",
+  "Chain: d1 delete → ON DELETE CASCADE se Emp ke `did = d1` rows delete → har deleted `eid` ke liye Proj me ON DELETE SET NULL. End me Proj ke NULL rows gino.",
+  "Emp me `did = d1` wale rows: e1, e2, e4 — ye teeno delete honge. Ab Proj me in eids wali rows dhundo. Trap: p5 jo pehle se NULL hai, use ginna bhool jaana."
+ ],
+ "db-keys-05": [
+  "FK Emp(did) → Dept(did) hai, RESTRICT / NO ACTION ke saath. Violation ka matlab: koi Emp row aise department ko point kare jo Dept me hai hi nahi.",
+  "Rule: violation do hi tarah hota hai — referencing side (Emp) me unmatched non-NULL value aaye, ya referenced side (Dept) se koi used value hat jaaye. Har option ke baad poocho: koi 'dangling' Emp row bani?",
+  "Option B dekho: `did` NULL wala Emp row — NULL FK ko kisi Dept row se match karna padta hai kya? Baaki options me direction (Emp side ya Dept side) pe dhyan do. Trap: direction ulta pakadna."
+ ],
+ "db-keys-06": [
+  "Candidate keys {A, B} aur {C} hain; superkey wo set hai jo inme se kam se kam ek ko contain kare. Jo sets dono ko contain karte hain, wo do baar gine jaayenge.",
+  "Count $=2^{6-2}+2^{6-1}-2^{6-3}$: supersets of {A, B} + supersets of {C} − supersets of {A, B, C} (yahan $n=6$).",
+  "Supersets of {A, B}: baaki 4 attributes free, $2^4=16$. Ab {C} aur {A, B, C} wale terms nikaalo. Trap: overlap subtract na karna, ya sirf {C} ke supersets gin lena."
+ ],
+ "db-keys-07": [
+  "`PRIMARY KEY (A, B)` composite hai — pura pair unique hona chahiye, har column alag se nahi. Dusri baat: PK ke kisi part me NULL allowed hai ya nahi.",
+  "Rule: insert tabhi succeed hoga jab (A, B) combination existing (1, 2) se alag ho aur dono parts NOT NULL hon. Akela ek column repeat ho sakta hai.",
+  "(1, 3) check karo: A = 1 repeat hai, par kya pair (1, 3) aur (1, 2) same hain? Baaki teen options ko isi pair + NULL rule se dekho. Trap: 'ek column repeat hua to fail' sochna."
+ ],
+ "db-ra-eval-01": [
+  "Natural join common attribute B pe hota hai. Dhyan do: B = a R me do baar hai aur S me bhi do baar — matching **pairs** gine jaate hain, sirf matched rows nahi.",
+  "Join size $=\\sum_v$ (R me B = v rows) × (S me B = v rows), sirf un values v pe jo dono tables me hain.",
+  "B = a: R me 2 rows (A = 1, 3), S me 2 rows (C = x, y), to $2\\times 2=4$ pairs. Ab B = b, c, d check karo. Trap: har a-row ko sirf ek baar ginna."
+ ],
+ "db-ra-eval-02": [
+  "Condition me OR ($\\lor$) hai, AND nahi — aur B > 2 strict hai. Upar se $\\pi_A$ set return karta hai, to repeated A values ek hi baar ginenge.",
+  "Steps: har row pe check karo (B > 2) ya (C = 1); bachi rows ke A values likho; phir distinct A values gino.",
+  "Row (1,3,0): B = 3 > 2, pass. Row (3,2,0): B = 2 fail aur C = 0 fail, reject. Baaki 4 rows aise hi check karo. Trap: selected rows gin kar ruk jaana — π duplicates hata deta hai."
+ ],
+ "db-ra-eval-03": [
+  "**Full** outer join = inner join ke saare matched pairs + R ke unmatched tuples + S ke unmatched tuples, dono NULL padding ke saath.",
+  "Count = $|R\\bowtie S|$ + (R ke tuples jinka B S me nahi) + (S ke tuples jinka B R me nahi). B values: R me {a, b, c}, S me {a, b, d}.",
+  "Inner join pehle: B = a se $2\\times 2=4$, B = b se $1\\times 1=1$. Ab dono sides ke unmatched tuples dhundo aur jodo. Trap: sirf R ka unmatched tuple pad karna, left outer join ki tarah."
+ ],
+ "db-ra-eval-04": [
+  "Key phrase: 'B is the **primary key** of S'. Matlab S me har B value sirf ek baar aati hai — socho ek R tuple ko S me kitne partners mil sakte hain.",
+  "Join size $=\\sum_v$ (R me B = v rows) × (S me B = v rows). B key hone se S wala factor har v ke liye sirf 0 ya 1 ho sakta hai.",
+  "Ek R tuple (B = b1) ko S me zyada se zyada ek partner milta hai. Ab saare R tuples ke liye best case socho. Trap: chhoti relation ka size bound maan lena — kai R tuples same B share kar sakte hain."
+ ],
+ "db-ra-eval-05": [
+  "∩ aur − **pure tuple** pe kaam karte hain — (3, x) aur (3, y) alag tuples hain. Options C, D me pehle π lagta hai, to wahan compare sirf ek column pe hoga.",
+  "Rule: ∩ / − me tuple tabhi match hota hai jab A aur B dono same hon. π pehle lage to pehle distinct values likho, jaise $\\pi_B(R)$ aur $\\pi_B(S)$, phir set operation karo.",
+  "R ∩ S check karo: (2, y) dono me hai; (3, x) vs (3, y) — same tuple hai kya? Har option ka result set likh kar size gino. Trap: sirf A column dekh kar tuples ko match maan lena."
+ ],
+ "db-ra-eval-06": [
+  "Theta join ki condition A < C **strict** hai. Cartesian product ka har pair (A, C) tabhi rakha jaata hai jab A < C ho.",
+  "Count $=\\sum_A$ (S me kitne C values A se badi hain), jahan A ∈ {1, 2, 3, 4} aur C ∈ {2, 3, 5}.",
+  "A = 1: C = 2, 3, 5 teeno badi → 3 pairs. A = 2: sirf 3, 5 → 2 pairs. Ab A = 3, 4 karo aur jodo. Trap: A ≤ C le lena — (2, 2), (3, 3) strict condition fail karte hain."
+ ],
+ "db-ra-division-01": [
+  "Division ka matlab 'for **every**': wo sid chahiye jisne Req ke har course (c1 **aur** c2) liya ho. Extra course (jaise c3) hone se koi farak nahi padta.",
+  "Rule: sid result me hai iff (sid, c1) ∈ Enroll aur (sid, c2) ∈ Enroll. Har student ka course set likho aur check karo ki {c1, c2} uska subset hai ya nahi.",
+  "s1 ka set {c1, c2, c3}: c1 ✓, c2 ✓, to s1 qualify karta hai. Ab s2, s3, s4 ka set isi tarah check karo. Trap: 'at least one' required course wale students ko bhi gin lena."
+ ],
+ "db-ra-division-02": [
+  "Division = wo a jo S ke **har** b ke saath R me paired ho. Standard trick: pehle saare possible (a, b) pairs banao, phir dekho kaunse pairs R me missing hain.",
+  "Rule: a result me tab hai jab koi bhi required b aisa na ho ki (a, b) R me missing ho. Socho: candidate pairs $\\pi_A(R)\\times S$ aur R me se kisme se kise ghatao to 'missing pairs' milenge?",
+  "Chhota test: R = {(1, x)}, S = {x, y}. Candidate pairs = {(1, x), (1, y)}, aur 1 result me nahi aana chahiye (y missing hai). Ab options A aur B dono is pe evaluate karo. Trap: inner difference ke operands ulte karna."
+ ],
+ "db-ra-division-03": [
+  "Req **empty** hai, aur formula diya hua hai — to guess nahi, formula ko step by step chalao. Empty set ke saath × kya deta hai, yahi key hai.",
+  "Formula: $\\pi_{sid}(E)-\\pi_{sid}\\big((\\pi_{sid}(E)\\times\\emptyset)-E\\big)$. Yaad rakho: koi bhi relation × ∅ = ∅, aur ∅ − X = ∅.",
+  "Inner part: $\\pi_{sid}(E)\\times\\emptyset=\\emptyset$, to missing pairs bhi ∅. Ab socho $\\pi_{sid}(E)$ me se kuch hata ya nahi, aur usme distinct sid kitne hain. Trap: 'empty divisor = empty result' maan lena."
+ ],
+ "db-ra-division-04": [
+  "Divisor yahan $\\pi_{pid}(\\sigma_{color='red'}(\\text{Parts}))$ hai — yaani sirf **red** parts ka set. Division hamesha 'divisor ke har element ke saath' bolta hai.",
+  "Rule: R ÷ S me sid tab aata hai jab S ke **har** pid ke saath (sid, pid) Supplies me ho. Supplier ke extra (divisor ke bahar wale) parts se result pe koi asar nahi.",
+  "Mini check: red parts = {p1, p2}; supplier X supplies {p1, p2, p9 (blue)}. Kya X result me aayega? Isi example se 'every', 'only' aur 'at least one' wale options test karo. Trap: σ ko ignore karke 'every part' padh lena."
+ ],
+ "db-ra-equiv-01": [
+  "'**Always** holds' — ek bhi counterexample mila to wo equivalence gayi. Har option me dekho operators (σ, π, −, ∪/∩) ka order badalne se kya badalta hai.",
+  "Rules: σ cascade hota hai; $\\sigma_{p\\lor q}=\\sigma_p\\cup\\sigma_q$; π ∪ pe distribute hota hai par − pe nahi; π ke baad hata hua attribute σ me use nahi ho sakta.",
+  "Option B ka counterexample try karo: R = {(1, x)}, S = {(1, y)}, A = pehla column. Dono sides alag-alag compute karo. Trap: OR ko ∩ se jodna — OR union hota hai."
+ ],
+ "db-ra-equiv-02": [
+  "Har expression ko Venn diagram me socho: teen regions — sirf R, dono, sirf S. '**Always** equal to R ∩ S' matlab result me sirf beech wala region bache.",
+  "Rule: X − Y = X ke wo tuples jo Y me nahi. R − S = 'sirf R' region, S − R = 'sirf S' region, R ∩ S = beech wala region.",
+  "Option B: S − R me R ka koi tuple hai hi nahi, to R se use hatane pe kya kam hota hai? Baaki options bhi regions se nikaalo. Trap: (R ∪ S) − (R − S) me bacha 'sirf S' region bhool jaana."
+ ],
+ "db-ra-equiv-03": [
+  "σ join ke **baad** lagta hai, to `credits > 3` aur `grade = 'A'` dono ek hi joined tuple (ek enrolment) pe test hote hain. Aur > strict hai.",
+  "Rule: σ phir π = existential ('kam se kam ek aisi row'). Ek joined tuple = ek (student, enrolment, course), to dono conditions same course ki hain. 'Every' ke liye division chahiye.",
+  "Example: student ne ek 3-credit course me A liya aur ek 4-credit course me B. Kya koi joined tuple dono conditions satisfy karta hai? Isse options A aur D test karo. Trap: > ko ≥ padh lena."
+ ],
+ "db-ra-equiv-04": [
+  "'Enrolled in **no** course' = complement wala sawal: saare students me se wo hatao jo Enrolled me kam se kam ek baar dikhte hain.",
+  "Rule: 'none' ke liye join kaam nahi aata — natural join unmatched students ko drop karta hai, to NULL cid kabhi banta hi nahi. Set difference chahiye, aur operands ka order matter karta hai.",
+  "Option C dekho: $\\pi_{sid}(\\text{Enrolled})-\\pi_{sid}(\\text{Student})$ — valid FK ke saath Enrolled ka har sid Student me hai, to ye kya dega? Trap: difference ke operands ulte rakhna."
+ ],
+ "db-ra-equiv-05": [
+  "Teen tables ka join = har enrolment ke saath uska student aur course. σ me `credits ≥ 4` hai (≥, > nahi), aur $\\pi_{name}$ naam pe distinct karta hai, sid pe nahi — do students ka naam Asha hai.",
+  "Steps: credits ≥ 4 wale courses dhundo; Enrolled me unke enrolments ke sid lo; un sids ke names likho; phir distinct names gino.",
+  "Course table: c1 (4) aur c3 (4) qualify, c2 (3) nahi. Ab Enrolled me cid = c1 ya c3 wali rows ke sid nikaalo. Trap: distinct sid gin lena — $\\pi_{name}$ dono Asha ko ek kar deta hai."
+ ],
+ "db-trc-01": [
+  "Formula me ∃ ke aage ¬ hai: $\\neg\\exists e\\in\\text{Enrolled}\\,(e.sid=t.sid)$. Condition sirf sid compare karti hai — grade ya course ki koi baat nahi.",
+  "Rule: ∃ = 'kam se kam ek', ¬∃ = 'ek bhi nahi'. To padho: 'Enrolled me koi aisa tuple e nahi hai jiska sid, t ke sid jaisa ho'.",
+  "Ek student lo jiski Enrolled me 2 rows hain: uske liye ¬∃ true hoga ya false? Ab ek student lo jiski 0 rows hain. Trap: ¬∃ ko ∀ samajh lena ('every course')."
+ ],
+ "db-trc-02": [
+  "'Every red part' ek universal statement hai. Har option me dekho: ∀ ke andar ⇒ hai ya ∧, aur quantifier Parts pe chal raha hai ya Supplies pe.",
+  "Standard pairing: ∀x (P(x) ⇒ Q(x)) aur ∃x (P(x) ∧ Q(x)). Yahan P = 'p red hai', Q = 't ye part supply karta hai'.",
+  "Option B ko ek blue part p ke saath test karo: kya ∀ ke andar wala ∧ true ho sakta hai? Phir C me dekho quantifier kis relation pe hai. Trap: inclusion ulta karna — 'every red part' vs 'only red parts'."
+ ],
+ "db-trc-03": [
+  "Unsafe = answer infinite ho sakta hai, kyunki t kisi stored relation se bound nahi. Har expression me dekho: kya har case me t pe ek positive 't ∈ R' (ya S) condition lagti hai?",
+  "Rule: ¬(t ∈ S) akela safe nahi — R/S ke bahar ke saare (infinite) tuples use satisfy karte hain. ∧ me 't ∈ R' saath ho to t R tak limited; ∨ me ek bhi unbounded disjunct poora expression unsafe kar deta hai.",
+  "Option D: $t\\in R\\land\\neg(t\\in S)$ — har answer pehle R me hona chahiye, to answer R ka subset hai. Ab A, B, C ko isi tarah check karo. Trap: 't ∈ R' likha dekh kar safe maan lena — ∧ hai ya ∨, ye dekho."
+ ],
+ "db-trc-04": [
+  "Sawal **safe** TRC ki expressive power ka hai, relational algebra se compare karke. 'strictly weaker', 'strictly more powerful', 'aggregates' jaise claims ko ek-ek karke parkho.",
+  "Rule: division algebra me π, ×, − se banta hai aur TRC me ∀ + ⇒ se; ∀ ko $\\neg\\exists\\neg$ likh sakte hain. To socho kisi ek ke paas sach me koi extra power hai ya dono barabar hain.",
+  "Option C test karo: basic algebra (σ, π, ×, ∪, −, ρ) me koi operator rows count karta hai kya? Agar algebra nahi kar sakta, to TRC kar payega? Trap: ∀ dekh kar TRC ko zyada powerful maan lena."
+ ],
+ "db-trc-05": [
+  "Ye ∀ ⇒ wala pattern hai: student t tab aata hai jab wo **har** 4-credit course me enrolled ho. Jo course 4-credit nahi, wo implication ko apne aap true kar deta hai.",
+  "Steps: pehle credits = 4 wale courses ka set nikaalo; phir har Student tuple (sid wise, naam wise nahi) ka cid set dekho aur check karo ki wo us set ko contain karta hai.",
+  "4-credit courses: c1 (DB) aur c3 (OS). sid 1 ke courses {c1, c2, c3} — dono hain ✓. Ab sid 2, 3, 4 check karo. Trap: ∀ ko ∃ padh lena, yaani 'kam se kam ek 4-credit course' wale students gin lena."
+ ],
+ "db-sql-joins-01": [
+  "LEFT JOIN me left table (Emp) ki **har** row result me rehti hai — match ho ya na ho. Dept 30 right side me hai; Emp me did = NULL aur did = 40 pe dhyan do.",
+  "Rule: LEFT JOIN rows = matched pairs + unmatched left rows (NULL padding ke saath). ON me NULL = NULL kabhi true nahi, par LEFT JOIN us left row ko phir bhi rakhta hai.",
+  "Matches: did 10 se eid 1, 3; did 20 se eid 2 — Dept me did unique hai, to 3 matched rows. Ab Emp ki bachi rows (eid 4, 5) ka kya hota hai, socho. Trap: NULL did wali row ko drop kar dena."
+ ],
+ "db-sql-joins-02": [
+  "**FULL** OUTER JOIN me dono taraf ke unmatched rows bhi rakhe jaate hain. Emp ke did NULL aur 40 kisi Dept se match nahi karte, aur Dept 30 ka koi employee nahi.",
+  "Rule: rows = matched pairs + unmatched Emp rows + unmatched Dept rows. ON me NULL = NULL kabhi true nahi hota.",
+  "Matched pairs: eid 1, 3 with did 10 aur eid 2 with did 20, total 3. Ab unmatched Emp rows aur unmatched Dept rows alag-alag gino. Trap: LEFT JOIN pe ruk jaana — Dept 30 (ME) bhi aata hai."
+ ],
+ "db-sql-joins-03": [
+  "Dono queries me same filter `d.dname = 'CS'` hai — P me ON ke andar, Q me WHERE me. Outer join me filter ki ye position result badal deti hai.",
+  "Rule: LEFT JOIN me ON sirf decide karta hai kaun match hai; left ki har row phir bhi bachti hai. WHERE join ke baad lagta hai aur rows hata deta hai — NULL-padded row pe `dname = 'CS'` UNKNOWN hai.",
+  "P: kaunse Emp rows CS (did 10) se match karte hain? eid 1 aur 3. Baaki Emp rows P me bachengi ya hategi — LEFT JOIN rule lagao. Phir Q alag se trace karo. Trap: ON wali condition ko WHERE jaisa filter maan lena."
+ ],
+ "db-sql-joins-04": [
+  "Dono tables me duplicates aur NULLs hain. Inner join me har matching **pair** ek row deta hai, aur `NULL = NULL` UNKNOWN hai, TRUE nahi.",
+  "Count $=\\sum_v$ (T1 me x = v rows) × (T2 me x = v rows), sirf un non-NULL values v ke liye jo dono tables me hain.",
+  "x = 1: T1 me 2 rows, T2 me 1 row, to $2\\times 1=2$. Ab x = 2 aur x = 3 karo. Trap: T1 ke NULL ko T2 ke do NULLs se match karwa dena."
+ ],
+ "db-sql-joins-05": [
+  "NATURAL JOIN **saare** same-naam wale columns pe equate karta hai. Dono tables ke column names dhyan se dekho — kya sirf `did` hi common hai?",
+  "Rule: NATURAL JOIN condition = har common column pe equality, sab AND se jude hue. Pehle common columns list karo, phir poori condition likho.",
+  "Common columns: `did` aur `name` (Emp.name = employee ka naam, Dept.name = dept ka naam). eid 1 (Asha, 10) lo: Dept 10 ka name CS hai — dono equalities hold karti hain? Trap: sirf did pe join samajh lena."
+ ],
+ "db-sql-subquery-01": [
+  "Subquery **correlated** hai (`WHERE dept = e.dept`) — har employee ko uske apne department ke max se compare karna hai, overall max se nahi. Ties pe bhi dhyan do.",
+  "Steps: har dept ka MAX(salary) nikaalo; phir har row check karo ki uski salary apne dept ke max ke barabar hai ya nahi; aisi rows gino.",
+  "CS ke salaries 50, 70, 70 → max 70, to eid 2 aur 3 dono match karte hain. Ab EE aur ME ke max nikaal kar unki rows check karo. Trap: har dept se sirf ek top earner ginna — CS me tie hai."
+ ],
+ "db-sql-subquery-02": [
+  "Subquery EE ki salaries deti hai: {40, 60}. P me `> ALL` hai aur Q me `> ANY` — dono strict > hain.",
+  "Rule: > ALL = list ke **maximum** se bada; > ANY = list ke **minimum** se bada. To P ka threshold 60 hai aur Q ka 40.",
+  "P: salaries 50, 70, 70, 40, 60, 55 me se kaun 60 se strictly bada hai? 60 khud count nahi hoga. Ab Q ke liye 40 se compare karo. Trap: ALL aur ANY ko swap kar dena."
+ ],
+ "db-sql-subquery-03": [
+  "B me ek **NULL** hai. NOT IN aur NOT EXISTS NULL ke saath alag behave karte hain — yahi is sawal ka trigger hai.",
+  "Rule: `x NOT IN (2, 4, NULL)` = $x\\ne 2$ AND $x\\ne 4$ AND $x\\ne$ NULL, aur $x\\ne$ NULL hamesha UNKNOWN. NOT EXISTS sirf dekhta hai ki `B.y = A.x` TRUE wali koi row hai ya nahi.",
+  "P me x = 1 lo: 1≠2 TRUE, 1≠4 TRUE, 1≠NULL UNKNOWN — AND ka result kya, aur WHERE row rakhega? Phir Q ke liye har x ki equal row dhundo. Trap: ye maan lena ki NULL NOT EXISTS ko bhi tod deta hai."
+ ],
+ "db-sql-subquery-04": [
+  "IN membership test hai — subquery me CS do baar aaye to bhi outer row ek hi baar ginti hai. Aur condition `salary >= 60` hai (≥, > nahi).",
+  "Steps: subquery me salary ≥ 60 wali rows ke dept nikaalo (distinct samjho); phir outer Emp me un departments ke saare employees gino.",
+  "Salary ≥ 60 wali rows: eid 2 (CS, 70), eid 3 (CS, 70), eid 5 (EE, 60). Ab Emp me in departments ke kitne employees hain, gino. Trap: IN ko join samajh kar CS employees ko do baar ginna."
+ ],
+ "db-sql-subquery-05": [
+  "'**Every** employee earns at least 50' ek ∀ condition hai, aur 'at least' = ≥. Har query ko dekho: wo ∀ test karti hai ya sirf ∃ ('koi ek employee')?",
+  "Rule: ∀ do tarah likh sakte ho — `MIN(salary) >= 50`, ya 'koi counterexample nahi' (NOT EXISTS salary < 50). `WHERE salary >= 50` sirf ∃ test karta hai.",
+  "Department-wise MIN: CS = 50, EE = 40, ME = 55. Ab har query ka output set nikaalo aur is MIN list se compare karo. Trap: > aur ≥ ka farak — CS ka min exactly 50 hai."
+ ],
+ "db-sql-groupby-01": [
+  "HAVING me `COUNT(amount)` hai, `COUNT(*)` nahi — aur kai amounts NULL hain. Outer query sirf HAVING ke baad bache regions gin rahi hai.",
+  "Rule: COUNT(col) NULL values skip karta hai, COUNT(*) saari rows ginta hai. Har region ka COUNT(amount) nikaalo, phir jinka ≥ 2 hai wo regions gino.",
+  "Region N: rows 1, 2, 6 → amounts 100, NULL, 300, to COUNT(amount) = 2. Ab S, E, W ke liye karo. Trap: region E me 2 rows hain par dono NULL — wahan COUNT(*) mat lagao."
+ ],
+ "db-sql-groupby-02": [
+  "WHERE sirf region N ki rows rakhta hai, aur unme ek amount NULL hai. AVG NULL ke saath kya karta hai — yahi sawal hai.",
+  "Rule: AVG(col) = SUM(non-NULL values) / COUNT(non-NULL values). NULL na numerator me jaata hai, na denominator me.",
+  "Region N ki rows: id 1 (100), id 2 (NULL), id 6 (300). Non-NULL values ka sum nikaalo aur sahi count se divide karo. Trap: 3 rows se divide karna — NULL wali row count nahi hoti."
+ ],
+ "db-sql-groupby-03": [
+  "Order yaad rakho: WHERE pehle (rows filter), phir GROUP BY, phir HAVING (groups filter). `amount > 60` grouping se **pehle** lagta hai, aur `> 200` strict hai.",
+  "Steps: (1) amount > 60 wali rows rakho — NULL pe ye UNKNOWN hai, row hat jaati hai; (2) bachi rows ko region se group karke SUM; (3) SUM > 200 wale groups rakho.",
+  "WHERE ke baad bachi rows: id 1 (N, 100), id 3 (S, 200), id 6 (N, 300); id 4 (S, 50) hat gayi. Ab region-wise SUM karo aur HAVING lagao. Trap: HAVING > 200 ko ≥ 200 padh lena."
+ ],
+ "db-sql-groupby-04": [
+  "Teen alag counts hain: `COUNT(*)`, `COUNT(amount)` aur `COUNT(DISTINCT product)`. Teeno NULLs aur duplicates ko alag tarah treat karte hain.",
+  "Rule: COUNT(*) har row ginta hai, NULL ho ya na ho; COUNT(col) sirf non-NULL values ginta hai; COUNT(DISTINCT col) sirf distinct non-NULL values.",
+  "amount column scan karo: id 2, 5, 8 pe NULL hai. Ab total rows, non-NULL amounts aur distinct products alag-alag gino. Trap: COUNT(*) ko bhi NULL wali rows skip karne wala maan lena."
+ ],
+ "db-sql-groupby-05": [
+  "Column g me do NULL values hain. Asli sawal: GROUP BY NULLs ke saath kya karta hai — har NULL ka alag group, sab ka ek group, ya NULL rows hata deta hai?",
+  "Rule: GROUP BY me saare NULL keys **ek hi** group banate hain (DISTINCT jaisa), aur wo group result me rehta hai. Result rows = distinct g values, NULL ko ek value maan kar.",
+  "Non-NULL groups likho: a (rows with v = 1, 5) aur b (v = 3). Ab NULL wali rows (v = 2, 4) ka group socho aur total groups gino. Trap: har NULL ko alag group bana dena."
+ ],
+ "db-sql-null-01": [
+  "`a > 2 OR a <= 2` dekhne me hamesha true lagta hai — par T me do NULL rows hain. Three-valued logic me NULL pe comparison kya deta hai?",
+  "Rule: NULL ke saath har comparison UNKNOWN deta hai. UNKNOWN OR UNKNOWN = UNKNOWN, aur WHERE sirf TRUE wali rows rakhta hai.",
+  "a = 1: `1 > 2` FALSE, `1 <= 2` TRUE, to OR TRUE — row bachi. Ab 3, 5 aur dono NULL rows check karo. Trap: condition ko tautology maan kar saari rows gin lena."
+ ],
+ "db-sql-null-02": [
+  "Har option dekho: ye comparison (=) hai, NULL test (IS NULL) hai, ya UNKNOWN ke saath logical operator (AND/OR)? Sirf wo chahiye jo **TRUE** de — FALSE ya UNKNOWN nahi.",
+  "Rules: NULL ke saath koi bhi comparison UNKNOWN, chahe doosra side bhi NULL ho. OR me ek TRUE kaafi hai; AND me ek FALSE kaafi hai. IS NULL sirf TRUE/FALSE deta hai.",
+  "`FALSE AND UNKNOWN` lo: UNKNOWN ko TRUE maano ya FALSE, AND ka result dono case me kya aata hai — aur kya wo TRUE hai? Baaki teen aise hi parkho. Trap: `NULL = NULL` ko TRUE maan lena."
+ ],
+ "db-sql-null-03": [
+  "SELECT DISTINCT me NULL ka kya hota hai — hata diya jaata hai, ya ek row ki tarah rehta hai? T me do NULL hain.",
+  "Rule: DISTINCT saare NULLs ko ek hi value maanta hai aur ek NULL row rakhta hai. (Contrast: COUNT(DISTINCT a) NULL ko ginta hi nahi.)",
+  "Non-NULL distinct values likho: 1, 2, 3. Ab NULL rows ke liye decide karo kitni rows bachengi, aur jodo. Trap: SELECT DISTINCT ko COUNT(DISTINCT) jaisa samajh kar NULL drop kar dena."
+ ],
+ "db-sql-null-04": [
+  "NOT ke andar AND hai, aur salary/bonus me NULLs hain. Har row ka value TRUE / FALSE / UNKNOWN nikaalna hai — WHERE sirf TRUE wali rows rakhta hai.",
+  "Rules: FALSE AND UNKNOWN = FALSE; TRUE AND UNKNOWN = UNKNOWN; NOT TRUE = FALSE, NOT FALSE = TRUE, NOT UNKNOWN = UNKNOWN. Har row pe pehle AND, phir NOT.",
+  "Row 1: `100 > 120` FALSE, bonus NULL → FALSE AND UNKNOWN = FALSE, NOT ke baad TRUE ✓. Ab rows 2–5 karo. Trap: NOT se pehle UNKNOWN ko FALSE bana dena — NOT UNKNOWN UNKNOWN hi rehta hai."
+ ],
+ "db-sql-null-05": [
+  "Do cheezein decide karti hain: BETWEEN ki boundaries (100 aur 150) inclusive hain ya nahi, aur NULL salary ke saath BETWEEN kya deta hai.",
+  "Rule: `salary BETWEEN 100 AND 150` ⇔ `salary >= 100 AND salary <= 150` — dono ends included. NULL pe ye UNKNOWN hai, to WHERE row hata deta hai.",
+  "Salaries: 100, 200, NULL, 150, NULL. 200 > 150, to fail. Ab baaki values ko ≥ 100 aur ≤ 150 se check karo. Trap: BETWEEN ko strict ya half-open samajh kar ek endpoint chhod dena."
+ ],
+ "db-sql-null-06": [
+  "`salary > 500` kisi bhi row ke liye true nahi — WHERE ke baad input empty hai. Sawal: empty set pe COUNT, SUM aur MAX kya return karte hain, aur kya row aati bhi hai?",
+  "Rule: GROUP BY ke bina aggregate query hamesha exactly ek row deti hai, chahe input empty ho. COUNT 'kitni rows' ginta hai — empty set ki ginti socho.",
+  "SUM aur MAX ke liye socho: empty set me koi value hi nahi, to 'sabse badi value' kya hogi — 0 ya 'koi value nahi' (NULL)? Trap: SUM aur MAX ko bhi COUNT ki tarah 0 maan lena."
+ ],
+ "db-fd-closure-01": [
+  "$\\{A\\}^+$ nikaalna hai: A se shuru karke jo FDs fire ho sakein, chalate jao. Dhyan do: D kisi bhi FD ke RHS pe nahi hai.",
+  "Rule: FD X → Y tabhi fire hoti hai jab X ka **poora** LHS current set me ho. Jab set badhna band ho jaaye, tab ruko.",
+  "Start {A}. A → B fire karo: {A, B}. Ab dekho B → C aur CD → E fire hoti hain ya nahi. Trap: CD → E ko sirf C ke saath fire kar dena."
+ ],
+ "db-fd-closure-02": [
+  "Har option X → Y ke liye $X^+$ nikaalo aur dekho Y usme hai ya nahi. Yahan C, B, D jaise single attributes ke closures kaafi chhote ho sakte hain.",
+  "Rule: X → Y implied hai iff $Y\\subseteq X^+$. Closure me FD tabhi fire hoti hai jab poora LHS set me ho — CD → E ko C aur D dono chahiye.",
+  "$B^+$: start {B}, B → D se {B, D}. Ab CD → E ke liye C hai kya? Isi tarah $A^+$, $C^+$, $D^+$ nikaalo. Trap: CD → E ko sirf C ya sirf D ke saath fire kar dena."
+ ],
+ "db-fd-closure-03": [
+  "$\\{D\\}^+$ me chain lambi ho sakti hai — ek FD ka RHS doosri FD ka LHS ban jaata hai. Ek attribute aisa bhi hai jo kisi FD ke RHS pe nahi aata; uspe nazar rakho.",
+  "Rule: har round me wo saari FDs fire karo jinka poora LHS set me hai; tab tak jab tak set badhna band na ho. Phir set ka size gino.",
+  "Start {D}. D → EF se {D, E, F}. Ab F → G se aage ki chain chalao. Trap: C ko bhi jod dena — C kisi FD ke RHS pe hai hi nahi, to BC → D yahan madad nahi karti."
+ ],
+ "db-fd-closure-04": [
+  "Do FD sets ki equivalence: F aur G tabhi equivalent hain jab dono ek doosre ki saari FDs imply karein. FDs ki list alag dikhna kaafi nahi — closures compare karne hain.",
+  "Rule: F covers G iff G ki har FD X → Y ke liye $Y\\subseteq X^+_F$. Phir ulti direction check karo (F ki har FD, G se). Yahan $A^+$ aur $D^+$ dono sets me nikaalo.",
+  "F ke under $A^+$: A → B se {A, B}, phir AB → C se {A, B, C} — to G ki A → BC, F se aati hai. Ab G ki D → A aur ulti direction check karo. Trap: sirf ek direction check karke ruk jaana."
+ ],
+ "db-fd-closure-05": [
+  "F me redundancy hai: A → BC, A → B aur AB → C, B → C aapas me overlap karte hain. Minimal cover me RHS single ho, LHS me koi extraneous attribute na ho, aur har FD zaroori ho.",
+  "Steps: (1) RHS split: A → B, A → C, B → C, AB → C. (2) AB → C me check karo A ya B extraneous hai kya. (3) Jo FD baaki FDs se derive ho jaaye, use hatao.",
+  "AB → C lo: B → C already hai, to A extraneous hai aur ye B → C ka duplicate ban jaata hai. Ab check karo A → C baaki FDs se aata hai ya nahi. Trap: AB → C ka LHS test hi na karna."
+ ],
+ "db-fd-closure-06": [
+  "Minimal cover me FDs ginni hain. Do FDs suspicious hain: AB → C (LHS me kuch extra?) aur AD → E (shayad baaki FDs se hi aa jaaye).",
+  "Steps: (1) har RHS pehle se single hai. (2) LHS reduce karo: AB → C ke liye $A^+$ nikaal kar dekho C usme hai ya nahi. (3) Phir har FD hata kar check karo ki baaki FDs se derive hoti hai ya nahi.",
+  "$A^+$: A → D, D → B se {A, B, D}, phir AB → C se C bhi. To AB → C ban jaata hai A → C. Ab AD → E ko reduce karke check karo. Trap: A → D ya D → B ko bhi hata dena."
+ ],
+ "db-fd-closure-07": [
+  "'Not valid in general' poocha hai — chaar mein se teen rules sound hain (Armstrong axioms ya unse derived), ek nahi. Ek counterexample milte hi rule invalid.",
+  "Sound rules: reflexivity, augmentation ($X\\to Y \\Rightarrow XZ\\to YZ$), transitivity, aur derived union/decomposition. Dhyan do: decomposition sirf RHS ko split karta hai.",
+  "A = augmentation, B = union — dono sound. Baaki do mein se shak wale ke liye do rows banao jahan premise sach ho par conclusion fail ho. Trap: decomposition ko LHS pe laga dena."
+ ],
+ "db-fd-keys-01": [
+  "Count poocha hai — sirf ek key nahi, saari candidate keys chahiye. Dekho kaunsa attribute kisi bhi FD ke RHS pe nahi aata.",
+  "B kisi RHS pe nahi hai, to har key mein B hoga; $B^+=\\{B\\}$. Ab B ke saath ek-ek attribute jodo: $(AB)^+, (BC)^+, (BD)^+, (BE)^+$ nikaalo; jo ABCDE de, wo key.",
+  "$(AB)^+$: AB → C, C → D, D → E, to ABCDE — AB ek key. Ab BC, BD, BE ke closure cycle $C\\to D\\to E\\to A$ chala ke khud nikaalo. Trap: pehli key milte hi ruk jaana."
+ ],
+ "db-fd-keys-02": [
+  "FDs ek chain banate hain: $A\\to B\\to C\\to D$. Dekho kaunsa attribute kisi RHS pe nahi aata — wo har key mein hona hi chahiye.",
+  "Rule: jo attribute kisi RHS pe nahi, wo har candidate key mein hai. Candidate key = minimal set jiska closure ABCD ho.",
+  "$B^+=\\{B,C,D\\}$ — A missing, to {B} key nahi. Ab RHS-free attribute ka closure nikaalo aur minimality dekho. Trap: superkey (jaise do attributes wala set) ko minimal key maan lena."
+ ],
+ "db-fd-keys-03": [
+  "Prime attribute = jo kam se kam ek candidate key mein ho. Isliye pehle SAARI keys chahiye, sirf pehli nahi.",
+  "B aur D kisi RHS pe nahi: $(BD)^+=\\{B,D,E,F\\}$. Isme A ya C jod ke closure check karo; prime attributes = saari keys ka union.",
+  "$(ABD)^+$: AB → C, D → E → F, to saare six — ABD ek key. Ab $(BCD)^+$ khud nikaalo (C → A yaad rakho), phir union gino. Trap: sirf pehli key lekar ruk jaana."
+ ],
+ "db-fd-keys-04": [
+  "Har option ka closure bhi dekhna hai aur minimality bhi. E kisi RHS pe nahi aata, to E har key mein hoga.",
+  "$E^+=\\{E,B\\}$. Set key tab hai jab closure = ABCDE ho AUR uska koi proper subset ye na kar sake.",
+  "Option {B, E}: $(BE)^+=\\{B,E\\}$ — AB → C ke liye A chahiye jo milta nahi. Baaki teen ka closure aise hi chalao. Trap: teen attributes wale set ko key maan lena — uske subsets bhi check karo."
+ ],
+ "db-fd-keys-05": [
+  "FDs do alag cycles banate hain: $A\\to B\\to C\\to A$ aur $D\\to E\\to F\\to D$. Koi attribute dusre cycle tak nahi pahunchta.",
+  "Cycle ka koi bhi ek attribute poora cycle de deta hai ($A^+=\\{A,B,C\\}$). To key = har cycle se exactly ek attribute.",
+  "Example: $(AD)^+$ = ABCDEF, aur A ya D akele kaafi nahi — AD ek key. Ab gino aise kitne pairs ban sakte hain. Trap: 3 + 3 jodna — choices add hoti hain ya multiply?"
+ ],
+ "db-fd-keys-06": [
+  "Superkeys ginne hain, candidate keys nahi. C aur D kisi RHS pe nahi hain, to har key mein honge.",
+  "$(CD)^+=\\{C,D\\}$; A ya B jod ke keys nikaalo. Superkey = jo set kisi key ko contain kare; ginti inclusion–exclusion se: $|S_1|+|S_2|-|S_1\\cap S_2|$.",
+  "$(ACD)^+$ = ABCD (A → B se), to ACD key; isi tarah BCD. Ab har key ke supersets list karo (sirf 4 attributes hain). Trap: jo set dono keys contain kare, use do baar ginna."
+ ],
+ "db-nf-test-01": [
+  "Highest NF chahiye — pehle key dhundo, phir har FD ko 2NF, 3NF, BCNF tests se guzaaro.",
+  "A, B kisi RHS pe nahi; $(AB)^+$ = ABCD, to key AB, prime = {A, B}. 2NF: non-prime A ya B akele pe depend na kare. 3NF: har $X\\to Y$ mein X superkey ya Y prime.",
+  "AB → C: LHS key hai, theek. Ab C → D test karo: C superkey hai? D prime hai? Partial bhi check karo. Trap: C → D ko partial dependency samajhna — C key ka hissa nahi hai."
+ ],
+ "db-nf-test-02": [
+  "Pehle saari candidate keys nikaalo — C → B ki wajah se ek se zyada key ho sakti hai, aur isse prime attributes badal jaate hain.",
+  "BCNF: har nontrivial $X\\to Y$ mein X superkey. 3NF: ya X superkey, ya Y prime. A kisi RHS pe nahi, to har key mein A; $(AB)^+$ aur $(AC)^+$ check karo.",
+  "$(AC)^+$: C → B, phir AB → C, to ABC — AC bhi key. Ab C → B pe dono tests lagao: C superkey? B prime? Trap: prime RHS ko BCNF ke liye kaafi maan lena."
+ ],
+ "db-nf-test-03": [
+  "C kisi RHS pe nahi — har key mein C hoga. Statements judge karne ke liye pehle saari keys aur prime attributes chahiye.",
+  "$C^+=\\{C,E\\}$. C ke saath A, B ya D jod ke closure nikaalo. 2NF test: koi non-prime attribute kisi key ke proper subset pe depend na kare.",
+  "$(AC)^+$: C → E, AE → B, B → D, to ABCDE. BC aur CD ke closure khud chalao. Phir C → E dekho: E kisi key mein hai? Trap: E ko prime maan lena kyunki wo ek LHS mein aata hai."
+ ],
+ "db-nf-test-04": [
+  "'Always true' poocha hai — galat statement ke liye ek counterexample kaafi hai. Chaaro statements BCNF, 3NF aur decomposition ke rishte ke baare mein hain.",
+  "Hierarchy: BCNF ⊂ 3NF ⊂ 2NF. BCNF: har nontrivial $X\\to Y$ mein X superkey; 3NF mein 'ya Y prime' bhi allowed hai.",
+  "R(A,B,C) with AB → C, C → B lo: keys AB, AC, sab prime, to 3NF — par C superkey nahi. Ye example kin statements ko todta hai? Baaki ke liye bhi chhota example socho. Trap: 'sab prime ⇒ BCNF' maan lena."
+ ],
+ "db-nf-test-05": [
+  "BC → A dekho — iska matlab ek se zyada key ho sakti hai. Phir har FD ko 2NF, 3NF, BCNF tests se check karo.",
+  "Keys: A (A → BCDE) aur BC (BC → A); prime = {A, B, C}. 2NF: non-prime B ya C akele pe depend na kare. 3NF: har $X\\to Y$ mein X superkey ya Y prime.",
+  "A → BCDE, BC → A: LHS superkey, theek. $B^+=\\{B\\}$, $C^+=\\{C\\}$ — koi partial dependency hai? Ab D → E test karo. Trap: D → E ko BCNF violation maan ke 3NF ko bhi automatically pass kar dena."
+ ],
+ "db-nf-test-06": [
+  "Definition question: 3NF ki exact condition. Options mein 2NF aur BCNF ki conditions bhi chhupi hain, aur ek mein ek shabd ulta hai.",
+  "BCNF = 'X superkey'. 3NF thoda dheela hai — ek extra escape clause jo RHS attribute A ke baare mein hai.",
+  "Check: R(A,B,C), AB → C, C → B (keys AB, AC) 3NF hai. C → B mein C superkey nahi, phir bhi pass — B prime hai ya non-prime? Trap: prime / non-prime ulta padhna."
+ ],
+ "db-decomp-01": [
+  "Binary decomposition hai, sawaal lossless vs lossy ka. Sirf common attributes $R_1\\cap R_2$ matter karte hain.",
+  "Binary lossless test: $(R_1\\cap R_2)\\to R_1$ ya $(R_1\\cap R_2)\\to R_2$ (closure se check). Yahan $R_1\\cap R_2=\\{A\\}$.",
+  "$A^+$ nikaalo: A → B deta hai, aur kuch nahi. Ab dekho $A^+$ mein R1 = {A, B} ya R2 = {A, C} poora aata hai kya. Trap: test ulta lagana (B → A dhundhna) ya dono parts ki zaroorat maan lena."
+ ],
+ "db-decomp-02": [
+  "Do alag properties judge karni hain: lossless join aur dependency preservation. Dono ka test alag hai.",
+  "Lossless: $R_1\\cap R_2=\\{B\\}$; check karo $B^+\\supseteq R_1$ ya $B^+\\supseteq R_2$. Preservation: har FD ke saare attributes kisi ek part mein fit ho jaayen to wo preserved.",
+  "$B^+$ nikaalo: kya kisi FD ka LHS sirf B hai? Phir dekho {A, B} kis part mein hai aur {C, D} kis mein. Trap: lossless aur preservation ko ek hi cheez samajhna."
+ ],
+ "db-decomp-03": [
+  "Teen decompositions hain; har ek ke liye alag se lossless aur preservation judge karo. Note: $A^+$ = ABCD, yaani A poori relation ki key hai.",
+  "Lossless: do parts ka join tab safe jab common attributes kisi ek part ko determine karein; multi-part ho to step by step join karo. Preservation: har FD projected FDs se, bina join ke, nikalni chahiye.",
+  "{AB, CD} mein common attribute kya hai? Koi nahi, to join Cartesian product. {AB, AC, AD} ke liye projected FDs (sab A se) se $B^+$ nikaalo. Trap: key har part mein hone ko preservation samajhna."
+ ],
+ "db-decomp-04": [
+  "Decomposition dependency preserving NAHI hai — iska exact matlab yaad karo: kuch FD kisi ek $R_i$ pe akele check nahi ho sakti.",
+  "Preservation: $(\\bigcup F_i)^+ = F^+$, jahan $F_i$ = F ka $R_i$ pe projection. Fail ho to kisi FD ke attributes alag-alag relations mein bikhre hote hain.",
+  "Socho: aisi FD check karne ke liye uske saare attributes ek hi table mein chahiye — wo kaise milenge? Option B ke liye yaad rakho: lossless aur preservation independent properties hain. Trap: 'mehenga hai' ko 'impossible hai' samajhna."
+ ],
+ "db-decomp-05": [
+  "Ye classic BCNF vs dependency preservation case hai. Pehle keys nikaalo, phir har statement ke liye alag test — lossless, preservation, BCNF.",
+  "Keys: AB aur AC. Lossless: $R_1\\cap R_2=\\{C\\}$ — dekho $C^+$ kisi part ko cover karta hai kya. Preservation: BC aur AC pe projected FDs se AB → C derive hoti hai kya?",
+  "$C^+=\\{B,C\\}$ ko R1 se compare karo. Projections: BC pe C → B, AC pe kuch nontrivial nahi. Statement C: A, B, C ek relation mein hon to C → B kya karegi? Trap: R ko BCNF maan lena."
+ ],
+ "db-decomp-06": [
+  "Chaar decompositions alag-alag judge karni hain. Teen parts ho to do parts ko pehle join karo, phir result ko teesre se — har join pe binary test.",
+  "Binary test: common attributes ka closure (F se) kisi ek part ko poora cover kare to join lossless. Jin parts mein koi common attribute hi nahi, wo Cartesian product — lossy.",
+  "{AB, BC, ADE}: AB ⋈ BC pe common B, aur B → C se BC cover, to result ABC. Ab ABC ⋈ ADE ka common attribute dekho. Baaki teen aise hi. Trap: ek join safe dekh ke poori decomposition lossless maan lena."
+ ],
+ "db-bplus-order-01": [
+  "Internal node mein p child pointers ke saath sirf p − 1 keys hoti hain — har pointer ke saath key nahi.",
+  "Condition: $8p + 10(p-1) \\le 1024$, yaani $18p \\le 1034$.",
+  "$1034/18$ compute karo aur floor lo — round up kiya to block overflow ho jaayega. Trap: $\\lfloor 1024/18\\rfloor$ lena, jo har pointer ke saath ek key gin leta hai."
+ ],
+ "db-bplus-order-02": [
+  "Leaf mein (key, record pointer) pairs hain plus ek next-leaf pointer. Dhyan: record pointer 12 bytes ka hai, 8 wala next pointer alag hai.",
+  "n pairs ke liye: $n(10+12) + 8 \\le 512$.",
+  "Next pointer ke 8 bytes hatao: $n \\le 504/(10+12)$; ise compute karke floor lo. Trap: next pointer bhool ke $\\lfloor 512/(10+12)\\rfloor$ lena — us n ko wapas daal ke check karo 512 cross hota hai kya."
+ ],
+ "db-bplus-order-03": [
+  "B+ tree mein saari keys leaves mein hoti hain. Maximum chahiye, to har node full lo: internal 5 children, leaf 4 keys.",
+  "3 levels: root → internal level → leaves. Max leaves = (root ke children) × (har internal node ke children); total keys = leaves × (keys per leaf).",
+  "Root ke 5 children = 5 internal nodes, har ek ke 5 leaf children, to $5\\times5 = 25$ leaves. Ab har leaf ki capacity se multiply karo. Trap: B-tree formula $5^3-1$ lagana."
+ ],
+ "db-bplus-order-04": [
+  "Minimum poocha hai — har node ko kam se kam bharo. Root ka rule alag hai (≥ 2 children); baaki internal ≥ 3 children, leaf ≥ 2 keys.",
+  "Min keys = (root ke min children) × (internal node ke min children) × (leaf ke min keys), 3 levels ke liye.",
+  "Root: 2 children, yaani level 2 pe 2 internal nodes. Har ek ke kam se kam 3 leaves — leaves gino, phir har leaf ke min keys lagao. Trap: root ko bhi 3 children dena."
+ ],
+ "db-bplus-order-05": [
+  "Neeche se upar build karo: pehle kitni leaves lagengi, phir har upar wale level ke nodes, jab tak 1 root na bache. Har baar ceiling lo.",
+  "Leaves $=\\lceil 100000/49 \\rceil$; agla level $=\\lceil \\text{leaves}/50 \\rceil$; ye repeat karo jab tak 1 node na aaye.",
+  "$\\lceil 100000/49\\rceil = 2041$ leaves. Ab $\\lceil 2041/50\\rceil$ nikaalo, aage badho aur levels gino (leaf level bhi). Trap: $\\log_{50}$ ka floor lena, ya data records ko bhi ek level gin lena."
+ ],
+ "db-bplus-order-06": [
+  "B-tree hai, B+ nahi — har key ke saath uska data pointer bhi node mein baithta hai. p children, p − 1 keys.",
+  "Condition: $6p + (9+7)(p-1) \\le 512$.",
+  "Isse $6p + 16(p-1) \\le 512$ likho, simplify karke p ka bound nikaalo aur floor lo. Trap: data pointers bhool ke B+ wala formula $6p + 9(p-1)$ lagana."
+ ],
+ "db-index-access-01": [
+  "Sparse primary index = har data BLOCK ki ek entry, har record ki nahi. To pehle data blocks gino, phir index blocks.",
+  "Data bfr $=\\lfloor 1024/100\\rfloor$, data blocks $=30000/\\text{bfr}$. Index bfr $=\\lfloor 1024/15\\rfloor$, index blocks $=\\lceil \\text{entries}/\\text{index bfr}\\rceil$.",
+  "Data bfr = 10, to 3000 data blocks = 3000 index entries. Index bfr = 68 (1024/15 = 68.3). Ab ceiling ke saath divide karo. Trap: floor lena — aadha bhara last block bhi ginta hai."
+ ],
+ "db-index-access-02": [
+  "File sorted hai aur index nahi — to blocks pe binary search hoga. Worst case poocha hai.",
+  "Worst-case block accesses $=\\lceil \\log_2 3000 \\rceil$.",
+  "$2^{11} = 2048$ — ye 3000 se kam hai, to 11 halvings kaafi nahi. Agla power of 2 dekho. Trap: floor lena, ya linear scan ka cost lena."
+ ],
+ "db-index-access-03": [
+  "Multilevel sparse index: har index level pe ek block padhte hain, aur aakhir mein ek data block. Binary search nahi.",
+  "Data bfr $=\\lfloor 2048/200\\rfloor$, data blocks $=50000/\\text{bfr}$; index bfr $=2048/16$. Level 1 entries = data blocks; har agla level = pichhle level ke blocks ÷ index bfr (ceiling), jab tak 1 block.",
+  "Data bfr = 10, to 5000 blocks; index bfr = 128. Level 1: $\\lceil 5000/128\\rceil = 40$ blocks. Ab agla level nikaalo, phir accesses = index levels + 1. Trap: data block wala access bhool jaana."
+ ],
+ "db-index-access-04": [
+  "Ab index dense secondary hai — har RECORD ki ek entry, data block ki nahi. Multilevel hai, to har level ek access + ek data block.",
+  "Level 1 entries = 50,000; index bfr $=2048/16 = 128$. Har level: blocks $=\\lceil \\text{entries}/128\\rceil$, jab tak 1 block na bache.",
+  "Level 1: $\\lceil 50000/128\\rceil = 391$ blocks. Ye 391 entries level 2 banaate hain — aage nikaalo, levels gino, aur data block jodo. Trap: 391 blocks pe binary search kar dena."
+ ],
+ "db-index-access-05": [
+  "File non-key field `dept` pe physically sorted hai — ye clustering index ka case hai, primary (key pe sparse) index ka nahi.",
+  "Rule: clustering index mein ordering field ki har distinct value ki ek entry hoti hai, jo us value ke pehle block ko point karti hai.",
+  "Stem dekho: `dept` ki kitni distinct values hain, aur har value ke kitne records — inme se kaunsa number entries batata hai? Trap: dense index ki tarah har record ki entry gin lena."
+ ],
+ "db-index-types-01": [
+  "Do query types hain: range (`BETWEEN`) aur equality (`=`). Har statement dekho: kaunsa index kis query type ko support karta hai.",
+  "Hash: value hash karke seedha bucket — sirf equality ke liye. B+ tree: root-to-leaf search, aur leaves ek linked chain mein jude hote hain.",
+  "Hash index se range socho: 40000 aur 40001 ke buckets paas-paas honge kya? Ab B+ tree leaves ki chain se baaki statements judge karo. Trap: B+ tree ke internal nodes aur leaves ka role mix kar dena."
+ ],
+ "db-index-types-02": [
+  "Sparse = har block ki sirf ek entry (block anchor). Ye tabhi chalega jab block ke andar ke records bhi usi field ke order mein hon.",
+  "Rule: sparse index ke liye file indexed field pe physically sorted honi chahiye. Secondary index (non-ordering field) hamesha dense hota hai.",
+  "Option D: heap file unsorted hai — block ka pehla key baaki records ke baare mein kuch batata hai? Isi tarah har option mein dekho file us field pe sorted hai ya nahi. Trap: dense aur sparse ki definition ulat dena."
+ ],
+ "db-index-types-03": [
+  "Chaaro statements primary, clustering, secondary aur dense ki definitions pe hain. Key idea: ek file ka physical order sirf ek hi ho sakta hai.",
+  "Primary: ordering KEY field pe; clustering: ordering NON-KEY field pe — dono physical order pe tike hain. Secondary: non-ordering field pe, dense. Dense = har record (ya search-key value) ki entry.",
+  "Statement A ko definition se milao: dense mein entry per block hoti hai ya per record? Baaki teen ke liye socho kaun physical order pe depend karta hai. Trap: primary aur clustering ki definitions swap kar dena."
+ ],
+ "db-index-types-04": [
+  "B-tree vs B+ tree, same block size. Farak do jagah hai: data pointers kahan rakhe hain, aur leaves linked hain ya nahi.",
+  "B+ tree: saare data pointers leaves mein, leaves linked; internal nodes mein sirf routing keys + child pointers. B-tree: har key apne data pointer ke saath kisi bhi level pe.",
+  "Option D: B-tree mein key internal node mein hi mil jaaye to search wahin ruk sakti hai? Phir socho data pointers hatne se internal node mein kya zyada fit hota hai. Trap: B+ internal keys ko unique maan lena."
+ ],
+ "db-dw-schema-01": [
+  "Star schema mein fact table = dimension keys + numeric measures; descriptive cheezein dimension tables mein jaati hain.",
+  "Measure = numeric, aggregatable value jo har (time, product, store) combination pe record ho — jise SUM / AVG karna meaningful ho.",
+  "Har option se poochho: 'ise SUM karna meaningful hai?' `month_name` ko jod sakte ho? Baaki teen pe bhi yahi test. Trap: hierarchy level ya descriptive attribute (city, brand) ko measure samajhna."
+ ],
+ "db-dw-schema-02": [
+  "Star vs snowflake: farak sirf dimension tables ke normalization ka hai. Har statement mein dekho kahin direction ulti to nahi.",
+  "Star: har dimension ek denormalized table. Snowflake: dimension normalize hoke kai tables (jaise Store → City → State). Fact table dimensions ki foreign keys rakhta hai.",
+  "Statement A: normalize karne se redundancy badhti hai ya ghatti hai? Statement B: foreign key kis table mein hai — fact ya dimension? Baaki do aise hi judge karo. Trap: 'kaun kisko refer karta hai' ulta padhna."
+ ],
+ "db-dw-schema-03": [
+  "Balance ek snapshot value hai — har din ka level, flow nahi. Sawaal: kis dimension pe SUM karna meaningful hai?",
+  "Additive: har dimension pe SUM valid. Semi-additive: kuch dimensions pe valid, kuch pe nahi. Non-additive: kisi pe nahi (ratio, %).",
+  "Do test karo: ek din ke saare accounts ke balance jodo — meaningful? Ek account ka 30 din ka balance jodo — meaningful? Trap: daily badalne wale balance ko descriptive attribute samajh ke dimension mein daalna."
+ ],
+ "db-dw-schema-04": [
+  "Fully additive = Time, Product, Store teeno pe SUM sahi aaye. Har measure ko teeno dimensions pe jod ke socho.",
+  "Flow quantities (kitna becha, kitna kamaya) har dimension pe add hoti hain. Snapshot levels (stock) time pe nahi. Ratios (%) kahin bhi nahi.",
+  "`profit_margin` test: do stores ka margin 10% aur 20% — total margin 30% hoga? Baaki teen ko bhi flow / snapshot / ratio mein classify karo. Trap: day-end stock ko days pe jod dena."
+ ],
+ "db-dw-schema-05": [
+  "City → country: level of detail badla, finer se coarser gaye. Location ki concept hierarchy pe kis direction mein move hua?",
+  "Roll-up: hierarchy mein upar (aggregate). Drill-down: neeche (zyada detail). Slice: ek dimension ki ek value fix. Pivot: sirf axes rotate.",
+  "Check: kya kisi dimension ki value fix hui (slice)? Kya sirf rows / columns ghoome (pivot)? Nahi — to city se country ka move hierarchy mein upar hai ya neeche? Trap: roll-up aur drill-down ki direction ulti yaad karna."
+ ],
+ "db-dw-schema-06": [
+  "Teen dimensions pe restriction hai: time ek value, location aur item do-do values. Koi aggregation ya level change nahi hua.",
+  "Slice: SIRF ek dimension ko ek value pe fix → (n − 1)-D view. Dice: do ya zyada dimensions pe value sets → sub-cube.",
+  "Gino: kitni dimensions restrict hui hain? Roll-up / drill-down ke liye level change chahiye — hua kya? Trap: time = Q1 dekh ke turant slice bol dena, baaki do conditions ignore karke."
+ ],
+ "db-dw-schema-07": [
+  "Most detailed se most general tak — har level poori tarah agle level ke andar fit hona chahiye (containment).",
+  "Concept hierarchy: chhoti unit < usko contain karne wali badi unit. Socho kaun kisme aata hai: street, city, state, country.",
+  "Pehla level sabse detailed hona chahiye — option A ka pehla level dekho. Phir baaki options mein har adjacent pair check karo: 'X, Y ke andar hai?' Trap: city aur state ka order ulta karna."
+ ],
+ "db-dw-schema-08": [
+  "Snowflake mein split hui dimension ka ek hissa apni jagah table rehta hai, bas extra tables judti hain. Fact table bhi ginna hai.",
+  "Total = 1 (fact) + unsplit dimensions + split ke baad har dimension ke tables. Location → 3 tables, Product → 2 tables.",
+  "Unsplit dimensions: Time, Customer — 2 tables. Ab fact aur split dimensions ke tables jodo. Trap: original Location / Product ko alag se bhi gin dena — wo split tables mein se hi ek hain."
+ ],
+ "db-olap-cube-01": [
+  "CUBE saare $2^3$ grouping sets banata hai, par sawaal ROWS ka hai, sets ka nahi. Har combination table mein hai — ye important hai.",
+  "Har grouping set ki rows = uske columns ki values ka product. Sab sets ka sum $=\\prod (n_i + 1)$, kyunki har column ya apni value leta hai ya 'all' (NULL).",
+  "Example: (region, product, year) set → $4\\times3\\times2 = 24$ rows; (region) → 4 rows. Ab $n_i + 1$ wala product compute karo. Trap: grand-total row (sab NULL) bhool jaana."
+ ],
+ "db-olap-cube-02": [
+  "Saare (city, item) pairs table mein nahi hain, to $\\prod(n_i+1)$ wala formula nahi chalega. Har grouping set ke distinct groups alag se gino.",
+  "CUBE(city, item) ke 4 grouping sets: (city, item), (city), (item), (). Rows = har set ke distinct groups ka sum.",
+  "(city, item) distinct pairs: Delhi-TV, Delhi-Phone, Pune-TV, Agra-Laptop — 4 (Pune-TV do baar hai par group ek). Ab (city), (item), () ke groups gino. Trap: $(3+1)(3+1)$ lagana."
+ ],
+ "db-olap-cube-03": [
+  "Har cuboid = 4 dimensions ka ek subset (group-by mein kaun-si dimensions hain). Apex = koi nahi, base = saari.",
+  "Har dimension ke liye 2 choices: group-by mein hai ya nahi. Hierarchy nahi hai, to n dimensions → $2^n$ cuboids.",
+  "Chhota check: 2 dimensions (A, B) → {AB}, {A}, {B}, {} = 4 cuboids $=2^2$. Ab 4 dimensions pe lagao. Trap: apex (empty group-by) chhod dena, ya orderings (4!) gin lena."
+ ],
+ "db-olap-cube-04": [
+  "Concept hierarchies hain, to sirf $2^3$ nahi chalega — har dimension kitne alag levels pe group ho sakti hai ('all' level bhi), wo gino.",
+  "Cuboids $=\\prod (L_i + 1)$, jahan $L_i$ = dimension i ke hierarchy levels; +1 'all' ke liye.",
+  "time ke levels: day, month, year = 3, to choices $3 + 1 = 4$. Ab item aur location ke choices nikaalo aur multiply karo. Trap: choices ko add kar dena, ya 'all' level bhool jaana."
+ ],
+ "db-olap-cube-05": [
+  "ROLLUP hai, CUBE nahi — sirf left-se-prefix wale grouping sets bante hain. Saare (year, quarter) combinations data mein maujood hain.",
+  "ROLLUP(year, quarter) = {(year, quarter), (year), ()}. Rows = har set ke distinct groups ka sum.",
+  "(year, quarter): 2 years × 4 quarters = 8 groups. Ab (year) aur () ke groups jodo. Trap: CUBE ki tarah (quarter) wala set bhi gin lena."
+ ],
+ "db-transform-01": [
+  "Min-max to [0, 1]: value minimum se kitni door hai, use poori range ke fraction mein naapna hai.",
+  "$v' = \\dfrac{v-\\min}{\\max-\\min} = \\dfrac{73600-12000}{98000-12000}$.",
+  "Numerator $= 61600$, range $= 86000$. Ab divide karke 3 decimals tak likho. Trap: sirf max se divide karna (73600 / 98000) — denominator range hai."
+ ],
+ "db-transform-02": [
+  "Z-score = value mean se kitne standard deviations door hai. Mean aur σ dono diye hain.",
+  "$z = \\dfrac{v-\\mu}{\\sigma} = \\dfrac{73600-54000}{16000}$.",
+  "Deviation $= 73600 - 54000 = 19600$ (positive, kyunki value mean se upar hai). Ab σ se divide karo. Trap: mean se divide kar dena, ya order ulta karke sign galat kar dena."
+ ],
+ "db-transform-03": [
+  "Population SD kaha hai: variance mein n = 8 se divide karo, n − 1 se nahi. Pehle mean, phir σ, phir z.",
+  "$\\mu = \\sum x/8$, $\\sigma^2 = \\sum (x-\\mu)^2/8$, aur $z = (9-\\mu)/\\sigma$.",
+  "$\\sum x = 40$, to $\\mu = 5$. Ab har value ka $(x-5)^2$ nikaal ke jodo, 8 se divide karo, phir square root lo. Trap: variance se divide kar dena, σ se nahi."
+ ],
+ "db-transform-04": [
+  "Decimal scaling mein sabse bada |value| dekho — negative bhi count hota hai. Yahan |−986| max positive 917 se bada hai.",
+  "Smallest j jiske liye $\\max|v|/10^j < 1$, jahan $\\max|v| = 986$.",
+  "j = 2 try karo: $986/100 = 9.86$ — ye 1 se kam hai? Agla j test karo. Trap: 917 use karna, ya aisa bada j lena jo valid to hai par smallest nahi."
+ ],
+ "db-transform-05": [
+  "Equal-WIDTH bins hain, equal-frequency nahi — pehle boundaries nikaalo, phir values gino. Boundary pe padi value kis bin mein jaati hai, ye rule dhyan se padho.",
+  "Width $w=(34-4)/3$. Bins: $[4, 4+w)$, $[4+w, 4+2w)$, $[4+2w, 34]$ — left closed, right open; last bin 34 include karta hai.",
+  "Width = 10, to bins $[4,14)$, $[14,24)$, $[24,34]$. Ab last bin ki values gino — 24 kis bin mein gira, left-closed rule se socho. Trap: equal-frequency ki tarah barabar counts bana dena."
+ ],
+ "db-transform-06": [
+  "Equal-frequency bins of 3: sorted list ko 3-3 ke tukdon mein kaato. Smoothing by MEANS hai — median ya boundaries nahi.",
+  "Bin 1 = pehli teen values; har value ko bin ke mean $=(\\text{sum})/3$ se replace karo.",
+  "Bin 1 = {4, 8, 9}. Inka sum nikaal ke 3 se divide karo — wahi teeno jagah aayega. Trap: median (beech wali value) ya boundary smoothing kar dena."
+ ],
+ "db-sampling-01": [
+  "Without replacement, aur order matter nahi karta — sample ek subset hai, sequence nahi.",
+  "Number of samples $=\\binom{10}{3} = \\dfrac{10\\cdot 9\\cdot 8}{3!}$.",
+  "Ordered draws $10\\times9\\times8 = 720$; har set $3! = 6$ orders mein gina gaya hai. Ab divide karo. Trap: $10^3$ lena — wo with replacement aur ordered hai."
+ ],
+ "db-sampling-02": [
+  "Proportional stratified: har segment ko sample mein utna hi hissa milta hai jitna uska poore data mein hai.",
+  "Stratum C ka share $=100/1000$; C se tuples $=$ share $\\times$ sample size 50.",
+  "Share $=100/1000 = 0.1$. Ab ise sample size 50 se multiply karo (C ke size 100 se nahi). Trap: 50 ko teen segments mein barabar baant dena."
+ ],
+ "db-sampling-03": [
+  "Chaar methods: SRSWR, stratified, SRS, cluster. Har statement ko definition se milao; 'always' / 'exactly' jaise shabdon pe dhyan do.",
+  "SRSWR: har draw ke baad tuple wapas. Stratified: har stratum ke andar alag sample. Cluster: poore groups pick, unke saare tuples. SRS: proportions sirf average mein sahi.",
+  "Statement A: tuple wapas daal diya to agle draw mein dobara aa sakta hai? Statement C: 1000 mein 10 rare tuples, 50 ka random sample — kya har baar ginti same aayegi? Trap: 'on average' ko 'always exactly' padh lena."
+ ],
+ "db-sampling-04": [
+  "With replacement = 50 independent draws. 'At least once' ke liye complement aasaan hai: tuple kabhi na chuna jaaye.",
+  "$P(\\text{at least once}) = 1 - (1 - 1/1000)^{50} = 1 - 0.999^{50}$.",
+  "Ek draw mein na chune jaane ki probability $0.999$; 50 draws mein kabhi nahi $=0.999^{50}$ — calculator se nikaalo, phir 1 se ghatao. Trap: $s/N = 50/1000$ lena — wo without replacement ka hai."
+ ],
+ "db-sampling-05": [
+  "Lossless = original data EXACT wapas ban sake. Har technique se poochho: kuch data phenka gaya kya?",
+  "Rule: sirf exactly invertible encoding lossless hai. Jo coefficients, components ya tuples drop karta hai, wo lossy — reconstruction approximate hogi.",
+  "Option D: 10% sample rakha to baaki 90% tuples wapas aa sakte hain? Baaki teen pe yahi sawaal — kya kuch zero ya drop hua? Trap: PCA ya wavelet ko reversible samajh ke truncation bhool jaana."
+ ]
+}

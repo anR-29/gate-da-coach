@@ -1,0 +1,747 @@
+{
+ "ps-union-overlap-01": [
+  "'At least one of the two' matlab Python ya Statistics ya dono — yaani union $|P\\cup S|$. Dhyan do: 12 students dono lists mein gine gaye hain.",
+  "Rule: $|P\\cup S|=|P|+|S|-|P\\cap S|$, yahan $|P|=35$, $|S|=28$, $|P\\cap S|=12$. Total 60 is sawaal mein seedha kaam nahi aata.",
+  "Pehle $35+28=63$ — isme 'both' wale 12 do baar gine gaye. Ab overlap sirf ek baar ghatao; do baar ghatane se 'exactly one' milta hai, aur $60-$union 'neither' hai."
+ ],
+ "ps-union-overlap-02": [
+  "'Neither A nor B' = na A, na B. Ye union ka complement hai: $P(A^c\\cap B^c)=1-P(A\\cup B)$.",
+  "$P(A\\cup B)=P(A)+P(B)-P(A\\cap B)=0.45+0.35-0.15$, phir $P(\\text{neither})=1-P(A\\cup B)$.",
+  "Pehle $0.45+0.35=0.80$; ab overlap 0.15 sirf ek baar ghatao to union milega. Trap: union pe hi ruk jaana — wo 'at least one' hai, 'neither' uska complement hai."
+ ],
+ "ps-union-overlap-03": [
+  "'Divisible by 4 or by 6' ek union hai. Jo numbers dono se divisible hain (jaise 12, 24) wo dono lists mein aayenge — unhe ek hi baar ginna hai.",
+  "Count $=\\lfloor300/4\\rfloor+\\lfloor300/6\\rfloor-(\\text{dono se divisible})$. Dono se divisible = lcm$(4,6)$ ke multiples.",
+  "$\\lfloor300/4\\rfloor=75$, $\\lfloor300/6\\rfloor=50$. Trap: overlap ke liye $4\\times6=24$ mat lo — lcm$(4,6)=12$ hai; ab $\\lfloor300/12\\rfloor$ nikal ke formula lagao."
+ ],
+ "ps-union-overlap-04": [
+  "'None of the three' $=100-|A\\cup B\\cup C|$. Teen sets hain, to pairwise overlaps aur triple overlap dono chahiye.",
+  "$|A\\cup B\\cup C|=(50+40+30)-(15+10+12)+5$. Triple overlap 5 ko wapas add karna hai, ghataana nahi.",
+  "Singles ka sum $=120$, pairwise ka sum $=37$. Trap: 120 > 100 dekh ke 'sab covered' maan lena, ya $+5$ bhool jaana; union nikaal ke 100 se ghatao."
+ ],
+ "ps-union-overlap-05": [
+  "$P(A)+P(B)=1.1$ — ye 1 se zyada hai. Socho: kya dono events bina kisi overlap ke reh sakte hain?",
+  "Rule: $P(A\\cap B)=P(A)+P(B)-P(A\\cup B)=1.1-P(A\\cup B)$, aur $P(A\\cup B)$ hamesha $\\le1$ aur $\\ge\\max(0.6,0.5)$.",
+  "$P(A\\cup B)$ ki max value 1 aur min 0.6 rakh ke overlap ki range nikalo, phir har option us range se check karo. Trap: $0.6\\times0.5$ — wo independence maanta hai, jo given nahi."
+ ],
+ "ps-sampling-no-replace-01": [
+  "'Without replacement' — pehli red nikalne ke baad box mein 7 balls bachti hain, aur red sirf 4.",
+  "Sequential route: $P(R_1)\\cdot P(R_2\\mid R_1)$. Ya combinations: (5 red mein se 2 chunne ke tarike)/(8 mein se 2 chunne ke tarike). Ek hi route rakho.",
+  "$P(R_1)=\\frac58$. Ab doosri draw ke waqt kitni red aur kitni total bachi? Trap: $(5/8)^2$ lena — wo replacement hai; aur $\\binom52$ ko $8\\cdot7$ se divide karna routes mix karna hai."
+ ],
+ "ps-sampling-no-replace-02": [
+  "'Exactly 2 white' in 3 draws = 2 white + 1 black, kisi bhi order mein. Without replacement hai, to binomial nahi chalega.",
+  "Combinations route: $\\binom62\\binom41/\\binom{10}3$. Neeche ke numbers $2+1=3$, upar ke $6+4=10$.",
+  "$\\binom62=15$, $\\binom41=4$; ab $\\binom{10}3$ nikal ke divide karo. Trap: sirf W,W,B order ka $\\frac6{10}\\cdot\\frac59\\cdot\\frac48$ lena — black teen positions pe aa sakta hai."
+ ],
+ "ps-sampling-no-replace-03": [
+  "Do cards bina wapas rakhe — pehla ace nikalne ke baad deck mein 51 cards aur 3 aces bachte hain.",
+  "Sequential: $\\frac{4}{52}\\cdot\\frac{3}{51}$; ya combinations: $\\binom42/\\binom{52}2$. Dono same result denge, bas route mix mat karo.",
+  "$\\frac4{52}=\\frac1{13}$; ab $\\frac3{51}$ simplify karke multiply karo. Trap: $4\\cdot3=12$ ko $\\binom{52}2=1326$ se divide karna (ordered upar, unordered neeche), ya $(4/52)^2$ lena."
+ ],
+ "ps-sampling-no-replace-04": [
+  "'Both faulty within first 3 tests' ka matlab: pehle 3 tested bulbs mein dono faulty shaamil hain — kis test number pe mile, ye matter nahi karta.",
+  "Unordered route: pehle 3 bulbs ko 6 mein se ek 3-subset socho. $P=\\binom22\\binom41/\\binom63$.",
+  "$\\binom22=1$, $\\binom41=4$; ab $\\binom63$ nikalo. Trap: sirf 'tests 1 aur 2 pe faulty' ginna — pair tests (1,3) ya (2,3) pe bhi ho sakta hai."
+ ],
+ "ps-hypergeometric-01": [
+  "Log bina replacement chune jaate hain, isliye Binomial(4, 0.4) nahi — ye hypergeometric hai. Exactly 2 women matlab baaki 2 men.",
+  "$P=\\binom42\\binom62/\\binom{10}4$: 4 women mein se 2, 6 men mein se 2, total 10 mein se 4.",
+  "$\\binom42=6$, $\\binom62=15$; ab $\\binom{10}4$ nikal ke divide karo. Trap: men wala factor $\\binom62$ bhool jaana."
+ ],
+ "ps-hypergeometric-02": [
+  "'At least one defective' — 1, 2, 3 defective ke cases jodne se aasaan hai complement: sample mein koi defective nahi.",
+  "$P(\\ge1)=1-\\binom{15}3/\\binom{20}3$; yahan 15 = non-defective items, aur sampling bina replacement hai.",
+  "$\\binom{15}3=455$, $\\binom{20}3=1140$; ratio nikalo aur 1 se ghatao. Trap: ratio $P(\\text{none})$ pe hi ruk jaana, ya $1-0.75^3$ (replacement wala) lena."
+ ],
+ "ps-hypergeometric-03": [
+  "4 balls bina replacement, order irrelevant: 2 red 7 mein se aur 2 green 5 mein se aane chahiye.",
+  "$P=\\binom72\\binom52/\\binom{12}4$. Check: neeche $2+2=4$, upar $7+5=12$.",
+  "$\\binom{12}4=495$. Ab $\\binom72$ aur $\\binom52$ nikalo — trap: $\\binom72$ mein $7\\cdot6$ ko 2 se divide karna mat bhoolna. Binomial(4, 7/12) bhi galat hai."
+ ],
+ "ps-hypergeometric-04": [
+  "Selection bina replacement hai: 12 mein se 4. 'Exactly 3 qualified' matlab 3 qualified (5 mein se) aur 1 unqualified (7 mein se).",
+  "Hypergeometric: $\\binom{K}{k}\\binom{N-K}{n-k}/\\binom{N}{n}$, yahan $N=12$, $K=5$, $n=4$, $k=3$.",
+  "Har option check karo: neeche ke numbers ka sum 4 ho, denominator bhi 4 chune, aur 7 mein se 1 wala factor ho. Trap: $(5/12)^3$ wala binomial — har pick ke baad probability badalti hai."
+ ],
+ "ps-at-least-one-01": [
+  "'At least one fails' = 1, 2 ya 3 failures. Inko alag-alag jodne ki jagah complement lo: koi bhi fail nahi.",
+  "$P(\\ge1)=1-P(\\text{none})$, aur servers independent hain to $P(\\text{none})=(1-0.1)^3$.",
+  "Ek server ke fail na hone ki prob $0.9$; ab $0.9^3$ nikalo aur complement lo. Trap: $0.1+0.1+0.1$ jodna — do ya teen failures wale din double count hote hain."
+ ],
+ "ps-at-least-one-02": [
+  "'At least one six' in 4 rolls — complement socho: chaaron rolls mein ek bhi six nahi aaya.",
+  "$P(\\ge1\\text{ six})=1-(5/6)^4$; rolls independent hain.",
+  "$(5/6)^2=25/36\\approx0.694$; ise square karo to $P(\\text{no six})$ milega. Trap: $4\\times\\frac16$ jodna, ya $(5/6)^4$ pe hi ruk jaana."
+ ],
+ "ps-at-least-one-03": [
+  "'At least one success $\\ge0.95$' ko complement mein socho: $n$ trials mein ek bhi success nahi — uski prob $\\le0.05$ honi chahiye.",
+  "$1-0.8^n\\ge0.95 \\iff 0.8^n\\le0.05$. Sabse chhota integer $n$ chahiye jo ye satisfy kare.",
+  "Log lo: $n\\ln0.8\\le\\ln0.05$; dono logs negative hain, to divide karte hi sign flip: $n\\ge\\ln0.05/\\ln0.8$. Trap: fractional value ko round down karna — final $n$ pe $0.8^n$ check karo."
+ ],
+ "ps-at-least-one-04": [
+  "'Some digit appears more than once' ke bahut cases hain (ek pair, do pair, triple...). Complement simple hai: chaaron digits alag-alag.",
+  "$P(\\text{repeat})=1-\\dfrac{10\\cdot9\\cdot8\\cdot7}{10^4}$; total PINs $10^4$ kyunki repetition allowed hai.",
+  "$10\\cdot9\\cdot8\\cdot7=5040$, to $P(\\text{all distinct})=5040/10000$. Trap: isi pe ruk jaana — ye 'all distinct' hai; aur pairs ki probabilities jodna over-count karta hai."
+ ],
+ "ps-ordered-outcomes-01": [
+  "Do dice distinguishable hain — (1,6) aur (6,1) alag outcomes. Sample space 36 equally likely ordered pairs ka hai, 11 sums ka nahi.",
+  "$P=\\dfrac{\\#\\{(a,b): a+b=7\\}}{36}$. Har $a$ ke liye $b=7-a$ valid (1 se 6) hai ya nahi, check karo.",
+  "$a=1\\Rightarrow b=6$, $a=2\\Rightarrow b=5$ — aise hi $a=6$ tak likho aur gino. Trap: sirf {1,6},{2,5},{3,4} unordered ginna — har pair ordered mein do baar aata hai."
+ ],
+ "ps-ordered-outcomes-02": [
+  "3 coins ke $2^3=8$ ordered outcomes equally likely hain. '0, 1, 2, 3 heads' wale 4 cases equally likely nahi hain.",
+  "$P=\\dfrac{\\#\\text{outcomes with exactly 2 H}}{8}$. Exactly 2 heads = ek tail; tail ki position choose karne ke tarike gino.",
+  "HHT ek outcome hai; tail ko baaki positions pe rakh ke bache outcomes bhi likho. Trap: 'at least two' (HHH bhi shaamil) se confuse mat karo — exactly two chahiye."
+ ],
+ "ps-ordered-outcomes-03": [
+  "'Larger number exactly 4' = dono dice $\\le4$, aur kam se kam ek die pe 4. 36 ordered pairs mein gino, unordered nahi.",
+  "Trick: $P(\\max=4)=P(\\max\\le4)-P(\\max\\le3)=(4/6)^2-(3/6)^2$.",
+  "$P(\\max\\le4)=16/36$ (dono dice 1–4). Ab $\\max\\le3$ ke outcomes nikal ke ghatao. Trap: 16/36 pe ruk jaana, ya {4,1},{4,2},... unordered gin lena."
+ ],
+ "ps-ordered-outcomes-04": [
+  "'At least 10' = sum 10, 11 ya 12. Har sum ke ordered outcomes 36 mein se gino — 11 sums equally likely nahi hain.",
+  "$P=\\dfrac{N_{10}+N_{11}+N_{12}}{36}$, jahan $N_s$ = ordered pairs $(a,b)$ with $a+b=s$.",
+  "Sum 10: (4,6),(5,5),(6,4) — 3 outcomes. Ab 11 aur 12 ke gino. Trap: (5,6) aur (6,5) ko ek hi ginna, ya direction ulta karke 'sum $\\le9$' le lena."
+ ],
+ "ps-given-restrict-01": [
+  "'Given that the sum is 8' — ab sample space sirf sum 8 wale ordered outcomes hain, poore 36 nahi.",
+  "$P(\\text{koi 6}\\mid\\text{sum}=8)=\\dfrac{\\#(\\text{sum 8 aur ek 6})}{\\#(\\text{sum 8})}$.",
+  "Sum 8 ke ordered outcomes likho: (2,6),(3,5),... (6,2) tak, aur unme 6 wale gino. Trap: denominator 36 rakhna, ya {2,6},{3,5},{4,4} unordered ginna."
+ ],
+ "ps-given-restrict-02": [
+  "'$A\\mid B$' — B ho chuka hai, to B hi naya 'poora space' ban jaata hai. Denominator mein B aayega.",
+  "$P(A\\mid B)=\\dfrac{P(A\\cap B)}{P(B)}$; yahan numerator $0.1$, denominator $P(B)=0.4$.",
+  "Ab bas ye ratio nikalo. Trap: $P(A)=0.5$ se divide karna — wo $P(B\\mid A)$ hai; aur sirf 0.1 likhna joint probability hai, conditional nahi."
+ ],
+ "ps-given-restrict-03": [
+  "'Given at least two heads' — sample space ko sirf un outcomes tak restrict karo jinme 2 ya 3 heads hain.",
+  "$P(HHH\\mid\\ge2H)=\\dfrac{P(HHH)}{P(\\ge2H)}$; dono ko 8 ordered outcomes mein gino.",
+  "Exactly 2 heads: HHT, HTH, THH; isme HHH jodo to given set ban gaya. Trap: 'ek toss bacha, to 1/2' — condition ye fix nahi karti ki kaun se tosses heads the."
+ ],
+ "ps-given-restrict-04": [
+  "'Picked from those who bought' — ab universe sirf buyers hain, 200 customers nahi. Ye $P(\\text{mobile}\\mid\\text{bought})$ hai.",
+  "$P(\\text{mobile}\\mid\\text{bought})=\\dfrac{\\text{mobile buyers}}{\\text{total buyers}}$, jahan mobile buyers $=36$.",
+  "Total buyers $=36+12$. Trap: $36/120$ — wo ulta conditional $P(\\text{bought}\\mid\\text{mobile})$ hai; aur $36/200$ joint hai."
+ ],
+ "ps-independence-01": [
+  "'Mutually exclusive' matlab dono ek saath ho hi nahi sakte: $P(A\\cap B)=0$. Isko independence se mat milao.",
+  "Rule: independent tab jab $P(A\\cap B)=P(A)P(B)$; aur $P(A\\mid B)=P(A\\cap B)/P(B)$. Yahan $P(A)P(B)=0.12$.",
+  "Union $=0.3+0.4-0=0.7$, to 0.58 wala option $0.3\\times0.4$ ghata raha hai (independence). Ab $P(A\\mid B)$ bhi $P(A\\cap B)=0$ daal ke nikalo."
+ ],
+ "ps-independence-02": [
+  "Saare options $P(A\\cap B)$ pe tike hain. Union diya hai, to pehle overlap nikalo.",
+  "$P(A\\cap B)=P(A)+P(B)-P(A\\cup B)$. Phir: exclusive $\\iff$ overlap $=0$; independent $\\iff$ overlap $=P(A)P(B)$.",
+  "$P(A\\cap B)=0.4+0.5-0.7=0.2$; ise $0.4\\times0.5$ se compare karo, aur 'neither' ke liye $1-P(A\\cup B)$ lo. Har option alag judge karo. Trap: overlap non-zero ko dependence samajhna."
+ ],
+ "ps-independence-03": [
+  "Overlap hona dependence nahi hai. Har pair ke liye test: $P(X\\cap Y)=P(X)P(Y)$? Fair die hai, to prob $=|\\text{set}|/6$.",
+  "$P(A)=3/6$, $P(B)=4/6$, $P(C)=3/6$. Check karo $P(A\\cap B)\\overset?=P(A)P(B)$ aur $P(A\\cap C)\\overset?=P(A)P(C)$.",
+  "$A\\cap B=\\{2,4\\}$, to $P(A\\cap B)=2/6$; ise $\\frac12\\cdot\\frac46$ se compare karo. Ab $A\\cap C$ ke liye same karo. Trap: 'overlap hai to independent nahi' sochna."
+ ],
+ "ps-independence-04": [
+  "Independent ≠ mutually exclusive: independent events overlap karte hain, to union mein seedha add nahi kar sakte.",
+  "$P(A\\cup B)=P(A)+P(B)-P(A)P(B)=0.3+0.6-0.3\\times0.6$.",
+  "Overlap $=0.3\\times0.6=0.18$; ab ise $0.3+0.6$ se ghatao. Trap: 0.9 (exclusive maan ke) ya 0.18 (intersection) ko hi union likh dena."
+ ],
+ "ps-independence-05": [
+  "Har statement ko definitions se ek-ek karke test karo. Dhyan do: $0<P(A),P(B)<1$, to koi event impossible ya certain nahi.",
+  "Rules: independent $\\iff P(A\\cap B)=P(A)P(B)$; exclusive $\\iff P(A\\cap B)=0$. Aur $P(A\\mid B)>P(A)\\iff P(A\\cap B)>P(A)P(B)$ — yahi $P(B\\mid A)$ ke liye bhi.",
+  "Complement wale statement ke liye likho $P(A^c\\cap B)=P(B)-P(A\\cap B)$ aur independence lagao. Trap: independent aur exclusive ko same samajhna — positive probabilities pe independent events overlap karte hi hain."
+ ],
+ "ps-total-prob-01": [
+  "Item teen machines mein se kisi ek se aaya — ye ek partition hai. Har machine ka defect rate uske output share se weight hoga.",
+  "Total probability: $P(D)=0.5(0.02)+0.3(0.03)+0.2(0.05)$ — har branch = prior × defect rate.",
+  "Pehli branch: $0.5\\times0.02=0.010$. Baaki do branches nikal ke jodo. Trap: 2%, 3%, 5% ka simple average ya seedha sum lena — weights bhool gaye."
+ ],
+ "ps-total-prob-02": [
+  "Coin pehle urn chunta hai, phir ball — do-stage experiment. 'Red' dono urns se aa sakta hai, to dono branches chahiye.",
+  "$P(R)=P(I)P(R\\mid I)+P(II)P(R\\mid II)=\\frac12\\cdot\\frac35+\\frac12\\cdot\\frac15$.",
+  "Urn I branch: $\\frac12\\cdot\\frac35=0.3$. Ab urn II branch nikal ke jodo. Trap: sirf ek branch rakhna, ya $0.6\\times0.2$ multiply karna — branches alternatives hain, add hoti hain."
+ ],
+ "ps-total-prob-03": [
+  "B se draw karne se pehle B badal chuka hai: ab usme 9 balls hain. Moved ball white thi ya black — ye do cases (partition) hain.",
+  "$P(W_B)=P(\\text{moved }W)\\cdot\\frac{5}{9}+P(\\text{moved }B)\\cdot\\frac{4}{9}$, jahan $P(\\text{moved }W)=\\frac25$, $P(\\text{moved }B)=\\frac35$.",
+  "Pehli branch: $\\frac25\\cdot\\frac59=\\frac{10}{45}$. Ab doosri branch nikal ke jodo. Trap: transfer ignore karke $4/8$ lena, ya maan lena ki black hi move hui."
+ ],
+ "ps-total-prob-04": [
+  "Email ya spam hai ya nahi — 40/60 ka partition. 'Offer' dono classes mein aata hai, alag-alag rate se.",
+  "$P(\\text{offer})=P(S)P(\\text{offer}\\mid S)+P(S^c)P(\\text{offer}\\mid S^c)=0.4(0.3)+0.6(0.05)$.",
+  "Spam branch: $0.4\\times0.3=0.12$. Ab non-spam branch nikal ke jodo. Trap: 0.12 pe ruk jaana (sirf spam), ya 0.3 aur 0.05 ka 50/50 average lena."
+ ],
+ "ps-bayes-01": [
+  "Sawaal $P(\\text{affected}\\mid+)$ maang raha hai — ulta conditional, 95% wala nahi. Base rate sirf 1% hai, ye bahut matter karega.",
+  "Bayes: $P(D\\mid+)=\\dfrac{0.01\\times0.95}{0.01\\times0.95+0.99\\times0.05}$. Numerator = affected branch, denominator = saare positives.",
+  "Numerator $=0.0095$, false-positive branch $=0.99\\times0.05=0.0495$. Ab inko jod ke $P(+)$ banao aur divide karo. Trap: 0.95 likh dena, ya numerator pe hi ruk jaana."
+ ],
+ "ps-bayes-02": [
+  "'Item is defective, came from C?' — ye $P(C\\mid D)$ hai, reverse direction. Evidence (defect) aur prior (20%) dono lagenge.",
+  "$P(C\\mid D)=\\dfrac{0.2\\times0.05}{0.5(0.02)+0.3(0.03)+0.2(0.05)}$ — numerator sirf C ki branch.",
+  "Numerator $=0.2\\times0.05=0.010$; denominator ke liye baaki branches $0.010$ aur $0.009$ bhi jodo. Trap: B ki branch upar rakhna, ya sirf prior 0.2 dena."
+ ],
+ "ps-bayes-03": [
+  "Red ball mili; ab poochha hai urn II ki prob — $P(II\\mid R)$. Priors 1/4 aur 3/4 barabar nahi hain, unhe ignore mat karna.",
+  "$P(II\\mid R)=\\dfrac{\\frac34\\cdot\\frac25}{\\frac14\\cdot\\frac45+\\frac34\\cdot\\frac25}$. Numerator = urn II ki branch.",
+  "Urn II branch: $\\frac34\\times0.4=0.3$; urn I branch: $\\frac14\\times0.8=0.2$. Ab total nikal ke divide karo. Trap: urn I ki branch upar rakhna, ya priors chhod ke $0.4/(0.8+0.4)$."
+ ],
+ "ps-bayes-04": [
+  "Fraud sirf 0.1% hai, legit 99.9%. Flag milne pe $P(\\text{fraud}\\mid\\text{flag})$ chahiye — 99% detection rate wala ulta conditional nahi.",
+  "Bayes: $\\dfrac{0.001\\times0.99}{0.001\\times0.99+0.999\\times0.01}$. Neeche dono flag-branches ka total.",
+  "Fraud branch $=0.00099$, legit branch $=0.00999$. Ab ratio ka order of magnitude socho. Trap: 0.99 chun lena (reverse conditional), ya legit branch ko numerator mein rakhna."
+ ],
+ "ps-bayes-05": [
+  "Sensitivity $=P(+\\mid D)=0.9$, specificity $=P(-\\mid D^c)=0.9$, to false positive rate $0.1$. Options prevalence $\\pi$ badal ke poochh rahe hain.",
+  "$P(D\\mid+)=\\dfrac{0.9\\pi}{0.9\\pi+0.1(1-\\pi)}$ aur $P(+)=0.9\\pi+0.1(1-\\pi)$. Har option mein diya $\\pi$ daalo.",
+  "$\\pi=0.01$: numerator $0.009$, false-positive branch $0.099$ — ab ratio ko 0.1 se compare karo. $\\pi=0.5$ bhi aise hi try karo. Trap: maan lena ki prior ka asar nahi padta."
+ ],
+ "ps-pmf-moments-01": [
+  "$P(X=x)=kx$ — probabilities equal nahi hain, aur $k$ unknown hai. Pehle normalise karo, phir mean.",
+  "$\\sum_{x=1}^4 kx=1$ se $k$ nikalo; phir $E[X]=\\sum x\\cdot kx=k(1^2+2^2+3^2+4^2)$.",
+  "$k(1+2+3+4)=10k=1$, to $k=0.1$. Ab $1+4+9+16$ ko $k$ se multiply karo. Trap: 1–4 ka simple average lena, ya $k$ se multiply karna bhool jaana."
+ ],
+ "ps-pmf-moments-02": [
+  "Support $x=0,1,2,3$ hai — $x=0$ bhi shaamil hai, uski prob $c(0+1)=c$ hai. Pehle normalise, phir $E[X^2]$.",
+  "$c(1+2+3+4)=1$; phir $E[X^2]=\\sum x^2\\,c(x+1)=c(0\\cdot1+1\\cdot2+4\\cdot3+9\\cdot4)$.",
+  "Normalisation se $c=0.1$. Ab bracket wale terms jodo aur $c$ se multiply karo. Trap: $(E[X])^2$ dena — $E[X^2]$ mein values pehle square hoti hain; aur $x=0$ chhodne se $c$ galat aata hai."
+ ],
+ "ps-pmf-moments-03": [
+  "$E[X^2]$ chahiye — har value ko pehle square karo, phir uski probability se weight karo. $-1$ ka square positive hota hai.",
+  "$E[X^2]=(-1)^2(0.3)+0^2(0.2)+2^2(0.5)$.",
+  "Pehla term: $(-1)^2\\times0.3=+0.3$ (minus nahi). Ab teesra term jodo. Trap: $E[X]=0.7$ ka square lena, ya variance $E[X^2]-(E[X])^2$ de dena."
+ ],
+ "ps-pmf-moments-04": [
+  "$X$ sirf 1 ya 3, dono 1/2 prob se. Har statement ke liye $E[X]$, $E[X^2]$, $E[1/X]$ seedha definition se nikalo.",
+  "$E[g(X)]=\\frac12g(1)+\\frac12g(3)$. Aur $\\mathrm{Var}(X)=E[X^2]-(E[X])^2\\ge0$.",
+  "$E[X]=\\frac{1+3}{2}=2$. Ab $E[X^2]=\\frac{1+9}{2}$ aur $E[1/X]=\\frac{1+1/3}{2}$ nikal ke har option se milao. Trap: $E[X^2]=(E[X])^2$ ya $E[1/X]=1/E[X]$ maan lena."
+ ],
+ "ps-var-linear-01": [
+  "$3X-5$ ek linear transform hai. Shift $-5$ spread ko nahi badalta; sirf scale 3 ka asar padta hai.",
+  "Rule: $\\mathrm{Var}(aX+b)=a^2\\,\\mathrm{Var}(X)$, yahan $a=3$, $b=-5$, $\\mathrm{Var}(X)=4$.",
+  "$a^2=9$ — ab ise $\\mathrm{Var}(X)$ se multiply karo. Trap: $3\\times4$ (a ka square bhoolna), ya $-5$ ko variance mein bhi lagana."
+ ],
+ "ps-var-linear-02": [
+  "$E[X^2]=13$ variance nahi hai. Pehle $\\mathrm{Var}(X)$ nikalo, phir linear transform ka rule lagao.",
+  "$\\mathrm{Var}(X)=E[X^2]-(E[X])^2=13-2^2$; phir $\\mathrm{Var}(-2X+7)=(-2)^2\\,\\mathrm{Var}(X)$.",
+  "$\\mathrm{Var}(X)=13-4=9$. Ab $(-2)^2$ se multiply karo — minus sign square mein gayab, aur $+7$ spread nahi badalta. Trap: 13 ko hi variance maan lena."
+ ],
+ "ps-var-linear-03": [
+  "$Y=5-X$ ek linear transform hai ($a=-1$, $b=5$). Shift spread ko nahi badalta, aur SD kabhi negative nahi hota.",
+  "Rule: $\\mathrm{SD}(aX+b)=|a|\\,\\mathrm{SD}(X)$ (kyunki $\\mathrm{Var}=a^2\\mathrm{Var}(X)$); yahan $a=-1$, $\\mathrm{SD}(X)=3$.",
+  "$|a|=|-1|=1$ — ab ise $\\mathrm{SD}(X)$ se multiply karo. Trap: $5-3$ karna (shift lagana), minus sign rakhna, ya SD ki jagah variance de dena."
+ ],
+ "ps-var-linear-04": [
+  "Do cheezein chahiye: $E[Y]$ (shift aur sign dono matter karte hain) aur $\\mathrm{Var}(Y)$ (sirf $a^2$). $E[X^2]=5$ variance nahi hai.",
+  "$E[Y]=4-3E[X]$; $\\mathrm{Var}(X)=E[X^2]-(E[X])^2$; $\\mathrm{Var}(Y)=(-3)^2\\,\\mathrm{Var}(X)$.",
+  "$\\mathrm{Var}(X)=5-1^2=4$. Ab $E[Y]$ sign dhyan se nikalo aur $\\mathrm{Var}(Y)$ ke liye 9 se multiply karo. Trap: $-3$ se multiply karna (negative variance), ya 5 ko Var maan lena."
+ ],
+ "ps-var-linear-05": [
+  "$F=1.8C+32$ linear hai. Mean 20 is sawaal mein kaam ka nahi — sirf variance chahiye, aur +32 spread nahi badalta.",
+  "$\\mathrm{Var}(F)=1.8^2\\cdot\\mathrm{Var}(C)=1.8^2\\times25$.",
+  "$1.8^2=3.24$. Ab 25 se multiply karo. Trap: 1.8 se hi multiply karna (square bhoolna), ya end mein 32 jod dena."
+ ],
+ "ps-model-select-01": [
+  "'Average rate of 3 per minute, independently' aur 'number of calls in a window' — ye counts-in-an-interval model hai. Window 10 minute ki hai, 1 ki nahi.",
+  "Poisson rule: $\\lambda=\\text{rate}\\times\\text{interval length}$ (same units mein).",
+  "Rate per minute hai, window minutes mein — ab multiply karke $\\lambda$ nikalo. Trap: per-minute rate 3 hi rakh dena; aur Binomial ke 10 'trials' nahi hain, ek minute mein kai calls aa sakti hain."
+ ],
+ "ps-model-select-02": [
+  "Key words: 'batch of 30', '6 defective', 'without replacement' — fixed finite lot se bina wapas rakhe nikalna.",
+  "Checklist: finite lot, no replacement → hypergeometric; independent trials, constant $p$ → binomial; first success tak wait → geometric; rate × interval → Poisson.",
+  "Pehla chip defective hone ki prob $6/30$; agar wo defective nikla to doosre ki $5/29$ — kya $p$ constant raha? Isi se decide karo. Trap: $6/30=0.2$ dekh ke Binomial(5, 0.2) chun lena."
+ ],
+ "ps-model-select-03": [
+  "Har option pe binomial checklist lagao: fixed $n$, har trial ke do outcomes, independent trials, constant $p$.",
+  "Fail hone ke do common reasons: $n$ fixed nahi (first success tak wait → geometric), ya bina replacement ($p$ badalta hai → hypergeometric).",
+  "Die wala option: 'until the first six' mein rolls ki ginti pehle se fixed nahi — ye geometric hai. Baaki options pe bhi yahi checklist chalao. Trap: deck se 'dealt' cards ko independent trials samajhna."
+ ],
+ "ps-model-select-04": [
+  "Har question pe independent guess, 4 mein se 1 sahi — fixed 20 trials, constant $p$. 'Expected number' poochha hai, koi probability nahi.",
+  "$X\\sim\\text{Binomial}(n=20,\\,p=1/4)$ aur $E[X]=np$.",
+  "$p=1/4=0.25$ sirf ek question ke liye hai; ab 20 questions ke liye $np$ nikalo. Trap: $P(X=k)$ wala binomial formula lagana — expectation ke liye sirf $np$ chahiye."
+ ],
+ "ps-model-select-05": [
+  "12 independent rolls, har roll pe six ki prob $1/6$ — fixed $n$, constant $p$: binomial. 'Exactly two' = $P(X=2)$, mean nahi.",
+  "$P(X=2)=\\binom{12}{2}\\left(\\frac16\\right)^2\\left(\\frac56\\right)^{10}$.",
+  "$\\binom{12}2=\\frac{12\\cdot11}{2}=66$ (2 se divide karna mat bhoolo). Ab $(\\frac16)^2(\\frac56)^{10}$ nikal ke multiply karo. Trap: $\\binom{12}2$ factor hi chhod dena."
+ ],
+ "ps-tail-direction-01": [
+  "'$X\\ge3$' with $n=4$ matlab $X=3$ ya $X=4$ — sirf 2 terms. Direction dhyan se: $\\ge$ hai, $\\le$ nahi.",
+  "$P(X\\ge3)=P(3)+P(4)=\\left[\\binom43+\\binom44\\right](0.5)^4$.",
+  "$(0.5)^4=1/16$, aur $\\binom43=4$. Ab $\\binom44$ jodo. Trap: complement lete waqt $1-P(X\\le3)$ likhna — $X\\ge3$ ka complement $X\\le2$ hai."
+ ],
+ "ps-tail-direction-02": [
+  "'$X\\ge2$' ke infinite terms hain (2, 3, 4, ...). Complement lo: $X\\le1$, yaani sirf $X=0$ aur $X=1$.",
+  "$P(X\\ge2)=1-P(0)-P(1)=1-e^{-2}(1+2)$.",
+  "$e^{-2}\\approx0.1353$, to $P(0)+P(1)=3e^{-2}$. Ab 1 se ghatao. Trap: $1-P(X\\le2)$ lena — wo $X\\ge3$ hai; aur sirf $P(X=2)$ dena bhi galat."
+ ],
+ "ps-tail-direction-03": [
+  "'At most 1 defect' $=X\\le1$: $X=0$ ya $X=1$. Boundary 1 shaamil hai, 2 nahi.",
+  "$P(X\\le1)=e^{-1.5}(1+1.5)$ — Poisson $P(k)=e^{-\\lambda}\\lambda^k/k!$ se, $\\lambda=1.5$.",
+  "$e^{-1.5}\\approx0.2231$ (yahi $P(X=0)$ hai). Ab $P(X=1)$ jodo. Trap: sirf $P(0)$ pe ruk jaana, ya ulta $P(X\\ge2)$ nikal dena."
+ ],
+ "ps-tail-direction-04": [
+  "'No more than 3 failures' — failures 3 se zyada nahi ho sakte. Socho: kaun si values allowed hain, aur kya 3 khud allowed hai?",
+  "Translation: 'at most / no more than $k$' → $\\le k$; 'fewer than $k$' → $<k$; 'at least $k$' → $\\ge k$; 'more than $k$' → $>k$.",
+  "Allowed values list karo: 0, 1, 2, ... kahan tak? Phir option match karo. Trap: boundary 3 ko chhod dena, ya complement 'more than 3' chun lena."
+ ],
+ "ps-tail-direction-05": [
+  "'$X\\ge2$' = 2, 3, 4, 5 — chaar terms. Complement mein sirf $X=0$ aur $X=1$ aate hain, wo aasaan hai.",
+  "$P(X\\ge2)=1-P(0)-P(1)=1-0.8^5-5(0.2)(0.8^4)$.",
+  "$P(0)=0.8^5=0.32768$. Ab $P(1)$ nikal ke dono ko 1 se ghatao. Trap: complement $X\\le2$ tak le jaana — $X\\ge2$ ka complement $X\\le1$ par rukta hai."
+ ],
+ "ps-poisson-rate-01": [
+  "Rate per hour diya hai par interval 20 minute ka — pehle units match karo. 'No email' = $P(X=0)$.",
+  "$\\lambda=6\\times\\frac{20}{60}$, phir $P(X=0)=e^{-\\lambda}$.",
+  "20 minute $=\\frac13$ hour, to $\\lambda=6\\cdot\\frac13$. Ab $e^{-\\lambda}$ nikalo. Trap: $\\lambda=6$ rakh ke $e^{-6}$, ya $1-e^{-\\lambda}$ (at least one) de dena."
+ ],
+ "ps-poisson-rate-02": [
+  "$n=500$ bada, $p=0.004$ chhota — Binomial ko Poisson se approximate karo. 'Exactly 2' = $P(X=2)$, $\\le2$ nahi.",
+  "$\\lambda=np=500\\times0.004$, aur $P(X=2)=e^{-\\lambda}\\lambda^2/2!$.",
+  "$\\lambda=500\\times0.004=2$, aur $e^{-2}\\approx0.1353$. Ab $\\lambda^2/2!$ se multiply karo. Trap: $2!$ bhool jaana, ya $P(0)+P(1)+P(2)$ jod dena."
+ ],
+ "ps-poisson-rate-03": [
+  "'Average 0.5 per page' ek rate hai aur report 6 pages ki — counts in an interval, to Poisson. Ek page pe ek se zyada typos bhi ho sakte hain.",
+  "$\\lambda=\\text{rate}\\times\\text{length}=0.5\\ \\text{(typos/page)}\\times6\\ \\text{(pages)}$.",
+  "Units check: (typos/page) × pages = typos — yaani multiply, divide nahi. Ab $\\lambda$ nikal ke option dhoondo. Trap: $6/0.5$ karna, ya per-page rate hi poori report ke liye rakh dena."
+ ],
+ "ps-poisson-rate-04": [
+  "Rate per hour hai, interval 5 minute — pehle $\\lambda$ ko interval pe scale karo. 'At least one' ka complement 'none' hai.",
+  "$\\lambda=12\\times\\frac{5}{60}$, aur $P(X\\ge1)=1-e^{-\\lambda}$.",
+  "5 minute $=\\frac{1}{12}$ hour, to $\\lambda=12\\cdot\\frac1{12}$. Ab $1-e^{-\\lambda}$ nikalo. Trap: $e^{-\\lambda}$ pe ruk jaana (wo 'none' hai), ya $5/60$ ko hi probability maan lena."
+ ],
+ "ps-pdf-cdf-01": [
+  "PDF ki total area 1 honi chahiye — height nahi. $k$ wahi number hai jo $\\int_0^2 kx^2\\,dx$ ko 1 banaye.",
+  "$\\int_0^2 kx^2\\,dx=k\\left[\\frac{x^3}{3}\\right]_0^2=1$.",
+  "$\\left[\\frac{x^3}{3}\\right]_0^2=\\frac{8}{3}$, to equation $\\frac{8k}{3}=1$ bani. Ab $k$ solve karo. Trap: $1/3$ factor bhoolna ($8k=1$), ya peak $f(2)=4k$ ko 1 rakhna."
+ ],
+ "ps-pdf-cdf-02": [
+  "Pehle $k$ fix karo (area = 1), phir interval probability CDF ke difference se nikalo — density values ka difference nahi.",
+  "$\\int_0^2k(2-x)\\,dx=1$ se $k$; phir $P(0.5<X<1)=F(1)-F(0.5)$, jahan $F(x)=\\int_0^x k(2-t)\\,dt$.",
+  "$\\int_0^2(2-x)\\,dx=2$, to $k=\\frac12$ aur $F(x)=x-\\frac{x^2}{4}$. Ab $F(1)$ aur $F(0.5)$ nikal ke ghatao. Trap: sirf $F(1)$ dena, ya $k=1$ maan lena."
+ ],
+ "ps-pdf-cdf-03": [
+  "Valid PDF ki do shartein: $[0,2]$ pe har jagah $f(x)\\ge0$, aur total area $=1$. Har option dono pe test karo.",
+  "Area $=\\int_0^2 f(x)\\,dx$. Non-negativity ke liye $x=0$ wala end check karo — linear function ka minimum end pe hota hai.",
+  "Example: $f(x)=1$ ka area $=2$, to fail. Baaki options ka integral aur $f(0)$ check karo. Trap: sirf area 1 dekh ke ruk jaana — negative values wala function bhi area 1 de sakta hai."
+ ],
+ "ps-pdf-cdf-04": [
+  "CDF $F$ diya hai. Teen alag cheezein: density $f=F'$, interval prob $=F(b)-F(a)$, aur continuous $X$ ke liye point prob $=0$.",
+  "$f(x)=\\frac{d}{dx}x^3$; $P(a<X<b)=b^3-a^3$; $P(X\\le a)=a^3$; $P(X=a)=0$.",
+  "$F(0.5)=0.5^3=0.125$ — ab har option mein dekho ye kahan lagta hai, aur $F(1)=1$ bhi use karo. Trap: density value $f(0.5)$ ko $P(X=0.5)$ samajhna."
+ ],
+ "ps-median-cdf-01": [
+  "Median $m$ wo point hai jahan tak area 0.5 ho: $F(m)=0.5$. Ye $F(0.5)$ evaluate karna nahi hai.",
+  "$F(x)=\\int_0^x 2t\\,dt$; phir $F(m)=0.5$ ko $m$ ke liye solve karo.",
+  "$F(x)=x^2$, to equation $m^2=0.5$. Ab positive root lo. Trap: $F(0.5)=0.25$ likh dena, ya mean $\\int_0^1 2x^2dx$ de dena."
+ ],
+ "ps-median-cdf-02": [
+  "Median $m$: $F(m)=0.5$ solve karna hai. Density $3x^2$ right side pe zyada hai, to median support ke midpoint pe nahi hoga.",
+  "$F(x)=\\int_0^x 3t^2\\,dt$; phir $F(m)=0.5$.",
+  "$F(x)=x^3$, to $m^3=0.5$ — ab cube root lo. Trap: $F(0.5)=0.125$ dena, mean $3/4$ dena, ya midpoint 0.5 le lena."
+ ],
+ "ps-median-cdf-03": [
+  "'Mean 4' se rate $\\lambda=1/4$ hota hai, 4 nahi. Median ke liye $F(m)=0.5$ solve karna hai.",
+  "$F(x)=1-e^{-x/4}$, to $1-e^{-m/4}=0.5$, yaani $e^{-m/4}=0.5$.",
+  "Dono taraf $\\ln$ lo: $-m/4=\\ln0.5=-\\ln2$. Ab $m$ nikalo ($\\ln2\\approx0.693$). Trap: $\\lambda=4$ lena, ya mean ko hi median maan lena — exponential right-skewed hai."
+ ],
+ "ps-median-cdf-04": [
+  "Median $m$: jahan tak area 0.5 ho, yaani $F(m)=0.5$. Density badh rahi hai, to median midpoint 2 pe nahi hoga.",
+  "$F(x)=\\int_0^x\\frac t8\\,dt$; phir $F(m)=0.5$ solve karo.",
+  "$F(x)=\\frac{x^2}{16}$, to $\\frac{m^2}{16}=0.5$ — ab $m^2$ nikal ke positive root lo. Trap: $F(0.5)$ evaluate karna, ya mean $\\int_0^4 x^2/8\\,dx$ de dena."
+ ],
+ "ps-uniform-conditional-01": [
+  "'Given $X>4$' — ab $X$ sirf $(4,10)$ mein ho sakta hai, aur wahan bhi uniform hai. Naya sample space yahi interval hai.",
+  "$P(X>7\\mid X>4)=\\dfrac{\\text{length}(7,10)}{\\text{length}(4,10)}$ — lengths divide karo, cut-offs nahi.",
+  "Restricted interval $(4,10)$ ki length $=6$. Ab favourable $(7,10)$ ki length nikal ke divide karo. Trap: $7/4$ ya $4/7$ (cut-offs) lena, ya unconditional $3/10$ dena."
+ ],
+ "ps-uniform-conditional-02": [
+  "Condition $X>4$ se range $(4,12)$ ban jaati hai. Dono conditions saath lagao: $4<X<6$.",
+  "$P(X<6\\mid X>4)=\\dfrac{\\text{length}(4,6)}{\\text{length}(4,12)}$.",
+  "Restricted range $(4,12)$ ki length $=8$. Ab $(4,6)$ ki length isse divide karo. Trap: unconditional $P(X<6)=4/10$, ya joint $2/10$ pe ruk jaana."
+ ],
+ "ps-uniform-conditional-03": [
+  "'Not arrived by minute 10' ek condition hai — ab arrival time $(10,30)$ mein uniform hai. 'Next 10 minutes' = $(10,20)$.",
+  "$P(X<20\\mid X>10)=\\dfrac{\\text{length}(10,20)}{\\text{length}(10,30)}$.",
+  "Restricted interval ki length $=30-10=20$. Ab $(10,20)$ ki length se divide karo. Trap: denominator 30 rakhna (unconditional), ya $P(X>10)$ hi de dena."
+ ],
+ "ps-uniform-conditional-04": [
+  "Do conditions: $X^2<1$ matlab $-1<X<1$, aur given $X>0$. Restricted space $(0,3)$ hai.",
+  "$P=\\dfrac{\\text{length}\\big((-1,1)\\cap(0,3)\\big)}{\\text{length}(0,3)}$.",
+  "Denominator: $(0,3)$ ki length 3. Ab $(-1,1)$ ka wo hissa jo $X>0$ mein aata hai, uski length nikalo. Trap: poora $(-1,1)$ (length 2) gin lena, ya joint $P(0<X<1)$ pe ruk jaana."
+ ],
+ "ps-exponential-01": [
+  "Mean 5 years se rate $\\lambda=1/5$ per year — mean khud rate nahi hai. 'More than 5 years' = survival $P(X>5)$.",
+  "$P(X>t)=e^{-\\lambda t}$, yahan $\\lambda=\\frac15$, $t=5$.",
+  "Exponent $\\lambda t=\\frac15\\times5$ — ab $e^{-\\lambda t}$ nikalo. Trap: $1-e^{-\\lambda t}$ dena (wo $P(X<5)$ hai), ya mean ko median maan ke 0.5 kehna."
+ ],
+ "ps-exponential-02": [
+  "Bulb 600 h pehle hi chal chuka hai — ye 'given' condition hai. Exponential ki khaas property socho: kya purani age future survival ko affect karti hai?",
+  "Memoryless: $P(X>600+500\\mid X>600)=P(X>500)$, aur $P(X>t)=e^{-\\lambda t}$ with $\\lambda=1/1000$.",
+  "Exponent $=-\\lambda t=-500/1000$; ab $e^{\\text{exponent}}$ calculate karo. Trap: $e^{-0.6}$ (sirf condition) ya $e^{-1.1}$ (condition ignore) mat lo."
+ ],
+ "ps-exponential-03": [
+  "$N=\\lfloor X\\rfloor=2$ ka matlab $X$ exactly 2 nahi, balki ek poora interval hai. Continuous $X$ ke liye ek point ki probability 0 hoti hai.",
+  "$P(N=2)=P(2\\le X<3)=P(X>2)-P(X>3)=e^{-2\\lambda}-e^{-3\\lambda}$, with $\\lambda=0.5$.",
+  "$e^{-2(0.5)}=e^{-1}\\approx0.3679$; ab $e^{-1.5}$ nikal ke subtract karo. Trap: density $f(2)=0.5e^{-1}$ probability nahi hai, aur $P(X\\ge2)$ pe mat ruko."
+ ],
+ "ps-exponential-04": [
+  "Mean 2 diya hai — pehle rate nikalo, phir chaaron statements (floor, memoryless, rate, variance) ko alag-alag check karo.",
+  "Rules: $\\lambda=1/\\text{mean}$, $\\mathrm{Var}=1/\\lambda^2$, $P(X>s+t\\mid X>s)=P(X>t)$, aur $\\lfloor X\\rfloor\\sim$ Geometric with $p=1-e^{-\\lambda}$.",
+  "Variance ke liye $1/\\lambda^2$ mein apna $\\lambda$ daalo; memoryless wale mein $s=1$ aur $s+t=3$ se $t$ nikalo. Trap: exponential mein mean, SD aur variance ko mix mat karo."
+ ],
+ "ps-exponential-05": [
+  "Tail probability $P(X>2)$ di hai, aur mean poocha hai. Pehle tail formula se rate $\\lambda$ nikalo, phir mean.",
+  "$P(X>2)=e^{-2\\lambda}=0.25$, aur $E[X]=1/\\lambda$.",
+  "Dono side $\\ln$ lo: $2\\lambda=\\ln 4$, to $\\lambda=\\ln4/2$. Trap: $\\lambda$ ko hi answer mat likh do — mean uska reciprocal hai."
+ ],
+ "ps-standardize-01": [
+  "Notation $N(50,16)$ mein 16 variance hai, SD nahi. Aur $P(X>58)$ right tail hai.",
+  "$z=(58-\\mu)/\\sigma$ with $\\sigma=\\sqrt{16}=4$; phir $P(X>58)=1-\\Phi(z)$.",
+  "$z=(58-50)/4$ calculate karo aur given $\\Phi$ value use karo. Trap: 16 se divide karke $z=0.5$ mat lo, aur $\\Phi(z)$ hi mat likho — wo left tail hai."
+ ],
+ "ps-standardize-02": [
+  "$Y=3Z-2$ standard normal ka linear transformation hai; $Z$ ka mean 0 aur variance 1 hai.",
+  "$E[aZ+b]=aE[Z]+b$ aur $\\mathrm{Var}(aZ+b)=a^2\\mathrm{Var}(Z)$; yahan $a=3$, $b=-2$.",
+  "Pehle mean: $3\\cdot0-2$. Ab variance ke liye socho shift $-2$ ka koi effect hai kya. Trap: $E[Z]$ ko 1 maanna, ya variance ko $a$ se (not $a^2$) scale karna."
+ ],
+ "ps-standardize-03": [
+  "Do-sided interval $85<X<130$ hai, to dono ends standardise karne padenge. $15^2$ variance hai, to $\\sigma=15$.",
+  "$P=\\Phi(z_2)-\\Phi(z_1)$ with $z_1=(85-100)/15$, $z_2=(130-100)/15$; negative $z$ ke liye $\\Phi(-a)=1-\\Phi(a)$.",
+  "$z_1=-1$, $z_2=2$. Ab $\\Phi(-1)=1-0.8413$ nikalo aur $\\Phi(2)$ se subtract karo. Trap: $-1$ ko $+1$ maan ke $\\Phi(2)-\\Phi(1)$ mat karo."
+ ],
+ "ps-standardize-04": [
+  "$P(X<40)=0.5$ — normal mein kaunsa point exactly aadha area deta hai? Aur $0.8413=\\Phi(1)$ ek $z$-value bata raha hai.",
+  "Normal symmetric hai, to median $=\\mu$. Phir 46 pe $z=1$: $(46-\\mu)/\\sigma=1$.",
+  "$\\mu=40$ daalo: $(46-40)/\\sigma=1$ se $\\sigma$ nikalo. Trap: question variance maang raha hai, $\\sigma$ pe mat ruko."
+ ],
+ "ps-standardize-05": [
+  "$E[(2Z+1)^2]$ ek second moment hai, $(E[2Z+1])^2$ nahi. Square ko expand karo ya variance + mean² wala rule lagao.",
+  "Expand: $(2Z+1)^2=4Z^2+4Z+1$, with $E[Z]=0$, $E[Z^2]=1$. Ya $E[W^2]=\\mathrm{Var}(W)+(E[W])^2$ with $W=2Z+1$.",
+  "Term by term: $E[4Z^2]=4\\cdot1$, $E[4Z]=0$; ab constant term jodo. Trap: $1^2$ drop mat karo, aur coefficient 2 ko square karna mat bhoolo."
+ ],
+ "ps-chi-square-01": [
+  "$Z^2$ ka variance poocha hai, mean nahi. $\\mathrm{Var}(Z^2)$ ke liye $Z$ ka 4th moment chahiye.",
+  "$\\mathrm{Var}(Z^2)=E[Z^4]-(E[Z^2])^2$; standard normal ke liye $E[Z^2]=1$, $E[Z^4]=3$.",
+  "$(E[Z^2])^2$ nikalo aur $E[Z^4]$ se subtract karo. Trap: $E[Z^4]$ ko hi answer mat likho, aur $E[Z^2]$ (mean of $\\chi^2_1$) se confuse mat ho."
+ ],
+ "ps-chi-square-02": [
+  "$X_i\\sim N(0,4)$ standard normal nahi hain, to $\\chi^2_3$ ka '$2k$' seedha nahi lagega. Pehle $X_i$ ko $Z_i$ mein likho.",
+  "$X_i=2Z_i$, to $X_i^2=4Z_i^2$; $\\mathrm{Var}(cY)=c^2\\mathrm{Var}(Y)$ aur $\\mathrm{Var}(Z_i^2)=2$. Independent terms ke variances add hote hain.",
+  "Ek term: $\\mathrm{Var}(4Z_1^2)=4^2\\cdot2$. Ab teeno terms ke liye jodo. Trap: sirf 4 se scale karna (not $4^2$), ya mean $3\\times4$ de dena."
+ ],
+ "ps-chi-square-03": [
+  "$\\chi^2_3$ ki definition yaad karo: kitne independent squared standard normals, aur kaise combine? Har option mein dekho square kahan laga hai.",
+  "$\\chi^2_k=\\sum_{i=1}^k Z_i^2$ with $Z_i$ iid $N(0,1)$. Normals ka sum normal hi rehta hai; $cZ^2$ sirf scaled $\\chi^2_1$ hai.",
+  "$(Z_1+Z_2+Z_3)^2$ check karo: andar $N(0,3)$ hai, standard nahi — to ye $3\\chi^2_1$ hai. Baaki options isi tarah check karo. Trap: sirf mean 3 hona kaafi nahi."
+ ],
+ "ps-chi-square-04": [
+  "Chaar statements: $V$ ka mean, variance, $Z^2+V$ ka distribution, aur $t$ ki definition. Har ek ko $\\chi^2_k$ rules se check karo, $k=4$.",
+  "$\\chi^2_k$: mean $k$, variance $2k$; independent chi-squares ki df add hoti hai; $t_k=Z/\\sqrt{V/k}$.",
+  "$Z^2\\sim\\chi^2_1$, to $Z^2+V$ ki df $=1+4$ — statement se milao. Baaki teen mein $k=4$ daalo. Trap: variance ko $k$ maan lena."
+ ],
+ "ps-joint-pmf-01": [
+  "Constant $c$ fix karna hai: saare 6 cells ki probabilities ka total 1 hona chahiye. Lekin har cell ka weight $x+y$ hai, 1 nahi.",
+  "$c\\sum_{x}\\sum_{y}(x+y)=1$, with $x\\in\\{0,1\\}$, $y\\in\\{0,1,2\\}$.",
+  "Row $x=0$: $0+1+2=3$. Ab row $x=1$ ka sum nikalo, dono jodo, aur $c=1/\\text{total}$. Trap: 6 cells gin ke $c=1/6$ mat lo."
+ ],
+ "ps-joint-pmf-02": [
+  "'Given $Y=1$' — sample space sirf $Y=1$ wale cells tak restrict ho jaata hai. Denominator $P(Y=1)$ hoga.",
+  "$P(X=1\\mid Y=1)=p(1,1)/P(Y=1)$, with $P(Y=1)=p(0,1)+p(1,1)$ aur $p(x,y)=(x+y)/9$.",
+  "$p(0,1)=1/9$, $p(1,1)=2/9$; ab $P(Y=1)$ jodo aur divide karo. Trap: $P(X=1)=6/9$ se divide mat karo — wo ulta conditional deta hai."
+ ],
+ "ps-joint-pmf-03": [
+  "$P(Y=1)$ ek marginal hai — table mein $Y=1$ wala column dekho, row nahi.",
+  "Marginal: $P(Y=1)=\\sum_x p(x,1)=p(0,1)+p(1,1)$.",
+  "Column $Y=1$ ke dono cells (upar se neeche) padho aur jodo. Trap: row $X=1$ jodna (wo $P(X=1)$ hai), ya sirf ek cell $p(1,1)$ le lena."
+ ],
+ "ps-joint-pmf-04": [
+  "'Given $Y=1$' — sirf $Y=1$ column pe dhyan do aur use ek naya mini-distribution banao. $X$ yahan sirf 0 ya 1 ho sakta hai.",
+  "$E[X\\mid Y=1]=\\sum_x x\\,p(x,1)/P(Y=1)$, with $P(Y=1)=0.3+0.4$.",
+  "$P(Y=1)=0.7$. Ab $p(0,1)/0.7$ aur $p(1,1)/0.7$ banao, phir $\\sum x\\,P(X=x\\mid Y=1)$ lo. Trap: $P(X=1)=0.6$ se divide karna, ya joint cell ko hi conditional maan lena."
+ ],
+ "ps-joint-pmf-05": [
+  "Table se pehle marginals nikalo (row sums, column sums). Independence, covariance aur dono conditionals sab inhi se judge honge.",
+  "Independent iff har cell $p(x,y)=P(X=x)P(Y=y)$; independent ⇒ Cov $=0$; $P(A\\mid B)=p(\\text{cell})/P(B)$.",
+  "$P(X=1)=0.4$, $P(Y=1)=0.3$: $0.4\\times0.3$ ko cell 0.12 se milao, phir baaki cells. Conditionals mein denominator 'given' wala marginal hai. Trap: joint cell ko hi conditional maan lena."
+ ],
+ "ps-uniform-area-01": [
+  "Do independent uniforms, alag ranges: $X\\in[0,2]$, $Y\\in[0,1]$. Probability = favourable area / rectangle area; yahan symmetry se $\\frac12$ nahi milega.",
+  "Rectangle $[0,2]\\times[0,1]$ ka area 2. Region $X\\ge Y$ line $y=x$ ke neeche hai; ulta region $X<Y$ ek chhota triangle hai.",
+  "$X<Y$ triangle: vertices $(0,0),(0,1),(1,1)$, area $\\frac12$. Ise 2 se divide karo, phir complement lo. Trap: $P(X<Y)$ hi report kar dena."
+ ],
+ "ps-uniform-area-02": [
+  "$X,Y$ iid $U(0,1)$: unit square pe probability = area. $X+Y\\le0.6$ origin wale corner pe ek chhota region hai.",
+  "Region line $x+y=0.6$ ke neeche: right triangle, dono legs 0.6. Area $=\\frac12\\cdot\\text{leg}^2$, aur total area 1.",
+  "Legs $0.6$ aur $0.6$, to $\\text{leg}^2=0.36$ — ab triangle formula complete karo. Trap: $\\frac12$ bhoolna, ya $X+Y$ ko uniform maan ke 0.6 de dena."
+ ],
+ "ps-uniform-area-03": [
+  "Unit square pe $|X-Y|\\le0.2$ diagonal $y=x$ ke around ek band hai. Band ka area seedha mushkil hai — bahar wala hissa easy hai.",
+  "Band ke bahar do corner triangles: $y>x+0.2$ aur $y<x-0.2$, dono ki legs $1-0.2=0.8$. $P=1-(\\text{dono triangles ka area})$.",
+  "Ek triangle ka area $=0.8^2/2$; dono ka total nikal ke 1 se ghatao. Trap: complement hi report karna, ya width $2\\times0.2$ × length 1 lena (corners clipped hain)."
+ ],
+ "ps-uniform-area-04": [
+  "$X\\in[0,1]$, $Y\\in[0,3]$ — ranges alag hain, to $\\frac12$ wali symmetry nahi lagegi. Area method lagao.",
+  "Rectangle $[0,1]\\times[0,3]$ ka area 3. Region $Y<X$: line $y=x$ ke neeche, $x$ 0 se 1 tak.",
+  "$Y<X$ region triangle hai vertices $(0,0),(1,0),(1,1)$ — iska area nikalo aur 3 se divide karo. Trap: triangle area mein $\\frac12$ bhoolna, ya ulta $P(Y\\ge X)$ de dena."
+ ],
+ "ps-uniform-area-05": [
+  "$X,Y$ iid $U(0,4)$: square $[0,4]^2$, area 16. Line $y=x/2$ hai, $y=x$ nahi — to region aadha nahi hoga.",
+  "$X\\ge2Y\\iff y\\le x/2$. Favourable area $=\\int_0^4 \\frac{x}{2}\\,dx$, phir 16 se divide.",
+  "Ye region triangle hai vertices $(0,0),(4,0),(4,2)$; area $=\\frac12\\cdot4\\cdot2$. Ab 16 se divide karo. Trap: ulta region $X<2Y$ ka area le lena."
+ ],
+ "ps-total-expectation-01": [
+  "Do groups alag sizes ke hain (60% vs 40%) — overall mean simple average nahi, weighted average hoga.",
+  "$E[\\text{spend}]=P(\\text{regular})\\cdot500+P(\\text{new})\\cdot200$.",
+  "Regular part: $0.6\\times500=300$. Ab new part nikal ke jodo. Trap: 500 aur 200 ka seedha average, ya weights swap kar dena."
+ ],
+ "ps-total-expectation-02": [
+  "Tosses ki ginti $k$ khud random hai (die se aati hai). Pehle fixed $k$ pe expected heads socho, phir $k$ pe average karo.",
+  "$E[H]=E[E[H\\mid k]]$ with $E[H\\mid k]=k\\cdot\\frac12$ (fair coin, $k$ tosses).",
+  "To $E[H]=\\frac12E[k]$; fair die ke liye $E[k]=(1+2+\\dots+6)/6$. Ise compute karke half karo. Trap: $E[k]$ ko hi answer de dena."
+ ],
+ "ps-total-expectation-03": [
+  "$E[X\\mid Y]=2Y+1$ abhi bhi $Y$ pe depend karta hai — $E[X]$ ek number hai, to $Y$ pe average karna padega.",
+  "Tower rule: $E[X]=E[E[X\\mid Y]]=E[2Y+1]=2E[Y]+1$.",
+  "$Y\\sim U(0,1)$ ka mean $(0+1)/2$ hai; ise $2E[Y]+1$ mein daalo. Trap: $Y=0$ ya $Y=1$ plug kar dena — average karna hai."
+ ],
+ "ps-total-expectation-04": [
+  "Route ke hisaab se mean time alag hai aur route ki probability bhi alag — isliye weighted average chahiye.",
+  "$E[T]=P(A)E[T\\mid A]+P(B)E[T\\mid B]=\\frac13\\cdot30+\\frac23\\cdot15$.",
+  "Pehla term: $\\frac13\\cdot30=10$. Ab doosra term nikal ke jodo. Trap: 30 aur 15 ka unweighted average, weights swap, ya dono means seedha jodna."
+ ],
+ "ps-total-variance-01": [
+  "Random member ka variance do jagah se aata hai: group ke andar ka spread, aur group means (10 vs 20) ke beech ka farak.",
+  "$\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid G)]+\\mathrm{Var}(E[X\\mid G])$; dono groups ki probability $\\frac12$.",
+  "Within part: $\\frac12(4)+\\frac12(4)=4$. Between part: means 10, 20 (equally likely) ka variance $E[M^2]-(E[M])^2$ nikalo, phir jodo. Trap: sirf ek part rakhna, ya $4+4$ jodna."
+ ],
+ "ps-total-variance-02": [
+  "Ye mixture hai: prob 0.4 pe $N(0,1)$, prob 0.6 pe $N(5,4)$. Variance = within-component part + between-means part.",
+  "Within $=0.4(1)+0.6(4)$. Between $=0.4(0-\\mu)^2+0.6(5-\\mu)^2$, jahan overall mean $\\mu=0.4(0)+0.6(5)$.",
+  "Within $=2.8$ aur $\\mu=3$. Ab between part $0.4(9)+0.6(4)$ nikal ke within mein jodo. Trap: $N(5,4)$ mein 4 variance hai, SD nahi; aur sirf within pe mat ruko."
+ ],
+ "ps-total-variance-03": [
+  "Formula ke ek term ka meaning poocha hai. $E[\\mathrm{Var}(X\\mid Y)]$ ko andar se bahar padho: pehle Var, phir $E$.",
+  "Andar: $\\mathrm{Var}(X\\mid Y=y)$ = sirf group $y$ ke members ka spread. Bahar ka $E$ us spread ko $Y$ ke groups pe average karta hai. $\\mathrm{Var}(E[X\\mid Y])$ = group means ka spread.",
+  "Dono terms non-negative hain aur unka sum $\\mathrm{Var}(X)$ hai — to koi ek term total se bada ho sakta hai kya? Options isi se judge karo. Trap: 'within' aur 'between' ulta samajhna."
+ ],
+ "ps-total-variance-04": [
+  "Ye 'any $X,Y$' wala conceptual sawaal hai — har statement ko total variance formula ke structure se check karo: dono parts add hote hain ya multiply?",
+  "$\\mathrm{Var}(X)=E[\\mathrm{Var}(X\\mid Y)]+\\mathrm{Var}(E[X\\mid Y])$, aur dono terms $\\ge0$ hain.",
+  "Har special case mein dekho kaunsa term 0 banta hai: $E[X\\mid Y]$ constant ho to constant ka variance? $X=g(Y)$ ho to $Y$ diya hone pe $X$ ka spread? Trap: '+' ko '×' padh lena."
+ ],
+ "ps-total-variance-05": [
+  "$X$ ka mean khud random $N$ pe depend karta hai — total variance formula lagega. Poisson ki khaas property yaad karo: mean aur variance ka relation.",
+  "Poisson($N$): $E[X\\mid N]=N$ aur $\\mathrm{Var}(X\\mid N)=N$. To $\\mathrm{Var}(X)=E[N]+\\mathrm{Var}(N)$.",
+  "$N$ uniform on $\\{1,2,3\\}$: $E[N]=2$. Ab $\\mathrm{Var}(N)=E[N^2]-2^2$ with $E[N^2]=(1+4+9)/3$ nikalo aur jodo. Trap: sirf ek part rakhna."
+ ],
+ "ps-descriptive-01": [
+  "Old mean 9 values ka hai, aur ek naya value 30 aaya. Mean ko seedha average mat karo — totals ke through jao.",
+  "Old total $=9\\times20$; new mean $=(\\text{old total}+30)/10$.",
+  "Old total $=180$. Ab 30 jodo aur 10 se divide karo. Trap: $(20+30)/2$ — old mean 9 values represent karta hai, 1 nahi."
+ ],
+ "ps-descriptive-02": [
+  "Median ke liye data pehle sort karna zaroori hai. Yahan $n=6$ (even) hai.",
+  "Even $n$: median = sorted data ke 3rd aur 4th values ka average.",
+  "Sort karo: 2, 2, 5, … — baaki list poori karo, phir 3rd aur 4th ka average lo. Trap: unsorted list ke beech wale values lena, ya mean/mode se confuse karna."
+ ],
+ "ps-descriptive-03": [
+  "Ek value galat record hua (40 ki jagah 10) — to total galat hai. Mean ko seedha nahi, total ko correct karo.",
+  "Correct total $=20\\times15-10+40$; corrected mean $=\\text{correct total}/20$.",
+  "Old total $=300$. Galat 10 hatao, sahi 40 jodo, phir 20 se divide karo. Trap: correction ulti direction mein lagana, ya poora 30 mean mein jod dena (mean mein sirf $30/20$ judta hai)."
+ ],
+ "ps-descriptive-04": [
+  "Sirf extreme value 10 → 100 badla hai. Har measure ke liye socho: kya wo value ke size pe depend karta hai, ya sirf position/frequency pe?",
+  "Mean $=\\text{total}/n$; range $=\\max-\\min$; median = sorted middle value; mode = sabse frequent value.",
+  "Total change $=100-10=90$ aur $n=5$ — mean ka change nikalo. Naya sorted data 2, 4, 4, 5, 100 likh ke baaki teen check karo. Trap: range $=\\max-\\min$ hai, sirf max nahi."
+ ],
+ "ps-covariance-01": [
+  "Teen moments diye hain: $E[X]$, $E[Y]$, $E[XY]$ — covariance ka shortcut formula seedha lagega.",
+  "$\\mathrm{Cov}(X,Y)=E[XY]-E[X]E[Y]$.",
+  "$E[X]E[Y]=2\\cdot3=6$; ab ise $E[XY]$ se subtract karo. Trap: $E[XY]$ ko hi answer de dena, ya ulta subtract karna."
+ ],
+ "ps-covariance-02": [
+  "Correlation ke liye covariance ko SDs ke product se divide karte hain — yahan variances diye hain, SDs nahi.",
+  "$\\rho=\\mathrm{Cov}/(\\sigma_X\\sigma_Y)$ with $\\sigma_X=\\sqrt9$, $\\sigma_Y=\\sqrt{16}$.",
+  "$\\sigma_X\\sigma_Y=3\\cdot4=12$; ab Cov 6 ko isse divide karo. Trap: $9\\cdot16$ ya $9+16$ se divide karna."
+ ],
+ "ps-covariance-03": [
+  "Linear combination $2X-3Y$ ka variance hai, aur Cov negative hai — coefficients square honge aur cross term ka sign dhyan se.",
+  "$\\mathrm{Var}(aX+bY)=a^2\\sigma_X^2+b^2\\sigma_Y^2+2ab\\,\\mathrm{Cov}$ with $a=2$, $b=-3$, Cov $=-2$.",
+  "$a^2\\sigma_X^2=4\\cdot4=16$, $b^2\\sigma_Y^2=9\\cdot9=81$. Ab $2(2)(-3)(-2)$ ka sign carefully nikalo aur jodo. Trap: cross term drop karna, ya do negatives ka sign galat lena."
+ ],
+ "ps-covariance-04": [
+  "Covariance chahiye, correlation nahi. Table se $E[X]$, $E[Y]$ aur $E[XY]$ nikalo.",
+  "$\\mathrm{Cov}=E[XY]-E[X]E[Y]$. $XY$ sirf cell $(1,1)$ pe non-zero hai, to $E[XY]=p(1,1)$.",
+  "$E[X]=P(X=1)=0.2+0.4=0.6$, $E[Y]=P(Y=1)=0.3+0.4=0.7$. Ab product nikal ke $E[XY]$ se subtract karo. Trap: order ulta lena, ya $\\sigma_X\\sigma_Y$ se divide kar dena."
+ ],
+ "ps-covariance-05": [
+  "'Independent' word dekho — ye covariance ke baare mein kya batata hai? Aur $X-Y$ mein $Y$ ka coefficient $-1$ hai.",
+  "$\\mathrm{Var}(X-Y)=\\mathrm{Var}X+(-1)^2\\mathrm{Var}Y-2\\mathrm{Cov}(X,Y)$; independent ⇒ Cov $=0$.",
+  "$(-1)^2=1$, to $\\mathrm{Var}Y$ plus sign ke saath aata hai. Ab values daalo. Trap: $3-5$ karna — variance kabhi negative nahi hota."
+ ],
+ "ps-cov-independence-01": [
+  "$Y=X^2$ — $Y$ poori tarah $X$ se fix hai, lekin relation linear nahi (U-shape). Dependence aur covariance alag cheezein hain.",
+  "$\\mathrm{Cov}=E[XY]-E[X]E[Y]=E[X^3]-E[X]E[X^2]$. Independence test: $P(Y=0\\mid X=0)$ vs $P(Y=0)$.",
+  "$X\\in\\{-1,0,1\\}$ equally likely: $E[X]=0$, $E[X^3]=(-1+0+1)/3$ — Cov nikalo. Phir $P(Y=0)$ ko $P(Y=0\\mid X=0)=1$ se compare karo. Trap: Cov $=0$ se independence maan lena."
+ ],
+ "ps-cov-independence-02": [
+  "Chaar implications hain — 'Cov 0' aur 'independent' ke beech kaunsi direction always hold karti hai? Har statement ko implication + contrapositive ki tarah dekho.",
+  "Pakka rule: independent ⇒ $E[XY]=E[X]E[Y]$ ⇒ Cov $=0$. Koi implication sahi ho to uska contrapositive bhi sahi; converse zaroori nahi.",
+  "Counterexample: $X$ uniform on $\\{-1,0,1\\}$, $Y=X^2$ — Cov 0 hai par dependent. Ise har statement pe lagao. Trap: converse ko bhi true maan lena."
+ ],
+ "ps-cov-independence-03": [
+  "Chaar points symmetric hain aur har point pe ya $X=0$ ya $Y=0$. Do cheezein alag-alag check karo: Cov, aur independence.",
+  "Cov $=E[XY]-E[X]E[Y]$. Independence ke liye har pair pe $P(X=x,Y=y)=P(X=x)P(Y=y)$ chahiye.",
+  "Har point pe $XY=0$, aur symmetry se $E[X]=E[Y]=0$ — Cov nikalo. Phir $P(X=0)$, $P(Y=0)$ aur $P(X=0,Y=0)$ compare karo. Trap: Cov 0 dekh ke independence maan lena."
+ ],
+ "ps-cov-independence-04": [
+  "Chaar statements: $N(0,1)$ ke liye $\\mathrm{Cov}(X,X^2)$, jointly normal ka special case, $\\rho=0$ ka matlab, aur $X$ vs $X^2$ ki independence. Har ek alag judge karo.",
+  "$\\mathrm{Cov}(X,X^2)=E[X^3]-E[X]E[X^2]$. General rule: Cov 0 ⇏ independence; sirf jointly normal mein Cov 0 ⇒ independent. $\\rho$ sirf linear association naapta hai.",
+  "$N(0,1)$ symmetric hai — odd moments $E[X]$, $E[X^3]$ kya honge? Cov mein daalo. Phir socho: $X$ jaan ke kya $X^2$ fix ho jaata hai? Trap: $\\rho=0$ ko 'koi relation nahi' padhna."
+ ],
+ "ps-clt-sum-01": [
+  "Sum $S$ ka SD poocha hai (mean ka SE nahi). Yaad rakho: independent terms ke variances add hote hain, SDs nahi.",
+  "$\\mathrm{Var}(S)=n\\sigma^2=25\\cdot3^2$, aur $\\mathrm{SD}(S)=\\sqrt{\\mathrm{Var}(S)}=\\sigma\\sqrt n$.",
+  "$\\sqrt{25}=5$; ab ise $\\sigma=3$ se multiply karo. Trap: SD ko $n$ se multiply karna ($3\\times25$), ya variance hi report kar dena."
+ ],
+ "ps-clt-sum-02": [
+  "Sample mean ka standard error chahiye — population $\\sigma$ ko sample size ke hisaab se chhota karna hai.",
+  "$SE=\\sigma/\\sqrt n=12/\\sqrt{36}$.",
+  "$\\sqrt{36}=6$; ab divide karo. Trap: $n$ se divide karna, ya $\\sigma^2/n$ (jo $\\bar X$ ka variance hai) de dena."
+ ],
+ "ps-clt-sum-03": [
+  "400 tosses mein heads Binomial$(400,0.5)$ hai; normal approximation ke liye pehle mean aur SD nikalo. '$\\ge220$' right tail hai.",
+  "Mean $=np$, variance $=np(1-p)$, SD $=\\sqrt{np(1-p)}$; $z=(220-np)/\\text{SD}$ aur $P=1-\\Phi(z)$.",
+  "$np=200$, $np(1-p)=100$, to SD $=10$. Ab $z$ nikalo aur right tail lo. Trap: variance 100 ko SD maan ke $z=0.2$ lena, ya $\\Phi(z)$ hi report karna."
+ ],
+ "ps-clt-sum-04": [
+  "Sawaal $\\bar X$ ke baare mein hai, ek $X$ ke nahi — CLT se $\\bar X$ approx normal hai, par chhote spread ke saath. Variance 4 diya hai, SD nahi.",
+  "$\\bar X\\approx N(\\mu,\\sigma^2/n)$, $SE=\\sigma/\\sqrt n=\\sqrt4/\\sqrt{100}$; $z=(2.4-2)/SE$.",
+  "$SE=2/10=0.2$. Ab $z=0.4/0.2$ nikalo aur right tail $1-\\Phi(z)$ lo. Trap: $\\sigma^2/n=0.04$ ko SE lena, ya $\\sqrt n$ bhool ke $\\sigma=2$ use karna."
+ ],
+ "ps-ci-compute-01": [
+  "$\\sigma$ known hai, to $z$-interval. Sirf upper limit chahiye — ek number, poora interval nahi.",
+  "Upper $=\\bar x+z_{0.025}\\,\\sigma/\\sqrt n=50+1.96\\cdot16/\\sqrt{64}$.",
+  "$SE=16/8=2$. Ab $1.96\\times SE$ nikal ke 50 mein jodo. Trap: $\\sqrt n$ bhoolna, $n$ se divide karna, ya minus karke lower limit de dena."
+ ],
+ "ps-ci-compute-02": [
+  "'Total width' poocha hai — ye margin of error (half-width) ka double hai. $\\sigma$ known hai, to $z$-interval.",
+  "Width $=2\\,z_{0.025}\\,\\sigma/\\sqrt n=2\\times1.96\\times10/\\sqrt{100}$.",
+  "$SE=10/\\sqrt{100}=1$, to margin $=1.96\\times1$. Ab total width ke liye last step karo. Trap: margin of error pe ruk jaana, ya $\\sigma/n$ use karna."
+ ],
+ "ps-ci-compute-03": [
+  "Margin of error $\\le1$ chahiye aur $n$ dhoondhna hai — inequality ko $n$ ke liye solve karo. 'Smallest $n$' ek integer hona chahiye.",
+  "$z\\,\\sigma/\\sqrt n\\le1\\Rightarrow\\sqrt n\\ge1.96\\times5\\Rightarrow n\\ge(1.96\\times5)^2$.",
+  "$1.96\\times5=9.8$; ab $9.8^2$ nikalo. Trap: decimal ko round down karna — tab margin 1 se thoda upar chala jaata hai; aur square karna mat bhoolo."
+ ],
+ "ps-ci-compute-04": [
+  "$\\sigma$ unknown hai aur $n=16$ chhota — $t$-interval lagega, $z$ nahi. Teen critical values diye hain; sahi wala chuno.",
+  "CI $=\\bar x\\pm t_{0.025,\\,n-1}\\cdot s/\\sqrt n$, with df $=n-1=15$.",
+  "$SE=8/\\sqrt{16}=2$, aur multiplier $t_{0.025,15}=2.131$. Ab margin nikal ke $20\\pm$ margin karo. Trap: df $=16$ ya $z=1.96$ use kar lena."
+ ],
+ "ps-ci-interpret-01": [
+  "Ek computed interval $(12.1,\\ 15.3)$ hai. Har statement mein dekho probability kis pe lagayi ja rahi hai — fixed $\\mu$ pe, procedure pe, ya individual observations pe?",
+  "Interval $\\bar x\\pm\\text{margin}$ symmetric hai, to centre $=\\bar x$. '95%' procedure ki long-run coverage hai; $\\mu$ fixed hai, random nahi.",
+  "Centre $=(12.1+15.3)/2$ nikalo aur statement se milao. Baaki ke liye poochho: fixed $\\mu$ ko probability di ja rahi hai, ya CI ko observations pe lagaya ja raha hai? Trap: computed interval ke baad $\\mu$ pe probability lagana."
+ ],
+ "ps-ci-interpret-02": [
+  "Width $\\sigma$, $n$ aur confidence level pe depend karti hai. Har statement mein ek cheez badal rahi hai — dekho width kaise react karti hai.",
+  "Width $=2\\,z_{\\alpha/2}\\,\\sigma/\\sqrt n$. Higher confidence → bada $z_{\\alpha/2}$ (95%: 1.96, 99%: 2.576).",
+  "Quadrupling: $\\sqrt{4n}=2\\sqrt n$ — width ka factor kya hoga? Baaki statements formula ke numerator/denominator se check karo. Trap: width ko $1/n$ ke proportional maan lena (wo $1/\\sqrt n$ hai)."
+ ],
+ "ps-ci-interpret-03": [
+  "Interval already compute ho chuka hai. Socho: $\\mu$ random hai ya fixed? Aur '90%' kis cheez ki property hai?",
+  "Frequentist rule: $\\mu$ fixed constant hai; 90% = procedure repeat karne pe kitne intervals $\\mu$ ko cover karenge. Computed interval ke liye $\\mu$ pe probability statement nahi banta.",
+  "Har option mein dekho probability kis pe lagi hai: $\\mu$, future $\\bar x$, ya method. Aur $\\bar x$ to interval ka centre hai — kya wo bahar ho sakta hai? Trap: fixed $\\mu$ ko probability dena."
+ ],
+ "ps-ci-interpret-04": [
+  "CI $(48,\\ 56)$ aur 5% two-sided test ek hi cheez ke do roop hain (CI–test duality). Har $\\mu_0$ ke liye dekho wo interval ke andar hai ya bahar.",
+  "Margin = half-width $=(\\text{upper}-\\text{lower})/2$. Duality: $\\mu_0$ 95% CI ke bahar ⇔ 5% pe reject; andar ⇔ fail to reject.",
+  "$(56-48)/2$ nikalo aur margin wale statement se milao. Phir 58 aur 50 ko interval pe place karo. Trap: CI ya test se '$H_0$ true hone ki probability' nikaal lena."
+ ],
+ "ps-test-select-01": [
+  "Teen sawaal poochho: parameter kya hai (mean ya variance)? $\\sigma$ known ya unknown? Aur $n=12$ chhota hai.",
+  "Mean, $\\sigma$ unknown, normal sample → $t$ with $n-1$ df. $\\chi^2_{n-1}$ variance ke liye hai; $z$ ke liye $\\sigma$ known chahiye.",
+  "Yahan $n=12$ hai — df $=n-1$ nikalo aur options se milao. Trap: df $=n$ le lena."
+ ],
+ "ps-test-select-02": [
+  "$H_0$ variance ($\\sigma^2=4$) ke baare mein hai, mean ke baare mein nahi — to mean wale $t$/$z$ statistics yahan kaam ke nahi.",
+  "Normal population ka variance test: $\\chi^2=(n-1)s^2/\\sigma_0^2\\sim\\chi^2_{n-1}$ under $H_0$.",
+  "Options mein dekho kaunsa statistic $s^2$ use karta hai aur kaunsa $\\bar x$; phir $\\sigma_0^2=4$ daal ke milao. Trap: $\\sum(O-E)^2/E$ ko variance test samajhna — wo counts (goodness-of-fit) ke liye hai."
+ ],
+ "ps-test-select-03": [
+  "$\\chi^2$ test kab lagta hai? Har situation mein dekho data kis type ka hai (counts/table vs measurements) aur parameter kya hai (mean vs variance).",
+  "$\\chi^2$ ke teen use: goodness of fit (counts), independence ($r\\times c$ table), aur ek normal variance ($(n-1)s^2/\\sigma_0^2$). Mean ke liye $z$/$t$.",
+  "Har option ko in buckets mein daalo: height ka mean, die ke counts, $2\\times3$ table, variance 9. Trap: sirf 'normal' ya '$\\sigma$' word dekh ke test chunna — pehle parameter dekho."
+ ],
+ "ps-test-select-04": [
+  "Mean ka test hai, $\\sigma$ unknown, aur sample SD $s=6$ diya hai — $t$ statistic. Denominator SE hai, sirf $s$ nahi.",
+  "$t=(\\bar x-\\mu_0)/(s/\\sqrt n)=(52-50)/(6/\\sqrt{16})$.",
+  "Numerator $=2$ aur $SE=6/4=1.5$. Ab divide karo. Trap: $\\sqrt n$ bhoolna ($2/6$), ya $s/n$ le lena."
+ ],
+ "ps-test-select-05": [
+  "Goodness-of-fit: fair coin ke under har cell (heads, tails) ka expected count nikalo, phir dono cells ka contribution jodo.",
+  "$\\chi^2=\\sum\\frac{(O-E)^2}{E}$ with $E=100\\times0.5$ for heads aur tails dono.",
+  "Heads cell: $(60-50)^2/50=100/50$. Ab tails cell ka term nikal ke jodo. Trap: sirf ek cell lena, ya $E^2$ se divide karna."
+ ],
+ "ps-test-logic-01": [
+  "$p=0.03$ diya hai. Statements do type ke hain: decision ($\\alpha=0.05$ aur $0.01$ pe) aur p-value ka meaning — dono alag check karo.",
+  "Reject $H_0$ iff $p\\le\\alpha$. p-value $=P(\\text{data at least this extreme}\\mid H_0\\text{ true})$ — ye $H_0$ ki probability nahi hai.",
+  "0.03 ko pehle 0.05 se, phir 0.01 se compare karo aur har case ka decision likho. Trap: p-value ko '$P(H_0$ true$)$' padhna."
+ ],
+ "ps-test-logic-02": [
+  "$p=0.12$ aur $\\alpha=0.05$ — pehle compare karo, phir decision ki wording dhyan se padho.",
+  "Rule: reject iff $p\\le\\alpha$; warna 'fail to reject' — 'accept' ya '$H_0$ proved' nahi bolte, aur $p$ $H_0$ ki probability nahi hai.",
+  "$0.12$ vs $0.05$: kaunsa bada hai? Us hisaab se decision lo, phir wo option dhoondo jiski wording bhi sahi ho. Trap: 'accept $H_0$' ya '12% chance $H_0$ true' jaisi wording."
+ ],
+ "ps-test-logic-03": [
+  "Two-sided test hai — p-value mein dono tails count honge. $\\Phi(1.8)$ left side ka area hai.",
+  "Two-sided p-value $=2\\,P(Z>|z|)=2(1-\\Phi(1.8))$.",
+  "Ek tail: $1-0.9641=0.0359$. Ab two-sided ke liye last step karo. Trap: one-sided pe ruk jaana, ya $\\Phi(1.8)$ ko hi p-value maan lena."
+ ],
+ "ps-test-logic-04": [
+  "$H_1:\\mu>\\mu_0$ right-tailed hai, par observed $z=-1.5$ negative hai — data $H_1$ ki ulti direction mein hai. Tail $H_1$ decide karta hai, $z$ ka sign nahi.",
+  "Right-tailed: $p=P(Z\\ge z_{obs})$ with $z_{obs}=-1.5$, chahe $z$ negative ho.",
+  "Sketch: $-1.5$ ke right ka area 0.5 se bada hai ya chhota? Symmetry $P(Z\\ge-a)=P(Z\\le a)$ se given $\\Phi$ use karo. Trap: $z$ negative dekh ke left tail le lena."
+ ],
+ "ps-errors-power-01": [
+  "Type II error ki definition: actually kaunsi hypothesis true hai, aur test ne kya decide kiya?",
+  "Type I = $H_0$ true hote hue galat decision (prob $\\alpha$). Type II = $H_1$ true hote hue galat decision (prob $\\beta$).",
+  "Har option ko (truth, decision) pair mein likho: $H_1$ true ho to kaunsa decision galat hai? Jo sahi decision hai wo error nahi. Trap: Type I/II ulta karna, ya error ko '$H_0$ false hone ki probability' samajhna."
+ ],
+ "ps-errors-power-02": [
+  "Power $H_1$ ke under nikalti hai ($\\mu=2$), $H_0$ ke under nahi. Rejection region $X>1.5$ hai.",
+  "Power $=P(\\text{reject}\\mid H_1)=P(X>1.5\\mid\\mu=2)=P\\left(Z>\\frac{1.5-2}{1}\\right)$.",
+  "$z=-0.5$, to power $=P(Z>-0.5)$. Sketch: $-0.5$ ke right ka area 0.5 se bada hai — ise given $\\Phi$ values se likho. Trap: $\\mu=0$ use karna (wo $\\alpha$ deta hai), ya $\\beta$ report karna."
+ ],
+ "ps-errors-power-03": [
+  "Chaar statements $\\alpha$, $\\beta$, power aur $n$ ke relation pe hain. Har ek ke liye socho: ye probability kis hypothesis ke under calculate hoti hai?",
+  "$\\alpha=P(\\text{reject}\\mid H_0)$, $\\beta=P(\\text{not reject}\\mid H_1)$, power $=1-\\beta=P(\\text{reject}\\mid H_1)$. $\\alpha$ aur $\\beta$ alag hypotheses ke under hain.",
+  "$\\alpha$ 0.05→0.01: rejection region chhota hoga — $H_1$ ke under miss zyada ya kam? Bada $n$ → SE chhota → distributions ka overlap? Trap: '$\\alpha+\\beta=1$' jaisi identity maan lena."
+ ],
+ "ps-errors-power-04": [
+  "Type I error = $H_0$ (fair coin) true hote hue reject karna. Rejection tab hota hai jab 5 tosses sab same hon — aur 'same' ke do tarike hain.",
+  "$\\alpha=P(\\text{reject}\\mid\\text{fair})=P(HHHHH)+P(TTTTT)$, har ek $(1/2)^5$.",
+  "$(1/2)^5=1/32$. Ab dono cases jodo aur decimal mein likho. Trap: sirf all-heads ginna, ya $1-\\alpha$ de dena."
+ ],
+ "ps-estimator-01": [
+  "Do alag cheezein check karni hain: unbiasedness ($E[\\hat\\theta]=\\theta$?) aur variance. Har estimator ka pehle expected value nikalo.",
+  "Linearity: $E[\\frac1n\\sum X_i]=\\frac1n\\sum E[X_i]$. $\\mathrm{Var}(cY)=c^2\\mathrm{Var}(Y)$ aur independent terms add. Sample variance unbiased tabhi hota hai jab divisor $n-1$ ho.",
+  "$\\mathrm{Var}(\\bar X)=\\frac{1}{n^2}\\cdot n\\sigma^2$ simplify karke statement se milao; $X_1$ ke liye bas $E[X_1]$ dekho. Trap: 'unbiased' aur 'kam variance' ko ek hi cheez samajhna."
+ ],
+ "ps-estimator-02": [
+  "Unbiased ka matlab $E[T]=\\mu$. $T$ ek weighted sum hai — weights 1, 2, 3.",
+  "$E[T]=\\frac{E[X_1]+2E[X_2]+3E[X_3]}{k}$, aur har $E[X_i]=\\mu$; ise $\\mu$ ke barabar rakho.",
+  "Weights ka sum nikalo aur $\\frac{(\\text{sum})\\,\\mu}{k}=\\mu$ solve karo. Trap: weights ke squares ka sum lena (wo variance mein aata hai), ya terms ki ginti se divide karna."
+ ],
+ "ps-estimator-03": [
+  "Dono estimators unbiased hain par alag number of observations use karte hain — variance compare karni hai. Ratio ka order dekho: $T_2$ upar hai.",
+  "Mean of $m$ iid values ka variance $=\\sigma^2/m$. $T_1$ mein $m=4$, $T_2$ mein $m=2$.",
+  "$\\mathrm{Var}(T_1)=\\sigma^2/4$. Ab $\\mathrm{Var}(T_2)=\\frac14(\\sigma^2+\\sigma^2)$ simplify karo aur ratio lo. Trap: ratio ulta lena, ya 'dono unbiased hain to variance same' maan lena."
+ ],
+ "ps-estimator-04": [
+  "$n$ badhne pe $\\bar X$ ki do properties dekho: uska mean (bias) aur uska spread (variance). Kaunsi cheez $n$ pe depend karti hai?",
+  "$E[\\bar X]=\\mu$ har $n$ ke liye; $\\mathrm{Var}(\\bar X)=\\sigma^2/n$, aur SE $=\\sigma/\\sqrt n$.",
+  "Statement mein 'Var' likha hai ya 'SE' — $1/n$ aur $1/\\sqrt n$ alag rakho. Aur jo already exactly $\\mu$ hai, wo 'closer' kaise hoga? Trap: variance aur SE ki rate mix karna."
+ ]
+}

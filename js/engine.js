@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611072144';
+import { addEvent, allEvents, cfg } from './store.js?v=202611072349';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -31,6 +31,18 @@ export async function loadContent() {
       // a missing or broken area file should not take the whole app down
     }
   }
+  // per-question hints (data/hints/<file>.json: {qid: [notice, setup, first step]})
+  await Promise.all(AREAS.map(async (area) => {
+    try {
+      const r = await fetch(`data/hints/${area}.json`, { cache: 'no-cache' });
+      if (!r.ok) return;
+      for (const [qid, h] of Object.entries(await r.json())) {
+        if (content.questions[qid] && Array.isArray(h) && h.length === 3) content.questions[qid].hints = h;
+      }
+    } catch {
+      // hints are optional; the app falls back to generic ones
+    }
+  }));
 }
 
 // ---------- dates ----------

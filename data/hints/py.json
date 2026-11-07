@@ -1,0 +1,347 @@
+{
+"py-arith-ops-01": [
+  "Teen alag operators hain: `//`, `%` aur `/`, aur divisor negative hai (−2). Python ka `//` C jaisa zero ki taraf truncate nahi karta — yahi pakadna hai.",
+  "Rule: `a // b` = floor(a/b), yaani −∞ ki taraf; `a % b = a - (a//b)*b`, isliye remainder divisor ka sign leta hai. `/` hamesha exact float deta hai.",
+  "`7 / -2 = -3.5`, iska floor $-4$ hai (−3 nahi). Ab isi −4 ko `a - (a//b)*b` mein daal ke `7 % -2` nikaalo. Trap: −3 lena aur remainder ko positive maan lena."
+],
+"py-arith-ops-02": [
+  "Ek hi line mein `**`, `//` aur `%` hain — sawaal precedence aur associativity ka hai: kaun pehle chalega, aur `**` kis taraf se group hota hai.",
+  "`**` right-associative hai: `2 ** 3 ** 2` = `2 ** (3 ** 2)`. `//` aur `%` ki precedence same hai, left se right: `(… // 10) % 7`.",
+  "`3 ** 2 = 9`, phir `2 ** 9 = 512`. Ab `512 // 10` karo aur uske result pe `% 7`. Trap: `(2**3)**2 = 64` lena, ya `10 % 7` pehle kar dena."
+],
+"py-arith-ops-03": [
+  "`-3 ** 2` mein bracket nahi hai, `(-3) ** 2` mein hai — fark precedence ka hai. Aur `2 ** -1` mein exponent negative hai, result ka type socho.",
+  "`**` unary minus se zyada tight bind karta hai: `-3 ** 2` = `-(3 ** 2)`. Int ko negative int power pe raise karo to result float aata hai, truncate nahi hota.",
+  "Pehla term: `-(3 ** 2)` = $-9$. Ab `(-3) ** 2` mein minus bracket ke andar hai — use alag evaluate karo, phir `2 ** -1` ki value aur type socho. Trap: unary minus ko pehle laga dena."
+],
+"py-arith-ops-04": [
+  "`divmod(n, 5)` teen inputs pe chal raha hai: ek negative (−17) aur ek float (17.0). Har baar `q*10 + r` total mein judta hai.",
+  "`divmod(a, b) = (a // b, a % b)` floor wala: $q=\\lfloor a/b \\rfloor$, $r = a - 5q$, aur $0 \\le r < 5$ (divisor positive hai). Float input ho to q, r bhi float.",
+  "Pehla: `divmod(17, 5) = (3, 2)` → 32. Ab −17: $-17/5 = -3.4$, iska floor lo (−3 nahi), phir r nikaalo. Trap: C jaisa (−3, −2) lena."
+],
+"py-arith-ops-05": [
+  "Har option alag check karo: ek mein float vs int value, ek mein negative `//` aur `%`, ek mein float rounding, ek mein result ka type.",
+  "Rules: `/` hamesha float deta hai par `==` value compare karta hai; `//` mein ek bhi float operand ho to result float; hamesha `a == (a//b)*b + a%b`; 0.1 jaise decimals binary mein exact nahi hote.",
+  "Option B: `-7 // 2` = floor(−3.5) = −4 (−3 nahi). Ab `-7 % 2` isi rule se nikaalo aur poora left side jodo. Option D ke liye socho: `10 // 2.0` ka type kya hoga?"
+],
+"py-bool-precedence-01": [
+  "Ek line mein `or` aur `and` mix hain, aur operands 0, `[]` aur strings hain. Dekho kaun pehle bind hota hai, aur and/or kya return karte hain.",
+  "`and` ki precedence `or` se zyada hai: `0 or [] or (\"a\" and \"b\")`. `or` pehla truthy operand return karta hai; `and` pehla falsy, warna aakhri operand.",
+  "Pehle bracket: `\"a\"` truthy hai, to `and` aage jaata hai — ab wo kaunsa operand lautayega? Phir `0` aur `[]` dono falsy hain, to `or` aage badhta rahega. Trap: result ko True/False samajhna."
+],
+"py-bool-precedence-02": [
+  "Pehle do expressions comparison chains hain (`1 < 3 > 2`, `1 < 3 == 3 < 2`), teesre mein bracket hai — chain aur bracket alag tarah evaluate hote hain.",
+  "Chain rule: `a < b > c` = `a < b and b > c`; har adjacent pair alag check hota hai. Bracket wala `(1 < 3)` pehle bool banta hai, aur `True` ki numeric value 1 hai.",
+  "Pehla: `1 < 3 and 3 > 2` — dono pairs check karo. Doosra: `1 < 3 and 3 == 3 and 3 < 2` — har pair dekho. Trap: chain ko `((1<3)==3)<2` jaisa left-to-right padhna."
+],
+"py-bool-precedence-03": [
+  "`f` har call pe `calls` badhata hai — sawaal hai ki short-circuit ki wajah se kaunse `f(...)` call hote hi nahi.",
+  "`x and y`: x falsy → y call nahi hota. `x or y`: x truthy → y skip. Precedence `not` > `and` > `or`, to line 3 = `f(0) or f([]) or (f(4) and f(5))`.",
+  "Line 1: `f(0)` falsy, `and` wahin ruk gaya → 1 call. Line 2: `f(2)` truthy, `or` ruk gaya → total 2. Ab lines 3 aur 4 isi tarah gino. Trap: maan lena ki har `f` call hota hai."
+],
+"py-bool-precedence-04": [
+  "Options mein zero aur empty cheezein hain, par `\"0\"` aur `[0]` mein 0 sirf andar baitha hai — value khud empty/zero hai ya nahi, wo dekho.",
+  "Falsy sirf ye hote hain: numeric zero (0, 0.0), empty containers (`\"\"`, `[]`, `{}`, `set()`), `None`, `False`. Baaki sab truthy.",
+  "Har option ki length ya value check karo: `\"0\"` ek character ki string hai, `[0]` ek element ki list, `{}` mein koi key nahi. Ab rule lagao. Trap: andar ke 0 ko dekh ke poore container ko judge karna."
+],
+"py-bool-precedence-05": [
+  "`a` aur `b` same contents ke do alag list literals hain. Teen checks: `==`, `is`, aur `not` ke saath `==` — yahan precedence pe dhyaan do.",
+  "`==` contents compare karta hai, `is` identity (kya dono same object hain?). `not` ki precedence `==` se kam hai: `not a == b[:1]` = `not (a == b[:1])`.",
+  "Pehle `b[:1]` nikaalo: `[1]`. Ab `a == [1]` evaluate karo, phir uska `not`. Trap: isse `(not a) == [1]` padhna."
+],
+"py-strings-01": [
+  "Teen slices hain: ek step 2 ke saath, ek negative start (`-3`), aur ek negative step (−4). Pehle har character ka index likh lo.",
+  "`s[start:stop:step]` mein stop exclude hota hai. Negative step ho aur start na diya ho, to slicing aakhri index se peeche ki taraf chalti hai.",
+  "Indices: D0 A1 T2 A3 S4 C5 I6 E7 N8 C9 E10. `s[2:8:2]` → indices 2, 4, 6 (8 nahi). Ab `s[::-4]` index 10 se 4-4 peeche jao. Trap: `s[-3:]` ko ulta padhna."
+],
+"py-strings-02": [
+  "Teen methods hain: `find`, `count`, `rfind` — sab 0-based index ya ginti dete hain. Pehle \"banana\" ke indices likh lo.",
+  "`find(x)` pehle match ka index, `rfind(x)` aakhri match ka index (left se hi gina hua), `count(x)` non-overlapping matches. Expression = find + count×10 + rfind.",
+  "b0 a1 n2 a3 n4 a5. \"na\" pehli baar index 2 pe hai. Ab \"an\" kitni baar aata hai aur aakhri \"a\" kis index pe hai, gino. Trap: rfind ko right end se 0 se ginna."
+],
+"py-strings-03": [
+  "Teen cheezein dekho: `t = s` alias, `s.upper()` jiska result kahin store nahi hua, aur `replace` ka teesra argument `1`.",
+  "Strings immutable hain: methods naya string return karte hain, original nahi badalta. `replace(\"a\", \"@\", 1)` sirf pehla match badalta hai; `s = ...` s ko naye object pe le jaata hai, t purane pe rehta hai.",
+  "Line 3 ka `s.upper()` result discard ho gaya, to s abhi bhi \"Data gate\" hai. Ab replace sirf pehli 'a' pe lagao, aur socho t kis object ko dekh raha hai. Trap: count 1 ko ignore karna."
+],
+"py-strings-04": [
+  "String ke saath `*` repetition hai, arithmetic nahi — ek jagah 0 se multiply hai, aur ek jagah int pehle aur string baad mein hai (`3 * \"2\"`).",
+  "`s * k` (ya `k * s`) string ko k baar repeat karta hai; k = 0 pe empty string milti hai. `+` strings ko bina space ke jodta hai, aur `str(True)` = \"True\".",
+  "`\"ab\" * 2` = \"abab\". Ab `\"c\" * 0` kya deta hai, aur `3 * \"2\"` ko \"222\" se compare karo. Trap: `3 * \"2\"` ko number 6 samajhna."
+],
+"py-strings-05": [
+  "Har option ek slice hai: kahin start stop ke baad hai par step positive, kahin reverse ke baad slice, kahin index length se bahar (10, jabki length 6).",
+  "Indices: p0 y1 t2 h3 o4 n5. Default step +1 start se aage badhta hai aur stop exclude karta hai. Out-of-range slice index error nahi deta, clamp ho jaata hai.",
+  "Option A: `s[-1:-4]` = `s[5:2]` step +1 ke saath — kya 5 se aage badhke 2 tak pahunch sakte ho? Baaki options bhi indices likh ke aise hi check karo. Trap: negative start dekh ke reverse maan lena."
+],
+"py-loops-01": [
+  "`range(10, 0, -3)` mein start stop se bada hai, par step negative hai — to ye ulta ginta hai. Dekho stop 0 kahan rokta hai.",
+  "Negative step pe range `start, start+step, …` deta hai jab tak value `> stop` ho; stop khud aur uske aage ki value kabhi nahi aati.",
+  "10 se shuru: 10, phir 7, phir 4… har agli value pe check karo ki wo `> 0` hai ya nahi. Trap: aakhri valid value chhod dena, ya 0 ke paar chale jaana."
+],
+"py-loops-02": [
+  "Inner `for` ke saath `else` laga hai — ye `if` ka else nahi, loop ka else hai. Dekho ye kin n ke liye chalta hai aur `count` mein kya judta hai.",
+  "Loop-else tabhi chalta hai jab loop bina `break` ke khatam ho (zero iterations bhi). Break tab hota hai jab n ka koi divisor 2 se n−1 ke beech mile.",
+  "n = 2: `range(2, 2)` empty hai, break nahi hua, to else chala → count += 2. n = 4: d = 2 pe break, else skip. Ab 3 se 19 tak aise check karke jodo. Trap: zero-iteration case mein else skip kar dena."
+],
+"py-loops-03": [
+  "Loop mein `continue`, `break` aur `while-else` teeno hain. Dhyaan: `i += 1` har pass mein sabse pehle hota hai, aur else sirf break na hone pe chalta hai.",
+  "Har pass: i badhao → `i % 3 == 0` ho to bina add kiye agla pass → `i > 7` ho to break (else skip) → warna `s += i`.",
+  "i = 1: s = 1; i = 2: s = 3; i = 3: continue (kuch add nahi). Ab i = 4 se aage aise hi trace karo jab tak break na ho. Trap: break ke baad bhi else ka +100 jod dena."
+],
+"py-loops-04": [
+  "`len(range(5, 50, 7))` — kitni values hain ye poochha hai, unka sum nahi. 5 se shuru, 7 ke jump, 50 exclude.",
+  "Positive step ke liye count = $\\lceil (\\text{stop}-\\text{start})/\\text{step} \\rceil = \\lceil 45/7 \\rceil$. Ya seedha values list kar lo.",
+  "List: 5, 12, 19, … har baar 7 jodo jab tak value 50 se chhoti rahe. Trap: `45 // 7` (floor) lena — usse pehla element chhoot jaata hai."
+],
+"py-loops-05": [
+  "Do loops hain: `range(3)` aur `range(0)`. Sawaal ye hai ki loop ke baad loop variable mein kya bachta hai — aur agar loop chala hi nahi to?",
+  "Python ka for loop variable ko sirf range ki values assign karta hai; loop ke baad aakhri assigned value rehti hai. Empty range mein variable assign hi nahi hota.",
+  "`range(3)` ki values likho: 0, 1, … (stop 3 include nahi). Ab k ki aakhri value socho, aur dekho `range(0)` mein j kabhi assign hua ya nahi. Trap: C jaisa sochna ki k stop value tak pahunchta hai."
+],
+"py-recursion-trace-01": [
+  "Ye Fibonacci jaisa hai, par doosre term pe factor 2 hai: `f(n-1) + 2*f(n-2)`. Base case `n <= 1` pe n khud return hota hai.",
+  "Bottom-up table banao: $f(0)=0$, $f(1)=1$, $f(n)=f(n-1)+2f(n-2)$. f(5) ke liye f(2) se f(4) tak chahiye.",
+  "$f(2)=f(1)+2f(0)=1+0=1$, $f(3)=f(2)+2f(1)=1+2=3$. Ab f(4), phir f(5) nikaalo. Trap: f(0) ko 1 lena — base case n hi lautata hai."
+],
+"py-recursion-trace-02": [
+  "`show` mein recursive call se pehle bhi print hai aur baad mein bhi — dekho kaunsa print neeche jaate waqt chalta hai aur kaunsa wapas aate waqt.",
+  "Har call: pehle n print, phir `show(n-1)` ke poora khatam hone ka wait, phir dobara n print. `show(0)` bina kuch print kiye return karta hai.",
+  "show(3) prints 3 → show(2) prints 2 → show(1) prints 1 → show(0) return. Ab socho stack unwind hote waqt kaunsa call pehle apna doosra print karega. Trap: doosre prints ko call order mein likhna."
+],
+"py-recursion-trace-03": [
+  "`h` har step pe n ka aakhri digit (`n % 10`) acc mein jodta hai aur n se hata deta hai — digits ulte ho rahe hain. 450 ke aakhri 0 pe khaas dhyaan.",
+  "Update: $acc \\to 10\\cdot acc + (n \\bmod 10)$, $n \\to n // 10$, jab tak n = 0 na ho. Phir dono results jodo: h(1203) + h(450).",
+  "h(1203): acc = 3 (n = 120), phir 30 (n = 12)… aage ke do steps khud karo. h(450): pehla digit 0 hai, to acc 0 hi rehta hai. Trap: 450 ka reverse 540 maan lena."
+],
+"py-recursion-trace-04": [
+  "`p(n)` neeche wali list `r` leke uske end mein ek naya element jodta hai: `r[-1] + n`. Base list `[0]` hai.",
+  "Bottom-up: $p(0)=[0]$, aur p(n) = p(n−1) + [p(n−1) ka last element + n]. List hamesha end pe badhti hai.",
+  "p(1) = [0] + [0+1] = [0, 1]; p(2) = [0, 1] + [1+2]. Ab p(3) aur p(4) isi tarah banao. Trap: `r[-1] + n` ki jagah sirf n append karna."
+],
+"py-recursion-trace-05": [
+  "`b(n)` = `b(n // 2) + str(n % 2)` — ye binary conversion hai. Dekho remainder recursive part ke aage lagta hai ya peeche, aur `b(8)` ke baad `[::-1]` bhi hai.",
+  "Recursive part (higher bits) pehle aata hai, current remainder `n % 2` end mein — to string seedhe binary order mein banti hai. `[::-1]` string ko ulta karta hai.",
+  "b(13) = b(6) + \"1\", b(6) = b(3) + \"0\", b(3) = b(1) + \"1\" = \"11\". Ab jodke b(13) banao, phir b(8) aur uska reverse. Trap: `[::-1]` bhool jaana."
+],
+"py-recursion-calls-01": [
+  "`count` har call pe badhta hai — poochha hai `fib` kitni baar call hua, fib(5) ki value nahi. Naive recursion same n ko baar baar call karta hai.",
+  "Calls ka recurrence: $C(0)=C(1)=1$, $C(n) = 1 + C(n-1) + C(n-2)$ (1 is call ka khud ka).",
+  "$C(2)=1+1+1=3$, $C(3)=1+3+1=5$. Ab C(4) aur C(5) nikaalo. Trap: top-level call fib(5) ko na ginna."
+],
+"py-recursion-calls-02": [
+  "Har call `count` badhata hai, aur body mein teen recursive calls hain — `t(n // 2)` do baar likha hai, aur Python dono ko alag se chalata hai (koi cache nahi).",
+  "$C(0)=C(1)=1$, $C(n) = 1 + 2\\,C(n//2) + C(n-1)$. t(4) ke liye bottom-up C(2), C(3), C(4) chahiye.",
+  "$C(2) = 1 + 2C(1) + C(1) = 1+2+1 = 4$. Ab $C(3) = 1 + 2C(1) + C(2)$ nikaalo (3 // 2 = 1), phir C(4). Trap: dono `t(n // 2)` ko ek hi call ginna."
+],
+"py-recursion-calls-03": [
+  "Har `star(n)` (n > 0) apni do recursive calls ke beech exactly ek `*` print karta hai; `star(0)` kuch nahi karta. Stars gino, calls nahi.",
+  "Recurrence: $S(0)=0$, $S(n) = 2S(n-1) + 1$ — do half calls ke stars + beech ka ek star.",
+  "$S(1) = 2\\cdot 0+1 = 1$, $S(2) = 2\\cdot 1+1 = 3$. Ab S(3) aur S(4) nikaalo. Trap: seedha $2^n$ lena — base calls star print nahi karte."
+],
+"py-recursion-calls-04": [
+  "Do cheezein print hoti hain: `d(100)` ki return value aur `calls`. n har baar `n // 2` hota hai, aur base case n == 0 hai, 1 nahi.",
+  "Return value = kitni baar halving hui (har non-base call +1 jodta hai). calls = chain ke total nodes, base call d(0) bhi shaamil.",
+  "Chain likho: 100 → 50 → 25 → 12 → … jab tak 0 na aaye. Phir arrows aur nodes alag alag gino. Trap: n = 1 pe ruk jaana, ya d(0) call ko na ginna."
+],
+"py-recursion-calls-05": [
+  "Memo hai, par `calls += 1` memo check se pehle hota hai — to memo hit bhi ek call gina jaata hai. Sawaal calls ka hai, value ka nahi.",
+  "Fresh call: n memo mein nahi, compute karta hai. Memo hit: turant return, par count phir bhi +1. Body mein `f(n-1)` pehle chalta hai, `f(n-2)` baad mein.",
+  "f(10) → f(9) → … → f(1) pehle chalte hain, sab fresh; f(2) ka doosra call f(0) bhi fresh. Ab n = 3 se 10 tak har `f(n-2)` call ko dekho — fresh ya hit? Trap: sirf fresh computations ginna."
+],
+"py-mutable-default-01": [
+  "`bag=[]` default ek list hai jo function ke saath sirf ek baar banti hai. a aur b default use karte hain, c apni nayi `[]` deta hai.",
+  "Default values def time pe ek baar evaluate hote hain; jo call argument omit kare wo usi shared list ko mutate karta hai. Return mein wahi object milta hai, copy nahi.",
+  "`add(1)` shared list mein 1 daalta hai aur a usi list ko point karta hai. Ab `add(2)` usi object pe kya karega — aur print ke waqt a mein kya dikhega? Trap: a ko us waqt ka snapshot maan lena."
+],
+"py-mutable-default-02": [
+  "`seen={}` default dict ek baar banta hai aur \"abcab\" ke paanchon calls mein share hota hai. Aakhri call apna naya `{}` deta hai.",
+  "Har call: `seen[k]` ko 1 badhao, phir return `len(seen)*10 + seen[k]`. Shared dict mein len aur counts calls ke saath badhte rehte hain.",
+  "'a': seen = {a:1}, return 10+1 = 11. 'b': seen = {a:1, b:1}, return 20+1 = 21. Ab c, a, b aur aakhri `tally(\"a\", {})` khud karo. Trap: har call pe naya dict maan lena."
+],
+"py-mutable-default-03": [
+  "Do alag patterns: f mein `acc=None` + `if acc is None`, g mein default ek tuple `()` hai. Dekho kis case mein default object sach mein badalta hai.",
+  "None idiom har call pe nayi list banata hai. Tuple immutable hai: `acc += (x,)` naya tuple bana ke sirf local naam acc ko rebind karta hai; default `()` waisa hi rehta hai.",
+  "`f(1)`: acc None hai → nayi `[]` → [1]. Ab `f(2)` mein acc phir kya hoga? Aur `g(1)` ke baad g ka default kya bacha? Trap: tuple ke `+=` ko list jaisa in-place samajhna."
+],
+"py-mutable-default-04": [
+  "`s=[]` shared default hai. Dhyaan: `push(3, x)` mein x pass hua — aur x khud wahi default list hai.",
+  "Default list ek hi object hai jo `push.__defaults__[0]` mein rehta hai; jo bhi call use (omit karke ya explicitly) use kare, sab usi object ko mutate karke wahi return karte hain.",
+  "x = push(1): default = [1], x usi object ko point karta hai. y = push(2) ke baad wahi list [1, 2]. Ab `push(3, x)` aur `push(4)` ka effect usi list pe socho, phir har option check karo. Trap: x pass karne ko nayi list samajhna."
+],
+"py-mutable-default-05": [
+  "`cache=[0]` default list har call mein share hoti hai, aur `cache[0] += n` usi list ko badalta hai. Teen calls ki return values jodi ja rahi hain.",
+  "Default ek baar banta hai, to running total chalta hai: har call `cache[0]` mein n jodta hai aur us waqt ki value return karta hai (calls left se right).",
+  "`inc(1)`: cache[0] = 0+1 = 1, return 1. Ab `inc(2)` purane 1 pe jodega; teesra bhi aise hi, phir teeno return values ka sum. Trap: har call pe cache ko [0] se reset maan lena."
+],
+"py-scope-01": [
+  "f ke andar `print(x)` pehle hai aur `x = 10` baad mein — par function mein x ko kahin assign kiya gaya hai. Python ye scope kab decide karta hai?",
+  "Rule: function body mein kisi naam pe assignment ho (bina `global`/`nonlocal`), to wo naam poore function mein local hai — compile time pe hi decide ho jaata hai.",
+  "To `print(x)` local x padhega. Us line tak local x ko koi value mili hai kya? Ab socho Python kaunsa specific error class deta hai. Trap: sochna ki assignment se pehle global x use hoga."
+],
+"py-scope-02": [
+  "x teen jagah hai: module-level \"g\", outer ka \"o\", aur inner/other mein declarations — ek `nonlocal`, ek `global`. Har ek kis x ko badalta hai?",
+  "`nonlocal x` nearest enclosing function (yahan outer) ka x rebind karta hai. `global x` hamesha module-level x ko — chahe kitna bhi nested ho.",
+  "inner() ke baad outer ka x = \"i\" ho gaya. Ab other() kaunsa x badalta hai, aur outer jab `return x` karta hai to kaunsa x padhta hai? Trap: `global` ko nearest enclosing x samajhna."
+],
+"py-scope-03": [
+  "Teen cheezein jud rahi hain: `a()`, `c()` aur global `n`. Dekho b() n ko kab padhta hai, aur c() ke baad global n kya ho jaata hai.",
+  "Closure enclosing variable ko call ke waqt padhta hai, define ke waqt nahi. `global n` module ka n badalta hai. `+` ke operands left se right evaluate hote hain.",
+  "`a()`: n = 2, b define hua, phir n = 3, phir b() call — us waqt enclosing n 3 hai, to b() = 30. Ab c() global n ko kya banata hai, aur uske baad n padho. Trap: n ko c() se pehle padh lena."
+],
+"py-scope-04": [
+  "Chaaron statements scope ke rules hain: for-loop variable, function mein assignment, top-level pe `nonlocal`, aur comprehension variable. Har ek ko Python 3 ke hisaab se judge karo.",
+  "Naya scope function banata hai (aur Python 3 mein comprehension), loops nahi. Locality compile time pe poore body ke liye decide hoti hai. `nonlocal` ko enclosing function chahiye; module level ke liye `global` hai.",
+  "Ek chhota test socho: function mein `for i in range(3): pass` ke baad `return i` — kya i bound hai? Aur Python 3 mein `[j for j in range(3)]` ke baad j? Trap: Python 2 wala behaviour yaad karna."
+],
+"py-scope-05": [
+  "f ke andar `len` naam ko ek lambda assign kiya gaya hai — ye builtin ka naam hai. Andar wala aur bahar wala `len(\"abc\")` alag alag dekho.",
+  "LEGB: Local → Enclosing → Global → Builtin. Local assignment builtin ko sirf us function ke andar shadow karta hai; bahar builtin waisa hi rehta hai.",
+  "f ke andar `len` ka lookup L pe hi local lambda pe ruk jaata hai — wo \"abc\" ke liye kya lautata hai? Ab bahar wala `len` LEGB mein kahan milega, socho. Trap: maan lena ki local assignment builtin ko globally badal deta hai."
+],
+"py-closures-01": [
+  "Comprehension chaar lambdas banata hai, sab `i * i` return karte hain — par i ki value lambda banate waqt li jaati hai ya call karte waqt?",
+  "Late binding: closure enclosing variable ko call ke waqt dhoondta hai. Chaaron lambdas comprehension ka ek hi i share karte hain.",
+  "Lambdas `print` wali line pe call hote hain — tab tak comprehension `range(4)` poora kar chuka hai. Socho i ki aakhri value kya thi (stop include nahi hota). Trap: har lambda ko apni i ki copy maan lena."
+],
+"py-closures-02": [
+  "`make()` do baar call hua — s1 aur s2 do alag closures hain. Dekho dono ek hi c share karte hain ya alag alag.",
+  "Har `make()` call apna naya local c banata hai; `nonlocal c` usi call wale c ko update karta hai, aur value calls ke beech bani rehti hai.",
+  "s1 ke pehle do calls: c = 2, phir 4. Ab print wala `s1()` kya dega, aur s2 ka pehla call apne c se kya dega? Trap: s1 aur s2 ko ek hi counter maan lena."
+],
+"py-closures-03": [
+  "Do lists hain: fs ke lambdas mein `i=i` default hai, gs mein nahi. Dono ka index 0 wala lambda 10 pe call ho raha hai.",
+  "Default value lambda banate waqt evaluate hoti hai (value freeze ho jaati hai). Bina default ke i call ke waqt dhoondha jaata hai — late binding.",
+  "fs[0] banate waqt i = 0 tha aur default ne use freeze kar diya. gs[0] ke liye socho: call ke waqt comprehension khatam ho chuka, `range(3)` ke baad i kya bacha? Trap: `i=i` default ko bhi late-bound samajhna."
+],
+"py-closures-04": [
+  "`multiplier(k)` ke andar m define hone ke baad `k += 1` hota hai. Sawaal: m call hone pe kaunsa k padhega — aur teen calls ka k shared hai ya alag?",
+  "Closure enclosing variable ko call ke waqt padhta hai, to m ko increment ke baad wala k milta hai. Har `multiplier` call ka apna alag k hota hai.",
+  "`multiplier(1)`: k = 1, m define hua, phir k = 2, return m — to iska `f(10)` = 10 × 2. Ab k = 2 aur 3 wale calls isi tarah karo aur sum lo. Trap: increment se pehle wala k use karna."
+],
+"py-aliasing-copy-01": [
+  "`b = a` aur `c = a[:]` — ek alias hai, ek copy. Phir b aur c dono pe append hota hai; dekho kiska effect a pe padta hai.",
+  "Assignment kabhi copy nahi banata: b aur a ek hi list object hain. `a[:]` nayi list (shallow copy) banata hai, uske changes a ko nahi chhoote.",
+  "`b.append(4)` ke baad a aur b dono kya hain? Ab c: copy ke waqt [1, 2, 3] thi, phir `append(5)` — iski length gino. Trap: slice ko alias samajhna."
+],
+"py-aliasing-copy-02": [
+  "`[[0] * 3] * 2` aur comprehension dono 2×3 grid jaise dikhte hain — par andar ki rows alag objects hain ya ek hi row do baar?",
+  "List ko `* 2` karne se andar ke object ka reference repeat hota hai, copy nahi. Comprehension mein `[0] * 3` har iteration pe dobara chalta hai, to har baar nayi row banti hai.",
+  "Pehle socho `grid[0] is grid[1]` kya hoga, phir `grid[0][1] = 7` ka asar dono rows pe. Ab safe ke liye yahi check karo. Trap: `[0] * 3` ke ints ko bhi shared slot maan lena."
+],
+"py-aliasing-copy-03": [
+  "Teen lists: a, uski shallow copy s, aur deep copy d. Print sirf a ki lengths aur d[1] ki length use karta hai — dekho kaunsa change a tak pahunchta hai.",
+  "`copy.copy` sirf outer list copy karta hai; inner lists a aur s share karte hain. `deepcopy` andar tak sab naya banata hai. Expression: len(a)·100 + len(a[0])·10 + len(d[1]).",
+  "`s[0].append(9)`: s[0] aur a[0] same inner list hain, to a[0] ab [1, 2, 9] hai. Ab `s.append([4])` aur `d[1].append(8)` ka effect socho. Trap: s.append ko a pe bhi laga dena."
+],
+"py-aliasing-copy-04": [
+  "Ek list pe do alag operations hain: `x += [2]` aur `x = x + [3]`. Beech mein y aur z list ko naam dete hain — dekho kaunsa operation same object badalta hai.",
+  "List pe `+=` in-place extend hai (object wahi rehta hai). `x + [3]` nayi list banata hai, aur `x = ...` sirf x ko naye object pe le jaata hai.",
+  "`x += [2]` ne shared list ko hi [1, 2] bana diya, to y bhi wahi dekhta hai. Ab z kis object pe hai, aur last line ke baad x kaunsa object hai? Trap: `+=` ko `x = x + [2]` jaisa rebind samajhna."
+],
+"py-aliasing-copy-05": [
+  "Tuple immutable hai par uske andar ek list hai. `append` aur `+=` dono list badalte hain — fark ye hai ki `t[0] += ...` tuple slot mein wapas assign bhi karta hai.",
+  "`t[0] += [4]` do steps hai: pehle `list.__iadd__` list ko in-place extend karta hai, phir `t[0] = result` tuple item assignment — jo TypeError deta hai.",
+  "`t[0].append(3)` sirf list ko mutate karta hai, tuple slot ko assign nahi — to t = ([1, 3], 2). Ab `+=` ke dono steps mein kaunsa pehle hua, aur error ke baad list ka kya haal hai? Trap: error aaya to list unchanged maan lena."
+],
+"py-mutate-iterate-01": [
+  "Loop usi list `nums` pe chal raha hai jisme se `remove` ho raha hai, aur list mein 2 aur 4 do-do baar hain.",
+  "for loop live list ke indices 0, 1, 2… pe chalta hai. Remove hone pe baaki elements left shift hote hain, to agla element skip ho jaata hai. `remove(x)` pehli matching value hatata hai.",
+  "idx 0: x = 1. idx 1: x = 2 → remove → [1, 2, 3, 4, 4, 5]; ab index 2 pe 3 hai, to doosra 2 skip ho gaya. Ab idx 2 se aage trace karo. Trap: maan lena loop har original element dekhega."
+],
+"py-mutate-iterate-02": [
+  "Loop jis list `a` pe chal raha hai usi mein append ho raha hai — kya naye elements bhi loop mein aate hain? Condition `v < 25` growth ko rokti hai.",
+  "for loop live list pe index se chalta hai, to append kiye gaye elements bhi visit hote hain. Har visited `v < 25` ke liye `v * 10` end mein judta hai.",
+  "1, 2, 3 visit → 10, 20, 30 append. Ab 10, 20, 30 ki baari — kaun `< 25` hai aur kya append karega? Naye elements bhi check karo, phir poori list ka sum. Trap: sirf original teen elements ginna."
+],
+"py-mutate-iterate-03": [
+  "Do operations hain: slice assignment `a[1:4] = [\"x\"]` (3 items ki jagah 1) aur `del a[::2]`. Doosra step pehle step ke baad wali list pe chalta hai.",
+  "Slice assignment poore slice ko naye items se replace karta hai — length badal sakti hai. `a[::2]` indices 0, 2, 4, … select karta hai, aur `del` unhe hata deta hai.",
+  "`a[1:4]` = indices 1, 2, 3 — inki jagah sirf \"x\" aayega, to a = [0, 'x', 4, 5]. Ab is nayi list pe `a[::2]` wale indices hatao. Trap: odd indices delete karna."
+],
+"py-mutate-iterate-04": [
+  "Loop `list(d)` pe hai, d pe nahi — ye keys ka snapshot hai. Odd value wali keys `pop` hoti hain aur `k * 2` naam ki nayi key banti hai.",
+  "Snapshot pe loop karna safe hai (koi RuntimeError nahi). Dict insertion order rakhta hai: `pop` key hata deta hai, aur nayi key hamesha end mein judti hai.",
+  "k = 'a': value 1 odd → `d.pop('a')` 1 deta hai aur 'a' hat jaata hai, phir `d['aa'] = 10` end mein. Ab 'b' aur 'c' ke liye socho aur final order likho. Trap: 'aa' ko purani 'a' ki jagah rakhna."
+],
+"py-mutate-iterate-05": [
+  "Stack ke end se pop hota hai, aur `x > 2` ho to `x - 2` wapas push hota hai — ye pushed values bhi baad mein pop hoke `out` mein judti hain.",
+  "Har step: x = last element nikalo; agar x > 2 to x−2 end pe daalo; `out += x`. Loop tab tak chalta hai jab tak stack khaali na ho.",
+  "pop 5 → push 3, stack [3, 1, 4, 1, 3], out = 5. pop 3 → push 1, out = 8. Ab aage trace karo jab tak stack empty na ho. Trap: sirf original paanch numbers jodna."
+],
+"py-comprehensions-01": [
+  "Ek comprehension mein do `for` clauses hain, aur inner range `range(x, 3)` outer x pe depend karti hai. Result ek flat list hai.",
+  "Rule: for-clauses ko left se right nested loops ki tarah padho — `for x in range(1, 4):` ke andar `for y in range(x, 3):`, har pair pe `x * y`.",
+  "x = 1: y in range(1, 3) = 1, 2 → products 1, 2. Ab x = 2 aur x = 3 ke liye `range(x, 3)` likho — koi empty to nahi? Trap: inner range ko har baar range(1, 3) maan lena."
+],
+"py-comprehensions-02": [
+  "Ye set comprehension hai — sirf distinct values bachti hain, aur har character pehle `.lower()` hota hai. Space bhi ek character hai.",
+  "Poochha gaya hai: lowercase string \"data and data\" mein kitne distinct characters hain. Set duplicates apne aap hata deta hai.",
+  "Lowercase string: \"data and data\". Ek-ek character dekho: d, a, t… jo pehle aa chuka use dobara mat gino. Trap: space ko bhool jaana, ya `.lower()` ignore karna."
+],
+"py-comprehensions-03": [
+  "Dict comprehension mein key `w[0]` (pehla letter) hai — \"apple\"/\"avocado\" aur \"banana\"/\"blueberry\" ka pehla letter same hai. Repeated key ka kya hota hai?",
+  "Dict comprehension mein repeated key ki value overwrite hoti hai — last value jeetti hai, par key apni pehli position pe hi rehti hai. Koi error nahi aata.",
+  "Lengths: apple 5, avocado 7, banana 6, blueberry 9, cherry 6. 'a' ke liye pehle 5 likha gaya — uske baad kaunsi value aayi? 'b' ke liye bhi yahi socho. Trap: pehli value ko jeetne dena."
+],
+"py-comprehensions-04": [
+  "`t` nested comprehension hai jiska outer loop i (column index) pe hai — to t ki row i, m ka column i hai. Phir s mein sirf even entries judti hain.",
+  "`t[i] = [row[i] for row in m]` — yaani transpose. Print hota hai `sum(t[0]) * 10 + s`, jahan s = t ke saare even elements ka sum (t mein wahi 1–9 hain).",
+  "t[0] = [row[0] for row in m] = [1, 4, 7]. Ab iska sum lo, aur 1 se 9 mein even numbers jodke s nikaalo. Trap: t[0] ko m ki pehli row [1, 2, 3] maan lena."
+],
+"py-comprehensions-05": [
+  "`g` round brackets mein hai — ye list nahi, generator hai. Aur usi g pe `sum` do baar chal raha hai.",
+  "Generator single-use hai: ek baar poora iterate hone ke baad exhausted ho jaata hai, dobara iterate karne pe koi item nahi deta.",
+  "Pehla `sum(g)`: `x*x` for x = 0, 1, 2, 3 — inhe jodo. Ab socho doosre `sum(g)` ko kitne items milenge, aur khaali ka sum kya hota hai. Trap: range(4) mein 4 ko include karna."
+],
+"py-dict-set-sort-01": [
+  "Chaar set operations hain: `|`, `&`, `-`, `^`. Har ek ka matlab alag hai — khaas kar `-` (difference) aur `^` (symmetric difference) ko mix mat karna.",
+  "`A | B` union, `A & B` intersection, `A - B` = A mein hai par B mein nahi, `A ^ B` = exactly ek set mein. Sets mein duplicates nahi hote.",
+  "Common elements {3, 4} hain, to `len(A & B)` mil gaya. Ab union mein kitne distinct elements, A − B mein kya bachta hai, aur dono taraf ke non-common elements kaun hain? Trap: union ko 4 + 3 ginna."
+],
+"py-dict-set-sort-02": [
+  "Dict literal mein chaar keys likhi hain: 1, True, 1.0, 2. Sawaal: Python inme se kaunsi keys ko 'same' maanta hai?",
+  "Do keys same hain agar `==` aur hash dono same hon. Agar same hain to baad wali entry nayi key nahi banati, sirf value overwrite karti hai.",
+  "Ek-ek pair check karo: `1 == True`? `1 == 1.0`? (bool int ka subclass hai, aur equal numbers ka hash same hota hai.) Jo equal hain unhe ek key mein merge karke distinct keys gino. Trap: True ko alag key maan lena."
+],
+"py-dict-set-sort-03": [
+  "`key=lambda p: (-p[1], p[0])` ek tuple key hai: pehle score pe minus, phir naam. ria aur zoe dono ke 82 hain — tie kaise tootega?",
+  "sorted key tuple ko ascending, left se right compare karta hai: `-score` chhota = score bada, to scores descending aate hain. Tie pe doosra element (naam) ascending.",
+  "Keys likho: ria → (−82, 'ria'), aman → (−91, 'aman'), zoe → (−82, 'zoe'), dev → (−75, 'dev'). Ab in tuples ko ascending sort karo. Trap: tie pe naam ko reverse order mein rakhna."
+],
+"py-dict-set-sort-04": [
+  "Teen cheezein chahiye: dict mein \"not\" ki position (insertion order), sabse bada count, aur distinct words ki ginti. Dict keys sorted nahi hoti.",
+  "`list(freq)` keys first-seen order mein deta hai. `max(freq, key=freq.get)` sabse bade count wali key deta hai (tie ho to pehli). Print: index·10 + freq[best] + len(freq).",
+  "Words: to, be, or, not, to, be. freq banao: to, be, or, not pehle 1-1 count se, phir to aur be dobara aate hain. Ab \"not\" ka index aur baaki do values nikaalo. Trap: len(freq) mein total words (6) ginna."
+],
+"py-dict-set-sort-05": [
+  "Chaar alag rules check ho rahe hain: set ka `<`, `list.sort()` ki return value, dict keys ka order, aur `sorted(..., reverse=True)`.",
+  "Sets pe `<` proper subset hai (barabar nahi hona chahiye), `<=` subset. `list.sort()` in-place sort karke `None` return karta hai; `sorted()` nayi list deta hai. `list(d)` keys insertion order mein deta hai.",
+  "Har option alag evaluate karo: A mein dono sets bilkul same hain — `<` ki definition lagao. C mein dict mein pehle kaunsi key daali gayi? B aur D mein socho kaunsa function list lautata hai. Trap: dict keys ko sorted maan lena."
+],
+"py-trace-programs-01": [
+  "`enumerate` index i aur value item dono deta hai; group ki key `item % 3` hai, par list mein index i jaata hai, item nahi.",
+  "result = {item % 3: [us group ke indices]}. Phir total = Σ key × sum(indices). Dhyaan do: key 0 wale group ka contribution 0 hoga.",
+  "i = 0: 5 % 3 = 2 → {2: [0]}; i = 1: 9 % 3 = 0 → {2: [0], 0: [1]}. Baaki items aise hi daalo, phir total nikaalo. Trap: indices ki jagah items jodna, ya index 1 se shuru karna."
+],
+"py-trace-programs-02": [
+  "`deque` + `popleft()` = FIFO queue, yaani BFS. Har x se do naye values: `2 * x` aur `x + 3`, isi order mein, agar ≤ 10 hon aur pehle na dekhe gaye hon.",
+  "BFS mein `order` wahi hai jis order mein values queue mein daali gayi — increasing order nahi. `seen` mein value queue mein daalte waqt hi add hoti hai.",
+  "Pop 1 → 2 aur 4 queue mein: [2, 4]. Pop 2 → 4 already seen, 5 queue: [4, 5]. Ab 4 ko pop karo — pehle 2·4, phir 4+3 check karo. Trap: queue ko sorted maan lena."
+],
+"py-trace-programs-03": [
+  "Binary search do baar chalta hai: 22 (list mein hai) aur 23 (nahi hai). Not found pe function `-steps` return karta hai, aur dono results jud rahe hain.",
+  "a = [1, 4, 7, …, 37], 13 items, $a[i] = 1 + 3i$. Har pass: steps += 1, mid = (lo+hi)//2, compare, phir lo = mid+1 ya hi = mid−1; loop `lo <= hi` tak chalta hai.",
+  "Search 22: lo 0, hi 12 → mid 6, a[6] = 19 < 22 → lo = 7; agla mid 9, a[9] = 28. Aage khud trace karo, phir 23 ke liye jab tak lo > hi na ho. Trap: unsuccessful search ka minus sign bhoolna."
+],
+"py-trace-programs-04": [
+  "`encode` run-length encoding hai: har same-character run ke liye character + run length. Phir `encode(\"abc\")` pe `[::2]` lagta hai.",
+  "Inner while j ko tab tak badhata hai jab tak s[j] == s[i]; run length = j − i, aur ye hamesha append hota hai, chahe 1 ho. `[::2]` indices 0, 2, 4, … leta hai.",
+  "\"aaabccddd\": i = 0, j 3 tak jaata hai (s[3] = 'b') → \"a3\", phir i = 3. Ab 'b', 'cc', 'ddd' runs isi tarah karo, phir encode(\"abc\") banake `[::2]` lo. Trap: count 1 ko chhod dena."
+],
+"py-trace-programs-05": [
+  "Inner loop ke saath `break` aur `for-else` dono hain, aur else `score *= 2` karta hai. Dekho kaunsi row bina break ke poori hoti hai.",
+  "Har row: values v pe chalo; v > 7 ho to `score += r*10 + c` aur break (else skip); warna `score += v`. Row bina break ke khatam ho tabhi score double hota hai.",
+  "Row 0: v = 3 → score 3; v = 8 > 7 → score += 0·10 + 1 → 4, break. Ab row 1 aur row 2 isi tarah karo. Trap: break wali rows pe bhi else chala dena."
+]
+}

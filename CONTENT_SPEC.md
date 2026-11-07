@@ -173,3 +173,29 @@ A tight summary list (8–12 bullets) of what to remember, then the line:
 **Math** in `$...$` / `$$...$$` as elsewhere (this is Markdown, so write single backslashes). Code in fenced blocks with a language tag (` ```python `, ` ```sql `).
 
 **Accuracy.** Every formula, number and claim must be correct. Recompute all examples. If the theory note and the lesson disagree, the lesson is wrong until checked.
+
+## Question hints: `data/hints/<file>.json`
+
+Every question gets three graded hints, shown one at a time when the student taps "Atak gaye?". They are written for **this exact question** (its numbers, its options, its wording), never generic advice such as "use a simple example" or "recall the concept".
+
+File format (one file per question file, same name, e.g. `data/hints/la.json`):
+
+```json
+{ "la-rayleigh-01": [
+    "Unit vectors pe $x^TAx$ ka max matrix ke ek khaas number ke barabar hota hai — diagonal entry nahi.",
+    "Max $=\\lambda_{\\max}(A)$. 2×2 ke liye $\\lambda^2-(\\text{tr})\\lambda+\\det=0$; yahan tr $=6$, det $=8$.",
+    "$\\lambda^2-6\\lambda+8=0$ factor karo. Dhyan: $x=(1,1)$ seedha mat daalo — wo unit vector nahi hai."
+] }
+```
+
+1. **Hint 1 — Kya notice karo.** The trigger in this question: what is really being asked and which idea it needs, pointed at the specific words, numbers or structure of the stem. No formula yet.
+2. **Hint 2 — Setup / formula.** The exact formula or rule, written with this question's quantities plugged in (or the table / tree / trace to set up). For conceptual or code questions: the precise rule that decides it, applied to this case.
+3. **Hint 3 — Pehla step.** Do the first real step with this question's numbers (or evaluate one option / trace the first iterations), then stop. Add the one trap most students fall into here (use the question's `traps` / wrong-option `why` texts).
+
+Rules:
+- **Never reveal the final answer**: not the NAT value, not the correct option letter(s), not "so the answer is". Hint 3 must leave at least one real step for the student.
+- Simple Hinglish (Roman script), English technical terms. Each hint 1–2 short sentences (max ~35 words).
+- Math in `$...$`, JSON-escaped backslashes (`\\lambda`). Every number must be correct for this question — recompute with `python -I -c "..."`.
+- MSQ: hints help judge options one by one; never list which options are correct.
+- GA reading questions: point to the sentence/phrase of the passage to re-read, without stating the conclusion.
+- Check with `python -I tools/check_hints.py`.

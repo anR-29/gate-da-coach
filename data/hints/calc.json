@@ -1,0 +1,287 @@
+{
+"calc-limits-01": [
+  "Seedha $x=0$ daalo to $0/0$ aata hai. Numerator mein $1+3x$ to cancel ho jaata hai — dekho $e^{3x}$ ka kaunsa term bachta hai jo neeche ke $x^2$ se match kare.",
+  "Taylor: $e^{u}=1+u+\\frac{u^2}{2}+\\dots$, yahan $u=3x$. Limit sirf numerator ke $x^2$ wale term ka coefficient decide karega.",
+  "$\\frac{u^2}{2}$ mein $u=3x$ daalo — square poore $3x$ ka hoga, sirf $x$ ka nahi. Phir $x^2$ se divide karo. Trap: L'Hôpital ek hi baar lagaya to abhi bhi $0/0$ hai."
+],
+"calc-limits-02": [
+  "$x\\to0$ pe $\\sin 5x$ aur $\\tan 2x$ dono 0 hain — $0/0$ form. Arguments $5x$ aur $2x$ alag hain, isliye ratio ko seedha 1 mat maano.",
+  "Small $u$ ke liye $\\frac{\\sin u}{u}\\to1$ aur $\\frac{\\tan u}{u}\\to1$. Upar $u=5x$ aur neeche $u=2x$ lo.",
+  "Likho $\\frac{\\sin5x}{5x}\\cdot\\frac{2x}{\\tan2x}\\cdot(\\text{ek factor})$ — pehle do factor 1 ki taraf jaate hain. Expression same rahe, iske liye bacha factor kya hona chahiye? Trap: ratio ulta (neeche wala upar) mat karna."
+],
+"calc-limits-03": [
+  "Base $1+\\frac{2}{x}\\to1$ aur exponent $3x\\to\\infty$ — ye $1^\\infty$ form hai, iski value 1 nahi hoti.",
+  "$1^\\infty$ rule: limit $=e^{L}$ jahan $L=\\lim\\,(f-1)\\cdot g$. Yahan $f-1=\\frac{2}{x}$ aur $g=3x$.",
+  "$L=\\lim 3x\\cdot\\frac{2}{x}$ mein $x$ cancel karo, phir $e^{L}$ calculator se 2 decimal tak nikalo. Trap: constants ko multiply karna hai, add nahi ($e^{2+3}$ galat hai)."
+],
+"calc-limits-04": [
+  "$x=0$ pe upar $1-\\cos x$ aur neeche $x\\sin x$ dono 0 — $0/0$. Dono ka leading power $x^2$ hai, unke coefficients compare karne hain.",
+  "Standard approximations: $1-\\cos x\\approx\\frac{x^2}{2!}$ aur $\\sin x\\approx x$, isliye $x\\sin x\\approx x^2$.",
+  "Numerator ke coefficient mein $\\frac{1}{2!}$ mat chhodo (log $x^2$ likh dete hain). L'Hôpital se karo to ek step ke baad $\\frac{\\sin x}{\\sin x+x\\cos x}$ abhi bhi $0/0$ hai — ek baar aur lagao."
+],
+"calc-limits-05": [
+  "Chaaron options alag limits hain — har ek ko khud evaluate karo. $\\infty/\\infty$ ya $0/0$ form ka matlab value 1 nahi hota.",
+  "Rules: $\\frac{a^x-1}{x}\\to\\ln a$ (ye 1 sirf $a=e$ pe hai); $\\infty/\\infty$ pe L'Hôpital lagao; $x\\to\\infty$ wale mein $u=\\frac1x$ substitute karo.",
+  "Pehla option try karo: L'Hôpital se $\\frac{\\ln x}{x}$ ban jaata hai $\\frac{1/x}{1}$ — ye $x\\to\\infty$ pe kahan jaata hai? Isi tarah baaki teen ek-ek karke check karo."
+],
+"calc-one-sided-01": [
+  "$|x-2|$ ka sign is baat pe depend karta hai ki $x$ 2 se bada hai ya chhota — isliye $x\\to2^+$ aur $x\\to2^-$ alag-alag dekhne padenge.",
+  "Rule: limit tabhi exist karti hai jab left limit = right limit. $x>2$ pe $|x-2|=x-2$, aur $x<2$ pe $|x-2|=-(x-2)$.",
+  "Right side: $f=\\frac{x-2}{x-2}=1$, to $x\\to2^+$ pe value 1. Ab left side khud nikalo aur dono compare karo. Trap: sirf ek side dekh ke ruk jaana."
+],
+"calc-one-sided-02": [
+  "Floor function $x=3$ pe jump karta hai, isliye 3 se thoda neeche aur thoda upar values alag hain — left limit ke liye $\\lfloor 3\\rfloor$ seedha mat lagao.",
+  "$2\\le x<3$ pe $\\lfloor x\\rfloor$ ek constant hai aur $3\\le x<4$ pe doosra constant. Left limit pehle interval se aati hai, right limit doosre se.",
+  "Example lo: $x=2.99$ pe $\\lfloor x\\rfloor=2$ — yahi left limit hai. Ab $x=3.01$ pe nikalo aur dono jodo. Trap: left limit ko $\\lfloor3\\rfloor=3$ le lena."
+],
+"calc-one-sided-03": [
+  "Left piece $\\frac{x^2-1}{x-1}$ mein $x=1$ daaloge to $0/0$ — pehle factor karke cancel karo. Aur yaad rakho, $f(1)=2$ limit decide nahi karta.",
+  "Limit ke liye left limit ($x<1$ wala piece) aur right limit ($2x+1$) alag nikalo; dono equal hon tabhi limit exist karti hai. $x^2-1=(x-1)(x+1)$.",
+  "Left: $x\\ne1$ pe $\\frac{(x-1)(x+1)}{x-1}=x+1$, ab $x\\to1^-$ lagao. Right: $2x+1$ mein $x\\to1^+$ khud karo. Trap: $f(1)=2$ dekh ke limit bhi wahi maan lena."
+],
+"calc-one-sided-04": [
+  "$x\\to0^-$ hai — sirf left side, yaani $x$ negative. Square root ke andar se bahar nikalte waqt sign ka dhyan rakhna padega.",
+  "Identity: $1-\\cos2x=2\\sin^2x$, to $\\sqrt{1-\\cos2x}=\\sqrt2\\,|\\sin x|$. Mod zaroori hai kyunki $\\sqrt{\\sin^2x}=|\\sin x|$.",
+  "$x<0$ ke paas $\\sin x<0$, to $|\\sin x|=-\\sin x$. Ab $\\frac{x}{-\\sqrt2\\sin x}$ mein $\\frac{x}{\\sin x}\\to1$ use karo. Trap: mod hata ke $+\\sin x$ likhne se sign ulta ho jaata hai."
+],
+"calc-one-sided-05": [
+  "Sab kuch exponent $\\frac1x$ pe depend karta hai — $x$ 0 ke left se aaye ya right se, $\\frac1x$ ka sign badal jaata hai.",
+  "Pehle likho $x\\to0^+$ aur $x\\to0^-$ pe $\\frac1x$ kis taraf jaata hai. Phir: $e^{t}\\to\\infty$ jab $t\\to+\\infty$, aur $e^{t}\\to0$ jab $t\\to-\\infty$. Two-sided limit tabhi exist jab dono sides equal.",
+  "Example: $x=-0.01$ lo, to $\\frac1x=-100$ — $e^{-100}$ kitna bada ya chhota? Isse left wale do options judge karo, phir $x=+0.01$ se baaki. Trap: dono sides ko same maan lena."
+],
+"calc-continuity-const-01": [
+  "Continuity at $x=2$: left piece ($x\\le2$) ki value aur right piece ka limit barabar hone chahiye. Isse $k$ ki ek equation milegi.",
+  "Equation: $k\\cdot(2)^2+3=5\\cdot2-1$.",
+  "Right side pehle nikalo: $5(2)-1=9$. Left mein 2 ka square lena mat bhoolo ($4k$, $2k$ nahi) aur $+3$ bhi rakho. Ab $k$ solve karo."
+],
+"calc-continuity-const-02": [
+  "$x=3$ pe $\\frac{x^2-9}{x-3}$ $0/0$ deta hai — iska matlab value 0 nahi hai, pehle cancel karna padega. $k$ ko us limit ke barabar hona hai.",
+  "Continuity: $k=\\lim_{x\\to3}\\frac{x^2-9}{x-3}$. Factor karo: $x^2-9=(x-3)(x+3)$.",
+  "$x\\ne3$ pe $(x-3)$ cancel karo — kya bacha? Usme $x=3$ daalo. Trap: factor $(x+3)$ ka $+3$ chhod ke sirf $x$ bacha lena."
+],
+"calc-continuity-const-03": [
+  "Teen pieces aur do unknown $a$, $b$. Continuity at 0 ka matlab left limit $=f(0)=a=$ right limit — do alag equations milengi.",
+  "Standard limits: $\\frac{\\sin kx}{x}\\to k$ aur $\\frac{e^{kx}-1}{x}\\to k$ as $x\\to0$. Pehla left piece pe lagao, doosra right piece pe.",
+  "Left: $\\frac{\\sin3x}{x}=3\\cdot\\frac{\\sin3x}{3x}$ — isse $a$ milta hai. Ab right limit ko $a$ ke barabar rakh ke $b$ nikalo, phir jodo. Trap: $\\frac{\\sin3x}{x}\\to1$ maan lena."
+],
+"calc-continuity-const-04": [
+  "Do joints hain: $x=1$ aur $x=2$. Har joint pe dono taraf ke pieces milne chahiye — do equations, do unknowns $a$, $b$.",
+  "$x=2$ pe: $b(2)^2=2+6$. $x=1$ pe: $2(1)+a=b(1)^2$.",
+  "Pehle $x=2$ wali equation solve karo kyunki usme sirf $b$ hai: $4b=8$. Phir woh $b$ $x=1$ wali mein daalo. Trap: $bx^2$ ko $x=2$ pe $2b$ likhna (square bhool jaana)."
+],
+"calc-composition-01": [
+  "$(f\\circ g)(2)$ ka matlab $f(g(2))$ — pehle andar wala $g$, phir bahar wala $f$. Ye product $f(2)\\cdot g(2)$ nahi hai.",
+  "Inside-out: step 1 $g(2)=2(2)-3$; step 2 us result ko $f(x)=x^2+1$ mein daalo.",
+  "$g(2)=1$ aaya — yahin mat ruko, ab isse $f$ mein daalo. Trap: order ulta karke $g(f(2))$ nikal lena."
+],
+"calc-composition-02": [
+  "Andar $g(x)=x^2$ hai — $x\\ne0$ ke liye $x^2$ hamesha positive hai. To limit ke liye sgn ka sirf ek side matter karta hai.",
+  "Continuity check: $\\lim_{x\\to0}h(x)$ nikalo aur use $h(0)=\\operatorname{sgn}(g(0))$ se compare karo. Dono equal hon tabhi continuous.",
+  "$x=0.1$ ya $x=-0.1$ lo: dono mein $g=0.01>0$, to $h=\\operatorname{sgn}(0.01)=1$. Ab $h(0)$ alag se nikalo aur compare karo. Trap: sgn ka jump dekh ke limit DNE bol dena."
+],
+"calc-composition-03": [
+  "$f(f(3))$ mein $f$ do baar lagana hai: pehle $f(3)$, phir us result pe dobara $f$.",
+  "$f(x)=\\frac{x+1}{x-1}$: upar $x+1$, neeche $x-1$. Step 1: $f(3)=\\frac{3+1}{3-1}$.",
+  "$f(3)=\\frac{4}{2}=2$ — yahin mat ruko, isi value pe $f$ dobara lagao. Trap: numerator aur denominator ulte likh dena."
+],
+"calc-composition-04": [
+  "Har option alag function hai — har ek ka formula pehle simplify karo (kai ek constant ban jaate hain), phir $x=0$ pe jump hai ya nahi dekho.",
+  "Inside-out socho: $g$ sirf $\\pm1$ output deta hai, aur $f(x)=|x|\\ge0$ hamesha. Product $f\\cdot g$ ko $x>0$ aur $x<0$ pe alag likho.",
+  "Example: $g\\circ f$ mein pehle $f(x)=|x|$, jo kabhi negative nahi — to $g$ ka kaunsa branch lagega? Baaki teen bhi aise hi simplify karo. Trap: maan lena ki composition se jump hamesha hat jaata hai."
+],
+"calc-composition-05": [
+  "Bahar $\\ln$ hai, andar $\\frac{e^{2x}-1}{x}$ — inside-out chalo: pehle andar ka limit, phir $\\ln$ lagao ($\\ln$ continuous hai).",
+  "Standard: $\\frac{e^{kx}-1}{x}\\to k$ as $x\\to0$; yahan $k=2$. Phir limit $=\\ln(\\text{andar ka limit})$.",
+  "Andar ka factor 2 mat bhoolo — use 1 maan liya to $\\ln1=0$ galat aayega. Inner limit ke baad $\\ln$ lagana bhi mat bhoolo, aur 3 decimal tak round karo."
+],
+"calc-differentiability-01": [
+  "Har function ke liye $x=0$ pe left derivative aur right derivative compare karo. Corner (dono slopes alag) matlab not differentiable.",
+  "$x>0$ pe $|x|=x$ aur $x<0$ pe $|x|=-x$ likh ke har function ko piecewise banao, phir dono pieces ka slope $x=0$ pe nikalo.",
+  "Example: $|x|$ right pe $x$, left pe $-x$, to slopes $1$ aur $-1$. Isi tarah $x|x|=\\pm x^2$, $|x|^3$ aur ReLU ke dono slopes nikalo. Trap: continuous hai to differentiable maan lena."
+],
+"calc-differentiability-02": [
+  "Differentiable at $x=1$ ke liye do conditions: values milein (continuity) aur slopes milein. Do unknowns, do equations.",
+  "Continuity: $1^2+a=b(1)+2$. Slope: $\\frac{d}{dx}(x^2)$ at $x=1$ $=b$.",
+  "Slope wali equation pehle solve karo: $2x$ ko $x=1$ pe nikalo, wahi $b$ hai. Phir continuity mein daalo — $+2$ mat chhodna. Trap: sirf continuity dekh ke koi bhi pair chun lena."
+],
+"calc-differentiability-03": [
+  "Teeno terms ke corners alag-alag dhundo: $|x^2-4|$ wahan corner banata hai jahan $x^2-4=0$; $|x|$ aur $|x^3|$ ko $x=0$ pe check karo.",
+  "Rule: $|h(x)|$ ka corner simple root pe hota hai jahan $h'\\ne0$. Lekin $|x^3|=|x|^3$ ka derivative $3x|x|$ hai, jo 0 pe smooth hai.",
+  "$x^2-4=0$ ke roots nikalo — dono pe slope $2x\\ne0$, to dono corners hain. Ab $x=0$ ko alag se socho. Trap: $|x^3|$ ko bhi corner maan ke 0 ko do baar ginna."
+],
+"calc-differentiability-04": [
+  "$r(x)=\\max(0,x)$ ka 0 pe corner hai, lekin yahan $g=r^2$ hai — squaring corner ko smooth kar sakta hai. Dono sides ka slope check karo.",
+  "Piecewise: $x<0$ pe $g=0$, $x\\ge0$ pe $g=x^2$. Phir $g'(0^-)$ aur $g'(0^+)=\\lim_{h\\to0^+}\\frac{h^2}{h}$ compare karo.",
+  "Left side pe $g=0$ constant hai, to $g'(0^-)=0$. Ab right side wala limit khud nikalo. Trap: ReLU ka right slope 1 seedha $g$ pe laga dena."
+],
+"calc-differentiability-05": [
+  "$x|x|$ mein mod hai, to $x\\ge0$ aur $x<0$ pe formula alag hai — dono sides ka derivative alag nikalo, phir ek expression mein jodo.",
+  "$x\\ge0$: $f=x^2$; $x<0$: $f=-x^2$. Dono ka derivative lo aur $x=0$ pe left/right values check karo.",
+  "Right side ($x>0$): $f'=2x$. Left side ka derivative khud nikalo, dono ka sign dekho aur options se match karo. Trap: poore domain pe $f=x^2$ maan lena."
+],
+"calc-derivative-rules-01": [
+  "$f'''(0)$ chahiye — teen baar product rule lagana padega. Shortcut bhi hai: $f^{(n)}(0)=n!\\times(x^n$ ka Maclaurin coefficient$)$.",
+  "Series se: $x^2e^x=x^2\\left(1+x+\\frac{x^2}{2!}+\\dots\\right)$ aur $f'''(0)=3!\\times(x^3$ ka coefficient$)$.",
+  "Product rule se: $f'=(x^2+2x)e^x$, $f''=(x^2+4x+2)e^x$ — ek baar aur differentiate karke $x=0$ daalo. Trap: $f''(0)$ pe ruk jaana ya cross terms bhool jaana."
+],
+"calc-derivative-rules-02": [
+  "$\\ln$ ke andar $x^2+1$ hai, sirf $x$ nahi — chain rule lagega. Aur derivative chahiye, function ki value $\\ln2$ nahi.",
+  "Chain rule: $\\frac{d}{dx}\\ln u=\\frac{1}{u}\\cdot u'$, yahan $u=x^2+1$ aur $u'=2x$.",
+  "Derivative $\\frac{2x}{x^2+1}$ banta hai; ab isme $x=1$ daalo. Trap: chain factor $2x$ chhod ke sirf $\\frac{1}{x^2+1}$ likhna."
+],
+"calc-derivative-rules-03": [
+  "$\\sin(x^2)$ ka second derivative — pehle chain rule, phir $f'$ ek product ban jaata hai to product rule bhi. Point pe $x^2=\\pi/2$ hai, jo sab simplify karega.",
+  "$f'=2x\\cos(x^2)$. Product rule: $f''=2\\cos(x^2)+2x\\cdot\\frac{d}{dx}\\cos(x^2)$, jahan $\\frac{d}{dx}\\cos(x^2)=-2x\\sin(x^2)$.",
+  "Simplify: $f''=2\\cos(x^2)-4x^2\\sin(x^2)$. Ab $x^2=\\frac{\\pi}{2}$ daalo — $\\cos\\frac{\\pi}{2}$ aur $\\sin\\frac{\\pi}{2}$ kya hain? Trap: minus sign ya inner factor 2 chhod dena."
+],
+"calc-derivative-rules-04": [
+  "$\\frac{1}{1-x}$ ko baar baar differentiate karo to ek pattern banta hai. Ya Maclaurin series $1+x+x^2+\\dots$ ka $x^5$ coefficient use karo.",
+  "$f^{(n)}(0)=n!\\times(x^n$ ka coefficient$)$. Pattern: $f'=(1-x)^{-2}$, $f''=2(1-x)^{-3}$, …",
+  "Ek step aur: $f'''=6(1-x)^{-4}$ — har baar chain rule ka $-1$ aur power ka minus cancel hote hain, sign positive rehta hai. Pattern 5th derivative tak badhao. Trap: sirf coefficient likhna, $n!$ se multiply na karna."
+],
+"calc-derivative-rules-05": [
+  "Har option ko actual derivative se compare karna hai. Ek option khud ek derivative hai — use bhi nikal ke dekho.",
+  "Quotient rule: $\\left(\\frac{u}{v}\\right)'=\\frac{u'v-uv'}{v^2}$ with $u=x$, $v=1+x$, $u'=v'=1$. Ya $\\frac{x}{1+x}=1-\\frac{1}{1+x}$ likh lo.",
+  "Numerator: $u'v-uv'=1\\cdot(1+x)-x\\cdot1$ — ise simplify karo. Phir $\\frac{d}{dx}\\left(-\\frac{1}{1+x}\\right)$ alag se nikalo. Trap: numerator mein minus ki jagah plus lagana."
+],
+"calc-taylor-01": [
+  "$e^{2x}$ ki series chahiye — $e^u$ ki series mein $u=2x$ rakho. $x^3$ term mein $(2x)^3$ aayega, sirf $x^3$ nahi.",
+  "$e^{u}=\\sum\\frac{u^n}{n!}$, to $x^3$ ka coefficient $=\\frac{2^3}{3!}$.",
+  "$2^3$ aur $3!$ alag-alag nikalo, phir divide karke 2 decimal tak round karo. Trap: $3!$ ki jagah sirf 3 se divide karna, ya $2^3$ bhool jaana."
+],
+"calc-taylor-02": [
+  "Expansion point $x=1$ hai, 0 nahi — isliye terms $(x-1)$ ki powers mein honge. $\\ln(1+x)$ ki 0 wali series seedha mat chipkao.",
+  "$P_2(x)=f(1)+f'(1)(x-1)+\\frac{f''(1)}{2!}(x-1)^2$, with $f=\\ln x$, $f'=\\frac1x$, $f''=-\\frac{1}{x^2}$.",
+  "Pehle $f(1)=\\ln1$ nikalo — ye 1 nahi hai. Phir $f'(1)$ aur $f''(1)$ ki values sign ke saath lagao. Trap: $f''$ ka minus sign chhod dena."
+],
+"calc-taylor-03": [
+  "Do series ka product hai — $x^4$ sirf ek term se nahi aata. Har woh pair jiski powers ka sum 4 ho, sab collect karne hain.",
+  "$e^x$ ke coefficients: $1,1,\\frac12,\\frac16,\\frac1{24}$; $\\cos x$ ke: $1,0,-\\frac12,0,\\frac1{24}$. $x^4$ ka coefficient $=\\sum_k a_k\\,b_{4-k}$.",
+  "$\\cos x$ ke odd coefficients 0 hain, to sirf $k=0,2,4$ bachte hain. Pehla: $a_0b_4=1\\cdot\\frac1{24}$. Baaki do khud likho aur jodo. Trap: cross term $\\frac12\\cdot\\left(-\\frac12\\right)$ bhool jaana."
+],
+"calc-taylor-04": [
+  "$\\sqrt{4.2}$ ko $x=4$ ke paas expand karo kyunki $\\sqrt4=2$ exact hai. Yahan $h=4.2-4=0.2$, aur second-order term bhi chahiye.",
+  "$\\sqrt{4+h}\\approx f(4)+f'(4)h+\\frac{f''(4)}{2!}h^2$, with $f'=\\frac{1}{2\\sqrt x}$, $f''=-\\frac14x^{-3/2}$.",
+  "$f(4)=2$, $f'(4)=\\frac14$, $f''(4)=-\\frac14\\cdot\\frac18$. Ab $h=0.2$ daal ke teeno terms jodo, 4 decimal tak. Trap: $\\frac{1}{2!}$ bhool jaana ya $f''$ ka minus chhod dena."
+],
+"calc-taylor-05": [
+  "Har statement alag cheez pooch raha hai: ek derivative, do coefficients, ek convergence. Coefficient aur derivative same cheez nahi hote.",
+  "$\\ln(1+x)$ ka general coefficient $\\frac{(-1)^{n+1}}{n}$ hai (sign alternate karta hai). Aur $f^{(n)}(0)=n!\\times(x^n$ ka coefficient$)$.",
+  "$f'''(0)$ ke liye pehle $x^3$ ka coefficient formula se nikalo, phir $3!$ se multiply karo. $x=1$ pe series $1-\\frac12+\\frac13-\\dots$ banti hai — alternating series test socho. Trap: $x^2$ coefficient ka sign bhoolna."
+],
+"calc-series-sums-01": [
+  "Ye geometric series hai, ratio $r=\\frac23$, aur index $n=0$ se shuru hai — pehla term $\\left(\\frac23\\right)^0=1$ hai.",
+  "$n=0$ se geometric sum: $\\frac{a}{1-r}$ with $a=1$, $r=\\frac23$ (valid kyunki $|r|<1$).",
+  "Denominator pehle nikalo: $1-\\frac23=\\frac13$. Ab 1 ko isse divide karo. Trap: $n=1$ wala formula $\\frac{r}{1-r}$ laga dena."
+],
+"calc-series-sums-02": [
+  "$\\frac{1}{n(n+2)}$ ko partial fractions mein todo — terms telescope honge, lekin cancellation do step door hoga ($n$ aur $n+2$), consecutive nahi.",
+  "$\\frac{1}{n(n+2)}=\\frac12\\left(\\frac1n-\\frac1{n+2}\\right)$. Factor $\\frac12$ mat bhoolna.",
+  "Kuch terms likho: $\\frac12\\left[(1-\\frac13)+(\\frac12-\\frac14)+(\\frac13-\\frac15)+\\dots\\right]$. Kaunse positive terms kabhi cancel nahi hote? Unhe jodo aur $\\frac12$ se multiply karo. Trap: sirf pehla term bachana."
+],
+"calc-series-sums-03": [
+  "Har term mein $n$ ka factor hai, to ye plain geometric nahi hai. Consecutive terms ka ratio $\\to\\frac12<1$, to series converge karti hai — ab sum chahiye.",
+  "$\\sum x^n=\\frac{1}{1-x}$ ko differentiate karo: $\\sum nx^{n-1}=\\frac{1}{(1-x)^2}$. Yahan $x^n$ chahiye, to $x$ se multiply karo: $\\sum nx^n=\\frac{x}{(1-x)^2}$.",
+  "Ab $x=\\frac12$ daalo: denominator $\\left(1-\\frac12\\right)^2=\\frac14$. Numerator khud lagao. Trap: $x$ se multiply karna bhool jaana."
+],
+"calc-series-sums-04": [
+  "Fraction ko do parts mein todo: $\\frac{3^n}{6^n}$ aur $\\frac{2^n}{6^n}$ — dono alag geometric series hain. Index $n=1$ se shuru hai.",
+  "$\\frac{3^n}{6^n}=\\left(\\frac12\\right)^n$ aur $\\frac{2^n}{6^n}=\\left(\\frac13\\right)^n$. $n=1$ se geometric sum $=\\frac{r}{1-r}$.",
+  "Pehli series: $\\frac{1/2}{1-1/2}=1$. Ab $r=\\frac13$ wali khud nikalo aur jodo. Trap: ratios jod ke ek hi series $r=\\frac56$ bana dena, ya $n=0$ se sum lena."
+],
+"calc-series-sums-05": [
+  "Har series pe alag test lagega: terms 0 ki taraf jaate hain ya nahi, geometric hai ya nahi, alternating hai ya nahi.",
+  "Tests: terms $\\not\\to0$ to diverge; geometric $|r|<1$ pe converge; alternating series jiske terms decreasing to 0 hon, converge; $\\sum\\frac{1}{n^p}$ sirf $p>1$ pe converge.",
+  "Pehla option: $\\frac{n}{n+1}$ jab $n\\to\\infty$ kahan jaata hai? Usse n-th term test lagao. Baaki teen ko upar ke tests se ek-ek karke judge karo. Trap: terms $\\to0$ dekh ke converge maan lena."
+],
+"calc-extrema-01": [
+  "Local minimum ki **value** chahiye, location $x$ nahi. Pehle critical points nikalo, phir decide karo kaunsa min hai.",
+  "$f'(x)=3x^2-6x=0$ solve karo; classify ke liye $f''(x)=6x-6$ ka sign dekho ($>0$ matlab min).",
+  "$3x(x-2)=0$ se $x=0,2$. $f''(0)=-6<0$, to $x=0$ max hai. Ab min point pe $f$ ki value nikalo. Trap: $x$ ki value ko hi report kar dena."
+],
+"calc-extrema-02": [
+  "Closed interval $[0,3]$ pe absolute max chahiye — stationary points ke saath dono endpoints bhi check karo. Jo stationary point interval ke bahar ho, use chhod do.",
+  "$f'=3x^2-3=0\\Rightarrow x=\\pm1$; sirf $x=1$ interval mein hai. Candidates: $x=0,1,3$.",
+  "$f(0)=0$, $f(1)=1-3=-2$. Ab $f(3)$ nikalo aur teeno compare karo. Trap: right endpoint bhool jaana, ya $x=-1$ use karna jo $[0,3]$ mein hai hi nahi."
+],
+"calc-extrema-03": [
+  "$x^4$ mein $f'(0)$ aur $f''(0)$ dono 0 aate hain — socho ye second-derivative test ke baare mein kya batata hai, aur phir kaunsa test lagana chahiye.",
+  "Jab $f''=0$ ho to first-derivative test lagao: $f'=4x^3$ ka sign $x=0$ ke left aur right dekho. Inflection ke liye $f''$ ka sign change hona zaroori hai.",
+  "$x=-0.1$ aur $x=0.1$ pe $f'=4x^3$ ka sign nikalo. $-\\to+$ ya $+\\to-$, kaunsa pattern kya batata hai? Trap: $f''=0$ dekh ke seedha inflection maan lena."
+],
+"calc-extrema-04": [
+  "Domain $[0,\\infty)$ hai, to endpoint $x=0$ bhi candidate hai. Statements derivative sign, inflection aur global max/min ke baare mein hain — pehle $f'$ aur $f''$ nikalo.",
+  "Product rule: $f'=(1-x)e^{-x}$, $f''=(x-2)e^{-x}$. $e^{-x}>0$ hamesha, to sign sirf bracket se decide hota hai.",
+  "$f''(1)$ ke liye $(1-2)e^{-1}$ ka sign dekho. Baaki: $f'=0$ kahan hai, $f''$ sign kahan badalta hai, aur $f(0)$ vs $x>0$ pe $f$. Trap: endpoint $x=0$ ignore karna."
+],
+"calc-extrema-05": [
+  "Closed interval $[0,3]$ — absolute max/min ke candidates hain stationary points aur dono endpoints. Sabki values compare karni hain.",
+  "$f'=6x^2-18x+12=6(x-1)(x-2)$, to stationary points $x=1,2$. Candidates: $x=0,1,2,3$.",
+  "$f(1)=2-9+12=5$, $f(2)=16-36+24=4$. Ab dono endpoints $f(0)$, $f(3)$ nikalo aur charon compare karo. Trap: sirf stationary points compare karna."
+],
+"calc-convexity-01": [
+  "Har function ko poore $\\mathbb{R}$ pe check karo — sirf ek interval pe convex hona kaafi nahi. Ek option 0 pe differentiable nahi hai, uske liye $f''$ se kaam nahi chalega.",
+  "Rule: $f''(x)\\ge0$ har $x$ pe ⇒ convex. Jahan $f''$ exist na kare (corner), wahan chord test lagao: kisi bhi do points ke beech ki line graph ke upar ya us par ho.",
+  "$x^3$ ke liye $f''=6x$ — $x=-1$ pe iska sign kya hai? Isi tarah $e^x$ aur $-x^2+2x$ ka $f''$ nikalo, aur $|x|$ ko do lines ka max socho. Trap: non-differentiable dekh ke convex na maanna."
+],
+"calc-convexity-02": [
+  "Convexity $f''$ se decide hoti hai, $f'$ se nahi. Is quartic mein $-6x^2$ term 0 ke paas convexity tod sakta hai.",
+  "$f''(x)=12x^2-12$. Convex wahan hai jahan $f''(x)\\ge0$.",
+  "$12x^2-12\\ge0$ ko 12 se divide karo, phir $x=0$ aur $x=2$ jaise points pe test karke dekho kis region mein $f''\\ge0$ hai. Trap: inequality ulti padhna, ya $f'=0$ solve kar dena."
+],
+"calc-convexity-03": [
+  "Convex on all of $\\mathbb{R}$ ka matlab $f''(x)\\ge0$ har $x$ ke liye. $f''$ ek quadratic banega — use kabhi negative nahi hona chahiye.",
+  "$f''=12x^2+6ax+12$. Upward quadratic har jagah $\\ge0$ tab hai jab discriminant $\\le0$: $(6a)^2-4\\cdot12\\cdot12\\le0$.",
+  "$36a^2\\le576$ simplify karo, $a^2$ ki bound milegi — lekin $c$ bound $|a|$ pe hai, $a^2$ pe nahi. Trap: discriminant mein 4 bhool jaana, ya $ax^3$ ko sirf ek baar differentiate karna."
+],
+"calc-convexity-04": [
+  "Har statement 'always true' hona chahiye — ek bhi convex differentiable function counterexample de de to statement galat. $e^x$ aur $x^2$ jaise examples pe test karo.",
+  "Teen tools socho: differentiable $f$ ke liye convexity $f'$ ke baare mein kya kehti hai; tangent line graph ke upar hai ya neeche; aur chord graph ke upar rehti hai to local vs global min.",
+  "'Minimiser exists' wala statement $e^x$ pe test karo: ye convex hai ($f''=e^x>0$) — kya iska koi minimum point hai? Baaki teen ko $x^2$ jaise example aur upar ke rules se judge karo."
+],
+"calc-opt-word-01": [
+  "Do variables aur ek constraint $x+2y=20$ — constraint se ek variable hata ke $xy$ ko ek variable ka function banao. Dhyan: constraint mein $2y$ hai, $y$ nahi.",
+  "$x=20-2y$, to $P(y)=(20-2y)y=20y-2y^2$, domain $0\\le y\\le10$.",
+  "$P'(y)=20-4y=0$ solve karo, phir $x$ nikalo aur $xy$ calculate karo. Trap: constraint ko $x+y=20$ padh lena."
+],
+"calc-opt-word-02": [
+  "Har corner se square kaata, to har side se do baar $x$ ghatega. Volume chahiye, cut $x$ nahi — aur $x$ ka valid range bhi socho.",
+  "$V(x)=x(12-2x)^2$, domain $0<x<6$. $V'(x)=0$ solve karo.",
+  "Product rule: $V'=(12-2x)^2-4x(12-2x)=(12-2x)(12-6x)$. Root $x=6$ volume 0 deta hai — doosra root lo aur $V$ nikalo. Trap: $x$ ko hi report kar dena."
+],
+"calc-opt-word-03": [
+  "River ke saath fence nahi chahiye — to sirf teen sides fence hongi: river ke perpendicular do sides ($x$, $x$) aur ek parallel side ($y$).",
+  "Constraint: $2x+y=400$. Area $A=xy=x(400-2x)$.",
+  "$A=400x-2x^2$; $A'=400-4x=0$ solve karo, phir $y$ nikalo aur $A=xy$. Trap: teeno sides barabar maan lena, ya chaaron sides fence kar dena."
+],
+"calc-opt-word-04": [
+  "Squared distances ka sum minimise karna hai — ye ek variable ka smooth function hai, derivative zero karo. Median ya midpoint wala shortcut yahan nahi chalta.",
+  "$f'(x)=2[(x-1)+(x-5)+(x-6)]=0$.",
+  "Bracket simplify karo: $3x-(1+5+6)=0$. Ab $x$ nikalo — 3 se divide karna mat bhoolo. Trap: $x=\\sum a_i$ likh dena."
+],
+"calc-gradient-descent-01": [
+  "Sirf ek step chahiye, minimiser nahi. Gradient descent mein gradient ke **against** chalte hain.",
+  "Update: $x_1=x_0-\\eta f'(x_0)$, with $f'(x)=2x-4$, $\\eta=0.1$, $x_0=0$.",
+  "Pehle $f'(0)=2(0)-4=-4$. Ab $x_1=0-0.1\\times(-4)$ — minus-minus ka sign dhyan se. Trap: $+\\eta f'$ karke ulti direction mein jaana."
+],
+"calc-gradient-descent-02": [
+  "Do steps chahiye ($x_2$). Har step pe gradient naye point pe dobara nikalna hai — pehla step double mat karo.",
+  "$f'(x)=2(x-3)$ (square ka 2 mat bhoolo). Update: $x_{k+1}=x_k-0.25\\,f'(x_k)$.",
+  "Step 1: $f'(0)=-6$, to $x_1=0-0.25(-6)=1.5$. Ab $f'(1.5)$ nikalo aur second step lo. Trap: ek hi step pe ruk jaana."
+],
+"calc-gradient-descent-03": [
+  "$f=x^2$ convex hai, par step $\\eta=1.2$ bada hai. Convergence step size pe depend karti hai — update ko $x_k$ ke multiple ki tarah likho.",
+  "$f'(x)=2x$, to $x_{k+1}=x_k-\\eta\\cdot2x_k=(1-2\\eta)x_k$. Converge tabhi jab $|1-2\\eta|<1$.",
+  "$\\eta=1.2$ daalo: factor $=1-2(1.2)$. Ise nikalo, phir socho iska absolute value 1 se bada hai ya chhota, aur sign kya hai. Trap: convex hai to converge karega maan lena."
+],
+"calc-gradient-descent-04": [
+  "Do variables hain, to gradient ek vector hai — har coordinate ka apna partial derivative. Dono coordinates ke liye same partial mat use karo.",
+  "$\\nabla f=(2x,\\,6y)$. Update: $(x,y)_{new}=(1,1)-0.1\\cdot\\nabla f(1,1)$.",
+  "$\\nabla f(1,1)=(2,6)$. Ise $0.1$ se multiply karo aur $(1,1)$ mein se **subtract** karo. Trap: add kar dena (ascent) ya $\\eta$ bhool jaana."
+],
+"calc-gradient-descent-05": [
+  "Loss $w$ ka function hai; $x=2$ aur $y=4$ fixed numbers hain. $\\frac{dL}{dw}$ mein chain rule lagega — square ka 2 aur andar ka $x$, dono aayenge.",
+  "$\\frac{dL}{dw}=2(wx-y)\\cdot x$. Update: $w_1=w_0-\\eta\\,\\frac{dL}{dw}\\big|_{w_0}$ with $\\eta=0.05$.",
+  "$w_0=0$ pe $wx-y=0-4=-4$. Ab $2\\cdot(-4)\\cdot2$ nikalo, phir update lagao. Trap: factor 2 ya chain factor $x$ chhod dena."
+]
+}

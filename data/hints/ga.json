@@ -1,0 +1,362 @@
+{
+"ga-grammar-01": [
+  "Blank ke baad ka clue dekho: 'voted it down without even discussing it' — rejection kaisa tha? Jaldi aur bina kisi process ke.",
+  "Aisa word chahiye jiska matlab ho 'turant, bina formalities ke'. Charon options ka meaning likho: tentatively, sumptuously, subsequently, summarily.",
+  "*Tentatively* = jhijhakte hue — yeh 'bina discussion ke turant reject' se match nahi karta, cut. Trap: sound-alike se bacho; *sumptuously* ka matlab 'lavishly / mehenga' hai."
+],
+"ga-grammar-02": [
+  "Article spelling se nahi, word ki pehli **sound** se decide hota hai. 'honest' aur 'useful' dono ko zor se bol ke dekho.",
+  "Rule: vowel sound → *an*, consonant sound → *a*. Pehli letter h ya u dekh ke decide mat karo, sirf awaaz suno.",
+  "'useful' bolo: 'yoo-sful' — shuru 'y' (consonant) sound se hota hai, toh doosre blank ka article tay. Ab 'honest' mein h bolte ho ya silent hai, khud check karo."
+],
+"ga-grammar-03": [
+  "'By next March' future ka ek point hai, aur 'six years' ek duration hai — dono blanks inhi do clues se decide honge.",
+  "Rule: 'by + future time' → future perfect (*will have + V3*). Aur *for* + duration, *since* + starting point (jaise since 2020).",
+  "Pehle socho: 'six years' starting point hai ya length of time? Uske hisaab se since/for chuno. Trap: 'has worked' (present perfect) sirf 'ab tak' batata hai, future deadline nahi."
+],
+"ga-grammar-04": [
+  "Teen confusable words: assure, ensure, insure. Har blank ke baad dekho kya aata hai — ek person (the inspectors), ek outcome (power), ya property against damage.",
+  "Rule: *assure* + person (kisi ko bharosa dilana); *ensure* + outcome (pakka karna); *insure* + property against risk (financial cover).",
+  "Blank 1 ke baad 'the inspectors' hai — person, toh wahi verb chahiye jo person ko object leta hai. Baaki do blanks khud match karo; trap: ensure aur insure swap mat karna."
+],
+"ga-grammar-05": [
+  "Pehle Cartographer aur Map ka relation ek sentence mein bolo — cartographer map ke saath kya karta hai? Order yaad rakho: pehle person, phir cheez.",
+  "Relation: 'A cartographer **makes** a map' (maker : thing made). Ab har pair ko isi sentence mein, isi order mein daal ke test karo.",
+  "Painter : Brush — 'A painter makes a brush'? Nahi, brush toh tool hai, cut. Trap: sahi relation par ulta order (thing : maker) bhi galat hai."
+],
+"ga-grammar-06": [
+  "Drought aur Famine ka relation bolo: drought se kya hota hai? Yeh cause → effect pair hai, aur order mein cause pehle hai.",
+  "Test sentence: 'X causes Y' — pehla word cause, doosra effect. Har option ko isi order mein bol ke dekho.",
+  "Flood : Rain — 'Flood causes rain'? Nahi, rain flood ka cause hai, yani order ulta, cut. Trap: sirf related hona kaafi nahi — measuring tool (thermometer) ya remedy (food) cause-effect nahi hai."
+],
+"ga-grammar-07": [
+  "Clue: 'but journalists soon uncovered the full story' — *but* contrast dikhata hai, matlab company ne kuch chhupane ki koshish ki thi.",
+  "Aisa phrasal verb chahiye jiska matlab ho 'kisi event ya galti ko chhupana'. Har option ka meaning likho: cover for, play up, make up, cover up.",
+  "*Play up* = exaggerate, yani badha-chadha ke batana — chhupane ka ulta, cut. Trap: *cover for* kisi person ko bachane ya uski jagah kaam karne ke liye hota hai, event hide karne ke liye nahi."
+],
+"ga-grammar-08": [
+  "Dono blanks ke aas-paas ke words dekho: pehla 'a strong ___' ke baad hai, doosra 'did not ___' ke baad. Ek jagah noun chahiye, ek jagah verb.",
+  "Rule: *effect* normally noun hai (result), *affect* normally verb hai (influence karna). Article + adjective ke baad noun aata hai; 'did not' ke baad verb.",
+  "'a strong ___' — 'a' aur 'strong' ke baad noun chahiye, toh pehla blank noun wala word. Ab 'did not ___' ke liye khud decide karo; trap: *effect* as a verb ka matlab 'bring about' hota hai."
+],
+"ga-grammar-09": [
+  "Har option mein subject–verb agreement test ho raha hai. Har sentence ka asli subject dhoondo — beech ke 'of the reports' jaise phrase se dhokha mat khao.",
+  "Rules: *a number of* → plural verb; *the number of* → singular; *each of* → singular; *neither A nor B* → verb B (nearer subject) se match karega.",
+  "'Each of the reports have been reviewed': subject *Each* hai (singular), toh 'have' theek nahi, cut. Baaki teen options par yahi rules ek-ek karke lagao."
+],
+"ga-grammar-10": [
+  "Question **opposite** maang raha hai, synonym nahi. Pehle *ephemeral* ka meaning yaad karo — yeh time / duration ke baare mein hai.",
+  "*ephemeral* = bahut kam time tak rehne wala (short-lived). Opposite = lambe time tak rehne wala. Har option ka meaning likho.",
+  "*fleeting* ka matlab bhi short-lived hai — yeh synonym hai, opposite nahi, cut. Trap: *ethereal* sound mein milta-julta hai par matlab 'delicate / heavenly' hai."
+],
+"ga-grammar-11": [
+  "*Although* contrast dikhata hai: pehla blank 'praised' se juda hai, doosra 'gave up halfway' se. Dono blanks opposite direction mein honge.",
+  "Blank 1 = positive word (praise kiya), blank 2 = negative word (beech mein chhod di). Har option ke dono words ki polarity (+ / −) likho.",
+  "'lucid; engrossing': lucid (clear) positive theek, par engrossing (bahut interesting) book koi beech mein nahi chhodta, cut. Trap: sirf ek blank fit dekh ke option mat chuno — dono fit hone chahiye."
+],
+"ga-grammar-12": [
+  "Teeno blanks (hour, European, MBA) ka article first letter se nahi, pehli **sound** se decide hoga. Har word ko zor se bolo.",
+  "Rule: vowel sound → *an*, consonant sound → *a*. Abbreviation (MBA) letter-by-letter bola jaata hai, toh pehli letter ke **naam** ki sound dekho.",
+  "'hour' bolo: h silent hai, vowel sound se shuru, toh pehla blank tay. Ab European aur MBA bol ke unki pehli sound khud check karo; trap: E ya M letter dekh ke decide mat karna."
+],
+"ga-reading-01": [
+  "Question 'best supported' maang raha hai. Passage ka 'however' wala sentence dhyan se padho: 'The streets, however, were not randomly selected…'.",
+  "Rule: agar streets random nahi chuni gayi aur speeds pehle se gir rahi thi, toh poora credit lanes ko dena risky hai. Har option ko is sentence se match karo.",
+  "'Speed checks explain the 30% fall' ko last sentence se check karo: checks **whole city** mein the, par baaki streets par injuries unchanged rahi — kya ye farak explain kar sakte hain? Trap: 'not randomly' ko 'randomly' padhna."
+],
+"ga-reading-02": [
+  "Question mein **beyond** hai — tumhe wo statement chahiye jo passage support NAHI karta. Teen options passage mein seedhe mil jayenge.",
+  "Har option ke saamne likho: stated / inferable / passage mein hai hi nahi. Sirf 'hai hi nahi' wala chahiye.",
+  "'Evaporating water is used to cool the hive' — second sentence ('spread it on the comb… evaporation cools the air') mein stated hai, toh beyond nahi. Trap: supported option chun lena, jabki question ulta hai."
+],
+"ga-reading-03": [
+  "Yeh direction of influence ka question hai: crabs birds ko affect karte hain ya birds crabs ko? Do experiment wale sentences ('crabs were removed', 'birds were kept out') dobara padho.",
+  "Logic: agar X hatane se Y badalta hai par Y hatane se X nahi badalta, toh influence X → Y hai. Dono experiments mein dekho kya badla.",
+  "Fenced plots (birds bahar) mein crab numbers 'no measurable change' — toh 'birds control crabs' wala option iske against jaata hai. Trap: 'main food during the breeding season' ko 'only food all year' mat bana dena."
+],
+"ga-reading-04": [
+  "Main idea = wo claim jise poora passage support karta hai, koi ek detail nahi. Last sentence ('The result is a system in which…') dhyan se padho.",
+  "Har option ko classify karo: supporting detail / passage se bahar / passage ke against / poore passage ka summary. Main idea sirf last type hoga.",
+  "'Some large firms pay staff…' — passage mein hai, par sirf ek detail hai, poore passage ka point nahi. Trap: 'These efforts remain small…' padho — kisi option ne problem ko 'solved' toh nahi bata diya?"
+],
+"ga-reading-05": [
+  "Passage mein **do** changes hain: closing 6 pm se 9 pm, aur opening 9 am se noon. Question sirf evening (closing) wale change ka reason pooch raha hai.",
+  "'Instead, a survey showed…' wala sentence ek change ka reason deta hai, aur 'because morning visits…' wala doosre ka. Dono reasons alag-alag likho.",
+  "'Morning visits had been the lowest' — yeh kis change ka reason hai, later opening ka ya later closing ka? Trap: 'costs unchanged' ko 'reduced' aur 'flat' visitors ko 'rising' mat padhna."
+],
+"ga-reading-06": [
+  "Question mein **NOT** hai — options padhne se pehle ise circle karo. Tumhe wo statement chahiye jo passage support nahi karta.",
+  "Har option ko passage ki ek line se match karo. Last sentence ('The plant's engineers caution, however…') khaas dhyan se padho — wo output gain ke baare mein kya kehta hai?",
+  "'Dust on panels can reduce their output' — first sentence mein stated hai, toh supported hai, NOT question mein yeh nahi chalega. Trap: 'sahi lagne wala' supported option chun lena."
+],
+"ga-reading-07": [
+  "'Most justified' conclusion chahiye. Do phrases dekho: 'Patients chose their routine themselves' aur 'Because the groups were not randomised…'.",
+  "Rule: jab groups khud chune gaye aur unme pehle se farak hai (younger, fitter), toh recovery ka farak sirf routine ki wajah se hai, yeh claim nahi kar sakte — sirf association dikhta hai.",
+  "'The hospital has already switched its guidelines' check karo: authors trial recommend karte hain **before** any change, toh yeh passage ke against hai. Trap: 'not randomised' ko 'randomly assigned' padh lena."
+],
+"ga-reading-08": [
+  "Question sirf 'only in classrooms' wale programmes ke outcome ke baare mein hai. Passage ka last sentence ('Programmes that teach a language only in classrooms…') dobara padho.",
+  "Passage do tarah ke programmes ke outcomes batata hai: school + home/community wale, aur classroom-only wale. Option ko sahi type ke programme se match karo.",
+  "'better job prospects' wala option dekho — passage mein jobs ka zikr kyon aaya: language decline ka cause ya revival ka result? Trap: 'seldom speak' ko 'no speakers at all' tak exaggerate mat karna."
+],
+"ga-reading-09": [
+  "'Must hold' = necessary condition, sirf ek example nahi. Sales team kehti hai total revenue badhega, jabki price 20% kam ho raha hai.",
+  "Revenue = price × quantity. Naya price $=0.8\\times$ purana; quantity factor $q$ maano. Revenue badhne ke liye $0.8\\,q > 1$ chahiye.",
+  "Pehle 20% rise test karo: $0.8 \\times 1.2 = 0.96 < 1$, revenue abhi bhi girta hai. Ab $0.8q>1$ ko $q$ ke liye solve karo; trap: rival ka 'double' sufficient hai, necessary nahi."
+],
+"ga-reading-10": [
+  "Question mein **beyond** hai — study ki limit dhoondo. Last sentence ('The study covered only engineers and designers…') dhyan se padho.",
+  "Har option ke liye check karo: kya yeh study wale logon (engineers, designers) ke baare mein hai aur passage mein stated hai? Jo study ke scope se bahar jaye, wohi beyond hai.",
+  "'Managers' views changed' — passage kehta hai unhone output girne ki ummeed ki thi par end mein kaha performance hurt nahi hui; toh supported hai. Trap: supported statement chun lena, kyunki question ulta hai."
+],
+"ga-reading-11": [
+  "Question curators ke view ka **before → after** change pooch raha hai. Wo sentence dhoondo jisme 'had long regarded the storerooms as…' aur 'began to see them as…' hai.",
+  "Pehla view (shuru mein storerooms unke liye kya the) aur baad wala view alag-alag likho; phir last sentence (permanent gallery plan) se confirm karo.",
+  "'They had expected long queues from the start' — pehla sentence 'modest interest' kehta hai, toh yeh contradict karta hai. Trap: 'unlabelled tools' padho — kisi option ne ulta 'labelled' toh nahi bola?"
+],
+"ga-numerical-01": [
+  "Question **total students** pooch raha hai, sirf boys nahi. Ratio 5 : 7 mein girls ke 7 parts = 21.",
+  "Ek part = girls ÷ 7. Total = (5 + 7) parts × ek part.",
+  "Ek part $= 21/7 = 3$. Ab total parts se multiply karo; trap: sirf boys (5 parts) nikaal ke ruk mat jaana."
+],
+"ga-numerical-02": [
+  "Pani add karne se milk **change nahi hota** — sirf water aur total badalte hain. Toh pehle 60 L mein milk aur water alag nikalo.",
+  "Milk $= \\frac{7}{10}\\times 60$, water $= \\frac{3}{10}\\times 60$. Naya water $w$ ho toh milk : $w$ = 3 : 2.",
+  "Milk $=42$ L, water $=18$ L. Ab $42/w = 3/2$ se $w$ nikalo, phir usme se 18 ghatao; trap: final water ko hi 'added' mat bolna, aur total 60 fixed mat maanna."
+],
+"ga-numerical-03": [
+  "Kisi number ke digits uske $\\log_{10}$ se nikalte hain. Yahan $2^{50}$ hai aur $\\log_{10}2 = 0.301$ diya hai.",
+  "$\\log_{10} 2^{50} = 50 \\times 0.301$. Phir digits $= \\lfloor \\log_{10} N \\rfloor + 1$.",
+  "$50 \\times 0.301 = 15.05$. Ab formula lagao; trap: integer part (15) ko hi digit count mat maan lena — $10^{15}$ khud kitne digits ka hai, socho."
+],
+"ga-numerical-04": [
+  "Teen alag logs hain, har ek alag se nikalo: $\\log_2 8$, $\\log_3 \\frac19$, $\\log_5 1$. Har ek ke liye socho: base ko kitni power dene se yeh number milta hai?",
+  "Rule: $\\log_b b^k = k$. Toh $8 = 2^{?}$, $\\frac19 = 3^{?}$ (fraction hai, toh power negative hogi), aur kisi bhi base mein $\\log 1 = 0$.",
+  "$\\log_2 8 = 3$ kyunki $2^3 = 8$. Ab $\\frac19$ ko 3 ki power mein likh ke doosra term nikalo aur signs dhyan se jodo; trap: $\\log_3\\frac19$ ka minus sign gira dena."
+],
+"ga-numerical-05": [
+  "Terms 3, 7, 15, 31, 63 tezi se badh rahe hain — har term pichhle ka lagbhag double hai. Pehle consecutive differences nikalo.",
+  "Differences: $7-3,\\ 15-7,\\ 31-15,\\ 63-31$. Dekho ye kis pattern mein badh rahe hain — ya check karo kya term $= 2\\times$ previous $+1$ hai.",
+  "Differences 4, 8, 16, 32 hain — har baar double. Agla difference nikaal ke 63 mein jodo; trap: last difference 32 repeat mat karna, aur $2\\times63$ ke baad $+1$ mat bhoolna."
+],
+"ga-numerical-06": [
+  "Average se seedha number nahi milta — pehle **sums** nikalo. 5 numbers ka average 18, aur ek hatane ke baad 4 ka average 16.",
+  "Sum = average × count. Removed number = (5 numbers ka sum) − (4 numbers ka sum) $= 5\\times18 - 4\\times16$.",
+  "5 numbers ka sum $= 5\\times 18 = 90$. Ab 4 numbers ka sum nikaal ke ghatao; trap: average ka drop (2) ko hi removed number mat samajhna."
+],
+"ga-numerical-07": [
+  "Days directly add/subtract nahi hote, **rates** (kaam per day) add hote hain. A ka rate $\\frac1{12}$, B ka $\\frac1{18}$ job per day.",
+  "4 din saath: kaam $= 4\\left(\\frac1{12}+\\frac1{18}\\right)$. Bacha kaam $= 1 -$ ye. B ke din $=$ bacha kaam ÷ $\\frac1{18}$.",
+  "$\\frac1{12}+\\frac1{18} = \\frac{3+2}{36} = \\frac5{36}$, toh 4 din mein $\\frac{20}{36}$ kaam hua. Ab bacha kaam aur B ke din nikalo; trap: pehle 4 din mein B ka kaam bhool jaana."
+],
+"ga-numerical-08": [
+  "Do dice ke outcomes **ordered pairs** hote hain — (2,6) aur (6,2) alag hain. Total outcomes kitne hain, aur sum 8 kaun se pairs dete hain?",
+  "P = (sum 8 wale ordered pairs) / 36. List banao: first die 1 se 6 tak, second $= 8 -$ first, jab tak woh 1–6 ke andar ho.",
+  "First die 1 ho toh second 7 chahiye — impossible. First 2 ho toh (2,6) chalega. Aise baaki values check karo; trap: sums 2–12 ko equally likely maanna, ya (3,5) aur (5,3) ko ek hi ginna."
+],
+"ga-numerical-09": [
+  "'Closest to' — exact calculation ki zaroorat nahi. Har number ko easy value ke paas round karo: 49.8, 0.0198, 0.251.",
+  "Round: $49.8\\approx50$, $0.0198\\approx0.02$, $0.251\\approx0.25$. Expression $\\approx \\frac{50\\times0.02}{0.25}$.",
+  "Numerator: $50\\times0.02 = 1$. Ab 0.25 se **divide** karo (multiply nahi); trap: decimal khisak jaana — 0.0198 ko 0.198 mat padhna."
+],
+"ga-numerical-10": [
+  "Teen layers hain: list ke voters → jinhone vote diya (90%) → valid votes (cast − 60). Margin 120 **valid** votes par hai — wahan se peeche ki taraf chalo.",
+  "Winner 52%, loser 48% of valid, toh margin $= 4\\%$ of valid $= 120$. Phir cast $=$ valid $+ 60$, aur cast $= 0.9 \\times$ list.",
+  "$0.04 \\times V = 120$ se valid votes $V$ nikalo, phir 60 jodo, phir 0.9 wala step. Trap: votes cast ya valid votes par ruk jaana — question **list** ke voters pooch raha hai."
+],
+"ga-numerical-11": [
+  "'Compounded' hai — har saal 10% badhe hue size par lagta hai, toh simple 10 × 10% wala logic nahi chalega. Smallest full $n$ chahiye jahan size double se zyada ho.",
+  "Condition: $1.1^n > 2$. Powers of 1.1 ek-ek karke compute karo, ya $n > \\frac{\\log 2}{\\log 1.1}$ nikaal ke next integer lo.",
+  "$1.1^2 = 1.21$, $1.1^4 = 1.21^2 \\approx 1.4641$. Ab aage 1.1 se multiply karte raho jab tak 2 cross na ho; trap: rule of 72 ka 7.2 round down kar dena — exact check karo."
+],
+"ga-numerical-12": [
+  "Do solutions mix ho rahe hain: unknown $x$ L of 30% aur 20 L of 70%, result 40%. Acid ki total quantity dono taraf barabar honi chahiye.",
+  "Acid balance: $0.3x + 0.7\\times 20 = 0.4(x+20)$. Ya alligation: weak : strong $= (70-40) : (40-30)$.",
+  "Alligation ratio $30 : 10 = 3 : 1$ (weak : strong), aur strong 20 L hai. Ab weak ki quantity nikalo; trap: total mixture report kar dena, ya ratio ulta (1 : 3) laga dena."
+],
+"ga-di-01": [
+  "Chart se sirf Q3 aur Q4 ki values padho (Q1, Q2 nahi). Percentage change mein base hamesha **purani** value hoti hai.",
+  "% rise $= \\frac{Q4 - Q3}{Q3}\\times100$. Chart se Q3 = 45, Q4 = 60.",
+  "Change $= 60-45 = 15$ crore. Ab ise base 45 se divide karo; trap: 15 crore ko hi 15% bol dena, ya nayi value 60 se divide kar dena."
+],
+"ga-di-02": [
+  "Question **share** pooch raha hai: (May + June) ÷ (chhe mahine ka total). Chart se har mahine ki value padho.",
+  "% $= \\frac{\\text{May}+\\text{June}}{\\text{Jan}+\\dots+\\text{Jun}}\\times100$. Values: 20, 35, 50, 80, 120, 95.",
+  "May + June $= 120 + 95 = 215$. Ab chhe values jod ke actual total nikalo aur divide karo; trap: total ko 600 (6 × 100) maan lena."
+],
+"ga-di-03": [
+  "Sections ke size alag hain (30, 50, 20), toh teen averages ka seedha average nahi chalega — **weighted** average chahiye.",
+  "Overall avg $= \\frac{30\\cdot62 + 50\\cdot78 + 20\\cdot66}{100}$. Har section ka total score = students × average.",
+  "Section A ka total $= 30\\times62 = 1860$. B aur C ke totals nikaal ke jodo, phir 100 se divide karo; trap: $(62+78+66)/3$ wala plain average, ya weights galat rows se jodna."
+],
+"ga-di-04": [
+  "Question **profit** ka % increase pooch raha hai, revenue ya cost ka nahi. Pehle dono saal ka profit nikalo.",
+  "Profit = Revenue − Cost. % increase $= \\frac{P_{2024} - P_{2023}}{P_{2023}}\\times100$.",
+  "Profit 2023 $= 250-200 = 50$ lakh. Ab 2024 ka profit nikaal ke formula lagao; trap: revenue growth (250 → 300) ko profit growth samajh lena."
+],
+"ga-di-05": [
+  "'Python exceeds DBMS by what %' — comparison DBMS **se** ho raha hai, toh base DBMS hai. Chart se dono bars ki values padho.",
+  "% more $= \\frac{\\text{Python} - \\text{DBMS}}{\\text{DBMS}}\\times100$. Chart: Python = 50, DBMS = 25.",
+  "Difference $= 50 - 25 = 25$ students. Ab base se divide karo; trap: '% of' (Python ÷ DBMS) aur '% more' (difference ÷ DBMS) ko mix kar dena."
+],
+"ga-di-06": [
+  "Teen plants ki growth compare karni hai — absolute rise nahi, **percentage** growth. Har plant ke liye base January ki value hogi.",
+  "% growth $= \\frac{\\text{March} - \\text{Jan}}{\\text{Jan}}\\times 100$. Rises: P $78-60$, Q $100-80$, R $236-200$.",
+  "P: rise $= 18$, base 60 → $18/60$. Q aur R ke liye bhi same karo (base January hi) aur har option check karo; trap: R ka absolute rise sabse bada hai, par % alag cheez hai."
+],
+"ga-di-07": [
+  "Average se seedha Saturday nahi milta — **sums** mein socho. Chart se Mon–Fri ki paanch values padho: 1200, 1500, 900, 1800, 1600.",
+  "Saturday $=$ (6-day total) − (Mon–Fri total) $= 6\\times1450 - (\\text{Mon}+\\dots+\\text{Fri})$.",
+  "Mon–Fri total $= 1200+1500+900+1800+1600 = 7000$. Ab $6\\times1450$ nikaal ke ghatao; trap: naye din ko naye average (1450) ke barabar maan lena."
+],
+"ga-di-08": [
+  "Rent **rupees mein fixed** hai, sirf income badh rahi hai — toh rent ka share girega. Table ke baaki items (food, savings…) is question mein kaam nahi aayenge.",
+  "Rent $= 30\\%$ of ₹60,000. New income $= 1.1\\times60{,}000$. New share $= \\frac{\\text{rent}}{\\text{new income}}\\times100$.",
+  "Rent $= 0.30\\times60{,}000 = ₹18{,}000$. Ab nayi income nikaal ke divide karo; trap: share ko seedha 10 points kam (30 → 20) kar dena."
+],
+"ga-di-09": [
+  "Highest **percentage** increase chahiye, absolute nahi. Legend se pehchaano: light bar = 2023, dark bar = 2024, aur har product ki dono values padho.",
+  "% change $= \\frac{2024 - 2023}{2023}\\times100$. Values: A 40→50, B 60→45, C 30→42, D 70→84.",
+  "A: $(50-40)/40 = 10/40$. Baaki teen ke liye bhi 2023 ko base rakh ke nikalo; trap: B mein bars ka farak bada dikhta hai, par 2024 wala chhota hai — woh decrease hai."
+],
+"ga-di-10": [
+  "Har grade ki quantity alag hai (40, 25, 35 kg), toh teen prices ka seedha average nahi chalega — quantity se **weighted** average chahiye.",
+  "Avg price $= \\frac{\\text{total revenue}}{\\text{total kg}} = \\frac{40\\cdot50 + 25\\cdot60 + 35\\cdot80}{40+25+35}$.",
+  "Regular ka revenue $= 40\\times50 = ₹2000$. Premium aur Basmati ka nikaal ke jodo, phir total kg se divide karo; trap: $(50+60+80)/3$ plain average, ya quantity ko galat price se jodna."
+],
+"ga-di-11": [
+  "Sirf Sales mein hiring ho rahi hai, toh Engineering (120) fixed rahega. Question **poori firm ka total** pooch raha hai, sirf Sales nahi.",
+  "Eng : Sales $= 5 : 4$ with Eng $=120$ → new Sales $= 120\\times\\frac45$. Hires $=$ new Sales − 80. New total $=$ current total + hires.",
+  "Current total $= 120+80+60+40 = 300$. Ab naya Sales count aur hires nikaal ke total update karo; trap: naye Sales count ya hires ki sankhya par hi ruk jaana."
+],
+"ga-reasoning-01": [
+  "'Unless' wala rule: 'The server will not restart unless the administrator approves.' Pehle ise if-then mein badlo — phir sirf contrapositive hi pakka follow karta hai.",
+  "Rule: 'not P unless Q' = 'if not Q then not P'. Iska contrapositive: P → Q. Converse aur inverse follow nahi karte.",
+  "Yahan P = restart, Q = approve, toh rule: 'no approval → no restart'. Har option ko if-then mein likho aur pehchaano — contrapositive kaunsa hai? Trap: approval *necessary* hai, *sufficient* nahi."
+],
+"ga-reasoning-02": [
+  "'Unless it rains, the match will be played' ko if-then mein badlo, phir dekho 'match **not** played' rule ke kis hisse ko negate karta hai.",
+  "Rule: 'A unless B' = 'if not B then A'. Yahan A = match played, B = it rains. Phir contrapositive lo: if not A then ___.",
+  "If-then: 'no rain → played'. Diya hai 'not played' — consequent ka negation, toh contrapositive antecedent ka negation dega; woh khud likho. Trap: 'rain → cancelled' inverse hai, follow nahi karta."
+],
+"ga-reasoning-03": [
+  "Do statements: analysts poore graduates ke andar hain; managers graduates ke saath sirf **kahin** overlap karte hain. Venn diagram banao.",
+  "Rule: conclusion tabhi follows jab har possible diagram mein true ho. Aur 'Some A are B' se hamesha 'Some B are A' milta hai (conversion).",
+  "Conclusion I test karo: aisa diagram banao jisme managers graduates ko overlap karein par analysts wale circle ko na chhuein — possible hai? Phir II par conversion rule lagao; trap: possible ko certain maan lena."
+],
+"ga-reasoning-04": [
+  "'No sensor is cheap' — sensors aur cheap circles bilkul alag (disjoint). 'Some devices are sensors' — devices sensors ko kahin overlap karte hain. Diagram banao.",
+  "Rule: jo conclusion har possible diagram mein true ho, wahi follows. Devices ka jo hissa sensors ke andar hai, uske baare mein cheap ke hisaab se kya pakka hai?",
+  "Ab devices ka baaki hissa (sensors ke bahar) — kya woh cheap circle mein ja sakta hai? Ek diagram try karo, isse II test hoga; trap: 'some devices' ko 'all devices' bana dena."
+],
+"ga-reasoning-05": [
+  "Paanch seats left se right 1–5 (sab north face kar rahe hain, toh left/right normal hai). Pehle fixed clues lagao: C middle, E right end.",
+  "C = seat 3, E = seat 5, aur 'A immediately left of C' → A = seat 2. Bachi seats 1 aur 4, B aur D ke liye.",
+  "Ab 'B is not next to E' lagao: seat 5 ke bagal mein kaunsi seat hai? Usse B aur D place karo, phir right se doosri seat dekho; trap: left se count kar lena."
+],
+"ga-reasoning-06": [
+  "Saare comparisons ek hi chain mein jodo. Pehla sentence do comparisons deta hai: 'P more than Q' aur 'P less than R'.",
+  "Chain: R > P > Q. Ab 'S less than Q' aur 'T more than R' ko is chain ke sahi end par jodo.",
+  "S ko Q ke neeche lagao: R > P > Q > S. Ab T ko place karo aur upar se teesra gino; trap: kisi clause ko ulta padhna (jaise Q ko P ke upar rakhna)."
+],
+"ga-reasoning-07": [
+  "1, 2, 6, 24, 120 bahut tezi se badh rahe hain — differences ke bajaye consecutive **ratios** dekho.",
+  "Ratios: $2/1,\\ 6/2,\\ 24/6,\\ 120/24$. Inka pattern pehchaano (ya socho: kya ye factorials $n!$ hain?).",
+  "Ratios 2, 3, 4, 5 hain — multiplier har baar 1 badhta hai. Agla multiplier socho aur 120 se multiply karo; trap: last multiplier ×5 repeat kar dena."
+],
+"ga-reasoning-08": [
+  "Letters ko alphabet positions mein badlo (A = 1, …, Z = 26): B, E, I, N, T. Phir gaps dekho.",
+  "Positions: 2, 5, 9, 14, 20. Gaps ka pattern nikalo; agar result 26 se upar jaaye toh 26 ghata ke wrap around karo.",
+  "Gaps 3, 4, 5, 6 hain — har baar +1. Agla gap 20 mein jodo aur zaroorat ho toh wrap karo; trap: wrap karte waqt off-by-one (A = 1 hai, 0 nahi)."
+],
+"ga-reasoning-09": [
+  "Data sufficiency: har statement ko pehle **akele** test karo — kya woh integer $x$ ki ek hi value deta hai? Phir zaroorat ho toh dono saath.",
+  "I: $x^2 = 16$ ke kitne integer solutions hain? II: $x > 0$ kitni values allow karta hai? Sirf unique value = sufficient.",
+  "I se $x = 4$ ya $x = -4$ — do values, toh I akela unique nahi. Ab II akela, aur phir dono saath check karo; trap: negative root bhool jaana."
+],
+"ga-reasoning-10": [
+  "Question yes/no hai: 'Is $x > y$?' Statement sufficient tab hai jab woh hamesha ek hi pakka result de — hamesha yes ya hamesha no.",
+  "I: $x - y = 5$ ka sign $x$ aur $y$ ke order ke baare mein kya batata hai? II: squares compare karne se order pata chalta hai ya nahi — negative numbers bhi try karo.",
+  "II test karo: $x=-3,\\ y=1$ lo — $x^2 = 9 > 1 = y^2$, par $x < y$; jabki $x=3,\\ y=1$ mein $x>y$. Ab I ko akele check karo; trap: squaring order preserve karta hai, yeh maan lena."
+],
+"ga-reasoning-11": [
+  "Path ki total length nahi, start se **displacement** (seedhi doori + direction) chahiye. Har turn ke baad direction track karo — north face karke 'right' = east.",
+  "Coordinates lo: start $(0,0)$, north $= +y$, east $= +x$. 5 km north, right (east) 3 km, phir right again (south) 9 km. Distance $= \\sqrt{x^2+y^2}$.",
+  "Do legs ke baad position $(3, 5)$. Ab 9 km south chalo — naya y kya hoga, aur end point start se kis direction mein hai? Trap: 5 + 3 + 9 jod dena."
+],
+"ga-spatial-01": [
+  "Pehle har region ke boundary-sharing neighbours list karo. Dekho: F (centre square) baaki paanchon ko chhoota hai, aur A, B, C, D, E bahar ek ring banate hain.",
+  "Rule: ring ko alternate 2 colours se tabhi rang sakte ho jab ring mein regions **even** hon; odd ring ko 3 chahiye. Jo region sabko chhoye, use unse alag naya colour chahiye.",
+  "Ring ki adjacencies: A–B, B–C, C–D, D–E, E–A — yeh ring kitne regions ki hai, odd ya even? Uske colours gino, phir F ka effect jodo; trap: ring ko 2 colours se alternate kar dena."
+],
+"ga-spatial-02": [
+  "Adjacencies list karo: P, Q, R, S bahar ek ring mein hain aur beech ka circle T sabko chhoota hai. Socho: diagonal pairs (P–R, Q–S) kya koi boundary line share karte hain?",
+  "Rule: even ring → 2 alternating colours; odd ring → 3. Jo region sabko chhoye, use ek extra alag colour chahiye.",
+  "P aur R ke beech circle T aa jaata hai, toh woh boundary share nahi karte (Q, S bhi nahi). Ab ring ke colours gino aur T ke liye socho; trap: T ko bhool jaana."
+],
+"ga-spatial-03": [
+  "Net mein seedhi lines dekho: A, C, E, F upar se neeche ek column mein hain; B, C, D ek row mein. Edge se jude squares fold hone par hamesha adjacent bante hain.",
+  "Rule: ek straight line of squares mein alternate squares **opposite** hote hain (ek square chhod ke agla).",
+  "Row B, C, D par rule lagao: C beech mein hai, toh B aur D opposite. Ab yahi column A, C, E, F mein A ke liye karo; trap: sabse door wala square automatically opposite nahi hota."
+],
+"ga-spatial-04": [
+  "Dono views mein 1 **top** par hai — toh 2, 3, 6 sab 1 ke charon taraf wali side faces ki ring mein hain. Die standard nahi hai, toh 'opposite faces add to 7' mat lagao.",
+  "Top fixed ho toh side faces ek ring banate hain: front ke baad right. View 1: front 2, right 3. View 2: front 3, right 6. Ring mein do step door wale faces opposite hote hain.",
+  "View 1: ring mein 2 ke baad 3. View 2: 3 ke baad kya? Ring ka order likho aur 2 se do step aage gino; trap: kabhi na dikhe face (4 ya 5) ko opposite maan lena."
+],
+"ga-spatial-05": [
+  "Do folds hue (left-onto-right, phir top-down), toh folded piece mein **4 layers** hain — ek punch se unfold par kitne holes? Har unfold ek reflection hai, slide nahi.",
+  "Folded piece = sheet ka bottom-right quarter; hole $(80, 70)$ par (100 × 100 sheet, y neeche badhta hai). Ulte order mein kholo: pehle top fold (crease $y = 50$), phir left fold (crease $x = 50$).",
+  "Top fold kholo: $(80,70)$ ko crease $y=50$ mein reflect karo — same doori 20 upar, yani $(80,30)$. Ab left fold kholo, dono holes ko $x=50$ mein reflect karo; trap: hole ko crease ke paar slide karna."
+],
+"ga-spatial-06": [
+  "Ek hi fold hai, diagonal ke along — toh unfold par 2 holes: original aur uska **reflection** across woh diagonal. Dhyan do kaunsa diagonal hai: top-left se bottom-right.",
+  "Sheet 100 × 100, top-left $(0,0)$, x right, y neeche. Crease line $y = x$ hai aur punch $(70, 20)$ par hai. Line $y=x$ mein reflection $x$ aur $y$ ko swap karta hai.",
+  "Rule $(a, b) \\to (b, a)$ ko punch point par lagao aur dekho naya hole kis corner ki taraf aata hai; trap: 180° rotation, ya vertical/horizontal centre line mein reflect kar dena."
+],
+"ga-spatial-07": [
+  "Ek distinctive cell track karo — jaise top row ka right-most shaded cell (top-right corner). 90° **clockwise** mein top row right column ban jaati hai.",
+  "3 × 3 grid mein (column $x$, row $y$, dono 0 se 2) clockwise 90° rule: $(x, y) \\to (2-y,\\ x)$. Rotation rows aur columns ko swap karta hai; mirror nahi karta.",
+  "Top-right cell $(2,0) \\to (2,2)$, yani bottom-right corner. Ab column 1 wali lambi vertical stem kahan jaayegi, rule se khud nikalo; trap: anticlockwise ghuma dena (top row left column mein chali jaati hai)."
+],
+"ga-spatial-08": [
+  "Mirror **vertical** hai (figure ke right mein), toh sirf left ↔ right badlega; upar-neeche wahi rahega. Shape ki left column aur bottom row dekho.",
+  "Rule: vertical mirror mein $(x, y) \\to (2 - x,\\ y)$ — har row apni jagah rehti hai, bas ulti ho jaati hai. Mirror kabhi rows ko columns mein nahi badalta.",
+  "Top row: shaded cells columns 0 aur 1 mein hain → mirror ke baad columns 2 aur 1 mein. Baaki rows bhi aise hi flip karo; trap: top-bottom flip kar dena (woh water image hai)."
+],
+"ga-spatial-09": [
+  "Figure mein apex se 4 lines neeche jaati hain (2 sides + 2 andar wali), aur 2 horizontal lines hain (beech wali aur base). Dhyan do: har triangle apex use karta hai.",
+  "Ek triangle = apex se nikli koi 2 lines + ek horizontal line base ke roop mein. Ek horizontal line ke liye triangles $= \\binom{4}{2}$.",
+  "$\\binom{4}{2} = 6$ triangles ek horizontal line par. Ab socho kitni horizontal lines base ban sakti hain; trap: sirf chhote triangles, ya ek hi base ke triangles gin ke ruk jaana."
+],
+"ga-spatial-10": [
+  "Sirf **squares** chahiye, rectangles nahi — aur har size ke: 1 × 1, 2 × 2, 3 × 3. Grid 4 columns × 3 rows ka hai, toh 4 × 4 square possible nahi.",
+  "$m\\times n$ grid mein $k\\times k$ squares $= (m-k+1)(n-k+1)$. Yahan $m=4,\\ n=3$, aur $k = 1, 2, 3$.",
+  "$k=1$: $4\\times3 = 12$ unit squares. Ab $k=2$ aur $k=3$ ke liye formula lagao aur jodo; trap: $\\binom52\\times\\binom42$ wala rectangles count le lena."
+],
+"ga-spatial-11": [
+  "Ek corner chuno; usse edges se jude teen corners se plane guzarta hai. Cut face ki har side in teen mein se do corners ko jodti hai — yeh line cube par kahan padti hai?",
+  "Ek corner ke koi do neighbours ek hi face par hote hain, aur unhe jodne wali line us face ka **diagonal** hai. Cube ke saare face diagonals barabar hote hain ($a\\sqrt2$).",
+  "Corner $(0,0,0)$ lo; neighbours $(1,0,0), (0,1,0), (0,0,1)$. Pehle do ke beech doori $= \\sqrt{1+1} = \\sqrt2$. Baaki do sides nikaal ke shape decide karo; trap: corner ka right angle cut face par carry kar dena."
+],
+"ga-spatial-12": [
+  "Cut **tilted** hai aur sirf curved surface ko kaatta hai, flat ends ko nahi — toh cut face ek band (closed) curve hogi.",
+  "Rule: axis ke perpendicular cut → circle; axis ke parallel (dono ends tak) → rectangle. Tilted cut circle ko ek direction mein stretch karta hai.",
+  "Socho perpendicular cut se tilt badhane par circle ka kya hota hai — ek direction mein lamba, doosri mein wahi diameter. Trap: parabola open curve hai (cone se banti hai), closed cut kabhi open nahi hota."
+],
+"ga-spatial-13": [
+  "Pehle khaali region (?) ke cells gino aur uski shape banao: right column ke neeche wale teen cells aur unke bagal ka ek cell. Area 4 cells hai.",
+  "Rule: piece rotate kar sakte ho, **flip nahi**. Same area kaafi nahi — shape match honi chahiye: teen cells seedhi line mein + ek cell line ke **end** par, ek khaas side mein.",
+  "Gap: right column mein rows 2–4 (khadi bar of 3) aur bottom cell ke left mein ek extra. Har option ko 90° steps mein ghuma ke yahi shape dhoondo; trap: mirror-image piece, jo sirf flip karke fit hota."
+],
+"ga-spatial-14": [
+  "Question **NOT** pooch raha hai — wo arrangement dhoondo jo cube nahi ban sakta. Har option ki layout dekho: koi 2 × 2 block hai? koi 5 squares ki row hai?",
+  "Quick rules: 2 × 2 block ho toh fail (cube ke corner par sirf 3 faces milte hain, 4 nahi); 5+ squares ek row mein bhi fail. 1-4-1 aur 3-3 staircase valid nets hain.",
+  "Cross shape (beech mein 4 ki row, upar-neeche ek-ek square) standard 1-4-1 net hai — valid, cut. Baaki arrangements mein 2 × 2 block dhoondo; trap: sochna ki har net mein 4 ki row zaroori hai."
+],
+"ga-spatial-15": [
+  "Tum mirror image dekh rahe ho — 4:37 asli time nahi hai. Vertical mirror left-right ulta karta hai, toh actual aur mirror time ka ek fixed relation hota hai.",
+  "Rule: mirror time + actual time = 12:00. Toh actual $= 12{:}00 - 4{:}37$; subtraction ke liye 12:00 ko 11:60 likho.",
+  "11:60 se 4:37 column-wise ghatao — minutes alag, hours alag. Trap: borrow bhool ke hour ko 12 se ghata dena, ya 11:59 ko reference le lena."
+]
+}

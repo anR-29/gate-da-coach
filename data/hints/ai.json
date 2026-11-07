@@ -1,0 +1,157 @@
+{
+"ai-uninformed-order-01": [
+  "Do cheezein dhyan do: BFS (FIFO queue, level by level) aur goal test **expansion** pe — G generate hone pe nahi rukte, jab G queue se nikalta hai tab rukte hain.",
+  "Har expansion ke baad queue likho. Successors alphabetical order mein, aur jo node pehle se queue mein ya expanded hai use dobara mat daalo. Figure mein S ke neighbours A, B hain.",
+  "Expand S → [A, B]. Expand A → [B, C, D]. Ab B expand karo — D already queued hai, to kya add hoga? Aage aise hi chalao. Trap: G generate hote hi ruk jaana."
+],
+"ai-uninformed-order-02": [
+  "Recursive DFS: har step pe current node ka pehla (alphabetical) unvisited neighbour pakdo aur usi mein gehra jao — level by level nahi.",
+  "Rule: S se shuru, neighbours alphabetically try karo, visited skip karo, aur G visit hote hi stop. Backtrack sirf tab jab koi unvisited neighbour na bache.",
+  "S ke neighbours A, B — pehle A. A ke unvisited neighbours C, D mein se pehla kaunsa? Wahan se figure dekh ke aage chalo. Trap: shortest path (BFS wala) ko DFS order samajh lena."
+],
+"ai-uninformed-order-03": [
+  "Dono searches ke expanded nodes alag-alag gino, goal J ko bhi count karo, phir $n_B-n_D$ isi order mein nikalo. Figure mein J, E ka left child hai (depth 3).",
+  "BFS = level order (A; B, C; D, E, F, G; phir depth 3 left se right). DFS = left-most branch mein poora gehra jaana, phir backtrack (preorder).",
+  "BFS: depth 0–2 mein 7 nodes hain, phir depth 3 mein J kaunse number pe aata hai? DFS: A, B, D, H, I, … aage likho jab tak J na aaye. Trap: subtraction ulta karna ($n_D-n_B$)."
+],
+"ai-uninformed-order-04": [
+  "Goal G, C ka child hai (depth 2). BFS aur DFS dono ke expanded nodes gino, aur yaad rakho tree mein har node tak sirf ek hi path hota hai.",
+  "BFS: level order, children left to right — A; B, C, D; E, F, G, … DFS: preorder — B ka poora subtree khatam karke hi C pe jaayega.",
+  "DFS trace: A, B, E, J, F, … — B ke subtree mein aur kaun bacha? Phir C, G tak gino. BFS mein level order se G ki position gino. Trap: maan lena ki DFS hamesha kam expand karta hai."
+],
+"ai-uninformed-order-05": [
+  "Graph **directed** hai — sirf arrow ki direction mein ja sakte ho. Aur visited nodes skip hote hain, to edge B → S wapas S pe nahi le jaayegi.",
+  "DFS rule: current node ke successors alphabetical order mein try karo, pehle unvisited mein ghuso. Arrows: S→A, S→C, A→B, A→E, B→S, B→D, C→D, D→G, E→G.",
+  "S ka pehla successor A. A ke successors B aur E mein se pehle kaun? Wahan pahunch ke dekho kaunse successors unvisited hain. Trap: fewest-edge path (BFS wala) ko DFS ka path maan lena."
+],
+"ai-uninformed-order-06": [
+  "Directed graph pe BFS — sirf arrows ki direction mein successors. Goal test expansion pe hai, aur already expanded ya queued node dobara add nahi hota (B → S edge kuch add nahi karegi).",
+  "Har expansion ke baad FIFO queue likho. Successors: S→{A, C}, A→{B, E}, B→{S, D}, C→{D}, D→{G}, E→{G}.",
+  "Expand S → queue [A, C]. Expand A → [C, B, E]. Ab C expand karo — D add hoga. Aage queue ke order mein chalao. Trap: G generate hote hi ruk jaana, ya S ko dobara daal dena."
+],
+"ai-goal-test-01": [
+  "Is baar goal test **generation** pe hai: jaise hi G kisi expansion mein generate ho, search ruk jaata hai — G khud expand nahi hota.",
+  "BFS queue (alphabetical) chalao aur expanded nodes gino. Figure mein G ke neighbours D, E, F hain — inme se jo pehle expand hoga, usi ke expansion pe search khatam.",
+  "Expand S (gen A, B), A (gen C, D), B (gen E; D already queued). Ab queue [C, D, E] — expand karte jao jab tak G generate na ho. Trap: G ko bhi expanded gin lena."
+],
+"ai-goal-test-02": [
+  "Sawal ye hai ki goal test late (expansion pe) karne se kitna extra kaam hota hai. Goal depth $d$ pe hai, lekin uske pop hone se pehle queue mein depth $d$ ke aur nodes bhi hain.",
+  "Test on generation: $b+b^2+\\dots+b^d$ nodes. Test on expansion: goal se pehle wale depth-$d$ nodes bhi expand honge, aur har ek $b$ children generate karega.",
+  "Worst case: goal depth $d$ ka last node. Goal se pehle depth $d$ ke kitne nodes expand honge, aur unke children kis depth pe hain — wahan total kitne nodes? Trap: DFS ki memory $O(bd)$ se confuse karna."
+],
+"ai-goal-test-03": [
+  "Complete binary tree, goal depth 3 ka **last** node, aur test expansion pe. Matlab goal pop hone se pehle depth 3 ke baaki saare nodes expand ho chuke honge — unke children bhi generate honge.",
+  "Total generated $=$ (depth 0–3 ke saare nodes) $+$ (goal se pehle expand hue depth-3 nodes) $\\times2$. Goal khud expand nahi hota.",
+  "Depth 0–3: $1+2+4+8=15$ nodes. Depth 3 ke 8 nodes mein se goal se pehle kitne hain? Unke children jod do. Trap: goal ko bhi expand karke uske 2 children gin lena."
+],
+"ai-goal-test-04": [
+  "Sawal optimality ka hai: kis strategy ki guarantee is baat pe tiki hai ki goal ko **pop** karte waqt hi accept karein? Jo strategy optimal hi nahi, uski guarantee tootegi kaise?",
+  "Rule: unit costs pe BFS/IDS ka pehla generated goal already shallowest hota hai. Jo search frontier ko path cost $g$ ke order mein pop karti hai, uska sasta path baad mein bhi mil sakta hai.",
+  "Example socho: S→G direct cost 10, aur S→A→G cost $1+1$. Kaunsi strategy G ko pehle generate karke accept kar legi aur mehenga path degi? Trap: DFS chunna — wo kisi bhi rule mein optimal nahi."
+],
+"ai-goal-test-05": [
+  "Weighted graph pe UCS: frontier ko $g$ (path cost) ke order mein pop karo, tie alphabetically. Statements goal test ki do placements compare karte hain — dono ko alag trace karo.",
+  "Edge costs: S–A 2, S–B 2, A–C 2, A–G 6, B–C 1, B–D 3, C–G 3, D–G 2. Har pop ke baad frontier mein har node ka best $g$ update karo.",
+  "Pop S: A=2, B=2. Tie mein A pehle — wo C=4, G=8 generate karta hai. Generation test yahan kya karega? Expansion test ke liye B pop karke C ka $g$ update karo. Trap: G ki pehli copy ko final maanna."
+],
+"ai-ucs-trace-01": [
+  "UCS total path cost $g$ ke order mein pop karta hai, single edge weight se nahi. Goal test pop pe hai, to S se seedha G (cost 12) generate hona search nahi rokta.",
+  "Edges: S–A 1, S–B 4, S–G 12, A–B 2, A–C 5, B–C 1, B–D 5, C–D 2, C–G 6, D–G 2. Har pop ke baad sasta path mile to frontier ka $g$ lower karo.",
+  "Pop S: A=1, B=4, G=12. Pop A: B lower hoke $1+2=3$, C=6. Ab frontier mein sabse chhota $g$ kiska hai? Aise hi aage chalo. Trap: edge A–C (5) ko B ke total cost (3) se compare kar dena."
+],
+"ai-ucs-trace-02": [
+  "UCS jo path return karta hai uska cost chahiye — fewest edges nahi. Direct edge S–G (12) mehenga hai; sasti edges se jaane wale raaste dhoondo.",
+  "Har node ka cheapest $g$ UCS order mein nikalo. $g(G)=\\min$ over neighbours of $(g(\\text{neighbour})+\\text{edge})$; G ke neighbours: S (12), C (6), D (2).",
+  "Shuru karo: $g(A)=1$, $g(B)=\\min(4,\\,1+2)=3$, $g(C)=\\min(1+5,\\,3+1)$. Ab $g(D)$ (via B ya C) nikalo, phir G ke teeno raaste compare karo. Trap: G ko via C pehli baar improve hote hi le lena."
+],
+"ai-ucs-trace-03": [
+  "Statements teen alag searches ke baare mein hain: BFS (sirf edges ginta hai), UCS with test on pop, UCS with test on generation. Har ek ko alag socho.",
+  "BFS cost ignore karta hai — fewest edges wala path deta hai. UCS (test on pop) cheapest path deta hai. Test on generation mein G ki jo pehli copy generate ho, wahi accept ho jaati hai.",
+  "S expand hote hi G ki pehli copy kis cost pe generate hoti hai — generation test yahan kya karega? Phir UCS pop order mein C aur D ke $g$ compare karo. Trap: dono placements ko same maanna."
+],
+"ai-ucs-trace-04": [
+  "$g(A)$ chahiye **jab A expand ho** — pehli baar mila cost nahi. Beech mein koi sasta raasta A ka cost kam kar sakta hai.",
+  "UCS: lowest $g$ pop karo, aur naya path sasta ho to frontier mein $g$ lower karo. Edges: S–A 3, S–B 1, B–A 1, A–G 2, B–C 4, C–G 1.",
+  "Pop S: frontier A=3, B=1. Agla pop kaun hoga? Uske expand hone pe A tak ka naya total cost nikalo aur 3 se compare karo. Trap: edge weight B–A ko hi $g(A)$ maan lena."
+],
+"ai-ucs-trace-05": [
+  "UCS hamesha poore frontier ka minimum $g$ pop karta hai — A ki taraf depth-first mat chalo. Tie (same $g$) alphabetically todo, aur goal tabhi jab G pop ho.",
+  "Edges: S–A 2, S–B 2, A–C 2, A–G 6, B–C 1, B–D 3, C–G 3, D–G 2. Har pop ke baad sasta path mile to frontier mein $g$ lower karo.",
+  "Pop S: A=2, B=2 (tie → A pehle). Pop A: C=4, G=8. Ab B pop karke C, D ke $g$ update karo — agla minimum kaun? Trap: C ke baad seedha G pop karna, D ka $g$ dekhe bina."
+],
+"ai-ids-01": [
+  "IDS har iteration mein root se fresh DFS chalata hai — limits 0, 1, 2, 3. Goal last node hai, to har iteration poori chalti hai. Har iteration ke visits alag gino aur jodo.",
+  "Limit $\\ell$ wali iteration depth 0 se $\\ell$ tak ke saare nodes visit karti hai: $1+2+\\dots+2^{\\ell}=2^{\\ell+1}-1$.",
+  "Limit 0: 1 visit. Limit 1: $1+2=3$. Ab limit 2 aur limit 3 ke visits isi tarah nikalo aur charon jodo. Trap: sirf last iteration (limit 3) gin lena."
+],
+"ai-ids-02": [
+  "IDS limit 0 se shuru hoti hai aur har iteration root se restart hoti hai. Root ek iteration mein ek baar visit hota hai — to asli sawal: kitni iterations chalengi?",
+  "Limits $0,1,2,\\dots$ badhti hain jab tak goal ki depth tak na pahunchein. Goal depth 4 pe hai, to last iteration ki limit 4 hogi.",
+  "Iterations list karo: limit 0, limit 1, … limit 4 tak, aur inhe gino — limit 0 ko bhi count karna. Trap: ginti limit 1 se shuru karna."
+],
+"ai-ids-03": [
+  "IDS ek DFS nahi, kai DFS hai: limit 0, phir 1, phir 2 — har baar root A se dobara. Figure mein F, C ka left child hai (depth 2).",
+  "Har iteration andar se depth-first (preorder, left to right) hai, depth limit tak. Poora sequence = limit 0 ke visits + limit 1 ke visits + limit 2 ke visits (F milte hi stop).",
+  "Limit 0: sirf A. Limit 1: A, B, C. Ab limit 2 ka DFS order likho — B ke baad uske children aate hain ya C? F pe ruk jaana. Trap: last iteration ko level by level likh dena."
+],
+"ai-ids-04": [
+  "Formula diya hua hai — bas $b=3$, $d=4$ plug karna hai. Dhyan: multiplier shallow level pe sabse bada ($d$) aur deepest level pe 1 hai.",
+  "$N=4\\cdot3+3\\cdot3^2+2\\cdot3^3+1\\cdot3^4$.",
+  "Pehle do terms: $4\\cdot3=12$, $3\\cdot9=27$. Baaki do khud nikalo aur jodo. Trap: multipliers ulte lagana, ya BFS wala $b+b^2+b^3+b^4$ use karna."
+],
+"ai-ids-05": [
+  "Har statement IDS ki ek property hai: time, memory, goal ki depth, aur completeness. Har ek ko IDS ke structure (baar-baar depth-limited DFS) se judge karo.",
+  "IDS: har iteration DFS hai (memory mein sirf ek path + siblings), aur limit ek-ek karke badhti hai. Time mein deepest level $b^d$ dominate karta hai.",
+  "Memory wala lo: ek depth-limited DFS ek time pe kitne nodes rakhta hai — $O(b^d)$ ya $O(bd)$? Baaki bhi aise check karo; infinite $b$ pe kya limit-1 iteration khatam hogi? Trap: IDS memory BFS jaisi maanna."
+],
+"ai-search-props-01": [
+  "Teen keywords: finite $b$, unit costs, aur kuch paths infinitely long. Complete = goal zaroor mile; optimal = cheapest mile. Unit costs pe cheapest = shallowest.",
+  "Rule: jo strategy level by level jaati hai wo infinite path mein nahi phansti, aur uska pehla goal shallowest hota hai. Jo ek branch mein gehra jaati hai, wo infinite path pe atak sakti hai.",
+  "Depth-limited option: limit $\\ell=d-1$ aur goal depth $d$ pe — kya ye kabhi goal tak pahunchega? Baaki teen ko 'infinite path' aur 'path cost' pe test karo. Trap: greedy ko optimal maanna — wo sirf $h$ dekhta hai."
+],
+"ai-search-props-02": [
+  "Har statement DFS ki alag property hai: shallowest goal, cycle pe looping, visited set ke saath completeness, aur optimality. Tree search vs graph search ka farq dhyan se dekho.",
+  "Rule: DFS leftmost branch ka pehla goal deta hai, jo shallowest ho zaroori nahi. Visited set na ho to cycle pe ghoomta reh sakta hai; visited set ho to har node ek hi baar.",
+  "Example: root ke left child ke neeche depth 3 pe goal, right child khud goal. DFS kaunsa pehle dega? Isse pehla aur aakhri statement judge karo, baaki do cycle wale rule se. Trap: equal costs pe DFS ko optimal maanna."
+],
+"ai-search-props-03": [
+  "UCS ki guarantees teen cheezon pe tiki hain: costs kam se kam $\\varepsilon>0$, frontier $g$ ke order mein pop, aur goal test pop pe. Har statement kis assumption ko chhoota hai, dekho.",
+  "Rule: node pop hote hi uska $g$ final maana jaata hai — ye tabhi sahi hai jab aage ki koi edge cost ghata na sake. Equal costs pe $g=c\\times\\text{depth}$.",
+  "Negative edge test karo: A cost 2 pe pop ho gaya, baad mein S→B (3), B→A ($-5$) mila — A ka asli cost kya, UCS pakdega? Baaki teen bhi aise check karo. Trap: generation-time test ko optimality ka reason samajhna."
+],
+"ai-search-props-04": [
+  "IDS = baar-baar depth-limited DFS, limit ek-ek karke badhti hai. Options time, memory aur optimality ke baare mein hain — har claim ko is structure se check karo.",
+  "Memory: ek DFS iteration ek path + siblings rakhti hai. Time: $db+(d-1)b^2+\\dots+1\\cdot b^d$, jisme deepest level dominate karta hai. Aur IDS shallowest goal deta hai.",
+  "Time wala option lo: sabse bada term $1\\cdot b^d$, shallow levels chhote — kya repeat se poora extra factor $b$ aata hai? Phir socho shallowest goal kab cheapest hota hai. Trap: IDS memory BFS jaisi maanna."
+],
+"ai-search-props-05": [
+  "Keyword: costs positive lekin **unequal**. Ab fewest edges aur cheapest path alag ho sakte hain — kaunsi strategy actual path cost dekhti hai?",
+  "Rule: BFS/IDS fewest-edge (shallowest) goal dete hain, jo cheapest sirf equal costs pe hai. Jo search frontier ko total path cost $g$ ke order mein pop kare aur goal test pop pe kare, wahi cheapest guarantee karti hai.",
+  "Example: S→G direct cost 10, aur S→A→G cost $1+1$. BFS kaunsa path dega? Har option ko isi example pe socho. Trap: IDS ko BFS se alag maan lena — dono shallowest goal hi dete hain."
+],
+"ai-search-complexity-01": [
+  "Goal test on generation aur goal depth 4 ka last node — matlab depth 1 se 4 tak har level poora generate hoga, usse aage kuch nahi. Root count nahi karna.",
+  "Generated $=b+b^2+b^3+b^4$ with $b=3$.",
+  "$3+9=12$ — ab $3^3$ aur $3^4$ nikal ke jodo. Trap: root jod dena, ya ek extra level $3^5$ jod dena (wo expansion-time test mein hota)."
+],
+"ai-search-complexity-02": [
+  "DFS memory ka sawal: sabse gehre point pe current path ke har expanded node ke saare $b$ children memory mein hain. Root bhi count hota hai.",
+  "Depth $m=5$ pe path ke expanded ancestors depth 0 se 4 tak hain, har ek ke $b=4$ children stored. Storage $=1+b\\times(\\text{expanded ancestors})$.",
+  "Depth 5 ka node leaf hai — wo expand nahi hota, uske children nahi. Expanded ancestors gino aur formula mein daalo. Trap: root bhool jaana, ya BFS jaisa $b^m$ le lena."
+],
+"ai-search-complexity-03": [
+  "Do sums compare karne hain — formulas diye hue hain, $b=10$, $d=5$ daalo. Ratio dekho: sabse bada term $b^5$ dono mein sirf ek baar hai.",
+  "BFS $=10+10^2+10^3+10^4+10^5$; IDS $=5\\cdot10+4\\cdot10^2+3\\cdot10^3+2\\cdot10^4+10^5$. Ratio $=\\text{IDS}/\\text{BFS}$.",
+  "BFS sum: $10+100+1000+10000+100000=111{,}110$. Ab IDS ke paanch terms nikal ke jodo aur ratio lo. Trap: maan lena ki har level $d$ baar repeat hota hai (5 guna)."
+],
+"ai-search-complexity-04": [
+  "Chaar statements, chaar alag quantities: BFS time, DFS space, UCS time, BFS space. Har ek ko standard results se match karo — time aur space swap mat karna.",
+  "Kya store hota hai: BFS poora frontier (lagbhag ek full level); DFS sirf current path + siblings ($m$ levels, har level pe $\\le b$). UCS cost $C^*$ tak jaata hai, har step $\\ge\\varepsilon$.",
+  "DFS space lo: depth $m$ tak, har level pe $b$ siblings — ye $b^m$ jaisa hai ya $b\\cdot m$? Baaki teen bhi aise derive karo. Trap: DFS ka time aur space swap karna."
+],
+"ai-search-complexity-05": [
+  "Do calculations: BFS memory $\\approx b^d\\times$ 1 KB aur IDS memory $\\approx bd\\times$ 1 KB. IDS ki memory $d$ mein linear hai, exponential nahi.",
+  "BFS: $10^6$ nodes $\\times$ 1 KB. IDS: $b\\cdot d=10\\cdot6$ nodes $\\times$ 1 KB.",
+  "Units: $10^3$ KB ≈ 1 MB aur $10^6$ KB ≈ 1 GB. Dono numbers ko sahi unit mein badlo aur options se match karo. Trap: $10^3$ nodes (depth 3) le lena, ya IDS ko BFS jitni memory de dena."
+]
+}

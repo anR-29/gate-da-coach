@@ -1,0 +1,307 @@
+{
+"dsa-sort-passes-01": [
+  "Code har pass mein `a[i:]` ka minimum dhoondh ke slot i ke saath **swap** karta hai — shifting nahi. Sirf 2 passes chahiye.",
+  "Pass 1 (i = 0): poore array ka minimum index 0 pe aata hai. Pass 2 (i = 1): `a[1:]` ka minimum index 1 pe. Sirf swap hone wale do elements hilte hain.",
+  "Pass 1: min 4 (index 7) ↔ 29 → `[4, 13, 41, 7, 36, 18, 52, 29]`. Ab pass 2 tum karo. Trap: minima aage laake baaki ko right shift mat karo — 29 seedha index 7 pe gaya."
+],
+"dsa-sort-passes-02": [
+  "Insertion sort ka pass i sirf `a[i]` ko sorted prefix `a[:i]` mein daalta hai, aur loop i = 1 se start hota hai. 3 passes = i = 1, 2, 3.",
+  "3 passes ke baad sirf `a[:4]` (29, 13, 41, 7) sorted hoga; index 4 onwards (36, 18, 52, 4) bilkul untouched rahega.",
+  "i = 1: 13 insert → `[13, 29, 41, ...]`; i = 2: 41 already bada, no move. Ab i = 3 pe 7 ko insert karo. Trap: pehle element ko pass 1 mat gino."
+],
+"dsa-sort-passes-03": [
+  "Har option ek algorithm ka 2-pass state claim karta hai. Teeno sorts ko `[38, 12, 55, 21, 9, 47]` pe khud 2 passes tak trace karo aur option se milao.",
+  "Selection: pass i `a[i:]` ka min slot i pe swap karta hai (self-swap bhi ek pass hai). Insertion: pass i `a[i]` ko prefix mein daalta hai. Bubble: har sweep bacha hua largest end pe le jaata hai.",
+  "Bubble sweep 1 → `[12, 38, 21, 9, 47, 55]`; ye sirf 1 sweep hai, sweep 2 khud karo. Trap: selection pass 2 mein 12 already apni jagah hai — us self-swap pass ko skip mat karo."
+],
+"dsa-sort-passes-04": [
+  "Bubble sort bade elements ko right le jaata hai, par sawaal chhote element 3 ka hai jo left jaata hai. Socho: ek pass mein wo kitna khisak sakta hai?",
+  "Ek pass mein chhota element zyada se zyada ek slot left jaata hai (jab uske left wala bada ho aur us pe swap ho). 3 abhi 1-based position 6 pe hai.",
+  "Pass 1: `[8, 26, 14, 31, 3, 19, 22, 40]` — 3 ab position 5 pe. Passes 2 aur 3 khud karo. Trap: 3 ek hi pass mein front tak nahi pahunchta."
+],
+"dsa-sort-passes-05": [
+  "Given state `[2, 6, 9, 8, 1, 7]` mein sirf pehle 3 elements sorted hain aur 8, 1, 7 input jaise hi hain. Ye pattern kis sort ka 2-pass fingerprint hai?",
+  "2 passes ke baad: selection front pe do sabse chhote (1, 2) rakhta hai; insertion sirf `a[:3]` sort karta hai; bubble end pe do sabse bade (9, 8) rakhta hai.",
+  "Selection pass 1: min 1 ↔ 6 → `[1, 9, 2, 8, 6, 7]`, given se pehle hi alag. Ab insertion aur bubble ko 2 passes trace karo. Trap: sirf sorted prefix dekh ke selection mat bolo."
+],
+"dsa-sort-passes-06": [
+  "Ye selection sort ka ulta version hai: har pass `a[0..last]` ka **maximum** dhoondh ke `a[last]` se swap karta hai, yaani right end se fill karta hai.",
+  "Pass 1: last = 6, `a[0..6]` ka max. Pass 2: last = 5, `a[0..5]` ka max. Dono baar swap hai, shift nahi.",
+  "Pass 1: max 50 (index 5) ↔ 11 (index 6) → `[17, 42, 8, 33, 25, 11, 50]`. Ab last = 5 ke liye karo. Trap: max nikal ke baaki ko left shift mat karo."
+],
+"dsa-sort-swaps-01": [
+  "Sawaal swaps ka hai, comparisons ka nahi. Bubble sort ka har adjacent swap exactly ek inversion hatata hai.",
+  "Total swaps = inversions = pairs (i < j) jahan `a[i] > a[j]`. `[7, 3, 9, 1, 5, 2]` mein har element ke right mein usse chhote elements gino aur jodo.",
+  "7 ke right mein chhote: 3, 1, 5, 2 → 4. Ab 3, 9, 1, 5 ke liye gino. Trap: sirf input ke adjacent out-of-order pairs (7-3, 9-1, 5-2) mat gino."
+],
+"dsa-sort-swaps-02": [
+  "Swap line har pass mein chalti hai (6 passes), par sawaal sirf un passes ka hai jahan `m != i` — yaani minimum already slot i pe nahi tha.",
+  "Har i ke liye current `a[i:]` ka min dekho: agar wo already index i pe hai to self-swap (count nahi), warna real swap. Har pass ke baad array update karo.",
+  "i = 0: min 9 (index 3) ↔ 44 → `[9, 17, 62, 44, 30, 51, 26]`, real swap. i = 1: 17 already min, self-swap. Ab i = 2..5 khud karo. Trap: inversions mat gino."
+],
+"dsa-sort-swaps-03": [
+  "Sirf `a[j] > key` gino, `j >= 0` nahi. Har true comparison ek shift deta hai; ek extra (false) comparison tab hota hai jab loop `a[j] > key` fail hone se rukta hai.",
+  "Comparisons = shifts (= inversions) + un passes ki ginti jinka key index 0 tak nahi pahunchta. Keys 5, 18, 3, 15, 9 ko alag-alag dekho.",
+  "Inversions: 12 → {5, 3, 9} = 3, 18 → {3, 15, 9} = 3; 5 aur 15 ke khud gino. Trap: jo key front tak pahunchta hai, wahan loop `j >= 0` pe rukta hai — failing comparison nahi."
+],
+"dsa-sort-swaps-04": [
+  "Har statement ek counting rule hai — bubble swaps, selection swaps, selection comparisons, insertion comparisons. Ek-ek ko rule se check karo.",
+  "Rules: adjacent exchange ek inversion hatata hai; selection har pass mein ek swap statement chalata hai aur min-scan hamesha end tak jaata hai; insertion comparisons = inversions + (passes jo index 0 se pehle rukte hain).",
+  "Option C test karo: sorted `[1, 2, 3]` pe selection i = 0 mein j = 1, 2 dono check karta hai — scan rukta hai kya? D ke liye socho: jo key index 0 tak pahunchta hai, uska failing comparison hota hai?"
+],
+"dsa-sort-swaps-05": [
+  "Shifts = inversions. Array do sorted halves hai: `2, 4, 6, 8` aur `1, 3, 5, 7`, to inversions sirf left-half element aur usse chhote right-half element ke beech hain.",
+  "Har right-half key ke liye gino: left half mein kitne elements usse bade hain. Total = in counts ka sum.",
+  "Key 1: 2, 4, 6, 8 sab bade → 4 shifts. Ab 3, 5, 7 ke liye gino. Trap: 4 × 4 = 16 mat lo — 2 < 3, 2 < 5 jaise pairs inversion nahi hain."
+],
+"dsa-sort-swaps-06": [
+  "Early-exit flag hai: loop tabhi rukta hai jab ek poora pass bina swap ke chale. Aur pass p sirf `n - 1 - p` pairs compare karta hai.",
+  "n = 8, to pass 0: 7 comparisons, pass 1: 6, pass 2: 5, ... Pehle dekho kis pass ke baad array sorted ho jaata hai, phir ek aur no-swap pass jodo.",
+  "Pass 0 trace karo: 3 > 1 swap, 3 > 2 swap, 3 < 6, 6 > 4 swap, ... End mein array sorted hai kya? Trap: sorted hone wale pass pe mat ruko — no-swap pass bhi ginta hai."
+],
+"dsa-sort-props-01": [
+  "Stable matlab equal keys apna input order rakhein. Har option mein dekho: kya koi element apne equal twin ko cross kar sakta hai?",
+  "Adjacent-swap sorts strict `>` ke saath equal neighbours ko kabhi swap nahi karte. Long-range swap, ya `>=` wala test, equal items ko cross kara sakta hai.",
+  "Selection ko `[3a, 3b, 1]` pe try karo: pass 1 mein min 1 ko index 0 pe swap karo — 3a kahan gaya? Trap: insertion mein `>` aur `>=` ka fark ignore mat karo."
+],
+"dsa-sort-props-02": [
+  "Selection sort long-range swap karta hai, isliye do 3 wale records ka order badal sakta hai. Strict `<` ka matlab: tie mein pehla mila minimum hi rehta hai.",
+  "4 passes (i = 0..3): har pass mein `a[i:]` ka pehla minimum dhoondh ke index i se swap karo. Har pass ke baad sequence likho aur (3,p), (3,r) ko track karo.",
+  "i = 0: min (1,q) index 1 pe → (3,p) se swap: `(1,q),(3,p),(3,r),(2,s),(1,t)`. Ab i = 1 se aage karo. Trap: selection ko stable maan ke 3s ka input order mat rakho."
+],
+"dsa-sort-props-03": [
+  "Input already sorted hai. Dekho kaunsa algorithm sorted input ka fayda utha ke jaldi khatam karta hai, aur kiske liye ye ulta worst case hai.",
+  "Sorted input mein inversions = 0. Yaad karo kis algorithm ka cost inversions pe depend karta hai, kiska inner loop hamesha poora chalta hai, aur last-element pivot ka split kaisa banta hai.",
+  "Quicksort test karo: `[1, 2, 3, 4]` pe pivot 4 → split 3 : 0, phir pivot 3 → 2 : 0 ... har level linear kaam. Trap: bina flag ka bubble sorted input pe bhi saare n - 1 passes chalata hai."
+],
+"dsa-sort-props-04": [
+  "Descending input insertion sort ka worst case hai: har key ko apne left ke saare elements ke past shift hona padta hai.",
+  "Pass i (i = 1..11) mein key i elements ke past jaata hai aur index 0 tak pahunchta hai, so koi failing comparison nahi. Total = $1 + 2 + \\dots + 11$.",
+  "Pass 1: 1 comparison, pass 2: 2, ... Formula $\\frac{(n-1)n}{2}$ mein n = 12 daalo. Trap: $\\frac{n(n+1)}{2}$ mat lo — sum 11 tak jaata hai, 12 tak nahi."
+],
+"dsa-sort-props-05": [
+  "Keywords: **always** aur sirf O(n) inversions. Har sort ka cost kis cheez pe depend karta hai — inversions pe, ya kuch aur (jaise kisi element ko kitni door jaana hai)?",
+  "Insertion = Θ(n + I). Selection comparisons input se independent. Early-exit bubble ke passes = max leftward distance + 1. Flagless bubble har input pe saare passes chalata hai.",
+  "Bubble ke liye `[2, 3, ..., n, 1]` socho: sirf n - 1 inversions, par 1 ko kitne slots left jaana hai, aur ek pass use kitna le jaata hai? Trap: kam swaps ka matlab kam comparisons nahi."
+],
+"dsa-sort-props-06": [
+  "A mein bada 8 front pe hai, B mein chhota 1 end pe. Bubble mein bada element ek pass mein end tak pahunch jaata hai, chhota sirf ek slot left khisakta hai.",
+  "Passes = (sorted hone tak ke passes) + 1 no-swap confirming pass — lekin loop zyada se zyada n - 1 = 7 passes hi chalta hai.",
+  "A, pass 1: 8 end tak jaata hai → `[1, 2, ..., 8]`; flag ke hisaab se aur kitne passes? B mein 1 ko index 7 se 0 tak khud gino. Trap: loop limit ke baad extra confirming pass nahi hota."
+],
+"dsa-sort-merge-01": [
+  "Comparisons tabhi tak hote hain jab tak dono lists non-empty hain; ek list khaali hote hi doosri ke bache items bina comparison copy hote hain.",
+  "Dono fronts compare karo, chhota output mein, us list ka pointer aage. Sizes m = 4, n = 5, to count min(m, n) = 4 aur m + n - 1 = 8 ke beech hoga.",
+  "Shuruat: 3 vs 5 → 3; 8 vs 5 → 5; 8 vs 9 → 8. Aise hi gino jab tak koi list khaali na ho. Trap: end mein bache items (jaise 41) ke liye comparison mat gino."
+],
+"dsa-sort-merge-02": [
+  "Total = har merge ke comparisons ka sum, saare levels pe — size-1 pairs se final 4+4 merge tak. Actual count runs ke interleaving pe depend karta hai, formula pe nahi.",
+  "Split: `[14, 3, 22, 9]` | `[31, 6, 17, 25]` → pairs (14,3), (22,9), (31,6), (17,25). Merges: 4 of 1+1, 2 of 2+2, 1 of 4+4.",
+  "1+1 merges: 4 comparisons. `[3,14]+[9,22]`: 3 vs 9, 14 vs 9, 14 vs 22 → 3. Ab `[6,31]+[17,25]` aur final merge khud karo. Trap: worst-case formula $n\\log_2 n - n + 1$ mat lagao."
+],
+"dsa-sort-merge-03": [
+  "Merge sort ka split position (mid) se hota hai, values se nahi. To sorted input pe recursion tree ka shape badalta hai kya?",
+  "$T(n) = 2T(n/2) + cn$ ka recursion tree banao: levels kitne hain aur har level pe kitna kaam? Sorted input pe comparisons kam ho sakte hain, par copying ka kya?",
+  "Level 0: ek merge, n items copy. Level 1: do merges of n/2 — phir bhi total n copies. Ab levels gino. Trap: sorted input quicksort (end pivot) ka worst case hai, merge sort ka nahi."
+],
+"dsa-sort-merge-04": [
+  "Bottom-up mein ek pass poora level khatam karta hai: pass 1 size-1 runs (adjacent pairs) merge karta hai, pass 2 size-2 runs.",
+  "Pass 1: (27,10), (36,5), (18,41), (2,33) ko sort karo. Pass 2: pehle do size-2 runs ko merge karo, phir agle do — result do sorted blocks of 4.",
+  "Pass 1 → `[10, 27, 5, 36, 18, 41, 2, 33]`. Ab pass 2 mein `[10,27]+[5,36]` aur `[18,41]+[2,33]` merge karo. Trap: top-down ki tarah sirf left half pe mat ruko."
+],
+"dsa-sort-merge-05": [
+  "Char claims hain: stability, extra space, comparisons fixed hain ya nahi, aur best case. Har ek ko merge step ke behaviour se judge karo.",
+  "Tie pe left run se lena → earlier item pehle. Array merge ko temporary buffer chahiye. Ek merge ke comparisons min(m, n) se m + n - 1 tak vary karte hain; copying har level pe n items.",
+  "C test karo: `[1,2]+[3,4]` merge mein 2 comparisons, `[1,3]+[2,4]` mein 3 — same size, alag count? D ke liye socho: sorted input pe bhi har level n items copy hote hain ya nahi."
+],
+"dsa-sort-merge-06": [
+  "Maximum over all orderings matlab har merge ka worst case lo. Tree fix hai: 8 → 4 + 4 → 2 + 2 → 1 + 1.",
+  "Worst merge of m + n items = m + n - 1 comparisons. Merges: 4 of 1+1, 2 of 2+2, 1 of 4+4.",
+  "1+1 merges: 4 × 1 = 4. Ab 2+2 aur 4+4 waale khud lagao aur jodo. Trap: m + n mat lo — last bacha item hamesha free copy hota hai."
+],
+"dsa-sort-quick-01": [
+  "Lomuto partition: pivot = `a[hi]` = 14. i sirf tab badhta hai jab `a[j] <= 14`; aakhir mein pivot slot i + 1 pe jaata hai.",
+  "j = 0..6 chalo: `a[j] <= 14` ho to i += 1 aur `a[i] ↔ a[j]` (i == j ho to self-swap). Loop ke baad `a[i+1] ↔ a[7]`.",
+  "j = 0, 1: 12, 7 ≤ 14 → i = 0, 1, self-swaps. j = 2: 25 > 14, skip. Ab j = 3 se aage chalo. Trap: swap line 2 mat bhoolo — pivot a[i+1] se swap hota hai, a[i] se nahi."
+],
+"dsa-sort-quick-02": [
+  "Convention: swap line 1 ka har execution count hota hai (self-swaps bhi), plus swap line 2 hamesha ek baar. Pivot = 10.",
+  "Swap line 1 utni baar chalti hai jitne `a[j]` (j = 0..5) `<= 10` hain. Total swaps = wo count + 1.",
+  "4 ≤ 10 → i = 0 = j, self-swap (count). 9 ≤ 10 → i = 1 = j, self-swap. Ab 2, 11, 6, 15 check karo. Trap: comparisons (6) ko swaps mat samjho."
+],
+"dsa-sort-quick-03": [
+  "Sorted input + last-element pivot: har baar pivot subarray ka maximum hai, to split hamesha (k - 1) : 0 hota hai.",
+  "k items ka partition k - 1 comparisons karta hai. Calls ke sizes: 9, 8, ..., 2 (size 1 pe koi comparison nahi).",
+  "Pehli call: 9 items → 8 comparisons; doosri: 8 items → 7. Ab sab jodo. Trap: $1 + 2 + \\dots + 9$ mat lo — size k pe k - 1 comparisons hain, k nahi."
+],
+"dsa-sort-quick-04": [
+  "Sorted input pe har `a[j] <= pivot` true hai, to swap line 1 har j pe chalti hai (i == j, self-swap) — aur convention unhe bhi ginta hai.",
+  "k sorted items ki call: swap line 1 → k - 1 baar, swap line 2 → 1 baar, total k swaps. Call sizes 9, 8, ..., 2.",
+  "Pehli call (k = 9): 8 self-swaps + 1 pivot swap = 9. Ab baaki calls ke liye jodo. Trap: sirf line 1 mat gino — har call swap line 2 bhi chalati hai."
+],
+"dsa-sort-quick-05": [
+  "Lomuto quicksort Θ(n²) tab hota hai jab baar-baar pivot ek end pe land kare (split n - 1 : 0). Har input ke liye socho pivot kahan girta hai.",
+  "Pivot = last element, test `<=`. Har input ke liye pivot ka rank dekho: max ya min ho to lopsided split. Random input pe expected split balanced hota hai.",
+  "All-equal `[5, 5, 5, 5]` try karo: har `a[j] <= 5` true, to i end tak jaata hai — pivot kahan aaya? Trap: descending ke liye sirf pehli call nahi, baad ki calls ka structure bhi dekho."
+],
+"dsa-sort-quick-06": [
+  "Ek partition ke baad pivot apni sorted position pe hota hai: left mein sab chhote, right mein sab bade. Har array mein aisa ek key dhoondo.",
+  "Keys 1..8 hain, to key k ki sorted position index k - 1 hai. Check: key k index k - 1 pe ho aur uske left ke saare keys < k (to right ke saare > k).",
+  "Pehle array mein index 3 pe 4 hai; left {3, 1, 2}, right {8, 6, 5, 7} — condition check karo. Trap: halves 'roughly split' dikhne se kaam nahi chalega; ek exact key chahiye."
+],
+"dsa-sort-quick-07": [
+  "Split 1 : 9 hai — unbalanced, par ratio constant hai. Aur quicksort dono parts pe recurse karta hai.",
+  "$T(n) = T(n/10) + T(9n/10) + cn$. Recursion tree mein har level ka total ≤ cn; ab depth nikalo.",
+  "Sabse lambi path har baar 9/10 hissa leti hai, to depth $\\log_{10/9} n$. Ab is log ko $\\log n$ se compare karo. Trap: unbalanced ≠ Θ(n²); wo sirf n - 1 : 0 jaise splits pe hota hai."
+],
+"dsa-dc-recur-01": [
+  "$T(n) = 3T(n/2) + n$: a = 3, b = 2, f(n) = n. Master theorem mein f(n) ko $n^{\\log_b a}$ se compare karna hai.",
+  "f(n) = n ko $n^{\\log_2 3}$ se compare karo. f chhota → leaves dominate, $\\Theta(n^{\\log_b a})$; barabar → ek extra $\\log n$; bada → Θ(f(n)).",
+  "$\\log_2 3$ approx karo: $2^1 = 2 < 3 < 4 = 2^2$, to exponent 1 aur 2 ke beech (≈ 1.585). Ab n se compare karo. Trap: exponent a/b = 3/2 nahi, $\\log_b a$ hota hai."
+],
+"dsa-dc-recur-02": [
+  "a = 4, b = 2, f(n) = $n^2$. Pehle $n^{\\log_b a}$ nikalo aur dekho f(n) usse chhota, barabar ya bada hai.",
+  "Master cases: f chhota → $\\Theta(n^{\\log_b a})$; f barabar → $\\Theta(n^{\\log_b a}\\log n)$; f bada → Θ(f(n)). Yahan $\\log_2 4$ nikalo.",
+  "Recursion tree level i: $4^i$ subproblems, har ek ka cost $(n/2^i)^2$. Level total simplify karo, phir $\\log_2 n$ levels se multiply. Trap: log factor do baar mat lagao."
+],
+"dsa-dc-recur-03": [
+  "Har non-base call `f(n // 2)` ko **do** baar call karta hai (result reuse nahi hota). Sawaal total calls ka hai — internal aur leaf dono.",
+  "Calls: $C(n) = 1 + 2C(n/2)$, $C(1) = 1$. Ya recursion tree ke har level pe calls gino: n = 32, 16, 8, ..., 1.",
+  "Level 0: f(32) → 1 call; level 1: do f(16) → 2 calls; level 2: 4 calls ... f(1) wale level tak chalo aur jodo. Trap: sirf leaves f(1) mat gino."
+],
+"dsa-dc-recur-04": [
+  "Ab calls nahi, return value chahiye: $f(n) = 2f(n/2) + n$, $f(1) = 1$. Har internal call apna n add karta hai, leaves 1 return karte hain.",
+  "Recursion tree: level i pe $2^i$ calls, har ek $n/2^i$ add karta hai, to har internal level ka total 32. Internal levels (n ≥ 2) gino, aur leaves alag se jodo — har leaf 1 return karta hai.",
+  "Bottom-up chalo: f(1) = 1, f(2) = 2·1 + 2 = 4, f(4) = 2·4 + 4 = 12. Ab f(8), f(16), f(32) nikalo. Trap: leaves ke 1s mat chhodo."
+],
+"dsa-dc-recur-05": [
+  "Har recurrence alag type ka hai: master theorem, uneven split, ya subtract-by-one. Har ek ko solve karke dekho Θ(n log n) kaun deta hai.",
+  "Recursion tree socho: level cost × depth. Balanced ya constant-ratio split + linear combine → har level ≈ n, depth Θ(log n). T(n - 1) type mein depth n hoti hai.",
+  "C test karo: $2T(n/2) + n\\log n$ mein level i ka cost $2^i \\cdot \\frac{n}{2^i}\\log\\frac{n}{2^i} = n\\log\\frac{n}{2^i}$ — ab levels pe sum karo. Trap: T(n - 1) + n ko n log n mat samjho."
+],
+"dsa-dc-recur-06": [
+  "Recurrence banao: 7 subproblems of size n/2, combine Θ(n²). To a = 7, b = 2, f(n) = n².",
+  "$n^{\\log_2 7}$ ko n² se compare karo. f chhota → $\\Theta(n^{\\log_b a})$; barabar → × log n; bada → Θ(f(n)).",
+  "$\\log_2 7$: $2^2 = 4 < 7 < 8 = 2^3$, to exponent 2 aur 3 ke beech — ab n² se bada hai ya chhota? Trap: plain block method ke 8 products mat socho; yahan 7 hain."
+],
+"dsa-dc-recur-07": [
+  "Har step n ko √n bana deta hai — n/2 se kahin tezi se chhota. Asli sawaal: kitni baar square root lene pe 2 tak pahunchte hain?",
+  "Substitute $n = 2^m$, $S(m) = T(2^m)$. Tab $\\sqrt{n} = 2^{m/2}$, to $S(m) = S(m/2) + 1$.",
+  "Example: $2^{16} → 2^8 → 2^4 → 2^2 → 2$, exponent har baar half. Ab S(m) solve karo aur m ko n mein wapas likho. Trap: √n ko n/2 jaisa mat treat karo."
+],
+"dsa-graph-traverse-01": [
+  "BFS: FIFO queue, poora level pehle, phir agla. Vertex enqueue hote hi marked, aur neighbours alphabetical order mein.",
+  "Figure se adjacency: A{B,C,E}, B{A,D,F}, C{A,G}, D{B,H}, E{A,F}, F{B,E,H}, G{C,H}, H{D,F,G}. Queue se nikalo, unmarked neighbours peeche daalo.",
+  "Dequeue A → [B, C, E]. Dequeue B → D, F add → [C, E, D, F]. Ab C se aage chalo. Trap: H ko F ke turant baad mat likho — jo pehle enqueue hua wahi pehle aata hai."
+],
+"dsa-graph-traverse-02": [
+  "Recursive DFS: alphabetically pehle unvisited neighbour pe turant jao; backtrack sirf tab jab current vertex ke saare neighbours visited hon.",
+  "Adjacency: A{B,C,E}, B{A,D,F}, C{A,G}, D{B,H}, E{A,F}, F{B,E,H}, G{C,H}, H{D,F,G}. Har step pe current vertex ka pehla unvisited neighbour lo.",
+  "A → B (A ka pehla) → D (B ka pehla unvisited) → H. Ab H se aage chalo. Trap: F se jaldi wapas mat jao — pehle dekho F ka koi neighbour abhi unvisited hai kya."
+],
+"dsa-graph-traverse-03": [
+  "Adjacency order kuch bhi ho sakta hai, to sirf DFS ka rule check karo: DFS kisi vertex ko tab tak nahi chhodta jab tak uska koi neighbour unvisited hai.",
+  "Edges: A-B, A-C, A-E, B-D, B-F, C-G, D-H, E-F, F-H, G-H. Har sequence mein current path (stack) rakho; agla vertex path ke sabse deep 'unfinished' vertex ka neighbour hona chahiye.",
+  "Last option test karo: A, B ke baad C aaya — tab B ke paas D ya F unvisited the kya? Baaki options bhi aise hi step-by-step check karo. Trap: BFS jaisa level order DFS order nahi hota."
+],
+"dsa-graph-traverse-04": [
+  "Adjacency order free hai, to BFS ka structure check karo: levels order mein, aur har dequeued vertex ke naye neighbours ek block mein, parents ke dequeue order mein.",
+  "Levels from A: L1 = {B, C, E}, L2 = {D, F, G}, L3 = {H}. B → D (aur F), C → G; F ka parent B ya E mein jo pehle dequeue ho.",
+  "Third option dekho: H (level 3) G (level 2) se pehle aa raha hai — BFS mein possible hai? Baaki options mein L2 ka order parents ke order se milao. Trap: L2 ke andar bhi order free nahi hai."
+],
+"dsa-graph-traverse-05": [
+  "Lists sort mat karo — stored order mein scan karna hai (0 ke liye pehle 2, phir 1). Aur driver 0 ke baad bache unvisited vertices pe DFS restart karta hai.",
+  "Recursive DFS: list ka pehla unvisited neighbour → recurse; dead end pe backtrack. Pehla tree khatam hone ke baad 1..6 mein jo unvisited bacha ho, wahan se restart.",
+  "0 → 2 (list [2, 1] ka pehla) → 4 (2 ki list [4, 1]) → 3. Ab 3 ki list [0, 5] se aage chalo. Trap: vertex 6 0 se reachable nahi — restart mat bhoolo."
+],
+"dsa-graph-traverse-06": [
+  "Queue ka size har step ke baad track karna hai. Dhyan: vertex pehle remove hota hai, phir uske neighbours add hote hain.",
+  "Adjacency: A{B,C,E}, B{A,D,F}, C{A,G}, D{B,H}, E{A,F}, F{B,E,H}, G{C,H}, H{D,F,G}. Har step ke baad queue contents likho aur max size note karo.",
+  "[A] → A remove, B, C, E add → [B, C, E]. Ab B remove karke uske unmarked neighbours add karo, aur aise hi aage. Trap: jo vertex process ho raha hai use queue mein mat gino."
+],
+"dsa-graph-bfs-dist-01": [
+  "BFS level = vertex 1 se fewest edges. DFS ka path shortest nahi hota. Vertex 9 sirf 8 se juda hai.",
+  "Level by level chalo: L0 = {1}, L1 = 1 ke neighbours, L2 = L1 ke naye neighbours, ... jab tak 9 na mile. Edges gino, vertices nahi.",
+  "L1 = {2, 3}, L2 = {4, 5}. Ab L3, L4, ... nikalo. Trap: path ke vertices mat gino, edges gino; aur 8 ka level 9 ka level nahi hai."
+],
+"dsa-graph-bfs-dist-02": [
+  "Vertices 1 se 12 tak hain. Jo vertex edge list mein kabhi nahi aata, wo bhi apna alag component hai.",
+  "Edges se groups banao: jude hue vertices ek set mein. Phir isolated vertices alag gino. n - m formula sirf forest (no cycle) pe chalta hai.",
+  "Groups: {1, 2, 3} (1-2, 2-3), {4, 5}. Ab 6-7-8 aur 9-10 dekho, phir bache vertices. Trap: 12 - 7 mat karo — 6-7-8 ek cycle hai."
+],
+"dsa-graph-bfs-dist-03": [
+  "Sirf ek statement **always** true hai. Har option BFS levels, DFS depth ya weighted graphs ke baare mein claim hai — har ek ka counterexample dhoondo.",
+  "Rule: jab u dequeue hota hai, uske har unvisited neighbour ko level d(u) + 1 milta hai. To kisi bhi edge ke do endpoints ke levels mein zyada se zyada kitna fark ho sakta hai?",
+  "Square graph s-a, s-b, a-c, b-c lo: d(a) = d(b) = 1, d(c) = 2, aur agar c ko a ne pakda to b-c non-tree edge hai. Ye kis option ko todta hai? Trap: DFS depth ko distance mat samjho."
+],
+"dsa-graph-bfs-dist-04": [
+  "n vertices, m edges, k components. Socho: c vertices wale component ko connected rehne ke liye minimum kitne edges chahiye? Saare options isi se judge hote hain.",
+  "Connected component with c vertices: kam se kam c - 1 edges, aur exactly c - 1 tabhi jab wo tree ho. Ise saare k components pe jodo. Extra edge cycle banata hai par k nahi badalta.",
+  "C ko triangle (n = 3, m = 3, k = 1) pe test karo: n - m kya aata hai? D: edge agar ek hi component ke andar jude to k ka kya hoga? Trap: forest wala formula har graph pe mat lagao."
+],
+"dsa-graph-bfs-dist-05": [
+  "Shortest paths ki **ginti** chahiye, sirf distance nahi. Ek vertex tak kai shortest paths aa sakte hain, jabki BFS tree sirf ek parent rakhta hai.",
+  "Pehle levels nikalo, phir paths(v) = sum of paths(u) over neighbours u jo exactly ek level upar hain. paths(A) = 1. Edges: A-B, A-C, A-E, B-D, B-F, C-G, D-H, E-F, F-H, G-H.",
+  "Levels: A 0; B, C, E 1; D, F, G 2; H 3. paths(B) = paths(C) = paths(E) = 1; ab D, F, G aur phir H nikalo. Trap: level-2 vertex ke saare level-1 neighbours gino, sirf tree parent nahi."
+],
+"dsa-graph-bfs-dist-06": [
+  "Graph **directed** hai — s se sirf edge ki direction mein chal sakte ho. f→s, g→b jaise edges s se kabhi use nahi honge.",
+  "BFS level by level: L1 = s ke out-neighbours, L2 = L1 ke out-neighbours jo pehle nahi mile. Sirf exactly distance 2 wale gino, usse kam wale nahi.",
+  "L1 = {a, b}. Ab a aur b ke out-edges se naye vertices nikalo — wahi L2 hai. Trap: e→a ko ulta use karke e ko distance 2 mat do."
+],
+"dsa-graph-dfs-topo-01": [
+  "Cross edge u→v: v already finished hai, pehle discover hua tha (d[v] < d[u]) aur u ka descendant nahi. Isliye poora DFS restart ke saath trace karna padega.",
+  "Scan pe classify karo: v new → tree; v open → back; v finished & d[u] < d[v] → forward; v finished & d[v] < d[u] → cross. Out-lists: a{b, c, d}, b{d}, c{d, e}, d{a}, e{b, c}, f{e, g}, g{f}.",
+  "a(1) → b(2) → d(3); d→a: a open hai → back edge. d, b finish. Ab a→c se aage chalo, phir f se restart. Trap: do trees ke beech wale edges bhi cross hote hain — unhe miss mat karo."
+],
+"dsa-graph-dfs-topo-02": [
+  "a→d ka type is pe depend karta hai ki jab a, d ko scan kare tab d ki state kya hai (new, open ya finished) aur dono ke discovery times kya hain.",
+  "a ki list alphabetical: b, c, d — to a→d sabse last scan hoga. Rule: finished & d[a] < d[d] → forward; finished & d[d] < d[a] → cross; open → back; new → tree.",
+  "a (d = 1) → b (2) → d (3): d pehle hi b ke through mil gaya aur finish ho gaya. Ab jab a, d ko scan kare, discovery times compare karo. Trap: d→a back edge hai, a→d nahi — direction dekho."
+],
+"dsa-graph-dfs-topo-03": [
+  "Char claims: directed cycle ↔ back edge, undirected DFS ke edge types, cross edge ke discovery times, aur DAG mein back edge. Har ek ko definition se check karo.",
+  "Back edge = open ancestor ki taraf edge, jo tree path ke saath cycle banata hai. Cross edge = finished vertex ki taraf jo descendant nahi. Undirected edge dono endpoints se scan ho sakta hai.",
+  "C test karo: cross edge u→v pe v already finished hai jab u abhi discover hua — to d[v] aur d[u] mein chhota kaun? D ke liye socho: back edge bina cycle ke ban sakta hai kya?"
+],
+"dsa-graph-dfs-topo-04": [
+  "Kahn's algorithm: har step pe current in-degree 0 wale vertices mein se **alphabetically smallest** nikalo, phir uske out-edges hata ke in-degrees update karo.",
+  "Initial in-degrees: p 0, q 1, r 2 (p, u), s 2 (q, r), t 2 (s, v), u 0, v 1. Available set {p, u} se shuru karo.",
+  "Step 1: p nikalo → q ka in-degree 0, r ka 1. Available {q, u}. Ab aage karo. Trap: FIFO queue (discovery order) mat use karo — har baar smallest available lo."
+],
+"dsa-graph-dfs-topo-05": [
+  "DAG ke do alag parts hain: {a, b, c, d} aur {e, f}. Dono ke beech koi edge nahi, to unhe aapas mein kaise bhi interleave kar sakte ho.",
+  "Total = (part 1 ke valid orders) × (6 positions mein se e, f ki 2 positions choose karne ke tareeke; e hamesha f se pehle). Part 1 mein a first aur d last.",
+  "Part 1: a, phir b aur c kisi bhi order mein, phir d → 2 orders. Ab e, f ke liye 6 mein se 2 positions choose karo. Trap: e f ko ek block mat maano — adjacent hona zaroori nahi."
+],
+"dsa-graph-dfs-topo-06": [
+  "Ye DFS method hai, Kahn nahi: vertex **finish** hone pe list mein append hota hai, aur end mein list reverse hoti hai.",
+  "Out-lists alphabetical: p{q, r}, q{s}, r{s}, s{t}, u{r, v}, v{t}. p se DFS, phir smallest unvisited (u) se restart. Finish order likho, phir ulta karo.",
+  "p → q → s → t; t ka koi out-edge nahi, to pehle t finish, phir s, phir q. Ab p ke agle neighbour r se aage chalo. Trap: finishing order ko bina reverse kiye mat likho."
+],
+"dsa-graph-dijkstra-01": [
+  "Weighted shortest path chahiye — fewest edges wala path nahi, sabse kam total weight wala. Zyada hops wala path bhi sasta pad sakta hai (jaise s→b→a vs s→a).",
+  "Relaxation: $d[v] = \\min(d[v], d[u] + w)$. Order mein nikalo: d[b], d[a], d[c], d[d], d[t] — har ek ke saare incoming options compare karke.",
+  "d[b] = 1, d[a] = min(4, 1 + 2) = 3. Ab d[c] = min(1 + 5, 3 + 1), phir d[d] aur d[t] khud nikalo. Trap: c→t (7) seedha mat lo — c→d→t bhi compare karo."
+],
+"dsa-graph-dijkstra-02": [
+  "Sirf d[d] ki value kitni baar strictly ghatti hai, wo gino — ∞ se pehli value bhi ek update hai. Extraction khud update nahi hai.",
+  "d ke incoming edges: b→d (8) aur c→d (3). d[d] tabhi badlega jab b ya c extract hoke relax kare aur nayi value purani se chhoti ho.",
+  "Extract s: d[a] = 4, d[b] = 1. Extract b (smallest): d[a] = 3, d[c] = 6, d[d] = 1 + 8 = 9 (pehla update). Ab aage extractions trace karo. Trap: d ke extract hone ko update mat gino."
+],
+"dsa-graph-dijkstra-03": [
+  "Sawaal ek snapshot ka hai: exactly 3 extractions (aur unke relaxations) ke baad, final distances nahi. Sirf extracted vertices apne edges relax karte hain.",
+  "Har step: unfinished vertices mein smallest d wala extract karo, uske out-edges relax karo. Teen extractions ke baad (d[c], d[d], d[t]) note karo.",
+  "Extract s (0): a = 4, b = 1. Extract b (1): a = 3, c = 6, d = 9. Ab teesra extraction kaun hai aur uske out-edges kya badalte hain? Trap: c→t abhi relax mat karo — c extract nahi hua."
+],
+"dsa-graph-dijkstra-04": [
+  "Ek negative edge b→a (-4) hai, par koi cycle nahi. Dijkstra extracted vertex ko dobara update nahi karta — dekho ye rule yahan kya bigaadta hai.",
+  "Do cheezein alag nikalo: (1) Dijkstra ka trace (smallest extract, relax, finalized vertex locked); (2) asli shortest distance, saare s→t paths ke weights compare karke.",
+  "Extract s: a = 2, b = 5. Extract a (2 < 5): c = 2 + 3 = 5. Ab b extract karo — b→a se a ko kya milta, aur kya a update hoga? Trap: negative edge ≠ negative cycle."
+],
+"dsa-graph-dijkstra-05": [
+  "Char claims: Dijkstra ki condition, Bellman-Ford ki condition, constant reweighting, aur Dijkstra with negative edges. Har ek ko uske rule se check karo.",
+  "Dijkstra ka greedy step tabhi safe hai jab koi edge negative na ho. Bellman-Ford n - 1 rounds mein har simple path cover karta hai; condition: koi reachable negative cycle na ho.",
+  "C test karo: P1 = ek edge weight 3, P2 = teen edges weight 1 each. Har edge mein +2 jodo — ab totals kya hain? D: ek negative edge (bina cycle) finalized vertex ke saath kya kar sakti hai?"
+]
+}

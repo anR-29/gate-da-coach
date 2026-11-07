@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072144';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072349';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611072144';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072144';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072144';
+} from './engine.js?v=202611072349';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072349';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072349';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -361,6 +361,16 @@ const PART_OF_MODE = { review: 'review', learn: 'learn', diag: 'topic', topic: '
 
 // "Atak gaye?": up to three nudges, mildest first. Using one marks the answer as not yet yours.
 function hintSteps(q, skill, formula = '') {
+  const lesson = skill.theory ? `<b>Theory:</b> <a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">lesson ka wahi hissa kholo ↗</a> (naye tab me)` : '';
+  // hints written for this exact question
+  if (q.hints) {
+    return [
+      `<b>Kya notice karo:</b> ${md(q.hints[0], true)}`,
+      `<b>Setup / formula:</b> ${md(q.hints[1], true)}`,
+      `<b>Pehla step:</b> ${md(q.hints[2], true)}`,
+      lesson,
+    ].filter(Boolean);
+  }
   const tip = q.type === 'MSQ'
     ? 'Har option ko alag se ek simple example pe check karo — "lagta hai" pe mat chuno.'
     : q.type === 'NAT'
@@ -654,7 +664,7 @@ function renderSession(state) {
   if (current.hints) showHints();
   // the formula step comes from the notes (cached after the first fetch)
   const forQ = current;
-  formulaFor(q, skill).then((fh) => {
+  if (!q.hints) formulaFor(q, skill).then((fh) => {
     if (current !== forQ || feedback || !fh) return;
     steps = hintSteps(q, skill, fh);
     if (current.hints) showHints();
@@ -1587,7 +1597,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611072144');
+  const store = await import('./store.js?v=202611072349');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

@@ -1,0 +1,292 @@
+{
+"dsa-stack-trace-01": [
+  "Stack LIFO hai: har `pop` sabse recent push (jo abhi andar hai) nikalta hai. Gino: 5 push aur 4 pop — to end mein kuch bachega.",
+  "Har operation ke baad stack bottom→top likho; `pop` hamesha rightmost (top) element nikaal ke print karta hai.",
+  "push 5, push 3 → [5, 3]; pop prints 3. Phir push 8, push 2 → [5, 8, 2] — aage ke pops yahin se karo. Trap: pop–pop mein 8 ko 2 se pehle mat nikalo."
+],
+"dsa-stack-trace-02": [
+  "Sawal final size nahi, poore trace ka **peak** size pooch raha hai. Har letter +1, har `-` −1.",
+  "Ek running count rakho: har symbol ke baad stack ka size likho aur ab tak ka sabse bada value yaad rakho.",
+  "a b c ke baad size 3, phir `-` se 2. Ab d, e, `-`, `-`, f, g ... aise hi count chalao. Trap: end ka size ya total pushes (8) mat bolo."
+],
+"dsa-stack-trace-03": [
+  "1, 2, 3, 4, 5 isi order mein push hote hain. Har printed sequence alag se check karo: kya har value print ke waqt top pe ho sakti hai?",
+  "Simulate karo: next printed value top pe nahi hai to tab tak push karo jab tak wo top pe na aaye; agar wo neeche dabi hai to sequence impossible.",
+  "Option A (4 2 3 1 5): 4 ke liye 1–4 push, 4 pop → stack [1, 2, 3]. Ab top kaun hai, aur sequence agla kya maangta hai? Trap: stack leftovers ko kisi bhi order mein nahi deta."
+],
+"dsa-stack-trace-04": [
+  "Saare 4! orders possible nahi — stack kuch patterns (jaise 3 1 2) block karta hai. Valid stack permutations ek famous sequence se count hote hain.",
+  "Valid stack permutations of n inputs = Catalan number $C_n=\\frac{1}{n+1}\\binom{2n}{n}$; yahan $n=4$.",
+  "Pehle $\\binom{8}{4}=\\frac{8\\cdot7\\cdot6\\cdot5}{4!}$ nikaalo, phir $n+1$ se divide karna mat bhoolo. Trap: $C_3$ mat lo — index wahi n hai jitne inputs."
+],
+"dsa-stack-trace-05": [
+  "Postfix mein operand push hota hai, operator top ki do values pop karta hai. Order dhyan se: pehla pop `b` (right operand), doosra `a`.",
+  "Har operator pe: b = pop, a = pop, push(a op b). Stack left→right likhte jao, `7 2 3 *` se shuru karo.",
+  "7 2 3 push → [7, 2, 3]; `*` → 2·3 = 6 → [7, 6]. Ab `-` pe a = 7, b = 6 lo aur aage chalo. Trap: b − a (6 − 7) mat karo."
+],
+"dsa-stack-trace-06": [
+  "Digit aaye to push; `*` aaye to (stack non-empty ho to) top pop karke `out` mein. Loop ke baad bacha stack bhi top se khaali hota hai.",
+  "String ke har char ke baad stack (bottom→top) aur `out` likho. `list.pop()` last element hataata hai — LIFO.",
+  "'1', '2' push → [1, 2]; `*` → out = \"2\". Ab '3', '4' aur do `*` trace karo. Trap: end ka `while` loop mat bhoolo, aur leftover ko bottom-first mat likho."
+],
+"dsa-queue-deque-01": [
+  "FIFO queue: har `dequeue` sabse purana (front) element nikalta hai. Sequence mein teen dequeue hain — gin ke chalo.",
+  "Har step ke baad queue front→rear likho; enqueue rear pe jodta hai, dequeue front se hata ke print karta hai.",
+  "enqueue 4, 9 → [4, 9]; dequeue prints 4 → [9]. Ab 1, 6 enqueue karke aage badho. Trap: end ki queue ko rear→front ulta mat likho."
+],
+"dsa-queue-deque-02": [
+  "`rear` sirf enqueue pe aage badhta hai; dequeue sirf `front` ko hilata hai. Index mod 7 mein wrap hota hai.",
+  "rear = (4 + total enqueues) mod 7 — dequeues ka isme koi role nahi.",
+  "Pehle 4 enqueues: rear 4 → 5 → 6 → 0 → 1 (7 pe wrap). Ab baaki 2 enqueues chalao. Trap: dequeues ko rear se minus mat karo, aur `front` report mat karo."
+],
+"dsa-queue-deque-03": [
+  "Count queue operations ka nahi, IN aur OUT ke har push aur pop ka hai — transfers bhi. Ek element move = 1 pop + 1 push.",
+  "Har step pe IN aur OUT likho. Dequeue: OUT khaali ho tabhi IN ka sab OUT mein (har element 2 ops), phir OUT se 1 pop.",
+  "5 enqueues = 5 pushes on IN. Pehla dequeue: OUT khaali, 1, 2, 3 move = 6 ops, phir 1 pop. Ab baaki teen dequeues gino. Trap: transfer ko 1 op mat gino."
+],
+"dsa-queue-deque-04": [
+  "Do alag cheezein hain: n operations ka total (amortized) cost vs ek single dequeue ka worst case. Har statement kis cheez ke baare mein hai, pehchaano.",
+  "Ek element ki life gino: IN push, IN pop, OUT push, OUT pop — max kitne ops? Aur jab OUT khaali ho aur IN mein n elements, tab ek dequeue kitna kaam karta hai?",
+  "Option C pe socho: OUT non-empty hai to queue ka front OUT ke top pe hai ya IN ke top pe? IN ka top newest element hai. Trap: total cost aur single-op cost mix mat karo."
+],
+"dsa-queue-deque-05": [
+  "Odd `x` left end pe jaata hai (`appendleft`), even right end pe (`append`). Loop ke baad teen end-operations aur hain.",
+  "Har iteration ke baad deque left→right likho. `pop()` right se, `popleft()` left se; last line left ka element nikaal ke right mein daalti hai.",
+  "1 → [1]; 2 → [1, 2]; 3 → [3, 1, 2]. Ab 4, 5, 6 daalo. Trap: last line ko ulta (right se left) mat padho, aur use skip mat karo."
+],
+"dsa-linked-list-01": [
+  "Do tarah ke insert: odd value nayi head banti hai (`Node(v, head)`), even value head ke turant baad (`head.next = Node(v, head.next)`).",
+  "Har value ke baad list head→tail likho. Even case mein head wahi rehta hai, naya node position 2 pe aata hai.",
+  "3 → [3]; 1 (odd) → [1, 3]; 4 (even) → [1, 4, 3]. Ab 1 aur 5 karo. Trap: even ko bhi head insert mat samjho."
+],
+"dsa-linked-list-02": [
+  "Loop condition dhyan se padho: `while cur and cur.next` — last node pe ye kya karegi? Normal reversal mein `while cur:` hota hai.",
+  "Har iteration: `nxt = cur.next`, `cur.next = prev`, phir prev, cur ek aage. Har baar prev, cur aur badla hua link likho.",
+  "cur = 1: 1.next = None, prev = 1, cur = 2. cur = 2: 2.next = 1, prev = 2, cur = 3. Ab cur = 3, phir cur = 4 pe condition check karo. Trap: 4 ko juda hua mat maano."
+],
+"dsa-linked-list-03": [
+  "`p = p.next.next` do-do node koodta hai, aur body tabhi chalti hai jab `p.next` bhi ho. To sirf kuch positions ke values judte hain.",
+  "Table banao: p ki value, `p.next` hai ya nahi, aur s. Shuru p = head (2), s = 0.",
+  "p = 2 (next 5 hai): s = 2, p jump karke 7 pe. Isi tarah aage chalao. Trap: last node 6 pe `p.next` None hai — wahan body nahi chalti."
+],
+"dsa-linked-list-04": [
+  "Sirf `head` hai, tail nahi, aur list singly hai — peeche nahi ja sakte. Har operation ke liye socho kaunsa node haath mein chahiye.",
+  "Rule: operation O(1) tabhi hai jab jis node ka pointer badalna hai wo seedha mile. Head: haan; second-last node ya middle: walk karna padega = Θ(n).",
+  "Option D pe socho: last node hatane ke liye kiska `next` None karna hai, aur wo node milega kaise? Trap: doubly list + tail pointer wala O(1) yahan apply mat karo."
+],
+"dsa-linked-list-05": [
+  "Doubly list mein q ko p ke baad daalne ke liye 4 pointers badalte hain: q.prev, q.next, old successor ka prev, aur p.next. Order matter karta hai.",
+  "Rule: `p.next` jab tak padhna baaki hai (q.next aur successor.prev ke liye), use overwrite mat karo — `p.next = q` sabse last.",
+  "Har option mein dekho `p.next = q` kab aata hai aur uske baad `p.next` phir padha gaya kya. Option A mein pointers gino — chaaron hain? Trap: `p.next = q` ke baad `p.next.prev` asal mein `q.prev` hai."
+],
+"dsa-tree-traversal-01": [
+  "Postorder = L R N: har node apne dono subtrees ke baad aata hai, root A sabse last.",
+  "Pehle tree draw karo: A(B, C), B(D, E), C ka sirf right F, F ka sirf left G. Phir har subtree ka postorder alag nikaalo.",
+  "Subtree B: D, E, phir B → D E B. Ab subtree C karo (C ka left khaali, right F, jiska left G). Trap: preorder ko ulta karna postorder nahi deta."
+],
+"dsa-tree-traversal-02": [
+  "Preorder ka pehla key root hai; inorder mein root ki position left aur right subtree alag karti hai. Tree rebuild karke postorder padho.",
+  "Root 1: inorder split → left {4, 2, 7, 5}, right {3, 8, 6, 9}. Har side pe us side ka pehla preorder key root, phir recurse.",
+  "Left side: preorder 2 4 5 7 → root 2; inorder 4 | 2 | 7 5, to 4 left, {7, 5} right (root 5, preorder mein pehle). Ab right side karo. Trap: preorder ulta mat karo."
+],
+"dsa-tree-traversal-03": [
+  "Height chahiye, to tree rebuild karna padega — balanced maan ke $\\lfloor\\log_2 11\\rfloor$ mat lo. Postorder ka last key root hai.",
+  "Root 1 (postorder ka last). Inorder split: left {4 8 2 9 5}, right {6 3 7 11 10}. Har side ka root = us side ke keys mein postorder ka last.",
+  "Right side: in keys mein postorder ka last 3 hai, to root 3; left 6, right {7 11 10}. Ab 7 wala part aur left side banao. Trap: edges gino, nodes nahi."
+],
+"dsa-tree-traversal-04": [
+  "Har pair ke liye socho: kya do alag trees dono sequences same de sakte hain? Ek bhi aisa example mile to pair 'always unique' nahi.",
+  "Rule: inorder left vs right alag karta hai; preorder/postorder/level order sirf root batate hain. Unique ke liye pair mein dono kaam hone chahiye.",
+  "Chhota test: root A ka sirf ek child B — left ho ya right. Dono cases ke preorder, postorder, level order likho; kya badla? Trap: full binary tree wala special case 'always' nahi hai."
+],
+"dsa-tree-traversal-05": [
+  "`popleft()` wali queue = level order (BFS), har node ke left child pehle. Aur `[4]` 0-indexed hai — paanchwa value.",
+  "Tree level by level likho: level 0 = 10, level 1 = 20 30, phir level 2 aur 3 left→right. `out` exactly isi order mein banta hai.",
+  "out shuru: 10, 20, 30 (indices 0, 1, 2). Ab level 2 ke nodes left→right lagao aur index 4 tak gino. Trap: index 4 ko chautha value mat samjho, aur preorder mat use karo."
+],
+"dsa-tree-traversal-06": [
+  "`g` pehle right subtree, phir node, phir left subtree — ye inorder ka mirror hai. Aur tree BST hai.",
+  "BST ka inorder (L N R) ascending hota hai. Yahan order R N L hai — to output ka pattern kya banega?",
+  "Root 50 pe pehle g(70) = g(80) + [70] + g(60) chalega, phir [50], phir g(30). Ye pieces expand karo. Trap: `[n.val]` beech mein hai, to ye preorder/postorder nahi."
+],
+"dsa-tree-bounds-01": [
+  "Height edges mein hai: height 5 matlab levels 0 se 5 tak — kitne levels? Max nodes ke liye har level poora bhara ho.",
+  "Level i pe max $2^i$ nodes. Total $=2^0+2^1+\\dots+2^h=2^{h+1}-1$, yahan $h=5$.",
+  "Pattern dekho: pehle 3 levels $1+2+4=7=2^3-1$. Ab isse 6 levels tak le jao. Trap: $2^h-1$ (sirf 5 levels) mat lo, aur −1 mat bhoolo."
+],
+"dsa-tree-bounds-02": [
+  "Minimum height tab jab tree jitna ho sake utna bhara (complete) ho. Height edges mein hai.",
+  "Height h mein max $2^{h+1}-1$ nodes. Sabse chhota h dhoondo jisme $2^{h+1}-1\\ge 100$.",
+  "h = 4 try karo: $2^5-1=31$, jo 100 se kam hai. h badhate jao jab tak 100 cover na ho. Trap: levels ki ginti ($\\lceil\\log_2 101\\rceil$) ko height mat bolo."
+],
+"dsa-tree-bounds-03": [
+  "Har node ke 0 ya 2 children — koi one-child node nahi. Leaves aur 2-child nodes ka ek fixed relation hota hai.",
+  "Rule: leaves $n_0 = n_2 + 1$. Yahan $n_1 = 0$, to total $= n_0 + n_2$.",
+  "$n_0 = 20$ rakh ke $n_0 = n_2 + 1$ se $n_2$ nikaalo, phir total jodo. Trap: internal = leaves (ya leaves + 1) mat maano."
+],
+"dsa-tree-bounds-04": [
+  "Teen tarah ke nodes: 2 children ($n_2=10$), 1 child ($n_1=7$), leaves ($n_0$). Asli sawal: kya $n_1$ leaves ko affect karta hai?",
+  "Edges do tarah gino: $n-1 = 2n_2 + n_1$, aur $n = n_0+n_1+n_2$. Dono ko barabar rakho.",
+  "Substitute: $n_0+n_1+n_2-1 = 2n_2+n_1$ — $n_1$ dono taraf cancel ho jaata hai. Ab $n_0$ solve karo. Trap: $n_2+n_1+1$ mat lo."
+],
+"dsa-tree-bounds-05": [
+  "Chaar claims, sab 'always true' hone chahiye. Do extreme shapes socho: chain (sabse lamba) aur complete tree (sabse chhota).",
+  "Do bounds: har level pe kam se kam 1 node → $n\\ge h+1$; level i pe max $2^i$ → $n\\le 2^{h+1}-1$. Har option inme se nikle ya counterexample mile.",
+  "Option B ko n = 5 pe test karo: 5 nodes wale complete tree ki height kya hai, aur $\\lceil\\log_2 5\\rceil$ kya hai? Trap: level ka max size ($2^h$) minimum nodes nahi hai."
+],
+"dsa-bst-01": [
+  "Pehle BST banao, har key root se insert karke (chhota left, bada right). Phir preorder = N L R.",
+  "50 root; 30, 70 uske children; 20, 40 under 30; 60, 80 under 70. Ab 35, 45, 65 ki jagah dhoondo.",
+  "35: 35 < 50 → 30; 35 > 30 → 40; 35 < 40 → 40 ka left. Isi tarah 45 aur 65 rakho. Trap: insertion order ko hi preorder mat maano — yahan wo level order hai."
+],
+"dsa-bst-02": [
+  "BST ka shape insertion order se banta hai, balanced nahi maan sakte. Poora tree banao aur longest path dekho.",
+  "Har key root se daalo: chhota left, bada right. Height = longest root-to-leaf path ke **edges**.",
+  "15 root; 9, 22 children; 4, 12 under 9; 18, 30 under 22. Ab 11, 13, 10 daalo. Trap: nodes mat gino, edges gino."
+],
+"dsa-bst-03": [
+  "BST search ek hi path follow karta hai: har node pe compare, chhota → left, bada → right, empty subtree pe stop.",
+  "Pehle tree banao: 15; 9, 22; 4, 12 under 9; 18, 30 under 22; 11, 13 under 12; 10 under 11. Phir 14 ka path likho.",
+  "14 < 15 → 9; 14 > 9 → 12. Ab 12 pe aage dekho — kya 12 ka right child hai? Trap: empty subtree ko compared node mat gino."
+],
+"dsa-bst-04": [
+  "Valid search path mein har key ko sirf parent se nahi, **saare pehle wale keys** se consistent hona chahiye. Har sequence ko interval se check karo.",
+  "Interval (lo, hi) = (−∞, ∞) se shuru. Har key x ke baad: 55 < x to hi = x, warna lo = x. Agla key is interval ke andar hona chahiye.",
+  "Option A: 90 → (−∞, 90); 20 → (20, 90); 85 → (20, 85); 30 → (30, 85). Ab agla key 95 is interval mein hai? Baaki options aise hi karo. Trap: sirf parent se compare mat karo."
+],
+"dsa-bst-05": [
+  "50 ke do children hain, to wo inorder successor (right subtree ka minimum) se replace hoga. Successor ka apna subtree bhi sambhaalna padega.",
+  "Pehle tree banao: 50; 30 (20, 40); 70 (60, 80); 65 = 60 ka right child. Successor: 70 se left jaate raho jab tak left khaali na ho.",
+  "70 ka left 60, 60 ka left khaali — successor 60. 60 ko root pe copy karo; purani jagah se hatane pe uska right child 65 kahan judega? Trap: predecessor (left ka max) mat lo."
+],
+"dsa-hash-probing-01": [
+  "Linear probing: home slot bhara ho to agla slot try karo, mod 10 ke saath wrap. Saari keys order mein rakhni padengi.",
+  "Probe i: $(k \\bmod 10 + i) \\bmod 10$. Har key ke baad likho kaunse slots bhare hain.",
+  "12 → 2, 22 → 3 (2 bhara), 42 → 4. Ab 15, 25, 39 rakho, phir 49. Trap: 49 ka home slot hi answer mat maano — check karo wo khaali hai ya nahi."
+],
+"dsa-hash-probing-02": [
+  "Saari keys 22, 33, 44, 55, 66 multiples of 11 hain — sabka home slot same. Quadratic probing mein offsets $i^2$ hain, $i$ nahi.",
+  "Probe sequence: $(0 + i^2) \\bmod 11$ for $i = 0, 1, 2, \\dots$ → 0, 1, 4, 9, ... Har key pehla khaali slot leti hai.",
+  "22 → 0, 33 → 1 (0 bhara), 44 → 4. Ab 55 aur 66 ke liye sequence aage chalao. Trap: $i^2$ ke baad mod 11 lena mat bhoolo."
+],
+"dsa-hash-probing-03": [
+  "17 ko 'deleted' marker ke bina seedha empty kiya gaya — search pehle empty slot pe ruk jaati hai. Ye chain ko kaise todta hai?",
+  "Pehle table banao: teeno ka home 3, linear probing se slots 3, 4, 5. Phir 17 wala slot empty karo aur 24 ki search slot 3 se chalao.",
+  "Inserts ke baad: slot 3 = 10, slot 4 = 17, slot 5 = 24. 17 hatane pe slot 4 khaali. Ab 24 ki search step by step karo aur slots gino. Trap: deletion pe baaki keys shift nahi hoti."
+],
+"dsa-hash-probing-04": [
+  "Har statement open addressing ki ek property pe hai: clustering, load factor, quadratic probing ki guarantee. Ek-ek ko alag judge karo.",
+  "Open addressing mein har key ko apna slot chahiye — to $\\alpha = n/m$ pe kya limit hai? Quadratic: prime m pe $i^2 \\bmod m$ ke $(m+1)/2$ alag values hote hain.",
+  "Option D socho: do keys jinka home slot same hai, quadratic probing mein kya same sequence follow karengi? Trap: 'every form' jaise over-claim pe dhyan do."
+],
+"dsa-hash-probing-05": [
+  "Probes mein har key ka final slot bhi ginna hai, sirf collisions nahi. Dekho: 5, 16, 27, 38 sab mod 11 = 5, aur 6, 17 mod 11 = 6 — ek cluster banega.",
+  "Har key: home slot se aage slots dekho jab tak khaali na mile; probes = examined slots (final wala bhi). Phir chhe keys ke probes jodo.",
+  "5 → slot 5: 1 probe. 16 → 5, 6: 2 probes. 27 → 5, 6, 7: 3 probes. Ab 6, 38, 17 karo. Trap: last key 17 mat chhodo, aur sirf occupied slots mat gino."
+],
+"dsa-hash-chaining-01": [
+  "Longest chain poocha hai, average (α) nahi. Har key ka $k \\bmod 7$ nikaalo aur same slot wali keys gino.",
+  "Keys 15, 8, 22, 3, 10, 29, 4 — har ek ka slot $k \\bmod 7$ likho, phir har slot ki chain length.",
+  "15 mod 7 = 1, 8 mod 7 = 1, 22 mod 7 = 1. Ab 3, 10, 29, 4 ke slots nikaalo. Trap: 29 ka mod bhi dhyan se, aur α = 7/7 ko longest chain mat samjho."
+],
+"dsa-hash-chaining-02": [
+  "Successful search ka average stored keys pe hai: chain ki k-th key ko k comparisons. Keys chain ke end mein judti hain, to chain order = insertion order.",
+  "Pehle chains banao ($k \\bmod 5$). Average = (saari 8 keys ke comparisons ka sum) / 8.",
+  "Slot 0: 10, 15, 20 → costs 1 + 2 + 3. Ab slot 1 (21, 31, 26) aur slot 2 (7, 12) karo. Trap: α = 8/5 unsuccessful cost hai; aur matching comparison bhi gino."
+],
+"dsa-hash-chaining-03": [
+  "Key table mein nahi hai, to search apne slot ki poori chain scan karti hai. Average 6 slots pe hai — empty slots bhi (cost 0).",
+  "Expected comparisons = (har slot ki chain length ka sum) / 6. Pehle har key ka $k \\bmod 6$ nikaalo.",
+  "7, 13, 19 sab mod 6 = 1 → slot 1 mein 3 keys. Ab 2, 8, 24, 14 ke slots nikaalo. Trap: sirf non-empty slots pe average mat lo, aur successful-search formula mat lagao."
+],
+"dsa-hash-chaining-04": [
+  "Unsuccessful search: absent key apne slot ki poori chain scan karti hai. Uniform hashing mein ek slot ki expected chain length kya hogi?",
+  "Load factor $\\alpha = n/m$ (keys per slot). Absent key ka slot uniform random hai, to expected comparisons = expected chain length = α.",
+  "n = 2000 keys, m = 500 slots — α nikaalo, dhyan rakho numerator keys hai. Trap: m/n ulta mat karo, aur successful wala $1+\\alpha/2$ yahan mat lagao."
+],
+"dsa-hash-chaining-05": [
+  "Chaining mein har slot ek list hai — open addressing jaisa 'ek slot ek key' nahi. Har statement ko is fact se judge karo.",
+  "Yaad rakho: expected unsuccessful ≈ α, successful ≈ $1+\\alpha/2$; worst case mein sab keys ek chain mein → Θ(n). Deletion sirf ek list se node hatata hai.",
+  "Option B ko α = 4 pe test karo: unsuccessful ≈ 4, successful ≈ $1 + 4/2$. Kaunsa bada hai? Trap: 'expected O(1)' ko 'worst-case O(1)' mat samjho."
+],
+"dsa-hash-chaining-06": [
+  "Unsuccessful search kisi bhi home slot (0–9) se shuru ho sakti hai aur pehle empty slot tak chalti hai — empty slot bhi gina jaata hai. Table cyclic hai: 9 ke baad 0.",
+  "Har home slot s ke liye: s se aage slots gino jab tak '–' na mile (usko include karke). Phir in 10 counts ka average.",
+  "Slot 1 khaali → 1 probe. Slot 0: 49, phir slot 1 khaali → 2 probes. Ab slots 2 se 9 karo. Trap: slot 9 se 0, 1 pe wrap karna mat bhoolo."
+],
+"dsa-search-01": [
+  "Worst case poocha hai — key present ho ya absent. Har probe search range ko lagbhag aadha karta hai.",
+  "Binary search worst case on n items $= \\lfloor\\log_2 n\\rfloor + 1$; yahan n = 100.",
+  "$2^6 = 64$ aur $2^7 = 128$ — 100 inke beech kahan hai, to $\\lfloor\\log_2 100\\rfloor$ kya hua? Phir formula poora karo. Trap: +1 mat bhoolo, aur ceil + 1 mat lo."
+],
+"dsa-search-02": [
+  "37 array mein hai hi nahi (36 aur 41 ke beech) — to loop tab tak chalega jab tak `lo > hi` na ho. `//` floor deta hai.",
+  "Har row likho: lo, hi, mid = (lo + hi) // 2, a[mid]. a[mid] < 37 to lo = mid + 1, a[mid] > 37 to hi = mid − 1.",
+  "lo = 0, hi = 10 → mid 5, a[5] = 24 < 37 → lo = 6. Ab lo = 6, hi = 10 se aage chalo. Trap: lo == hi pe mat ruko — condition `lo <= hi` hai."
+],
+"dsa-search-03": [
+  "Do cases ka mix: probability 0.5 key absent, 0.5 present. Har case ka expected comparisons alag nikaalo, phir weight lagao.",
+  "Present: position i pe i comparisons, average $\\frac{n+1}{2}$. Absent: saare n compare. Expected $= 0.5\\cdot(\\text{present avg}) + 0.5\\cdot(\\text{absent count})$, n = 20.",
+  "Present average $= (20+1)/2 = 10.5$. Ab absent case ka count lo aur weighted sum banao. Trap: present average n/2 = 10 mat lo."
+],
+"dsa-search-04": [
+  "Har statement binary/linear search ki ek requirement pe hai: sorted data, O(1) indexing, duplicates. Ek-ek ko alag judge karo.",
+  "Binary search ko chahiye: sorted order (ek side discard karne ke liye) aur middle tak O(1) access; pehle match pe ruk jaata hai. Linear search bas har element dekhta hai.",
+  "Option C test karo: [5, 1, 9, 3, 7] mein key 1 — mid index 2 (9), 1 < 9 to hi = 1; agla mid kya? Trap: linked list pe O(log n) comparisons ≠ O(log n) time."
+],
+"dsa-search-05": [
+  "'Exactly 4' poocha hai, 'at most 4' nahi. n = 31 = $2^5 - 1$, to binary search ke probes ek perfect tree banate hain.",
+  "Probe tree mein root (1 comparison) pe 1 element; har agle level pe elements double. Level k ka element exactly k comparisons mein milta hai.",
+  "Level 1: index 15 (1 element). Level 2: indices 7 aur 23 (2 elements). Ye pattern level 4 tak le jao. Trap: $2^k$ mat lo, aur 1 + 2 + 4 + … (at most) mat jodo."
+],
+"dsa-loop-complexity-01": [
+  "Inner loop `range(i, n + 1)` i se shuru hota hai, to har outer i pe inner count alag hai — n × n nahi.",
+  "Fixed i ke liye j = i se n tak: $n - i + 1$ baar. Total $= \\sum_{i=1}^{10} (10 - i + 1)$.",
+  "i = 1: 10 baar, i = 2: 9 baar, i = 3: 8 baar … i = 10 tak. Ab ye sum karo. Trap: `range(i, n + 1)` mein j = i bhi aata hai, to $n(n-1)/2$ mat lo."
+],
+"dsa-loop-complexity-02": [
+  "Outer `i` har baar double hota hai (1, 2, 4, …), aur inner loop i baar chalta hai. Total = in i values ka sum.",
+  "Pehle i ki saari values likho jo `i <= 100` pass karti hain; total `c += 1` = in values ka sum.",
+  "i = 1, 2, 4, 8, 16, … — 100 se pehle last power of 2 kaunsi hai? Phir sum lo ($1+2+\\dots+2^k = 2^{k+1}-1$). Trap: 128 include mat karo — wo `i <= 100` fail karta hai."
+],
+"dsa-loop-complexity-03": [
+  "Outer loop mein i har baar 3 se divide hota hai, lekin inner loop `range(n)` hai — wo i pe depend nahi karta.",
+  "Total = (outer iterations) × n. Outer: i = n, n/3, n/9, … jab tak i > 1 — ye kitne steps hain?",
+  "Example n = 81: i = 81 → 27 → 9 → 3 → 1, yaani 4 outer iterations, har ek mein 81 inner steps. General n ke liye outer count kya hai? Trap: inner ko i baar mat maano."
+],
+"dsa-loop-complexity-04": [
+  "Inner `while` j = i se shuru hokar double hota hai jab tak n tak na pahunche — to bada i, kam doublings. Inner count i pe depend karta hai.",
+  "Fixed i ke liye inner ≈ $\\log_2(n/i)$ baar. Total $= \\sum_{i=1}^{n} \\log_2(n/i)$ — har term ko $\\log_2 n$ se bound karna loose hai.",
+  "n = 16 pe doublings: i = 1 → 4, i = 2..3 → 3, i = 4..7 → 2, i = 8..15 → 1. Zyaadatar i ko kitni chahiye, aur sum kaisa dikhta hai? Trap: har i ko log n mat do."
+],
+"dsa-loop-complexity-05": [
+  "Teen nested loops, par ranges shrink hoti hain: k < j < i < 8. Body har aise triple ke liye ek baar chalti hai — $n^3$ nahi.",
+  "Fixed i ke liye andar ke do loops $\\sum_{j=0}^{i-1} j = \\binom{i}{2}$ baar chalte hain. Total $= \\sum_{i=0}^{7} \\binom{i}{2}$.",
+  "i = 0, 1 → 0; i = 2 → 1; i = 3 → 3; i = 4 → 6. Ab i = 5, 6, 7 jodo (ya socho: kaunsa ek binomial?). Trap: $\\binom{9}{3}$ mat lo — i sirf 7 tak hai."
+],
+"dsa-growth-order-01": [
+  "Chaar functions: polylog $(\\log n)^{10}$, $\\sqrt n$, $n\\log n$, $n^{1.1}$. Asymptotic order chahiye — chhote n ki values se judge mat karo.",
+  "Rule: koi bhi power of log n < koi bhi $n^{\\varepsilon}$ ($\\varepsilon > 0$); aur $n^{a}\\log n < n^{b}$ jab b > a.",
+  "$f_3$ vs $f_4$: ratio $n^{1.1}/(n\\log n) = n^{0.1}/\\log n$ — $n\\to\\infty$ pe ye kahan jaata hai? Isi tarah $f_1$ vs $f_2$ karo. Trap: n = 1024 pe compare mat karo; order increasing chahiye."
+],
+"dsa-growth-order-02": [
+  "Har statement mein dekho: constant factor hai ya exponent mein factor? Aur $a^{\\log n}$ jaise chhupe hue polynomials.",
+  "Rules: $2^{n+c} = 2^c\\cdot 2^n$ (constant); $2^{cn} = (2^c)^n$ (naya base); $a^{\\log_2 n} = n^{\\log_2 a}$; $\\log(n!)$ ko $n! \\le n^n$ aur $n! \\ge (n/2)^{n/2}$ se bound karo.",
+  "Option C: $2^{2n} = 4^n$; ratio $4^n/2^n$ bounded hai ya nahi? Baaki options bhi aise rewrite karo. Trap: $3^{\\log_2 n}$ ko 'log jaisa chhota' mat samjho."
+],
+"dsa-growth-order-03": [
+  "c ko sirf $n \\ge 5$ ke liye kaam karna hai, $n \\ge 1$ ke liye nahi. Ratio $f(n)/n^2$ dekho.",
+  "$f(n)/n^2 = 3 + 10/n$, jo n badhne pe ghatta hai. To c ≥ is ratio ka maximum on $n \\ge 5$, aur c integer hona chahiye.",
+  "Example: n = 10 pe ratio $3 + 10/10 = 4$. Lekin n = 5 bhi allowed hai — wahan ratio kya hai? Trap: sirf leading coefficient 3 mat lo, aur n₀ = 1 maan ke 13 mat lo."
+],
+"dsa-growth-order-04": [
+  "Terms $n/1, n/2, n/3, \\dots$ shrink hote hain, to har term ko n se bound karna loose hoga. Common factor n bahar nikaalo.",
+  "$\\sum_{i=1}^{n} n/i = n\\cdot H_n$, jahan $H_n = 1 + \\frac12 + \\dots + \\frac1n$ harmonic number hai. Floors sirf n se kam ka farq laate hain.",
+  "Ab $H_n$ ki growth socho: kya ye constant pe converge karta hai, ya $\\int_1^n \\frac{dx}{x}$ jaisa badhta hai? Trap: bahar wala factor n mat giraao."
+],
+"dsa-growth-order-05": [
+  "g even aur odd n pe alag behave karta hai. Big-O / Ω ko **saare** bade n pe hold karna hai — dono parities check karo.",
+  "$A = O(B)$ tab jab ek constant c se $A(n) \\le c\\,B(n)$ sab large n pe; $\\Omega$ ulta. Har option mein ratio even aur odd n pe alag likho.",
+  "Option A: odd n pe $f(n)/g(n) = n^2/n = n$ — kya ye kisi constant se bounded hai? Baaki options ke liye bhi dono parities pe ratio likho. Trap: sirf even n check mat karo."
+]
+}

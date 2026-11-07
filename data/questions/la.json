@@ -1208,7 +1208,7 @@
    "marks": 1,
    "level": 1,
    "source": "Drill · GATE-pattern",
-   "stem": "Let $A$ be an invertible $n\\times n$ real matrix and $c\\neq0,1$ a scalar. Which statements are true?",
+   "stem": "Let $A$ be an invertible $n\\times n$ real matrix and $c\\neq0,\\pm1$ a scalar. Which statements are true?",
    "figure": null,
    "options": [
     {
@@ -1224,7 +1224,7 @@
     {
      "text": "$(cA)^{-1}=cA^{-1}$",
      "correct": false,
-     "why": "$(cA)(cA^{-1})=c^2I\\neq I$; the correct inverse is $\\tfrac1cA^{-1}$.",
+     "why": "$(cA)(cA^{-1})=c^2I\\neq I$ (since $c\\neq\\pm1$); the correct inverse is $\\tfrac1cA^{-1}$.",
      "trap": "C4"
     },
     {
