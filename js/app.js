@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072349';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072353';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611072349';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072349';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072349';
+} from './engine.js?v=202611072353';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072353';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072353';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -1597,7 +1597,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611072349');
+  const store = await import('./store.js?v=202611072353');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

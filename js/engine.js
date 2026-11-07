@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611072349';
+import { addEvent, allEvents, cfg } from './store.js?v=202611072353';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -428,12 +428,14 @@ export function targets(session, counts) {
   if (session.mode !== 'normal' || counts.firstPass < 6) return t;
   const acc = counts.firstPassOk / counts.firstPass;
   if (acc < 0.6) {
-    t.topic = Math.max(counts.topic + 2, Math.round(t.topic * 0.75));
+    // a fixed, smaller target (never below what is already done) — it must not move
+    // ahead with every answer, or the part never ends
+    t.topic = Math.max(counts.topic, Math.round(t.topic * 0.75));
     t.mixed = Math.round(t.mixed * 0.5);
-    t.note = `First-pass accuracy ${Math.round(acc * 100)}%: fewer new questions, more repair.`;
+    t.note = `First-pass accuracy ${Math.round(acc * 100)}%: aaj naye sawaal thode kam, repair zyada.`;
   } else if (acc >= 0.8) {
     t.mixed = t.mixed + 4;
-    t.note = `First-pass accuracy ${Math.round(acc * 100)}%: extra mixed questions from older topics.`;
+    t.note = `First-pass accuracy ${Math.round(acc * 100)}%: purane topics ke 4 extra mixed sawaal.`;
   }
   return t;
 }
