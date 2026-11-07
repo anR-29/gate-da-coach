@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072124';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072144';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611072124';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072124';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072124';
+} from './engine.js?v=202611072144';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072144';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072144';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -360,7 +360,7 @@ const MODE_LABEL = { review: 'Revision', learn: 'Seekho', diag: 'Brush-up', topi
 const PART_OF_MODE = { review: 'review', learn: 'learn', diag: 'topic', topic: 'topic', mixed: 'mixed', ga: 'ga', repair: null };
 
 // "Atak gaye?": up to three nudges, mildest first. Using one marks the answer as not yet yours.
-function hintSteps(q, skill) {
+function hintSteps(q, skill, formula = '') {
   const tip = q.type === 'MSQ'
     ? 'Har option ko alag se ek simple example pe check karo — "lagta hai" pe mat chuno.'
     : q.type === 'NAT'
@@ -368,9 +368,82 @@ function hintSteps(q, skill) {
       : 'Jo option kisi simple case pe fail ho, use cut karo.';
   return [
     `<b>Concept:</b> ${esc(skill.title || q.skill)}. ${tip}`,
+    formula,
     skill.check ? `<b>Method:</b> ${md(skill.check, true)}` : '',
     skill.theory ? `<b>Theory:</b> <a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">lesson ka wahi hissa kholo ↗</a> (naye tab me)` : '',
   ].filter(Boolean);
+}
+
+const FORMULA_PIN = {
+  'db.er-tables': /^Minimum tables =|^1:1 with total/,
+  'db.keys': /^PK: unique|^Entity integrity/,
+  'calc.derivative-rules': /^Rules: |^\$\\frac\{d\^n\}/,
+  'la.eig-trace-det': /Use both to find missing eigenvalues/,
+  'la.rank-one': /^Rank one \$uv\^T\$|uv\^T\$: \$v\^Tu\$/,
+  'ml.leakage': /^\*\*Leakage\*\*|^Fit scalers/,
+};
+
+// The formulas this question needs: the short note's lines (core ideas, shortcuts, recall) that
+// best match the skill and the question, else the display equations of the matching lesson step.
+async function formulaFor(q, skill) {
+  if (!skill.theory) return '';
+  const [note, lesson] = await Promise.all([getDoc('theory', skill.theory), getDoc('learn', skill.theory)]);
+  // the skill's own words decide; the question's words only break ties
+  const key = new Map();
+  [[skill.title, 3], [skill.check, 2]].forEach(([t, w]) => words(t).forEach((x) => key.set(x, Math.max(key.get(x) || 0, w))));
+  const stem = new Set(words(q.stem));
+  let picked = [];
+  let label = 'Formula';
+  if (note) {
+    let section = '';
+    const cand = [];
+    for (const raw of note.split('\n')) {
+      const l = raw.trim();
+      if (l.startsWith('## ')) { section = l; continue; }
+      if (FORMULA_PIN[skill.id]) break; // pinned lines are used instead
+      if (/Traps/i.test(section)) continue;
+      let text = '';
+      if (/^[-*]\s|^\d+\.\s/.test(l)) text = l.replace(/^([-*]|\d+\.)\s+/, '');
+      else if (l.startsWith('|') && !/^\|[\s:|-]+\|$/.test(l) && !/^\|\s*(Given|Situation|Case)\b/i.test(l)) text = l.split('|').map((c) => c.trim()).filter(Boolean).join(' → ');
+      if (!text) continue;
+      const ws = new Set(words(text));
+      let own = 0;
+      for (const [t, w] of key) if (ws.has(t)) own += w;
+      let tie = 0;
+      for (const t of stem) if (ws.has(t)) tie += 0.3;
+      if (own >= 3) cand.push({ text, s: own + Math.min(tie, 2), math: text.includes('$') });
+    }
+    const take = (list) => {
+      const out = [];
+      for (const c of list.sort((a, b) => b.s - a.s)) if (out.length < 2 && !out.includes(c.text)) out.push(c.text);
+      return out;
+    };
+    // a few skills whose key line uses other words than the skill title
+    const pin = FORMULA_PIN[skill.id];
+    if (pin) {
+      for (const raw of note.split('\n')) {
+        const t = raw.trim().replace(/^([-*]|\d+\.)\s+/, '');
+        if (pin.test(t) && !picked.includes(t) && picked.length < 2) picked.push(t);
+      }
+      if (picked.length) cand.length = 0;
+      if (!picked.some((t) => t.includes('$'))) label = 'Yaad rakho';
+    }
+    if (!picked.length) picked = take(cand.filter((c) => c.math));
+    // topics without formulas (SQL, Python, GA) get their key rule instead
+    if (!picked.length) {
+      picked = take(cand.filter((c) => c.s >= 5));
+      label = 'Yaad rakho';
+    }
+  }
+  if (!picked.length && lesson) {
+    const art = document.createElement('article');
+    art.innerHTML = md(lesson);
+    const block = matchLessonBlock(art, q.id);
+    const eqs = block ? block.els.map((e) => e.textContent).join(' ').match(/\$\$[\s\S]+?\$\$/g) || [] : [];
+    picked.push(...eqs.slice(0, 2));
+    label = 'Formula';
+  }
+  return picked.length ? `<b>${label}:</b><ul class="fhint">${picked.map((l) => `<li>${md(l, true)}</li>`).join('')}</ul>` : '';
 }
 
 // Lines for the 10-second check before submitting, led by the student's own most common traps.
@@ -562,7 +635,7 @@ function renderSession(state) {
   form.addEventListener('input', remember);
 
   // hints: one more nudge per tap; the count is kept with the question across reloads
-  const steps = hintSteps(q, skill);
+  let steps = hintSteps(q, skill);
   const hintBtn = document.getElementById('hintbtn');
   const showHints = () => {
     const n = current.hints || 0;
@@ -579,6 +652,13 @@ function renderSession(state) {
     showHints();
   };
   if (current.hints) showHints();
+  // the formula step comes from the notes (cached after the first fetch)
+  const forQ = current;
+  formulaFor(q, skill).then((fh) => {
+    if (current !== forQ || feedback || !fh) return;
+    steps = hintSteps(q, skill, fh);
+    if (current.hints) showHints();
+  });
 
   form.onsubmit = (ev) => {
     ev.preventDefault();
@@ -1507,7 +1587,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611072124');
+  const store = await import('./store.js?v=202611072144');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
