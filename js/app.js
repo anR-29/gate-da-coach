@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611080012';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611080018';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade,
-} from './engine.js?v=202611080012';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611080012';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611080012';
+  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl,
+} from './engine.js?v=202611080018';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611080018';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611080018';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -648,6 +648,7 @@ function renderSession(state) {
   let steps = hintSteps(q, skill);
   const hintBtn = document.getElementById('hintbtn');
   const showHints = () => {
+    if (q.hints && !steps[0].startsWith('<b>Kya notice')) steps = hintSteps(q, skill); // question hints arrived late
     const n = current.hints || 0;
     document.getElementById('hints').innerHTML = steps.slice(0, n).map((h) => `<li>${h}</li>`).join('');
     typeset(document.getElementById('hints'));
@@ -1081,7 +1082,7 @@ function getDoc(kind, id) {
   const key = `${kind}/${id}`;
   // the promise is cached, so two renders at once share one download
   if (!docCache.has(key)) {
-    docCache.set(key, fetch(`data/${key}.md`, { cache: 'no-cache' })
+    docCache.set(key, fetch(dataUrl(`data/${key}.md`))
       .then((r) => (r.ok ? r.text() : null)) // a missing lesson is remembered too
       .catch(() => {
         docCache.delete(key); // offline: try again next time
@@ -1820,7 +1821,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611080012');
+  const store = await import('./store.js?v=202611080018');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

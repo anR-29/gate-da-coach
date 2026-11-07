@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611080012';
+import { addEvent, allEvents, cfg } from './store.js?v=202611080018';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -11,17 +11,22 @@ const AREAS = ['ps', 'la', 'calc', 'py', 'dsa', 'dsa2', 'db', 'ml', 'ml2', 'ai',
 
 export const content = { plan: null, skills: {}, questions: {}, bySkill: {}, theory: new Set() };
 
+// Data URLs carry the build version (stamped on this module's own URL by tools/bump_version.py),
+// so browsers and the service worker can cache them; a new deploy changes every URL.
+export const VERSION = new URL(import.meta.url).searchParams.get('v') || String(Date.now());
+export const dataUrl = (path) => `${path}?v=${VERSION}`;
+
 export async function loadContent() {
   // plan, question files and hint files are all fetched at once, then read in order
-  const getJson = async (url) => {
+  const getJson = async (path) => {
     try {
-      const r = await fetch(url, { cache: 'no-cache' });
+      const r = await fetch(dataUrl(path));
       return r.ok ? await r.json() : null;
     } catch {
       return null;
     }
   };
-  const planP = fetch('data/plan.json', { cache: 'no-cache' }).then((r) => r.json());
+  const planP = fetch(dataUrl('data/plan.json')).then((r) => r.json());
   const hintsP = Promise.all(AREAS.map((area) => getJson(`data/hints/${area}.json`)));
   const files = await Promise.all(AREAS.map((area) => getJson(`data/questions/${area}.json`)));
   content.plan = await planP;
@@ -41,13 +46,16 @@ export async function loadContent() {
       // a missing or broken area file should not take the whole app down
     }
   }
-  // per-question hints (data/hints/<file>.json: {qid: [notice, setup, first step]})
-  // hints are optional; without them the app falls back to generic ones
-  for (const hints of await hintsP) {
-    for (const [qid, h] of Object.entries(hints || {})) {
-      if (content.questions[qid] && Array.isArray(h) && h.length === 3) content.questions[qid].hints = h;
+  // per-question hints (data/hints/<file>.json: {qid: [notice, setup, first step]}) are only
+  // needed when "Atak gaye?" is tapped, so the app does not wait for them; until they arrive
+  // the generic hints are used
+  content.hintsReady = hintsP.then((all) => {
+    for (const hints of all) {
+      for (const [qid, h] of Object.entries(hints || {})) {
+        if (content.questions[qid] && Array.isArray(h) && h.length === 3) content.questions[qid].hints = h;
+      }
     }
-  }
+  });
 }
 
 // ---------- dates ----------
