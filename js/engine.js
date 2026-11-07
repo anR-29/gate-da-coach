@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611071901';
+import { addEvent, allEvents, cfg } from './store.js?v=202611072124';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -64,7 +64,9 @@ export function derive() {
   const seen = {};
   const attempts = [];
   const mocks = [];
+  const stuck = {}; // latest "Kahan atke?" answer per question
   for (const e of events) {
+    if (e.type === 'stuck') { stuck[e.qid] = e; continue; }
     if (e.type === 'attempt') {
       attempts.push(e);
       const s = (seen[e.qid] ||= { n: 0, last: 0 });
@@ -81,7 +83,7 @@ export function derive() {
       mocks.push(e);
     }
   }
-  return { cards, dayLogs, logList, seen, attempts, mocks };
+  return { cards, dayLogs, logList, seen, attempts, mocks, stuck: Object.values(stuck) };
 }
 
 // Status of one plan day for lists: done, fallback, re-attempt count, attempts.
@@ -137,10 +139,10 @@ export function dueCards(state, date = today()) {
 export function skillStats(state) {
   const stats = {};
   for (const a of state.attempts) {
-    if (a.mode === 'repair' || a.repeated || a.skipped) continue;
+    if (a.mode === 'repair' || a.mode === 'learn' || a.repeated || a.skipped) continue;
     const s = (stats[a.skill] ||= { n: 0, ok: 0 });
     s.n++;
-    if (a.correct && a.conf !== 'Guess') s.ok++;
+    if (a.correct && a.conf !== 'Guess' && !a.hint) s.ok++;
   }
   return stats;
 }
@@ -186,11 +188,11 @@ function subjectWeightPerSkill(skillId) {
 // Expected exam marks per subject from recent first-pass accuracy (last 60 unseen attempts).
 export function target72(state) {
   const rows = [];
-  const all = state.attempts.filter((a) => a.mode !== 'repair' && !a.repeated && !a.skipped && content.skills[a.skill]);
+  const all = state.attempts.filter((a) => a.mode !== 'repair' && a.mode !== 'learn' && !a.repeated && !a.skipped && content.skills[a.skill]);
   for (const [name, s] of Object.entries(SUBJECTS)) {
     const mine = all.filter((a) => s.areas.includes(content.skills[a.skill].area)).slice(-60);
     const n = mine.length;
-    const ok = mine.filter((a) => a.correct).length;
+    const ok = mine.filter((a) => a.correct && !a.hint).length;
     const acc = n ? ok / n : null;
     const known = n >= 3; // 3–9 attempts give a provisional, low-data value
     const lowData = n < MIN_N;
@@ -286,6 +288,25 @@ export function setOrder(order) {
   try { localStorage.setItem(LS_ORDER, JSON.stringify(order)); } catch {}
 }
 
+// "Seekho": on a new topic day, one easy question per topic skill comes first, and the lesson
+// step it needs is shown right after it (question first, theory in small pieces).
+// Checkpoint days (many topics at once) and re-attempts skip it.
+function learnCount(day, opts, fallback, revisionOnly) {
+  if (!opts.learn || revisionOnly || opts.reattempt) return 0;
+  const skills = skillsForDays([day.day, ...((day.mergedDays) || [])]);
+  const theories = new Set(skills.map((s) => content.skills[s].theory).filter(Boolean));
+  if (!skills.length || theories.size > 3) return 0;
+  return Math.min(fallback ? 2 : 6, skills.length);
+}
+
+function withLearn(order, n) {
+  const o = order.filter((p) => p !== 'learn');
+  if (!n) return o;
+  const i = o.indexOf('topic');
+  o.splice(i < 0 ? 0 : i, 0, 'learn');
+  return o;
+}
+
 export function newSession(day, opts = {}) {
   const fallback = !!opts.fallback;
   const revisionOnly = !!opts.revisionOnly;
@@ -307,10 +328,11 @@ export function newSession(day, opts = {}) {
     served: [],
     mode: revisionOnly ? 'revision' : fallback ? 'fallback' : 'normal',
     reattempt: !!opts.reattempt,
-    order: opts.order || getOrder(),
+    order: withLearn(opts.order || getOrder(), learnCount(day, opts, fallback, revisionOnly)),
     sid: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
     ended: false,
   };
+  session.base.learn = learnCount(day, opts, fallback, revisionOnly);
   // continuing an unfinished day: the time already spent counts against today's cap
   if (opts.carryMs) session.activeMs = Math.min(opts.carryMs, session.capMin * 60000);
   saveSession(session);
@@ -375,6 +397,7 @@ export function sessionCounts(session, state) {
     attempts: mine.length,
     correct: mine.filter((a) => a.correct).length,
     review: count('review'),
+    learn: count('learn'),
     diag: count('diag'),
     topic: count('topic') + count('diag'),
     mixed: count('mixed'),
@@ -449,9 +472,20 @@ export function nextItem(session, state) {
       const picked = pickQuestion(c.skill, session, state);
       return picked ? { ...picked, skill: c.skill, mode: 'review', label: 'Delayed revision · fresh variant' } : null;
     },
+    learn() {
+      const n = session.base.learn || 0;
+      if (counts.learn >= n || !topic.length) return null;
+      for (let i = 0; i < topic.length; i++) {
+        const skill = rotate(topic, counts.learn + i);
+        const picked = pickQuestion(skill, session, state, 1);
+        if (ok(picked)) return { ...picked, skill, mode: 'learn', label: 'Seekho · pehle khud try karo, phir theory ka tukda' };
+      }
+      return null;
+    },
     topic() {
       if (counts.topic >= t.topic || !topic.length) return null;
-      const mode = counts.diag < 3 && session.mode === 'normal' ? 'diag' : 'topic';
+      // after a Seekho part the brush-up is not closed-book any more
+      const mode = counts.diag < 3 && session.mode === 'normal' && !session.base.learn ? 'diag' : 'topic';
       for (let i = 0; i < topic.length; i++) {
         const skill = rotate(topic, counts.topic + i);
         const level = mode === 'diag' ? 1 : counts.topic < t.topic / 2 ? 1 : 2;
@@ -552,6 +586,7 @@ export function submit(session, item, response, conf, ms) {
   addEvent('attempt', {
     qid: q.id, skill: q.skill, subject: skill?.subject || '', day: session.day, date,
     mode: item.mode, resp: response, correct: g.correct, conf, repeated: item.repeated, ms, sid: session.sid,
+    ...(item.hints ? { hint: item.hints } : {}),
     ...(session.reattempt ? { re: true } : {}),
     ...(traps.length ? { traps } : {}),
   });
@@ -560,7 +595,13 @@ export function submit(session, item, response, conf, ms) {
   const counts = sessionCounts(session, state);
   const repairsDone = counts.repairsBySkill[q.skill] || 0;
   const out = { ...g, traps, repairQueued: false, showTheory: false, stopSkill: false, cardOpened: false };
-  const guessed = conf === 'Guess';
+  // Seekho questions are for learning: no cards, no repair, no accuracy
+  if (item.mode === 'learn') {
+    session.served.push(q.id);
+    saveSession(session);
+    return { ...out, learn: true };
+  }
+  const guessed = conf === 'Guess' || item.hints > 0; // solved with a hint = not yet yours
 
   if (item.mode === 'review') {
     addEvent('card', { skill: q.skill, action: g.correct && !guessed ? 'good' : 'again', date });

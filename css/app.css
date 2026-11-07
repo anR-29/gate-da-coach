@@ -411,6 +411,24 @@ section.card { overflow-x: auto; }
 .fig { margin: 22px 0; color: var(--ink); }
 .fig svg { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; }
 .fig figcaption { text-align: center; font-size: 13px; color: var(--muted); margin-top: 8px; }
+/* hints, 10-second check, Seekho piece, "Kahan atke?" */
+.hintbox { margin: 14px 0 4px; }
+.hintrow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; }
+.hintrow .link { font-size: 13px; color: var(--info); text-decoration: none; padding: 0; min-height: 0; }
+.hintrow .link.nudge { color: var(--warn); font-weight: 600; animation: nudge 1.2s ease-in-out 2; }
+@keyframes nudge { 50% { transform: translateX(3px); } }
+.hints { margin: 10px 0 0; padding-left: 20px; font-size: 14px; }
+.hints li { margin: 6px 0; padding: 8px 12px; background: var(--info-bg); border-radius: 10px; list-style-position: outside; }
+.precheck { margin: 14px 0 0; padding: 12px 16px; border: 1px solid var(--warn-line); background: var(--warn-bg); border-radius: 12px; font-size: 14px; }
+.precheck ul { margin: 6px 0 8px; padding-left: 20px; }
+.precheck li { margin: 4px 0; }
+.learnstep { margin: 16px 0; padding: 14px 18px; border: 1px solid var(--mark); border-left-width: 4px; background: var(--mark-bg); border-radius: 12px; }
+.learnstep .prose { font-size: 14.5px; }
+.learnstep .lesson h2, .learnstep .lesson h3 { border: 0; padding: 0; }
+.stuck { margin: 10px 0 16px; }
+.stuck .chips { margin: 8px 0 0; }
+.stuck .chip { cursor: pointer; background: var(--panel); }
+.stuck .chip.on { background: var(--ink); color: var(--panel); border-color: var(--ink); }
 .button.primary { background: var(--primary-bg); border-color: var(--primary-bg); color: var(--primary-fg); }
 #mxfilter .chip { cursor: pointer; background: var(--panel); }
 #mxfilter .chip.on { background: var(--ink); color: var(--panel); border-color: var(--ink); }

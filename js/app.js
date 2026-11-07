@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611071901';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611072124';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611071901';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611071901';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611071901';
+} from './engine.js?v=202611072124';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611072124';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611072124';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -257,10 +257,10 @@ function dayAttempts(state, n) {
         const l = log(arr[0].sid, arr[0].date);
         const ok = arr.filter((a) => a.correct).length;
         const tag = l ? (l.mode === 'reattempt' ? 're-attempt' : String(l.mode).startsWith('history') ? 'chat (pehle)' : l.mode) : 'chal raha / log nahi';
-        const SECTIONS = [['Topic', ['diag', 'topic']], ['Mixed', ['mixed']], ['GA', ['ga']], ['Revision cards', ['review']], ['Repair variants', ['repair']]];
+        const SECTIONS = [['Seekho', ['learn']], ['Topic', ['diag', 'topic']], ['Mixed', ['mixed']], ['GA', ['ga']], ['Revision cards', ['review']], ['Repair variants', ['repair']]];
         const item = (a) => {
           const s = content.skills[a.skill];
-          return `<li><a href="#/attempt/${esc(a.id)}"><span class="${a.correct ? 'okc' : 'noc'}">${a.correct ? '✓' : '✗'}</span> ${esc(s ? s.title : a.skill)}</a> <span class="muted small">${a.conf === 'Guess' ? 'guess' : ''}${a.repeated ? ' · repeat' : ''}</span></li>`;
+          return `<li><a href="#/attempt/${esc(a.id)}"><span class="${a.correct ? 'okc' : 'noc'}">${a.correct ? '✓' : '✗'}</span> ${esc(s ? s.title : a.skill)}</a> <span class="muted small">${a.conf === 'Guess' ? 'guess' : ''}${a.hint ? ' · 💡 ishara' : ''}${a.repeated ? ' · repeat' : ''}</span></li>`;
         };
         return `<details ${groups.size === 1 ? 'open' : ''}><summary>${fmtDate(arr[0].date)} · ${esc(tag)}${l && l.fallback && l.mode === 'reattempt' ? ' · fallback' : ''}${l && l.partial ? ' · adhoora' : ''} · ${ok}/${arr.length} sahi</summary>
           ${SECTIONS.map(([name, modes]) => {
@@ -344,7 +344,11 @@ async function fillTitles(root) {
 }
 
 function startSession(day, opts = {}) {
-  if (!opts.reattempt && !opts.revisionOnly) opts = { ...opts, carryMs: dayCarry(derive(), day.day).ms };
+  if (!opts.reattempt && !opts.revisionOnly) {
+    const state = derive();
+    // a day not finished yet starts with the Seekho part (question first, theory after)
+    opts = { ...opts, carryMs: dayCarry(state, day.day).ms, learn: !dayStatus(state, day.day).done };
+  }
   session = newSession(day, opts);
   current = null;
   feedback = null;
@@ -352,15 +356,64 @@ function startSession(day, opts = {}) {
   else location.hash = '#/today';
 }
 
-const MODE_LABEL = { review: 'Revision', diag: 'Brush-up', topic: 'Topic', mixed: 'Mixed', ga: 'GA', repair: 'Repair' };
-const PART_OF_MODE = { review: 'review', diag: 'topic', topic: 'topic', mixed: 'mixed', ga: 'ga', repair: null };
+const MODE_LABEL = { review: 'Revision', learn: 'Seekho', diag: 'Brush-up', topic: 'Topic', mixed: 'Mixed', ga: 'GA', repair: 'Repair' };
+const PART_OF_MODE = { review: 'review', learn: 'learn', diag: 'topic', topic: 'topic', mixed: 'mixed', ga: 'ga', repair: null };
+
+// "Atak gaye?": up to three nudges, mildest first. Using one marks the answer as not yet yours.
+function hintSteps(q, skill) {
+  const tip = q.type === 'MSQ'
+    ? 'Har option ko alag se ek simple example pe check karo — "lagta hai" pe mat chuno.'
+    : q.type === 'NAT'
+      ? 'Sabse simple case ya chhote numbers pe pehle try karo, phir asli numbers.'
+      : 'Jo option kisi simple case pe fail ho, use cut karo.';
+  return [
+    `<b>Concept:</b> ${esc(skill.title || q.skill)}. ${tip}`,
+    skill.check ? `<b>Method:</b> ${md(skill.check, true)}` : '',
+    skill.theory ? `<b>Theory:</b> <a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">lesson ka wahi hissa kholo ↗</a> (naye tab me)` : '',
+  ].filter(Boolean);
+}
+
+// Lines for the 10-second check before submitting, led by the student's own most common traps.
+const CHECKS = {
+  C1: 'Koi condition chhooti to nahi? "Always / sirf tab" wale claim dobara padho.',
+  C2: 'Do jodi wali cheezein ulti to nahi kar di (∪/∩, α/β, single/complete)?',
+  C3: 'Formula wahi lagaya jo sawaal maang raha hai, paas wala nahi?',
+  C4: 'Square ya root? (variance vs SD, ‖v‖ vs ‖v‖², λ vs 1/λ)',
+  C5: 'Boundary: < ya ≤? Endpoints shamil hain ya nahi?',
+  C6: 'Ginti dobara: off-by-one, ya koi step adhoora to nahi?',
+  C7: 'Given kya hai — P(A|B) ya P(B|A)? Independence maani to sahi hai?',
+  C8: 'Kya ye cheez sach me possible hai? "Hamesha" wale options pe ek counter-example socho.',
+  C9: 'Property sahi object pe lagayi (data structure / model / Python rule)?',
+  C10: 'Dekhne me same lag raha hai, par sawaal alag to nahi?',
+  C11: 'Sign aur direction sahi hai (+/−, increase/decrease)?',
+};
+
+function checkLines(q, state) {
+  const counts = {};
+  for (const a of state.attempts) for (const t of a.traps || []) counts[t] = (counts[t] || 0) + 1;
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).map(([c]) => c);
+  const codes = [...new Set([...top, 'C4', 'C6'])].filter((c) => CHECKS[c]).slice(0, 2);
+  return [
+    'Sawaal <b>kya maang raha hai</b> — maine wahi nikala (distance ya distance², count ya probability)?',
+    ...codes.map((c) => esc(CHECKS[c])),
+    ...(q.type === 'NAT' ? [`Format: ${esc(natHint(q))}.`] : []),
+  ];
+}
+
+const STUCK = {
+  concept: 'Concept pehchana nahi',
+  setup: 'Setup nahi bana',
+  last: 'Aakhri step / calculation',
+  read: 'Padhne me galti',
+  unknown: 'Pata hi nahi tha',
+};
 
 // The question that was on screen before a reload or a look at a past attempt, if still unanswered.
 function restoreCurrent(state) {
   const c = session.cur;
   if (!c || !content.questions[c.qid]) return null;
   if (sessionAttempts(session, state).some((a) => a.qid === c.qid)) return null;
-  return { q: content.questions[c.qid], skill: c.skill, mode: c.mode, label: c.label, repeated: c.repeated, shownAt: Date.now() };
+  return { q: content.questions[c.qid], skill: c.skill, mode: c.mode, label: c.label, repeated: c.repeated, hints: c.hints || 0, shownAt: Date.now() };
 }
 
 // Progress of each part in the chosen order, e.g. "Revision 3/10 · Topic 0/14 · Mixed 0/6 · GA 0/8".
@@ -371,6 +424,7 @@ function partProgress(state, counts, t) {
   ));
   const parts = {
     review: [counts.review, counts.review + leftDue],
+    learn: [counts.learn, session.base.learn || 0],
     topic: [counts.topic, t.topic],
     mixed: [counts.mixed, t.mixed],
     ga: [counts.ga, t.ga],
@@ -380,7 +434,7 @@ function partProgress(state, counts, t) {
   const switchable = session.mode !== 'revision';
   // each part is a one-tap switcher: the tapped part's questions come next
   return order
-    .filter((p) => parts[p][1] > 0 || parts[p][0] > 0)
+    .filter((p) => parts[p] && (parts[p][1] > 0 || parts[p][0] > 0))
     .map((p) => {
       const fin = parts[p][0] >= parts[p][1];
       const label = `${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}`;
@@ -426,7 +480,7 @@ function renderSession(state) {
     const it = restored || nextItem(session, state);
     current = it ? { ...it, shownAt: it.shownAt || Date.now() } : null;
     feedback = null;
-    session.cur = current ? { qid: current.q.id, skill: current.skill, mode: current.mode, label: current.label, repeated: current.repeated } : null;
+    session.cur = current ? { qid: current.q.id, skill: current.skill, mode: current.mode, label: current.label, repeated: current.repeated, hints: current.hints || 0 } : null;
     if (!restored) session.sel = null;
     saveSession(session);
   }
@@ -472,7 +526,11 @@ function renderSession(state) {
         </div>
         <div class="err" id="err" role="alert"></div>
         ${shown ? '' : `<p class="hint keys">Keyboard: ${q.type === 'NAT' ? 'number likho' : `1–4 ya A–D${isMsq ? ' (toggle)' : ''}`} · S / L / G confidence · Enter = submit, phir Enter = next</p>`}
-        ${shown || !skill.theory ? '' : `<p class="hint">Theory nahi aati? <a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">Is sawaal wala lesson ka hissa kholo ↗</a> <span class="muted">(naye tab me; session yahin rukega)</span></p>`}
+        ${shown ? '' : `<div class="hintbox">
+          <div class="hintrow"><button type="button" class="link" id="hintbtn">💡 Atak gaye? Ek ishara lo</button>
+            ${skill.theory ? `<a class="small" href="${lessonHref(q, skill)}" target="_blank" rel="noopener">📖 Is sawaal wala lesson ka hissa ↗</a>` : ''}</div>
+          <ol class="hints" id="hints"></ol></div>
+          <div class="precheck" id="precheck" hidden></div>`}
       </form>
       <div id="fb"></div>
     </section>
@@ -502,6 +560,26 @@ function renderSession(state) {
   };
   form.addEventListener('change', remember);
   form.addEventListener('input', remember);
+
+  // hints: one more nudge per tap; the count is kept with the question across reloads
+  const steps = hintSteps(q, skill);
+  const hintBtn = document.getElementById('hintbtn');
+  const showHints = () => {
+    const n = current.hints || 0;
+    document.getElementById('hints').innerHTML = steps.slice(0, n).map((h) => `<li>${h}</li>`).join('');
+    typeset(document.getElementById('hints'));
+    hintBtn.hidden = n >= steps.length;
+    hintBtn.classList.remove('nudge');
+    hintBtn.textContent = n ? '💡 Ek aur ishara' : '💡 Atak gaye? Ek ishara lo';
+  };
+  hintBtn.onclick = () => {
+    current.hints = Math.min(steps.length, (current.hints || 0) + 1);
+    if (session.cur) session.cur.hints = current.hints;
+    saveSession(session);
+    showHints();
+  };
+  if (current.hints) showHints();
+
   form.onsubmit = (ev) => {
     ev.preventDefault();
     const err = document.getElementById('err');
@@ -509,6 +587,17 @@ function renderSession(state) {
     if (q.type !== 'NAT' && !resp.length) return (err.textContent = 'Pehle koi option chuno.');
     if (q.type === 'NAT' && !String(resp).trim()) return (err.textContent = 'Pehle answer likho.');
     if (!conf) return (err.textContent = 'Confidence chuno: Sure, Likely ya Guess (S / L / G).');
+    // 10-second check on NAT and 2-mark questions: the first Submit shows it, the second submits
+    if ((q.type === 'NAT' || q.marks === 2) && current.mode !== 'learn' && !current.checked) {
+      current.checked = true;
+      const box = document.getElementById('precheck');
+      box.innerHTML = `<b>10-second check:</b><ul>${checkLines(q, derive()).map((l) => `<li>${l}</li>`).join('')}</ul>
+        <span class="muted small">Sab theek? Submit dobara dabao (ya Enter). Kuch galat dikhe toh pehle answer badlo.</span>`;
+      box.hidden = false;
+      document.getElementById('submitbtn').textContent = 'Haan, check kiya — Submit';
+      box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      return;
+    }
     const out = submit(session, current, resp, conf, Date.now() - current.shownAt);
     if (!out.valid) {
       err.textContent = String(resp).includes(',')
@@ -567,9 +656,19 @@ function renderFeedback() {
     }).join('');
   }
   const trapTags = (f.traps || []).map((c) => `<span class="chip hot" title="${esc(c)}">${esc(TRAP_CLASSES[c] || c)}</span>`).join('');
-  const verdict = f.correct
-    ? (f.conf === 'Guess' ? '<div class="verdict ok">Sahi — lekin Guess tha, isliye revision card bana diya.</div>' : '<div class="verdict ok">Sahi ✓</div>')
-    : `<div class="verdict no">Galat ✗</div>${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}`;
+  const learning = current.mode === 'learn';
+  const verdict = learning
+    ? (f.correct
+      ? '<div class="verdict ok">Sahi ✓ — ab neeche dekho ye kyun kaam karta hai.</div>'
+      : '<div class="verdict no">Abhi nahi hua — koi baat nahi. Ye seekhne wala sawaal hai, ginti me nahi aata. Neeche ka tukda padho.</div>')
+    : f.correct
+      ? (f.conf === 'Guess' ? '<div class="verdict ok">Sahi — lekin Guess tha, isliye revision card bana diya.</div>'
+        : current.hints ? '<div class="verdict ok">Sahi ✓ — ishara lekar. Revision card bana diya, taaki agli baar bina ishare ke ho.</div>'
+          : '<div class="verdict ok">Sahi ✓</div>')
+      : `<div class="verdict no">Galat ✗</div>${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}`;
+  const stuck = !f.correct ? `<div class="stuck" id="stuck"><span class="muted small">Kahan atke? (ek tap — isse tumhara pattern banta hai)</span>
+      <div class="chips">${Object.entries(STUCK).map(([k, l]) => `<button type="button" class="chip ${f.stuck === k ? 'on' : ''}" data-why="${k}">${l}</button>`).join('')}</div></div>` : '';
+  const piece = learning && skill.theory ? '<div class="learnstep" id="learnstep"><p class="muted">Theory ka tukda aa raha hai…</p></div>' : '';
   const next = f.repairQueued
     ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga. Check: ${md(skill.check || '', true)}</p>`
     : f.stopSkill
@@ -578,12 +677,26 @@ function renderFeedback() {
   const theory = (f.showTheory || !f.correct || f.conf === 'Guess') && skill.theory
     ? `<p><a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">📖 Samjho: ${esc(skill.title)} — detailed lesson (naya tab)</a></p>` : '';
   const fb = document.getElementById('fb');
-  fb.innerHTML = `
+  fb.innerHTML = learning ? `
     ${verdict}
+    ${piece}
+    ${detail}
+    <details><summary>Is sawaal ka poora solution</summary><div class="sol">${md(q.solution)}</div></details>
+    ${stuck}` : `
+    ${verdict}
+    ${stuck}
     ${detail}
     <details ${f.correct ? '' : 'open'}><summary>Solution</summary><div class="sol">${md(q.solution)}</div></details>
     ${next}${theory}`;
   typeset(fb);
+  fb.querySelectorAll('#stuck [data-why]').forEach((b) => {
+    b.onclick = () => {
+      f.stuck = b.dataset.why;
+      window.__store.addEvent('stuck', { qid: q.id, skill: q.skill, mode: current.mode, why: f.stuck, day: session.day });
+      fb.querySelectorAll('#stuck [data-why]').forEach((x) => x.classList.toggle('on', x === b));
+    };
+  });
+  if (piece) showLessonPiece(q, skill);
   const nextBtn = document.getElementById('next');
   nextBtn.onclick = () => {
     current = null;
@@ -956,10 +1069,52 @@ const PART_HINT = {
 // The lesson block (### step, or a ## section) that best matches the question's skill and
 // text; it is scrolled to and flashed for a moment, with a chip to jump back to it.
 function focusLessonPart(qid, jump) {
+  const best = matchLessonBlock(main.querySelector('article.lesson'), qid);
+  if (!best) return;
+  const { h, els } = best;
+  h.id ||= 'qfocus';
+  jump.hidden = false;
+  jump.insertAdjacentHTML('afterbegin', `<button type="button" class="chip focus" data-s="${h.id}">📍 Is sawaal ka hissa: ${esc(h.textContent.replace(/^\d+\.\s*/, ''))}</button>`);
+  requestAnimationFrame(() => {
+    h.scrollIntoView({ block: 'start' });
+    els.forEach((e) => {
+      e.classList.remove('flash');
+      void e.offsetWidth; // restart the animation
+      e.classList.add('flash');
+    });
+    setTimeout(() => els.forEach((e) => e.classList.remove('flash')), 1600);
+  });
+}
+
+// Seekho: after the try, show only the lesson step that question needs, inline.
+async function showLessonPiece(q, skill) {
+  const box = document.getElementById('learnstep');
+  const text = await getDoc('learn', skill.theory);
+  if (!box || !box.isConnected) return;
+  const href = lessonHref(q, skill);
+  if (!text) {
+    box.innerHTML = `<p><a href="${href}" target="_blank" rel="noopener">📖 Lesson ka wahi hissa kholo ↗</a></p>`;
+    return;
+  }
+  const art = document.createElement('article');
+  art.className = 'lesson';
+  art.innerHTML = md(text);
+  const best = matchLessonBlock(art, q.id);
+  if (!best) {
+    box.innerHTML = `<p><a href="${href}" target="_blank" rel="noopener">📖 Lesson ka wahi hissa kholo ↗</a></p>`;
+    return;
+  }
+  const [h, ...rest] = best.els;
+  box.innerHTML = `<div class="eyebrow">📘 Theory ka tukda · ${esc(h.textContent.replace(/^\d+\.\s*/, ''))}</div>
+    <div class="prose lesson">${rest.map((e) => e.outerHTML).join('')}</div>
+    <p class="small"><b>Ek line me khud bolo:</b> ye idea kya kehta hai? Bol pao toh agla sawaal. · <a href="${href}" target="_blank" rel="noopener">poora lesson isi jagah se ↗</a></p>`;
+  typeset(box);
+}
+
+function matchLessonBlock(art, qid) {
   const q = content.questions[qid];
   const sk = q ? content.skills[q.skill] : content.skills[qid];
-  if (!sk) return;
-  const art = main.querySelector('article.lesson');
+  if (!sk || !art) return null;
   const skip = /^(Ye topic kyun|Ek page me|Khud try karo|Solved examples|Confusions)/i;
   const blocks = [];
   let section = '';
@@ -971,7 +1126,7 @@ function focusLessonPart(qid, jump) {
     if (els.length < 2) continue; // a heading with nothing under it
     blocks.push({ h, els, section, head: words(h.textContent), body: words(els.slice(1).map((e) => e.textContent).join(' ')) });
   }
-  if (!blocks.length) return;
+  if (!blocks.length) return null;
   const want = new Map();
   const add = (text, w) => words(text).forEach((t) => want.set(t, Math.max(want.get(t) || 0, w)));
   add(q ? `${q.stem} ${q.solution || ''}` : '', 1);
@@ -993,20 +1148,8 @@ function focusLessonPart(qid, jump) {
   };
   const hint = PART_HINT[sk.id] && blocks.find((b) => PART_HINT[sk.id].test(b.h.textContent));
   const best = hint ? { b: hint, s: 1 } : blocks.map((b) => ({ b, s: score(b) })).sort((x, y) => y.s - x.s)[0];
-  if (!best || best.s <= 0) return;
-  const { h, els } = best.b;
-  h.id ||= 'qfocus';
-  jump.hidden = false;
-  jump.insertAdjacentHTML('afterbegin', `<button type="button" class="chip focus" data-s="${h.id}">📍 Is sawaal ka hissa: ${esc(h.textContent.replace(/^\d+\.\s*/, ''))}</button>`);
-  requestAnimationFrame(() => {
-    h.scrollIntoView({ block: 'start' });
-    els.forEach((e) => {
-      e.classList.remove('flash');
-      void e.offsetWidth; // restart the animation
-      e.classList.add('flash');
-    });
-    setTimeout(() => els.forEach((e) => e.classList.remove('flash')), 1600);
-  });
+  if (!best || best.s <= 0) return null;
+  return best.b;
 }
 
 // Link from a question to the lesson part it needs.
@@ -1134,6 +1277,7 @@ function viewProgress() {
       </tbody></table>
       <p class="muted small">${state.attempts.length < 20 ? 'Sample chhota hai (20 se kam unseen attempts) — trend mat padho.' : ''}</p>
     </section>
+    ${stuckProfile(state)}
     ${trapProfile(state)}
     <section class="card">
       <h2>Revision cards</h2>
@@ -1163,6 +1307,33 @@ function viewProgress() {
       ${logs.slice().reverse().map((l) => `<tr><td><a href="#/day/${l.day}">${l.day}</a></td><td>${fmtDate(l.date)}</td><td>${modeTag(l)}</td><td>${l.hours ?? '—'}</td><td>${l.anxiety ?? '—'}</td><td>${l.firstPass ? pct(l.firstPassOk, l.firstPass) : '—'}</td></tr>`).join('')}
       </tbody></table>
     </section>`);
+}
+
+// Where the student gets stuck on wrong answers ("Kahan atke?"), with what to do about the top reason.
+const STUCK_FIX = {
+  concept: 'Naye sawaal pe pehle 30 sec sirf ye socho: "kaunsa concept?" Trigger words dhoondo. Atko toh 💡 ka pehla ishara concept hi batata hai. Naye din ka Seekho part skip mat karo.',
+  setup: 'Concept pata hai par sawaal ko equation/tree/table me nahi badal pa rahe. Lesson ke Solved examples ka "Soch" hissa padho, wahi setup sikhata hai. Pehle sabse simple case pe setup banao.',
+  last: 'Method sahi, aakhri step galat. Submit se pehle wala 10-second check dhyan se padho: root ya square, unit vector, sawaal kya maang raha hai.',
+  read: 'Sawaal 2 baar padho. "at least", "not", "without replacement", MSQ ka "select all" pe ruk ke dhyan do.',
+  unknown: 'Ye topic abhi baitha nahi. Sawaal ke neeche wala lesson ka hissa padho, phir usi skill ka agla variant karo.',
+};
+
+function stuckProfile(state) {
+  const list = state.stuck || [];
+  const counts = {};
+  list.forEach((s) => { counts[s.why] = (counts[s.why] || 0) + 1; });
+  const rows = Object.entries(counts).filter(([k]) => STUCK[k]).sort((a, b) => b[1] - a[1]);
+  const total = rows.reduce((t, [, n]) => t + n, 0);
+  return `<section class="card">
+      <h2>Kahan atakte ho</h2>
+      <p class="muted small">Galat answer ke baad "Kahan atke?" pe jo tap karte ho, uska hisaab.</p>
+      ${rows.length ? `<table class="tbl"><tbody>
+        ${rows.map(([k, n]) => `<tr><td><b>${esc(STUCK[k])}</b></td><td>${n}</td><td><div class="minibar"><div style="width:${(100 * n) / rows[0][1]}%"></div></div> ${pct(n, total)}</td></tr>`).join('')}
+      </tbody></table>
+      <p class="banner"><b>Sabse zyada: ${esc(STUCK[rows[0][0]])}.</b> ${esc(STUCK_FIX[rows[0][0]])}</p>
+      ${total < 10 ? '<p class="muted small">Abhi 10 se kam tags hain — pattern 10–15 ke baad pakka hoga.</p>' : ''}`
+        : '<p class="muted">Abhi koi tag nahi. Agli baar galat answer pe "Kahan atke?" me ek tap karna.</p>'}
+    </section>`;
 }
 
 // Which of the 11 recurring GATE trap classes the student falls for, from tagged wrong answers.
@@ -1318,6 +1489,15 @@ document.addEventListener('keydown', (e) => {
 ['click', 'keydown', 'touchstart', 'scroll'].forEach((t) => window.addEventListener(t, () => (lastInput = Date.now()), { passive: true }));
 setInterval(() => {
   if (!session || session.ended || !current || document.visibilityState !== 'visible') return;
+  // 2 minutes on one question: offer a hint instead of letting the student freeze
+  if (!feedback && !current.nudged && !current.hints && Date.now() - current.shownAt > 120000) {
+    current.nudged = true;
+    const b = document.getElementById('hintbtn');
+    if (b) {
+      b.textContent = '⏱ 2 min ho gaye — ek ishara dekhoge? Atakna theek hai, rukna nahi.';
+      b.classList.add('nudge');
+    }
+  }
   if (Date.now() - lastInput > IDLE_MS) return;
   session.activeMs += 1000;
   if (session.activeMs % 15000 === 0) saveSession(session);
@@ -1327,7 +1507,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611071901');
+  const store = await import('./store.js?v=202611072124');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
