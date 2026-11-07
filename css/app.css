@@ -394,7 +394,14 @@ section.card { overflow-x: auto; }
   #ljump .chip { flex: none; }
 }
 .lesson h2 { padding-top: 18px; border-top: 1px solid var(--line-subtle); scroll-margin-top: 12px; }
-.lesson h3 { margin-top: 26px; }
+.lesson h3 { margin-top: 26px; scroll-margin-top: 12px; }
+/* the lesson part a question links to flashes once */
+.lesson .flash { animation: flash 1.6s ease-out; border-radius: 6px; }
+@keyframes flash {
+  0%, 55% { background: var(--mark-bg); box-shadow: 0 0 0 8px var(--mark-bg); }
+  100% { background: transparent; box-shadow: 0 0 0 8px transparent; }
+}
+#ljump .chip.focus { background: var(--mark-bg); border-color: var(--mark); color: var(--ink); cursor: pointer; }
 .lesson blockquote { margin: 12px 0; padding: 8px 14px; border-left: 3px solid var(--mark); background: var(--mark-bg); border-radius: 0 10px 10px 0; color: var(--ink); }
 .lesson blockquote p { margin: 4px 0; }
 .lesson pre { background: var(--hover); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-size: 13px; line-height: 1.5; }

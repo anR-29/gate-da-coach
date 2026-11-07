@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611061815';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611071901';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry,
-} from './engine.js?v=202611061815';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611061815';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611061815';
+} from './engine.js?v=202611071901';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611071901';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611071901';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -472,7 +472,7 @@ function renderSession(state) {
         </div>
         <div class="err" id="err" role="alert"></div>
         ${shown ? '' : `<p class="hint keys">Keyboard: ${q.type === 'NAT' ? 'number likho' : `1–4 ya A–D${isMsq ? ' (toggle)' : ''}`} · S / L / G confidence · Enter = submit, phir Enter = next</p>`}
-        ${shown || !skill.theory ? '' : `<p class="hint">Theory nahi aati? <a href="#/theory/${esc(skill.theory)}" target="_blank" rel="noopener">Is topic ka lesson kholo ↗</a> <span class="muted">(naye tab me; session yahin rukega)</span></p>`}
+        ${shown || !skill.theory ? '' : `<p class="hint">Theory nahi aati? <a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">Is sawaal wala lesson ka hissa kholo ↗</a> <span class="muted">(naye tab me; session yahin rukega)</span></p>`}
       </form>
       <div id="fb"></div>
     </section>
@@ -576,7 +576,7 @@ function renderFeedback() {
       ? '<p class="banner warn">Is skill pe aaj ke repair khatam. Ye kal revision me aayegi. Pehle theory dekh lo.</p>'
       : '';
   const theory = (f.showTheory || !f.correct || f.conf === 'Guess') && skill.theory
-    ? `<p><a href="#/theory/${esc(skill.theory)}" target="_blank" rel="noopener">📖 Samjho: ${esc(skill.title)} — detailed lesson (naya tab)</a></p>` : '';
+    ? `<p><a href="${lessonHref(q, skill)}" target="_blank" rel="noopener">📖 Samjho: ${esc(skill.title)} — detailed lesson (naya tab)</a></p>` : '';
   const fb = document.getElementById('fb');
   fb.innerHTML = `
     ${verdict}
@@ -688,14 +688,14 @@ function viewAttempt(id) {
     </div>
     <section class="card q">
       <div class="eyebrow">Day ${a.day} · ${fmtDate(a.date)} · ${esc(a.mode)} · ${esc(skill.title || q.skill)}</div>
-      <div class="meta">[${esc(q.source || 'Drill')}] · ${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''} · ${a.conf ? `confidence ${esc(a.conf)}` : a.mode === 'mock' ? (a.skipped ? 'mock · chhoda' : 'mock') : ''} ·${Math.round((a.ms || 0) / 1000)} s${a.repeated ? ' · repeat' : ''}</div>
+      <div class="meta">[${esc(q.source || 'Drill')}] · ${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''} · ${a.conf ? `confidence ${esc(a.conf)}` : a.mode === 'mock' ? (a.skipped ? 'mock · chhoda' : 'mock') : ''} · ${Math.round((a.ms || 0) / 1000)} s${a.repeated ? ' · repeat' : ''}</div>
       <div class="verdict ${a.correct ? 'ok' : 'no'}" style="border-top:0;padding-top:0;margin-top:0">${a.correct ? 'Sahi ✓' : 'Galat ✗'}</div>
       ${trapTags ? `<div class="chips">Trap: ${trapTags}</div>` : ''}
       <div class="stem">${md(q.stem)}</div>
       ${q.figure ? `<div class="figure">${q.figure}</div>` : ''}
       ${body}
       <details open><summary>Solution</summary><div class="sol">${md(q.solution)}</div></details>
-      ${skill.theory ? `<p><a href="#/theory/${esc(skill.theory)}">📖 ${esc(skill.title)} — theory</a></p>` : ''}
+      ${skill.theory ? `<p><a href="${lessonHref(q, skill)}">📖 ${esc(skill.title)} — lesson ka wahi hissa</a></p>` : ''}
       <div class="actions">${back}</div>
     </section>`);
 }
@@ -924,6 +924,94 @@ async function viewNote(id, sub, tok) {
       if (b) document.getElementById(b.dataset.s).scrollIntoView({ block: 'start', behavior: 'smooth' });
     };
   }
+  // opened from a question: jump to the part of the lesson that question needs
+  const qid = sub && sub.startsWith('q=') ? decodeURIComponent(sub.slice(2)) : null;
+  if (qid && !showShort) focusLessonPart(qid, jump);
+}
+
+const STOP = new Set(('the and for with from that this into are use using each when not than then also only its was were has have '
+  + 'can will may one two any all how what which who why does did given find value values answer correct option options '
+  + 'hai hota hoti hain aur nahi kya kyun jab toh yahan wahi sirf matlab karo karte liye bhi koi kuch agar par pehle phir '
+  + 'frac dfrac left right text mathrm cdot times').split(' '));
+
+function words(text) {
+  return String(text || '').toLowerCase()
+    .replace(/\\([a-z]+)/g, ' $1 ') // \lambda -> lambda
+    .replace(/[^a-z0-9]+/g, ' ').split(' ')
+    .filter((w) => w.length >= 3 && !STOP.has(w) && !/^\d+$/.test(w))
+    .map((w) => ALIAS[w] || w)
+    .map((w) => (w.length > 6 ? w.replace(/(ations?|ings?|ed)$/, '') : w))
+    .map((w) => (w.length > 4 && w.endsWith('s') ? w.slice(0, -1) : w));
+}
+
+const ALIAS = { det: 'determinant', determinants: 'determinant', eigenvalues: 'eigenvalue', prob: 'probability' };
+
+// Skills whose words don't appear in the heading they belong to.
+const PART_HINT = {
+  'ai.search-props': /Properties/i, 'ai.search-complexity': /Properties/i,
+  'dsa.sort-props': /Ek table/i, 'la.eig-trace-det': /Trace = sum/i, 'la.svd': /Singular values kaise/i,
+  'ps.ci-interpret': /interpretation/i, 'ps.test-select': /5 steps/i,
+};
+
+// The lesson block (### step, or a ## section) that best matches the question's skill and
+// text; it is scrolled to and flashed for a moment, with a chip to jump back to it.
+function focusLessonPart(qid, jump) {
+  const q = content.questions[qid];
+  const sk = q ? content.skills[q.skill] : content.skills[qid];
+  if (!sk) return;
+  const art = main.querySelector('article.lesson');
+  const skip = /^(Ye topic kyun|Ek page me|Khud try karo|Solved examples|Confusions)/i;
+  const blocks = [];
+  let section = '';
+  for (const h of art.querySelectorAll('h2, h3')) {
+    if (h.tagName === 'H2') section = h.textContent;
+    if (skip.test(section)) continue;
+    const els = [h];
+    for (let n = h.nextElementSibling; n && !/^H[1-3]$/.test(n.tagName); n = n.nextElementSibling) els.push(n);
+    if (els.length < 2) continue; // a heading with nothing under it
+    blocks.push({ h, els, section, head: words(h.textContent), body: words(els.slice(1).map((e) => e.textContent).join(' ')) });
+  }
+  if (!blocks.length) return;
+  const want = new Map();
+  const add = (text, w) => words(text).forEach((t) => want.set(t, Math.max(want.get(t) || 0, w)));
+  add(q ? `${q.stem} ${q.solution || ''}` : '', 1);
+  add(sk.check, 1.5);
+  add(sk.title, 2.5);
+  const df = new Map();
+  blocks.forEach((b) => new Set([...b.head, ...b.body]).forEach((t) => df.set(t, (df.get(t) || 0) + 1)));
+  const score = (b) => {
+    const body = new Map();
+    b.body.forEach((t) => body.set(t, (body.get(t) || 0) + 1));
+    const head = new Set(b.head);
+    let s = 0;
+    for (const [t, w] of want) {
+      const idf = Math.log(1 + blocks.length / (df.get(t) || blocks.length));
+      s += w * idf * ((head.has(t) ? 3 : 0) + Math.min(body.get(t) || 0, 3) * 0.6);
+    }
+    // concept steps teach; solved examples come second
+    return s * (/^Concept/i.test(b.section) ? 1.25 : 1) / Math.sqrt(1 + b.body.length / 120);
+  };
+  const hint = PART_HINT[sk.id] && blocks.find((b) => PART_HINT[sk.id].test(b.h.textContent));
+  const best = hint ? { b: hint, s: 1 } : blocks.map((b) => ({ b, s: score(b) })).sort((x, y) => y.s - x.s)[0];
+  if (!best || best.s <= 0) return;
+  const { h, els } = best.b;
+  h.id ||= 'qfocus';
+  jump.hidden = false;
+  jump.insertAdjacentHTML('afterbegin', `<button type="button" class="chip focus" data-s="${h.id}">📍 Is sawaal ka hissa: ${esc(h.textContent.replace(/^\d+\.\s*/, ''))}</button>`);
+  requestAnimationFrame(() => {
+    h.scrollIntoView({ block: 'start' });
+    els.forEach((e) => {
+      e.classList.remove('flash');
+      void e.offsetWidth; // restart the animation
+      e.classList.add('flash');
+    });
+    setTimeout(() => els.forEach((e) => e.classList.remove('flash')), 1600);
+  });
+}
+
+// Link from a question to the lesson part it needs.
+function lessonHref(q, skill) {
+  return `#/theory/${esc(skill.theory)}/q=${encodeURIComponent(q ? q.id : skill.id)}`;
 }
 
 async function viewTheory(id, sub) {
@@ -1239,7 +1327,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611061815');
+  const store = await import('./store.js?v=202611071901');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
