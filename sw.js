@@ -4,7 +4,7 @@
 // - The page itself: network first (a new deploy is picked up at once), cache when offline.
 // - Everything else (the GitHub API used for sync) is never touched.
 // VERSION is stamped by tools/bump_version.py; a new version drops the old app cache.
-const VERSION = '202611091150';
+const VERSION = '202611091158';
 const APP = `gdc-app-${VERSION}`;
 const LIBS = 'gdc-libs';
 const CDN = ['https://cdn.jsdelivr.net/npm/', 'https://fonts.googleapis.com/', 'https://fonts.gstatic.com/'];

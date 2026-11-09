@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611091150';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611091158';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl,
-} from './engine.js?v=202611091150';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611091150';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611091150';
+} from './engine.js?v=202611091158';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611091158';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611091158';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -518,20 +518,36 @@ function partProgress(state, counts, t) {
   const switchable = session.mode !== 'revision';
   const rep = counts.repairFrom || {};
   const shown = order.filter((p) => parts[p] && (parts[p][1] > 0 || parts[p][0] > 0));
-  // everything done today, and roughly what is left (new questions + queued repairs)
-  const total = counts.attempts;
+  // roughly what is left today: new questions of every part + queued repairs
   const left = shown.reduce((s, p) => s + Math.max(0, parts[p][1] - parts[p][0]), 0) + session.repairQueue.length;
   const loose = Object.entries(rep).filter(([p]) => !shown.includes(p)).reduce((s, [, n]) => s + n, 0);
-  // each part is a one-tap switcher: the tapped part's questions come next
-  return `<span class="pt tot" title="Aaj ke saare sawaal, repair milake">Aaj ${total} kiye${left ? ` · ~${left} baaki` : ''}</span>` + shown
-    .map((p) => {
-      const fin = parts[p][0] >= parts[p][1];
-      const label = `${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}${rep[p] ? ` · +${rep[p]} repair` : ''}`;
-      if (!switchable) return `<span class="pt ${p === on ? 'on' : fin ? 'fin' : ''}">${label}</span>`;
-      return `<button type="button" class="pt ${p === on ? 'on' : fin ? 'fin' : ''}" data-part="${p}" ${fin && p !== on ? 'disabled' : ''}
-        aria-pressed="${p === on}" title="${fin ? `${MODE_LABEL[p]} ho gaya` : p === on ? 'Abhi yahi chal raha hai' : `${MODE_LABEL[p]} pe switch karo`}">${fin ? '✓ ' : ''}${label}</button>`;
-    })
-    .join('') + (loose ? `<span class="pt">+${loose} repair</span>` : '');
+  // each part: name on top; below, new questions done (+ repairs ↻) and how many are left.
+  // Each chip is a one-tap switcher: the tapped part's questions come next.
+  const chips = shown.map((p) => {
+    const [done, target] = parts[p];
+    const fin = done >= target;
+    const rest = Math.max(0, target - done);
+    const tip = `${MODE_LABEL[p]}: ${done} naye${rep[p] ? ` + ${rep[p]} repair` : ''}, ${rest} baaki (target ${target})`;
+    const inner = `<span class="pt1">${fin ? '✓ ' : ''}${MODE_LABEL[p]}</span>
+      <span class="pt2">${done}${rep[p] ? `<i class="rp">+${rep[p]}↻</i>` : ''} · ${fin ? 'done' : `${rest} baaki`}</span>`;
+    const cls = `pt pt2l ${p === on ? 'on' : fin ? 'fin' : ''}`;
+    if (!switchable) return `<span class="${cls}" title="${esc(tip)}">${inner}</span>`;
+    return `<button type="button" class="${cls}" data-part="${p}" ${fin && p !== on ? 'disabled' : ''}
+      aria-pressed="${p === on}" title="${esc(tip)}${fin || p === on ? '' : ' · tap = is part pe switch'}">${inner}</button>`;
+  }).join('') + (loose ? `<span class="pt pt2l"><span class="pt1">Repair</span><span class="pt2">+${loose}↻</span></span>` : '');
+  return { chips, left };
+}
+
+// Small ring with today's first-pass accuracy (new questions right the first time, no Guess).
+function accRing(ok, n) {
+  const p = n ? ok / n : null;
+  const r = 15;
+  const c = 2 * Math.PI * r;
+  const tone = p === null ? '' : p >= 0.8 ? 'good' : p >= 0.6 ? 'warn' : 'bad';
+  return `<span class="ring ${tone}" title="First-pass accuracy: ${n ? `${ok}/${n} naye sawaal pehli baar me sahi` : 'abhi data nahi'}">
+      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="${r}" class="rbg"/>
+        <circle cx="18" cy="18" r="${r}" class="rfg" stroke-dasharray="${p === null ? 0 : (p * c).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 18 18)"/></svg>
+      <b>${p === null ? '—' : Math.round(p * 100)}${p === null ? '' : '<small>%</small>'}</b></span>`;
 }
 
 // Tap a part in the session bar: its questions come next. An unanswered question of another
@@ -582,11 +598,14 @@ function renderSession(state) {
   const last = done[done.length - 1];
   const isMsq = q.type === 'MSQ';
   const shown = !!feedback;
+  const pp = partProgress(state, counts, t);
 
   set(`
     <div class="sessionbar">
-      <span class="sb-day">Day ${session.day}${session.mode === 'fallback' ? ' · fallback' : session.mode === 'revision' ? ' · revision' : ''}${session.reattempt ? ' · ↻' : ''}</span>
-      <span class="sb-parts">${partProgress(state, counts, t)}</span>
+      <span class="sb-day"><b>Day ${session.day}${session.mode === 'fallback' ? ' · fallback' : session.mode === 'revision' ? ' · revision' : ''}${session.reattempt ? ' · re' : ''}</b>
+        <small>${counts.attempts} sawaal${pp.left ? ` · ~${pp.left} baaki` : ''}</small></span>
+      ${accRing(counts.firstPassOk, counts.firstPass)}
+      <span class="sb-parts">${pp.chips}</span>
       <span class="sb-links">${last ? `<a class="link" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}<button class="link" id="stop">Din band karo</button></span>
       <details class="sb-more"><summary aria-label="Aur options">⋯</summary><div>
         ${last ? `<a class="button" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}
@@ -767,7 +786,7 @@ function renderFeedback() {
       <div class="chips">${Object.entries(STUCK).map(([k, l]) => `<button type="button" class="chip ${f.stuck === k ? 'on' : ''}" data-why="${k}">${l}</button>`).join('')}</div></div>` : '';
   const piece = learning && skill.theory ? '<div class="learnstep" id="learnstep"><p class="muted">Theory ka tukda aa raha hai…</p></div>' : '';
   const next = f.repairQueued
-    ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga (repair). Check: ${md(skill.check || '', true)}<br><span class="small muted">Repair "${esc(MODE_LABEL[current.from || PART_OF_MODE[current.mode]] || 'part')}" ka naya-sawaal number nahi badhata — wo upar "+repair" aur "Aaj … kiye" me gina jaata hai.</span></p>`
+    ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga (repair). Check: ${md(skill.check || '', true)}<br><span class="small muted">Repair "${esc(MODE_LABEL[current.from || PART_OF_MODE[current.mode]] || 'part')}" ka naya-sawaal number nahi badhata — wo us part me "+N↻" aur Day ke total me gina jaata hai.</span></p>`
     : f.stopSkill
       ? '<p class="banner warn">Is skill pe aaj ke repair khatam. Ye kal revision me aayegi. Pehle theory dekh lo.</p>'
       : '';
@@ -1827,7 +1846,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611091150');
+  const store = await import('./store.js?v=202611091158');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

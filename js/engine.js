@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611091150';
+import { addEvent, allEvents, cfg } from './store.js?v=202611091158';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -432,8 +432,15 @@ export function sessionCounts(session, state) {
     firstPassOk: fpOk,
     reviewedToday,
     repairsBySkill: mine.filter((a) => a.mode === 'repair').reduce((m, a) => ((m[a.skill] = (m[a.skill] || 0) + 1), m), {}),
-    // repairs per part they came from ('' = older sessions that did not record it)
-    repairFrom: mine.filter((a) => a.mode === 'repair').reduce((m, a) => ((m[a.from || ''] = (m[a.from || ''] || 0) + 1), m), {}),
+    // repairs per part they came from; repairs recorded before "from" existed are placed by skill
+    repairFrom: mine.filter((a) => a.mode === 'repair').reduce((m, a) => {
+      const p = a.from
+        || ((session.topicSkills || []).includes(a.skill) ? 'topic'
+          : String(a.skill).startsWith('ga.') ? 'ga'
+            : mine.some((x) => x.mode === 'review' && x.skill === a.skill) ? 'review' : 'mixed');
+      m[p] = (m[p] || 0) + 1;
+      return m;
+    }, {}),
   };
 }
 
