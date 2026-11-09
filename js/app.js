@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611092013';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611092028';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
-  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl,
-} from './engine.js?v=202611092013';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611092013';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611092013';
+  TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl, partHasItem,
+} from './engine.js?v=202611092028';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611092028';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611092028';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -525,11 +525,13 @@ function partProgress(state, counts, t) {
   // Each chip is a one-tap switcher: the tapped part's questions come next.
   const chips = shown.map((p) => {
     const [done, target] = parts[p];
-    const fin = done >= target;
-    const rest = Math.max(0, target - done);
+    // a part whose bank questions for today are used up counts as finished
+    const empty = done < target && p !== on && switchable && !partHasItem(session, state, p);
+    const fin = done >= target || empty;
+    const rest = empty ? 0 : Math.max(0, target - done);
     const tip = `${MODE_LABEL[p]}: ${done} naye${rep[p] ? ` + ${rep[p]} repair` : ''}, ${rest} baaki (target ${target})`;
     const inner = `<span class="pt1">${fin ? '✓ ' : ''}${MODE_LABEL[p]}</span>
-      <span class="pt2">${done}${rep[p] ? `<i class="rp">+${rep[p]}↻</i>` : ''} · ${fin ? 'done' : `${rest} baaki`}</span>`;
+      <span class="pt2">${done}${rep[p] ? `<i class="rp">+${rep[p]}↻</i>` : ''} · ${empty ? 'sawaal khatam' : fin ? 'done' : `${rest} baaki`}</span>`;
     const cls = `pt pt2l ${p === on ? 'on' : fin ? 'fin' : ''}`;
     if (!switchable) return `<span class="${cls}" title="${esc(tip)}">${inner}</span>`;
     return `<button type="button" class="${cls}" data-part="${p}" ${fin && p !== on ? 'disabled' : ''}
@@ -563,22 +565,30 @@ function accRing(counts) {
     </details>`;
 }
 
-// Tap a part in the session bar: its questions come next. An unanswered question of another
-// part is put back (it was never recorded); a pending repair still comes first.
+// Tap a part in the session bar: its questions come next, right away. An unanswered question
+// of another part (even a repair) is put back — it was never recorded and a repair stays
+// queued; repairs of other parts wait until the chosen part is finished.
 function switchPart(part) {
   if (!session || session.mode === 'revision') return;
+  const state = derive();
+  if (!partHasItem(session, state, part)) {
+    session.switchNote = `${MODE_LABEL[part]} ke liye abhi koi naya sawaal nahi bacha (is din ke bank ke saare sawaal ho chuke). Doosra part chuno.`;
+    saveSession(session);
+    return renderSession(state);
+  }
   const order = session.order || Object.keys(PARTS);
   session.shownOrder = session.shownOrder || order; // chips keep their places in the bar
   session.order = [part, ...order.filter((p) => p !== part)];
-  const onRepair = current && current.mode === 'repair';
-  if (current && !feedback && !onRepair && PART_OF_MODE[current.mode] !== part) {
+  session.forcePart = part;
+  const curPart = current ? (current.mode === 'repair' ? current.from : PART_OF_MODE[current.mode]) : null;
+  if (current && !feedback && curPart !== part) {
     current = null;
     session.cur = null;
     session.sel = null;
   }
-  session.switchNote = onRepair && !feedback ? `Pehle ye repair variant, phir ${MODE_LABEL[part]}.` : '';
+  session.switchNote = '';
   saveSession(session);
-  renderSession(derive());
+  renderSession(state);
 }
 
 function stopSession() {
@@ -626,7 +636,7 @@ function renderSession(state) {
       </div></details>
     </div>
     ${t.note ? `<div class="banner">${esc(t.note)}</div>` : ''}
-    ${session.switchNote && current.mode === 'repair' ? `<div class="banner">${esc(session.switchNote)}</div>` : ''}
+    ${session.switchNote ? `<div class="banner warn">${esc(session.switchNote)}</div>` : ''}
     <section class="card q">
       <div class="eyebrow">${esc(current.label)}${shown ? ` · ${esc(skill.title || q.skill)}` : ''}</div>
       <div class="meta"><span>[${esc(q.source || 'Drill')}]</span><span class="qtype ${isMsq ? 'msq' : ''}">${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''}</span>${current.repeated ? '<span class="hot">repeat · fresh evidence nahi</span>' : ''}</div>
@@ -830,6 +840,7 @@ function renderFeedback() {
   nextBtn.onclick = () => {
     current = null;
     feedback = null;
+    if (session.switchNote) { session.switchNote = ''; saveSession(session); }
     route();
   };
   fb.querySelector('.verdict')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
@@ -1859,7 +1870,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611092013');
+  const store = await import('./store.js?v=202611092028');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

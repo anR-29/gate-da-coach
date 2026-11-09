@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611092013';
+import { addEvent, allEvents, cfg } from './store.js?v=202611092028';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -504,15 +504,40 @@ export function nextItem(session, state) {
   if (session.ended || session.stopped) return null;
   const counts = sessionCounts(session, state);
   const t = targets(session, counts);
+  const parts = makeParts(session, state, counts, t);
 
-  while (session.repairQueue.length) {
-    const r = session.repairQueue[0];
+  // a part the student switched to stays first until it runs out; only its own repairs
+  // come in between, repairs from other parts wait until then
+  if (session.forcePart && !parts[session.forcePart]?.()) session.forcePart = null;
+  const force = session.forcePart;
+  for (let i = 0; i < session.repairQueue.length;) {
+    const r = session.repairQueue[i];
+    if (force && r.from && r.from !== force) { i++; continue; }
     const picked = pickQuestion(r.skill, session, state);
-    if (picked) return { ...picked, skill: r.skill, mode: 'repair', from: r.from, label: 'Fresh variant · repair' };
-    session.repairQueue.shift();
+    if (picked) {
+      // the picked repair moves to the front, so submit() removes the right entry
+      if (i) session.repairQueue.unshift(...session.repairQueue.splice(i, 1));
+      return { ...picked, skill: r.skill, mode: 'repair', from: r.from, label: 'Fresh variant · repair' };
+    }
+    session.repairQueue.splice(i, 1);
   }
   if (timeUp(session)) return null;
 
+  const order = session.mode === 'revision' ? ['review'] : session.order || DEFAULT_ORDER;
+  for (const part of order) {
+    const item = parts[part]?.();
+    if (item) return item;
+  }
+  return null;
+}
+
+// Whether a part can serve a question right now (used before switching to it).
+export function partHasItem(session, state, part) {
+  const counts = sessionCounts(session, state);
+  return !!makeParts(session, state, counts, targets(session, counts))[part]?.();
+}
+
+function makeParts(session, state, counts, t) {
   // a re-attempted day may reuse questions already seen (they are flagged as repeats)
   const ok = (picked) => picked && (!picked.repeated || session.reattempt);
   const topic = session.topicSkills;
@@ -564,12 +589,7 @@ export function nextItem(session, state) {
       return picked ? { ...picked, skill: picked.q.skill, mode: 'ga', label: 'General Aptitude' } : null;
     },
   };
-  const order = session.mode === 'revision' ? ['review'] : session.order || DEFAULT_ORDER;
-  for (const part of order) {
-    const item = parts[part]?.();
-    if (item) return item;
-  }
-  return null;
+  return parts;
 }
 
 // ---------- grading ----------
