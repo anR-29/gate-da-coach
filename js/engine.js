@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611091158';
+import { addEvent, allEvents, cfg } from './store.js?v=202611092013';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -416,7 +416,17 @@ export function sessionCounts(session, state) {
   const mine = sessionAttempts(session, state);
   const count = (m) => mine.filter((a) => a.mode === m).length;
   const firstPass = mine.filter((a) => ['diag', 'topic', 'mixed'].includes(a.mode) && !a.repeated);
-  const fpOk = firstPass.filter((a) => a.correct && a.conf !== 'Guess').length;
+  // "own" = right without Guess and without a hint; this drives the adaptive targets
+  const fpOk = firstPass.filter((a) => a.correct && a.conf !== 'Guess' && !a.hint).length;
+  // plain right/answered per part, for the accuracy ring (Seekho is learning, not scored)
+  const partOf = (a) => (a.mode === 'diag' ? 'topic' : a.mode);
+  const scored = mine.filter((a) => a.mode !== 'learn');
+  const byPart = {};
+  for (const a of scored) {
+    const b = (byPart[partOf(a)] ||= { ok: 0, n: 0 });
+    b.n++;
+    if (a.correct) b.ok++;
+  }
   const reviewedToday = new Set(state.attempts.filter((a) => a.date === session.date && a.mode === 'review').map((a) => a.skill));
   return {
     attempts: mine.length,
@@ -430,6 +440,10 @@ export function sessionCounts(session, state) {
     repair: count('repair'),
     firstPass: firstPass.length,
     firstPassOk: fpOk,
+    firstPassGuessed: firstPass.filter((a) => a.correct && (a.conf === 'Guess' || a.hint)).length,
+    scored: scored.length,
+    scoredOk: scored.filter((a) => a.correct).length,
+    byPart,
     reviewedToday,
     repairsBySkill: mine.filter((a) => a.mode === 'repair').reduce((m, a) => ((m[a.skill] = (m[a.skill] || 0) + 1), m), {}),
     // repairs per part they came from; repairs recorded before "from" existed are placed by skill
@@ -456,10 +470,10 @@ export function targets(session, counts) {
     // ahead with every answer, or the part never ends
     t.topic = Math.max(counts.topic, Math.round(t.topic * 0.75));
     t.mixed = Math.round(t.mixed * 0.5);
-    t.note = `First-pass accuracy ${Math.round(acc * 100)}%: aaj naye sawaal thode kam, repair zyada.`;
+    t.note = `Naye Topic/Mixed sawaal pehli baar me khud se sahi: ${counts.firstPassOk}/${counts.firstPass} (${Math.round(acc * 100)}%)${counts.firstPassGuessed ? ` — ${counts.firstPassGuessed} sahi the par Guess/ishara se, wo isme nahi gine` : ''}. Isliye aaj naye sawaal thode kam, repair zyada.`;
   } else if (acc >= 0.8) {
     t.mixed = t.mixed + 4;
-    t.note = `First-pass accuracy ${Math.round(acc * 100)}%: purane topics ke 4 extra mixed sawaal.`;
+    t.note = `Naye Topic/Mixed sawaal pehli baar me khud se sahi: ${counts.firstPassOk}/${counts.firstPass} (${Math.round(acc * 100)}%). Isliye purane topics ke 4 extra mixed sawaal.`;
   }
   return t;
 }

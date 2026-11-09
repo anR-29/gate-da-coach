@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611091158';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611092013';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl,
-} from './engine.js?v=202611091158';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611091158';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611091158';
+} from './engine.js?v=202611092013';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611092013';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611092013';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -538,16 +538,29 @@ function partProgress(state, counts, t) {
   return { chips, left };
 }
 
-// Small ring with today's first-pass accuracy (new questions right the first time, no Guess).
-function accRing(ok, n) {
+// Small ring: today's plain accuracy (right / answered, every part except Seekho).
+// Tapping it shows the per-part split and the stricter "own first-pass" figure that drives targets.
+function accRing(counts) {
+  const ok = counts.scoredOk;
+  const n = counts.scored;
   const p = n ? ok / n : null;
   const r = 15;
   const c = 2 * Math.PI * r;
   const tone = p === null ? '' : p >= 0.8 ? 'good' : p >= 0.6 ? 'warn' : 'bad';
-  return `<span class="ring ${tone}" title="First-pass accuracy: ${n ? `${ok}/${n} naye sawaal pehli baar me sahi` : 'abhi data nahi'}">
-      <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="${r}" class="rbg"/>
-        <circle cx="18" cy="18" r="${r}" class="rfg" stroke-dasharray="${p === null ? 0 : (p * c).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 18 18)"/></svg>
-      <b>${p === null ? '—' : Math.round(p * 100)}${p === null ? '' : '<small>%</small>'}</b></span>`;
+  const NAMES = { review: 'Revision', topic: 'Topic', mixed: 'Mixed', ga: 'GA', repair: 'Repair' };
+  const rows = Object.entries(NAMES).filter(([k]) => counts.byPart[k])
+    .map(([k, name]) => `<tr><td>${name}</td><td><b>${counts.byPart[k].ok}/${counts.byPart[k].n}</b></td><td>${Math.round((100 * counts.byPart[k].ok) / counts.byPart[k].n)}%</td></tr>`).join('');
+  const fp = counts.firstPass
+    ? `<p class="small"><b>Naye Topic/Mixed, pehli baar me khud se:</b> ${counts.firstPassOk}/${counts.firstPass} (${Math.round((100 * counts.firstPassOk) / counts.firstPass)}%)${counts.firstPassGuessed ? ` — ${counts.firstPassGuessed} sahi Guess/ishara se the, wo yahan nahi gine` : ''}. Isi se app aaj ke naye sawaal kam-zyada karta hai.</p>`
+    : '';
+  return `<details class="ringbox">
+      <summary class="ring ${tone}" aria-label="Aaj ki accuracy" title="Aaj sahi: ${ok}/${n} (tap = detail)">
+        <svg viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="${r}" class="rbg"/>
+          <circle cx="18" cy="18" r="${r}" class="rfg" stroke-dasharray="${p === null ? 0 : (p * c).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 18 18)"/></svg>
+        <b>${p === null ? '—' : Math.round(p * 100)}${p === null ? '' : '<small>%</small>'}</b></summary>
+      <div class="ringpop"><p><b>Aaj sahi: ${ok}/${n}</b>${n ? ` (${Math.round(p * 100)}%)` : ''} <span class="muted small">— Seekho chhod ke saare sawaal</span></p>
+        ${rows ? `<table class="tbl"><tbody>${rows}</tbody></table>` : ''}${fp}</div>
+    </details>`;
 }
 
 // Tap a part in the session bar: its questions come next. An unanswered question of another
@@ -604,7 +617,7 @@ function renderSession(state) {
     <div class="sessionbar">
       <span class="sb-day"><b>Day ${session.day}${session.mode === 'fallback' ? ' · fallback' : session.mode === 'revision' ? ' · revision' : ''}${session.reattempt ? ' · re' : ''}</b>
         <small>${counts.attempts} sawaal${pp.left ? ` · ~${pp.left} baaki` : ''}</small></span>
-      ${accRing(counts.firstPassOk, counts.firstPass)}
+      ${accRing(counts)}
       <span class="sb-parts">${pp.chips}</span>
       <span class="sb-links">${last ? `<a class="link" href="#/attempt/${esc(last.id)}">← Pichhle sawaal (${done.length})</a>` : ''}<button class="link" id="stop">Din band karo</button></span>
       <details class="sb-more"><summary aria-label="Aur options">⋯</summary><div>
@@ -1846,7 +1859,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611091158');
+  const store = await import('./store.js?v=202611092013');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
