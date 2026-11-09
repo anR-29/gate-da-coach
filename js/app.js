@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611092326';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611100002';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl, partHasItem,
-} from './engine.js?v=202611092326';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611092326';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611092326';
+} from './engine.js?v=202611100002';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611100002';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611100002';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -537,7 +537,7 @@ function partProgress(state, counts, t) {
     return `<button type="button" class="${cls}" data-part="${p}" ${fin && p !== on ? 'disabled' : ''}
       aria-pressed="${p === on}" title="${esc(tip)}${fin || p === on ? '' : ' · tap = is part pe switch'}">${inner}</button>`;
   }).join('') + (loose ? `<span class="pt pt2l"><span class="pt1">Repair</span><span class="pt2">+${loose}↻</span></span>` : '');
-  return { chips, left };
+  return { chips, left, newLeft: left - session.repairQueue.length };
 }
 
 // Small ring: today's plain accuracy (right / answered, every part except Seekho).
@@ -637,6 +637,8 @@ function renderSession(state) {
     </div>
     ${t.note ? `<div class="banner">${esc(t.note)}</div>` : ''}
     ${session.switchNote ? `<div class="banner warn">${esc(session.switchNote)}</div>` : ''}
+    ${pp.newLeft <= 0 && current.mode === 'repair' && session.mode !== 'revision' ? `<div class="banner ok-banner">✓ Aaj ke saare parts ho gaye. Bas ${session.repairQueue.length || 1} repair bacha — ye karo, phir din band hone ki screen apne aap aayegi.
+      <button type="button" class="link" id="finishnow">Repair chhodo, abhi din band karo</button> <span class="muted small">(ye skill revision card me pehle se hai)</span></div>` : ''}
     <section class="card q">
       <div class="eyebrow">${esc(current.label)}${shown ? ` · ${esc(skill.title || q.skill)}` : ''}</div>
       <div class="meta"><span>[${esc(q.source || 'Drill')}]</span><span class="qtype ${isMsq ? 'msq' : ''}">${q.type} · ${q.marks} mark${q.marks > 1 ? 's' : ''}</span>${current.repeated ? '<span class="hot">repeat · fresh evidence nahi</span>' : ''}</div>
@@ -672,6 +674,17 @@ function renderSession(state) {
 
   document.getElementById('stop').onclick = stopSession;
   document.getElementById('stop2').onclick = stopSession;
+  const finishNow = document.getElementById('finishnow');
+  if (finishNow) finishNow.onclick = () => {
+    // all parts are done; the leftover repairs' skills already have revision cards
+    session.repairQueue = [];
+    session.cur = null;
+    session.sel = null;
+    current = null;
+    feedback = null;
+    saveSession(session);
+    route();
+  };
   main.querySelectorAll('.sb-parts [data-part]').forEach((b) => { b.onclick = () => switchPart(b.dataset.part); });
   const onChip = main.querySelector('.sb-parts .pt.on'); // keep the running part visible in the phone's scroll row
   if (onChip) onChip.parentElement.scrollLeft = onChip.offsetLeft - onChip.parentElement.offsetLeft - 8;
@@ -1868,7 +1881,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611092326');
+  const store = await import('./store.js?v=202611100002');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
