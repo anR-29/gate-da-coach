@@ -2,9 +2,9 @@
 // GA 10 (5 x 1 + 5 x 2 marks) and technical 55 (25 x 1 + 30 x 2 marks), built from unseen bank
 // questions of the subjects studied before the mock day. MCQ wrong = -1/3 of its marks; MSQ/NAT no negative.
 
-import { content, derive, grade, trapsOf, parseNat, today, SUBJECTS, TARGET } from './engine.js?v=202611080018';
-import { addEvent, allEvents, sync } from './store.js?v=202611080018';
-import { md, typeset, esc, fmtDate } from './render.js?v=202611080018';
+import { content, derive, grade, trapsOf, parseNat, today, SUBJECTS, TARGET } from './engine.js?v=202611091150';
+import { addEvent, allEvents, sync } from './store.js?v=202611091150';
+import { md, typeset, esc, fmtDate } from './render.js?v=202611091150';
 
 const LS_MOCK = 'gdc.mock';
 export const MOCK_MIN = 180;

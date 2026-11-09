@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611080018';
+import { addEvent, allEvents, cfg } from './store.js?v=202611091150';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -432,8 +432,12 @@ export function sessionCounts(session, state) {
     firstPassOk: fpOk,
     reviewedToday,
     repairsBySkill: mine.filter((a) => a.mode === 'repair').reduce((m, a) => ((m[a.skill] = (m[a.skill] || 0) + 1), m), {}),
+    // repairs per part they came from ('' = older sessions that did not record it)
+    repairFrom: mine.filter((a) => a.mode === 'repair').reduce((m, a) => ((m[a.from || ''] = (m[a.from || ''] || 0) + 1), m), {}),
   };
 }
+
+const PART_OF = { review: 'review', diag: 'topic', topic: 'topic', mixed: 'mixed', ga: 'ga', learn: 'learn' };
 
 // Targets move with first-pass accuracy instead of staying fixed at the plan's number.
 export function targets(session, counts) {
@@ -483,7 +487,7 @@ export function nextItem(session, state) {
   while (session.repairQueue.length) {
     const r = session.repairQueue[0];
     const picked = pickQuestion(r.skill, session, state);
-    if (picked) return { ...picked, skill: r.skill, mode: 'repair', label: 'Fresh variant · repair' };
+    if (picked) return { ...picked, skill: r.skill, mode: 'repair', from: r.from, label: 'Fresh variant · repair' };
     session.repairQueue.shift();
   }
   if (timeUp(session)) return null;
@@ -614,6 +618,7 @@ export function submit(session, item, response, conf, ms) {
     qid: q.id, skill: q.skill, subject: skill?.subject || '', day: session.day, date,
     mode: item.mode, resp: response, correct: g.correct, conf, repeated: item.repeated, ms, sid: session.sid,
     ...(item.hints ? { hint: item.hints } : {}),
+    ...(item.mode === 'repair' && item.from ? { from: item.from } : {}),
     ...(session.reattempt ? { re: true } : {}),
     ...(traps.length ? { traps } : {}),
   });
@@ -643,7 +648,8 @@ export function submit(session, item, response, conf, ms) {
   if (item.mode === 'repair') session.repairQueue.shift();
   if (!g.correct) {
     if (repairsDone < REPAIRS_PER_SKILL) {
-      session.repairQueue.unshift({ skill: q.skill });
+      // remember which part the mistake came from, so the bar can show "Topic 7/11 · +3 repair"
+      session.repairQueue.unshift({ skill: q.skill, from: item.mode === 'repair' ? item.from : PART_OF[item.mode] });
       out.repairQueued = true;
       out.showTheory = repairsDone >= 1;
     } else {

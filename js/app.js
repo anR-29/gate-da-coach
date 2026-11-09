@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611080018';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611091150';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl,
-} from './engine.js?v=202611080018';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611080018';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611080018';
+} from './engine.js?v=202611091150';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611091150';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611091150';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -496,7 +496,7 @@ function restoreCurrent(state) {
   const c = session.cur;
   if (!c || !content.questions[c.qid]) return null;
   if (sessionAttempts(session, state).some((a) => a.qid === c.qid)) return null;
-  return { q: content.questions[c.qid], skill: c.skill, mode: c.mode, label: c.label, repeated: c.repeated, hints: c.hints || 0, shownAt: Date.now() };
+  return { q: content.questions[c.qid], skill: c.skill, mode: c.mode, label: c.label, repeated: c.repeated, hints: c.hints || 0, from: c.from, shownAt: Date.now() };
 }
 
 // Progress of each part in the chosen order, e.g. "Revision 3/10 · Topic 0/14 · Mixed 0/6 · GA 0/8".
@@ -513,19 +513,25 @@ function partProgress(state, counts, t) {
     ga: [counts.ga, t.ga],
   };
   const order = session.mode === 'revision' ? ['review'] : session.shownOrder || session.order || ['review', 'topic', 'mixed', 'ga'];
-  const on = current ? PART_OF_MODE[current.mode] : null;
+  // a repair counts under the part its mistake came from
+  const on = current ? (current.mode === 'repair' ? current.from || null : PART_OF_MODE[current.mode]) : null;
   const switchable = session.mode !== 'revision';
+  const rep = counts.repairFrom || {};
+  const shown = order.filter((p) => parts[p] && (parts[p][1] > 0 || parts[p][0] > 0));
+  // everything done today, and roughly what is left (new questions + queued repairs)
+  const total = counts.attempts;
+  const left = shown.reduce((s, p) => s + Math.max(0, parts[p][1] - parts[p][0]), 0) + session.repairQueue.length;
+  const loose = Object.entries(rep).filter(([p]) => !shown.includes(p)).reduce((s, [, n]) => s + n, 0);
   // each part is a one-tap switcher: the tapped part's questions come next
-  return order
-    .filter((p) => parts[p] && (parts[p][1] > 0 || parts[p][0] > 0))
+  return `<span class="pt tot" title="Aaj ke saare sawaal, repair milake">Aaj ${total} kiye${left ? ` · ~${left} baaki` : ''}</span>` + shown
     .map((p) => {
       const fin = parts[p][0] >= parts[p][1];
-      const label = `${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}`;
+      const label = `${MODE_LABEL[p]} ${parts[p][0]}/${parts[p][1]}${rep[p] ? ` · +${rep[p]} repair` : ''}`;
       if (!switchable) return `<span class="pt ${p === on ? 'on' : fin ? 'fin' : ''}">${label}</span>`;
       return `<button type="button" class="pt ${p === on ? 'on' : fin ? 'fin' : ''}" data-part="${p}" ${fin && p !== on ? 'disabled' : ''}
         aria-pressed="${p === on}" title="${fin ? `${MODE_LABEL[p]} ho gaya` : p === on ? 'Abhi yahi chal raha hai' : `${MODE_LABEL[p]} pe switch karo`}">${fin ? '✓ ' : ''}${label}</button>`;
     })
-    .join('') + (counts.repair ? `<span class="pt">+${counts.repair} repair</span>` : '');
+    .join('') + (loose ? `<span class="pt">+${loose} repair</span>` : '');
 }
 
 // Tap a part in the session bar: its questions come next. An unanswered question of another
@@ -563,7 +569,7 @@ function renderSession(state) {
     const it = restored || nextItem(session, state);
     current = it ? { ...it, shownAt: it.shownAt || Date.now() } : null;
     feedback = null;
-    session.cur = current ? { qid: current.q.id, skill: current.skill, mode: current.mode, label: current.label, repeated: current.repeated, hints: current.hints || 0 } : null;
+    session.cur = current ? { qid: current.q.id, skill: current.skill, mode: current.mode, label: current.label, repeated: current.repeated, hints: current.hints || 0, from: current.from } : null;
     if (!restored) session.sel = null;
     saveSession(session);
   }
@@ -761,7 +767,7 @@ function renderFeedback() {
       <div class="chips">${Object.entries(STUCK).map(([k, l]) => `<button type="button" class="chip ${f.stuck === k ? 'on' : ''}" data-why="${k}">${l}</button>`).join('')}</div></div>` : '';
   const piece = learning && skill.theory ? '<div class="learnstep" id="learnstep"><p class="muted">Theory ka tukda aa raha hai…</p></div>' : '';
   const next = f.repairQueued
-    ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga. Check: ${md(skill.check || '', true)}</p>`
+    ? `<p class="banner">Agla sawaal <b>isi skill ka naya variant</b> hoga (repair). Check: ${md(skill.check || '', true)}<br><span class="small muted">Repair "${esc(MODE_LABEL[current.from || PART_OF_MODE[current.mode]] || 'part')}" ka naya-sawaal number nahi badhata — wo upar "+repair" aur "Aaj … kiye" me gina jaata hai.</span></p>`
     : f.stopSkill
       ? '<p class="banner warn">Is skill pe aaj ke repair khatam. Ye kal revision me aayegi. Pehle theory dekh lo.</p>'
       : '';
@@ -1821,7 +1827,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611080018');
+  const store = await import('./store.js?v=202611091150');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();
