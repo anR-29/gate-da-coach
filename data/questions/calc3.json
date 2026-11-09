@@ -1,0 +1,792 @@
+{
+ "area": "calc",
+ "skills": {},
+ "questions": [
+  {
+   "id": "calc-extrema-06",
+   "skill": "calc.extrema",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Find the local maximum **value** of $f(x)=2x^3-3x^2-12x+5$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 12,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": -1,
+     "why": "Reported the location $x=-1$ instead of the value $f(-1)$.",
+     "trap": "C6"
+    },
+    {
+     "value": -15,
+     "why": "This is the local minimum value $f(2)$; $f''(2)=18>0$ makes $x=2$ a minimum.",
+     "trap": "C2"
+    },
+    {
+     "value": 2,
+     "why": "Gave the location of the local minimum; the maximum is at $x=-1$, and the value was asked.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. $f'(x)=6x^2-6x-12=6(x-2)(x+1)$, so $x=-1$ or $x=2$.\n2. $f''(x)=12x-6$: $f''(-1)=-18<0$ (max), $f''(2)=18>0$ (min).\n3. $f(-1)=-2-3+12+5=12$."
+  },
+  {
+   "id": "calc-extrema-07",
+   "skill": "calc.extrema",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For $x>0$, the minimum value of $f(x)=x+\\dfrac{4}{x}$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$2$",
+     "correct": false,
+     "why": "This is the minimiser $x=2$, not the minimum value $f(2)$.",
+     "trap": "C6"
+    },
+    {
+     "text": "$4$",
+     "correct": true,
+     "why": "$f'(x)=1-4/x^2=0$ gives $x=2$ (the root $x=-2$ is outside $x>0$); $f''(2)>0$ and $f(2)=2+2=4$."
+    },
+    {
+     "text": "$-4$",
+     "correct": false,
+     "why": "Used the critical point $x=-2$, which lies outside the domain $x>0$.",
+     "trap": "C5"
+    },
+    {
+     "text": "$5$",
+     "correct": false,
+     "why": "Differentiated $4/x$ as $-4/x$ instead of $-4/x^2$, which gives $x=4$ and $f(4)=5$.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f'(x)=1-\\frac{4}{x^2}=0\\Rightarrow x=\\pm2$; only $x=2$ is in the domain.\n2. $f''(x)=8/x^3$, and $f''(2)=1>0$: minimum.\n3. $f(2)=2+2=4$."
+  },
+  {
+   "id": "calc-extrema-08",
+   "skill": "calc.extrema",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Let $f(x)=x^3-6x^2+9x+1$ on the closed interval $[0,5]$. Which statements are true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$x=1$ is a local maximum and $f(1)=5$",
+     "correct": true,
+     "why": "$f'(x)=3(x-1)(x-3)$ and $f''(1)=-6<0$; $f(1)=1-6+9+1=5$."
+    },
+    {
+     "text": "The absolute maximum of $f$ on $[0,5]$ is $5$",
+     "correct": false,
+     "why": "Compared only the interior points; the endpoint gives $f(5)=125-150+45+1=21$.",
+     "trap": "C5"
+    },
+    {
+     "text": "The absolute minimum of $f$ on $[0,5]$ is $1$, attained at two points",
+     "correct": true,
+     "why": "$f(0)=1$ and $f(3)=27-54+27+1=1$, and no candidate is lower."
+    },
+    {
+     "text": "$x=3$ is an inflection point of $f$",
+     "correct": false,
+     "why": "$f'(3)=0$ with $f''(3)=6>0$ makes $x=3$ a local minimum; $f''=6x-12$ changes sign at $x=2$ instead.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f'(x)=3x^2-12x+9=3(x-1)(x-3)$; $f''(x)=6x-12$.\n2. Candidates: $f(0)=1$, $f(1)=5$, $f(3)=1$, $f(5)=21$.\n3. Absolute max $21$ at $x=5$; absolute min $1$ at $x=0$ and $x=3$.\n4. $f''$ changes sign at $x=2$ (the inflection); $x=3$ is a local minimum."
+  },
+  {
+   "id": "calc-extrema-09",
+   "skill": "calc.extrema",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Find the absolute maximum value of $f(x)=x^4-8x^2+5$ on $[-1,3]$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 14,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Compared only the critical points (largest is $f(0)=5$) and skipped the endpoint $x=3$.",
+     "trap": "C5"
+    },
+    {
+     "value": 3,
+     "why": "Gave the location $x=3$ instead of the value $f(3)$.",
+     "trap": "C6"
+    },
+    {
+     "value": -11,
+     "why": "This is the absolute minimum $f(2)=-11$, not the maximum.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. $f'(x)=4x^3-16x=4x(x-2)(x+2)$; in $[-1,3]$ the critical points are $x=0$ and $x=2$ ($x=-2$ is outside).\n2. Values: $f(-1)=-2$, $f(0)=5$, $f(2)=-11$, $f(3)=81-72+5=14$.\n3. Absolute maximum $14$, at the endpoint $x=3$."
+  },
+  {
+   "id": "calc-extrema-10",
+   "skill": "calc.extrema",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For $f(x)=x^{2/3}(x-5)$ on $\\mathbb{R}$, which statement about its local extrema is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Local maximum at $x=0$ and local minimum at $x=2$",
+     "correct": true,
+     "why": "$f'(x)=\\frac{5(x-2)}{3x^{1/3}}$ is undefined at $0$ and zero at $2$; its sign goes $+,-,+$."
+    },
+    {
+     "text": "Only a local minimum at $x=2$; $x=0$ is not a critical point because $f'(0)\\ne0$",
+     "correct": false,
+     "why": "A critical point is where $f'=0$ **or** $f'$ is undefined; $f'$ does not exist at $0$ and changes sign there.",
+     "trap": "C1"
+    },
+    {
+     "text": "Local minimum at $x=0$ and local maximum at $x=2$",
+     "correct": false,
+     "why": "Read the sign of $f'$ backwards: $f'>0$ for $x<0$ and $f'<0$ on $(0,2)$, so $f$ rises and then falls at $0$.",
+     "trap": "C11"
+    },
+    {
+     "text": "Local minimum at $x=2$ and an inflection point at $x=0$",
+     "correct": false,
+     "why": "$f$ switches from increasing to decreasing at $0$, so $x=0$ is a local maximum (a cusp), not an inflection.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f=x^{5/3}-5x^{2/3}$, so $f'=\\frac53x^{2/3}-\\frac{10}{3}x^{-1/3}=\\frac{5(x-2)}{3x^{1/3}}$.\n2. Critical points: $x=2$ ($f'=0$) and $x=0$ ($f'$ undefined).\n3. Sign of $f'$: $+$ for $x<0$, $-$ on $(0,2)$, $+$ for $x>2$.\n4. Local max at $x=0$ ($f(0)=0$), local min at $x=2$ ($f(2)=-3\\cdot2^{2/3}\\approx-4.76$)."
+  },
+  {
+   "id": "calc-convexity-05",
+   "skill": "calc.convexity",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=x^3-3x^2+2$ is convex exactly on",
+   "figure": null,
+   "options": [
+    {
+     "text": "$x\\le1$",
+     "correct": false,
+     "why": "Solved $f''\\le0$; that is where $f$ is concave.",
+     "trap": "C11"
+    },
+    {
+     "text": "$0\\le x\\le2$",
+     "correct": false,
+     "why": "Used $f'(x)=3x(x-2)\\le0$, which is where $f$ is decreasing, not where it is convex.",
+     "trap": "C3"
+    },
+    {
+     "text": "$x\\ge1$",
+     "correct": true,
+     "why": "$f''(x)=6x-6\\ge0$ exactly when $x\\ge1$."
+    },
+    {
+     "text": "all real $x$",
+     "correct": false,
+     "why": "$f''=6x-6<0$ for $x<1$, so this cubic is not convex everywhere.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f'(x)=3x^2-6x$, $f''(x)=6x-6$.\n2. Convex where $f''\\ge0$: $x\\ge1$."
+  },
+  {
+   "id": "calc-convexity-06",
+   "skill": "calc.convexity",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=x^4-6x^3+12x^2$ is concave exactly on the interval $[p,q]$. Find $p+q$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Solved $f'(x)=0$; $f'=2x(2x^2-9x+12)$ has only the root $0$. Concavity needs $f''$.",
+     "trap": "C3"
+    },
+    {
+     "value": -3,
+     "why": "Sign slip in the roots of $x^2-3x+2$; the roots are $1$ and $2$, not $-1$ and $-2$.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. $f''(x)=12x^2-36x+24=12(x-1)(x-2)$.\n2. $f''\\le0$ exactly on $[1,2]$, so $p=1$, $q=2$ and $p+q=3$."
+  },
+  {
+   "id": "calc-convexity-07",
+   "skill": "calc.convexity",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Which functions are convex on $(0,\\infty)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$-\\ln x$",
+     "correct": true,
+     "why": "$f''(x)=1/x^2>0$ for every $x>0$."
+    },
+    {
+     "text": "$\\sqrt{x}$",
+     "correct": false,
+     "why": "$f''(x)=-\\frac14x^{-3/2}<0$, so $\\sqrt x$ is concave; the sign was misread.",
+     "trap": "C11"
+    },
+    {
+     "text": "$\\dfrac{1}{x}$",
+     "correct": true,
+     "why": "$f''(x)=2/x^3>0$ for $x>0$. It is not convex on all of $\\mathbb R$, but the interval here is $x>0$."
+    },
+    {
+     "text": "$x^2-x^3$",
+     "correct": false,
+     "why": "$f''(x)=2-6x$ is positive only for $x<1/3$ and negative after that, so it is not convex on the whole interval.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $(-\\ln x)''=1/x^2>0$.\n2. $(\\sqrt x)''=-\\frac14x^{-3/2}<0$ (concave).\n3. $(1/x)''=2/x^3>0$ for $x>0$.\n4. $(x^2-x^3)''=2-6x<0$ for $x>1/3$."
+  },
+  {
+   "id": "calc-convexity-08",
+   "skill": "calc.convexity",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A twice-differentiable function $f$ has $f''(x)=(x-1)^2(x-4)$. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$f$ is convex exactly on $[4,\\infty)$, and $x=4$ is its only inflection point",
+     "correct": true,
+     "why": "Since $(x-1)^2\\ge0$, the sign of $f''$ is the sign of $x-4$; it changes only at $4$."
+    },
+    {
+     "text": "$f$ has inflection points at $x=1$ and $x=4$",
+     "correct": false,
+     "why": "$f''(1)=0$, but $f''$ is negative on both sides of $1$; with no sign change there is no inflection.",
+     "trap": "C1"
+    },
+    {
+     "text": "$f$ is convex on $(-\\infty,1]\\cup[4,\\infty)$",
+     "correct": false,
+     "why": "For $x<1$, $(x-1)^2>0$ and $x-4<0$, so $f''<0$ there; that region is concave.",
+     "trap": "C5"
+    },
+    {
+     "text": "$f$ is concave exactly on $[4,\\infty)$",
+     "correct": false,
+     "why": "Reversed the sign: $f''>0$ for $x>4$ means convex.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $(x-1)^2\\ge0$ everywhere and is $0$ only at $x=1$.\n2. So $f''<0$ for $x<4$ (except $f''(1)=0$) and $f''>0$ for $x>4$.\n3. Convex exactly on $[4,\\infty)$; the sign changes only at $x=4$, the only inflection point."
+  },
+  {
+   "id": "calc-convexity-09",
+   "skill": "calc.convexity",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "$f(x)=e^{x}+e^{-x}+ax^2$ is convex on all of $\\mathbb{R}$ exactly when $a\\ge c$. Find $c$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": -1,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 0,
+     "why": "Assumed $a\\ge0$ is needed; $e^x+e^{-x}\\ge2$ already leaves room for a negative $a$.",
+     "trap": "C5"
+    },
+    {
+     "value": -2,
+     "why": "Wrote $(ax^2)''=a$ instead of $2a$, getting $2+a\\ge0$.",
+     "trap": "C6"
+    },
+    {
+     "value": -0.5,
+     "why": "Took the minimum of $e^x+e^{-x}$ as $1$ instead of $2$ (its value at $x=0$).",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $f''(x)=e^x+e^{-x}+2a$.\n2. $e^x+e^{-x}\\ge2$, with equality at $x=0$, so $\\min f''=2+2a$.\n3. Need $2+2a\\ge0$, i.e. $a\\ge-1$. So $c=-1$."
+  },
+  {
+   "id": "calc-convexity-10",
+   "skill": "calc.convexity",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Let $f:\\mathbb{R}\\to\\mathbb{R}$ be convex and differentiable with $f(1)=3$ and $f'(1)=2$. Which statements must be true?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$f(3)\\ge7$",
+     "correct": true,
+     "why": "Tangent-line inequality: $f(3)\\ge f(1)+f'(1)(3-1)=3+4=7$."
+    },
+    {
+     "text": "$f(0)\\ge1$",
+     "correct": true,
+     "why": "$f(0)\\ge3+2(0-1)=1$; the tangent bound holds on both sides of $x=1$."
+    },
+    {
+     "text": "$f(0)\\le1$",
+     "correct": false,
+     "why": "Reversed the tangent inequality: a convex graph lies **above** its tangent lines.",
+     "trap": "C11"
+    },
+    {
+     "text": "$f$ attains a minimum at some $x<1$",
+     "correct": false,
+     "why": "Convexity does not guarantee a minimiser: $f(x)=2x+1$ is convex, fits the data, and has no minimum.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Convex and differentiable: $f(x)\\ge f(1)+f'(1)(x-1)=2x+1$ for all $x$.\n2. $x=3$: $f(3)\\ge7$. $x=0$: $f(0)\\ge1$.\n3. $f(x)=(x-1)^2+2x+1$ fits the data with $f(0)=2>1$, so C fails; $f(x)=2x+1$ fits the data and has no minimum, so D fails."
+  },
+  {
+   "id": "calc-opt-word-05",
+   "skill": "calc.opt-word",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Positive numbers $x,y$ satisfy $xy=64$. Find the minimum value of $x+4y$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 32,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 40,
+     "why": "Took $x=y=8$ by symmetry; the weight $4$ on $y$ moves the optimum to $x=16$, $y=4$.",
+     "trap": "C10"
+    },
+    {
+     "value": 16,
+     "why": "Gave the optimal $x$ (where $x=4y=16$) instead of the minimum value.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Gave the optimal $y$ instead of the minimum value.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $y=64/x$, so $S(x)=x+\\frac{256}{x}$ for $x>0$.\n2. $S'(x)=1-\\frac{256}{x^2}=0\\Rightarrow x=16$, $y=4$; $S''(x)=512/x^3>0$ (minimum).\n3. $S=16+16=32$."
+  },
+  {
+   "id": "calc-opt-word-06",
+   "skill": "calc.opt-word",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A closed cylindrical can (with top and bottom) must hold a volume of $128\\pi$ cm³. If $S$ is the least possible total surface area, find $S/\\pi$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 96,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 80,
+     "why": "Counted only one circular end at the optimum: $\\pi r^2+2\\pi rh=16\\pi+64\\pi$.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Gave the radius $r=4$ instead of the area.",
+     "trap": "C6"
+    },
+    {
+     "value": 64,
+     "why": "Kept only the curved surface $2\\pi rh=64\\pi$ and dropped both ends.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $\\pi r^2h=128\\pi\\Rightarrow h=128/r^2$.\n2. $S(r)=2\\pi r^2+2\\pi rh=2\\pi r^2+\\frac{256\\pi}{r}$.\n3. $S'(r)=4\\pi r-\\frac{256\\pi}{r^2}=0\\Rightarrow r^3=64$, $r=4$, $h=8$.\n4. $S=32\\pi+64\\pi=96\\pi$, so $S/\\pi=96$."
+  },
+  {
+   "id": "calc-opt-word-07",
+   "skill": "calc.opt-word",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The shortest distance from the point $(5,0)$ to the line $y=2x$ is",
+   "figure": null,
+   "options": [
+    {
+     "text": "$20$",
+     "correct": false,
+     "why": "This is the minimum **squared** distance $D(1)$; the distance is its square root.",
+     "trap": "C4"
+    },
+    {
+     "text": "$10$",
+     "correct": false,
+     "why": "Went straight up to $(5,10)$ on the line; the vertical drop is not the shortest path.",
+     "trap": "C10"
+    },
+    {
+     "text": "$5$",
+     "correct": false,
+     "why": "Used the distance to $(0,0)$, a point of the line picked without optimising.",
+     "trap": "C10"
+    },
+    {
+     "text": "$2\\sqrt5$",
+     "correct": true,
+     "why": "Minimising $(x-5)^2+(2x)^2$ gives $x=1$, so the nearest point is $(1,2)$ and the distance is $\\sqrt{16+4}$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A point on the line is $(x,2x)$; minimise the squared distance $D(x)=(x-5)^2+4x^2$.\n2. $D'(x)=2(x-5)+8x=0\\Rightarrow x=1$, nearest point $(1,2)$.\n3. $D(1)=16+4=20$, so the distance is $\\sqrt{20}=2\\sqrt5\\approx4.47$."
+  },
+  {
+   "id": "calc-opt-word-08",
+   "skill": "calc.opt-word",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A $20$ cm wire is cut into two pieces: $x$ cm is bent into a square and the rest into a circle ($0\\le x\\le20$). To **maximise** the total enclosed area, $x$ should be",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\dfrac{80}{\\pi+4}\\approx11.2$",
+     "correct": false,
+     "why": "This is the only critical point, but $A''>0$ there: it gives the **minimum** area (about 14.0).",
+     "trap": "C5"
+    },
+    {
+     "text": "$0$ (all into the circle)",
+     "correct": true,
+     "why": "$A$ is an upward parabola in $x$, so its maximum on $[0,20]$ is at an endpoint; $A(0)=100/\\pi\\approx31.8>A(20)=25$."
+    },
+    {
+     "text": "$20$ (all into the square)",
+     "correct": false,
+     "why": "Checked only one endpoint; $A(20)=25$ is less than $A(0)\\approx31.8$.",
+     "trap": "C5"
+    },
+    {
+     "text": "$10$",
+     "correct": false,
+     "why": "Split the wire equally by symmetry; $A(10)\\approx14.2$ is close to the minimum.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $A(x)=\\left(\\frac x4\\right)^2+\\frac{(20-x)^2}{4\\pi}$.\n2. $A'(x)=\\frac x8-\\frac{20-x}{2\\pi}=0\\Rightarrow x=\\frac{80}{\\pi+4}\\approx11.2$; $A''=\\frac18+\\frac1{2\\pi}>0$, so this is the **minimum** ($A\\approx14.0$).\n3. The maximum is at an endpoint: $A(0)=\\frac{100}{\\pi}\\approx31.8$, $A(20)=25$.\n4. So $x=0$: all the wire goes into the circle."
+  },
+  {
+   "id": "calc-opt-word-09",
+   "skill": "calc.opt-word",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A rectangular garden of area $50$ m² is built against a long wall, so only the other three sides need fencing. Find the least length of fencing (m).",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 20,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 28.28,
+     "why": "Fenced all four sides of a square of side $\\sqrt{50}$ ($4\\sqrt{50}\\approx28.28$); the wall side needs no fence.",
+     "trap": "C6"
+    },
+    {
+     "value": 21.21,
+     "why": "Used a square $\\sqrt{50}\\times\\sqrt{50}$ with three sides fenced ($3\\sqrt{50}\\approx21.21$); against a wall the best shape is $5\\times10$.",
+     "trap": "C10"
+    },
+    {
+     "value": 5,
+     "why": "Gave the side $x=5$ instead of the fence length.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Let the two sides perpendicular to the wall be $x$ and the side parallel to it be $y$: $xy=50$.\n2. Fence $F(x)=2x+\\frac{50}{x}$; $F'(x)=2-\\frac{50}{x^2}=0\\Rightarrow x=5$, $y=10$.\n3. $F=10+10=20$ m."
+  },
+  {
+   "id": "calc-opt-word-10",
+   "skill": "calc.opt-word",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "An open-top box with a square base must hold $32$ cm³. With base side $x$ and height $h$, the material used is $S=x^2+4xh$, to be minimised. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The optimal base side is $x=4$ cm",
+     "correct": true,
+     "why": "$S'(x)=2x-128/x^2=0$ gives $x^3=64$."
+    },
+    {
+     "text": "At the optimum the box is a cube ($h=x$)",
+     "correct": false,
+     "why": "The cube is the answer for a **closed** box; with no top, $h=32/16=2=x/2$.",
+     "trap": "C2"
+    },
+    {
+     "text": "The minimum material is $48$ cm²",
+     "correct": true,
+     "why": "$S(4)=16+128/4=16+32=48$."
+    },
+    {
+     "text": "$S(x)=x^2+\\frac{128}{x}$ has a local maximum at $x=4$",
+     "correct": false,
+     "why": "$S''(x)=2+256/x^3>0$, so $x=4$ is a minimum, not a maximum.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $h=32/x^2$, so $S(x)=x^2+\\frac{128}{x}$ for $x>0$.\n2. $S'(x)=2x-\\frac{128}{x^2}=0\\Rightarrow x^3=64$, $x=4$; $S''(4)=2+\\frac{256}{64}=6>0$ (minimum).\n3. $h=32/16=2$ and $S=16+32=48$ cm²."
+  },
+  {
+   "id": "calc-gradient-descent-06",
+   "skill": "calc.gradient-descent",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Gradient descent on $f(x)=x^4-2x^2$ starts at $x_0=2$ with learning rate $\\eta=0.05$. Find $x_1$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.8,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 3.2,
+     "why": "Added the step instead of subtracting it: $2+1.2$.",
+     "trap": "C11"
+    },
+    {
+     "value": 0.4,
+     "why": "Dropped the $-4x$ term and used $f'(2)=32$.",
+     "trap": "C6"
+    },
+    {
+     "value": 1.6,
+     "why": "Used the function value $f(2)=8$ in place of the gradient.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. $f'(x)=4x^3-4x$, so $f'(2)=32-8=24$.\n2. $x_1=2-0.05\\cdot24=2-1.2=0.8$."
+  },
+  {
+   "id": "calc-gradient-descent-07",
+   "skill": "calc.gradient-descent",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "One gradient descent step on $f(x,y)=(x-1)^2+2(y+1)^2$ from $(0,0)$ with $\\eta=0.25$ gives",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(-0.5,\\ 1)$",
+     "correct": false,
+     "why": "Moved along $+\\nabla f$ (ascent) instead of subtracting the gradient.",
+     "trap": "C11"
+    },
+    {
+     "text": "$(0.5,\\ -0.5)$",
+     "correct": false,
+     "why": "Used $\\partial f/\\partial y=2(y+1)$, dropping the coefficient $2$ of the $y$-term.",
+     "trap": "C6"
+    },
+    {
+     "text": "$(1,\\ -1)$",
+     "correct": false,
+     "why": "Jumped straight to the minimiser $(1,-1)$; in $x$ one step moves only $0.25\\cdot2=0.5$.",
+     "trap": "C6"
+    },
+    {
+     "text": "$(0.5,\\ -1)$",
+     "correct": true,
+     "why": "$\\nabla f(0,0)=(-2,4)$, so $(0,0)-0.25(-2,4)=(0.5,-1)$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $\\nabla f=(2(x-1),\\,4(y+1))$; at $(0,0)$ it is $(-2,4)$.\n2. New point $=(0,0)-0.25\\,(-2,4)=(0.5,-1)$."
+  },
+  {
+   "id": "calc-gradient-descent-08",
+   "skill": "calc.gradient-descent",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Gradient descent with a constant step $\\eta>0$ is run on $f(x)=3x^2$ from any $x_0\\ne0$. The iterates converge to $0$ exactly when",
+   "figure": null,
+   "options": [
+    {
+     "text": "$0<\\eta<\\frac16$",
+     "correct": false,
+     "why": "This is where $1-6\\eta>0$ (no sign flips); for $\\frac16<\\eta<\\frac13$ the iterates alternate in sign but still shrink.",
+     "trap": "C5"
+    },
+    {
+     "text": "$0<\\eta<\\frac13$",
+     "correct": true,
+     "why": "$x_{k+1}=(1-6\\eta)x_k$, and $|1-6\\eta|<1\\iff0<\\eta<\\frac13$."
+    },
+    {
+     "text": "$0<\\eta<\\frac23$",
+     "correct": false,
+     "why": "Used $f'(x)=3x$ (dropped the 2 from $x^2$), giving $|1-3\\eta|<1$.",
+     "trap": "C6"
+    },
+    {
+     "text": "$0<\\eta<1$",
+     "correct": false,
+     "why": "Copied the rule for $f(x)=x^2$; here the curvature is 3 times larger, so the step must be smaller.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f'(x)=6x$, so $x_{k+1}=(1-6\\eta)x_k$ and $x_k=(1-6\\eta)^kx_0$.\n2. Converges iff $|1-6\\eta|<1\\iff0<\\eta<\\frac13$.\n3. At $\\eta=\\frac13$ the factor is $-1$ (endless oscillation); beyond it the iterates diverge."
+  },
+  {
+   "id": "calc-gradient-descent-09",
+   "skill": "calc.gradient-descent",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Gradient descent with constant step $\\eta$ is run on $f(x)=(x-2)^2$ from $x_0=0$. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "With $\\eta=0.5$, $x_1=2$, the minimiser, in one step",
+     "correct": true,
+     "why": "$f'(0)=-4$, so $x_1=0-0.5(-4)=2$."
+    },
+    {
+     "text": "With $\\eta=1$, the iterates alternate $0,4,0,4,\\dots$ forever",
+     "correct": true,
+     "why": "$x_{k+1}-2=(1-2)(x_k-2)=-(x_k-2)$: $x_1=4$, $x_2=0$, and so on."
+    },
+    {
+     "text": "With $\\eta=0.75$, the iterates diverge because they overshoot $2$",
+     "correct": false,
+     "why": "Overshooting is not divergence: the factor is $1-2(0.75)=-0.5$, so $|x_k-2|$ halves every step.",
+     "trap": "C5"
+    },
+    {
+     "text": "With $\\eta=0.1$, $x_1=-0.4$",
+     "correct": false,
+     "why": "Added the step: $0+0.1(-4)$. Descent subtracts: $x_1=0-0.1(-4)=0.4$.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $f'(x)=2(x-2)$, so $x_{k+1}-2=(1-2\\eta)(x_k-2)$.\n2. $\\eta=0.5$: factor $0$, so $x_1=2$. $\\eta=1$: factor $-1$, so $0,4,0,4,\\dots$\n3. $\\eta=0.75$: factor $-0.5$, so $3,\\ 1.5,\\ 2.25,\\dots\\to2$ (converges). $\\eta=0.1$: $x_1=0.4$."
+  },
+  {
+   "id": "calc-gradient-descent-10",
+   "skill": "calc.gradient-descent",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A model $\\hat y=wx$ is fit to the two samples $(x,y)=(1,2)$ and $(2,3)$ with the mean squared error $L(w)=\\frac12\\sum_{i=1}^{2}(wx_i-y_i)^2$. Starting from $w_0=1$, take one gradient descent step with $\\eta=0.1$. Find $w_1$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 1.3,
+    "tol": 0.001
+   },
+   "traps": [
+    {
+     "value": 0.7,
+     "why": "Added the gradient step: $1+0.1(-3)$.",
+     "trap": "C11"
+    },
+    {
+     "value": 1.15,
+     "why": "Forgot the factor 2 from differentiating the square, so used gradient $-1.5$.",
+     "trap": "C4"
+    },
+    {
+     "value": 1.2,
+     "why": "Missed the chain-rule factor $x_i$: $\\frac12\\sum2(wx_i-y_i)=-2$.",
+     "trap": "C6"
+    },
+    {
+     "value": 1.6,
+     "why": "Dropped the $\\frac12$ (summed instead of averaged): gradient $-6$.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $L'(w)=\\frac12\\sum2(wx_i-y_i)x_i=\\sum(wx_i-y_i)x_i$.\n2. At $w=1$: $(1-2)\\cdot1+(2-3)\\cdot2=-1-2=-3$.\n3. $w_1=1-0.1(-3)=1.3$."
+  }
+ ]
+}

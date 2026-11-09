@@ -1,0 +1,449 @@
+{
+ "area": "ai",
+ "skills": {},
+ "questions": [
+  {
+   "id": "ai-uninformed-order-07",
+   "skill": "ai.uninformed-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Breadth-first graph search runs on the undirected graph in the figure from $S$ to $G$. Successors are generated in alphabetical order, a node already in the frontier or already expanded is not added again, and the goal test is applied when a node is selected for expansion. In which order are nodes expanded (the goal counts as expanded)?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 335 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 84L85 51M35 96L85 129M106 41L159 24M105 51L160 84M105 129L160 96M106 139L159 156M181 25L299 85M181 155L299 95M298 90L257 90M182 90L233 90\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"90\" r=\"12\"/><circle cx=\"95\" cy=\"45\" r=\"12\"/><circle cx=\"95\" cy=\"135\" r=\"12\"/><circle cx=\"170\" cy=\"20\" r=\"12\"/><circle cx=\"170\" cy=\"90\" r=\"12\"/><circle cx=\"170\" cy=\"160\" r=\"12\"/><circle cx=\"245\" cy=\"90\" r=\"12\"/><circle cx=\"310\" cy=\"90\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"94\">S</text><text x=\"95\" y=\"49\">B</text><text x=\"95\" y=\"139\">D</text><text x=\"170\" y=\"24\">A</text><text x=\"170\" y=\"94\">C</text><text x=\"170\" y=\"164\">F</text><text x=\"245\" y=\"94\">G</text><text x=\"310\" y=\"94\">E</text></g></svg>",
+   "options": [
+    {
+     "text": "S, B, A, E, F, D, C, G",
+     "correct": false,
+     "why": "This is the depth-first order: it dives B → A → E before finishing level 1.",
+     "trap": "C2"
+    },
+    {
+     "text": "S, B, D, A, C, E, F, G",
+     "correct": false,
+     "why": "Sorted the third level alphabetically; BFS keeps FIFO order, and F (added by D) was queued before E (added by A).",
+     "trap": "C9"
+    },
+    {
+     "text": "S, B, D, A, C, F, E, G",
+     "correct": true,
+     "why": "Queue: S adds B, D; B adds A, C; D adds F; A adds E; C adds G. G is dequeued last."
+    },
+    {
+     "text": "S, B, C, G",
+     "correct": false,
+     "why": "This is the returned path S–B–C–G, not the expansion order.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Expand S: queue B, D.\n2. B: add A, C. D: C is already queued, add F. Queue A, C, F.\n3. A: add E. C: add G. Queue F, E, G.\n4. F and E add nothing new; G is dequeued and passes the test. Order: S, B, D, A, C, F, E, G."
+  },
+  {
+   "id": "ai-uninformed-order-08",
+   "skill": "ai.uninformed-order",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Two depth-first searches run on the graph in the figure from $S$ to $G$. Both skip visited nodes, stop as soon as $G$ is visited, and return the path through the parent each node was reached from.\n\n- **Recursive DFS:** from the current node, recurse into the unvisited neighbours in alphabetical order.\n- **Stack DFS:** pop a node; if it is already visited, skip it; otherwise mark it visited (stop if it is $G$) and push all its unvisited neighbours in alphabetical order, so the alphabetically last one is popped next.\n\nWhich statements are correct?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 335 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 84L85 51M35 96L85 129M106 41L159 24M105 51L160 84M105 129L160 96M106 139L159 156M181 25L299 85M181 155L299 95M298 90L257 90M182 90L233 90\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"90\" r=\"12\"/><circle cx=\"95\" cy=\"45\" r=\"12\"/><circle cx=\"95\" cy=\"135\" r=\"12\"/><circle cx=\"170\" cy=\"20\" r=\"12\"/><circle cx=\"170\" cy=\"90\" r=\"12\"/><circle cx=\"170\" cy=\"160\" r=\"12\"/><circle cx=\"245\" cy=\"90\" r=\"12\"/><circle cx=\"310\" cy=\"90\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"94\">S</text><text x=\"95\" y=\"49\">B</text><text x=\"95\" y=\"139\">D</text><text x=\"170\" y=\"24\">A</text><text x=\"170\" y=\"94\">C</text><text x=\"170\" y=\"164\">F</text><text x=\"245\" y=\"94\">G</text><text x=\"310\" y=\"94\">E</text></g></svg>",
+   "options": [
+    {
+     "text": "Recursive DFS visits all 8 nodes and returns the path S–B–A–E–F–D–C–G",
+     "correct": true,
+     "why": "Each call takes the first unvisited neighbour: S → B → A → E → F → D → C → G, snaking through every node."
+    },
+    {
+     "text": "Stack DFS returns the path S–D–F–E–G",
+     "correct": true,
+     "why": "Pop S, push B, D; pop D, push C, F; pop F, push E; pop E, push A, G; pop G."
+    },
+    {
+     "text": "Recursive DFS returns the same path as BFS, S–B–C–G",
+     "correct": false,
+     "why": "DFS does not look for the fewest edges; at B it takes A first (alphabetical) and dives deep.",
+     "trap": "C9"
+    },
+    {
+     "text": "Both searches visit the nodes in the same order",
+     "correct": false,
+     "why": "Pushing in alphabetical order makes the stack pop the **last** neighbour first, so stack DFS goes S, D, … while recursive DFS goes S, B, …",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Recursive: S → B (first neighbour) → A → E → F → D → C → G; the path has 7 edges.\n2. Stack: pop S, push B, D. Pop D, push C, F. Pop F, push E. Pop E, push A, G. Pop G: path S–D–F–E–G.\n3. BFS would return S–B–C–G (3 edges)."
+  },
+  {
+   "id": "ai-goal-test-06",
+   "skill": "ai.goal-test",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Breadth-first graph search runs on the graph in the figure from $S$ to $G$, generating successors alphabetically and never re-adding a node that is already in the frontier or expanded. Let $n_1$ be the number of nodes **removed from the frontier** when the goal test is applied on expansion (removing $G$ itself counts), and $n_2$ the number removed when the goal test is applied on generation (the search stops the moment $G$ is generated). Find $n_1-n_2$.",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 335 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M35 84L85 51M35 96L85 129M106 41L159 24M105 51L160 84M105 129L160 96M106 139L159 156M181 25L299 85M181 155L299 95M298 90L257 90M182 90L233 90\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"90\" r=\"12\"/><circle cx=\"95\" cy=\"45\" r=\"12\"/><circle cx=\"95\" cy=\"135\" r=\"12\"/><circle cx=\"170\" cy=\"20\" r=\"12\"/><circle cx=\"170\" cy=\"90\" r=\"12\"/><circle cx=\"170\" cy=\"160\" r=\"12\"/><circle cx=\"245\" cy=\"90\" r=\"12\"/><circle cx=\"310\" cy=\"90\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"94\">S</text><text x=\"95\" y=\"49\">B</text><text x=\"95\" y=\"139\">D</text><text x=\"170\" y=\"24\">A</text><text x=\"170\" y=\"94\">C</text><text x=\"170\" y=\"164\">F</text><text x=\"245\" y=\"94\">G</text><text x=\"310\" y=\"94\">E</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 2,
+     "why": "Did not count the removal of $G$ itself in $n_1$ ($7-5$).",
+     "trap": "C6"
+    },
+    {
+     "value": 8,
+     "why": "Gave $n_1$ alone instead of the difference.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Gave $n_2$ alone instead of the difference.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Test on expansion: removals S, B, D, A, C, F, E, G, so $n_1=8$.\n2. Test on generation: G is generated while C is expanded; removals S, B, D, A, C, so $n_2=5$.\n3. $n_1-n_2=3$."
+  },
+  {
+   "id": "ai-goal-test-07",
+   "skill": "ai.goal-test",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "BFS runs on a complete tree with branching factor 3; expanding a node generates all 3 of its children at once. The only goal is the **leftmost** node at depth 2. With the goal test applied **when a node is generated**, how many nodes have been generated (counting the root) when the search stops?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$5$",
+     "correct": false,
+     "why": "Stopped halfway through an expansion; the stem says all 3 children are generated at once.",
+     "trap": "C6"
+    },
+    {
+     "text": "$13$",
+     "correct": false,
+     "why": "This is the count with the goal test on expansion: all depth-1 nodes are expanded before the goal is popped ($1+3+9$).",
+     "trap": "C6"
+    },
+    {
+     "text": "$4$",
+     "correct": false,
+     "why": "Stopped after expanding the root; a depth-2 goal appears only when a depth-1 node is expanded.",
+     "trap": "C6"
+    },
+    {
+     "text": "$7$",
+     "correct": true,
+     "why": "Root, its 3 children, and the 3 children of the first depth-1 node, which include the goal."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Root generated: 1.\n2. Expand the root: 3 children, total 4.\n3. Expand the leftmost depth-1 node: its 3 children (one is the goal) are generated, total 7, and the test on generation stops the search.\n4. With the test on expansion all three depth-1 nodes would be expanded first: $1+3+9=13$."
+  },
+  {
+   "id": "ai-ucs-trace-06",
+   "skill": "ai.ucs-trace",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Uniform-cost graph search runs on the weighted undirected graph in the figure from $S$ to $G$. A frontier node's cost is lowered when a cheaper path is found, ties are broken alphabetically, and the goal test is applied when a node is popped. Which statements are correct?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 325 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M34 83L91 37M34 97L91 143M100 42L100 138M110 143L180 97M110 37L180 83M112 150L258 150M200 97L260 143M201 84L289 36M273 138L297 42\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"90\" r=\"12\"/><circle cx=\"100\" cy=\"30\" r=\"12\"/><circle cx=\"100\" cy=\"150\" r=\"12\"/><circle cx=\"190\" cy=\"90\" r=\"12\"/><circle cx=\"270\" cy=\"150\" r=\"12\"/><circle cx=\"300\" cy=\"30\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"94\">S</text><text x=\"100\" y=\"34\">A</text><text x=\"100\" y=\"154\">B</text><text x=\"190\" y=\"94\">C</text><text x=\"270\" y=\"154\">D</text><text x=\"300\" y=\"34\">G</text><text x=\"55\" y=\"55\">5</text><text x=\"55\" y=\"134\">2</text><text x=\"90\" y=\"94\">2</text><text x=\"156\" y=\"133\">6</text><text x=\"150\" y=\"52\">2</text><text x=\"185\" y=\"166\">9</text><text x=\"240\" y=\"113\">1</text><text x=\"240\" y=\"52\">6</text><text x=\"297\" y=\"95\">4</text></g></svg>",
+   "options": [
+    {
+     "text": "Before $G$ is popped, the nodes are expanded in the order S, B, A, C, D",
+     "correct": true,
+     "why": "Pops: S(0), B(2), A(4), C(6), D(7), then G(11)."
+    },
+    {
+     "text": "$A$ is expanded with $g(A)=5$",
+     "correct": false,
+     "why": "Kept A's first cost from the edge S–A; expanding B lowers it to $2+2=4$.",
+     "trap": "C6"
+    },
+    {
+     "text": "The returned path is S–B–A–C–D–G, with cost 11",
+     "correct": true,
+     "why": "$2+2+2+1+4=11$; the route ending with C–G costs 12."
+    },
+    {
+     "text": "The search stops when $G$ is first generated, with cost 12",
+     "correct": false,
+     "why": "G is generated with $g=12$ while C is expanded, but UCS stops only when G is popped; D lowers it to 11 first.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pop S: A=5, B=2.\n2. Pop B(2): A→4, C=8, D=11.\n3. Pop A(4): C→6. Pop C(6): D→7, G=12.\n4. Pop D(7): G→11. Pop G(11).\n5. Path S–B–A–C–D–G, cost 11."
+  },
+  {
+   "id": "ai-ucs-trace-07",
+   "skill": "ai.ucs-trace",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "For the graph in the figure, uniform-cost search runs from $S$ to $G$ (goal test on pop, frontier costs lowered when a cheaper path appears, ties alphabetical). What is $g(D)$ at the moment $D$ is expanded?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 325 180\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M34 83L91 37M34 97L91 143M100 42L100 138M110 143L180 97M110 37L180 83M112 150L258 150M200 97L260 143M201 84L289 36M273 138L297 42\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"25\" cy=\"90\" r=\"12\"/><circle cx=\"100\" cy=\"30\" r=\"12\"/><circle cx=\"100\" cy=\"150\" r=\"12\"/><circle cx=\"190\" cy=\"90\" r=\"12\"/><circle cx=\"270\" cy=\"150\" r=\"12\"/><circle cx=\"300\" cy=\"30\" r=\"12\"/></g><g text-anchor=\"middle\"><text x=\"25\" y=\"94\">S</text><text x=\"100\" y=\"34\">A</text><text x=\"100\" y=\"154\">B</text><text x=\"190\" y=\"94\">C</text><text x=\"270\" y=\"154\">D</text><text x=\"300\" y=\"34\">G</text><text x=\"55\" y=\"55\">5</text><text x=\"55\" y=\"134\">2</text><text x=\"90\" y=\"94\">2</text><text x=\"156\" y=\"133\">6</text><text x=\"150\" y=\"52\">2</text><text x=\"185\" y=\"166\">9</text><text x=\"240\" y=\"113\">1</text><text x=\"240\" y=\"52\">6</text><text x=\"297\" y=\"95\">4</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 11,
+     "why": "Kept D's first cost via S–B–D ($2+9$) and never lowered it.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Used the last edge weight C–D instead of the total path cost.",
+     "trap": "C10"
+    },
+    {
+     "value": 8,
+     "why": "Went S–A–C–D ($5+2+1$), missing that A is cheaper via B.",
+     "trap": "C3"
+    },
+    {
+     "value": 9,
+     "why": "Went S–B–C–D ($2+6+1$), missing the cheaper route to C through A.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Cheapest costs: B=2, A=4 (via B), C=6 (via A).\n2. D is first reached from B with $2+9=11$, then lowered to $6+1=7$ when C is expanded.\n3. D is popped with $g(D)=7$."
+  },
+  {
+   "id": "ai-ids-06",
+   "skill": "ai.ids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Iterative deepening search runs on the tree in the figure with depth limits $0,1,2,\\dots$; children are visited left to right and the goal test is applied when a node is visited. The goal is $H$. Counting every visit in every iteration (the root counts each time), how many node visits are made in total?",
+   "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 320 175\" font-family=\"sans-serif\" font-size=\"12\" fill=\"currentColor\"><path d=\"M150 23L70 60M160 29L160 54M170 23L250 60M54 74L36 103M66 74L84 103M160 76L160 101M254 74L236 103M266 74L284 103M30 123L30 148\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"160\" cy=\"18\" r=\"11\"/><circle cx=\"60\" cy=\"65\" r=\"11\"/><circle cx=\"160\" cy=\"65\" r=\"11\"/><circle cx=\"260\" cy=\"65\" r=\"11\"/><circle cx=\"30\" cy=\"112\" r=\"11\"/><circle cx=\"90\" cy=\"112\" r=\"11\"/><circle cx=\"160\" cy=\"112\" r=\"11\"/><circle cx=\"230\" cy=\"112\" r=\"11\"/><circle cx=\"290\" cy=\"112\" r=\"11\"/><circle cx=\"30\" cy=\"159\" r=\"11\"/></g><g text-anchor=\"middle\"><text x=\"160\" y=\"22\">A</text><text x=\"60\" y=\"69\">B</text><text x=\"160\" y=\"69\">C</text><text x=\"260\" y=\"69\">D</text><text x=\"30\" y=\"116\">E</text><text x=\"90\" y=\"116\">F</text><text x=\"160\" y=\"116\">G</text><text x=\"230\" y=\"116\">H</text><text x=\"290\" y=\"116\">I</text><text x=\"30\" y=\"163\">J</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Counted only the last iteration (limit 2).",
+     "trap": "C6"
+    },
+    {
+     "value": 12,
+     "why": "Forgot the limit-0 iteration, which visits A once.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Ran the last iteration to the end and counted I too; the search stops at H.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Limit 0: A (1 visit).\n2. Limit 1: A, B, C, D (4).\n3. Limit 2: A, B, E, F, C, G, D, H, stopping at H (8).\n4. Total $1+4+8=13$."
+  },
+  {
+   "id": "ai-ids-07",
+   "skill": "ai.ids",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Iterative deepening search (limits $0,1,2,\\dots$) runs on a tree whose shallowest goal is the **last** node at depth 3, so every iteration runs to completion. How many times in total is a particular node at depth 1 visited?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$4$",
+     "correct": false,
+     "why": "That is the root's count ($d+1$); a depth-1 node is not visited in the limit-0 iteration.",
+     "trap": "C6"
+    },
+    {
+     "text": "$1$",
+     "correct": false,
+     "why": "IDS keeps nothing between iterations, so shallow nodes are visited again in every deeper iteration.",
+     "trap": "C9"
+    },
+    {
+     "text": "$3$",
+     "correct": true,
+     "why": "It is visited once in each iteration with limit 1, 2 and 3: $d-i+1=3-1+1$."
+    },
+    {
+     "text": "$2$",
+     "correct": false,
+     "why": "Left out the final iteration with limit 3, which also passes through depth 1.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A node at depth $i$ is visited in every iteration with limit $\\ell\\ge i$.\n2. Limits run $0,1,2,3$, so a depth-1 node is visited for $\\ell=1,2,3$: 3 times.\n3. In general it is $d-i+1$ times; the root ($i=0$) gets $d+1$."
+  },
+  {
+   "id": "ai-search-props-06",
+   "skill": "ai.search-props",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A finite graph has cycles, and its step costs are positive but unequal (some edges cost 1, others 10). Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "UCS with the goal test on pop returns a cheapest path",
+     "correct": true,
+     "why": "Step costs are $\\ge1>0$, so UCS is complete and optimal when it tests the goal on pop."
+    },
+    {
+     "text": "BFS returns a cheapest path because it finds the shallowest goal",
+     "correct": false,
+     "why": "Fewest edges is cheapest only when all step costs are equal; one edge of cost 10 loses to three edges of cost 1.",
+     "trap": "C1"
+    },
+    {
+     "text": "Graph-search DFS (with a visited set) is guaranteed to terminate",
+     "correct": true,
+     "why": "With a visited set, each of the finitely many nodes is expanded at most once."
+    },
+    {
+     "text": "Tree-search DFS (no visited set) is complete on this graph",
+     "correct": false,
+     "why": "Without a visited set, DFS can circle a cycle forever, even on a finite graph.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. UCS: every cost is $\\ge\\varepsilon=1>0$ and the goal is tested on pop, so it is complete and optimal.\n2. Graph-search DFS: finite graph plus a visited set, so it terminates (but it is not optimal).\n3. BFS minimises the number of edges, not the total cost.\n4. Tree-search DFS can go round a cycle forever."
+  },
+  {
+   "id": "ai-search-props-07",
+   "skill": "ai.search-props",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "Depth-limited search with limit $\\ell=3$ runs on a problem with finite branching factor whose shallowest goal is at depth 5. What happens?",
+   "figure": null,
+   "options": [
+    {
+     "text": "It returns failure (cutoff) without finding a goal",
+     "correct": true,
+     "why": "Nodes deeper than 3 are never generated and no goal lies within depth 3, so DLS is incomplete when $\\ell<d$."
+    },
+    {
+     "text": "It finds the goal at depth 5, but the path may not be optimal",
+     "correct": false,
+     "why": "The limit is a hard cut: nodes below depth 3 are never generated, so depth 5 is never reached.",
+     "trap": "C5"
+    },
+    {
+     "text": "It loops forever because the goal is never found",
+     "correct": false,
+     "why": "With finite $b$ and a depth cut, the search space is finite, so DLS always terminates.",
+     "trap": "C8"
+    },
+    {
+     "text": "It returns a node at depth 3 as the goal",
+     "correct": false,
+     "why": "Reaching the limit is not reaching a goal; the goal test fails on every node within depth 3.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. DLS treats nodes at depth $\\ell=3$ as leaves.\n2. The shallowest goal is at depth $5>3$, so no goal is ever generated.\n3. The finite tree up to depth 3 is exhausted and DLS reports cutoff/failure: it is incomplete when $\\ell<d$."
+  },
+  {
+   "id": "ai-search-complexity-06",
+   "skill": "ai.search-complexity",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "The worst-case number of nodes generated by uniform-cost search is bounded by $b^{1+\\lfloor C^*/\\varepsilon\\rfloor}$. Evaluate this bound for $b=2$, optimal cost $C^*=14$ and minimum step cost $\\varepsilon=3$.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 32,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 64,
+     "why": "Rounded $14/3$ up to 5 instead of taking the floor.",
+     "trap": "C5"
+    },
+    {
+     "value": 16,
+     "why": "Dropped the $+1$ in the exponent.",
+     "trap": "C6"
+    },
+    {
+     "value": 50.8,
+     "why": "Used $14/3\\approx4.67$ without the floor: $2^{5.67}\\approx50.8$.",
+     "trap": "C5"
+    },
+    {
+     "value": 10,
+     "why": "Multiplied instead of raising to a power: $b\\,(1+\\lfloor C^*/\\varepsilon\\rfloor)$, a DFS-style $bm$ formula.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. $C^*/\\varepsilon=14/3\\approx4.67$, so $\\lfloor C^*/\\varepsilon\\rfloor=4$.\n2. Exponent $1+4=5$.\n3. Bound $2^5=32$."
+  },
+  {
+   "id": "ai-search-complexity-07",
+   "skill": "ai.search-complexity",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (original)",
+   "stem": "A search tree has branching factor $b=2$, shallowest goal depth $d=10$ and maximum depth $m=20$. Using the standard worst-case **space** orders, which estimate of the number of nodes held in memory is right?",
+   "figure": null,
+   "options": [
+    {
+     "text": "BFS $\\approx1024$, IDS $\\approx1024$, DFS $\\approx40$",
+     "correct": false,
+     "why": "Gave IDS the BFS memory; IDS is a DFS underneath and stores only $O(bd)$.",
+     "trap": "C2"
+    },
+    {
+     "text": "BFS $\\approx1024$, IDS $\\approx20$, DFS $\\approx2^{20}\\approx10^6$",
+     "correct": false,
+     "why": "Used the DFS **time** $b^m$ as its space; DFS stores only the current path and siblings, $O(bm)$.",
+     "trap": "C2"
+    },
+    {
+     "text": "BFS $\\approx20$, IDS $\\approx20$, DFS $\\approx40$",
+     "correct": false,
+     "why": "Gave BFS linear memory; BFS must hold a whole level of the tree, $O(b^d)$.",
+     "trap": "C2"
+    },
+    {
+     "text": "BFS $\\approx1024$, IDS $\\approx20$, DFS $\\approx40$",
+     "correct": true,
+     "why": "Space: BFS $b^d=2^{10}$, IDS $bd=2\\cdot10$, DFS $bm=2\\cdot20$."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. BFS keeps a whole frontier level: $O(b^d)=2^{10}=1024$.\n2. IDS is depth-first inside: $O(bd)=2\\cdot10=20$.\n3. DFS: $O(bm)=2\\cdot20=40$ (its **time** is $O(b^m)$)."
+  }
+ ]
+}

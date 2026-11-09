@@ -1,0 +1,1481 @@
+{
+  "area": "ml",
+  "skills": {},
+  "questions": [
+    {
+      "id": "ml-naive-bayes-07",
+      "skill": "ml.naive-bayes",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A naive Bayes classifier has three classes with priors $P(C_1) = 0.5$, $P(C_2) = 0.3$, $P(C_3) = 0.2$. For a test point $x$ the class-conditional likelihoods are $P(x \\mid C_1) = 0.2$, $P(x \\mid C_2) = 0.5$, $P(x \\mid C_3) = 0.6$.\n\nThe posterior $P(C_3 \\mid x)$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.32,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.46,
+          "why": "Dropped the priors: $0.6/(0.2 + 0.5 + 0.6)$. $C_3$ is the least likely class a priori, so its posterior must be pulled down.",
+          "trap": "C7"
+        },
+        {
+          "value": 0.12,
+          "why": "Stopped at the unnormalised score $0.2 \\times 0.6$; divide by the sum of all three scores.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.2,
+          "why": "Returned the prior $P(C_3)$; the likelihood of $x$ was not used.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Scores $P(c)P(x \\mid c)$: $C_1$: $0.5 \\times 0.2 = 0.10$; $C_2$: $0.3 \\times 0.5 = 0.15$; $C_3$: $0.2 \\times 0.6 = 0.12$.\n2. Sum $= 0.37$.\n3. $P(C_3 \\mid x) = 0.12/0.37 \\approx 0.32$. (The prediction is $C_2$, even though $C_3$ has the largest likelihood.)"
+    },
+    {
+      "id": "ml-naive-bayes-08",
+      "skill": "ml.naive-bayes",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A two-class Bayes classifier has priors $P(A) = 0.2$ and $P(B) = 0.8$. For an observed feature vector $x$, $P(x \\mid A) = 0.6$ and $P(x \\mid B) = 0.2$. Which class does it predict, and why?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$A$, because $P(x \\mid A) > P(x \\mid B)$",
+          "correct": false,
+          "why": "Compared likelihoods only and dropped the priors; class $B$ is four times as likely before seeing $x$.",
+          "trap": "C7"
+        },
+        {
+          "text": "$B$, because $0.8 \\times 0.2 > 0.2 \\times 0.6$",
+          "correct": true,
+          "why": "Scores prior × likelihood are $0.16$ for $B$ and $0.12$ for $A$; the larger score wins."
+        },
+        {
+          "text": "It cannot be decided without the evidence $P(x)$",
+          "correct": false,
+          "why": "$P(x)$ is the same denominator for both classes, so it cancels when comparing them.",
+          "trap": "C1"
+        },
+        {
+          "text": "$B$, because a class with prior above $0.5$ is always predicted",
+          "correct": false,
+          "why": "The prior alone does not decide; a strong enough likelihood ratio can overturn it. Here it simply does not.",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Score$(A) = 0.2 \\times 0.6 = 0.12$; Score$(B) = 0.8 \\times 0.2 = 0.16$.\n2. $0.16 > 0.12$, so predict $B$ ($P(B \\mid x) = 0.16/0.28 \\approx 0.57$).\n3. $P(x)$ is common to both and is not needed for the decision."
+    },
+    {
+      "id": "ml-naive-bayes-09",
+      "skill": "ml.naive-bayes",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A Bernoulli naive Bayes classifier with two binary features is trained on 10 messages: 4 of class Pos and 6 of class Neg.\n\n- $F_1$ is present in 3 of the 4 Pos messages and in 0 of the 6 Neg messages.\n- $F_2$ is present in 1 of the 4 Pos messages and in 3 of the 6 Neg messages.\n\nPriors are the class frequencies. Each feature likelihood uses Laplace smoothing (add 1 to the count of each of the two outcomes, present/absent). For a new message with $F_1 = 1$ and $F_2 = 0$, the posterior $P(\\text{Neg} \\mid x)$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.17,
+        "tol": 0.005
+      },
+      "traps": [
+        {
+          "value": 0,
+          "why": "No smoothing: $P(F_1{=}1 \\mid \\text{Neg}) = 0/6$ zeroes the whole Neg score. Smoothing gives it $1/8$.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.16,
+          "why": "Added 1 to the denominator instead of 2 (the number of outcomes): $(n + 1)/(N_c + 1)$.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.12,
+          "why": "Dropped the priors $0.4$ and $0.6$ and normalised the likelihood products only.",
+          "trap": "C7"
+        },
+        {
+          "value": 0.83,
+          "why": "Reported $P(\\text{Pos} \\mid x)$; the question asks for Neg.",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. Smoothed likelihoods ($+1$ on top, $+2$ below): Pos: $P(F_1{=}1) = 4/6$, $P(F_2{=}0) = 4/6$. Neg: $P(F_1{=}1) = 1/8$, $P(F_2{=}0) = 4/8$.\n2. Pos score $= 0.4 \\times \\frac46 \\times \\frac46 \\approx 0.1778$; Neg score $= 0.6 \\times \\frac18 \\times \\frac48 = 0.0375$.\n3. $P(\\text{Neg} \\mid x) = 0.0375/(0.1778 + 0.0375) \\approx 0.17$."
+    },
+    {
+      "id": "ml-naive-bayes-10",
+      "skill": "ml.naive-bayes",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A multinomial naive Bayes text classifier has equal priors and uses Laplace (add-one) smoothing over a vocabulary of $V = 4$ words. Word counts in the training data:\n\n| word | spam | ham |\n|---|---|---|\n| cheap | 4 | 1 |\n| meeting | 0 | 3 |\n| offer | 3 | 0 |\n| report | 1 | 4 |\n| **total** | 8 | 8 |\n\nThe new document is \"cheap cheap meeting\". Which statement is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Ham, with probability 1, because *meeting* never occurs in spam",
+          "correct": false,
+          "why": "That is the unsmoothed estimate $0/8$. With add-one smoothing $P(\\textit{meeting} \\mid \\text{spam}) = 1/12$, not 0.",
+          "trap": "C6"
+        },
+        {
+          "text": "Ham, with $P(\\text{ham} \\mid d) = 8/13$",
+          "correct": false,
+          "why": "Counted *cheap* only once. In the multinomial model each occurrence contributes its own factor.",
+          "trap": "C9"
+        },
+        {
+          "text": "Spam, with $P(\\text{spam} \\mid d) = 25/29$",
+          "correct": false,
+          "why": "Dropped the token *meeting*; its factor $1/12$ vs $4/12$ strongly favours ham.",
+          "trap": "C6"
+        },
+        {
+          "text": "Spam, with $P(\\text{spam} \\mid d) = 25/41$",
+          "correct": true,
+          "why": "Spam $\\propto (5/12)^2(1/12) = 25/1728$, ham $\\propto (2/12)^2(4/12) = 16/1728$; $25/(25 + 16)$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Smoothed: $P(w \\mid c) = (\\text{count} + 1)/(8 + 4)$. Spam: cheap $5/12$, meeting $1/12$. Ham: cheap $2/12$, meeting $4/12$.\n2. Spam score $\\propto (5/12)^2 \\cdot (1/12) = 25/1728$; ham $\\propto (2/12)^2 \\cdot (4/12) = 16/1728$ (equal priors cancel).\n3. $P(\\text{spam} \\mid d) = 25/41 \\approx 0.61$: predict spam."
+    },
+    {
+      "id": "ml-naive-bayes-11",
+      "skill": "ml.naive-bayes",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about the naive Bayes classifier are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Naive Bayes is a discriminative model that learns $P(y \\mid x)$ directly",
+          "correct": false,
+          "why": "Swapped: NB is generative; it learns $P(y)$ and $P(x \\mid y)$ and gets the posterior through Bayes' rule.",
+          "trap": "C2"
+        },
+        {
+          "text": "If $P(x_j = v \\mid c)$ is the same for every class $c$, observing $x_j = v$ does not change the posterior",
+          "correct": true,
+          "why": "The same factor multiplies every class score, so it cancels on normalising."
+        },
+        {
+          "text": "Naive Bayes can only be applied when the features really are conditionally independent given the class",
+          "correct": false,
+          "why": "The assumption simplifies the model; NB is often used (and often classifies well) when it is violated.",
+          "trap": "C1"
+        },
+        {
+          "text": "To find the predicted class, the evidence $P(x)$ need not be computed",
+          "correct": true,
+          "why": "$P(x)$ is a common denominator; comparing the numerators $P(c)\\prod_j P(x_j \\mid c)$ is enough."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A factor equal across classes cancels in the normalisation, so it carries no evidence.\n2. The argmax only needs $P(c)\\prod_j P(x_j \\mid c)$; $P(x)$ is the same for all classes.\n3. NB is generative, not discriminative.\n4. Conditional independence is a modelling assumption, not a requirement for using NB."
+    },
+    {
+      "id": "ml-naive-bayes-12",
+      "skill": "ml.naive-bayes",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A naive Bayes classifier has 2 classes and 10 binary features. Counting the class prior and all class-conditional feature probabilities, the number of **independent** parameters it must estimate is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 21,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 20,
+          "why": "Counted the feature probabilities but forgot the one free prior parameter $P(C_1)$.",
+          "trap": "C6"
+        },
+        {
+          "value": 41,
+          "why": "Counted $P(x_j{=}0 \\mid c)$ and $P(x_j{=}1 \\mid c)$ separately; they sum to 1, so only one is free.",
+          "trap": "C6"
+        },
+        {
+          "value": 22,
+          "why": "Counted both priors; $P(C_2) = 1 - P(C_1)$ is not free.",
+          "trap": "C6"
+        },
+        {
+          "value": 2047,
+          "why": "Counted the full joint table $2(2^{10} - 1) + 1$; avoiding that is exactly what the naive assumption buys.",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. Prior: one free number $P(C_1)$.\n2. For each class and each binary feature, one number $P(x_j{=}1 \\mid c)$: $2 \\times 10 = 20$.\n3. Total $= 20 + 1 = 21$ (versus $2(2^{10} - 1) + 1 = 2047$ for the full joint model)."
+    },
+    {
+      "id": "ml-naive-bayes-13",
+      "skill": "ml.naive-bayes",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A Gaussian naive Bayes classifier with one feature has equal priors and class-conditional densities $X \\mid A \\sim N(2, 1)$ and $X \\mid B \\sim N(5, 4)$ (the second parameter is the variance). For $x = 3$, the posterior $P(A \\mid x)$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.67,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.5,
+          "why": "Dropped the factor $1/\\sigma$ in the Gaussian density. The exponents are equal here, so only the $1/\\sigma$ factors ($1$ vs $1/2$) separate the classes.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.77,
+          "why": "Used $\\sigma = 2$ instead of $\\sigma^2 = 4$ in the exponent: $e^{-(3-5)^2/(2 \\cdot 2)}$.",
+          "trap": "C4"
+        },
+        {
+          "value": 0.73,
+          "why": "Read 4 as the standard deviation, so used variance 16 for class $B$.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. $p(3 \\mid A) = \\frac{1}{\\sqrt{2\\pi}}e^{-(3-2)^2/2} = \\frac{1}{\\sqrt{2\\pi}}e^{-0.5}$.\n2. $p(3 \\mid B) = \\frac{1}{2\\sqrt{2\\pi}}e^{-(3-5)^2/8} = \\frac{1}{2\\sqrt{2\\pi}}e^{-0.5}$.\n3. Ratio $A : B = 1 : \\frac12 = 2 : 1$, so $P(A \\mid x) = 2/3 \\approx 0.67$."
+    },
+    {
+      "id": "ml-naive-bayes-14",
+      "skill": "ml.naive-bayes",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A Bernoulli naive Bayes classifier (each word is a binary present/absent feature, vocabulary of 50 words) is trained with Laplace smoothing. Class $c$ has 8 training documents, and the word *refund* appears in none of them. The estimate of $P(\\textit{refund} \\text{ present} \\mid c)$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$0$",
+          "correct": false,
+          "why": "The unsmoothed estimate $0/8$; smoothing exists to avoid this zero.",
+          "trap": "C6"
+        },
+        {
+          "text": "$1/9$",
+          "correct": false,
+          "why": "Added 1 to the denominator; a binary feature has 2 outcomes, so add 2.",
+          "trap": "C6"
+        },
+        {
+          "text": "$1/10$",
+          "correct": true,
+          "why": "$(0 + 1)/(8 + 2)$: one pseudo-count for each of the two outcomes, present and absent."
+        },
+        {
+          "text": "$1/58$",
+          "correct": false,
+          "why": "Used the vocabulary size $V = 50$, which is the multinomial rule. Here each word is its own two-valued feature.",
+          "trap": "C3"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Each word is a binary feature with 2 values, so Laplace smoothing adds 1 to each value's count and 2 to the denominator.\n2. $P = (0 + 1)/(8 + 2) = 1/10$."
+    },
+    {
+      "id": "ml-naive-bayes-15",
+      "skill": "ml.naive-bayes",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A classifier has three classes with priors $0.2, 0.3, 0.5$ for $C_1, C_2, C_3$. For a test point $x$, $P(x \\mid C_1) = 0.5$, $P(x \\mid C_2) = 0.4$, $P(x \\mid C_3) = 0.1$. The classifier predicts the class with the largest posterior. According to the model, the probability that this prediction is wrong is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$5/9$",
+          "correct": true,
+          "why": "Scores $0.10, 0.12, 0.05$ sum to $0.27$; max posterior $0.12/0.27 = 4/9$; error $1 - 4/9$."
+        },
+        {
+          "text": "$4/9$",
+          "correct": false,
+          "why": "That is the maximum posterior itself; the error is $1 - \\max$.",
+          "trap": "C2"
+        },
+        {
+          "text": "$1/2$",
+          "correct": false,
+          "why": "Ignored the priors: likelihoods $0.5, 0.4, 0.1$ give max posterior $0.5$ for $C_1$.",
+          "trap": "C7"
+        },
+        {
+          "text": "$0.88$",
+          "correct": false,
+          "why": "Subtracted the unnormalised score $0.12$ from 1; normalise by $0.27$ first.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Scores: $C_1$: $0.2 \\times 0.5 = 0.10$; $C_2$: $0.3 \\times 0.4 = 0.12$; $C_3$: $0.5 \\times 0.1 = 0.05$. Sum $0.27$.\n2. Prediction $C_2$ with posterior $0.12/0.27 = 4/9$.\n3. Error probability $= 1 - 4/9 = 5/9 \\approx 0.56$."
+    },
+    {
+      "id": "ml-naive-bayes-16",
+      "skill": "ml.naive-bayes",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about computing and smoothing naive Bayes scores are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Choosing the class with the largest $\\log P(c) + \\sum_j \\log P(x_j \\mid c)$ gives the same prediction as comparing the products",
+          "correct": true,
+          "why": "$\\log$ is strictly increasing, so the argmax is unchanged; logs also avoid numerical underflow."
+        },
+        {
+          "text": "Smoothing can change the predicted class only when some count is zero",
+          "correct": false,
+          "why": "Smoothing changes every ratio. Counts $1/1$ vs $5/10$ favour the first class, but with $V = 10$ they become $2/11$ vs $6/20$ and favour the second.",
+          "trap": "C1"
+        },
+        {
+          "text": "Naive Bayes needs the full table $P(x_1, \\dots, x_d \\mid c)$, so its parameter count grows exponentially in $d$",
+          "correct": false,
+          "why": "Swapped with the full Bayes model; NB stores one distribution per feature, so it grows linearly in $d$.",
+          "trap": "C2"
+        },
+        {
+          "text": "With add-$\\alpha$ smoothing over a vocabulary of size $V$, every $P(w \\mid c) \\to 1/V$ as $\\alpha \\to \\infty$",
+          "correct": true,
+          "why": "$(n_w + \\alpha)/(N_c + \\alpha V) \\to \\alpha/(\\alpha V) = 1/V$: the data are swamped by the pseudo-counts."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Logs preserve order, so log-scores give the same argmax and avoid underflow.\n2. $(n_w + \\alpha)/(N_c + \\alpha V) \\to 1/V$ as $\\alpha$ grows.\n3. Smoothing alters all estimates; it can flip a decision even when no count is zero.\n4. NB's factorisation makes the parameter count linear in $d$."
+    },
+    {
+      "id": "ml-lda-06",
+      "skill": "ml.lda",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Two classes have mean difference $\\mu_1 - \\mu_2 = (4, -2)$ and pooled within-class scatter matrix\n$$S_W = \\begin{pmatrix} 2 & 0 \\\\ 0 & 1 \\end{pmatrix}.$$\nThe Fisher LDA direction, rescaled to the form $w = (1, a)$, has $a =$ ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": -1,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": -0.5,
+          "why": "Used $\\mu_1 - \\mu_2 = (4, -2)$ directly, without $S_W^{-1}$.",
+          "trap": "C6"
+        },
+        {
+          "value": -0.25,
+          "why": "Multiplied by $S_W$ instead of $S_W^{-1}$: $(8, -2)$.",
+          "trap": "C4"
+        },
+        {
+          "value": 1,
+          "why": "Gave $(1, 1)$, which is perpendicular to $w$: a direction along the boundary, not the projection direction.",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. $S_W^{-1} = \\operatorname{diag}(1/2, 1)$.\n2. $w \\propto S_W^{-1}(\\mu_1 - \\mu_2) = (4/2, -2/1) = (2, -2)$.\n3. Rescale: $(1, -1)$, so $a = -1$."
+    },
+    {
+      "id": "ml-lda-07",
+      "skill": "ml.lda",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Two classes in $\\mathbb{R}^2$ are Gaussian with different means, class 1 with covariance $I$ and class 2 with covariance $4I$. Priors are equal. The Bayes-optimal decision boundary between them is",
+      "figure": null,
+      "options": [
+        {
+          "text": "a straight line, as in LDA",
+          "correct": false,
+          "why": "LDA's line needs one shared covariance. Here the $\\lVert x\\rVert^2$ terms have coefficients $-\\frac12$ and $-\\frac18$, so they do not cancel.",
+          "trap": "C2"
+        },
+        {
+          "text": "a circle",
+          "correct": true,
+          "why": "The log-ratio keeps $-\\frac38\\lVert x\\rVert^2$ plus linear terms; an isotropic quadratic set to a constant is a circle (QDA case)."
+        },
+        {
+          "text": "the perpendicular bisector of the two means",
+          "correct": false,
+          "why": "That is the boundary only for equal priors and a shared spherical covariance.",
+          "trap": "C1"
+        },
+        {
+          "text": "nonexistent, since class 2 has the larger covariance and wins everywhere",
+          "correct": false,
+          "why": "Near $\\mu_1$ the tighter class 1 density is much larger, so class 1 wins there; a boundary must exist.",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\ln p_1(x) - \\ln p_2(x) = -\\frac12\\lVert x - \\mu_1\\rVert^2 + \\frac18\\lVert x - \\mu_2\\rVert^2 + \\text{const}$.\n2. The $\\lVert x\\rVert^2$ coefficient is $-\\frac12 + \\frac18 = -\\frac38 \\ne 0$, so the boundary is quadratic.\n3. Both covariances are multiples of $I$, so the quadratic part is $\\lVert x\\rVert^2$ and the boundary is a circle."
+    },
+    {
+      "id": "ml-lda-08",
+      "skill": "ml.lda",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "One-feature LDA: class 1 has $X \\sim N(10, 9)$ and class 2 has $X \\sim N(4, 9)$ (variance 9 in both). Priors are $P(1) = 0.2$ and $P(2) = 0.8$. The classifier predicts class 1 for $x$ above a threshold $t$ and class 2 below it. The value of $t$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 9.08,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 7,
+          "why": "Midpoint of the means; correct only for equal priors.",
+          "trap": "C7"
+        },
+        {
+          "value": 4.92,
+          "why": "Shifted the wrong way. Class 2 is more likely, so its region grows and the threshold moves toward class 1's mean 10.",
+          "trap": "C11"
+        },
+        {
+          "value": 7.69,
+          "why": "Used $\\sigma = 3$ instead of $\\sigma^2 = 9$ in the shift term.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. Equal log scores: $\\ln 0.2 - \\frac{(t-10)^2}{18} = \\ln 0.8 - \\frac{(t-4)^2}{18}$.\n2. $\\frac{(t-4)^2 - (t-10)^2}{18} = \\frac{12t - 84}{18} = \\ln 4$, so $t = 7 + 1.5\\ln 4$.\n3. $t \\approx 7 + 2.08 = 9.08$. (Formula: midpoint $+ \\sigma^2\\ln(\\pi_1/\\pi_2)/(\\mu_2 - \\mu_1) = 7 + 9(-1.386)/(-6)$.)"
+    },
+    {
+      "id": "ml-lda-09",
+      "skill": "ml.lda",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Two classes have means $\\mu_1 = (2, 3)$ and $\\mu_2 = (0, 1)$ and pooled within-class scatter\n$$S_W = \\begin{pmatrix} 4 & 2 \\\\ 2 & 2 \\end{pmatrix}.$$\nUp to a non-zero scale factor, the Fisher LDA projection direction is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$(1, 1)$",
+          "correct": false,
+          "why": "Used $\\mu_1 - \\mu_2 = (2, 2)$ alone, which is optimal only when $S_W$ is a multiple of $I$.",
+          "trap": "C6"
+        },
+        {
+          "text": "$(3, 2)$",
+          "correct": false,
+          "why": "Multiplied by $S_W$: $S_W(2, 2) = (12, 8)$. Fisher uses $S_W^{-1}$.",
+          "trap": "C4"
+        },
+        {
+          "text": "$(1, -1)$",
+          "correct": false,
+          "why": "Perpendicular to the mean difference: a boundary direction, not a projection direction.",
+          "trap": "C2"
+        },
+        {
+          "text": "$(0, 1)$",
+          "correct": true,
+          "why": "$S_W^{-1} = \\frac14\\begin{pmatrix} 2 & -2 \\\\ -2 & 4 \\end{pmatrix}$ maps $(2, 2)$ to $(0, 1)$: the spread along $x_1$ is so large that only $x_2$ is used."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\mu_1 - \\mu_2 = (2, 2)$; $\\det S_W = 8 - 4 = 4$.\n2. $S_W^{-1} = \\frac14\\begin{pmatrix} 2 & -2 \\\\ -2 & 4 \\end{pmatrix}$.\n3. $w \\propto S_W^{-1}(2, 2) = \\frac14(0, 4) = (0, 1)$."
+    },
+    {
+      "id": "ml-lda-10",
+      "skill": "ml.lda",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Two classes have mean difference $d = \\mu_1 - \\mu_2 = (3, 1)$ and within-class scatter $S_W = \\begin{pmatrix} 2 & 0 \\\\ 0 & 1 \\end{pmatrix}$. The Fisher criterion is\n$$J(w) = \\frac{(w^\\top d)^2}{w^\\top S_W w}.$$\nThe maximum value of $J(w)$ over all non-zero $w$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5.5,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 5.26,
+          "why": "Evaluated $J$ at $w = d$ instead of the optimal $w = S_W^{-1}d$: $100/19$.",
+          "trap": "C6"
+        },
+        {
+          "value": 19,
+          "why": "Computed $d^\\top S_W d$; the maximum is $d^\\top S_W^{-1} d$.",
+          "trap": "C4"
+        },
+        {
+          "value": 1,
+          "why": "Forgot to square $w^\\top d$ in the numerator: $5.5/5.5$.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. Optimal $w = S_W^{-1}d = (1.5, 1)$.\n2. $w^\\top d = 4.5 + 1 = 5.5$; $w^\\top S_W w = 2(2.25) + 1 = 5.5$.\n3. $J = 5.5^2/5.5 = 5.5$ (in general $J_{\\max} = d^\\top S_W^{-1} d = 9/2 + 1$)."
+    },
+    {
+      "id": "ml-lda-11",
+      "skill": "ml.lda",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Fisher LDA is applied to a labelled data set with 4 classes and 10 features (and many more points than features). The largest number of useful discriminant directions it can produce is",
+      "figure": null,
+      "options": [
+        {
+          "text": "4",
+          "correct": false,
+          "why": "Counted one direction per class; the 4 deviations from the overall mean sum to zero, so only 3 are independent.",
+          "trap": "C6"
+        },
+        {
+          "text": "9",
+          "correct": false,
+          "why": "Applied \"minus one\" to the number of features instead of the number of classes.",
+          "trap": "C10"
+        },
+        {
+          "text": "3",
+          "correct": true,
+          "why": "The between-class scatter is built from 4 means around their overall mean, so its rank is at most $4 - 1$."
+        },
+        {
+          "text": "10",
+          "correct": false,
+          "why": "That is the PCA limit (number of features); LDA is limited by the classes.",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $S_B = \\sum_k n_k(\\mu_k - \\mu)(\\mu_k - \\mu)^\\top$ with $\\sum_k n_k(\\mu_k - \\mu) = 0$.\n2. So $\\operatorname{rank} S_B \\le K - 1 = 3$, and at most $\\min(K - 1, d) = 3$ directions exist."
+    },
+    {
+      "id": "ml-lda-12",
+      "skill": "ml.lda",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements comparing LDA, QDA and Gaussian naive Bayes are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "LDA's boundary is linear only when the class priors are equal",
+          "correct": false,
+          "why": "Priors only add the constant $\\ln(\\pi_1/\\pi_2)$; the boundary stays a hyperplane.",
+          "trap": "C1"
+        },
+        {
+          "text": "QDA estimates a separate covariance matrix for each class, so with few points per class it tends to have higher variance than LDA",
+          "correct": true,
+          "why": "More parameters ($K$ full covariances instead of one) are estimated from the same data."
+        },
+        {
+          "text": "Gaussian naive Bayes whose per-feature variances are shared by all classes is a special case of LDA with a diagonal covariance",
+          "correct": true,
+          "why": "Shared $\\Sigma = \\operatorname{diag}(\\sigma_1^2, \\dots, \\sigma_d^2)$ for every class is exactly LDA with a diagonal $\\Sigma$, so the boundary is linear."
+        },
+        {
+          "text": "Converting one feature from metres to centimetres changes LDA's predicted labels",
+          "correct": false,
+          "why": "LDA is unchanged by an invertible linear rescaling: the means and $\\Sigma$ rescale together and the discriminant is the same.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. QDA has $K$ covariance matrices to estimate, so it overfits more easily with little data.\n2. A shared diagonal covariance is a special case of LDA's shared $\\Sigma$.\n3. Unequal priors shift the LDA hyperplane but do not bend it.\n4. Rescaling $x' = Ax$ gives $\\mu' = A\\mu$, $\\Sigma' = A\\Sigma A^\\top$, and $(x' - \\mu')^\\top\\Sigma'^{-1}(x' - \\mu') = (x - \\mu)^\\top\\Sigma^{-1}(x - \\mu)$: same predictions."
+    },
+    {
+      "id": "ml-lda-13",
+      "skill": "ml.lda",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Class $A$ has points $(1, 2)$, $(3, 4)$ and class $B$ has points $(5, 1)$, $(7, 1)$, $(6, 4)$. The within-class scatter matrix is $S_W = S_A + S_B$, where $S_k = \\sum_{x \\in k}(x - \\mu_k)(x - \\mu_k)^\\top$. The $(2, 2)$ entry of $S_W$ (the second-feature diagonal entry) is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 8,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 6,
+          "why": "Used only class $B$'s scatter; $S_W$ adds both classes.",
+          "trap": "C6"
+        },
+        {
+          "value": 9.2,
+          "why": "Computed the total scatter around the overall mean $2.4$; within-class scatter uses each class's own mean.",
+          "trap": "C2"
+        },
+        {
+          "value": 1.6,
+          "why": "Divided by the number of points; the scatter defined here is a sum, not an average.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. Class $A$: second-feature mean $3$; deviations $-1, 1$; sum of squares $2$.\n2. Class $B$: second-feature mean $2$; deviations $-1, -1, 2$; sum of squares $6$.\n3. $(S_W)_{22} = 2 + 6 = 8$."
+    },
+    {
+      "id": "ml-lda-14",
+      "skill": "ml.lda",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "One-feature LDA: two Gaussian classes share a variance, with means $\\mu_1 < \\mu_2$. The prior of class 1 is raised from $0.5$ to $0.7$. Which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The threshold moves toward $\\mu_2$",
+          "correct": true,
+          "why": "Class 1 becomes more likely, so it claims more of the line; its region extends toward class 2."
+        },
+        {
+          "text": "The threshold moves toward $\\mu_1$",
+          "correct": false,
+          "why": "Direction reversed: that would shrink the region of the class that just became more likely.",
+          "trap": "C11"
+        },
+        {
+          "text": "The boundary is still a single threshold (a linear boundary)",
+          "correct": true,
+          "why": "The prior adds only a constant to the log-ratio; the $x^2$ terms still cancel."
+        },
+        {
+          "text": "In the $d$-dimensional version of this model, the boundary's normal vector $\\Sigma^{-1}(\\mu_1 - \\mu_2)$ changes with the priors",
+          "correct": false,
+          "why": "The priors only change the offset $b$; the normal vector depends on the means and $\\Sigma$ alone.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Threshold $t = \\frac{\\mu_1 + \\mu_2}{2} + \\frac{\\sigma^2\\ln(\\pi_1/\\pi_2)}{\\mu_2 - \\mu_1}$; with $\\pi_1 > \\pi_2$ and $\\mu_2 > \\mu_1$ the shift is positive, toward $\\mu_2$.\n2. The boundary stays linear; in $d$ dimensions only the offset changes."
+    },
+    {
+      "id": "ml-lda-15",
+      "skill": "ml.lda",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Two Gaussian classes in $\\mathbb{R}^2$ share the covariance $\\Sigma = I$. Class 1 has mean $(0, 0)$ and prior $0.75$; class 2 has mean $(2, 2)$ and prior $0.25$. The LDA boundary is a line $x_1 + x_2 = c$. It crosses the $x_1$-axis at $x_1 =$ ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2.55,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 2,
+          "why": "Used the perpendicular bisector of the means, which ignores the unequal priors.",
+          "trap": "C7"
+        },
+        {
+          "value": 1.45,
+          "why": "Shifted toward class 1; the more likely class 1 should gain territory, pushing the line toward $(2, 2)$.",
+          "trap": "C11"
+        },
+        {
+          "value": 3.1,
+          "why": "Forgot to divide $\\ln 3$ by 2 when going from $2x_1 + 2x_2 = 4 + \\ln 3$ to $x_1 + x_2 = c$.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Equal scores: $-\\frac12\\lVert x\\rVert^2 + \\ln 0.75 = -\\frac12\\lVert x - \\mu_2\\rVert^2 + \\ln 0.25$.\n2. The $\\lVert x\\rVert^2$ terms cancel: $\\mu_2^\\top x = \\frac12\\lVert\\mu_2\\rVert^2 + \\ln 3$, i.e. $2x_1 + 2x_2 = 4 + \\ln 3$.\n3. $x_1 + x_2 = 2 + \\frac{\\ln 3}{2} \\approx 2.55$; at $x_2 = 0$, $x_1 \\approx 2.55$."
+    },
+    {
+      "id": "ml-lda-16",
+      "skill": "ml.lda",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A labelled data set has 8 points:\n\n| class | points |\n|---|---|\n| $A$ | $(-4, 0.5)$, $(-4, 1.5)$, $(4, 0.5)$, $(4, 1.5)$ |\n| $B$ | $(-4, -0.5)$, $(-4, -1.5)$, $(4, -0.5)$, $(4, -1.5)$ |\n\nPCA (on all 8 points, labels ignored) and Fisher LDA (using labels) each pick one direction. Which is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Both pick the $x_2$-axis",
+          "correct": false,
+          "why": "PCA ignores labels; it follows the largest total spread, which is along $x_1$.",
+          "trap": "C9"
+        },
+        {
+          "text": "PCA picks the $x_1$-axis; LDA picks the $x_2$-axis",
+          "correct": true,
+          "why": "Total variance is largest along $x_1$ (scatter 128 vs 10), but the class means differ only along $x_2$, where within-class spread is small."
+        },
+        {
+          "text": "PCA picks the $x_2$-axis; LDA picks the $x_1$-axis",
+          "correct": false,
+          "why": "The two methods' goals are swapped.",
+          "trap": "C2"
+        },
+        {
+          "text": "Both pick the $x_1$-axis",
+          "correct": false,
+          "why": "Treated LDA as a variance maximiser like PCA; along $x_1$ the two classes overlap completely.",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Overall mean is $(0, 0)$. Total scatter: $x_1$: $8 \\times 16 = 128$; $x_2$: $4(0.25 + 2.25) = 10$; no cross term. PCA's first direction is $x_1$.\n2. Class means $(0, 1)$ and $(0, -1)$; $S_W = \\operatorname{diag}(128, 2)$.\n3. $w \\propto S_W^{-1}(0, 2) = (0, 1)$: LDA picks $x_2$."
+    },
+    {
+      "id": "ml-svm-margin-07",
+      "skill": "ml.svm-margin",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hard-margin linear SVM in $\\mathbb{R}^3$ has $w = (1, 2, 2)$ and $b = 5$, with margin hyperplanes $w^\\top x + b = \\pm 1$. The distance between the two margin hyperplanes is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.67,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.33,
+          "why": "Computed $1/\\lVert w\\rVert$, the half-width from the boundary to one margin hyperplane.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.22,
+          "why": "Used $2/\\lVert w\\rVert^2 = 2/9$; the width uses the norm, not its square.",
+          "trap": "C4"
+        },
+        {
+          "value": 0.4,
+          "why": "Used the $\\ell_1$ norm $1 + 2 + 2 = 5$ instead of the Euclidean norm.",
+          "trap": "C3"
+        }
+      ],
+      "solution": "1. $\\lVert w\\rVert = \\sqrt{1 + 4 + 4} = 3$ (the bias $b$ does not affect the width).\n2. Width $= 2/\\lVert w\\rVert = 2/3 \\approx 0.67$."
+    },
+    {
+      "id": "ml-svm-margin-08",
+      "skill": "ml.svm-margin",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A linear classifier has decision function $f(x) = x_1 - 2x_2 + 3$. For the point $(1, 4)$, which statement is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Its distance from the boundary is $4/5$",
+          "correct": false,
+          "why": "Divided by $\\lVert w\\rVert^2 = 5$ instead of $\\lVert w\\rVert = \\sqrt 5$.",
+          "trap": "C4"
+        },
+        {
+          "text": "Its distance from the boundary is $4/\\sqrt 5$, on the side where $f(x) > 0$",
+          "correct": false,
+          "why": "Took the absolute value before reading the side; $f = -4$ is negative.",
+          "trap": "C11"
+        },
+        {
+          "text": "Its distance from the boundary is $4/\\sqrt 5 \\approx 1.79$, on the side where $f(x) < 0$",
+          "correct": true,
+          "why": "$f(1, 4) = 1 - 8 + 3 = -4$ and $\\lVert w\\rVert = \\sqrt 5$; the negative sign gives the side."
+        },
+        {
+          "text": "Its distance from the boundary is $4/3$",
+          "correct": false,
+          "why": "Divided by the $\\ell_1$ norm $|1| + |-2| = 3$ instead of the Euclidean norm.",
+          "trap": "C3"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f(1, 4) = 1 - 8 + 3 = -4$, so the point is on the negative side.\n2. $\\lVert w\\rVert = \\sqrt{1 + 4} = \\sqrt 5$.\n3. Distance $= |{-4}|/\\sqrt 5 \\approx 1.79$."
+    },
+    {
+      "id": "ml-svm-margin-09",
+      "skill": "ml.svm-margin",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hard-margin linear SVM is trained on only two points: $x_+ = (3, 1)$ with label $+1$ and $x_- = (1, -1)$ with label $-1$. Its decision function is scaled so that $f(x_+) = 1$ and $f(x_-) = -1$. For the new point $P = (5, 2)$, the value $f(P) = w^\\top P + b$ is ______ (round to one decimal).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 2.5,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 10,
+          "why": "Took $w = x_+ - x_- = (2, 2)$ without rescaling (with $b = -4$ from the midpoint); then $f(x_+) = 4$, not 1.",
+          "trap": "C4"
+        },
+        {
+          "value": 3.54,
+          "why": "Gave the geometric distance $f(P)/\\lVert w\\rVert$ of $P$ from the boundary, not the value of $f$.",
+          "trap": "C2"
+        },
+        {
+          "value": 5,
+          "why": "Used $w = (1, 1)$, $b = -2$: the right boundary, but then $f(x_+) = 2$. The condition $f(x_\\pm) = \\pm 1$ forces a factor $\\frac12$.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. With two points, $w \\propto x_+ - x_- = (2, 2)$; write $w = (c, c)$.\n2. $f(x_+) = 4c + b = 1$ and $f(x_-) = b = -1$, so $c = 0.5$: $w = (0.5, 0.5)$, $b = -1$.\n3. $f(P) = 0.5(5) + 0.5(2) - 1 = 2.5$."
+    },
+    {
+      "id": "ml-svm-margin-10",
+      "skill": "ml.svm-margin",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hard-margin linear SVM is trained on\n\n| class | points |\n|---|---|\n| $+1$ | $(3, 0)$, $(3, 2)$, $(5, 1)$ |\n| $-1$ | $(1, 1)$, $(0, 3)$, $(-1, 0)$ |\n\nand learns $f(x) = x_1 - 2$. Deleting which **one** of the following points from the training set leaves $w$ and $b$ unchanged?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$(1, 1)$",
+          "correct": false,
+          "why": "It is the only negative point on $f = -1$; without it the nearest negative point is farther away and the margin grows.",
+          "trap": "C9"
+        },
+        {
+          "text": "$(3, 0)$",
+          "correct": false,
+          "why": "It is a support vector ($f = 1$). Without it the line can tilt and the margin widens from 2 to $\\sqrt 5$.",
+          "trap": "C1"
+        },
+        {
+          "text": "$(3, 2)$",
+          "correct": false,
+          "why": "Also a support vector; by symmetry, removing it lets the line tilt the other way to margin $\\sqrt 5$.",
+          "trap": "C1"
+        },
+        {
+          "text": "$(0, 3)$",
+          "correct": true,
+          "why": "$y f = -(0 - 2) = 2 > 1$: it lies outside the margin, its constraint is inactive and $\\alpha = 0$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $y f(x)$: $(3,0)$: 1; $(3,2)$: 1; $(5,1)$: 3; $(1,1)$: 1; $(0,3)$: 2; $(-1,0)$: 3.\n2. Support vectors (those with $y f = 1$): $(3,0)$, $(3,2)$, $(1,1)$.\n3. Removing a non-support vector such as $(0, 3)$ leaves the solution unchanged. Removing any of the three support vectors lets the margin grow (to $\\sqrt 5$ or $\\sqrt{10}$)."
+    },
+    {
+      "id": "ml-svm-margin-11",
+      "skill": "ml.svm-margin",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hard-margin linear SVM has been trained on a linearly separable data set. Which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The margin width depends on how many support vectors there are",
+          "correct": false,
+          "why": "The width is $2/\\lVert w\\rVert$; it depends on where the closest points are, not how many lie on the margin.",
+          "trap": "C9"
+        },
+        {
+          "text": "The boundary lies closer to the class that has more training points",
+          "correct": false,
+          "why": "The SVM boundary sits halfway between the margin hyperplanes; class sizes do not enter.",
+          "trap": "C7"
+        },
+        {
+          "text": "Adding a new point that is correctly classified and lies outside the margin leaves the solution unchanged",
+          "correct": true,
+          "why": "Its constraint $y f \\ge 1$ already holds strictly, so the old optimum is still feasible and optimal."
+        },
+        {
+          "text": "Adding a new point of the correct class that lies strictly inside the margin forces the solution to change",
+          "correct": true,
+          "why": "It has $y f < 1$, so the old $(w, b)$ violates its constraint and is no longer feasible."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A point outside the margin adds an inactive constraint: nothing changes.\n2. A point inside the margin violates the current constraints, so the optimum must move.\n3. Width $2/\\lVert w\\rVert$ is set by the geometry of the closest points.\n4. The boundary is equidistant from both margin hyperplanes, regardless of class counts."
+    },
+    {
+      "id": "ml-svm-margin-12",
+      "skill": "ml.svm-margin",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A linear classifier $f(x) = 2x_1 + x_2 - 4$ (not necessarily an SVM) is applied to\n\n| point | $x_1$ | $x_2$ | label |\n|---|---|---|---|\n| A | 3 | 2 | +1 |\n| B | 2 | 1 | +1 |\n| C | 1 | 0 | −1 |\n| D | 0 | 1 | −1 |\n\nIts geometric margin on this data, $\\min_i y_i f(x_i)/\\lVert w\\rVert$, is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.45,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 1,
+          "why": "Reported the functional margin $\\min y_i f(x_i)$ without dividing by $\\lVert w\\rVert$.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.89,
+          "why": "Used the SVM width formula $2/\\lVert w\\rVert$; the geometric margin is the smallest point distance, $1/\\sqrt 5$ here.",
+          "trap": "C3"
+        },
+        {
+          "value": 0.2,
+          "why": "Divided by $\\lVert w\\rVert^2 = 5$ instead of $\\lVert w\\rVert = \\sqrt 5$.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. $y f$: A $= 4$, B $= 1$, C $= -(2 - 4) = 2$, D $= -(1 - 4) = 3$. All positive, so all are correct.\n2. Minimum $= 1$ (point B); $\\lVert w\\rVert = \\sqrt{4 + 1} = \\sqrt 5$.\n3. Geometric margin $= 1/\\sqrt 5 \\approx 0.45$."
+    },
+    {
+      "id": "ml-svm-margin-13",
+      "skill": "ml.svm-margin",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Training points $(x_i, y_i)$ with $y_i \\in \\{-1, +1\\}$ are linearly separable. Which optimisation problem gives the hard-margin (maximum-margin) linear SVM?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\max_{w,b} \\lVert w\\rVert^2$ subject to $y_i(w^\\top x_i + b) \\ge 1$ for all $i$",
+          "correct": false,
+          "why": "Direction reversed: a larger $\\lVert w\\rVert$ means a narrower margin (and the problem is unbounded).",
+          "trap": "C11"
+        },
+        {
+          "text": "$\\min_{w,b} \\frac12\\lVert w\\rVert^2$ subject to $y_i(w^\\top x_i + b) \\ge 0$ for all $i$",
+          "correct": false,
+          "why": "With right-hand side 0, $w = 0$, $b = 0$ is feasible and optimal; the margin scale is lost.",
+          "trap": "C5"
+        },
+        {
+          "text": "$\\min_{w,b} \\frac12\\lVert w\\rVert^2$ subject to $w^\\top x_i + b \\ge 1$ for all $i$",
+          "correct": false,
+          "why": "Dropped the label $y_i$: this forces every point onto the positive side.",
+          "trap": "C6"
+        },
+        {
+          "text": "$\\min_{w,b} \\frac12\\lVert w\\rVert^2$ subject to $y_i(w^\\top x_i + b) \\ge 1$ for all $i$",
+          "correct": true,
+          "why": "Fixing the functional margin at 1 makes the geometric margin $2/\\lVert w\\rVert$; minimising $\\lVert w\\rVert$ maximises it."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. The constraint $y_i(w^\\top x_i + b) \\ge 1$ puts every point on its correct side, at least on its margin hyperplane.\n2. The margin width is $2/\\lVert w\\rVert$, so maximising it is minimising $\\frac12\\lVert w\\rVert^2$."
+    },
+    {
+      "id": "ml-svm-margin-14",
+      "skill": "ml.svm-margin",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hard-margin linear SVM is trained on only two points: $(4, 5)$ with label $+1$ and $(1, 1)$ with label $-1$. The norm $\\lVert w\\rVert$ of the learned weight vector is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.4,
+        "tol": 0.005
+      },
+      "traps": [
+        {
+          "value": 5,
+          "why": "Gave the margin width (the distance between the two points) instead of $\\lVert w\\rVert$.",
+          "trap": "C2"
+        },
+        {
+          "value": 2.5,
+          "why": "Gave the half-width $1/\\lVert w\\rVert$, the distance from the boundary to each point.",
+          "trap": "C4"
+        },
+        {
+          "value": 0.2,
+          "why": "Set $1/\\lVert w\\rVert$ equal to the full width 5; it is the half-width.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. With two points, both are support vectors and the margin width equals their distance: $\\sqrt{3^2 + 4^2} = 5$.\n2. Width $= 2/\\lVert w\\rVert = 5$, so $\\lVert w\\rVert = 2/5 = 0.4$."
+    },
+    {
+      "id": "ml-svm-margin-15",
+      "skill": "ml.svm-margin",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A linear classifier has $f(x) = x_1 + x_2 - 3$, with margin hyperplanes $f(x) = \\pm 1$. Which statements are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The point $(1, 1)$ with label $-1$ lies strictly inside the margin",
+          "correct": false,
+          "why": "$f(1, 1) = -1$, so $y f = 1$: it is exactly on the margin hyperplane, not inside.",
+          "trap": "C5"
+        },
+        {
+          "text": "The point $(2, 2)$ with label $+1$ lies on the margin hyperplane $f = +1$",
+          "correct": true,
+          "why": "$f(2, 2) = 1$ exactly, so $y f = 1$."
+        },
+        {
+          "text": "The point $(3, 3)$ with label $-1$ is correctly classified because $|f| = 3 > 1$",
+          "correct": false,
+          "why": "The side is decided by the sign of $y f = -3 < 0$: misclassified, and far on the wrong side.",
+          "trap": "C11"
+        },
+        {
+          "text": "The point $(2, 1.5)$ with label $+1$ is correctly classified but lies inside the margin",
+          "correct": true,
+          "why": "$f = 0.5$: positive (correct side) but $y f = 0.5 < 1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Compute $y f$: $(2,2)$, $+1$: $1$ (on margin). $(1,1)$, $-1$: $1$ (on margin).\n2. $(2, 1.5)$, $+1$: $0.5$, so $0 < y f < 1$: correct side, inside the margin.\n3. $(3,3)$, $-1$: $-3 < 0$: misclassified."
+    },
+    {
+      "id": "ml-svm-margin-16",
+      "skill": "ml.svm-margin",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hard-margin linear SVM on one feature is trained on positive points $x = 4, 6$ and negative points $x = 0, 1$, with decision function $f(x) = wx + b$ scaled so that the support vectors satisfy $y f(x) = 1$. Then $(w, b)$ is",
+      "figure": null,
+      "options": [
+        {
+          "text": "$(1/3, -5/6)$",
+          "correct": false,
+          "why": "Right boundary ($2.5$), but set $1/w$ equal to the full gap 3; the gap is $2/w$.",
+          "trap": "C6"
+        },
+        {
+          "text": "$(2/3, -5/3)$",
+          "correct": true,
+          "why": "Support vectors $1$ and $4$: $w + b = -1$ and $4w + b = 1$ give $w = 2/3$, $b = -5/3$; boundary at $2.5$."
+        },
+        {
+          "text": "$(2/3, 5/3)$",
+          "correct": false,
+          "why": "Sign slip on $b$: this puts the boundary at $x = -2.5$, with every point on the positive side.",
+          "trap": "C11"
+        },
+        {
+          "text": "$(1, -2.5)$",
+          "correct": false,
+          "why": "Right boundary, but scale not fixed: $f(4) = 1.5 \\ne 1$, so the support vectors are not on $f = \\pm 1$.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. The closest opposite pair is $1$ (negative) and $4$ (positive): these are the support vectors, and the boundary is at their midpoint $2.5$.\n2. $4w + b = 1$ and $w + b = -1$: subtracting, $3w = 2$, so $w = 2/3$ and $b = -5/3$.\n3. Check: width $2/w = 3 = 4 - 1$."
+    },
+    {
+      "id": "ml-svm-soft-07",
+      "skill": "ml.svm-soft",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "In a soft-margin linear SVM, a training point with label $y = -1$ gets the score $f(x) = w^\\top x + b = 0.3$. Its hinge loss (the optimal slack $\\xi$ for this point) is ______ (round to one decimal).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 1.3,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.3,
+          "why": "Used the perceptron loss $\\max(0, -yf)$; the hinge adds the margin: $\\max(0, 1 - yf)$.",
+          "trap": "C3"
+        },
+        {
+          "value": 0.7,
+          "why": "Dropped the label: computed $1 - f$ instead of $1 - yf = 1 + 0.3$.",
+          "trap": "C11"
+        },
+        {
+          "value": 0,
+          "why": "Treated the point as fine because $|f| < 1$; with $y = -1$ and $f > 0$ it is on the wrong side.",
+          "trap": "C11"
+        }
+      ],
+      "solution": "1. $y f(x) = (-1)(0.3) = -0.3$.\n2. $\\xi = \\max(0, 1 - (-0.3)) = 1.3$. Since $\\xi > 1$, the point is misclassified."
+    },
+    {
+      "id": "ml-svm-soft-08",
+      "skill": "ml.svm-soft",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "At the optimum of a soft-margin SVM, a training point has slack $\\xi_i = 0.4$. This point is",
+      "figure": null,
+      "options": [
+        {
+          "text": "misclassified",
+          "correct": false,
+          "why": "Misclassification needs $y f < 0$, i.e. $\\xi > 1$. Here $y f = 0.6 > 0$.",
+          "trap": "C5"
+        },
+        {
+          "text": "correctly classified but inside the margin",
+          "correct": true,
+          "why": "$y f = 1 - 0.4 = 0.6$, which lies between 0 and 1."
+        },
+        {
+          "text": "outside the margin, so it is not a support vector",
+          "correct": false,
+          "why": "Outside the margin means $\\xi = 0$. A point with $\\xi > 0$ is a margin violator and is a support vector ($\\alpha_i = C$).",
+          "trap": "C11"
+        },
+        {
+          "text": "exactly on the decision boundary $f = 0$",
+          "correct": false,
+          "why": "That needs $y f = 0$, i.e. $\\xi = 1$.",
+          "trap": "C5"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\xi_i = \\max(0, 1 - y_i f(x_i)) = 0.4$ gives $y_i f(x_i) = 0.6$.\n2. $0 < y f < 1$: correct side, inside the margin. (Ranges: $\\xi = 0$ outside or on the margin; $0 < \\xi \\le 1$ inside, correct side or on the boundary; $\\xi > 1$ misclassified.)"
+    },
+    {
+      "id": "ml-svm-soft-09",
+      "skill": "ml.svm-soft",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "One-feature data: negative points $x = 0, 1.5$ and positive points $x = 2, 4$. Two candidate classifiers $f(x) = wx + b$ are compared under the soft-margin objective $\\frac12 w^2 + C\\sum_i \\xi_i$, with $\\xi_i = \\max(0, 1 - y_i f(x_i))$:\n\n- Candidate P: $w = 4$, $b = -7$.\n- Candidate Q: $w = 1$, $b = -2$.\n\nThe value of $C$ at which P and Q have the same objective value is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 10,
+          "why": "Dropped the $\\frac12$ in front of $w^2$: $(16 - 1)/1.5$.",
+          "trap": "C6"
+        },
+        {
+          "value": 3.75,
+          "why": "Counted the 2 violating points instead of summing their slacks $0.5 + 1$.",
+          "trap": "C9"
+        },
+        {
+          "value": 15,
+          "why": "Gave the point $x = 2$ (with $f = 0$, on Q's boundary) zero slack; its slack is $1 - 0 = 1$.",
+          "trap": "C5"
+        }
+      ],
+      "solution": "1. P: $f = 4x - 7$ gives $y f = 7, 1, 1, 9$: all slacks 0. Objective $= \\frac12(16) = 8$.\n2. Q: $f = x - 2$ gives $y f = 2, 0.5, 0, 2$: slacks $0, 0.5, 1, 0$, sum $1.5$. Objective $= 0.5 + 1.5C$.\n3. $0.5 + 1.5C = 8 \\Rightarrow C = 5$. (For $C > 5$ the zero-slack P wins; for $C < 5$ the wider-margin Q wins.)"
+    },
+    {
+      "id": "ml-svm-soft-10",
+      "skill": "ml.svm-soft",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A linear soft-margin SVM is trained with two values of $C$ on the same data:\n\n| $C$ | training error | validation error |\n|---|---|---|\n| $0.01$ | 30% | 31% |\n| $1000$ | 0% | 25% |\n\nWhich diagnosis is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$C = 0.01$ underfits (wide margin, high bias); $C = 1000$ overfits (narrow margin, high variance)",
+          "correct": true,
+          "why": "Tiny $C$ makes slack cheap, so the fit is loose and both errors are high; huge $C$ fits the training set exactly but generalises worse than it trains."
+        },
+        {
+          "text": "$C = 0.01$ overfits and $C = 1000$ underfits",
+          "correct": false,
+          "why": "Direction of $C$ reversed: small $C$ tolerates violations (more regularisation), large $C$ does not.",
+          "trap": "C11"
+        },
+        {
+          "text": "Both models have the same margin, because $C$ affects only the slacks, not $w$",
+          "correct": false,
+          "why": "$C$ trades $\\frac12\\lVert w\\rVert^2$ against the slacks, so it changes $w$ and hence the margin $2/\\lVert w\\rVert$.",
+          "trap": "C9"
+        },
+        {
+          "text": "To close the train–validation gap of the $C = 1000$ model, increase $C$ further",
+          "correct": false,
+          "why": "A larger $C$ penalises violations even more and fits the training data even more tightly; to reduce variance, decrease $C$.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Small $C$: violations are cheap, so the margin is wide and the model is simple; high training and validation error mean high bias.\n2. Large $C$: violations are expensive, so the margin is narrow; 0% training but 25% validation error is a variance gap.\n3. A value of $C$ in between is likely best."
+    },
+    {
+      "id": "ml-svm-soft-11",
+      "skill": "ml.svm-soft",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about the hinge loss $\\ell(y, f) = \\max(0, 1 - y f)$ are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "It is zero whenever $y f \\ge 1$",
+          "correct": true,
+          "why": "Then $1 - y f \\le 0$, so the max is 0: points on or beyond their margin cost nothing."
+        },
+        {
+          "text": "It is convex in $(w, b)$ for a linear $f = w^\\top x + b$",
+          "correct": true,
+          "why": "It is the maximum of two affine functions of $(w, b)$, which is convex."
+        },
+        {
+          "text": "It equals the 0–1 loss on every point",
+          "correct": false,
+          "why": "Hinge is a convex upper bound of the 0–1 loss; e.g. $y f = 0.5$ gives hinge $0.5$ but 0–1 loss $0$.",
+          "trap": "C10"
+        },
+        {
+          "text": "A correctly classified point always has zero hinge loss",
+          "correct": false,
+          "why": "A correct point with $0 < y f < 1$ is inside the margin and pays $1 - y f > 0$.",
+          "trap": "C5"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $y f \\ge 1 \\Rightarrow$ loss 0.\n2. $\\max(0, 1 - y(w^\\top x + b))$ is a max of affine functions: convex.\n3. Hinge is a convex upper bound on the 0–1 loss, not equal to it: at $y f = 0.5$ hinge is $0.5$ while the 0–1 loss is 0.\n4. So a correctly classified point inside the margin ($0 < y f < 1$) still pays a positive hinge loss."
+    },
+    {
+      "id": "ml-svm-soft-12",
+      "skill": "ml.svm-soft",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For $x = (1, 2)$ and $z = (4, -1)$, the polynomial kernel $K(x, z) = (1 + x^\\top z)^3$ equals ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 27,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 8,
+          "why": "Dropped the constant 1: $(x^\\top z)^3 = 2^3$.",
+          "trap": "C6"
+        },
+        {
+          "value": 9,
+          "why": "Used power 2 instead of 3, or put the 1 outside the bracket: $1 + 2^3$.",
+          "trap": "C3"
+        },
+        {
+          "value": 3,
+          "why": "Forgot to raise $1 + x^\\top z$ to the power 3.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. $x^\\top z = 1(4) + 2(-1) = 2$.\n2. $K = (1 + 2)^3 = 27$."
+    },
+    {
+      "id": "ml-svm-soft-13",
+      "skill": "ml.svm-soft",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For inputs $x \\in \\mathbb{R}^3$, the kernel $K(x, z) = (1 + x^\\top z)^2$ equals $\\phi(x)^\\top\\phi(z)$ for a feature map $\\phi$ with the smallest possible number of components. How many components does $\\phi(x)$ have?",
+      "figure": null,
+      "options": [
+        {
+          "text": "6",
+          "correct": false,
+          "why": "Counted only the degree-2 monomials; $(1 + x^\\top z)^2$ also contains degree-0 and degree-1 terms.",
+          "trap": "C6"
+        },
+        {
+          "text": "13",
+          "correct": false,
+          "why": "Counted $x_ix_j$ and $x_jx_i$ as separate features; each cross pair appears once, with weight $\\sqrt 2$.",
+          "trap": "C6"
+        },
+        {
+          "text": "9",
+          "correct": false,
+          "why": "Forgot the constant feature that comes from the 1 inside the bracket.",
+          "trap": "C6"
+        },
+        {
+          "text": "10",
+          "correct": true,
+          "why": "One constant, 3 linear terms $\\sqrt2 x_i$, 3 squares $x_i^2$ and 3 cross terms $\\sqrt2 x_ix_j$ ($i < j$): $\\binom{3+2}{2} = 10$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $(1 + x^\\top z)^2 = 1 + 2\\sum_i x_iz_i + \\sum_i x_i^2z_i^2 + 2\\sum_{i<j}x_ix_jz_iz_j$.\n2. Matching features: $1$; $\\sqrt2 x_i$ (3); $x_i^2$ (3); $\\sqrt2 x_ix_j$ for $i < j$ (3).\n3. Total $1 + 3 + 3 + 3 = 10$."
+    },
+    {
+      "id": "ml-svm-soft-14",
+      "skill": "ml.svm-soft",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An SVM uses the RBF kernel $K(x, z) = \\exp(-\\gamma\\lVert x - z\\rVert^2)$. What happens as $\\gamma$ is made very large?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The boundary becomes smoother and close to linear",
+          "correct": false,
+          "why": "Reversed: that happens for small $\\gamma$, when the kernel varies slowly.",
+          "trap": "C11"
+        },
+        {
+          "text": "Each training point influences only a tiny neighbourhood, so the boundary becomes very wiggly and the model tends to overfit",
+          "correct": true,
+          "why": "$K$ drops to almost 0 except for very close pairs, so the decision function is a sum of narrow bumps around the training points."
+        },
+        {
+          "text": "The penalty on slack variables increases",
+          "correct": false,
+          "why": "That is the role of $C$; $\\gamma$ sets the kernel width.",
+          "trap": "C2"
+        },
+        {
+          "text": "$K(x, z) \\to 1$ for every pair, so all points look identical",
+          "correct": false,
+          "why": "That is the limit $\\gamma \\to 0$. As $\\gamma \\to \\infty$, $K \\to 0$ for every pair with $x \\ne z$.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Large $\\gamma$ makes $\\exp(-\\gamma\\lVert x - z\\rVert^2)$ fall off very quickly with distance.\n2. Each support vector then shapes the boundary only near itself: low bias, high variance."
+    },
+    {
+      "id": "ml-svm-soft-15",
+      "skill": "ml.svm-soft",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A function $K$ is evaluated on two points $x_1, x_2$, giving the matrix $G = [K(x_i, x_j)]$. Which of the following could be the Gram matrix of a valid (Mercer) kernel?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$\\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}$",
+          "correct": true,
+          "why": "Symmetric with eigenvalues 3 and 1, both positive."
+        },
+        {
+          "text": "$\\begin{pmatrix} 1 & 2 \\\\ 2 & 1 \\end{pmatrix}$",
+          "correct": false,
+          "why": "$\\det = 1 - 4 = -3 < 0$, so one eigenvalue is negative ($-1$): not PSD. Also $|K(x_1,x_2)| \\le \\sqrt{K(x_1,x_1)K(x_2,x_2)}$ fails.",
+          "trap": "C1"
+        },
+        {
+          "text": "$\\begin{pmatrix} 1 & 0.5 \\\\ 0.4 & 1 \\end{pmatrix}$",
+          "correct": false,
+          "why": "Not symmetric: $K(x_1, x_2) = \\phi(x_1)^\\top\\phi(x_2)$ must equal $K(x_2, x_1)$.",
+          "trap": "C9"
+        },
+        {
+          "text": "$\\begin{pmatrix} 4 & 2 \\\\ 2 & 1 \\end{pmatrix}$",
+          "correct": true,
+          "why": "Symmetric with eigenvalues 5 and 0: PSD (singular is allowed), e.g. $\\phi(x_1) = 2$, $\\phi(x_2) = 1$."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A valid kernel's Gram matrix must be symmetric and positive semidefinite.\n2. For a symmetric 2×2 matrix: PSD $\\iff$ diagonal entries $\\ge 0$ and $\\det \\ge 0$.\n3. Option 1: $\\det = 3$, passes. Option 2: $\\det = -3$, fails. Option 3: not symmetric. Option 4: $\\det = 0$, passes."
+    },
+    {
+      "id": "ml-svm-soft-16",
+      "skill": "ml.svm-soft",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A kernel SVM with RBF kernel $K(x, z) = \\exp(-\\lVert x - z\\rVert^2)$ (so $\\gamma = 1$) has two support vectors: $s_1 = (0, 0)$ with $y_1 = +1$, $\\alpha_1 = 1$, and $s_2 = (1, 1)$ with $y_2 = -1$, $\\alpha_2 = 1$; the bias is $b = 0$. The decision value $f(x) = \\sum_i \\alpha_i y_i K(s_i, x) + b$ at $x = (0, 0.5)$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.49,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 1.07,
+          "why": "Ignored the labels $y_i$ and added both kernel values.",
+          "trap": "C11"
+        },
+        {
+          "value": 0.28,
+          "why": "Used the distance $\\lVert x - z\\rVert$ instead of its square in the exponent.",
+          "trap": "C4"
+        },
+        {
+          "value": -0.49,
+          "why": "Swapped the labels of the two support vectors.",
+          "trap": "C11"
+        }
+      ],
+      "solution": "1. $\\lVert x - s_1\\rVert^2 = 0 + 0.25 = 0.25$, so $K(s_1, x) = e^{-0.25} \\approx 0.7788$.\n2. $\\lVert x - s_2\\rVert^2 = 1 + 0.25 = 1.25$, so $K(s_2, x) = e^{-1.25} \\approx 0.2865$.\n3. $f(x) = 0.7788 - 0.2865 \\approx 0.49$, so $x$ is classified $+1$."
+    }
+  ]
+}

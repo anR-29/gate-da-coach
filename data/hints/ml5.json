@@ -1,0 +1,217 @@
+{
+  "ml-tree-split-07": [
+    "Sirf ek node ki impurity chahiye, aur 'entropy using $\\log_2$' likha hai — Gini nahi, natural log nahi.",
+    "$H = -p\\log_2 p - (1-p)\\log_2(1-p)$ with $p = 7/10$; dono classes ka term lena hai.",
+    "Pehla term: $-0.7\\log_2 0.7 \\approx 0.360$. Ab $-0.3\\log_2 0.3$ nikaalo aur jodo. Trap: $\\ln$ use kiya toh value chhoti aayegi."
+  ],
+  "ml-tree-split-08": [
+    "CART Gini impurity maangta hai: class fractions ke squares se banta hai, log nahi lagta.",
+    "Gini $= 1 - p_A^2 - p_B^2$ with $p_A = 9/12$, $p_B = 3/12$.",
+    "$p_A = 0.75$ toh $p_A^2 = 0.5625$; $p_B^2$ bhi nikaalo. Trap: sirf $\\sum p_i^2$ likh ke ruk mat jao — 1 se minus karna hai."
+  ],
+  "ml-tree-split-09": [
+    "Classes 4 hain, 2 nahi — 'binary max 1 bit' wala rule yahan seedha nahi lagta.",
+    "$H = -\\sum_{i=1}^{4} p_i\\log_2 p_i$ with har $p_i = 1/4$.",
+    "Ek class ka term: $-\\frac14\\log_2\\frac14 = \\frac14 \\times 2$. Ab chaaron jodo. Trap: har term ko $p_i$ se multiply karna mat bhoolo."
+  ],
+  "ml-tree-split-10": [
+    "Parent 8:4 hai, balanced nahi — iski entropy 1 nahi hogi. Teen children hain, sizes 6, 5, 1.",
+    "Gain $= H(8{:}4) - \\frac{6}{12}H(3{:}3) - \\frac{5}{12}H(5{:}0) - \\frac{1}{12}H(0{:}1)$.",
+    "Green aur blue pure hain toh unki entropy 0; red $3{:}3$ ki entropy 1. Ab parent $H(2/3)$ nikaalo. Trap: children ko $1/3$-$1/3$ weight mat do."
+  ],
+  "ml-tree-split-11": [
+    "Split P ka ek child pure hai lekin usme sirf 1 example hai — dekho weight kitna milega.",
+    "Har split ke liye $\\frac{n_L}{20}G_L + \\frac{n_R}{20}G_R$ nikaalo; jiska chhota, wo chuna jaata hai.",
+    "Q: $8{:}2$ child ka Gini $= 1 - 0.8^2 - 0.2^2 = 0.32$, dono children same. Ab P ka right child $9{:}10$ ka Gini nikaalo. Trap: simple average mat lo."
+  ],
+  "ml-tree-split-12": [
+    "Har statement ek alag measure check karta hai — gain, Gini, entropy, misclassification. Ek-ek ko chhote calculation se parkho.",
+    "Rules: Gini $= 1 - \\sum p_i^2$; $H = -\\sum p_i\\log_2 p_i$ with $0\\log 0 = 0$; misclassification $= 1 - \\max p_i$.",
+    "Teesra option: $p = 0$ wali class ka term $0$ hai, toh asal mein kitni classes bachi? Chautha: $1 - \\max(0.7, 0.3)$ nikaalo aur 0.42 se milao."
+  ],
+  "ml-tree-split-13": [
+    "Har threshold data ko left ($x \\le t$) aur right mein todta hai. Sirf ek child pure hona kaafi nahi — dono children ka weighted impurity dekho.",
+    "Parent $4{:}4$ hai toh $H = 1$. Gain $= 1 - \\frac{n_L}{8}H_L - \\frac{n_R}{8}H_R$; chaaron $t$ ke liye counts likho.",
+    "$t = 2.5$: left $2{:}0$ (H = 0), right $2{:}4$ (H $\\approx 0.918$), gain $= 1 - \\frac68(0.918)$. Baaki teen thresholds isi tarah karo. Trap: equal-size children wala split automatically best nahi."
+  ],
+  "ml-tree-split-14": [
+    "Counts 6, 3, 1 hain — teen classes. Binary wale limits (entropy max 1, Gini max 0.5) yahan automatically nahi lagte.",
+    "Fractions $0.6, 0.3, 0.1$. Gini $= 1 - \\sum p_i^2$; $H = -\\sum p_i\\log_2 p_i$; misclassification $= 1 - \\max p_i$.",
+    "$\\sum p_i^2 = 0.36 + 0.09 + 0.01$ — isse pehla option check karo. Entropy ka pehla term $-0.6\\log_2 0.6 \\approx 0.442$; baaki do jodo aur 1 se compare karo."
+  ],
+  "ml-tree-split-15": [
+    "P mein 4 examples, Q mein 80 — lekin dono mein classes ka ratio dekho.",
+    "$H = -\\sum p_i\\log_2 p_i$ sirf fractions $p_i$ par depend karta hai, total count $n$ par nahi.",
+    "P ke liye $p_+ = 2/4$, Q ke liye $p_+ = 40/80$. Dono fractions compare karo. Trap: 0.5 Gini ki value hai, entropy ki nahi."
+  ],
+  "ml-tree-split-16": [
+    "Parent mein teen classes barabar hain — iski entropy 1 bit nahi, usse zyada hogi.",
+    "Gain $= H(4{:}4{:}4) - \\frac{8}{12}H(4{:}4{:}0) - \\frac{4}{12}H(0{:}0{:}4)$.",
+    "Parent $= \\log_2 3 \\approx 1.585$. Left child mein sirf A aur B barabar hain, toh uski $H$ binary $50{:}50$ jaisi. Trap: left child ka $8/12$ weight mat bhoolo."
+  ],
+  "ml-bias-variance-06": [
+    "Total error diya hai aur variance poocha hai — decomposition ko ulta use karna hai. Dhyan: noise ka SD diya hai, variance nahi.",
+    "$0.50 = \\text{bias}^2 + \\mathrm{Var}(\\hat f) + \\sigma^2$ with bias $= 0.3$ aur $\\sigma = 0.4$.",
+    "bias$^2 = 0.09$ aur $\\sigma^2 = 0.16$. Ab dono ko 0.50 se ghatao. Trap: 0.3 ya 0.4 ko bina square kiye mat ghatao."
+  ],
+  "ml-bias-variance-07": [
+    "Training error 1% aur validation 30% — itna bada gap kis problem ka signal hai: bias ya variance?",
+    "Rule: low train + high validation = overfit (high variance). Variance ghatane ke liye model ki flexibility kam karo.",
+    "Har option ke liye poocho: ye tree ko zyada flexible banata hai ya kam? Trap: training error aur ghatane se validation error nahi sudhrta."
+  ],
+  "ml-bias-variance-08": [
+    "6 se divide karne par $T$ biased ho jaata hai. MSE ke do hisse hain — dono nikaalne padenge.",
+    "MSE $= (E[T] - \\mu)^2 + \\mathrm{Var}(T)$, jahan $E[T] = 5\\mu/6$ aur $\\mathrm{Var}(T) = 5\\sigma^2/6^2$.",
+    "$E[T] = 50/6 \\approx 8.333$, toh bias $\\approx -1.667$; ise square karo. Ab $\\mathrm{Var}(T) = 5 \\times 20/36$ nikaalo. Trap: bias ko bina square kiye mat jodo."
+  ],
+  "ml-bias-variance-09": [
+    "Har option ek alag cheez pe hai: noise, bagging, 1-NN, aur zyada data. Har ek ke liye socho bias badalta hai ya variance.",
+    "Decomposition: error $=$ bias$^2$ + variance + $\\sigma^2$. Averaging aur zyada data variance ghataate hain; model ka galat shape bias banata hai.",
+    "1-NN ka training error 0 hota hai — wo flexible hai ya rigid? Seedhi line ko parabola ke data par fit karo: lakhon points ke baad bhi curve pakdegi?"
+  ],
+  "ml-bias-variance-10": [
+    "$k = n$ ka matlab: har prediction ke liye saare training points neighbours ban jaate hain.",
+    "k-NN regression prediction $=$ $k$ nearest targets ka average. $k = n$ par ye average har $x$ ke liye same hoga.",
+    "Prediction har jagah $\\bar y$ — ab socho ye constant model data ka pattern pakadta hai (bias) aur training set badalne par kitna hilta hai (variance)."
+  ],
+  "ml-bias-variance-11": [
+    "Chaar predictions ka spread variance deta hai, aur unka average true value 4 se kitna door hai wo bias deta hai.",
+    "bias $= \\overline{\\hat f} - 4$; variance $= \\frac14\\sum(\\hat f_i - \\overline{\\hat f})^2$. Dono ko (bias squared karke) jodo.",
+    "$\\overline{\\hat f} = (6 + 4 + 7 + 7)/4 = 6$, toh bias $= 2$. Ab deviations $0, -2, 1, 1$ se variance nikaalo. Trap: divisor 4 hai, 3 nahi."
+  ],
+  "ml-bias-variance-12": [
+    "Table mein training MSE lagatar gir raha hai, validation MSE pehle girta phir badhta hai — U-shape pehchano.",
+    "Model selection validation error se hota hai. High train + high val = bias; low train + high val = variance.",
+    "Validation row mein sabse chhoti value dhoondo. Phir degree 1 ka gap (21.0 − 20.1) aur degree 8 ka gap (37.5 − 1.2) compare karo."
+  ],
+  "ml-bias-variance-13": [
+    "Average lene se fluctuations cancel hote hain. 'Independent' word important hai — covariance terms zero.",
+    "$\\mathrm{Var}\\left(\\frac{1}{5}\\sum_{i=1}^5 Z_i\\right) = \\frac{1}{5^2}\\sum \\mathrm{Var}(Z_i)$.",
+    "Sum ka variance $= 5 \\times 0.2 = 1.0$. Ab constant $\\frac15$ bahar nikalne par kis power se divide hoga? Trap: $\\sqrt 5$ se divide karna SD ka rule hai."
+  ],
+  "ml-bias-variance-14": [
+    "$\\lambda$ badhana = weights ko zyada shrink karna = model ko kam flexible banana. Har option isi direction se judge karo.",
+    "Kam flexibility: bias ↑, variance ↓. $\\lambda = 0$ least squares hai jo training MSE ka minimum deta hai.",
+    "Pehla option: kya koi penalty wala fit training data pe least squares se behtar ho sakta hai? Chautha: 'every increase' — bahut bade $\\lambda$ par model kya predict karega?"
+  ],
+  "ml-bias-variance-15": [
+    "Model bilkul sahi $f$ jaanta hai, toh bias aur variance dono zero. Phir bhi naye $y$ mein kuch bacha hai — kya?",
+    "Error $= y - f(x) = \\varepsilon$, toh expected squared error $= E[\\varepsilon^2] = \\sigma^2$.",
+    "Stem mein SD diya hai: $\\sigma = 0.5$. Ise variance mein badlo. Trap: SD ko seedha error mat likho."
+  ],
+  "ml-bias-variance-16": [
+    "Dono curves 18–19 par mil ke flat ho gaye hain, jabki doosra model 5 la raha hai. Gap chhota hai ya level ooncha?",
+    "Small gap + high error = high bias (underfit). Big gap = high variance. Zyada data sirf gap band karta hai, plateau neeche nahi laata.",
+    "Gap $= 19 - 18 = 1$ hai — variance ka problem lagta hai? Ab chautha option: agar noise variance 18 hota toh boosted model 5 kaise laata?"
+  ],
+  "ml-cv-06": [
+    "Pehle ginno kitne alag candidates hain (har kernel–$C$ pair ek candidate), phir har candidate kitni baar train hota hai.",
+    "Fits $=$ (number of folds) $\\times$ (number of candidates); refit sirf tab jodo jab stem bole.",
+    "Candidates $= 2 \\times 5$, not $2 + 5$. Ab ise folds se multiply karo. Trap: final refit yahan nahi ginna."
+  ],
+  "ml-cv-07": [
+    "Har model ek fold ko validation ke liye chhodta hai — baaki pe train hota hai. Fold ka size pehle nikaalo.",
+    "Training size $= \\frac{k-1}{k} \\times n$ with $k = 8$, $n = 200$.",
+    "Ek fold $= 200/8 = 25$ points. Ab socho kitne folds training mein jaate hain. Trap: 25 validation fold hai, training nahi."
+  ],
+  "ml-cv-08": [
+    "LOOCV mein har point ko hata ke baaki 6 mein se nearest neighbour dhoondhna hai — point khud apna neighbour nahi ban sakta.",
+    "Har point ke liye Manhattan distance $|\\Delta x_1| + |\\Delta x_2|$ baaki points tak nikaalo; nearest ki class predict hogi. Error rate $=$ galat$/7$.",
+    "P3 $(0,3)$: P6 tak distance $2$, P1 tak $3$ — toh prediction P6 ki class. Baaki points bhi aise hi check karo. Trap: denominator 7 hai, 6 nahi."
+  ],
+  "ml-cv-09": [
+    "Har fold ko predict karte waqt sirf doosre fold ke targets ka mean use hoga — saare chaar ka nahi.",
+    "Fold 1 held out: prediction $= \\text{mean}\\{5, 7\\}$. Fold 2 held out: prediction $= \\text{mean}\\{1, 3\\}$. CV MSE $=$ chaaron squared errors ka average.",
+    "Fold 1 ke liye prediction $6$, toh errors $(1-6)^2 = 25$ aur $(3-6)^2 = 9$. Ab fold 2 karo. Trap: dono fold MSEs ko jodna nahi, average lena hai."
+  ],
+  "ml-cv-10": [
+    "Ek point ka ek hi fold hota hai. Wo fold kitni baar validation banta hai, aur baaki baar point kahan hota hai?",
+    "k-fold mein har point exactly ek baar held-out hota hai; baaki $k - 1$ models mein training mein.",
+    "$k = 5$: ek model mein point validation mein gaya. Baaki models mein kya? Trap: 'validation count' aur 'training count' alag sawaal hain."
+  ],
+  "ml-cv-11": [
+    "Char statements: chhota $k$, $k = n$, shuffling ka asar, aur computation. Har ek ko alag se socho.",
+    "k-fold mein $k$ fits per candidate, har fit $\\frac{k-1}{k}n$ points par. Folds random assignment se bante hain (LOOCV ko chhod ke).",
+    "$k = 2$ par har model $n/2$ pe train hota hai — final model se behtar ya bura? Aur $k$ badhane par fits ki ginti badhti hai ya ghat-ti?"
+  ],
+  "ml-cv-12": [
+    "Har point ko hata ke baaki teen mein se sabse paas wale $x$ ka $y$ prediction banta hai — point khud ko predict nahi kar sakta.",
+    "LOOCV MSE $= \\frac14\\sum (y_i - y_{\\text{nearest other}})^2$; har $x$ ke liye nearest doosra $x$ dhoondo.",
+    "$x = 1$ ka nearest $x = 2$ hai, toh prediction 5, error $(3-5)^2 = 4$. Baaki teen bhi karo; $x = 4$ ke liye 2 aur 7 ki distance compare karo. Trap: 4 se divide karo, 3 se nahi."
+  ],
+  "ml-cv-13": [
+    "Do loops hain: bahar 5 folds, aur har outer fold ke andar ek poori CV + ek refit. Pehle ek outer fold ka kaam gino.",
+    "Ek outer fold $=$ (inner folds $\\times$ candidates) $+ 1$ refit. Total $=$ outer folds $\\times$ ye count.",
+    "Ek outer fold ke andar inner CV fits $= 4 \\times 3 = 12$. Ab refit jodo aur 5 outer folds se multiply karo. Trap: full-data fit yahan nahi hai."
+  ],
+  "ml-cv-14": [
+    "CV ek model ko ek number deta hai — chaaron folds ko mila ke. Kisi ek fold ki best value se decide mat karo.",
+    "CV error $= \\frac14(e_1 + e_2 + e_3 + e_4)$ har model ke liye; sabse chhota average select hota hai.",
+    "P ka sum $= 0.10 + 0.30 + 0.12 + 0.28 = 0.80$, average 0.20. Ab Q aur R ke averages nikaalo. Trap: R ka 0.05 akela fold hai."
+  ],
+  "ml-cv-15": [
+    "Dono $k$ ke liye alag-alag LOOCV error nikaalna hai, phir chhota wala chunna hai. Held-out point apna neighbour nahi ho sakta.",
+    "Har $x$ ko hata ke baaki 6 mein se $k$ nearest dhoondo aur majority class se compare karo. Error $=$ galat$/7$.",
+    "$k = 1$, $x = 1$: nearest $x = 3$ (class B), asli A — galat. $k = 3$, $x = 1$: neighbours $3, 4, 6$ ki majority dekho. Trap: point ko khud ka neighbour mat gino."
+  ],
+  "ml-cv-16": [
+    "Do cheezein alag rakho: validation folds (jo data ko baant-te hain) aur training sets (jo baaki folds se bante hain).",
+    "k-fold: data ko $k$ disjoint folds mein baanto; model $i$ fold $i$ pe test, baaki $k - 1$ pe train. Fold models sirf error estimate ke liye.",
+    "Teesra option: CV ke baad final model kaise banta hai — average se ya refit se? Chautha: $k = 5$ mein model 1 aur model 2 ke training sets mein kitne folds common hain?"
+  ],
+  "ml-leakage-06": [
+    "Har step ke liye poocho: kya ye data se kuch 'seekh' raha hai (median, components), aur kis data se?",
+    "Leak-free rule: jo bhi fit hota hai (imputer, PCA, scaler) sirf training rows par fit ho; test rows par sirf apply ho.",
+    "Step 2 ka median kis set se aaya? Step 3 ka PCA kin rows par fit hua? Trap: test set ko 'chhoona' leak nahi, test se 'seekhna' leak hai."
+  ],
+  "ml-leakage-07": [
+    "Prediction discharge ke waqt banana hai. Har feature ke liye socho: kya ye us waqt maloom hota hai?",
+    "Target leakage: aisa feature jo outcome ke baad record hota hai, ya sirf positive cases mein hota hai.",
+    "Har option ko timeline pe rakho: pichhle 12 months, current stay, age — sab discharge se pehle. Ab 'readmitted ward' kab record hoga?"
+  ],
+  "ml-leakage-08": [
+    "Group CV mein folds patients ke hisaab se bante hain — ek patient ke saare scans ek hi fold mein.",
+    "Patients per fold $= 120/4$; scans per fold $=$ patients per fold $\\times$ 6.",
+    "Pehle $120/4 = 30$ patients per fold. Ab inke scans gino. Trap: training folds ke scans nahi, sirf validation fold ke."
+  ],
+  "ml-leakage-09": [
+    "Har option mein dekho: kya evaluation data (validation fold ya test set) ne training, preprocessing ya tuning ko kahin chhua?",
+    "Rule: jo bhi data se seekha jaata hai (oversampling, encoding, tuning) wo sirf training data se ho; test set sirf aakhri report ke liye.",
+    "Oversampling poore data par hua toh ek row ki copy kahan-kahan ja sakti hai? Epochs test accuracy dekh ke chune toh wo accuracy fair report hai?"
+  ],
+  "ml-leakage-10": [
+    "Pehle 24 months sirf training ke liye hain. Kitne months test hone hain aur kitne-kitne ke blocks mein?",
+    "Windows $=$ (test months)$/3$; trainings $=$ windows $\\times$ models per window.",
+    "Test months $25$ se $36$ tak $= 12$ months. Blocks likh ke gino: 25–27, 28–30, … Trap: har window mein 2 models train hote hain."
+  ],
+  "ml-leakage-11": [
+    "Labels coin flips hain aur features unse independent — asal mein koi signal hai hi nahi. Toh 85% kahan se aaya?",
+    "Feature selection bhi 'training' hai: leak-free CV mein ye har training fold ke andar dobara hona chahiye.",
+    "Socho 5,000 random features mein se 50 'sabse correlated' chunne mein kin labels ka use hua — validation folds wale bhi? Naye data pe coin flip ka best guess kitna sahi hoga?"
+  ],
+  "ml-leakage-12": [
+    "Prediction order place hote waqt banana hai. Har feature ke liye poocho: kya tab tak ye value ban chuki hoti hai?",
+    "Leak: jo feature outcome (return) ke baad hi record hota hai, ya sirf returned orders ke liye hota hai.",
+    "'Earlier orders' ka return rate past se aata hai. Ab refund amount aur return request ke days — ye kab record hote hain, aur kis order ke liye?"
+  ],
+  "ml-leakage-13": [
+    "Sales data time-ordered hai. Deployment mein model ke paas sirf past hota hai — evaluation mein bhi wahi hona chahiye.",
+    "Rule: har test month se pehle ke months hi training mein hon (train on past, test on future).",
+    "Har option ke liye ek test month lo, jaise year 2 ka March, aur dekho kya year 3–5 ke months training mein aa sakte hain."
+  ],
+  "ml-leakage-14": [
+    "Leak-free matlab scaler ka mean aur SD sirf training values $2, 4, 6, 8$ se aayenge — test row ka 20 unme shaamil nahi.",
+    "$z = (20 - \\bar x_{\\text{train}})/\\sigma_{\\text{train}}$ with $\\sigma_{\\text{train}} = \\sqrt{\\frac14\\sum (x_i - \\bar x)^2}$.",
+    "Training mean $= 20/4 = 5$; deviations $-3, -1, 1, 3$. Inse population SD nikaalo. Trap: 20 ko mean/SD mein mila diya toh z bahut chhota aayega."
+  ],
+  "ml-leakage-15": [
+    "50 configurations mein se 'best' chuna gaya — jis score se chuna, wahi score report karna fair hai kya?",
+    "Unbiased estimate ke liye data aisa ho jisne training ya selection mein koi role na nibhaaya ho.",
+    "Socho: agar saari 50 configurations barabar achhi hon, toh unke CV scores ka maximum asli performance se upar hoga ya neeche? Ab har option ka data source dekho."
+  ],
+  "ml-leakage-16": [
+    "Imputer bhi data se 'seekhta' hai. Leak-free mein kaun se values uska mean banayengi — test wale 40, 50 bhi?",
+    "Fill value $=$ training rows ki observed values ka mean (missing row ko count mein mat gino).",
+    "Training observed values: $6, 9, 15$; inka sum $30$. Ab sahi denominator se divide karo. Trap: test values milaane se mean bahut bada ho jaayega."
+  ]
+}

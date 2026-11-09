@@ -1,0 +1,207 @@
+{
+  "ml-linreg-origin-06": [
+    "No intercept wala model hai — line origin se guzregi, toh centred-sum wala slope nahi lagega.",
+    "$w = \\sum x_iy_i / \\sum x_i^2$; yahan $x = 1, 2, 3$ aur $y = 3, 5, 8$.",
+    "$\\sum x^2 = 1+4+9 = 14$. Ab $\\sum xy$ term-by-term jodo. Trap: $\\sum y/\\sum x$ ek alag (galat) ratio hai."
+  ],
+  "ml-linreg-origin-07": [
+    "Model origin se guzarta hai — chaar sums diye hain par sabke sab kaam ke nahi.",
+    "No-intercept fit: $w = \\sum xy/\\sum x^2$, phir $\\hat y = 3w$. $\\sum x$ aur $\\sum y$ sirf intercept wale model mein lagte.",
+    "$\\sum xy = 50$, $\\sum x^2 = 20$ — ratio sahi direction mein lo. Trap: $\\sum y/\\sum x$ wala slope mat lena."
+  ],
+  "ml-linreg-origin-08": [
+    "Model $x$ mein linear nahi, par $w$ mein linear hai — naya feature $\\phi = 1/x$ socho.",
+    "$\\hat y = w\\phi$ ke liye $w = \\sum\\phi y/\\sum\\phi^2$, jahan $\\phi = 1, 0.5, 0.25$.",
+    "$\\sum\\phi y = 4(1) + 2.5(0.5) + 1(0.25) = 5.5$. Ab $\\sum\\phi^2$ nikaalo. Trap: denominator mein $\\sum\\phi$ nahi, $\\sum\\phi^2$ aata hai."
+  ],
+  "ml-linreg-origin-09": [
+    "Har option alag se check karo: pehle $w$ nikaalo, phir residuals, phir naye point ka asar.",
+    "$w = \\sum xy/\\sum x^2$ with $x = 1,2,3$, $y = 2,2,6$. No intercept ho toh guarantee sirf $\\sum x_ie_i = 0$ ki hai.",
+    "$\\sum x^2 = 14$, $\\sum xy = 2+4+18$. Point $(0, 5)$ ke liye socho: $x = 0$ wala point dono sums mein kitna jodta hai? Trap: residual $= y - \\hat y$, ulta mat lo."
+  ],
+  "ml-linreg-origin-10": [
+    "Yahan ulta sawaal hai: $w$ diya hai, ek data value $k$ dhoondhni hai — formula ko equation ki tarah use karo.",
+    "$w = \\sum xy/\\sum x^2$ with $\\sum xy = 1\\cdot1 + 2\\cdot4 + 3k$ and $\\sum x^2 = 1+4+9$.",
+    "$\\sum xy = 9 + 3k$, $\\sum x^2 = 14$; ab $(9+3k)/14 = 2$ solve karo. Trap: teesra point line $y = 2x$ pe hi ho, ye zaroori nahi."
+  ],
+  "ml-linreg-origin-11": [
+    "Ek term $(y_i - wx_i)^2$ ko $w$ ke respect mein differentiate karna hai — chain rule ka inner part dhyaan se.",
+    "$\\frac{d}{dw}u^2 = 2u\\frac{du}{dw}$ with $u = y_i - wx_i$.",
+    "$\\frac{du}{dw}$ nikaalo: $y_i$ constant hai, $-wx_i$ ka derivative kya? Trap: inner factor ka sign aur $x_i$ dono rakhne hain."
+  ],
+  "ml-linreg-origin-12": [
+    "Dono models ka relation dekho: kya ek model doosre ka special case hai?",
+    "Origin line = intercept model with $a = 0$. Bade set pe liya gaya minimum chhote set ke minimum se zyada nahi ho sakta.",
+    "Socho: $\\text{SSE}_1$ ka minimum kin $(a, b)$ pe liya gaya — kya $(0, w)$ bhi usme shaamil hai? Trap: equality sirf special data pe hoti hai."
+  ],
+  "ml-linreg-ols-07": [
+    "Intercept ke saath fit hai — slope ke liye centred sums ($x - \\bar x$, $y - \\bar y$) chahiye.",
+    "$b = S_{xy}/S_{xx}$ with $S_{xy} = \\sum(x - \\bar x)(y - \\bar y)$; yahan $\\bar x = 5$, $\\bar y = 7.5$.",
+    "Deviations: $x - \\bar x = -3, -1, 1, 3$ aur $y - \\bar y = -4.5, -0.5, 0.5, 4.5$. Ab products jodo. Trap: $\\sum xy/\\sum x^2$ sirf origin wale model ka formula hai."
+  ],
+  "ml-linreg-ols-08": [
+    "Sirf means aur slope diye hain — intercept khud nikaalna padega, ek khaas point use karke.",
+    "OLS line $(\\bar x, \\bar y)$ se guzarti hai: $a = \\bar y - b\\bar x$, toh $\\hat y = \\bar y + b(x - \\bar x)$.",
+    "$a = 50 - 3 \\times 10$ nikaalo, phir $x = 12$ daalo. Trap: $a$ mein plus sign lagana ya $a$ bhool jaana — dono common galti."
+  ],
+  "ml-linreg-ols-09": [
+    "Total variation $S_{yy}$ do hisson mein bant-ta hai: jo line explain karti hai aur jo residual bachta hai.",
+    "Intercept ke saath $\\text{SSE} = S_{yy} - S_{xy}^2/S_{xx}$; yahan $S_{xy} = 20$, $S_{xx} = 10$, $S_{yy} = 50$.",
+    "Explained part $= S_{xy}^2/S_{xx} = 400/10$. Ab ise total se ghatao. Trap: explained part ko hi SSE mat likhna, aur $1 - R^2$ ek fraction hai, sum nahi."
+  ],
+  "ml-linreg-ols-10": [
+    "Sirf $y$ badla hai, linear tarike se — har quantity ($b$, $a$, residuals, $R^2$) pe asar alag se dekho.",
+    "Centring mein $+3$ cancel hota hai: $y' - \\bar y' = 2(y - \\bar y)$. Formulas: $b = S_{xy}/S_{xx}$, $a = \\bar y - b\\bar x$, $R^2 = 1 - \\text{SSE}/S_{yy}$.",
+    "Residual dekho: $e' = 2y + 3 - (a' + b'x)$ ko $e$ ke terms mein likho. Trap: residual double ho toh squared residual kitna guna hoga?"
+  ],
+  "ml-linreg-ols-11": [
+    "Ek hi data pe do regressions — dono slopes ka numerator same hai: $S_{xy}$.",
+    "$b_{y|x} = S_{xy}/S_{xx}$, $b_{x|y} = S_{xy}/S_{yy}$, aur $R^2 = S_{xy}^2/(S_{xx}S_{yy})$.",
+    "Dono slopes multiply karke dekho ki $S_{xx}$, $S_{yy}$ kahan baith-te hain, phir numbers daalo. Trap: $r$ aur $R^2$ alag hain — square-root mat lena."
+  ],
+  "ml-linreg-ols-12": [
+    "Prediction chahiye, toh pehle poori line ($a$ aur $b$) nikaalo — intercept wala model hai.",
+    "$b = S_{xy}/S_{xx}$, $a = \\bar y - b\\bar x$; yahan $\\bar x = 3$, $\\bar y = 4$.",
+    "Deviations: $x - \\bar x = -2,-1,0,1,2$ aur $y - \\bar y = -2, 0, 1, 0, 1$; products jodke $S_{xy}$ banao. Trap: intercept pe ruk mat jaana, $x = 6$ daalna hai."
+  ],
+  "ml-ridge-06": [
+    "Ridge fit pehle, prediction baad mein — penalty $\\lambda w^2$ ki wajah se OLS slope nahi chalega.",
+    "1-D ridge: $w = \\sum xy/(\\sum x^2 + \\lambda)$ with $\\lambda = 6$; phir $\\hat y = 4w$.",
+    "$\\sum x^2 = 1 + 4 + 9 = 14$; ab $\\sum xy$ nikaalo aur denominator $14 + 6$ lo. Trap: $w$ pe ruk mat jaana — $x = 4$ pe prediction chahiye."
+  ],
+  "ml-ridge-07": [
+    "Dhyaan do: penalty sirf slope $w$ pe hai, intercept $b$ pe nahi.",
+    "$\\lambda \\to \\infty$ pe $w \\to 0$; bacha hua loss $\\sum (y_i - b)^2$ sirf $b$ ka function hai.",
+    "$\\frac{d}{db}\\sum (y_i - b)^2 = 0$ set karo aur dekho $b$ kya banta hai. Trap: intercept penalised nahi hai, toh prediction 0 nahi jaata."
+  ],
+  "ml-ridge-08": [
+    "$X^\\top X$ diagonal nahi hai (off-diagonal 1) — har weight alag se divide karke nahi milega, 2×2 inverse chahiye.",
+    "$w = (X^\\top X + \\lambda I)^{-1}X^\\top y$; $\\lambda I$ sirf diagonal mein judta hai: matrix $\\begin{pmatrix} 3 & 1 \\\\ 1 & 3 \\end{pmatrix}$.",
+    "2×2 inverse: $\\frac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}$, yahan det $= 8$. Ise $(4, 2)$ se multiply karo, pehli row lo. Trap: $\\lambda$ off-diagonal mein mat jodo."
+  ],
+  "ml-ridge-09": [
+    "Dono formulas likh ke compare karo — numerator same hai, denominator ka farak dekho.",
+    "$w_0 = \\sum xy/\\sum x^2$ aur $w_\\lambda = \\sum xy/(\\sum x^2 + \\lambda)$; training SSE ka minimiser sirf $w_0$ hai.",
+    "Example lo: $\\sum x^2 = 10$, $\\lambda = 5$ vs $10$ — denominator 15 se 20 hua, kya double hua? Trap: ridge weight 0 ki taraf jaata hai, sign nahi badalta."
+  ],
+  "ml-ridge-10": [
+    "Objective ki minimum value poochi hai, sirf $w$ nahi — dono parts (squared error + penalty) jodne honge.",
+    "Pehle $w = \\sum xy/(\\sum x^2 + \\lambda)$ with $\\sum xy = 8$, $\\sum x^2 = 5$, $\\lambda = 3$; phir $J(w)$ evaluate karo.",
+    "$w$ nikaalke residuals $2 - w$ aur $3 - 2w$ banao, square karke jodo. Trap: penalty $\\lambda w^2$ jodna mat bhoolo, aur OLS wala $w$ mat daalo."
+  ],
+  "ml-ridge-11": [
+    "Sirf penalty term $\\lambda\\lVert w\\rVert^2$ ka gradient chahiye, aur update mein uska sign.",
+    "$\\frac{\\partial}{\\partial w_j}\\lambda\\sum_k w_k^2 = 2\\lambda w_j$; update hai $w \\leftarrow w - \\eta\\,\\nabla J$.",
+    "$2\\lambda w$ ko $-\\eta$ se multiply karo aur $w$ ke saath combine karke dekho. Trap: $\\text{sign}(w)$ wala step L1 ka hai, L2 ka nahi."
+  ],
+  "ml-ridge-12": [
+    "Do rows hain — training aur validation. $\\lambda$ choose karne ke liye kaunsi row dekhni chahiye?",
+    "Rule: hyperparameter wahi jo validation error minimum kare; ridge mein training error to $\\lambda$ ke saath badhta hi hai.",
+    "$\\lambda = 0.01$ dekho: training 2.0 par validation 8.0 — ye gap kya batata hai? Ab baaki $\\lambda$ ki validation values compare karo. Trap: sabse kam training MSE wala $\\lambda$ overfit karta hai."
+  ],
+  "ml-logistic-07": [
+    "Class 0 ki probability poochi hai, class 1 ki nahi — aakhri step mein dhyaan rakho.",
+    "$z = w^\\top x + b$, $P(y = 1) = \\sigma(z)$ aur $P(y = 0) = 1 - \\sigma(z) = \\sigma(-z)$.",
+    "$z = 1\\cdot2 - 2\\cdot1 + 0.5\\cdot4 - 1$ nikaalo, phir sigmoid lagao. Trap: bias mat bhoolo, aur $\\sigma(z)$ pe ruk mat jaana."
+  ],
+  "ml-logistic-08": [
+    "Logistic model mein $x$ ka seedha linear asar kis cheez pe hota hai — $p$ pe, odds pe ya log-odds pe?",
+    "$\\ln\\frac{p}{1-p} = w^\\top x + b$; $x_3 \\to x_3 + 1$ karne se right side mein $w_3$ judta hai.",
+    "Log-odds mein $+0.7$ hua; ab dono side ka exponent lo aur dekho odds pe kya hota hai. Trap: probability pe ye seedha multiply ya add nahi hota."
+  ],
+  "ml-logistic-09": [
+    "Do probabilities di hain — inhe log-odds mein badlo, kyunki wahi $x$ mein linear hai.",
+    "$\\ln\\frac{p}{1-p} = wx + b$: $x = 1$ pe log-odds $= \\ln 1$, $x = 3$ pe $\\ln(0.8/0.2)$.",
+    "Do equations: $w + b = 0$ aur $3w + b = \\ln 4$; inhe solve karke $x = 5$ pe $z$ nikaalo. Trap: probability ko seedhi line pe extrapolate mat karo."
+  ],
+  "ml-logistic-10": [
+    "$z$ ka sign badla hai — sigmoid ki symmetry kaam aayegi, poora calculation dobara nahi chahiye.",
+    "Identity: $\\sigma(-z) = 1 - \\sigma(z)$ (graph point $(0, 0.5)$ ke around symmetric hai).",
+    "$\\sigma(-2) = 1/(1 + e^{2})$ likho aur $\\sigma(2) = 1/(1 + e^{-2})$ se compare karo. Trap: sigmoid ka output kabhi negative ya 1 se bada nahi hota."
+  ],
+  "ml-logistic-11": [
+    "Har option ke liye $z = 2x_1 - x_2 + 1$ nikaalo; threshold 0.5 ka matlab boundary $z = 0$.",
+    "Rule: $p > 0.5 \\iff z > 0$, aur $\\sigma$ increasing hai, toh coefficient ka sign hi direction batata hai.",
+    "$(0, 1)$ pe $z$ daalo; $(1, 0)$ pe $z$ nikaal ke $\\sigma(z)$ ko 0.9 se compare karo. Trap: saare coefficients scale karne se kya line $z = 0$ badalti hai?"
+  ],
+  "ml-logistic-12": [
+    "Ek SGD step hai: pehle current $\\hat p$, phir gradient, phir update — teen kaam.",
+    "Cross-entropy ke liye $\\nabla_w L = (\\hat p - y)\\,x$; update $w \\leftarrow w - \\eta\\,\\nabla_w L$ with $\\eta = 0.5$.",
+    "$z = 0.5\\cdot2 - 1\\cdot1 = 0$, toh $\\hat p = \\sigma(0) = 0.5$. Ab $(\\hat p - y)x_1$ banao aur update karo. Trap: minus sign aur $\\eta$ dono lagane hain."
+  ],
+  "ml-logistic-13": [
+    "Har pair ke liye socho: model ne **true class** ko kitni probability di?",
+    "$y = 1$ pe loss $-\\ln\\hat p$, $y = 0$ pe loss $-\\ln(1 - \\hat p)$; $-\\ln$ decreasing hai, toh chhoti probability = bada loss.",
+    "Pehla pair: $y = 0$, $\\hat p = 0.7$, toh true class ko $0.3$ mila. Baaki teen ka bhi aise hi nikaalo. Trap: $y = 0$ ke liye $\\hat p$ nahi, $1 - \\hat p$ dekhna hai."
+  ],
+  "ml-logistic-14": [
+    "Threshold 0.5 nahi, 0.9 hai — toh $z > 0$ wala rule nahi chalega.",
+    "$\\sigma(z) \\ge t \\iff z \\ge \\ln\\frac{t}{1-t}$; yahan $t = 0.9$, toh cut-off $\\ln(0.9/0.1)$.",
+    "$\\ln 9 = 2\\ln 3$ aur $\\ln 3 \\approx 1.10$ se cut-off nikaalo, phir har $z$ compare karo. Trap: $z$ ko seedha 0.9 se compare mat karo."
+  ],
+  "ml-logistic-15": [
+    "Char alag properties — har ek ko formula $\\sigma(z) = 1/(1 + e^{-z})$ se seedha test karo.",
+    "Kaam ke facts: $\\sigma' = \\sigma(1 - \\sigma)$, aur $\\ln\\frac{\\sigma(z)}{1 - \\sigma(z)} = z$ (logit, sigmoid ka inverse).",
+    "$z = 0$ daal ke $\\sigma(0)$ aur $\\sigma'(0)$ nikaalo. Increasing ke liye socho: kya $\\sigma(1 - \\sigma)$ kabhi negative ho sakta hai? Trap: range $(0, 1)$ sigmoid ki hai, log-odds ki nahi."
+  ],
+  "ml-logistic-16": [
+    "Pehle har point pe $\\hat p$, phir har point ka loss — ek point ka $y = 0$ hai, doosre ka $y = 1$.",
+    "$z = 2x - 1$; loss $= -\\ln\\hat p$ jab $y = 1$, aur $-\\ln(1 - \\hat p)$ jab $y = 0$. Average = sum/2.",
+    "$x = 0$ pe $z = -1$, $\\hat p = \\sigma(-1) \\approx 0.269$, toh $1 - \\hat p \\approx 0.731$. Ab doosra point karo. Trap: sum nahi, average chahiye; aur natural log lo."
+  ],
+  "ml-knn-06": [
+    "Teen alag $k$ ke liye vote karna hai — distances ek hi baar sort karo, phir top-$k$ gino.",
+    "Har point ka distance $|x - 3|$ nikaalo; sort karke pehle 1, 3, 5 points ki classes ka majority lo.",
+    "Pehle do: $|3.5 - 3| = 0.5$ aur $|2 - 3| = 1$. Baaki teen distances bhi nikaalo. Trap: 3.5 ka distance 2 se chhota hai — nearest point kaun hai, dhyaan se."
+  ],
+  "ml-knn-07": [
+    "Regression hai, classification nahi — 3 nearest points ke $y$ ka mean lena hai.",
+    "Squared distance $(x_1 - 1)^2 + (x_2 - 1)^2$ se sort kar sakte ho; order same rehta hai.",
+    "P1 aur P2 dono ka squared distance 1 hai. Ab P3, P4, P5 ka nikaalo aur teesra nearest chuno. Trap: saare 5 targets ka average mat lena."
+  ],
+  "ml-knn-08": [
+    "Teen points, do metrics — har metric mein nearest point alag ho sakta hai, dono ki list banao.",
+    "Query origin hai: Euclidean $\\sqrt{x_1^2 + x_2^2}$, Manhattan $|x_1| + |x_2|$.",
+    "P ke liye: Euclidean $\\sqrt{8}$, Manhattan $4$. Ab Q aur R ke dono distances nikaalo. Trap: diagonal wala point Manhattan mein zyada door lagta hai."
+  ],
+  "ml-knn-09": [
+    "Har statement ko chhote example se socho: vote count, distance pe noise, scaling, aur $k = n$.",
+    "Prediction sirf neighbours ki **ranking** pe depend karti hai; jo badlaav ranking nahi badalta, wo prediction bhi nahi badalta.",
+    "Agar har distance 10 guna ho jaaye, kya sorted order badlega? Aur $k = n$ pe kaunse points chune jaate hain? Trap: uniform scaling aur per-feature scaling alag cheez hain."
+  ],
+  "ml-knn-10": [
+    "Scaling pehle, distance baad mein — raw values mein feature 2 hi sab decide karega.",
+    "Min–max: $x' = (x - \\min)/(\\max - \\min)$; yahan feature 1 ko 10 se aur feature 2 ko 1000 se divide karna hai.",
+    "Scaled $P = (0.2, 0.3)$. Ab $Q$ scale karo aur differences nikaalo. Trap: square root mat bhoolo, aur Manhattan nahi, Euclidean chahiye."
+  ],
+  "ml-knn-11": [
+    "$k$ ki value training points ki ginti ke barabar hai — kaun-kaun neighbour banega?",
+    "$k = n$ pe har query ke neighbours poora training set hai, toh vote hamesha same rehta hai.",
+    "Vote gino: 7 A vs 5 B. Kya ye query ki location se badlega? Trap: nearest point ki class sirf $k = 1$ pe decide karti hai."
+  ],
+  "ml-knn-12": [
+    "Har point ko classify karte waqt use training set se hatana hai — warna wo khud ka nearest neighbour ban jaayega.",
+    "Har $x$ ke liye baaki paanch mein se nearest point dhoondo aur uski class ko asli class se compare karo.",
+    "$x = 1$: nearest 2 (A), sahi. $x = 2$: 1 aur 4 mein se kaun paas hai? Aise hi sab chhe points check karo. Trap: point ko khud se compare mat karna."
+  ],
+  "ml-knn-13": [
+    "Do voting rules — ek mein har neighbour ka 1 vote, doosre mein vote $1/d$.",
+    "Weighted rule: class $c$ ka score $= \\sum 1/d$ over neighbours of class $c$.",
+    "Plain vote pehle gino (A ke kitne, B ke kitne). Phir B ka weighted score $1/3 + 1/3$ banao aur A ke $1/1$ se compare karo. Trap: dono rules swap mat karo."
+  ],
+  "ml-knn-14": [
+    "Distance yahan Euclidean nahi — kitni positions alag hain, wahi gino.",
+    "Har vector ko query 10110 ke saath position-by-position compare karo; 3 sabse chhote counts wale neighbours lo.",
+    "T1 = 10010 vs 10110: sirf teesri position alag, distance 1. Ab T2 se T5 tak gino. Trap: chhota Hamming distance = zyada similar; farthest points mat chuno."
+  ],
+  "ml-knn-15": [
+    "Table $x$ ke order mein hai, distance ke order mein nahi — pehle $|x - 10|$ se sort karo.",
+    "Sorted list pe $k = 1, 3, 5, \\dots$ ke liye top-$k$ ka vote gino; jahan pehli baar B jeete wahi chahiye.",
+    "Sabse paas: 11 (distance 1, A) aur 8.5 (1.5, A). Aage ke distances nikaal ke list poori karo. Trap: even $k$ pe tie ho sakta hai, aur odd $k$ hi chahiye."
+  ],
+  "ml-knn-16": [
+    "Socho k-NN training ke time asal mein kya karta hai — kuch seekhta hai ya bas data rakh leta hai?",
+    "Non-parametric = model ka size data ke saath badhta hai; lazy = kaam prediction ke time. 1-NN boundary Voronoi cells se banti hai.",
+    "Weight-vector wala option dekho: kaunsa model training mein $w$ seekhta hai — k-NN ya logistic regression? Trap: 1-NN boundary piecewise hai, ek hi line nahi."
+  ]
+}

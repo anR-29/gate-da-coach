@@ -1,0 +1,157 @@
+{
+  "dsa-tree-traversal-07": [
+    "Inorder poocha hai — root beech mein aata hai. Figure mein dhyan do: G, H ka **left** child hai aur T ka left child hai hi nahi.",
+    "Har node pe L N R: pehle left subtree poora, phir node, phir right subtree. Root M ka left subtree F wala hai, right subtree T wala.",
+    "F ke subtree se shuru: B (F ka left), phir F, phir H ka subtree — G left hai to G pehle, phir H. Trap: preorder (M pehle) mat likh dena."
+  ],
+  "dsa-tree-traversal-08": [
+    "Tree **full** hai (0 ya 2 children), isliye preorder + postorder se bhi unique banta hai. Root A hai — dono sequences mein dikhta hai.",
+    "Full tree mein preorder ka agla key B = A ka left child. Postorder mein B jahan khatam hota hai, wahan tak A ka left subtree hai.",
+    "Postorder D H I E B → left subtree in 5 keys ka; B ka left D (single node), right part {H, I, E} ka root E. Trap: E ke children ka order preorder se lo."
+  ],
+  "dsa-tree-bounds-06": [
+    "Complete tree (heap shape) hai, 45 nodes. Leaves sirf last level pe nahi — upar wale level pe bhi kuch nodes childless hote hain.",
+    "Full levels 0–4 mein $1+2+4+8+16=31$ nodes. Last level pe $45-31$ nodes bachte hain; ye kitne parents se latakte hain?",
+    "Last level pe 14 nodes → 7 parents chahiye level 4 se. Level 4 ke baaki 16 − 7 nodes bhi leaves hain. Trap: internal nodes ⌊45/2⌋ ko leaves mat samjho."
+  ],
+  "dsa-tree-bounds-07": [
+    "Har node ke 0 ya 2 children — chain allowed nahi. Height 6 chahiye aur nodes **minimum**.",
+    "Height 6 ke liye 7 nodes ka ek lamba path chahiye. Path ke har non-bottom node ko ek extra child dena padega taaki 2 children ho jaayein.",
+    "Path ke 7 nodes mein se neeche wala leaf hai; upar ke 6 nodes ko ek-ek extra leaf. Ab jodo. Trap: root ko ginna mat bhoolo, aur 127 max hai, min nahi."
+  ],
+  "dsa-tree-bounds-08": [
+    "15 nodes fixed hain. Har option ko check karo: height ki range kya hai, aur leaves ki kitni sankhya possible hai.",
+    "Height: $\\lfloor\\log_2 15\\rfloor$ se $15-1$ tak. Leaves: $n_0 = n_2 + 1$ aur $n_0+n_1+n_2 = 15$ — har option ke numbers isme daalo.",
+    "9 leaves wala option: $n_0 = 9$ → $n_2 = 8$ → total kam se kam $9 + 8$; 15 se compare karo. Height 2 wala: us height pe max nodes $2^3-1$."
+  ],
+  "dsa-bst-06": [
+    "Har insertion root se shuru hoti hai — 35 ko 40 se compare karke neeche jaate jao jab tak khaali jagah na mile.",
+    "Pehle tree banao: 40 root; 25, 60 uske children; 10, 30 under 25; 50, 70 under 60; 27 under 30. Phir 35 ka raasta trace karo.",
+    "35 < 40 → left (25). 35 > 25 → right: wahan 30 pehle se hai, to ruko mat. Agla compare karo. Trap: 27 (pichhla inserted key) ka child mat bana dena."
+  ],
+  "dsa-bst-07": [
+    "BST ka preorder diya hai — preorder ka pehla key root hai, aur BST mein usse chhote keys left subtree mein jaate hain.",
+    "Root 40: left subtree = {20, 10, 30, 25, 35}, right = {60, 50, 70}. Har subtree mein bhi wahi rule: pehla key root, chhote left, bade right.",
+    "Left subtree: root 20, left 10, right part {30, 25, 35} ka root 30. Ab L R N likho. Trap: preorder ulta karna postorder nahi deta."
+  ],
+  "dsa-bst-08": [
+    "Deletion **predecessor** se hai, successor se nahi. Pehle tree banao, phir 45 ke left subtree ka largest key dhoondo.",
+    "Predecessor = left subtree mein right-right jaate raho: 20 → 35 → 40. Wo node root mein copy hota hai, phir purani jagah se hatta hai.",
+    "Purane 40 node ka ek child hai (38). One-child delete mein child ko us node ke parent se jod dete hain — 40 ka parent kaun tha? Trap: successor 60 mat lena."
+  ],
+  "dsa-hash-probing-06": [
+    "50 table mein nahi hai, to search tab tak chalegi jab tak **pehla khaali slot** na mile — sirf home slot dekh ke mat ruko.",
+    "Pehle table bharo: har key ka $k \\bmod 8$, bhara ho to agla slot (mod 8). Phir 50 ka home $50 \\bmod 8 = 2$ se aage chalo.",
+    "19 → 3, 27 → 4, 11 → 5, 34 → 2 — ab 42 aur 3 kahan jaate hain? Phir slot 2 se gino. Trap: end ke baad wrap karke slot 0 dekho, aur khaali slot bhi gino."
+  ],
+  "dsa-hash-probing-07": [
+    "Saari keys ka home 10 hai aur table 6/11 bhari hai — load factor 1/2 se zyada. Quadratic probing kaun se slots tak pahunch sakti hai, ye socho.",
+    "Offsets $i^2 \\bmod 11$ nikaalo $i = 0$ se 10 tak, aur $(10 + i^2) \\bmod 11$ se slots ki list banao. Kitne alag slots aate hain?",
+    "$i = 0, 1, 2, 3$: slots 10, 0, 3, 8. Pehli 6 keys kin slots mein gayi, wo bhi isi sequence se. Trap: linear probing (10, 0, 1) mat chalao."
+  ],
+  "dsa-hash-probing-08": [
+    "Final table se ulta socho: jo key apne home slot mein nahi hai, uske home se lekar uske slot tak ke saare slots usse pehle bhar chuke the.",
+    "Homes: 41, 31 → 1; 22, 52 → 2; 13 → 3; 26 → 6. 31 slot 3 mein hai → slots 1, 2 pehle bhare the. 13 slot 4 mein → slot 3 pehle bhara tha.",
+    "Isse order constraints likho (jaise 22 pehle aaye 31 se). Har option ko simulate karo: pehle option mein 22 → 2, 41 → 1, 31 → ? Trap: sirf homes match karna kaafi nahi."
+  ],
+  "dsa-hash-chaining-07": [
+    "Chaining, **successful** search, uniform hashing — pehle load factor nikaalo. Successful aur unsuccessful ke formulas alag hain.",
+    "$\\alpha = n/m = 1500/600$. Successful ≈ $1 + \\alpha/2$: ek comparison key ke liye, plus chain ki aadhi doosri keys.",
+    "$\\alpha = 2.5$. Ab $1 + \\alpha/2$ daalo. Trap: sirf $\\alpha$ (wo unsuccessful hai) ya $1 + \\alpha$ mat lena."
+  ],
+  "dsa-hash-chaining-08": [
+    "Nayi key chain ke **head** pe jaati hai — to jo key pehle aayi, wo chain mein sabse peeche chali jaati hai.",
+    "Har key ka $k \\bmod 7$ nikaalo, phir har chain ko arrival ke ulte order mein likho. Chain mein k-th position = k comparisons.",
+    "10, 3, 24, 17, 31 sab slot 3 mein; 9, 2, 16 slot 2 mein. Slot 3 ki chain head se likho. Trap: end-insertion wala order mat lena."
+  ],
+  "dsa-sort-passes-07": [
+    "Bubble sort ka har pass left se right adjacent pairs swap karta hai — sabse bada element end tak bubble ho jaata hai. Yahan 2 passes chahiye.",
+    "Pass 1 mein j = 0…5 tak compare karo, pass 2 mein j = 0…4 tak (last slot fix ho chuka). Har compare ke baad array update karo.",
+    "Pass 1: 15>4 swap, 15<23, 23>8 swap, 23>16 swap … end mein 42 last pe. Ab pass 2 chalao. Trap: chhota 1 ek pass mein sirf ek slot left jaata hai."
+  ],
+  "dsa-sort-passes-08": [
+    "Insertion sort ke 4 passes ke baad sirf pehle 5 elements aapas mein sorted hote hain; baaki (27, 11) bilkul nahi chhue jaate.",
+    "Pass i, a[i] ko sorted prefix a[0..i-1] mein daalta hai. Pass 1: 8, pass 2: 35, pass 3: 14, pass 4: 2.",
+    "Pass 1 ke baad [8, 21, 35, …]; pass 2 mein 35 hilta nahi. Ab 14 aur 2 insert karo. Trap: while loop tab tak shift karta hai jab tak a[j] > key."
+  ],
+  "dsa-sort-passes-09": [
+    "Selection sort ka har pass ek swap line chalata hai — chahe wo self-swap ho (element pehle se sahi jagah). Self-swap bhi ek pass hai.",
+    "Pass i: a[i:] ka minimum dhoondo aur a[i] se swap karo. 3 passes = i = 0, 1, 2. Position 4 (1-based) = index 3.",
+    "Pass 1: min 9, 47 se swap → [9, 22, 13, 58, 31, 47, 40, 26]. Ab pass 2 aur 3 karo. Trap: pass 3 self-swap ho to bhi use gino, extra pass mat chalao."
+  ],
+  "dsa-sort-passes-10": [
+    "Input diya hi nahi — 'kisi input pe possible hai?' poocha hai. To har algorithm ka 2 passes ke baad ka **invariant** socho.",
+    "Bubble: k passes ke baad k sabse bade keys end pe sorted. Selection: k sabse chhote front pe. Insertion: pehle k + 1 elements aapas mein sorted.",
+    "k = 2: bubble array 5, 6 pe khatam hona chahiye; selection 1, 2 se shuru. Ab har option ko apne algorithm ke invariant se milao. Trap: 'almost sorted' dikhna kaafi nahi."
+  ],
+  "dsa-sort-passes-11": [
+    "4 passes ke baad pehle 5 elements (33, 18, 40, 25, 7) aapas mein sorted honge — baaki untouched. 33 kahan baithta hai?",
+    "Pass by pass chalao: pass 1 mein 18, pass 2 mein 40, pass 3 mein 25, pass 4 mein 7 insert hota hai.",
+    "Pass 1: [18, 33, 40, …]. Pass 2 mein 40 nahi hilta. Ab pass 3 aur 4 karo aur 33 ki 1-based position gino. Trap: pass 4 (7 ka insert) mat chhodo."
+  ],
+  "dsa-sort-passes-12": [
+    "Test ulta hai: swap jab a[j] < a[j+1]. Is se har pass mein sabse **chhota** element end tak jaata hai, sabse bada nahi.",
+    "Pass 1 mein j = 0…4, pass 2 mein j = 0…3. Har pair pe check karo: left wala chhota hai to swap.",
+    "Pass 1: 12<37 swap → [37, 12, 5, …]; 12<5 nahi; 5<29 swap … end mein 5 last pe. Ab pass 2 chalao. Trap: ascending test (>) mat lagao."
+  ],
+  "dsa-sort-swaps-07": [
+    "Adjacent swaps ka minimum = array ke **inversions** ki ginti, kyunki har adjacent swap theek ek inversion hatata hai.",
+    "Inversion = pair (i < j) jahan a[i] > a[j]. Har element ke liye gino: uske baad kitne chhote elements hain, phir sab jodo.",
+    "10 ke baad chhote: 3, 8, 1, 6, 2 → 5. 3 ke baad chhote: 1, 2 → 2. Ab 8, 1, 6, 12 ke liye gino. Trap: sirf adjacent descents (10>3 jaise) mat gino."
+  ],
+  "dsa-sort-swaps-08": [
+    "Selection sort input pe depend nahi karta — sorted array pe bhi har pass poora unsorted part scan karta hai. Aur swap line pe koi if nahi hai.",
+    "Comparisons $= (n-1) + (n-2) + \\dots + 1$ with $n = 10$. Swap line har outer iteration mein ek baar: i = 0 … n − 2.",
+    "Pass i = 0 mein 9 comparisons, i = 1 mein 8 … ye sum karo. Trap: insertion sort ki tarah sorted input pe 'kam kaam' mat maano."
+  ],
+  "dsa-sort-swaps-09": [
+    "Repeated keys hain aur test strict `a[j] > key` hai — barabar key pe loop ruk jaata hai. Har pass ke comparisons alag se gino.",
+    "Har pass: comparisons = shifts + 1, agar key index 0 se pehle ruki (ek failed test); agar key front tak gayi to sirf shifts.",
+    "i = 1, key 2: 4 > 2 shift, phir j = −1 → 1 comparison. i = 2, key 4: 4 > 4 false → 1. Ab i = 3, 4, 5 karo. Trap: 2 > 2 ko true mat maano."
+  ],
+  "dsa-sort-swaps-10": [
+    "Do alag counts: bubble ke saare swaps, aur selection ke sirf **asli** exchanges (m != i). Self-swaps nahi gine jaate.",
+    "Bubble swaps = inversions. Selection: har pass mein dekho minimum pehle se apni jagah pe hai ya nahi.",
+    "6 ke saath inversions: 6 > 2, 3, 4, 5, 1. Ab 1 ke saath baaki pairs gino. Selection pass 1: min 1 index 5 pe, 6 se swap — uske baad array kaisa hai?"
+  ],
+  "dsa-sort-swaps-11": [
+    "Har statement ek alag count claim karta hai — har ek ko is array pe khud nikaalo: inversions, insertion comparisons, selection ke real swaps, bubble passes.",
+    "Bubble swaps = inversions. Insertion comparisons = shifts + (passes jo index 0 se pehle ruke). Early-exit bubble mein last no-swap pass bhi ginta hai.",
+    "Inversions: 3 ke baad chhote 1, 2; 7 ke baad 1, 2, 6 … jodo. Selection pass 1: [1, 7, 3, 8, 2, 6]; aage chalao. Trap: self-swaps ko real exchange mat gino."
+  ],
+  "dsa-sort-swaps-12": [
+    "Pehle 5 keys ulte hain, baaki 5 pehle se sahi jagah pe. Har inserted key ke comparisons alag gino — shifts aur failed test dono.",
+    "Key front tak jaaye to comparisons = shifts. Key kisi chhote element pe ruke to comparisons = shifts + 1.",
+    "Keys 4, 3, 2, 1 front tak jaate hain: 1, 2, 3, 4 comparisons. Ab 6 se 10 tak socho — har ek kitne? Trap: inversions + (n − 1) wala formula yahan galat hai."
+  ],
+  "dsa-sort-props-07": [
+    "Sawaal exchanges ka hai, comparisons ka nahi — worst case mein kaun sa sort elements ko sabse kam baar hilata hai?",
+    "Insertion shifts aur bubble swaps dono = inversions. Selection har pass mein sirf ek swap karta hai.",
+    "Reversed input pe inversions $n(n-1)/2$ hote hain — bubble aur insertion pe iska kya asar? Selection ke kitne passes hain? Trap: early-exit flag swaps kam nahi karta."
+  ],
+  "dsa-sort-props-08": [
+    "Test `>=` hai, `>` nahi — barabar keys wale neighbours bhi swap honge. Tags (a, b, c, d) track karte raho.",
+    "3 passes: pass 1 mein j = 0, 1, 2; pass 2 mein j = 0, 1; pass 3 mein j = 0. Har compare pe sirf key dekho, tag nahi.",
+    "Pass 1: (2,a) ≥ (1,b) swap → (1,b), (2,a), …; ab (2,a) vs (2,c): 2 ≥ 2 true. Aage chalao. Trap: pass 3 mat bhoolo — wahan (1,b) aur (1,d) milte hain."
+  ],
+  "dsa-sort-props-09": [
+    "Har element apni sorted jagah se max k door hai. Har statement ko socho: kya ye input pe depend karta hai, aur kitna?",
+    "Insertion = Θ(n + inversions). Early-exit bubble passes = (max leftward distance) + 1. Selection hamesha $n(n-1)/2$ comparisons.",
+    "Inverted pair (i < j) ke liye $j - i < 2k$ — to har element ke inversions 2k se kam. Shifts wale statement ke liye [2, 1, 4, 3, …] jaisa 1-sorted array try karo."
+  ],
+  "dsa-sort-props-10": [
+    "Early-exit flag: jis pass mein koi swap nahi, wahan loop rukta hai — aur wo pass bhi ginta hai.",
+    "Passes = (kisi bhi element ki max leftward distance) + 1. Har element ki current index aur sorted index ka farak dekho.",
+    "3 index 5 pe hai, sorted mein index 2 pe chahiye → 3 slots left. Baaki chhote keys (1, 2, 5) ke liye bhi nikaalo. Trap: last no-swap pass mat chhodo."
+  ],
+  "dsa-sort-props-11": [
+    "Do alag cost measures: insertion sort inversions pe chalta hai, early-exit bubble passes pe — aur chhote keys bubble mein sirf ek slot per pass left jaate hain.",
+    "Insertion = Θ(n + inversions). Bubble passes = max leftward distance + 1. Har option ke liye dono nikaalo.",
+    "Largest-first input: n pass 1 mein hi end tak chala jaata hai — koi key kitna left jaati hai? Ab smallest-last se compare karo. Trap: reversed input pe insertion bhi Θ(n²)."
+  ],
+  "dsa-sort-props-12": [
+    "Early-exit flag **nahi** hai — to sorted array pe bhi har pass poora chalega. Sawaal comparisons ka hai, swaps ka nahi.",
+    "Pass p mein comparisons $= n - p$, p = 1 … n − 1, with n = 10. Sabko jodo.",
+    "Pass 1: 9 comparisons, pass 2: 8 … aakhri pass: 1. Ye series jodo. Trap: '1 pass mein pata chal gaya sorted hai' sirf flag wale version mein hota hai."
+  ]
+}

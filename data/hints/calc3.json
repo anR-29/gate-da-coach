@@ -1,0 +1,112 @@
+{
+ "calc-extrema-06": [
+  "'Local maximum **value**' poochha hai — location $x$ nahi, $f$ ki value chahiye. Pehle critical points nikalo.",
+  "$f'(x)=6x^2-6x-12=6(x-2)(x+1)$, to critical points $x=-1$ aur $x=2$. Classify karne ke liye $f''(x)=12x-6$.",
+  "$f''(-1)=-18<0$, to $x=-1$ pe max hai. Ab $f(-1)$ calculate karo. Trap: sirf $x=-1$ likh dena, ya $f(2)$ le lena (wo min hai)."
+ ],
+ "calc-extrema-07": [
+  "Domain sirf $x>0$ hai — jo critical point domain ke bahar ho use ignore karo. Value poochhi hai, location nahi.",
+  "$f'(x)=1-\\dfrac{4}{x^2}$. Dhyan: $\\frac{d}{dx}\\frac{4}{x}=-\\frac{4}{x^2}$ hota hai, $-\\frac4x$ nahi.",
+  "$f'=0$ se $x^2=4$, $x=\\pm2$; domain me sirf $x=2$ bachta hai. Ab $f(2)$ nikalo. Trap: $x=2$ ko hi answer maan lena."
+ ],
+ "calc-extrema-08": [
+  "Closed interval $[0,5]$ hai: absolute max/min ke liye endpoints bhi candidates hain. Har option alag se check karo.",
+  "$f'(x)=3(x-1)(x-3)$, $f''(x)=6x-12$. Candidates: $x=0,1,3,5$. Inflection wahan hota hai jahan $f''$ ka sign badle.",
+  "$f(1)=5$ aur $f(0)=1$. Ab $f(3)$ aur $f(5)$ nikalo aur charon compare karo. Trap: endpoint $x=5$ bhool jaana."
+ ],
+ "calc-extrema-09": [
+  "Closed interval $[-1,3]$: interval ke andar wale critical points aur dono endpoints — sab candidates hain.",
+  "$f'(x)=4x(x-2)(x+2)$. $x=-2$ interval ke bahar hai, to candidates $x=-1,0,2,3$.",
+  "$f(-1)=-2$, $f(0)=5$, $f(2)=-11$. Ab $f(3)$ nikalo aur compare karo. Trap: sirf critical points dekh kar ruk jaana."
+ ],
+ "calc-extrema-10": [
+  "$x^{2/3}$ wala function hai — $x=0$ pe $f'$ exist nahi karta. Critical points me $f'$-undefined wale points bhi aate hain.",
+  "$f=x^{5/3}-5x^{2/3}$, to $f'=\\dfrac{5(x-2)}{3x^{1/3}}$. Critical points: $x=2$ aur $x=0$.",
+  "Sign check: $x=-1$ pe $f'=\\frac{5(-3)}{3(-1)}=5>0$. Ab $(0,2)$ aur $x>2$ me sign dekho. Trap: $x=0$ ko critical point na maanna."
+ ],
+ "calc-convexity-05": [
+  "Convexity ka test second derivative se hota hai — $f'$ se nahi. Dekho $f''$ kahan non-negative hai.",
+  "$f''(x)=6x-6$. Rule: convex $\\iff f''(x)\\ge0$.",
+  "Inequality $6x-6\\ge0$ solve karo. Trap: inequality ulti lena — $f''\\le0$ concave region deta hai."
+ ],
+ "calc-convexity-06": [
+  "Concave matlab $f''\\le0$. Interval $[p,q]$ ke endpoints $f''$ ke roots honge.",
+  "$f''(x)=12x^2-36x+24=12(x^2-3x+2)$.",
+  "$x^2-3x+2$ factor karo aur dekho kin do roots ke beech ye negative hai. Trap: $f'=0$ solve kar dena."
+ ],
+ "calc-convexity-07": [
+  "Interval $(0,\\infty)$ hai, poora $\\mathbb R$ nahi. Har function ka $f''$ sirf $x>0$ pe check karo.",
+  "Convex $\\iff f''(x)\\ge0$ har $x>0$ pe. Example: $(-\\ln x)'=-1/x$, to $(-\\ln x)''=1/x^2$.",
+  "$(x^2-x^3)''=2-6x$, jo $x=1$ pe $-4$ hai. Ab $\\sqrt x$ aur $1/x$ ka $f''$ khud nikalo. Trap: sign galat padhna."
+ ],
+ "calc-convexity-08": [
+  "$f''$ factored form me diya hai. Convex = $f''\\ge0$; inflection = jahan $f''$ ka **sign badle** — sirf zero hona kaafi nahi.",
+  "$(x-1)^2$ hamesha $\\ge0$ hai, isliye $f''$ ka sign $(x-4)$ ke sign jaisa hai (bas $x=1$ pe zero).",
+  "$f''(0)=-4$ aur $f''(2)=-2$. To kya $x=1$ pe sign badla? Ab $x>4$ check karo. Trap: har zero ko inflection maan lena."
+ ],
+ "calc-convexity-09": [
+  "'Convex on all of $\\mathbb R$' ka matlab $f''(x)\\ge0$ har $x$ pe — to $f''$ ka **minimum** dekhna hai.",
+  "$f''(x)=e^x+e^{-x}+2a$. AM–GM se $e^x+e^{-x}\\ge2$, equality $x=0$ pe.",
+  "Sabse chhota $f''$ hai $f''(0)=1+1+2a$. Ise $\\ge0$ rakh kar $a$ ke liye solve karo. Trap: $(ax^2)''=a$ likh dena — wo $2a$ hai."
+ ],
+ "calc-convexity-10": [
+  "Convex + differentiable: graph hamesha apni tangent line ke **upar** rehta hai. $x=1$ pe tangent socho.",
+  "Tangent at $1$: $y=3+2(x-1)$. Convexity se $f(x)\\ge3+2(x-1)$ har $x$ ke liye.",
+  "$x=3$ daalo: bound $3+2\\cdot2$. Ab $x=0$ khud karo. D ke liye socho: kya koi linear function ye data satisfy karta hai? Trap: inequality ulti lena."
+ ],
+ "calc-opt-word-05": [
+  "Constraint $xy=64$ se ek variable hatao, phir objective $x+4y$ ko ek hi variable me likho. Value poochhi hai.",
+  "$y=64/x$, to $S(x)=x+\\dfrac{256}{x}$ ($x>0$), aur $S'(x)=1-\\dfrac{256}{x^2}$.",
+  "$S'=0$ se $x^2=256$, $x=16$, aur $y=64/16=4$. Ab $S$ nikalo. Trap: symmetry se $x=y=8$ le lena."
+ ],
+ "calc-opt-word-06": [
+  "Volume fixed hai, surface area minimise karna hai. Volume se $h$ ko $r$ me likho; dono ends (top + bottom) gino.",
+  "$h=128/r^2$, aur $S(r)=2\\pi r^2+2\\pi rh=2\\pi r^2+\\dfrac{256\\pi}{r}$.",
+  "$S'(r)=4\\pi r-\\dfrac{256\\pi}{r^2}=0$ se $r^3=64$, $r=4$, $h=8$. Ab $S$ nikalo aur $\\pi$ se divide karo. Trap: ek hi end ginna."
+ ],
+ "calc-opt-word-07": [
+  "Line ka har point $(x,2x)$ hai. Distance ka square minimise karna aasaan hai — last me square root lena mat bhoolna.",
+  "$D(x)=(x-5)^2+(2x)^2$, aur $D'(x)=2(x-5)+8x$.",
+  "$D'=0$ se $10x=10$, $x=1$, point $(1,2)$. Ab $D(1)$ nikalo aur uska root lo. Trap: $D$ ko hi distance bol dena."
+ ],
+ "calc-opt-word-08": [
+  "Closed interval $[0,20]$ aur **maximum** chahiye. Critical point minimum bhi ho sakta hai — endpoints zaroor check karo.",
+  "Square ki side $x/4$, circle ka radius $\\frac{20-x}{2\\pi}$: $A(x)=\\dfrac{x^2}{16}+\\dfrac{(20-x)^2}{4\\pi}$.",
+  "$A'(x)=0$ se $x=\\dfrac{80}{\\pi+4}$, par wahan $A''>0$ — to ye max hai ya min? Ab $A(0)$ aur $A(20)$ compare karo. Trap: critical point ko hi answer maan lena."
+ ],
+ "calc-opt-word-09": [
+  "Wall wali side pe fence nahi lagegi — sirf teen sides. Area fixed hai, fence ki length minimise karni hai.",
+  "Wall ke perpendicular do sides $x$, parallel side $y$: $xy=50$, fence $F(x)=2x+\\dfrac{50}{x}$.",
+  "$F'(x)=2-\\dfrac{50}{x^2}=0$ se $x^2=25$, $x=5$, aur $y=10$. Ab $F$ nikalo. Trap: chaaron sides fence karna ya square maan lena."
+ ],
+ "calc-opt-word-10": [
+  "Volume fixed hai, material minimise karna hai. $h$ ko $x$ me likh kar $S$ ko ek variable ka function banao. Har option alag check karo.",
+  "$x^2h=32\\Rightarrow h=32/x^2$, to $S(x)=x^2+\\dfrac{128}{x}$.",
+  "$S'(x)=2x-\\dfrac{128}{x^2}=0$ se $x^3=64$. Ab $x$, $h$, $S$ nikalo aur $S''$ ka sign dekho. Trap: closed box wala cube result yahan lagana."
+ ],
+ "calc-gradient-descent-06": [
+  "Ek step ka update chahiye. $x_0=2$ pe gradient (derivative) chahiye — function ki value nahi.",
+  "$f'(x)=4x^3-4x$. Update: $x_1=x_0-\\eta f'(x_0)=2-0.05\\,f'(2)$.",
+  "$f'(2)=4\\cdot2^3-4\\cdot2$ calculate karo, phir $0.05$ se multiply karke 2 me se **ghatao**. Trap: $-4x$ wala term chhodna ya step add kar dena."
+ ],
+ "calc-gradient-descent-07": [
+  "Do variables hain — har coordinate ka apna partial derivative, aur dono ko ek saath update karna hai.",
+  "$\\partial f/\\partial x=2(x-1)$, $\\partial f/\\partial y=2\\cdot2(y+1)=4(y+1)$. Update: $(x,y)-0.25\\,\\nabla f$.",
+  "$(0,0)$ pe $\\partial f/\\partial x=-2$. $\\partial f/\\partial y$ khud nikalo, phir $0.25$ guna gradient **ghatao**. Trap: gradient add kar dena."
+ ],
+ "calc-gradient-descent-08": [
+  "$f$ quadratic hai, to har GD step $x$ ko ek constant factor se multiply karta hai. Pehle wo factor nikalo.",
+  "$f'(x)=6x$, to $x_{k+1}=x_k-\\eta\\cdot6x_k=(1-6\\eta)x_k$. Convergence ke liye $|1-6\\eta|<1$.",
+  "$|1-6\\eta|<1$ ka matlab $-1<1-6\\eta<1$. Dono inequalities alag se solve karo. Trap: sirf $1-6\\eta>0$ (no oscillation) le lena."
+ ],
+ "calc-gradient-descent-09": [
+  "Har option me alag $\\eta$ hai. Ek general formula banao jo bataye ki har step me $x_k-2$ kitna scale hota hai.",
+  "$f'(x)=2(x-2)$, isliye $x_{k+1}-2=(1-2\\eta)(x_k-2)$. Factor ka absolute value $<1$ ho to convergence.",
+  "Pehla option: $f'(0)=-4$, to $x_1=0-0.5\\cdot(-4)$. Baaki options ke liye factor $1-2\\eta$ har $\\eta$ pe nikalo. Trap: overshoot ko divergence samajhna."
+ ],
+ "calc-gradient-descent-10": [
+  "Loss do samples ka average hai. Gradient me dono samples ka hissa jodo — chain rule se har term me factor $x_i$ aata hai.",
+  "$L'(w)=\\frac12\\sum 2(wx_i-y_i)\\,x_i=\\sum(wx_i-y_i)\\,x_i$. Update: $w_1=w_0-0.1\\,L'(w_0)$.",
+  "$w=1$ pe sample 1 ka term: $(1\\cdot1-2)\\cdot1=-1$. Sample 2 ka term khud nikalo, jodo, phir update karo. Trap: factor $x_i$ ya 2 bhool jaana."
+ ]
+}

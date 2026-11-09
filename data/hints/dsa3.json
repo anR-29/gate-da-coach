@@ -1,0 +1,207 @@
+{
+  "dsa-stack-trace-07": [
+    "Yahan do alag operations hain: `pop()` top hatata hai, `peek()` sirf top print karta hai — stack nahi badalta. Answer bottom → top maanga hai.",
+    "Har operation ke baad stack bottom → top likho, jaise [A, B]. peek pe value print karo par list same rakho; pop pe rightmost hatao.",
+    "push A, push B → [A, B]; peek prints B, stack ab bhi [A, B]. Ab push C aur do pops chalao. Trap: peek ko pop mat samjho."
+  ],
+  "dsa-stack-trace-08": [
+    "Value nahi, stack ka sabse bada size poocha hai. Operator aate hi do values nikalti hain aur ek wapas jaati hai — size 1 kam hota hai.",
+    "Operand → size + 1, operator → size − 1. Har token ke baad size likho: 8, 2, 5, *, +, 1, 3, 2, *, +, 4, -, /.",
+    "Pehle paanch tokens: 1, 2, 3, 2, 1. Ab 1, 3, 2 aate hain — size kahan tak jaata hai? Trap: saare 7 operands ek saath stack pe mat maano."
+  ],
+  "dsa-stack-trace-09": [
+    "Teen cheezein decide karti hain: precedence (^ > * > + −), `-` aur `+` left-associative, aur `^` right-associative. Dhyan do dono `^` pe.",
+    "Rule: aane wala operator stack ke top ko pop karta hai agar top ki precedence zyada ho, ya barabar ho aur operator left-associative ho. `^` ke liye barabar pe pop nahi.",
+    "a → out, `-` → stack, b → out. Ab `+` aaya: `-` barabar precedence, left-assoc → pop. Out `a b -`. Ab c, `*`, d, `^` … continue karo. Trap: doosre `^` pe pehla `^` pop mat karo."
+  ],
+  "dsa-stack-trace-10": [
+    "'Must be true' poocha hai — har valid sequence me sach hona chahiye. Pehle dekho 4 print hone ke waqt stack me kya pada hai.",
+    "4 pehle print = 1, 2, 3, 4 push, 4 pop → stack [1, 2, 3], 3 top pe. Stack wali values ulte order me hi niklengi; 5, 6 abhi bhi push ho sakte hain.",
+    "Har statement ke liye ek counter-example dhoondo: jaise 4 3 2 1 5 6 ya 4 5 3 2 1 6. Jo kisi ek se toot jaaye wo 'must' nahi. Trap: 'ho sakta hai' ko 'hona hi chahiye' mat padho."
+  ],
+  "dsa-stack-trace-11": [
+    "Sequence 3 se shuru hai, to 3 print karte waqt 1 aur 2 stack me hain aur 4, 5 abhi aane baaki hain. Ab sirf baaki chaar ka order gino.",
+    "Condition: 2 hamesha 1 se pehle (stack). 4 aur 5 ko beech me kahin bhi push-pop kar sakte ho, par agar 4 aur 5 dono stack me hon to 5 (upar) pehle niklega.",
+    "Case 2 pehle nikla: baaki 1 (stack me), 4, 5 — inke valid orders likho (jaise 1 4 5). Phir case 4 pehle, case 5 pehle. Trap: 4! sab orders mat gino."
+  ],
+  "dsa-stack-trace-12": [
+    "Function pehli galti ka index return karta hai. String me har bracket type ki ginti barabar hai, par order bhi match hona chahiye.",
+    "Opener → push; closer → pop karo aur check karo ki pop hua opener iska jodi hai. `enumerate` index 0 se gin-ta hai.",
+    "`{[()()]}` indices 0–7 pe hai aur stack khaali chhodta hai. Ab index 8 `(` aur 9 `[` push karo; agla character kya pop karega? Trap: index 1 se mat gino."
+  ],
+  "dsa-queue-deque-06": [
+    "front = 6 aur rear = 3: rear front se chhota hai, matlab queue array ke end se wrap hoke shuru me aa gayi hai.",
+    "Count $=(\\text{rear}-\\text{front}) \\bmod 8$. rear next free slot hai, to wo khud count me nahi aata.",
+    "$3-6=-3$ negative hai, to mod 8 lo. Ya seedha gino: slots 6, 7, phir 0 se kahan tak? Trap: $|3-6|$ ya slot 3 ko gin lena."
+  ],
+  "dsa-queue-deque-07": [
+    "Ek slot hamesha khaali rakha jaata hai taaki full aur empty alag dikhein. Empty ka test pehle yaad karo, full usse alag hoga.",
+    "Empty: front == rear. Har enqueue: rear = (rear + 1) % n. Full tab jab ek aur enqueue rear ko front pe pahuncha de.",
+    "Chhota case lo: n = 4, front = 0. 3 enqueues ke baad rear = 3. Ab kaunsa option sach hai? Trap: `rear == n - 1` linear queue ka test hai."
+  ],
+  "dsa-queue-deque-08": [
+    "Count queue operations ka hai — har enqueue aur dequeue, moves bhi. Ek element Q1 se Q2 le jaana = 1 dequeue + 1 enqueue.",
+    "push(x) ka cost = 1 + 2·(Q1 ka size). pop = 1 dequeue. Har step pe Q1 ka size likho.",
+    "push(1): 1 op, Q1 size 1. push(2): 1 + 2·1 = 3, size 2. push(3): 1 + 2·2. Ab pop ke baad size kya hai? Trap: move ko 1 op mat gino."
+  ],
+  "dsa-queue-deque-09": [
+    "Code ke teen loops hain: pehle k = 4 elements stack me, phir stack se rear pe, phir kuch elements front se rear pe. Teeno chalao.",
+    "Stack ulta order deta hai (LIFO). Teesra loop `len(q) - k` baar chalta hai; us waqt len(q) = 6.",
+    "Pehla loop: st = [10, 20, 30, 40], q = [50, 60]. Ab `st.pop()` se rear pe daalo — q kya banti hai? Trap: aakhri rotation loop mat chhodo."
+  ],
+  "dsa-queue-deque-10": [
+    "Input-restricted: daalna sirf rear pe, nikaalna dono ends se. Impossible wala dhoondna hai — jahan agla value beech me phansa ho.",
+    "Har sequence ke liye simulate karo: agla printed value kisi end pe nahi hai to aur insert karo; agar wo andar dabbi hai to impossible.",
+    "Option A (4 1 3 2): 4 ke liye deque 1 2 3 4, rear se 4 hatao → 1 2 3. Ab 1 kis end pe hai? Baaki options bhi aise check karo. Trap: input aur output restricted ko mat badlo."
+  ],
+  "dsa-queue-deque-11": [
+    "Har round me do values rear pe jaati hain, teesri discard hoti hai. Ye tab tak jab tak ek value na bache — wahi poocha hai.",
+    "Queue front → rear likho. Round: 2 baar (front nikaalo, rear pe daalo), phir front discard. Discarded values ki list bhi rakho.",
+    "Round 1: 1, 2 rear pe → 3 discard; queue 4, …, 10, 1, 2. Round 2 me kaun discard hota hai? Aage chalao. Trap: last discarded value bachi hui value nahi hai."
+  ],
+  "dsa-queue-deque-12": [
+    "FIFO queue = ek end pe daalo, doosre end se nikaalo. Har design me dekho: dono ends O(1) me pahunch me hain, aur order FIFO hai?",
+    "Singly list me head hatana O(1), tail ke baad jodna O(1) (tail pointer ho to). Par tail hatane ke liye usse pehle wala node chahiye.",
+    "Circular list me `last.next` kaunsa node hai? Use soch ke option C judge karo. Trap: option D me dono O(1) hain, par order LIFO hai."
+  ],
+  "dsa-linked-list-06": [
+    "slow ek step, fast do step chalta hai. List me 6 nodes hain (even), to do 'middle' hain — loop kis pe rukta hai, wo trace se dekho.",
+    "Har round ke baad (slow, fast) likho. Loop tab tak jab tak `fast` aur `fast.next` dono None na hon.",
+    "Start (3, 3). Round 1: (8, 1). Round 2: slow aur fast kahan? Phir check karo fast.next None hai ya nahi. Trap: pehla middle maan ke ruk jaana."
+  ],
+  "dsa-linked-list-07": [
+    "Har round me `p.next` ek node aage jump karta hai (beech wala node chhoot jaata hai), phir p naye next pe jaata hai.",
+    "Boxes aur arrows banao: 1 → 2 → … → 7. Har round: p ka arrow do aage, phir p ek aage (naye arrow pe).",
+    "p = 1: 1.next = 3, p = 3. Ab p = 3 pe yahi karo, aur dekho p 7 pe pahunch ke kya hota hai. Trap: 7 ko gayab mat maano."
+  ],
+  "dsa-linked-list-08": [
+    "Even values recursive call se pehle print hoti hain, odd values call ke baad. Pehle wali jaate waqt print, baad wali lautte waqt.",
+    "Jaate waqt order: 1, 2, 3, 4, 5. Lautte waqt order ulta: 5, 4, 3, 2, 1. Even ko pehli list se, odd ko doosri se lo.",
+    "Jaate waqt even: 2, 4 print. Ab lautte waqt kaunse odd kis order me aayenge? Trap: odd values ko list order me mat likho."
+  ],
+  "dsa-linked-list-09": [
+    "Condition `cur.val < head.val` hai — aur `head` loop ke andar badalta hai. Har baar current head se compare karo, original 5 se nahi.",
+    "Chhota node mile: use unlink karo aur head ke aage lagao (naya head), cur = prev.next. Warna prev aur cur ek aage.",
+    "head = 5: 8 rukta hai. 2 < 5 → front pe, head = 2. Ab 7 aur 1 ko naye head 2 se compare karo. Trap: 5 se compare karte rehna."
+  ],
+  "dsa-linked-list-10": [
+    "Har option me dekho: operation ke liye kaunsa node chahiye, aur kya wo pointer seedha mil jaata hai ya walk karni padti hai?",
+    "Last node delete karne ke liye uske pehle wala node chahiye (naya tail). Doubly list me `prev` hai; singly me nahi. Circular list me front = `last.next`.",
+    "Option A: `tail.prev` se naya tail turant milta hai. Option B me tail se pehle wala node kaise milega? Baaki do bhi aise judge karo. Trap: tail pointer hone se delete O(1) nahi ho jaata."
+  ],
+  "dsa-linked-list-11": [
+    "Steps ki ginti poochi hai, node ki value nahi. Cycle 4 → … → 10 → 4 hai; dono pointers har step me saath chalte hain.",
+    "Har step ke baad (slow, fast) node values likho. 10 ke baad agla node 4 hai. Tab tak chalao jab tak dono same na hon.",
+    "Step 1: (2, 3), step 2: (3, 5), step 3: (4, 7). Fast 10 ke baad 4 pe wapas aata hai — aage chalao. Trap: meeting node ki value ko steps mat likho."
+  ],
+  "dsa-linked-list-12": [
+    "b pehle k = 3 node aage jaata hai, phir a aur b saath chalte hain jab tak b None na ho. Gap 3 ka bana rehta hai.",
+    "Gap k ho aur b None pe ruke, to a end se k-th node pe hota hai. List me 9 nodes hain; indices 0–8 likho.",
+    "for loop ke baad b index 3 (value 4) pe. Ab b ko None tak kitne moves lagenge? Utne hi a ke. Trap: b ko last node pe rokna (None pe nahi)."
+  ],
+  "dsa-search-06": [
+    "20 array me nahi hai, to function 'found' nahi, loop ke end pe (lo, hi) return karega. Loop `lo <= hi` tak chalta hai.",
+    "Table banao: lo, hi, mid = (lo + hi) // 2, a[mid]. a[mid] < 20 → lo = mid + 1; a[mid] > 20 → hi = mid − 1.",
+    "Row 1: lo = 0, hi = 7, mid = 3, a[3] = 18 < 20 → lo = 4. Ab agli rows chalao jab tak lo > hi na ho. Trap: lo == hi pe ruk jaana."
+  ],
+  "dsa-search-07": [
+    "Ulta sawaal: comparisons ki limit 6 di hai, sabse bada n dhoondna hai. Worst-case formula ko n ke liye solve karo.",
+    "Worst case $=\\lfloor \\log_2 n \\rfloor + 1$. Condition: $\\lfloor \\log_2 n \\rfloor + 1 \\le 6$, yaani $\\lfloor \\log_2 n \\rfloor \\le 5$.",
+    "$\\lfloor \\log_2 n \\rfloor \\le 5$ ka matlab n, $2^6$ se strictly chhota. Ab sabse bada integer lo. Trap: $n = 2^6$ pe floor 6 ho jaata hai."
+  ],
+  "dsa-search-08": [
+    "Key hamesha present hai aur har element barabar likely. Average chahiye — har element ki comparisons jodo aur 15 se divide karo.",
+    "15 = $2^4 - 1$: search tree full hai. Depth d pe $2^{d-1}$ keys hain, aur unhe d comparisons lagte hain.",
+    "Depth 1: 1 key × 1, depth 2: 2 keys × 2. Depth 3 aur 4 ka bhi jodo, phir 15 se bhaag do. Trap: levels 1–4 ka seedha average nahi."
+  ],
+  "dsa-search-09": [
+    "Ye code `lo < hi` aur `hi = len(a)` use karta hai — normal bs se alag. Har statement ko ek chhote array pe trace karke judge karo.",
+    "Invariant: a[0..lo−1] sab < x, a[hi..] sab ≥ x. Loop lo == hi pe rukta hai. Equal element pe `hi = mid` hota hai.",
+    "Option C test: lo = 0, hi = 1, a[0] < x, aur `lo = mid` ho to mid kya banega, aur lo badlega? Option D ke liye a = [3, 5, 8, 12], x = 8 trace karo."
+  ],
+  "dsa-search-10": [
+    "5 ki copies indices 2–5 pe hain. Ye version jo bhi copy pehle probe ho, wahi return karta hai — leftmost guarantee nahi.",
+    "Trace: lo = 0, hi = 15. mid = (lo + hi) // 2; a[mid] > 5 → hi = mid − 1; a[mid] == 5 → return mid.",
+    "Pehla probe: mid = 7, a[7] = 11 > 5 → hi = 6. Ab agla mid nikaalo aur a[mid] dekho. Trap: index 1 se mat gino."
+  ],
+  "dsa-search-11": [
+    "Positions barabar likely nahi hain: probability i ke proportional hai. Pehle probabilities ko normalise karo (sum 1 hona chahiye).",
+    "$P(i) = i / (1 + 2 + \\dots + 10) = i/55$. Position i pe key mile to i comparisons. $E = \\sum_{i=1}^{10} i \\cdot P(i)$.",
+    "$E = \\frac{1}{55}\\sum i^2$. $\\sum_{i=1}^{10} i^2 = \\frac{10 \\cdot 11 \\cdot 21}{6}$ — ye nikaalo, phir 55 se divide. Trap: (n + 1)/2 sirf uniform case me."
+  ],
+  "dsa-search-12": [
+    "Do absent keys: ek sabse chhoti (search hamesha left), ek sabse badi (hamesha right). Floor mid ki wajah se dono sides barabar nahi ho sakti.",
+    "Chhoti key: har probe pe hi = mid − 1. Badi key: har probe pe lo = mid + 1. Har case me probes ki list banao.",
+    "Dono ka pehla probe: mid = (0 + 24) // 2 = 12. Left: hi = 11, agla mid = 5. Right: lo = 13, agla mid? Aage chalao. Trap: dono ko worst case 5 maan lena."
+  ],
+  "dsa-loop-complexity-06": [
+    "Inner `while` me j = 1 se double hota hai jab tak j < n — ye i pe depend nahi karta. Har i ke liye inner count same hai.",
+    "Total = (outer rounds) × (inner rounds). Inner rounds = j ki un values ki ginti jo 20 se chhoti hain: 1, 2, 4, …",
+    "j ki values likho: 1, 2, 4, 8, 16, 32 — kaunsi < 20 hain? Outer `range(20)` kitni baar? Trap: ⌊log₂ 20⌋ = 4 lena."
+  ],
+  "dsa-loop-complexity-07": [
+    "i har baar sirf 1 badhta hai; i² sirf rukne ki condition me hai. Socho: i kahan tak ja sakta hai?",
+    "Condition $i^2 \\le n$ ⇔ $i \\le \\sqrt{n}$. Rounds = i ki values 1, 2, 3, … jo is condition ko satisfy karein.",
+    "n = 100 lo: i = 1 se kahan tak loop chalega? Phir n = 10000 pe. Count n ke saath kaise badhta hai? Trap: i² dekh ke log n ya n² mat bolo."
+  ],
+  "dsa-loop-complexity-08": [
+    "Outer i halve hota hai (64, 32, …), aur inner `range(i, n)` chalta hai — ye n − i baar hai, i baar nahi.",
+    "i ki saari values likho jab tak i > 0. Har pass ka inner count = 64 − i. Phir sab jodo.",
+    "i = 64 → 0 rounds, i = 32 → 32, i = 16 → 48. Baaki i = 8, 4, 2, 1 ke liye nikaalo aur jodo. Trap: `range(i, n)` ko `range(i)` padhna."
+  ],
+  "dsa-loop-complexity-09": [
+    "Yahan i double nahi, square hota hai: i = i · i. Values bahut tez badhti hain — par count n ke saath fir bhi badhta hai.",
+    "i ki values $2^1, 2^2, 2^4, 2^8, \\dots$ — k rounds ke baad $i = 2^{2^k}$. Rukna jab $2^{2^k} \\ge n$.",
+    "Dono taraf $\\log_2$ lo: $2^k \\ge \\log_2 n$. Ab k ke liye ek baar aur log lo. Trap: doubling wala Θ(log n) yahan mat lagao."
+  ],
+  "dsa-loop-complexity-10": [
+    "Har fragment me inner loop ka count i ke function ke roop me likho. Do nested loops hone se hi n² nahi hota.",
+    "`range(a, b, s)` ke values ≈ (b − a)/s. Option B: (i² − 0)/i. Option D me outer i double hota hai.",
+    "Option A: `range(i, i + 10)` me kitne values, aur kya wo i pe depend karta hai? Har option ka total sum aise nikaalo. Trap: shape dekh ke judge karna."
+  ],
+  "dsa-loop-complexity-11": [
+    "Outer loop step 2 se chalta hai, aur 10 pe rukta hai (10 shaamil nahi). Inner `range(i)` exactly i baar.",
+    "Total = Σ i, sirf un i pe jo `range(0, 10, 2)` deta hai.",
+    "i ki values likho: 0, 2, … kahan tak? Phir inka sum lo. Trap: 0 se 9 tak saare i jod dena."
+  ],
+  "dsa-loop-complexity-12": [
+    "Dhyan do: `j = 0` for loop ke bahar hai. j kabhi reset nahi hota, sirf badhta hai.",
+    "Har `c += 1` ke saath `j += 1` hota hai. To total c = j ka total badhna. j maximum kahan tak jaata hai?",
+    "n = 4 pe trace: i = 0 → 0 runs, i = 1 → j 0→1 (1 run), i = 2 → j 1→2. Pattern dekho. Trap: maan lena ki har i pe j 0 se shuru hota hai."
+  ],
+  "dsa-growth-order-06": [
+    "$f_1 = 2^{\\log_2 n}$ dekhne me exponential lagta hai — pehle ise simplify karo. Baaki teen n ki powers (aur ek log) hain.",
+    "Identity: $2^{\\log_2 n} = n$. Log factor kisi bhi power $n^{\\varepsilon}$ se chhota hai, to $\\sqrt{n}\\log n$ ko n se ratio lekar compare karo.",
+    "$\\sqrt{n}\\log_2 n / n = \\log_2 n/\\sqrt{n}$ — ye n badhne par kahan jaata hai? Phir $n, n^{1.5}, n^2$ ko exponent se lagao. Trap: $2^{\\log_2 n}$ ko exponential maanna."
+  ],
+  "dsa-growth-order-07": [
+    "Chaaron bahut bade functions hain; seedha compare mushkil. Har ek ka $\\log_2$ lo — order same rahta hai.",
+    "$\\log_2$: $g_1 \\to 100\\log_2 n$, $g_4 \\to (\\log_2 n)^2$, $g_2 \\to n\\log_2 1.01$, $g_3 \\to \\log_2 n! = \\Theta(n\\log n)$. Ab $L = \\log_2 n$ ke terms me socho.",
+    "$100L$ vs $L^2$: L > 100 hote hi kaun aage? Phir $L^2$ ko $0.0144\\,n$ se compare karo. Trap: chhote n pe $1.01^n$ chhota dikhta hai — asymptotic n → ∞ hai."
+  ],
+  "dsa-growth-order-08": [
+    "$n_0$ aisa chahiye ki uske baad har n pe $2^n \\ge n^3$ ho — sirf pehla n jahan sach ho, wo nahi.",
+    "Table banao: n, $2^n$, $n^3$ for n = 1, 2, 3, … Dekho kahan se inequality lagataar sach rehti hai.",
+    "n = 1: 2 ≥ 1 sach. n = 2: 4 vs 8 — fail. n = 8: 256 vs 512. Aage n = 9, 10 check karo. Trap: n = 1 pe ruk jaana."
+  ],
+  "dsa-growth-order-09": [
+    "Har statement ko rewrite karo: log ka base, $a^{\\log_2 n}$ wali power, factorial vs exponential, aur exponent ke andar constant.",
+    "Rules: $\\log_a n = \\log_b n/\\log_b a$; $a^{\\log_2 n} = n^{\\log_2 a}$; $n! \\ge (n/2)^{n/2}$; $2^{cn} = (2^c)^n$.",
+    "Option B: $4^{\\log_2 n} = n^{\\log_2 4}$ — power kitni? Option D ke liye f = 2n, g = n leke dekho. Trap: exponent ke andar constant ko ignore karna."
+  ],
+  "dsa-growth-order-10": [
+    "Ye Ω wala sawaal hai: $f(n) \\ge c\\,n^2$ har n ≥ 20 pe chahiye. To c ratio $f(n)/n^2$ ke minimum se zyada nahi ho sakta.",
+    "$f(n)/n^2 = 1 - 10/n$. Ye n badhne par badhta hai ya ghatta hai? Minimum range n ≥ 20 ke kis end pe hoga?",
+    "$1 - 10/n$ badhta hai, to minimum n = 20 pe. Ab $10/20$ nikaal ke subtract karo. Trap: limit 1 lena — wo bahut bade n pe hi milta hai."
+  ],
+  "dsa-growth-order-11": [
+    "Dono functions me n common hai. Usse cancel karo — bacha compare: $\\log_2 n$ vs $\\sqrt{n}$.",
+    "f = O(g) agar f/g bounded rahe; g = O(f) agar g/f bounded rahe. $f/g = \\log_2 n/\\sqrt{n}$ ka limit dekho.",
+    "n = $2^{16}$: $\\log_2 n = 16$, $\\sqrt{n} = 256$. n = $2^{36}$ pe ratio kya hai? Ratio kidhar ja raha hai? Trap: dono n se shuru hain to Θ maan lena."
+  ],
+  "dsa-growth-order-12": [
+    "B ka order bada hai, par A ka constant 64 bada hai. Crossover dhoondna hai — sirf powers of 2 pe check karna hai.",
+    "$n^2 > 64\\,n\\log_2 n$ ⇔ $n > 64\\log_2 n$. $n = 2^k$ rakho: condition $2^k > 64k$.",
+    "k = 8: 256 vs 512 — nahi. Ab k = 9 aur aage check karo jab tak $2^k$ aage na nikle. Trap: log factor chhod ke $n > 64$ solve karna."
+  ]
+}

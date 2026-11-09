@@ -1,0 +1,1466 @@
+{
+ "area": "ml",
+ "skills": {},
+ "questions": [
+  {
+   "id": "ml-cluster-kmeans-07",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "k-means++ picks initial centres for the one-dimensional data 1, 4, 6, 9, 13. The first centre chosen is 4. What is the probability that 13 is chosen as the second centre? (Give 2 decimals.)",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.68,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.47,
+     "why": "Weighted by the distance $D(x)$ (9/19) instead of $D(x)^2$.",
+     "trap": "C4"
+    },
+    {
+     "value": 0.25,
+     "why": "Treated the four remaining points as equally likely; k-means++ weights them by $D(x)^2$.",
+     "trap": "C9"
+    },
+    {
+     "value": 1,
+     "why": "Treated k-means++ as 'always take the farthest point'; it samples at random with $D^2$ weights.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. $D(x)^2$ to the chosen centre 4: point 1 → 9, 6 → 4, 9 → 25, 13 → 81 (and 4 itself → 0).\n2. Total weight $= 9 + 4 + 25 + 81 = 119$.\n3. $P(13) = 81/119 \\approx 0.68$."
+  },
+  {
+   "id": "ml-cluster-kmeans-08",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "k-means++ seeding on the one-dimensional data 0, 2, 5, 9, 10 has already chosen the centres 0 and 10. What is the probability that 5 is chosen as the third centre? (Give 2 decimals.)",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 0.83,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 0.23,
+     "why": "Measured every point's distance to the first centre 0 only (25/110); $D(x)$ is the distance to the **nearest** chosen centre.",
+     "trap": "C6"
+    },
+    {
+     "value": 0.63,
+     "why": "Used $D(x)$ instead of $D(x)^2$: 5/(2 + 5 + 1).",
+     "trap": "C4"
+    },
+    {
+     "value": 0.33,
+     "why": "Gave each of the three remaining points the same chance.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. $D(x)$ = distance to the nearest chosen centre: 2 → 2 (from 0), 5 → 5, 9 → 1 (from 10).\n2. $D(x)^2$: 4, 25, 1; total 30.\n3. $P(5) = 25/30 \\approx 0.83$."
+  },
+  {
+   "id": "ml-cluster-kmeans-09",
+   "skill": "ml.cluster-kmeans",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "In a k-means iteration, the assignment step puts the points $(0, 0)$, $(2, 0)$, $(1, 3)$ and $(5, 1)$ into cluster 1. Where does the update step move the centroid $\\mu_1$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(2, 1)$",
+     "correct": true,
+     "why": "Mean of the four points: $(8/4, 4/4)$."
+    },
+    {
+     "text": "$(1.5, 0.5)$",
+     "correct": false,
+     "why": "Took the coordinate-wise median; k-means updates to the mean.",
+     "trap": "C3"
+    },
+    {
+     "text": "$(8, 4)$",
+     "correct": false,
+     "why": "Summed the coordinates but did not divide by the 4 points.",
+     "trap": "C6"
+    },
+    {
+     "text": "$(2.67, 1.33)$",
+     "correct": false,
+     "why": "Left out $(0, 0)$ because it adds nothing to the sums; it still counts in the divisor.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sum of x: $0 + 2 + 1 + 5 = 8$; sum of y: $0 + 0 + 3 + 1 = 4$.\n2. Divide by the 4 points: $\\mu_1 = (2, 1)$."
+  },
+  {
+   "id": "ml-cluster-kmeans-10",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 0, 3, 4, 10, 11, 18. k-means with $k = 2$ starts with $c_1 = 0$, $c_2 = 3$ and runs until the assignments stop changing. What is the final SSE (sum of squared distances to the final centroids)? Give 2 decimals.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 46.67,
+    "tol": 0.02
+   },
+   "traps": [
+    {
+     "value": 146.8,
+     "why": "Stopped after the first iteration: clusters {0} and {3, 4, 10, 11, 18} with centroids 0 and 9.2.",
+     "trap": "C6"
+    },
+    {
+     "value": 38,
+     "why": "Added only the second cluster's SSE.",
+     "trap": "C6"
+    },
+    {
+     "value": 14.67,
+     "why": "Summed plain distances to the centroids instead of squared distances.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. Iter 1: boundary 1.5, so {0} and {3, 4, 10, 11, 18}; update $c_1 = 0$, $c_2 = 46/5 = 9.2$.\n2. Iter 2: boundary 4.6, so {0, 3, 4} and {10, 11, 18}; update $c_1 = 7/3$, $c_2 = 13$.\n3. Iter 3: boundary $\\approx 7.67$, nothing changes. Stop.\n4. SSE: $(49 + 4 + 25)/9 = 78/9$ for cluster 1 and $9 + 4 + 25 = 38$ for cluster 2; total $\\approx 46.67$."
+  },
+  {
+   "id": "ml-cluster-kmeans-11",
+   "skill": "ml.cluster-kmeans",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about the k-means objective $J = \\sum_{j}\\sum_{x \\in C_j} \\lVert x - \\mu_j \\rVert^2$ and Lloyd's algorithm are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "With $k = n$ (one centroid per data point), the minimum possible $J$ is 0.",
+     "correct": true,
+     "why": "Each point can be its own centroid, so every term is 0."
+    },
+    {
+     "text": "For two centroids, the points equidistant from them form the perpendicular bisector of the segment joining them, so the assignment step splits the plane along that line.",
+     "correct": true,
+     "why": "$\\lVert x-\\mu_1\\rVert^2 = \\lVert x-\\mu_2\\rVert^2$ is linear in $x$ after $x^Tx$ cancels: the bisector."
+    },
+    {
+     "text": "If one assignment step changes no point's cluster, a later iteration can still change the clusters.",
+     "correct": false,
+     "why": "Same assignment gives the same means, which give the same assignment again: the algorithm has converged.",
+     "trap": "C9"
+    },
+    {
+     "text": "$J$ adds the plain (unsquared) Euclidean distances of the points to their centroids.",
+     "correct": false,
+     "why": "k-means uses squared distances; summing plain distances is the k-medoids style cost.",
+     "trap": "C4"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $k = n$: every point is a centroid, so $J = 0$.\n2. Expanding $\\lVert x-\\mu_1\\rVert^2 = \\lVert x-\\mu_2\\rVert^2$ gives $2x^T(\\mu_2-\\mu_1) = \\lVert\\mu_2\\rVert^2-\\lVert\\mu_1\\rVert^2$, a line: the perpendicular bisector.\n3. Unchanged assignment ⇒ unchanged means ⇒ unchanged assignment, so Lloyd's algorithm stops.\n4. $J$ uses squared distances."
+  },
+  {
+   "id": "ml-cluster-kmeans-12",
+   "skill": "ml.cluster-kmeans",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "For a data set of 200 points, the optimal k-means SSE is computed for $k = 1, 2, \\dots, 10$. A student proposes: 'choose the $k$ with the smallest SSE'. What is wrong with this rule?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Optimal SSE never increases as $k$ grows (it is 0 at $k = n$), so the rule always picks the largest $k$ tried; one looks for an elbow instead.",
+     "correct": true,
+     "why": "An extra centroid can always copy an old one or sit on a point, so the best SSE cannot rise."
+    },
+    {
+     "text": "Optimal SSE increases with $k$, so the rule always picks $k = 1$.",
+     "correct": false,
+     "why": "Direction reversed: more centroids fit the data at least as well.",
+     "trap": "C11"
+    },
+    {
+     "text": "SSE does not depend on $k$, so every $k$ ties.",
+     "correct": false,
+     "why": "Splitting clusters with more centres lowers the SSE.",
+     "trap": "C8"
+    },
+    {
+     "text": "Nothing is wrong; the smallest SSE always occurs at the true number of clusters.",
+     "correct": false,
+     "why": "SSE keeps falling past the true $k$, so its minimum does not mark the true number of clusters.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Adding a centroid can never make the optimal SSE worse (place it on a point and reassign).\n2. So SSE is smallest at the largest $k$ tried, here $k = 10$, and it is 0 at $k = n$.\n3. Choose the $k$ where the drop in SSE flattens (the elbow), or use another criterion."
+  },
+  {
+   "id": "ml-cluster-kmeans-13",
+   "skill": "ml.cluster-kmeans",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A 2-means clustering ends with cluster 1 = $\\{(1, 1), (3, 1), (2, 4)\\}$ and cluster 2 = $\\{(6, 5), (8, 5)\\}$, each centroid at its cluster mean. What is the SSE of this clustering?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6.83,
+     "why": "Summed plain Euclidean distances ($\\sqrt2 + \\sqrt2 + 2 + 1 + 1$) instead of squared ones.",
+     "trap": "C4"
+    },
+    {
+     "value": 8,
+     "why": "Added only cluster 1's SSE.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Gave only cluster 2's SSE, or divided the total by the 5 points.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Centroids: $(2, 2)$ and $(7, 5)$.\n2. Cluster 1: $(1+1) + (1+1) + (0+4) = 8$.\n3. Cluster 2: $1 + 1 = 2$.\n4. SSE $= 10$."
+  },
+  {
+   "id": "ml-cluster-kmeans-14",
+   "skill": "ml.cluster-kmeans",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data 0, 1, 2, 10, 11, 30 is clustered by k-means with $k = 2$, run to convergence twice: Run A starts from centroids (0, 30), Run B from (0, 1). Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Run A ends with {0, 1, 2, 10, 11} and {30} (SSE 110.8); Run B ends with {0, 1, 2} and {10, 11, 30} (SSE 256). The start decides which local minimum is reached.",
+     "correct": true,
+     "why": "Both traces stop at fixed points with different SSE."
+    },
+    {
+     "text": "Both runs end with the same clusters, because Lloyd's algorithm always converges.",
+     "correct": false,
+     "why": "Converging means stopping somewhere, not at one unique answer; the two fixed points differ.",
+     "trap": "C8"
+    },
+    {
+     "text": "Run B ends with the lower SSE because its clusters are balanced, 3 and 3.",
+     "correct": false,
+     "why": "SSE does not reward equal sizes; {10, 11, 30} alone has SSE 254.",
+     "trap": "C11"
+    },
+    {
+     "text": "Run B stops after one iteration with {0} and {1, 2, 10, 11, 30}.",
+     "correct": false,
+     "why": "That is only the first assignment; with $c_2 = 10.8$ the points 1 and 2 move to $c_1$ in iteration 2.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Run A: boundary 15 gives {0, 1, 2, 10, 11} and {30}; centroids 4.8 and 30; boundary 17.4 changes nothing. SSE $= 110.8$.\n2. Run B: boundary 0.5 gives {0} and the rest, $c_2 = 54/5 = 10.8$; boundary 5.4 moves 1 and 2 to cluster 1.\n3. Centroids 1 and 17, boundary 9: no change. SSE $= 2 + 254 = 256$.\n4. Same data, two different local minima; the start decides."
+  },
+  {
+   "id": "ml-cluster-kmeans-15",
+   "skill": "ml.cluster-kmeans",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "k-means with $k = 2$ runs on the six points in the figure, using squared Euclidean distance and starting with $\\mu_1 = A$, $\\mu_2 = B$ (ringed). Coordinates: $A(1,0)$, $B(6,2)$, $C(3,2)$, $D(3,3)$, $E(7,1)$, $F(2,2)$. Which statements are correct?",
+   "figure": "<svg viewBox=\"0 0 332 186\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M64 156V20M98 156V20M132 156V20M166 156V20M200 156V20M234 156V20M268 156V20M302 156V20M30 122H302M30 88H302M30 54H302M30 20H302\" style=\"stroke:var(--muted)\" stroke-width=\"0.5\"/><path d=\"M30 156H312M30 156V10\"/><circle cx=\"64\" cy=\"156\" r=\"9\" style=\"stroke:var(--mark)\" stroke-width=\"2\"/><circle cx=\"234\" cy=\"88\" r=\"9\" style=\"stroke:var(--mark)\" stroke-width=\"2\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"64\" cy=\"156\" r=\"4\"/><circle cx=\"234\" cy=\"88\" r=\"4\"/><circle cx=\"132\" cy=\"88\" r=\"4\"/><circle cx=\"132\" cy=\"54\" r=\"4\"/><circle cx=\"268\" cy=\"122\" r=\"4\"/><circle cx=\"98\" cy=\"88\" r=\"4\"/><text x=\"70\" y=\"150\">A</text><text x=\"240\" y=\"82\">B</text><text x=\"138\" y=\"82\">C</text><text x=\"138\" y=\"48\">D</text><text x=\"274\" y=\"116\">E</text><text x=\"104\" y=\"82\">F</text><text x=\"26\" y=\"172\">0</text><text x=\"60\" y=\"172\">1</text><text x=\"94\" y=\"172\">2</text><text x=\"128\" y=\"172\">3</text><text x=\"162\" y=\"172\">4</text><text x=\"196\" y=\"172\">5</text><text x=\"230\" y=\"172\">6</text><text x=\"264\" y=\"172\">7</text><text x=\"298\" y=\"172\">8</text><text x=\"14\" y=\"126\">1</text><text x=\"14\" y=\"92\">2</text><text x=\"14\" y=\"58\">3</text><text x=\"14\" y=\"24\">4</text></g></svg>",
+   "options": [
+    {
+     "text": "In the first assignment step, D joins B's cluster.",
+     "correct": true,
+     "why": "$D$ is at squared distance 13 from $A$ and 10 from $B$."
+    },
+    {
+     "text": "After the first update, $\\mu_1 = (2, 4/3)$.",
+     "correct": true,
+     "why": "Cluster 1 is {A, C, F}: mean $(6/3, 4/3)$."
+    },
+    {
+     "text": "In the second assignment step no point changes cluster, so the algorithm stops with $\\mu_2 = (16/3, 2)$.",
+     "correct": false,
+     "why": "D is $34/9 \\approx 3.78$ from the new $\\mu_1$ but $58/9 \\approx 6.44$ from $\\mu_2$, so it switches.",
+     "trap": "C6"
+    },
+    {
+     "text": "In the second assignment step, C switches to cluster 2.",
+     "correct": false,
+     "why": "C is $13/9 \\approx 1.44$ from $\\mu_1$ and $49/9 \\approx 5.44$ from $\\mu_2$; it stays. D is the point that moves.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Squared distances to A / B: C 8 / 9, D 13 / 10, E 37 / 2, F 5 / 16. Clusters {A, C, F} and {B, D, E}.\n2. Update: $\\mu_1 = (2, 4/3)$, $\\mu_2 = (16/3, 2)$.\n3. Iter 2: D is $3.78$ from $\\mu_1$ vs $6.44$ from $\\mu_2$, so D switches; C stays (1.44 vs 5.44).\n4. Update: $\\mu_1 = (9/4, 7/4)$, $\\mu_2 = (13/2, 3/2)$; the next assignment is unchanged."
+  },
+  {
+   "id": "ml-cluster-kmeans-16",
+   "skill": "ml.cluster-kmeans",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 1, 2, 3, 4, 5, 6, 100. k-means with $k = 2$ starts with $c_1 = 1$, $c_2 = 6$ and runs to convergence. What is the final result?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{1, 2, 3, 4, 5, 6} and {100}, centroids 3.5 and 100",
+     "correct": true,
+     "why": "After iteration 1, $c_2 = 28.75$ pushes the boundary to 15.375, so 4, 5, 6 move to cluster 1."
+    },
+    {
+     "text": "{1, 2, 3} and {4, 5, 6, 100}, centroids 2 and 28.75",
+     "correct": false,
+     "why": "Stopped after the first iteration.",
+     "trap": "C6"
+    },
+    {
+     "text": "{1, 2, 3} and {4, 5, 6}, with 100 discarded as an outlier",
+     "correct": false,
+     "why": "k-means never drops points; every point is assigned to some centroid.",
+     "trap": "C9"
+    },
+    {
+     "text": "It does not converge, because the outlier keeps moving $c_2$",
+     "correct": false,
+     "why": "SSE never rises and there are finitely many partitions, so it stops (here after two updates).",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Iter 1: boundary 3.5 gives {1, 2, 3} and {4, 5, 6, 100}; centroids 2 and 28.75.\n2. Iter 2: boundary 15.375 gives {1, …, 6} and {100}; centroids 3.5 and 100.\n3. Iter 3: boundary 51.75, no change. The outlier ends with a cluster of its own."
+  },
+  {
+   "id": "ml-cluster-kmedoids-06",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Five objects are described only by the dissimilarity matrix below (no coordinates). If they form one cluster, which object is its medoid?\n\n| | P | Q | R | S | T |\n|---|---|---|---|---|---|\n| P | 0 | 1 | 4 | 6 | 7 |\n| Q | 1 | 0 | 4 | 5 | 7 |\n| R | 4 | 4 | 0 | 3 | 4 |\n| S | 6 | 5 | 3 | 0 | 2 |\n| T | 7 | 7 | 4 | 2 | 0 |",
+   "figure": null,
+   "options": [
+    {
+     "text": "R",
+     "correct": true,
+     "why": "Row sums: P 18, Q 17, R 15, S 16, T 20; R has the smallest total dissimilarity."
+    },
+    {
+     "text": "P",
+     "correct": false,
+     "why": "P is in the closest pair (P–Q = 1), but the medoid minimizes the total over all objects, not one distance.",
+     "trap": "C10"
+    },
+    {
+     "text": "T",
+     "correct": false,
+     "why": "Added only the entries right of the diagonal, which makes T's row look empty; use the full row.",
+     "trap": "C6"
+    },
+    {
+     "text": "It cannot be found without coordinates.",
+     "correct": false,
+     "why": "A medoid needs only pairwise dissimilarities: sum each row.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Medoid = the object with the smallest total dissimilarity to the others = smallest row sum.\n2. Row sums: P 18, Q 17, R 15, S 16, T 20.\n3. R is the medoid; no coordinates are needed."
+  },
+  {
+   "id": "ml-cluster-kmedoids-07",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A cluster holds the one-dimensional points 5, 6, 9, 13, 42. Its medoid is chosen to minimize the total absolute distance $\\sum |x - m|$. What is that minimum total distance?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 44,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 54,
+     "why": "Measured distances from the mean 15; the medoid must be a data point.",
+     "trap": "C3"
+    },
+    {
+     "value": 9,
+     "why": "Gave the medoid itself instead of its total distance.",
+     "trap": "C6"
+    },
+    {
+     "value": 1130,
+     "why": "Summed squared distances from 9; k-medoids uses plain distances.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. In 1D with absolute distance the medoid is the median point, 9.\n2. Total: $4 + 3 + 0 + 4 + 33 = 44$.\n3. Check: from 6 the total is 47, from 13 it is 48."
+  },
+  {
+   "id": "ml-cluster-kmedoids-08",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 2, 3, 6, 7, 9, 16, 18. k-medoids ($k = 2$, absolute distance) currently has medoids $\\{2, 16\\}$. PAM evaluates every swap of the medoid 2 with a non-medoid point (16 stays). What is the smallest total cost among these swaps?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 19,
+     "why": "Gave the cost of the current medoids {2, 16}, before any swap.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Gave the decrease in cost (19 − 13), not the new cost.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Swapped in 7, the median of all seven points; the new medoid should be central for its own cluster {2, 3, 6, 7, 9}.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Current cost with {2, 16}: $0 + 1 + 4 + 5 + 7 + 0 + 2 = 19$.\n2. Swap 2 with 3, 6, 7, 9, 18: costs 16, 13, 14, 20, 53.\n3. Best: {6, 16} with $4 + 3 + 0 + 1 + 3 + 0 + 2 = 13$, which is below 19, so it is accepted."
+  },
+  {
+   "id": "ml-cluster-kmedoids-09",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional data: 1, 3, 4, 12, 14, 15, 17, 30. k-medoids ($k = 2$, absolute distance) has medoids $\\{3, 30\\}$ with total cost 48. Which single swap does PAM's best-improvement step choose?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Replace 30 by 15; new cost 24",
+     "correct": true,
+     "why": "Medoids {3, 15}: $2 + 0 + 1 + 3 + 1 + 0 + 2 + 15 = 24$, the lowest of all swaps."
+    },
+    {
+     "text": "Replace 30 by 17; new cost 26",
+     "correct": false,
+     "why": "17 is the point nearest the mean 17.6 of {12, 14, 15, 17, 30}; the outlier 30 drags that mean. The median 15 does better.",
+     "trap": "C3"
+    },
+    {
+     "text": "Replace 3 by 12; new cost 38",
+     "correct": false,
+     "why": "A real improvement, but smaller; moving the badly placed medoid 30 saves more.",
+     "trap": "C6"
+    },
+    {
+     "text": "No swap lowers the cost, so PAM stops",
+     "correct": false,
+     "why": "Several swaps beat 48; for example 30 → 15 gives 24.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Current: $2 + 0 + 1 + 9 + 11 + 12 + 13 + 0 = 48$.\n2. Swaps of 30 with 12, 14, 15, 17 give 31, 25, 24, 26.\n3. The best swap of 3 (with 12) gives 38.\n4. Lowest overall: replace 30 by 15, cost 24."
+  },
+  {
+   "id": "ml-cluster-kmedoids-10",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about k-medoids are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "For one-dimensional data with absolute distance, the medoid of a cluster with an odd number of points is its median point.",
+     "correct": true,
+     "why": "The median minimizes $\\sum |x - m|$ and is itself a data point."
+    },
+    {
+     "text": "The k-medoids cost adds the squared distances of points to their medoids.",
+     "correct": false,
+     "why": "It adds plain dissimilarities; squared distances belong to k-means.",
+     "trap": "C4"
+    },
+    {
+     "text": "k-medoids can cluster strings using edit distance, while standard k-means cannot be applied directly.",
+     "correct": true,
+     "why": "Medoids need only pairwise dissimilarities; the mean of strings is undefined."
+    },
+    {
+     "text": "PAM always reaches the minimum-cost set of medoids.",
+     "correct": false,
+     "why": "PAM is a greedy swap search and can stop at a local minimum.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. In 1D, $\\sum|x - m|$ is minimized at the median; with an odd count that is a data point.\n2. The cost uses unsquared dissimilarities.\n3. Only $d(x_i, x_j)$ is needed, so any dissimilarity (edit distance, Jaccard) works; k-means needs means of vectors.\n4. PAM stops when no single swap helps, which need not be the global optimum."
+  },
+  {
+   "id": "ml-cluster-kmedoids-11",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "k-medoids uses **Manhattan** distance $|\\Delta x| + |\\Delta y|$ and has medoids $A(0,0)$ and $D(3,4)$ (ringed in the figure). The other points are $B(1,2)$, $C(5,0)$, $E(4,5)$, $F(2,6)$. Each point is assigned to its nearest medoid. What is the total cost?",
+   "figure": "<svg viewBox=\"0 0 228 218\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M58 188V20M86 188V20M114 188V20M142 188V20M170 188V20M198 188V20M30 160H198M30 132H198M30 104H198M30 76H198M30 48H198M30 20H198\" style=\"stroke:var(--muted)\" stroke-width=\"0.5\"/><path d=\"M30 188H208M30 188V10\"/><circle cx=\"30\" cy=\"188\" r=\"9\" style=\"stroke:var(--mark)\" stroke-width=\"2\"/><circle cx=\"114\" cy=\"76\" r=\"9\" style=\"stroke:var(--mark)\" stroke-width=\"2\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"30\" cy=\"188\" r=\"4\"/><circle cx=\"58\" cy=\"132\" r=\"4\"/><circle cx=\"170\" cy=\"188\" r=\"4\"/><circle cx=\"114\" cy=\"76\" r=\"4\"/><circle cx=\"142\" cy=\"48\" r=\"4\"/><circle cx=\"86\" cy=\"20\" r=\"4\"/><text x=\"36\" y=\"182\">A</text><text x=\"64\" y=\"126\">B</text><text x=\"176\" y=\"182\">C</text><text x=\"120\" y=\"70\">D</text><text x=\"148\" y=\"42\">E</text><text x=\"92\" y=\"14\">F</text><text x=\"26\" y=\"204\">0</text><text x=\"54\" y=\"204\">1</text><text x=\"82\" y=\"204\">2</text><text x=\"110\" y=\"204\">3</text><text x=\"138\" y=\"204\">4</text><text x=\"166\" y=\"204\">5</text><text x=\"194\" y=\"204\">6</text><text x=\"14\" y=\"164\">1</text><text x=\"14\" y=\"136\">2</text><text x=\"14\" y=\"108\">3</text><text x=\"14\" y=\"80\">4</text><text x=\"14\" y=\"52\">5</text><text x=\"14\" y=\"24\">6</text></g></svg>",
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 14,
+     "why": "Gave C to D because it looks nearer in straight-line terms (4.47 < 5), then added its Manhattan distance 6.",
+     "trap": "C3"
+    },
+    {
+     "value": 10.36,
+     "why": "Summed Euclidean distances instead of Manhattan.",
+     "trap": "C3"
+    },
+    {
+     "value": 32,
+     "why": "Summed squared Euclidean distances.",
+     "trap": "C4"
+    }
+   ],
+   "solution": "1. Manhattan to A / D: B 3 / 4, C 5 / 6, E 9 / 2, F 8 / 3.\n2. Nearest: B → A (3), C → A (5), E → D (2), F → D (3).\n3. Total $= 13$. (Under Euclidean distance C would go to D, since $\\sqrt{20} \\approx 4.47 < 5$.)"
+  },
+  {
+   "id": "ml-cluster-kmedoids-12",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A cluster is $\\{2, 4, 6, 8, 10\\}$. The value 10 is mis-recorded as 200. How do the cluster's mean and its medoid (absolute distance) change?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The mean moves from 6 to 44; the medoid stays 6.",
+     "correct": true,
+     "why": "Mean = 220/5; 6 still has the lowest total distance (202)."
+    },
+    {
+     "text": "The mean stays 6; the medoid moves to 200.",
+     "correct": false,
+     "why": "Roles swapped: the mean absorbs the outlier, the medoid resists it.",
+     "trap": "C2"
+    },
+    {
+     "text": "Both move to 44.",
+     "correct": false,
+     "why": "A medoid must be a data point, and 44 is not one.",
+     "trap": "C3"
+    },
+    {
+     "text": "The mean moves to 44; the medoid moves to 8, the data point nearest the new mean.",
+     "correct": false,
+     "why": "The medoid minimizes total distance; 8 totals 204 against 202 for 6.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. New mean $= (2 + 4 + 6 + 8 + 200)/5 = 44$.\n2. Totals: 2 → 210, 4 → 204, 6 → 202, 8 → 204, 200 → 780.\n3. The medoid stays 6: one bad value moves the mean by 38 but leaves the medoid alone."
+  },
+  {
+   "id": "ml-cluster-kmedoids-13",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Six objects have the dissimilarity matrix below. k-medoids ($k = 2$) currently has medoids $\\{A, D\\}$. PAM evaluates swapping D with E. What is the total cost after this swap?\n\n| | A | B | C | D | E | F |\n|---|---|---|---|---|---|---|\n| A | 0 | 2 | 3 | 7 | 5 | 7 |\n| B | 2 | 0 | 2 | 6 | 4 | 6 |\n| C | 3 | 2 | 0 | 5 | 2 | 4 |\n| D | 7 | 6 | 5 | 0 | 3 | 4 |\n| E | 5 | 4 | 2 | 3 | 0 | 2 |\n| F | 7 | 6 | 4 | 4 | 2 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Gave the cost before the swap (medoids A, D).",
+     "trap": "C6"
+    },
+    {
+     "value": 10,
+     "why": "Kept C with A (cost 3) although the new medoid E is nearer (2); every point must be reassigned.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Gave the decrease in cost (12 − 9), not the new cost.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Before: B 2, C 3, E 3, F 4, total 12.\n2. Medoids {A, E}: B min(2, 4) = 2, C min(3, 2) = 2, D min(7, 3) = 3, F min(7, 2) = 2.\n3. Total 9 < 12, so the swap is accepted. C moves from A to E."
+  },
+  {
+   "id": "ml-cluster-kmedoids-14",
+   "skill": "ml.cluster-kmedoids",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "PAM runs k-medoids with $k = 4$ on $n = 20$ objects. In one pass it evaluates every swap of a current medoid with a current non-medoid. How many candidate swaps is that?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 64,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 190,
+     "why": "Counted all pairs of objects, $\\binom{20}{2}$; a swap pairs one medoid with one non-medoid.",
+     "trap": "C10"
+    },
+    {
+     "value": 80,
+     "why": "Used $k \\cdot n$, which also counts swapping a medoid with itself or another medoid.",
+     "trap": "C6"
+    },
+    {
+     "value": 16,
+     "why": "Counted the non-medoids for only one medoid.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Medoids: 4; non-medoids: $20 - 4 = 16$.\n2. Each (medoid, non-medoid) pair is one swap: $4 \\times 16 = 64$.\n3. Costing each swap needs the $n - k$ points again, so a pass is $O(k(n-k)^2)$."
+  },
+  {
+   "id": "ml-cluster-kmedoids-15",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about the PAM swap procedure for k-medoids are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The total cost never increases from one PAM iteration to the next.",
+     "correct": true,
+     "why": "A swap is kept only if it lowers the total cost."
+    },
+    {
+     "text": "After a swap, only the points that belonged to the removed medoid can change their medoid.",
+     "correct": false,
+     "why": "Any point nearer to the new medoid moves to it, whichever cluster it was in.",
+     "trap": "C9"
+    },
+    {
+     "text": "PAM can stop at medoids where no single swap lowers the cost, even though another set of medoids has a lower cost.",
+     "correct": true,
+     "why": "It is a local search; a better set may need two swaps at once."
+    },
+    {
+     "text": "A swap is accepted whenever the new medoid is closer to the cluster mean than the old one.",
+     "correct": false,
+     "why": "PAM compares total costs; the mean plays no part.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Accept rule: new total cost < old total cost, so the cost is non-increasing.\n2. After a swap every point is reassigned to its nearest medoid; points from other clusters can move to the new one.\n3. Stopping when no single swap helps gives a local, not necessarily global, optimum.\n4. Means are never computed in PAM."
+  },
+  {
+   "id": "ml-cluster-kmedoids-16",
+   "skill": "ml.cluster-kmedoids",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The five points in the figure form one cluster: $P(5,4)$, $Q(0,4)$, $R(0,0)$, $S(2,4)$, $T(0,1)$. Which point is the medoid under **Manhattan** distance?",
+   "figure": "<svg viewBox=\"0 0 230 186\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M64 156V20M98 156V20M132 156V20M166 156V20M200 156V20M30 122H200M30 88H200M30 54H200M30 20H200\" style=\"stroke:var(--muted)\" stroke-width=\"0.5\"/><path d=\"M30 156H210M30 156V10\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"200\" cy=\"20\" r=\"4\"/><circle cx=\"30\" cy=\"20\" r=\"4\"/><circle cx=\"30\" cy=\"156\" r=\"4\"/><circle cx=\"98\" cy=\"20\" r=\"4\"/><circle cx=\"30\" cy=\"122\" r=\"4\"/><text x=\"206\" y=\"14\">P</text><text x=\"36\" y=\"14\">Q</text><text x=\"36\" y=\"150\">R</text><text x=\"104\" y=\"14\">S</text><text x=\"36\" y=\"116\">T</text><text x=\"26\" y=\"172\">0</text><text x=\"60\" y=\"172\">1</text><text x=\"94\" y=\"172\">2</text><text x=\"128\" y=\"172\">3</text><text x=\"162\" y=\"172\">4</text><text x=\"196\" y=\"172\">5</text><text x=\"14\" y=\"126\">1</text><text x=\"14\" y=\"92\">2</text><text x=\"14\" y=\"58\">3</text><text x=\"14\" y=\"24\">4</text></g></svg>",
+   "options": [
+    {
+     "text": "Q",
+     "correct": true,
+     "why": "Total Manhattan distances: P 25, Q 14, R 20, S 16, T 17; Q is smallest."
+    },
+    {
+     "text": "S",
+     "correct": false,
+     "why": "S is the data point nearest the mean (1.4, 2.6), which minimizes squared Euclidean distance, not the Manhattan total (S totals 16).",
+     "trap": "C3"
+    },
+    {
+     "text": "T",
+     "correct": false,
+     "why": "T is in the closest pair (R–T = 1), but one short distance does not give the smallest total (T totals 17).",
+     "trap": "C10"
+    },
+    {
+     "text": "The mean $(1.4, 2.6)$",
+     "correct": false,
+     "why": "A medoid must be one of the data points.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Q: to P 5, R 4, S 2, T 3, total 14.\n2. S: $3 + 2 + 6 + 5 = 16$; T: $8 + 3 + 1 + 5 = 17$; R: $9 + 4 + 6 + 1 = 20$; P: $5 + 9 + 3 + 8 = 25$.\n3. The medoid is Q."
+  },
+  {
+   "id": "ml-cluster-linkage-07",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "On the real line, cluster $X = \\{1, 7\\}$ and cluster $Y = \\{4, 12\\}$. What is the **average-linkage** distance between $X$ and $Y$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5.5,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Took the minimum cross distance (single linkage).",
+     "trap": "C2"
+    },
+    {
+     "value": 11,
+     "why": "Took the maximum cross distance (complete linkage).",
+     "trap": "C2"
+    },
+    {
+     "value": 4,
+     "why": "Took the distance between the centroids 4 and 8; average linkage averages all point pairs.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Cross pairs: $|1-4| = 3$, $|1-12| = 11$, $|7-4| = 3$, $|7-12| = 5$.\n2. Average linkage $= (3 + 11 + 3 + 5)/4 = 22/4 = 5.5$.\n3. Check: single 3 ≤ average 5.5 ≤ complete 11."
+  },
+  {
+   "id": "ml-cluster-linkage-08",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Six objects have the distance matrix below. Agglomerative clustering with **single linkage** runs until one cluster remains. At what height does F join another cluster?\n\n| | A | B | C | D | E | F |\n|---|---|---|---|---|---|---|\n| A | 0 | 3 | 7 | 8 | 10 | 12 |\n| B | 3 | 0 | 4 | 9 | 9 | 11 |\n| C | 7 | 4 | 0 | 6 | 5 | 8 |\n| D | 8 | 9 | 6 | 0 | 2 | 7 |\n| E | 10 | 9 | 5 | 2 | 0 | 6 |\n| F | 12 | 11 | 8 | 7 | 6 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Used complete linkage, where F joins {C, D, E} at max(8, 7, 6) = 8.",
+     "trap": "C2"
+    },
+    {
+     "value": 5,
+     "why": "Gave the height of the fourth merge, {A, B, C} with {D, E}; F joins one step later.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Smallest entries: D–E = 2 (merge at 2), then A–B = 3 (merge at 3).\n2. Single update: C to {A,B} = min(7, 4) = 4, C to {D,E} = min(6, 5) = 5, F to {D,E} = min(7, 6) = 6. Merge C into {A,B} at 4.\n3. {A,B,C} to {D,E} = min(8, 10, 9, 9, 6, 5) = 5: merge at 5.\n4. F to {A,…,E} = min(12, 11, 8, 7, 6) = 6: F joins last, at 6."
+  },
+  {
+   "id": "ml-cluster-linkage-09",
+   "skill": "ml.cluster-linkage",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Five objects have the distance matrix below. With **complete linkage**, the first two merges are {S, T} at 4 and {Q, S, T} at 6. What is the third merge?\n\n| | P | Q | R | S | T |\n|---|---|---|---|---|---|\n| P | 0 | 10 | 8 | 9 | 12 |\n| Q | 10 | 0 | 7 | 6 | 5 |\n| R | 8 | 7 | 0 | 13 | 11 |\n| S | 9 | 6 | 13 | 0 | 4 |\n| T | 12 | 5 | 11 | 4 | 0 |",
+   "figure": null,
+   "options": [
+    {
+     "text": "{R} joins {Q, S, T} at height 7",
+     "correct": false,
+     "why": "Single-linkage rule: R's nearest member is Q (7); complete linkage uses the farthest member, 13.",
+     "trap": "C2"
+    },
+    {
+     "text": "{P} and {R} merge at height 8",
+     "correct": true,
+     "why": "Complete distances: P–R 8, P to {Q,S,T} 12, R to {Q,S,T} 13; the smallest is 8."
+    },
+    {
+     "text": "{P} joins {Q, S, T} at height 12",
+     "correct": false,
+     "why": "Compared only against the big cluster and missed the singleton pair P–R = 8.",
+     "trap": "C6"
+    },
+    {
+     "text": "{R} joins {Q, S, T} at height 13",
+     "correct": false,
+     "why": "13 is R's complete distance, but complete linkage merges the pair with the smallest such value.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Clusters now: {P}, {R}, {Q, S, T}.\n2. Complete distances: P–R = 8, P to {Q,S,T} = max(10, 9, 12) = 12, R to {Q,S,T} = max(7, 13, 11) = 13.\n3. Smallest is 8: {P} and {R} merge at 8. The final merge is at 13."
+  },
+  {
+   "id": "ml-cluster-linkage-10",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Five objects have the distance matrix below. Agglomerative clustering with **average linkage** (UPGMA: mean over all point pairs) runs to one cluster. At what height is the final merge? Give 2 decimals.\n\n| | A | B | C | D | E |\n|---|---|---|---|---|---|\n| A | 0 | 11 | 9 | 12 | 8 |\n| B | 11 | 0 | 4 | 7 | 6 |\n| C | 9 | 4 | 0 | 3 | 10 |\n| D | 12 | 7 | 3 | 0 | 13 |\n| E | 8 | 6 | 10 | 13 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 10.17,
+    "tol": 0.01
+   },
+   "traps": [
+    {
+     "value": 9.75,
+     "why": "Averaged the two sub-cluster distances equally at each step (WPGMA); UPGMA weights by cluster size.",
+     "trap": "C3"
+    },
+    {
+     "value": 8,
+     "why": "Used single linkage, or gave the third merge (A with E at 8).",
+     "trap": "C2"
+    },
+    {
+     "value": 13,
+     "why": "Used complete linkage.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. C–D merge at 3.\n2. B to {C,D} = (4 + 7)/2 = 5.5 beats B–E = 6 and A–E = 8: B joins {C,D} at 5.5.\n3. A to {B,C,D} = (11 + 9 + 12)/3 ≈ 10.67, E to {B,C,D} = (6 + 10 + 13)/3 ≈ 9.67, A–E = 8: merge A–E at 8.\n4. Final: mean of the 6 cross pairs 11, 6, 9, 10, 12, 13 = 61/6 ≈ 10.17."
+  },
+  {
+   "id": "ml-cluster-linkage-11",
+   "skill": "ml.cluster-linkage",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Five objects have the distance matrix below. Which statements are correct?\n\n| | A | B | C | D | E |\n|---|---|---|---|---|---|\n| A | 0 | 6 | 8 | 13 | 10 |\n| B | 6 | 0 | 7 | 12 | 11 |\n| C | 8 | 7 | 0 | 9 | 5 |\n| D | 13 | 12 | 9 | 0 | 4 |\n| E | 10 | 11 | 5 | 4 | 0 |",
+   "figure": null,
+   "options": [
+    {
+     "text": "Single and complete linkage both make {D, E} the first merge, at height 4.",
+     "correct": true,
+     "why": "The first merge is always the smallest entry, whatever the linkage."
+    },
+    {
+     "text": "With complete linkage, C joins {D, E}.",
+     "correct": false,
+     "why": "C to {D,E} = max(9, 5) = 9 but C to {A,B} = max(8, 7) = 8, so C joins {A,B} at 8. Joining {D,E} is the single-linkage result.",
+     "trap": "C2"
+    },
+    {
+     "text": "With single linkage, the final merge is at height 7.",
+     "correct": true,
+     "why": "{A,B} to {C,D,E}: the smallest cross distance is B–C = 7."
+    },
+    {
+     "text": "With average linkage, C joins {A, B} at height 7.5.",
+     "correct": false,
+     "why": "7.5 is C to {A,B}, but C to {D,E} = (9 + 5)/2 = 7 is smaller, so C joins {D,E} at 7.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Every linkage starts with the smallest entry, D–E = 4.\n2. Single: C to {D,E} = 5 < A–B = 6, so {C,D,E} at 5, {A,B} at 6, final at min cross = 7.\n3. Complete: A–B at 6 (C to {D,E} is 9); then C to {A,B} = 8 < 9, so C joins {A,B} at 8; final at 13.\n4. Average: A–B at 6; C to {D,E} = 7 < C to {A,B} = 7.5, so C joins {D,E} at 7."
+  },
+  {
+   "id": "ml-cluster-linkage-12",
+   "skill": "ml.cluster-linkage",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "In average-linkage (UPGMA) clustering, cluster $A$ has 1 point and cluster $B$ has 3 points. They merge into $A \\cup B$. For another cluster $C$, $d(A, C) = 4$ and $d(B, C) = 8$. What is $d(A \\cup B, C)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "7",
+     "correct": true,
+     "why": "$(1\\cdot4 + 3\\cdot8)/4 = 28/4$: B's three points carry three times the weight."
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Averaged the two cluster distances equally; that is WPGMA, not UPGMA.",
+     "trap": "C3"
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Took the minimum: the single-linkage update.",
+     "trap": "C2"
+    },
+    {
+     "text": "8",
+     "correct": false,
+     "why": "Took the maximum: the complete-linkage update.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. UPGMA averages over all point pairs, so B's pairs outnumber A's three to one.\n2. $d(A\\cup B, C) = \\dfrac{|A|\\,d(A,C) + |B|\\,d(B,C)}{|A| + |B|} = \\dfrac{4 + 24}{4} = 7$."
+  },
+  {
+   "id": "ml-cluster-linkage-13",
+   "skill": "ml.cluster-linkage",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Clusters $X = \\{(0,0), (1,2)\\}$ and $Y = \\{(4,4), (5,2)\\}$ are compared with **Manhattan** distance. What is the complete-linkage distance between $X$ and $Y$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "8",
+     "correct": true,
+     "why": "Farthest pair: $(0,0)$ and $(4,4)$, distance $4 + 4$."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Took the closest pair, $(1,2)$–$(5,2)$: single linkage.",
+     "trap": "C2"
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Averaged the four cross distances 8, 7, 5, 4: average linkage.",
+     "trap": "C3"
+    },
+    {
+     "text": "5.66",
+     "correct": false,
+     "why": "Used the Euclidean length $\\sqrt{32}$ of the farthest pair instead of Manhattan.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Cross distances: $(0,0)$–$(4,4)$ = 8, $(0,0)$–$(5,2)$ = 7, $(1,2)$–$(4,4)$ = 5, $(1,2)$–$(5,2)$ = 4.\n2. Complete linkage takes the maximum: 8."
+  },
+  {
+   "id": "ml-cluster-linkage-14",
+   "skill": "ml.cluster-linkage",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "During agglomerative clustering with single, complete or average linkage, clusters $A$ and $B$ have just been merged. Which entries of the cluster-distance matrix must be recomputed?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Only the distances from the new cluster $A \\cup B$ to each remaining cluster",
+     "correct": true,
+     "why": "Distances between untouched clusters involve neither A nor B, so they stay the same."
+    },
+    {
+     "text": "Every entry, because a merge changes all cluster distances",
+     "correct": false,
+     "why": "The distance between two clusters that took no part depends only on their own points.",
+     "trap": "C8"
+    },
+    {
+     "text": "Only the distance between $A$ and $B$",
+     "correct": false,
+     "why": "That pair no longer exists; the new cluster needs its distance to every other cluster.",
+     "trap": "C9"
+    },
+    {
+     "text": "None; the rows of $A$ and $B$ are kept and the smaller entry is read off when needed",
+     "correct": false,
+     "why": "Taking the smaller entry is only the single-linkage rule, and the two rows are still replaced by one new row.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Delete the rows and columns of $A$ and $B$.\n2. Add one new row: $d(A\\cup B, C)$ for every other cluster $C$ (min, max or size-weighted mean of $d(A,C)$ and $d(B,C)$).\n3. All other entries are unchanged."
+  },
+  {
+   "id": "ml-cluster-linkage-15",
+   "skill": "ml.cluster-linkage",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional points: 2, 3, 7, 9, 15. With **complete linkage**, at what height is the cluster $\\{2, 3, 7, 9\\}$ formed?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 7,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Used the nearest gap 7 − 3 (single linkage).",
+     "trap": "C2"
+    },
+    {
+     "value": 5.5,
+     "why": "Averaged the four cross distances (average linkage).",
+     "trap": "C3"
+    },
+    {
+     "value": 13,
+     "why": "Gave the final merge, when 15 joins.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. {2, 3} at 1, {7, 9} at 2.\n2. Complete: {2,3} to {7,9} = 9 − 2 = 7; {7,9} to 15 = 15 − 7 = 8; {2,3} to 15 = 13.\n3. The smallest is 7, so {2, 3, 7, 9} forms at height 7; 15 joins last at 13."
+  },
+  {
+   "id": "ml-cluster-linkage-16",
+   "skill": "ml.cluster-linkage",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about single, complete and average linkage are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "When two single points merge, all three linkages give the same merge height.",
+     "correct": true,
+     "why": "There is only one cross pair, so min = max = mean."
+    },
+    {
+     "text": "The average-linkage distance between two clusters always equals the distance between their centroids.",
+     "correct": false,
+     "why": "Not in general: for $\\{0, 2\\}$ and $\\{1, 3\\}$ the mean of cross distances is 1.5 but the centroids 1 and 2 are 1 apart.",
+     "trap": "C3"
+    },
+    {
+     "text": "All three can be computed from a distance matrix alone, without coordinates.",
+     "correct": true,
+     "why": "Each uses only the cross distances $d(x, y)$."
+    },
+    {
+     "text": "Adding a point to cluster $X$ can make the complete-linkage distance $d(X, Y)$ smaller.",
+     "correct": false,
+     "why": "The maximum over a larger set of pairs can only stay the same or grow.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Two singletons: one pair, so every linkage gives that distance.\n2. Average linkage ≠ centroid distance in general (example $\\{0,2\\}$, $\\{1,3\\}$: 1.5 vs 1).\n3. Min, max and mean of cross distances need only the distance matrix.\n4. Adding a point adds pairs; the max cannot fall."
+  },
+  {
+   "id": "ml-cluster-dendrogram-07",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The dendrogram shows agglomerative clustering of A–F; the vertical axis is the merge height. For which cut heights $h$ does it give exactly 3 clusters?",
+   "figure": "<svg viewBox=\"0 0 310 210\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M50 180V155H98V180M242 180V130H290V180M74 155V105H146V180M194 180V80H266V130M110 105V30H230V80\"/><path d=\"M32 180V30M28 180h4M28 155h4M28 130h4M28 105h4M28 80h4M28 55h4M28 30h4\"/><g fill=\"currentColor\" stroke=\"none\"><text x=\"46\" y=\"198\">A</text><text x=\"94\" y=\"198\">B</text><text x=\"142\" y=\"198\">C</text><text x=\"190\" y=\"198\">D</text><text x=\"238\" y=\"198\">E</text><text x=\"286\" y=\"198\">F</text><text x=\"16\" y=\"184\">0</text><text x=\"16\" y=\"159\">1</text><text x=\"16\" y=\"134\">2</text><text x=\"16\" y=\"109\">3</text><text x=\"16\" y=\"84\">4</text><text x=\"16\" y=\"59\">5</text><text x=\"16\" y=\"34\">6</text></g></svg>",
+   "options": [
+    {
+     "text": "$2 \\le h < 3$",
+     "correct": false,
+     "why": "Only the merges at 1 and 2 lie below such a cut: 6 − 2 = 4 clusters.",
+     "trap": "C6"
+    },
+    {
+     "text": "$3 \\le h < 4$",
+     "correct": true,
+     "why": "The merges at 1, 2 and 3 lie below the cut: 6 − 3 = 3 clusters {A,B,C}, {D}, {E,F}."
+    },
+    {
+     "text": "$4 \\le h < 6$",
+     "correct": false,
+     "why": "Four merges lie below such a cut, leaving 2 clusters.",
+     "trap": "C6"
+    },
+    {
+     "text": "$3 \\le h < 6$",
+     "correct": false,
+     "why": "For $h \\ge 4$ the merge of D with {E, F} is also below the cut, leaving 2 clusters.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Merge heights: A–B 1, E–F 2, C joins {A,B} at 3, D joins {E,F} at 4, final at 6.\n2. Clusters $= 6 - \\#\\{\\text{merges} \\le h\\}$; 3 clusters need exactly 3 merges below the cut.\n3. That holds for $3 \\le h < 4$."
+  },
+  {
+   "id": "ml-cluster-dendrogram-08",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The dendrogram of five points is cut at height 2.5. Which clusters result?",
+   "figure": "<svg viewBox=\"0 0 310 210\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M110 180V150H170V180M230 180V120H290V180M50 180V90H140V150M95 90V30H260V120\"/><path d=\"M32 180V30M28 180h4M28 150h4M28 120h4M28 90h4M28 60h4M28 30h4\"/><g fill=\"currentColor\" stroke=\"none\"><text x=\"46\" y=\"198\">C</text><text x=\"106\" y=\"198\">A</text><text x=\"166\" y=\"198\">E</text><text x=\"226\" y=\"198\">B</text><text x=\"286\" y=\"198\">D</text><text x=\"16\" y=\"184\">0</text><text x=\"16\" y=\"154\">1</text><text x=\"16\" y=\"124\">2</text><text x=\"16\" y=\"94\">3</text><text x=\"16\" y=\"64\">4</text><text x=\"16\" y=\"34\">5</text></g></svg>",
+   "options": [
+    {
+     "text": "{A, E}, {B, D}, {C}",
+     "correct": true,
+     "why": "Merges at 1 (A–E) and 2 (B–D) are below the cut; C joins only at 3."
+    },
+    {
+     "text": "{C, A}, {E, B}, {D}",
+     "correct": false,
+     "why": "Paired leaves that are drawn side by side; leaf order says nothing, the bars do.",
+     "trap": "C10"
+    },
+    {
+     "text": "{A, C, E}, {B, D}",
+     "correct": false,
+     "why": "Also applied the merge at height 3, which lies above the cut.",
+     "trap": "C5"
+    },
+    {
+     "text": "{A, E}, {B}, {C}, {D}",
+     "correct": false,
+     "why": "Applied only the lowest merge; B–D at 2 is also below 2.5.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Read the bars: A–E at 1, B–D at 2, C with {A,E} at 3, final at 5.\n2. Merges at height ≤ 2.5: two, so 5 − 2 = 3 clusters.\n3. They are {A, E}, {B, D} and {C}."
+  },
+  {
+   "id": "ml-cluster-dendrogram-09",
+   "skill": "ml.cluster-dendrogram",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Agglomerative clustering on 15 points is cut at a height that leaves 4 clusters. How many merges of the dendrogram lie below the cut?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 11,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Gave the number of clusters, not merges.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Gave the total number of merges, $n - 1$.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Counted the merges above the cut ($k - 1$).",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Each merge lowers the number of clusters by 1.\n2. Going from 15 to 4 clusters needs $15 - 4 = 11$ merges below the cut.\n3. The remaining $14 - 11 = 3$ merges lie above it."
+  },
+  {
+   "id": "ml-cluster-dendrogram-10",
+   "skill": "ml.cluster-dendrogram",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "One-dimensional points: 3, 4, 8, 15, 16, 22. Single-linkage agglomerative clustering is run to one cluster. What is the sum of all merge heights in its dendrogram?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 19,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 33,
+     "why": "Used complete-linkage heights (1, 1, 5, 7, 19).",
+     "trap": "C2"
+    },
+    {
+     "value": 7,
+     "why": "Gave only the final merge height.",
+     "trap": "C6"
+    },
+    {
+     "value": 25.67,
+     "why": "Used average-linkage heights (1, 1, 4.5, 6.5, 12.67).",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Single-linkage heights are the minimum spanning tree edges; in 1D the MST joins neighbours.\n2. Merges: {3,4} at 1, {15,16} at 1, 8 joins {3,4} at 4, 22 joins {15,16} at 6, final at 15 − 8 = 7.\n3. Sum $= 1 + 1 + 4 + 6 + 7 = 19$, which equals $22 - 3$: the gaps add up to the range."
+  },
+  {
+   "id": "ml-cluster-dendrogram-11",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "The dendrogram was built from the one-dimensional points 0, 2, 3, 7 (leaf labels are the values; the axis is the merge height). Which linkage produced it?",
+   "figure": "<svg viewBox=\"0 0 310 210\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M130 180V158.571H210V180M50 180V115.714H170V158.571M110 115.714V30H290V180\"/><path d=\"M32 180V30M28 180h4M28 158.571h4M28 137.143h4M28 115.714h4M28 94.2857h4M28 72.8571h4M28 51.4286h4M28 30h4\"/><g fill=\"currentColor\" stroke=\"none\"><text x=\"46\" y=\"198\">0</text><text x=\"126\" y=\"198\">2</text><text x=\"206\" y=\"198\">3</text><text x=\"286\" y=\"198\">7</text><text x=\"16\" y=\"184\">0</text><text x=\"16\" y=\"162.571\">1</text><text x=\"16\" y=\"141.143\">2</text><text x=\"16\" y=\"119.714\">3</text><text x=\"16\" y=\"98.2857\">4</text><text x=\"16\" y=\"76.8571\">5</text><text x=\"16\" y=\"55.4286\">6</text><text x=\"16\" y=\"34\">7</text></g></svg>",
+   "options": [
+    {
+     "text": "Single linkage",
+     "correct": false,
+     "why": "Single gives heights 1, 2 (0 to its nearest member 2) and 4 (7 − 3).",
+     "trap": "C2"
+    },
+    {
+     "text": "Complete linkage",
+     "correct": true,
+     "why": "Heights 1; max(2, 3) = 3 for 0; max(7, 5, 4) = 7 for 7 — exactly the figure."
+    },
+    {
+     "text": "Average linkage",
+     "correct": false,
+     "why": "Average gives 1, 2.5 and 16/3 ≈ 5.33.",
+     "trap": "C3"
+    },
+    {
+     "text": "Centroid linkage",
+     "correct": false,
+     "why": "Centroid gives 1, 2.5 (0 to 2.5) and 7 − 5/3 ≈ 5.33.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Figure heights: {2,3} at 1, 0 joins at 3, 7 joins at 7.\n2. Single: 1, 2, 4. Average: 1, 2.5, 5.33. Centroid: 1, 2.5, 5.33.\n3. Complete: 1, max(2, 3) = 3, max(7, 5, 4) = 7. Only complete matches."
+  },
+  {
+   "id": "ml-cluster-dendrogram-12",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Which statements about cutting dendrograms are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Raising the cut height never increases the number of clusters.",
+     "correct": true,
+     "why": "A higher cut has at least as many merges below it."
+    },
+    {
+     "text": "For the same data, cutting the single- and complete-linkage dendrograms at the same height always gives the same number of clusters.",
+     "correct": false,
+     "why": "Complete-linkage heights are usually larger: for points 0, 1, 3 cut at 2.5, single gives 1 cluster and complete gives 2.",
+     "trap": "C8"
+    },
+    {
+     "text": "Each cluster from a lower cut lies entirely inside one cluster from a higher cut.",
+     "correct": true,
+     "why": "Merges are never undone, so the clusters are nested."
+    },
+    {
+     "text": "Every number of clusters from 1 to $n$ can be obtained by some horizontal cut.",
+     "correct": false,
+     "why": "If two merges share a height, the count drops by 2 at that height and one value is skipped.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Clusters $= n - \\#\\{\\text{merges} \\le h\\}$, which can only fall as $h$ rises.\n2. Merges are permanent, so lower-cut clusters nest inside higher-cut clusters.\n3. Points 0, 1, 3: single heights 1, 2; complete heights 1, 3. At 2.5 they give 1 and 2 clusters.\n4. Tied merge heights skip some $k$."
+  },
+  {
+   "id": "ml-cluster-dendrogram-13",
+   "skill": "ml.cluster-dendrogram",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Five objects have the distance matrix below. The **complete-linkage** dendrogram is cut at height 7.5. How many clusters result?\n\n| | P | Q | R | S | T |\n|---|---|---|---|---|---|\n| P | 0 | 13 | 12 | 6 | 10 |\n| Q | 13 | 0 | 8 | 7 | 5 |\n| R | 12 | 8 | 0 | 11 | 3 |\n| S | 6 | 7 | 11 | 0 | 9 |\n| T | 10 | 5 | 3 | 9 | 0 |",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Used single linkage, whose merges (3, 5, 6, 7) all lie below 7.5.",
+     "trap": "C2"
+    },
+    {
+     "value": 2,
+     "why": "Used average linkage (merges at 3, 6, 6.5), or reported the 2 merges below the cut as the cluster count.",
+     "trap": "C2"
+    },
+    {
+     "value": 4,
+     "why": "Counted only the first merge (R–T at 3) below the cut.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. R–T merge at 3.\n2. Complete: Q to {R,T} = max(8, 5) = 8, P–S = 6, Q–S = 7, P to {R,T} = 12, S to {R,T} = 11. Merge P–S at 6.\n3. Then Q to {R,T} = 8, Q to {P,S} = 13, {P,S} to {R,T} = 12: merge Q with {R,T} at 8; final at 13.\n4. Merges at height ≤ 7.5: two (3 and 6). Clusters $= 5 - 2 = 3$: {R,T}, {P,S}, {Q}."
+  },
+  {
+   "id": "ml-cluster-dendrogram-14",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "In a drawn dendrogram, leaves X and Y sit next to each other at the bottom, and the lowest bar joining them is at height 6. What can be concluded?",
+   "figure": null,
+   "options": [
+    {
+     "text": "X and Y share a cluster for every cut at height 6 or more, and are in different clusters for any cut below 6.",
+     "correct": true,
+     "why": "The height of the lowest joint (the cophenetic distance) decides when two leaves share a cluster."
+    },
+    {
+     "text": "X and Y are the closest pair of points in the data.",
+     "correct": false,
+     "why": "Leaf order is only a drawing choice; closeness is read from bar heights.",
+     "trap": "C10"
+    },
+    {
+     "text": "The distance between X and Y is exactly 6, whatever the linkage.",
+     "correct": false,
+     "why": "6 is the linkage distance between the two clusters holding X and Y; $d(X, Y)$ itself can differ (at least 6 under single, at most 6 under complete).",
+     "trap": "C9"
+    },
+    {
+     "text": "Swapping the two branches under any bar would change the clusters.",
+     "correct": false,
+     "why": "Branches can be flipped freely; the tree and its heights stay the same.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A cut at $h$ keeps two leaves together exactly when their lowest common joint is at height ≤ $h$.\n2. Here that joint is at 6.\n3. Leaf order can be flipped at any bar, so being drawn side by side means nothing by itself."
+  },
+  {
+   "id": "ml-cluster-dendrogram-15",
+   "skill": "ml.cluster-dendrogram",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "A dendrogram of 7 points has merge heights 1, 1, 2, 3, 3, 5 (two pairs of merges are tied). A horizontal cut at height $h \\ge 0$ gives $7 - \\#\\{\\text{merges with height} \\le h\\}$ clusters. How many **different** numbers of clusters can such cuts produce?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Assumed every $k$ from 1 to 7 is reachable; the tied heights skip 6 and 3.",
+     "trap": "C8"
+    },
+    {
+     "value": 4,
+     "why": "Counted the distinct merge heights only and forgot the cut below every merge (7 clusters).",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Counted the merges.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. $h < 1$: 7 clusters; $1 \\le h < 2$: 5; $2 \\le h < 3$: 4; $3 \\le h < 5$: 2; $h \\ge 5$: 1.\n2. Possible counts: {7, 5, 4, 2, 1}, five values.\n3. 6 and 3 clusters are impossible because two merges happen at each tied height."
+  },
+  {
+   "id": "ml-cluster-dendrogram-16",
+   "skill": "ml.cluster-dendrogram",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE DA style)",
+   "stem": "Use the dendrogram of the points P–V (axis = merge height). Which statements are correct?",
+   "figure": "<svg viewBox=\"0 0 310 210\" xmlns=\"http://www.w3.org/2000/svg\" font-size=\"12\" fill=\"none\" stroke=\"currentColor\"><path d=\"M90 180V158.571H130V180M250 180V137.143H290V180M50 180V115.714H110V158.571M170 180V94.2857H210V180M190 94.2857V72.8571H270V137.143M80 115.714V30H230V72.8571\"/><path d=\"M32 180V30M28 180h4M28 158.571h4M28 137.143h4M28 115.714h4M28 94.2857h4M28 72.8571h4M28 51.4286h4M28 30h4\"/><g fill=\"currentColor\" stroke=\"none\"><text x=\"46\" y=\"198\">P</text><text x=\"86\" y=\"198\">Q</text><text x=\"126\" y=\"198\">R</text><text x=\"166\" y=\"198\">S</text><text x=\"206\" y=\"198\">T</text><text x=\"246\" y=\"198\">U</text><text x=\"286\" y=\"198\">V</text><text x=\"16\" y=\"184\">0</text><text x=\"16\" y=\"162.571\">1</text><text x=\"16\" y=\"141.143\">2</text><text x=\"16\" y=\"119.714\">3</text><text x=\"16\" y=\"98.2857\">4</text><text x=\"16\" y=\"76.8571\">5</text><text x=\"16\" y=\"55.4286\">6</text><text x=\"16\" y=\"34\">7</text></g></svg>",
+   "options": [
+    {
+     "text": "Cutting at height 3.5 gives 4 clusters.",
+     "correct": true,
+     "why": "Merges at 1, 2, 3 are below the cut: 7 − 3 = 4, namely {P,Q,R}, {S}, {T}, {U,V}."
+    },
+    {
+     "text": "Cutting at height 6 gives {P, Q, R} and {S, T, U, V}.",
+     "correct": true,
+     "why": "Only the final merge (height 7) lies above the cut."
+    },
+    {
+     "text": "Cutting at height 4.5 puts S and U in the same cluster.",
+     "correct": false,
+     "why": "S and U first meet at height 5, above the cut.",
+     "trap": "C5"
+    },
+    {
+     "text": "The dendrogram has 7 merges.",
+     "correct": false,
+     "why": "7 leaves need 6 merges.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Bars: Q–R 1, U–V 2, P with {Q,R} 3, S–T 4, {S,T} with {U,V} 5, final 7.\n2. Cut 3.5: three merges below, 4 clusters. Cut 6: five merges below, 2 clusters {P,Q,R} and {S,T,U,V}.\n3. Cut 4.5: {S,T} and {U,V} are still separate. Merges $= n - 1 = 6$."
+  }
+ ]
+}

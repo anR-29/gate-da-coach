@@ -1,0 +1,770 @@
+{
+  "area": "ml",
+  "skills": {},
+  "questions": [
+    {
+      "id": "ml-linreg-origin-06",
+      "skill": "ml.linreg-origin",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A model $\\hat y = wx$ with **no intercept** is fitted by least squares to the three points $(1, 3)$, $(2, 5)$ and $(3, 8)$. The value of $w$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2.64, "tol": 0.01 },
+      "traps": [
+        { "value": 2.67, "why": "Used $\\sum y/\\sum x = 16/6$, a ratio of totals, instead of $\\sum xy/\\sum x^2$.", "trap": "C10" },
+        { "value": 2.5, "why": "Computed the slope $S_{xy}/S_{xx}$ of the line with intercept; this model has no intercept.", "trap": "C3" },
+        { "value": 0.38, "why": "Inverted the formula: $\\sum x^2/\\sum xy = 14/37$.", "trap": "C4" }
+      ],
+      "solution": "1. Setting $\\frac{d}{dw}\\sum (y - wx)^2 = 0$ gives $w = \\sum xy/\\sum x^2$.\n2. $\\sum xy = 3 + 10 + 24 = 37$, $\\sum x^2 = 1 + 4 + 9 = 14$.\n3. $w = 37/14 \\approx 2.64$."
+    },
+    {
+      "id": "ml-linreg-origin-07",
+      "skill": "ml.linreg-origin",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For $n = 4$ points the sums are $\\sum x = 8$, $\\sum y = 22$, $\\sum x^2 = 20$, $\\sum xy = 50$. A least squares line **through the origin**, $\\hat y = wx$, is fitted. Its prediction at $x = 3$ is",
+      "figure": null,
+      "options": [
+        { "text": "$8.25$", "correct": false, "why": "Took $w = \\sum y/\\sum x = 2.75$; the least squares slope weights each point by its $x$.", "trap": "C10" },
+        { "text": "$7.5$", "correct": true, "why": "$w = \\sum xy/\\sum x^2 = 50/20 = 2.5$, so $\\hat y = 2.5 \\times 3 = 7.5$." },
+        { "text": "$1.2$", "correct": false, "why": "Inverted the ratio: $w = 20/50 = 0.4$.", "trap": "C4" },
+        { "text": "$7.0$", "correct": false, "why": "Fitted the line with intercept ($b = 1.5$, $a = 2.5$); the model here is forced through the origin.", "trap": "C3" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Only $\\sum xy$ and $\\sum x^2$ matter for a no-intercept fit: $w = 50/20 = 2.5$.\n2. $\\hat y(3) = 2.5 \\times 3 = 7.5$. ($\\sum x$ and $\\sum y$ would be needed only with an intercept.)"
+    },
+    {
+      "id": "ml-linreg-origin-08",
+      "skill": "ml.linreg-origin",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "The model $\\hat y = w/x$ (one parameter $w$, no intercept) is fitted by least squares to\n\n| $x$ | 1 | 2 | 4 |\n|---|---|---|---|\n| $y$ | 4 | 2.5 | 1 |\n\nThe value of $w$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4.19, "tol": 0.01 },
+      "traps": [
+        { "value": 0.62, "why": "Fitted $\\hat y = wx$ instead ($13/21$); the feature here is $\\phi(x) = 1/x$.", "trap": "C10" },
+        { "value": 3.14, "why": "Used $\\sum\\phi y/\\sum\\phi = 5.5/1.75$; the denominator must be $\\sum\\phi^2$.", "trap": "C4" },
+        { "value": 4.29, "why": "Used $\\sum y/\\sum\\phi = 7.5/1.75$, a ratio of totals.", "trap": "C3" }
+      ],
+      "solution": "1. Write $\\phi = 1/x$: the model is $\\hat y = w\\phi$, so $w = \\sum\\phi y/\\sum\\phi^2$.\n2. $\\phi = 1, 0.5, 0.25$: $\\sum\\phi y = 4 + 1.25 + 0.25 = 5.5$, $\\sum\\phi^2 = 1 + 0.25 + 0.0625 = 1.3125$.\n3. $w = 5.5/1.3125 \\approx 4.19$."
+    },
+    {
+      "id": "ml-linreg-origin-09",
+      "skill": "ml.linreg-origin",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "The model $\\hat y = wx$ (no intercept) is fitted by least squares to the points $(1, 2)$, $(2, 2)$, $(3, 6)$. Let $e_i = y_i - wx_i$. Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$w = 12/7$", "correct": true, "why": "$\\sum xy = 2 + 4 + 18 = 24$ and $\\sum x^2 = 14$, so $w = 24/14 = 12/7$." },
+        { "text": "$\\sum_i e_i = 0$", "correct": false, "why": "Without an intercept only $\\sum x_ie_i = 0$ is guaranteed; here $\\sum e_i = 10 - 6w = -2/7$.", "trap": "C1" },
+        { "text": "Adding a fourth point $(0, 5)$ leaves $w$ unchanged", "correct": true, "why": "A point with $x = 0$ adds $0$ to both $\\sum xy$ and $\\sum x^2$, so the line through the origin cannot react to it." },
+        { "text": "The residual at $x = 2$ is positive", "correct": false, "why": "$\\hat y(2) = 24/7 \\approx 3.43 > 2$, so $e = -10/7$; a positive value comes from computing $\\hat y - y$.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $w = \\sum xy/\\sum x^2 = 24/14 = 12/7 \\approx 1.714$.\n2. Residuals: $2/7$, $-10/7$, $6/7$. Their sum is $-2/7 \\ne 0$, but $\\sum xe = 2/7 - 20/7 + 18/7 = 0$.\n3. A point $(0, y)$ adds nothing to $\\sum xy$ or $\\sum x^2$, so $w$ stays $12/7$."
+    },
+    {
+      "id": "ml-linreg-origin-10",
+      "skill": "ml.linreg-origin",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "The model $\\hat y = wx$ (no intercept) is fitted by least squares to the points $(1, 1)$, $(2, 4)$ and $(3, k)$. The fitted slope turns out to be exactly $w = 2$. The value of $k$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 6.33, "tol": 0.01 },
+      "traps": [
+        { "value": 7, "why": "Used $w = \\sum y/\\sum x$: $(5 + k)/6 = 2$.", "trap": "C10" },
+        { "value": 6, "why": "Assumed the third point lies on the line $y = 2x$; least squares does not force any point onto the line.", "trap": "C1" },
+        { "value": 1, "why": "Used $\\sum x = 6$ in the denominator instead of $\\sum x^2 = 14$.", "trap": "C4" }
+      ],
+      "solution": "1. $w = \\sum xy/\\sum x^2 = (1 + 8 + 3k)/14$.\n2. Set it equal to 2: $9 + 3k = 28$, so $3k = 19$.\n3. $k = 19/3 \\approx 6.33$."
+    },
+    {
+      "id": "ml-linreg-origin-11",
+      "skill": "ml.linreg-origin",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For the no-intercept loss $L(w) = \\sum_i (y_i - wx_i)^2$, the derivative $\\dfrac{dL}{dw}$ is",
+      "figure": null,
+      "options": [
+        { "text": "$-2\\sum_i (y_i - wx_i)$", "correct": false, "why": "Dropped the inner factor $x_i$; this is the derivative with respect to an intercept, not the slope.", "trap": "C3" },
+        { "text": "$2\\sum_i x_i(y_i - wx_i)$", "correct": false, "why": "Lost the minus sign of the inner derivative $-x_i$.", "trap": "C11" },
+        { "text": "$-2\\sum_i x_i(y_i - wx_i)$", "correct": true, "why": "Chain rule: the derivative of $y_i - wx_i$ with respect to $w$ is $-x_i$." },
+        { "text": "$-2\\sum_i x_i^2(y_i - wx_i)$", "correct": false, "why": "Multiplied by $x_i$ twice; the chain rule contributes one factor $x_i$.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\frac{d}{dw}(y_i - wx_i)^2 = 2(y_i - wx_i)(-x_i)$.\n2. Sum: $dL/dw = -2\\sum x_i(y_i - wx_i)$. Setting it to 0 gives $\\sum x_iy_i = w\\sum x_i^2$."
+    },
+    {
+      "id": "ml-linreg-origin-12",
+      "skill": "ml.linreg-origin",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "On the same data, a line through the origin $\\hat y = wx$ and a line with intercept $\\hat y = a + bx$ are both fitted by least squares. Let $\\text{SSE}_0$ and $\\text{SSE}_1$ be their minimum sums of squared residuals. Which statement is **always** true?",
+      "figure": null,
+      "options": [
+        { "text": "$\\text{SSE}_0 \\le \\text{SSE}_1$", "correct": false, "why": "Direction reversed: a fit with fewer free parameters cannot beat the minimum over a larger set.", "trap": "C11" },
+        { "text": "$\\text{SSE}_0 = \\text{SSE}_1$", "correct": false, "why": "Equality holds only when the best intercept happens to be 0; not always.", "trap": "C8" },
+        { "text": "Either one can be smaller, depending on the data", "correct": false, "why": "Minimising over all $(a, b)$ includes $(0, w)$, so $\\text{SSE}_1$ can never exceed $\\text{SSE}_0$.", "trap": "C1" },
+        { "text": "$\\text{SSE}_0 \\ge \\text{SSE}_1$", "correct": true, "why": "The origin model is the special case $a = 0$ of the intercept model, so the larger model does at least as well." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Every origin line $y = wx$ is also a line $a + bx$ with $a = 0$.\n2. $\\text{SSE}_1$ is a minimum over a set that contains all origin lines, so $\\text{SSE}_1 \\le \\text{SSE}_0$, with equality only when the best intercept is 0."
+    },
+    {
+      "id": "ml-linreg-ols-07",
+      "skill": "ml.linreg-ols",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A line $\\hat y = a + bx$ is fitted by ordinary least squares to\n\n| $x$ | 2 | 4 | 6 | 8 |\n|---|---|---|---|---|\n| $y$ | 3 | 7 | 8 | 12 |\n\nThe slope $b$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1.4, "tol": 0.01 },
+      "traps": [
+        { "value": 1.48, "why": "Used the no-intercept formula $\\sum xy/\\sum x^2 = 178/120$; with an intercept the sums must be centred.", "trap": "C3" },
+        { "value": 0.71, "why": "Inverted the ratio: $S_{xx}/S_{xy} = 20/28$.", "trap": "C4" },
+        { "value": 0.68, "why": "Divided by $S_{yy} = 41$ instead of $S_{xx} = 20$ (that is the slope of $x$ on $y$).", "trap": "C2" }
+      ],
+      "solution": "1. $\\bar x = 5$, $\\bar y = 7.5$.\n2. Deviations: $x - \\bar x = -3, -1, 1, 3$; $y - \\bar y = -4.5, -0.5, 0.5, 4.5$.\n3. $S_{xy} = 13.5 + 0.5 + 0.5 + 13.5 = 28$, $S_{xx} = 9 + 1 + 1 + 9 = 20$.\n4. $b = 28/20 = 1.4$."
+    },
+    {
+      "id": "ml-linreg-ols-08",
+      "skill": "ml.linreg-ols",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For a simple linear regression $\\hat y = a + bx$ fitted by least squares, the sample means are $\\bar x = 10$, $\\bar y = 50$ and the fitted slope is $b = 3$. The prediction at $x = 12$ is",
+      "figure": null,
+      "options": [
+        { "text": "$36$", "correct": false, "why": "Used $\\hat y = bx$ and forgot the intercept $a = \\bar y - b\\bar x = 20$.", "trap": "C6" },
+        { "text": "$86$", "correct": false, "why": "Used $\\bar y + bx$ instead of $\\bar y + b(x - \\bar x)$; $x$ must be measured from $\\bar x$.", "trap": "C3" },
+        { "text": "$56$", "correct": true, "why": "The line passes through $(\\bar x, \\bar y)$: $\\hat y = 50 + 3(12 - 10) = 56$." },
+        { "text": "$116$", "correct": false, "why": "Took $a = \\bar y + b\\bar x = 80$; the sign in $a = \\bar y - b\\bar x$ was flipped.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. With an intercept the line passes through $(\\bar x, \\bar y)$, so $a = \\bar y - b\\bar x = 50 - 30 = 20$.\n2. $\\hat y(12) = 20 + 3 \\times 12 = 56$, the same as $50 + 3(12 - 10)$."
+    },
+    {
+      "id": "ml-linreg-ols-09",
+      "skill": "ml.linreg-ols",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A least squares line $\\hat y = a + bx$ is fitted to $n = 5$ points with centred sums $S_{xx} = \\sum(x - \\bar x)^2 = 10$, $S_{yy} = \\sum(y - \\bar y)^2 = 50$ and $S_{xy} = \\sum(x - \\bar x)(y - \\bar y) = 20$. The residual sum of squares $\\text{SSE} = \\sum (y_i - \\hat y_i)^2$ is ______.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 10, "tol": 0 },
+      "traps": [
+        { "value": 40, "why": "Gave the explained sum of squares $S_{xy}^2/S_{xx}$, not what is left over.", "trap": "C2" },
+        { "value": 30, "why": "Subtracted $S_{xy}$ itself ($50 - 20$); the explained part is $b\\,S_{xy} = S_{xy}^2/S_{xx}$.", "trap": "C3" },
+        { "value": 0.2, "why": "Computed $1 - R^2$, the unexplained fraction, not the sum of squares.", "trap": "C4" }
+      ],
+      "solution": "1. $b = S_{xy}/S_{xx} = 2$.\n2. Explained sum of squares $= b\\,S_{xy} = S_{xy}^2/S_{xx} = 400/10 = 40$.\n3. $\\text{SSE} = S_{yy} - 40 = 50 - 40 = 10$ (check: $R^2 = 40/50 = 0.8$)."
+    },
+    {
+      "id": "ml-linreg-ols-10",
+      "skill": "ml.linreg-ols",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An OLS line $\\hat y = a + bx$ with $b \\ne 0$ is fitted to some data. Every target is then transformed to $y' = 2y + 3$ (the $x_i$ unchanged) and the line is refitted as $\\hat y' = a' + b'x$. Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$b' = 2b$", "correct": true, "why": "$S_{xy}$ doubles (the $+3$ cancels when centring) while $S_{xx}$ is unchanged." },
+        { "text": "$R^2$ becomes $2R^2$", "correct": false, "why": "$R^2 = S_{xy}^2/(S_{xx}S_{yy})$: both $S_{xy}^2$ and $S_{yy}$ scale by 4, so $R^2$ is unchanged.", "trap": "C4" },
+        { "text": "$a' = 2a + 3$", "correct": true, "why": "$a' = \\bar y' - b'\\bar x = 2\\bar y + 3 - 2b\\bar x = 2a + 3$." },
+        { "text": "The residual sum of squares doubles", "correct": false, "why": "Each residual doubles, so each squared residual is multiplied by 4; SSE becomes $4\\,\\text{SSE}$.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Fitted values transform the same way: $\\hat y' = 2\\hat y + 3$, so $b' = 2b$ and $a' = 2a + 3$.\n2. Residuals $e' = y' - \\hat y' = 2e$, so SSE is multiplied by 4, and so is $S_{yy}$.\n3. $R^2 = 1 - \\text{SSE}/S_{yy}$ is unchanged."
+    },
+    {
+      "id": "ml-linreg-ols-11",
+      "skill": "ml.linreg-ols",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "On the same data, regressing $y$ on $x$ by least squares gives slope $b_{y|x} = 0.8$, and regressing $x$ on $y$ gives slope $b_{x|y} = 0.45$. The coefficient of determination $R^2$ (the same for both fits) is",
+      "figure": null,
+      "options": [
+        { "text": "$0.6$", "correct": false, "why": "Gave the correlation $r = \\sqrt{0.36}$; $R^2$ is the product of the slopes itself.", "trap": "C4" },
+        { "text": "$1.78$", "correct": false, "why": "Divided the slopes ($0.8/0.45$); that ratio is $S_{yy}/S_{xx}$, not $R^2$.", "trap": "C3" },
+        { "text": "$0.64$", "correct": false, "why": "Squared only $b_{y|x}$; $b^2$ equals $R^2$ only when $S_{xx} = S_{yy}$.", "trap": "C10" },
+        { "text": "$0.36$", "correct": true, "why": "$b_{y|x}\\,b_{x|y} = \\frac{S_{xy}}{S_{xx}}\\cdot\\frac{S_{xy}}{S_{yy}} = r^2 = 0.8 \\times 0.45$." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $b_{y|x} = S_{xy}/S_{xx}$ and $b_{x|y} = S_{xy}/S_{yy}$.\n2. Product $= S_{xy}^2/(S_{xx}S_{yy}) = r^2 = R^2$.\n3. $R^2 = 0.8 \\times 0.45 = 0.36$."
+    },
+    {
+      "id": "ml-linreg-ols-12",
+      "skill": "ml.linreg-ols",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An OLS line $\\hat y = a + bx$ is fitted to\n\n| $x$ | 1 | 2 | 3 | 4 | 5 |\n|---|---|---|---|---|---|\n| $y$ | 2 | 4 | 5 | 4 | 5 |\n\nThe predicted value at $x = 6$ is ______ (round to one decimal).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 5.8, "tol": 0.05 },
+      "traps": [
+        { "value": 7.2, "why": "Fitted through the origin ($w = 66/55 = 1.2$); this model has an intercept.", "trap": "C3" },
+        { "value": 9, "why": "Inverted the slope ($S_{xx}/S_{xy} = 10/6$), which gives $a = -1$.", "trap": "C4" },
+        { "value": 9.4, "why": "Used $a = \\bar y + b\\bar x$ (sign slip) and then added $6b$.", "trap": "C11" },
+        { "value": 2.2, "why": "Reported the intercept $a$, not the prediction at $x = 6$.", "trap": "C6" }
+      ],
+      "solution": "1. $\\bar x = 3$, $\\bar y = 4$.\n2. $S_{xy} = (-2)(-2) + (-1)(0) + 0 + (1)(0) + (2)(1) = 6$, $S_{xx} = 10$, so $b = 0.6$.\n3. $a = 4 - 0.6 \\times 3 = 2.2$.\n4. $\\hat y(6) = 2.2 + 3.6 = 5.8$."
+    },
+    {
+      "id": "ml-ridge-06",
+      "skill": "ml.ridge",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "No-intercept ridge regression minimises $\\sum_i (y_i - wx_i)^2 + \\lambda w^2$ with $\\lambda = 6$ on the data $(1, 1)$, $(2, 3)$, $(3, 4)$. Using the fitted $w$, the prediction at $x = 4$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 3.8, "tol": 0.01 },
+      "traps": [
+        { "value": 5.43, "why": "Ignored the penalty: the OLS weight $19/14$ gives $5.43$.", "trap": "C6" },
+        { "value": 2.92, "why": "Used $\\sum x^2 + 2\\lambda$ in the denominator; the factor 2 appears in both derivative terms and cancels.", "trap": "C6" },
+        { "value": 1.52, "why": "Added $\\lambda^2 = 36$ instead of $\\lambda$ to the denominator.", "trap": "C4" },
+        { "value": 0.95, "why": "Reported $w$ instead of the prediction $4w$.", "trap": "C6" }
+      ],
+      "solution": "1. $w = \\sum xy/(\\sum x^2 + \\lambda)$.\n2. $\\sum xy = 1 + 6 + 12 = 19$, $\\sum x^2 = 14$, so $w = 19/20 = 0.95$.\n3. $\\hat y(4) = 4 \\times 0.95 = 3.8$."
+    },
+    {
+      "id": "ml-ridge-07",
+      "skill": "ml.ridge",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A ridge model $\\hat y = b + wx$ is fitted with the usual convention: the intercept $b$ is **not** penalised, only $\\lambda w^2$ is. As $\\lambda \\to \\infty$, the prediction $\\hat y$ for every $x$ tends to",
+      "figure": null,
+      "options": [
+        { "text": "$0$", "correct": false, "why": "That happens only if the intercept is also penalised (or absent); here $b$ is free.", "trap": "C9" },
+        { "text": "$\\bar y$, the mean of the training targets", "correct": true, "why": "$w \\to 0$, and the free intercept then minimises $\\sum (y_i - b)^2$, giving $b = \\bar y$." },
+        { "text": "The OLS prediction for that $x$", "correct": false, "why": "Direction reversed: OLS is the limit $\\lambda \\to 0$, not $\\lambda \\to \\infty$.", "trap": "C11" },
+        { "text": "The median of the training targets", "correct": false, "why": "Squared loss is minimised by the mean; the median minimises absolute loss.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A huge $\\lambda$ forces $w \\to 0$ (never exactly 0 for finite $\\lambda$).\n2. With $w = 0$ the loss is $\\sum (y_i - b)^2$, minimised at $b = \\bar y$.\n3. So every prediction tends to $\\bar y$: a flat line."
+    },
+    {
+      "id": "ml-ridge-08",
+      "skill": "ml.ridge",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A ridge fit with two standardised features and no intercept has\n$$X^\\top X = \\begin{pmatrix} 2 & 1 \\\\ 1 & 2 \\end{pmatrix}, \\quad X^\\top y = \\begin{pmatrix} 4 \\\\ 2 \\end{pmatrix}, \\quad \\lambda = 1.$$\nThe first weight $w_1$ of $w = (X^\\top X + \\lambda I)^{-1}X^\\top y$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1.25, "tol": 0.01 },
+      "traps": [
+        { "value": 2, "why": "Ignored $\\lambda$: the OLS solution is $(2, 0)$.", "trap": "C6" },
+        { "value": 1.6, "why": "Added $\\lambda$ to every entry of $X^\\top X$ instead of only the diagonal ($\\lambda I$).", "trap": "C3" },
+        { "value": 1.33, "why": "Ignored the off-diagonal 1 and divided $4/(2 + 1)$ as if $X^\\top X$ were diagonal.", "trap": "C6" },
+        { "value": 0.93, "why": "Added $2\\lambda$ to the diagonal.", "trap": "C4" }
+      ],
+      "solution": "1. $X^\\top X + I = \\begin{pmatrix} 3 & 1 \\\\ 1 & 3 \\end{pmatrix}$, determinant $9 - 1 = 8$.\n2. Inverse $= \\frac{1}{8}\\begin{pmatrix} 3 & -1 \\\\ -1 & 3 \\end{pmatrix}$.\n3. $w = \\frac{1}{8}(12 - 2,\\ -4 + 6) = (1.25,\\ 0.25)$, so $w_1 = 1.25$."
+    },
+    {
+      "id": "ml-ridge-09",
+      "skill": "ml.ridge",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "One feature, no intercept, data with $\\sum x_iy_i > 0$. Let $w_0$ be the OLS weight and $w_\\lambda = \\arg\\min_w \\sum (y_i - wx_i)^2 + \\lambda w^2$ for some $\\lambda > 0$. Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$0 < w_\\lambda < w_0$", "correct": true, "why": "$w_\\lambda = \\sum xy/(\\sum x^2 + \\lambda)$ has the same positive numerator as $w_0$ and a larger denominator." },
+        { "text": "The training SSE $\\sum (y_i - w_\\lambda x_i)^2$ is at least the training SSE of $w_0$", "correct": true, "why": "$w_0$ minimises the SSE, so any other weight, including $w_\\lambda$, gives an SSE at least as large." },
+        { "text": "For a large enough $\\lambda$, $w_\\lambda$ becomes negative", "correct": false, "why": "Numerator and denominator stay positive, so $w_\\lambda$ only approaches 0 from above.", "trap": "C11" },
+        { "text": "Doubling $\\lambda$ halves $w_\\lambda$", "correct": false, "why": "$w_\\lambda = \\sum xy/(\\sum x^2 + \\lambda)$ is not proportional to $1/\\lambda$ because of the $\\sum x^2$ term.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $w_0 = \\sum xy/\\sum x^2$, $w_\\lambda = \\sum xy/(\\sum x^2 + \\lambda)$: same positive numerator, bigger denominator, so $0 < w_\\lambda < w_0$.\n2. $w_0$ is the SSE minimiser, so SSE$(w_\\lambda) \\ge$ SSE$(w_0)$.\n3. Doubling $\\lambda$ turns the denominator $\\sum x^2 + \\lambda$ into $\\sum x^2 + 2\\lambda$, which is less than double."
+    },
+    {
+      "id": "ml-ridge-10",
+      "skill": "ml.ridge",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For the data $(1, 2)$ and $(2, 3)$, no-intercept ridge regression with $\\lambda = 3$ minimises $J(w) = \\sum_i (y_i - wx_i)^2 + \\lambda w^2$. The minimum value of $J$ is ______.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 5, "tol": 0.01 },
+      "traps": [
+        { "value": 2, "why": "Reported only the squared-error part; the penalty $\\lambda w^2 = 3$ also belongs to $J$.", "trap": "C6" },
+        { "value": 0.2, "why": "Gave the OLS SSE at $w = 1.6$; the ridge objective has a different minimiser.", "trap": "C2" },
+        { "value": 7.88, "why": "Plugged the OLS weight $1.6$ into $J$; $J$ is minimised at the ridge weight $w = 1$.", "trap": "C3" }
+      ],
+      "solution": "1. $w = \\sum xy/(\\sum x^2 + \\lambda) = 8/(5 + 3) = 1$.\n2. Residuals $2 - 1 = 1$ and $3 - 2 = 1$, so the squared-error part is $2$.\n3. $J = 2 + 3 \\times 1^2 = 5$ (check: $\\sum y^2 - (\\sum xy)^2/(\\sum x^2 + \\lambda) = 13 - 8 = 5$)."
+    },
+    {
+      "id": "ml-ridge-11",
+      "skill": "ml.ridge",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Gradient descent with step size $\\eta$ is run on $J(w) = \\sum_i (y_i - w^\\top x_i)^2 + \\lambda\\lVert w\\rVert^2$. In the update $w \\leftarrow w - \\eta\\,\\nabla J(w)$, the part contributed by the penalty term is",
+      "figure": null,
+      "options": [
+        { "text": "$-\\eta\\lambda$ added to every weight", "correct": false, "why": "Treated the penalty's gradient as the constant $\\lambda$; the derivative of $\\lambda w_j^2$ is $2\\lambda w_j$.", "trap": "C3" },
+        { "text": "$-2\\eta\\lambda w$, so each step scales $w$ by $(1 - 2\\eta\\lambda)$ before the data term", "correct": true, "why": "$\\nabla(\\lambda\\lVert w\\rVert^2) = 2\\lambda w$; this is why the L2 penalty is called weight decay." },
+        { "text": "$+2\\eta\\lambda w$, pushing the weights away from zero", "correct": false, "why": "Sign slip: the update subtracts the gradient, so the penalty pulls weights toward 0.", "trap": "C11" },
+        { "text": "$-\\eta\\lambda\\,\\text{sign}(w)$", "correct": false, "why": "That is the subgradient step of the L1 (lasso) penalty $\\lambda\\lVert w\\rVert_1$.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\nabla(\\lambda\\lVert w\\rVert^2) = 2\\lambda w$.\n2. Its share of the step is $-\\eta \\cdot 2\\lambda w$, so $w \\leftarrow (1 - 2\\eta\\lambda)w - \\eta\\,\\nabla\\text{SSE}$: the weights decay toward 0 every step."
+    },
+    {
+      "id": "ml-ridge-12",
+      "skill": "ml.ridge",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Ridge regression is trained for several values of $\\lambda$. The mean squared errors are\n\n| $\\lambda$ | 0.01 | 0.1 | 1 | 10 | 100 |\n|---|---|---|---|---|---|\n| training MSE | 2.0 | 2.1 | 2.5 | 4.0 | 9.0 |\n| validation MSE | 8.0 | 5.0 | 3.2 | 4.5 | 9.5 |\n\nWhich $\\lambda$ should be chosen?",
+      "figure": null,
+      "options": [
+        { "text": "$0.01$", "correct": false, "why": "Picked the lowest training error; a tiny $\\lambda$ overfits (low bias, high variance), as the validation MSE of 8.0 shows.", "trap": "C9" },
+        { "text": "$1$", "correct": true, "why": "Smallest validation MSE (3.2): the best balance between bias and variance." },
+        { "text": "$100$", "correct": false, "why": "More shrinkage is not automatically better; here it underfits, with high training and validation error.", "trap": "C11" },
+        { "text": "$10$", "correct": false, "why": "Its validation MSE (4.5) is higher than at $\\lambda = 1$; the minimum of the validation row was misread.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Choose hyperparameters on the validation set, not the training set.\n2. Validation MSE is smallest (3.2) at $\\lambda = 1$.\n3. Training MSE rises steadily with $\\lambda$, as it always does for ridge: more bias, less variance."
+    },
+    {
+      "id": "ml-logistic-07",
+      "skill": "ml.logistic",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A logistic regression model has $w = (1, -2, 0.5)$ and $b = -1$. For the input $x = (2, 1, 4)$, the predicted probability of class **0**, $P(y = 0 \\mid x)$, is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.27, "tol": 0.01 },
+      "traps": [
+        { "value": 0.73, "why": "Gave $P(y = 1 \\mid x) = \\sigma(1)$; class 0 has probability $1 - \\sigma(z) = \\sigma(-z)$.", "trap": "C2" },
+        { "value": 1, "why": "Reported the score $z = w^\\top x + b$ itself, without applying the sigmoid.", "trap": "C6" },
+        { "value": 0.12, "why": "Forgot the bias $b = -1$, so $z = 2$ and $1 - \\sigma(2) = 0.12$.", "trap": "C6" }
+      ],
+      "solution": "1. $z = 1(2) - 2(1) + 0.5(4) - 1 = 1$.\n2. $P(y = 1 \\mid x) = \\sigma(1) = 1/(1 + e^{-1}) \\approx 0.731$.\n3. $P(y = 0 \\mid x) = 1 - 0.731 \\approx 0.27$."
+    },
+    {
+      "id": "ml-logistic-08",
+      "skill": "ml.logistic",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "In a logistic regression model, the coefficient of feature $x_3$ is $w_3 = 0.7$. If $x_3$ increases by 1 and all other features stay fixed, then",
+      "figure": null,
+      "options": [
+        { "text": "the probability $P(y = 1 \\mid x)$ is multiplied by $e^{0.7}$", "correct": false, "why": "The multiplicative effect is on the odds $p/(1-p)$, not on the probability.", "trap": "C3" },
+        { "text": "the odds $p/(1 - p)$ are multiplied by $e^{0.7} \\approx 2.01$", "correct": true, "why": "The log-odds $w^\\top x + b$ rise by $0.7$, so the odds are multiplied by $e^{0.7}$." },
+        { "text": "the odds $p/(1 - p)$ increase by $0.7$", "correct": false, "why": "The $+0.7$ is added to the log-odds; the odds change by a factor, not by an amount.", "trap": "C10" },
+        { "text": "the probability $P(y = 1 \\mid x)$ increases by $0.7$", "correct": false, "why": "The probability is not linear in $x$; its change depends on where on the sigmoid the point starts.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\ln\\frac{p}{1-p} = w^\\top x + b$, so raising $x_3$ by 1 adds $w_3 = 0.7$ to the log-odds.\n2. The odds $e^{w^\\top x + b}$ get multiplied by $e^{0.7} \\approx 2.01$.\n3. The change in $p$ itself depends on the starting point."
+    },
+    {
+      "id": "ml-logistic-09",
+      "skill": "ml.logistic",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A one-feature logistic model $P(y = 1 \\mid x) = \\sigma(wx + b)$ gives probability $0.5$ at $x = 1$ and probability $0.8$ at $x = 3$. The probability it gives at $x = 5$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.94, "tol": 0.01 },
+      "traps": [
+        { "value": 1.1, "why": "Extrapolated the probability linearly ($+0.3$ per 2 units); only the log-odds are linear in $x$.", "trap": "C9" },
+        { "value": 0.88, "why": "Made the odds rise by equal steps ($1 \\to 4 \\to 7$); equal steps in log-odds multiply the odds: $1 \\to 4 \\to 16$.", "trap": "C3" },
+        { "value": 0.64, "why": "Squared the probability 0.8; it is the odds that square ($4^2 = 16$), not the probability.", "trap": "C4" }
+      ],
+      "solution": "1. $p = 0.5$ at $x = 1$ gives $w + b = 0$; $p = 0.8$ at $x = 3$ gives $3w + b = \\ln 4$.\n2. So $2w = \\ln 4$, $w = \\ln 2$, $b = -\\ln 2$.\n3. At $x = 5$: $z = 4\\ln 2 = \\ln 16$, so $p = 16/17 \\approx 0.94$."
+    },
+    {
+      "id": "ml-logistic-10",
+      "skill": "ml.logistic",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Given $\\sigma(2) \\approx 0.88$ for the sigmoid $\\sigma(z) = 1/(1 + e^{-z})$, the value of $\\sigma(-2)$ is approximately",
+      "figure": null,
+      "options": [
+        { "text": "$-0.88$", "correct": false, "why": "The sigmoid is never negative; it is not an odd function.", "trap": "C11" },
+        { "text": "$0.12$", "correct": true, "why": "$\\sigma(-z) = 1 - \\sigma(z) = 1 - 0.88$." },
+        { "text": "$0.88$", "correct": false, "why": "Treated the sigmoid as an even function; it is symmetric about the point $(0, 0.5)$, not about the axis $z = 0$.", "trap": "C8" },
+        { "text": "$1.14$", "correct": false, "why": "Took the reciprocal $1/0.88$; a probability cannot exceed 1.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\sigma(-z) = \\frac{1}{1 + e^{z}} = \\frac{e^{-z}}{e^{-z} + 1} = 1 - \\sigma(z)$.\n2. $\\sigma(-2) = 1 - 0.88 = 0.12$."
+    },
+    {
+      "id": "ml-logistic-11",
+      "skill": "ml.logistic",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A logistic regression classifier uses $P(y = 1 \\mid x) = \\sigma(2x_1 - x_2 + 1)$ with threshold 0.5. Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "The point $(0, 1)$ lies exactly on the decision boundary", "correct": true, "why": "$z = 0 - 1 + 1 = 0$, so $p = 0.5$." },
+        { "text": "The point $(1, 0)$ is predicted class 1 with probability greater than 0.9", "correct": true, "why": "$z = 3$ and $\\sigma(3) \\approx 0.953$." },
+        { "text": "Increasing $x_2$ (with $x_1$ fixed) increases $P(y = 1 \\mid x)$", "correct": false, "why": "The coefficient of $x_2$ is $-1$, so a larger $x_2$ lowers $z$ and the probability.", "trap": "C11" },
+        { "text": "Replacing the score by $4x_1 - 2x_2 + 2$ moves the decision boundary", "correct": false, "why": "The boundary $z = 0$ is still the line $2x_1 - x_2 + 1 = 0$; scaling only makes the probabilities sharper.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. At threshold 0.5 the boundary is $z = 0$: $2x_1 - x_2 + 1 = 0$. At $(0, 1)$, $z = 0$.\n2. At $(1, 0)$, $z = 3$ and $\\sigma(3) \\approx 0.953 > 0.9$.\n3. $\\partial z/\\partial x_2 = -1 < 0$. Doubling every coefficient gives $2z = 0$, the same line."
+    },
+    {
+      "id": "ml-logistic-12",
+      "skill": "ml.logistic",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Logistic regression with $\\hat p = \\sigma(w^\\top x + b)$ is trained by SGD on the cross-entropy loss with learning rate $\\eta = 0.5$. The current parameters are $w = (0.5, -1)$ and $b = 0$. One step is taken on the example $x = (2, 1)$, $y = 1$. The new value of $w_1$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1.0, "tol": 0.01 },
+      "traps": [
+        { "value": 0, "why": "Added the gradient instead of subtracting it (sign slip in $w - \\eta\\nabla L$).", "trap": "C11" },
+        { "value": 1.5, "why": "Forgot the learning rate $\\eta = 0.5$.", "trap": "C6" },
+        { "value": 0.63, "why": "Included an extra factor $\\hat p(1 - \\hat p)$ as for squared loss; with cross-entropy it cancels.", "trap": "C3" }
+      ],
+      "solution": "1. $z = 0.5(2) - 1(1) + 0 = 0$, so $\\hat p = 0.5$.\n2. Gradient: $\\partial L/\\partial w = (\\hat p - y)x = -0.5 \\times (2, 1) = (-1, -0.5)$.\n3. $w_1 \\leftarrow 0.5 - 0.5 \\times (-1) = 1.0$."
+    },
+    {
+      "id": "ml-logistic-13",
+      "skill": "ml.logistic",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For a single example the cross-entropy loss is $-[y\\ln\\hat p + (1 - y)\\ln(1 - \\hat p)]$, where $\\hat p = P(y = 1 \\mid x)$. Which (true label, $\\hat p$) pair gives the **largest** loss?",
+      "figure": null,
+      "options": [
+        { "text": "$y = 0$, $\\hat p = 0.7$", "correct": false, "why": "Loss $= -\\ln 0.3 \\approx 1.20$. It is on the wrong side, but the true class still gets 0.3, more than 0.1.", "trap": "C10" },
+        { "text": "$y = 1$, $\\hat p = 0.6$", "correct": false, "why": "Loss $= -\\ln 0.6 \\approx 0.51$: the prediction is on the correct side of 0.5, so the loss is small.", "trap": "C9" },
+        { "text": "$y = 1$, $\\hat p = 0.1$", "correct": true, "why": "Loss $= -\\ln 0.1 \\approx 2.30$: the model gives only 0.1 to the true class." },
+        { "text": "$y = 0$, $\\hat p = 0.4$", "correct": false, "why": "Loss $= -\\ln(1 - 0.4) \\approx 0.51$; for $y = 0$ use $1 - \\hat p$, not $\\hat p$ (which would wrongly give $-\\ln 0.4$).", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. The loss is $-\\ln(\\text{probability given to the true class})$.\n2. True-class probabilities: $0.3$, $0.6$, $0.1$, $0.6$.\n3. The smallest is $0.1$, so $y = 1$, $\\hat p = 0.1$ has the largest loss, $\\ln 10 \\approx 2.30$."
+    },
+    {
+      "id": "ml-logistic-14",
+      "skill": "ml.logistic",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A logistic regression model gives the scores $z = w^\\top x + b$ below for five test points.\n\n| point | P1 | P2 | P3 | P4 | P5 |\n|---|---|---|---|---|---|\n| $z$ | −1 | 0.5 | 1.8 | 2.5 | 3.0 |\n\nA point is labelled class 1 only if $\\sigma(z) \\ge 0.9$. How many of the five points are labelled class 1?",
+      "figure": null,
+      "options": [
+        { "text": "$4$", "correct": false, "why": "Used the default rule $z > 0$ (threshold 0.5) instead of the stricter threshold 0.9.", "trap": "C6" },
+        { "text": "$3$", "correct": false, "why": "Compared $z$ itself with 0.9; the cut-off on $z$ is $\\ln(0.9/0.1) = \\ln 9 \\approx 2.20$, so $z = 1.8$ ($\\sigma \\approx 0.86$) fails.", "trap": "C10" },
+        { "text": "$2$", "correct": true, "why": "$\\sigma(z) \\ge 0.9 \\iff z \\ge \\ln 9 \\approx 2.20$: only P4 and P5 pass." },
+        { "text": "$0$", "correct": false, "why": "Compared $z$ with the odds $9$, forgetting the log; the cut-off is $\\ln 9$, not $9$.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\sigma(z) \\ge t \\iff z \\ge \\ln\\frac{t}{1-t}$. For $t = 0.9$: $z \\ge \\ln 9 \\approx 2.197$.\n2. Scores of at least 2.197: P4 (2.5) and P5 (3.0). Check: $\\sigma(1.8) \\approx 0.858 < 0.9$.\n3. Two points are labelled class 1."
+    },
+    {
+      "id": "ml-logistic-15",
+      "skill": "ml.logistic",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about the sigmoid $\\sigma(z) = 1/(1 + e^{-z})$ are true?",
+      "figure": null,
+      "options": [
+        { "text": "$\\sigma(0) = 0.5$", "correct": true, "why": "$e^0 = 1$, so $\\sigma(0) = 1/2$." },
+        { "text": "The derivative $\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))$ is largest at $z = 0$, where it equals $0.25$", "correct": true, "why": "$p(1 - p)$ is maximised at $p = 0.5$, which happens at $z = 0$, giving $0.25$." },
+        { "text": "$\\sigma(z)$ is strictly increasing in $z$", "correct": true, "why": "$\\sigma'(z) = \\sigma(z)(1 - \\sigma(z)) > 0$ for every $z$, since $0 < \\sigma(z) < 1$." },
+        { "text": "The log-odds $\\ln\\frac{\\sigma(z)}{1 - \\sigma(z)}$ always lies in $[0, 1]$", "correct": false, "why": "The log-odds equals $z$ itself and can be any real number; it is $\\sigma(z)$ that lies in $(0, 1)$.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\sigma(0) = 1/2$.\n2. $\\sigma' = \\sigma(1 - \\sigma)$ is a parabola in $\\sigma$ with maximum $0.25$ at $\\sigma = 0.5$, i.e. $z = 0$.\n3. $0 < \\sigma(z) < 1$ for all $z$, so $\\sigma' > 0$ and $\\sigma$ is strictly increasing, while $\\ln\\frac{\\sigma}{1-\\sigma} = z$ ranges over all reals."
+    },
+    {
+      "id": "ml-logistic-16",
+      "skill": "ml.logistic",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A one-feature logistic model $\\hat p = \\sigma(2x - 1)$ is evaluated on two training points, $(x = 0, y = 0)$ and $(x = 1, y = 1)$. The **average** cross-entropy loss (natural log) over the two points is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.31, "tol": 0.01 },
+      "traps": [
+        { "value": 0.63, "why": "Summed the two losses instead of averaging them.", "trap": "C6" },
+        { "value": 0.81, "why": "Used $-\\ln\\hat p$ for the $y = 0$ point too; for $y = 0$ the loss is $-\\ln(1 - \\hat p)$.", "trap": "C2" },
+        { "value": 0.14, "why": "Used $\\log_{10}$ instead of the natural log.", "trap": "C3" }
+      ],
+      "solution": "1. Point 1: $z = -1$, $\\hat p = \\sigma(-1) \\approx 0.269$; $y = 0$, so the loss is $-\\ln 0.731 \\approx 0.313$.\n2. Point 2: $z = 1$, $\\hat p \\approx 0.731$; $y = 1$, so the loss is $-\\ln 0.731 \\approx 0.313$.\n3. Average $= (0.313 + 0.313)/2 \\approx 0.31$."
+    },
+    {
+      "id": "ml-knn-06",
+      "skill": "ml.knn",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A k-NN classifier on one feature (distance $|x - x_0|$, majority vote) uses the training set\n\n| $x$ | 1 | 2 | 3.5 | 6 | 7 |\n|---|---|---|---|---|---|\n| class | A | A | B | B | B |\n\nThe query is $x_0 = 3$. For which values of $k \\in \\{1, 3, 5\\}$ is the prediction **A**?",
+      "figure": null,
+      "options": [
+        { "text": "$k = 1$ and $k = 3$", "correct": false, "why": "The single nearest point is 3.5 (distance 0.5, class B), not 2 (distance 1).", "trap": "C6" },
+        { "text": "Only $k = 3$", "correct": true, "why": "Sorted: 3.5 B (0.5), 2 A (1), 1 A (2), 6 B (3), 7 B (4). $k = 1$ gives B, $k = 3$ gives 2 A vs 1 B, $k = 5$ gives 3 B vs 2 A." },
+        { "text": "All three values", "correct": false, "why": "$k = 5$ uses every point, so it predicts the overall majority B (3 of 5).", "trap": "C9" },
+        { "text": "None of them", "correct": false, "why": "Let the nearest point 3.5 decide every case; at $k = 3$ the two A points at distances 1 and 2 outvote it.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Distances from 3: 3.5 → 0.5 (B), 2 → 1 (A), 1 → 2 (A), 6 → 3 (B), 7 → 4 (B).\n2. $k = 1$: B. $k = 3$: B, A, A → A. $k = 5$: 3 B vs 2 A → B.\n3. Only $k = 3$ predicts A."
+    },
+    {
+      "id": "ml-knn-07",
+      "skill": "ml.knn",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "k-NN **regression** with $k = 3$ (prediction = mean target of the 3 nearest points, Euclidean distance) uses\n\n| point | $x_1$ | $x_2$ | $y$ |\n|---|---|---|---|\n| P1 | 1 | 2 | 5 |\n| P2 | 2 | 1 | 9 |\n| P3 | 0 | 3 | 2 |\n| P4 | 3 | 3 | 4 |\n| P5 | 4 | 1 | 12 |\n\nThe prediction at the query $(1, 1)$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 5.33, "tol": 0.01 },
+      "traps": [
+        { "value": 6.4, "why": "Averaged all five targets; only the 3 nearest points count.", "trap": "C6" },
+        { "value": 7, "why": "Used only the 2 nearest points (P1 and P2).", "trap": "C6" },
+        { "value": 6, "why": "Took P4 ($\\sqrt 8 \\approx 2.83$) as the third neighbour instead of P3 ($\\sqrt 5 \\approx 2.24$).", "trap": "C10" }
+      ],
+      "solution": "1. Squared distances from $(1, 1)$: P1 1, P2 1, P3 5, P4 8, P5 9.\n2. The 3 nearest are P1, P2, P3 with targets 5, 9, 2.\n3. Prediction $= (5 + 9 + 2)/3 = 16/3 \\approx 5.33$."
+    },
+    {
+      "id": "ml-knn-08",
+      "skill": "ml.knn",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 1-NN classifier has three training points: P $= (2, 2)$ class A, Q $= (3, 0)$ class B, R $= (0, -3.5)$ class A. The query is $(0, 0)$. Compare the prediction using Euclidean distance with the prediction using Manhattan distance $|\\Delta x_1| + |\\Delta x_2|$.",
+      "figure": null,
+      "options": [
+        { "text": "A under both distances", "correct": false, "why": "Under Manhattan, P is at $2 + 2 = 4$, farther than Q at 3, so the nearest point changes.", "trap": "C9" },
+        { "text": "A with Euclidean, B with Manhattan", "correct": true, "why": "Euclidean: P $\\approx 2.83$ < Q $= 3$ < R $= 3.5$. Manhattan: Q $= 3$ < R $= 3.5$ < P $= 4$." },
+        { "text": "B with Euclidean, A with Manhattan", "correct": false, "why": "Swapped the two metrics: a diagonal offset is shorter in Euclidean and longer in Manhattan.", "trap": "C2" },
+        { "text": "B under both distances", "correct": false, "why": "Under Euclidean, P is at $\\sqrt 8 \\approx 2.83$, closer than Q at 3.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Euclidean: P $= \\sqrt 8 \\approx 2.83$, Q $= 3$, R $= 3.5$; nearest is P, class A.\n2. Manhattan: P $= 4$, Q $= 3$, R $= 3.5$; nearest is Q, class B.\n3. The off-axis point P loses most when switching to Manhattan, so the metric changes the answer."
+    },
+    {
+      "id": "ml-knn-09",
+      "skill": "ml.knn",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about k-NN classification with Euclidean distance are true?",
+      "figure": null,
+      "options": [
+        { "text": "With two classes, choosing an odd $k$ avoids a tied vote", "correct": true, "why": "An odd number of votes split between two classes cannot be equal." },
+        { "text": "Adding many irrelevant (pure noise) features can lower the accuracy", "correct": true, "why": "Noise features add random amounts to every distance, so the truly similar points get mixed with far ones." },
+        { "text": "Multiplying every feature by the same constant 10 changes the predictions", "correct": false, "why": "All distances scale by 10, so their order and the chosen neighbours stay the same; only unequal scaling of features matters.", "trap": "C9" },
+        { "text": "With $k = n$ (all training points), the prediction depends on where the query is", "correct": false, "why": "Every query gets the same $n$ neighbours, so the prediction is always the overall majority class.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Two classes and odd $k$: one class must get more votes.\n2. Irrelevant features inflate distances with noise (curse of dimensionality), which hurts the neighbour choice.\n3. Uniform scaling preserves the ranking of distances; per-feature scaling is what matters.\n4. $k = n$ always predicts the overall majority."
+    },
+    {
+      "id": "ml-knn-10",
+      "skill": "ml.knn",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Feature 1 ranges over $[0, 10]$ and feature 2 over $[0, 1000]$. Both are min–max scaled to $[0, 1]$ using these ranges. The Euclidean distance between $P = (2, 300)$ and $Q = (7, 400)$ **after scaling** is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.51, "tol": 0.01 },
+      "traps": [
+        { "value": 100.12, "why": "Used the raw values; feature 2 then dominates the distance.", "trap": "C9" },
+        { "value": 0.6, "why": "Used the Manhattan distance $0.5 + 0.1$.", "trap": "C3" },
+        { "value": 0.26, "why": "Forgot the square root: $0.25 + 0.01$ is the squared distance.", "trap": "C4" }
+      ],
+      "solution": "1. Scaled: $P = (0.2, 0.3)$, $Q = (0.7, 0.4)$.\n2. Differences: $0.5$ and $0.1$.\n3. Distance $= \\sqrt{0.25 + 0.01} = \\sqrt{0.26} \\approx 0.51$."
+    },
+    {
+      "id": "ml-knn-11",
+      "skill": "ml.knn",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A training set has 7 points of class A and 5 points of class B (12 distinct points). A k-NN classifier with $k = 12$ is used. For a new query point, the prediction is",
+      "figure": null,
+      "options": [
+        { "text": "The class of the training point nearest to the query", "correct": false, "why": "That is the 1-NN rule; with $k = 12$ the nearest point is just one of 12 votes.", "trap": "C6" },
+        { "text": "A or B, depending on where the query is", "correct": false, "why": "All 12 points are neighbours of every query, so the location never changes the vote.", "trap": "C8" },
+        { "text": "Undefined, because the vote is tied", "correct": false, "why": "7 against 5 is not a tie; a tie needs equal counts.", "trap": "C6" },
+        { "text": "Always A, wherever the query is", "correct": true, "why": "With $k = n$ every point votes, so the vote is always 7 A to 5 B." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $k = 12 = n$: all training points are neighbours of any query.\n2. The vote is always 7 A vs 5 B, so the prediction is A everywhere (a constant classifier with maximum bias)."
+    },
+    {
+      "id": "ml-knn-12",
+      "skill": "ml.knn",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Leave-one-out evaluation of a **1-NN** classifier (distance $|x - x'|$) is done on the training set\n\n| $x$ | 1 | 2 | 4 | 5 | 7 | 8 |\n|---|---|---|---|---|---|---|\n| class | A | A | B | A | B | B |\n\nEach point is removed in turn and classified by its nearest neighbour among the remaining five. The number of points misclassified is ______.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2, "tol": 0 },
+      "traps": [
+        { "value": 0, "why": "Kept each point in the training set while classifying it, so it was its own nearest neighbour (that is the 1-NN training error).", "trap": "C6" },
+        { "value": 4, "why": "Counted the correctly classified points instead of the errors.", "trap": "C11" }
+      ],
+      "solution": "1. $x = 1$: nearest 2 (A), correct. $x = 2$: nearest 1 (A), correct. $x = 4$: nearest 5 (A), wrong.\n2. $x = 5$: nearest 4 (B), wrong. $x = 7$: nearest 8 (B), correct. $x = 8$: nearest 7 (B), correct.\n3. Misclassified: $x = 4$ and $x = 5$, so 2 errors."
+    },
+    {
+      "id": "ml-knn-13",
+      "skill": "ml.knn",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For a query, the 3 nearest neighbours are at distances 1 (class A), 3 (class B) and 3 (class B). Compare plain majority voting with distance-weighted voting (weight $1/d$) for $k = 3$.",
+      "figure": null,
+      "options": [
+        { "text": "B under both rules", "correct": false, "why": "Weighted: A gets $1/1 = 1$, B gets $1/3 + 1/3 = 2/3$, so the close A neighbour wins.", "trap": "C9" },
+        { "text": "A under both rules", "correct": false, "why": "Plain voting just counts neighbours: 2 B against 1 A.", "trap": "C9" },
+        { "text": "B with plain voting, A with weighted voting", "correct": true, "why": "Plain: 2 vs 1 for B. Weighted: A $= 1$ beats B $= 2/3$." },
+        { "text": "A with plain voting, B with weighted voting", "correct": false, "why": "Swapped the rules; it is the weighting that favours the very close A point.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Plain majority: B has 2 votes, A has 1, so B.\n2. Weighted by $1/d$: A $= 1$, B $= 1/3 + 1/3 = 2/3$, so A.\n3. Weighting lets one very close neighbour outvote several distant ones."
+    },
+    {
+      "id": "ml-knn-14",
+      "skill": "ml.knn",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 3-NN classifier on binary feature vectors uses **Hamming distance** (the number of positions that differ). The query is 10110.\n\n| point | vector | class |\n|---|---|---|\n| T1 | 10010 | A |\n| T2 | 11110 | B |\n| T3 | 00111 | B |\n| T4 | 10001 | A |\n| T5 | 01001 | A |\n\nThe predicted class is",
+      "figure": null,
+      "options": [
+        { "text": "A, because A is the majority class of the training set", "correct": false, "why": "That is the $k = n$ prediction; 3-NN uses only the 3 closest vectors.", "trap": "C9" },
+        { "text": "B", "correct": true, "why": "Distances: T1 1, T2 1, T3 2, T4 3, T5 5. The 3 nearest are A, B, B." },
+        { "text": "A, because the 3 vectors with the most differing positions are mostly A", "correct": false, "why": "Picked the farthest points (T5, T4, T3) instead of the nearest; a small Hamming distance means similar.", "trap": "C11" },
+        { "text": "No decision, because T1 and T2 are tied", "correct": false, "why": "A distance tie inside the top 3 does not matter: both are neighbours, and the vote is 2 B to 1 A.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Compare position by position with 10110: T1 1, T2 1, T3 2, T4 3, T5 5.\n2. The 3 nearest are T1 (A), T2 (B), T3 (B).\n3. The vote is 2 B vs 1 A, so B."
+    },
+    {
+      "id": "ml-knn-15",
+      "skill": "ml.knn",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A k-NN classifier on one feature (distance $|x - x_0|$, majority vote) uses the training set\n\n| $x$ | 6.8 | 7.5 | 8.5 | 11 | 12 | 13 | 14.5 |\n|---|---|---|---|---|---|---|---|\n| class | B | B | A | A | B | B | A |\n\nThe query is $x_0 = 10$. The smallest **odd** $k$ for which the vote predicts class B is ______.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 5, "tol": 0 },
+      "traps": [
+        { "value": 3, "why": "Stopped at the third neighbour (12, B); at $k = 3$ the vote is still 2 A vs 1 B.", "trap": "C6" },
+        { "value": 4, "why": "Gave an even $k$; at $k = 4$ the vote is a 2–2 tie, and the question asks for an odd $k$.", "trap": "C5" },
+        { "value": 7, "why": "Took $k = n$ (overall majority); B already wins at a smaller $k$.", "trap": "C6" }
+      ],
+      "solution": "1. Distances from 10: 11 → 1 (A), 8.5 → 1.5 (A), 12 → 2 (B), 7.5 → 2.5 (B), 13 → 3 (B), 6.8 → 3.2 (B), 14.5 → 4.5 (A).\n2. $k = 1$: A. $k = 3$: 2 A vs 1 B → A. $k = 5$: 2 A vs 3 B → B.\n3. The smallest odd $k$ is 5."
+    },
+    {
+      "id": "ml-knn-16",
+      "skill": "ml.knn",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about the k-NN classifier are true?",
+      "figure": null,
+      "options": [
+        { "text": "It is non-parametric: it keeps the training data instead of a fixed-size set of parameters", "correct": true, "why": "The model is the stored training set, so its size grows with $n$." },
+        { "text": "It is an eager learner: most of the computation happens during training, so each prediction is $O(1)$", "correct": false, "why": "Reversed: k-NN is lazy. Training only stores the data; each prediction computes distances to all $n$ points.", "trap": "C2" },
+        { "text": "Training learns a weight vector that is then used to classify new points", "correct": false, "why": "That describes linear models such as logistic regression; k-NN learns no weights.", "trap": "C2" },
+        { "text": "The decision boundary of 1-NN is always a straight line (hyperplane)", "correct": false, "why": "The 1-NN boundary is made of pieces of perpendicular bisectors (Voronoi cells) and is generally nonlinear.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. k-NN stores the training set (non-parametric, instance-based).\n2. There is no fitting step; each prediction computes $n$ distances (lazy, not eager, learning).\n3. The 1-NN boundary follows the Voronoi cells of the training points: piecewise linear, usually not a single hyperplane."
+    }
+  ]
+}

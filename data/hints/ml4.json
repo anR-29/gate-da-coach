@@ -1,0 +1,207 @@
+{
+  "ml-naive-bayes-07": [
+    "Teen classes hain aur priors alag-alag ($0.5, 0.3, 0.2$). Sirf likelihood dekh ke $C_3$ ko jitaana galat hoga — prior bhi multiply hota hai.",
+    "Har class ka score $= P(c)\\,P(x \\mid c)$. Phir $P(C_3 \\mid x) = \\text{score}(C_3)/(\\text{teeno scores ka sum})$.",
+    "Scores: $C_1 = 0.5 \\times 0.2 = 0.10$, $C_2 = 0.3 \\times 0.5 = 0.15$. Ab $C_3$ ka score aur total nikaalo. Trap: unnormalised score hi likh dena."
+  ],
+  "ml-naive-bayes-08": [
+    "Likelihood $A$ ke favour mein hai ($0.6 > 0.2$), par prior $B$ ke favour mein ($0.8$). Decision dono ke product se hota hai.",
+    "Compare karo $P(A)P(x \\mid A)$ vs $P(B)P(x \\mid B)$. Denominator $P(x)$ dono mein same hai, toh cancel ho jaata hai.",
+    "$P(A)P(x \\mid A) = 0.2 \\times 0.6 = 0.12$. Ab $B$ ka product nikaalo aur dekho kaunsa bada hai. Trap: sirf likelihood compare karna."
+  ],
+  "ml-naive-bayes-09": [
+    "Neg class mein $F_1$ kabhi present nahi hua (0 of 6) — bina smoothing ke Neg ka score zero ho jaata. Isliye Laplace yahan zaroori hai.",
+    "Binary feature: $P(F = v \\mid c) = (\\text{count} + 1)/(N_c + 2)$. Score $= P(c) \\cdot P(F_1{=}1 \\mid c) \\cdot P(F_2{=}0 \\mid c)$, priors $0.4$ aur $0.6$.",
+    "Neg: $P(F_1{=}1) = 1/8$, $P(F_2{=}0) = (3+1)/8 = 4/8$. Ab Pos ke dono smoothed values ($N = 4$, denominator 6) nikaalo. Trap: denominator mein sirf $+1$."
+  ],
+  "ml-naive-bayes-10": [
+    "Multinomial model hai aur document mein *cheap* do baar aaya hai — har occurrence alag factor deta hai. Spam mein *meeting* ka count zero hai, par smoothing on hai.",
+    "$P(w \\mid c) = (\\text{count} + 1)/(8 + 4)$. Score $\\propto P(\\textit{cheap} \\mid c)^2 \\cdot P(\\textit{meeting} \\mid c)$; equal priors cancel.",
+    "Spam: cheap $= 5/12$, meeting $= 1/12$. Ab ham ke smoothed values likho aur dono scores compare karo. Trap: *cheap* ko ek hi baar ginna."
+  ],
+  "ml-naive-bayes-11": [
+    "Char alag claims: class-independent factor, evidence $P(x)$, generative vs discriminative, aur assumption ka sach hona. Har ek ko Bayes rule se judge karo.",
+    "$P(c \\mid x) = P(c)\\prod_j P(x_j \\mid c) / P(x)$. Jo factor har class mein same ho, wo normalise karte waqt cancel hota hai.",
+    "Option 2: agar $P(x_j{=}v \\mid c)$ sab classes ke liye equal hai toh har score same number se multiply hua — ratio badla? NB $P(x \\mid y)$ model karta hai ya $P(y \\mid x)$?"
+  ],
+  "ml-naive-bayes-12": [
+    "\"Independent\" parameters gino: jo numbers baaki se nikal aate hain (jaise $1 - p$), wo free nahi hain.",
+    "Prior: 2 classes ⇒ 1 free number. Har class aur har binary feature ke liye sirf $P(x_j{=}1 \\mid c)$ free hai, kyunki $P(x_j{=}0 \\mid c) = 1 - P(x_j{=}1 \\mid c)$.",
+    "Feature parameters $=$ (classes) $\\times$ (features) $= 2 \\times 10$. Ab prior wala add karo. Trap: $P(x_j{=}0)$ ko alag ginna, ya full joint table ginna."
+  ],
+  "ml-naive-bayes-13": [
+    "Variances alag hain (1 aur 4), toh Gaussian density ka front factor $1/\\sigma$ bhi matter karega, sirf exponent nahi.",
+    "$p(x \\mid c) = \\frac{1}{\\sigma\\sqrt{2\\pi}}e^{-(x-\\mu)^2/(2\\sigma^2)}$. $A$: $\\sigma = 1$, $\\mu = 2$; $B$: $\\sigma = 2$, $\\mu = 5$. Equal priors, toh densities ka ratio hi posterior ratio hai.",
+    "$A$ ka exponent: $-(3-2)^2/2 = -0.5$. $B$ ka exponent $-(3-5)^2/8$ — ye bhi nikaalo, phir $1/\\sigma$ factors compare karo. Trap: exponent mein $\\sigma$ use karna, $\\sigma^2$ nahi."
+  ],
+  "ml-naive-bayes-14": [
+    "Model Bernoulli hai: har word ek alag binary feature (present/absent). Vocabulary size 50 yahan denominator mein nahi aata.",
+    "Laplace binary feature ke liye: $(\\text{count} + 1)/(N_c + 2)$, kyunki do outcomes hain. Yahan count $= 0$, $N_c = 8$.",
+    "Numerator $0 + 1 = 1$. Ab denominator $8 + (\\text{outcomes ki sankhya})$ likho. Trap: multinomial wala $+V$ ya sirf $+1$ lagana."
+  ],
+  "ml-naive-bayes-15": [
+    "\"Prediction galat hone ki probability\" $= 1 - \\max$ posterior. Pehle teeno posteriors chahiye, priors ke saath.",
+    "Score$(c) = P(c)P(x \\mid c)$; posterior $=$ score / sum. Error $= 1 - \\max_c P(c \\mid x)$.",
+    "Scores: $C_1 = 0.2 \\times 0.5 = 0.10$, $C_2 = 0.3 \\times 0.4 = 0.12$. $C_3$ ka score aur total nikaalo. Trap: max posterior ko hi error bol dena."
+  ],
+  "ml-naive-bayes-16": [
+    "Char claims: log-scores, $\\alpha \\to \\infty$ smoothing, smoothing kab decision badalta hai, aur NB ka parameter count. Har ek ko formula se check karo.",
+    "Add-$\\alpha$: $P(w \\mid c) = (n_w + \\alpha)/(N_c + \\alpha V)$. NB: $P(x \\mid c) = \\prod_j P(x_j \\mid c)$ — har feature ki apni chhoti table.",
+    "Option 2 test karo: counts $1/1$ vs $5/10$ (bina smoothing), aur $V = 10$ ke saath $(1+1)/(1+10)$ vs $(5+1)/(10+10)$ — kaunsa bada hai?"
+  ],
+  "ml-lda-06": [
+    "Fisher direction sirf mean difference nahi hai — $S_W$ ka inverse bhi lagta hai. Yahan $S_W$ diagonal hai, toh inverse aasaan hai.",
+    "$w \\propto S_W^{-1}(\\mu_1 - \\mu_2)$, aur $S_W^{-1} = \\operatorname{diag}(1/2, 1)$. Phir $w$ ko itna scale karo ki pehla component 1 ho.",
+    "Pehla component: $4/2 = 2$. Doosra component nikaalo, phir dono ko 2 se divide karo. Trap: $S_W$ se multiply kar dena, ya seedha $(4, -2)$ lena."
+  ],
+  "ml-lda-07": [
+    "Covariances alag hain ($I$ aur $4I$) — LDA ki shared-covariance condition yahan nahi hai. Boundary ka shape quadratic terms se tay hoga.",
+    "$\\ln p_1 - \\ln p_2$ mein $-\\frac12\\lVert x - \\mu_1\\rVert^2$ aur $+\\frac18\\lVert x - \\mu_2\\rVert^2$ aate hain. Check karo $\\lVert x\\rVert^2$ cancel hota hai ya nahi.",
+    "$\\lVert x\\rVert^2$ ka coefficient $-\\frac12 + \\frac18$ — zero hai kya? Agar nahi, aur dono covariances $I$ ke multiple hain, toh $a\\lVert x\\rVert^2 + (\\text{linear}) = \\text{const}$ kaunsa curve hai?"
+  ],
+  "ml-lda-08": [
+    "Variance same (9), par prior class 2 ka bada (0.8). Threshold midpoint 7 se hatega — class 2 ka region badhna chahiye.",
+    "$t = \\frac{\\mu_1 + \\mu_2}{2} + \\frac{\\sigma^2\\ln(\\pi_1/\\pi_2)}{\\mu_2 - \\mu_1}$ with $\\mu_1 = 10$, $\\mu_2 = 4$, $\\sigma^2 = 9$, $\\pi_1 = 0.2$, $\\pi_2 = 0.8$.",
+    "$\\ln(0.2/0.8) = \\ln 0.25 \\approx -1.386$ aur $\\mu_2 - \\mu_1 = -6$. Ab shift $9 \\times (-1.386)/(-6)$ nikaalo aur 7 mein jodo. Trap: $\\sigma = 3$ use karna."
+  ],
+  "ml-lda-09": [
+    "Mean difference $(2, 2)$ hai, par $S_W$ diagonal nahi — $x_1$ direction mein spread zyada hai. Fisher direction mean difference se tilt hogi.",
+    "$w \\propto S_W^{-1}(\\mu_1 - \\mu_2)$. 2×2 inverse: $\\frac{1}{ad - bc}\\begin{pmatrix} d & -b \\\\ -c & a \\end{pmatrix}$, yahan $\\det = 4 \\cdot 2 - 2 \\cdot 2 = 4$.",
+    "$S_W^{-1} = \\frac14\\begin{pmatrix} 2 & -2 \\\\ -2 & 4 \\end{pmatrix}$. Ab isse $(2, 2)$ multiply karo aur options se match karo. Trap: $S_W$ se multiply karna."
+  ],
+  "ml-lda-10": [
+    "\"Maximum value of $J$\" poocha hai, direction nahi. Pehle optimal $w$ nikaalo, phir $J$ mein daalo.",
+    "Optimal $w = S_W^{-1}d$. Plug karne par $J_{\\max} = d^\\top S_W^{-1} d$ ban jaata hai. Yahan $S_W^{-1} = \\operatorname{diag}(1/2, 1)$, $d = (3, 1)$.",
+    "$w = (3/2, 1)$. Ab $w^\\top d$ aur $w^\\top S_W w$ nikaalo, phir $(w^\\top d)^2 / (w^\\top S_W w)$. Trap: $w = d$ hi daal dena, ya numerator square na karna."
+  ],
+  "ml-lda-11": [
+    "LDA ke directions ki limit classes ki ginti se aati hai, features (10) se nahi — PCA aur LDA ka yahi farak hai.",
+    "Between-class scatter $S_B = \\sum_k n_k(\\mu_k - \\mu)(\\mu_k - \\mu)^\\top$. Iska rank $\\le K - 1$, kyunki deviations ka weighted sum zero hai.",
+    "Yahan $K = 4$ classes, $d = 10$ features. Directions $\\le \\min(K - 1, d)$ — ab number nikaalo. Trap: $K$ ya $d - 1$ likh dena."
+  ],
+  "ml-lda-12": [
+    "Char claims: QDA ka variance, Gaussian NB ka LDA se rishta, priors ka boundary pe asar, aur unit change. Har ek ko \"kitne covariance parameters\" se socho.",
+    "LDA: sab classes ka ek $\\Sigma$ (boundary linear). QDA: har class ka alag $\\Sigma_k$. Prior sirf constant $\\ln(\\pi_1/\\pi_2)$ jodta hai.",
+    "Option 4: $x' = Ax$ karo, toh $\\mu' = A\\mu$ aur $\\Sigma' = A\\Sigma A^\\top$. Mahalanobis distance $(x' - \\mu')^\\top\\Sigma'^{-1}(x' - \\mu')$ badla ya wahi raha?"
+  ],
+  "ml-lda-13": [
+    "Within-class scatter mein har class apne khud ke mean se deviation leti hai, overall mean se nahi. Sirf second feature ($x_2$) chahiye.",
+    "$(S_W)_{22} = \\sum_{A}(x_2 - \\bar x_{2,A})^2 + \\sum_{B}(x_2 - \\bar x_{2,B})^2$. Average nahi lena, sirf sum.",
+    "Class $A$ ke $x_2$: 2, 4, mean 3, deviations $-1, +1$. Ab class $B$ ke $x_2$ values 1, 1, 4 ka mean aur squared deviations nikaalo. Trap: overall mean use karna."
+  ],
+  "ml-lda-14": [
+    "Prior badalne se 1-D LDA mein kya hilta hai — threshold ki position, ya boundary ka shape? Aur kis taraf?",
+    "$t = \\frac{\\mu_1 + \\mu_2}{2} + \\frac{\\sigma^2\\ln(\\pi_1/\\pi_2)}{\\mu_2 - \\mu_1}$. $d$-D mein boundary $w^\\top x + b = 0$ with $w = \\Sigma^{-1}(\\mu_1 - \\mu_2)$.",
+    "$\\pi_1 = 0.7$: $\\ln(0.7/0.3) > 0$ aur $\\mu_2 - \\mu_1 > 0$, toh shift ka sign kya hai? $d$-D formula mein prior $w$ mein aata hai ya sirf $b$ mein?"
+  ],
+  "ml-lda-15": [
+    "Shared $\\Sigma = I$, toh boundary line hai; par priors unequal (0.75 vs 0.25), toh line perpendicular bisector se khiskegi.",
+    "Equal scores: $-\\frac12\\lVert x\\rVert^2 + \\ln 0.75 = -\\frac12\\lVert x - \\mu_2\\rVert^2 + \\ln 0.25$. $\\lVert x\\rVert^2$ cancel karke linear equation banao.",
+    "Expand karke milta hai $2x_1 + 2x_2 = 4 + \\ln 3$. Ab 2 se divide karo aur $x_2 = 0$ rakho. Trap: $\\ln 3$ ko 2 se divide karna bhool jaana."
+  ],
+  "ml-lda-16": [
+    "PCA labels nahi dekhta — sabse zyada total spread wali direction. LDA labels dekhta hai — wo direction jahan classes alag hon aur andar ka spread kam ho.",
+    "Total scatter ke diagonal entries ($x_1$ aur $x_2$ ke liye) compare karo PCA ke liye. LDA ke liye $w \\propto S_W^{-1}(\\mu_A - \\mu_B)$.",
+    "Overall mean $(0, 0)$; $x_1$ values sab $\\pm 4$ hain. Class means $(0, 1)$ aur $(0, -1)$ — mean difference kis axis pe hai? Ab $x_2$ ka total scatter bhi nikaalo."
+  ],
+  "ml-svm-margin-07": [
+    "Margin width poocha hai — dono margin hyperplanes ke beech ki doori. Ye sirf $w$ pe depend karta hai, $b$ pe nahi. Dhyan do: yahan 3-D hai.",
+    "Width $= 2/\\lVert w\\rVert$ with Euclidean norm $\\lVert w\\rVert = \\sqrt{w_1^2 + w_2^2 + w_3^2}$.",
+    "$\\lVert w\\rVert = \\sqrt{1 + 4 + 4}$ nikaalo, phir 2 ko usse divide karo. Trap: $1/\\lVert w\\rVert$ (half-width) ya $2/\\lVert w\\rVert^2$ likhna."
+  ],
+  "ml-svm-margin-08": [
+    "Do cheezein chahiye: distance (magnitude) aur point boundary ke kis side hai (sign of $f$).",
+    "Distance $= |w^\\top x + b|/\\lVert w\\rVert$, yahan $w = (1, -2)$, $b = 3$. Side $= \\operatorname{sign} f(x)$.",
+    "$f(1, 4) = 1 - 2(4) + 3$ — iska sign dekho. $\\lVert w\\rVert = \\sqrt{1^2 + 2^2}$. Trap: $\\lVert w\\rVert^2$ ya $|w_1| + |w_2|$ se divide karna."
+  ],
+  "ml-svm-margin-09": [
+    "Sirf do training points — dono support vectors hain, aur $w$ unke difference ke parallel hoga. Par $w$ ka scale $f(x_\\pm) = \\pm 1$ se fix hota hai.",
+    "$w = c(x_+ - x_-) = c(2, 2)$. Do equations: $w^\\top x_+ + b = 1$ aur $w^\\top x_- + b = -1$.",
+    "$x_- = (1, -1)$ pe $w^\\top x_- = c(2 - 2) = 0$, toh $b = -1$. Ab $x_+$ wali equation se $c$ nikaalo, phir $f(5, 2)$. Trap: $c = 1$ maan lena."
+  ],
+  "ml-svm-margin-10": [
+    "Jo point margin ke bahar hai (non-support vector), uska constraint inactive hai — use hataane se solution nahi badalta.",
+    "Har point ke liye $y\\,f(x)$ nikaalo with $f = x_1 - 2$. $y f = 1$ ⇒ support vector; $y f > 1$ ⇒ margin ke bahar.",
+    "$(3, 0)$: $y f = 3 - 2 = 1$. $(1, 1)$: $y f = -(1 - 2) = 1$. Ab $(3, 2)$ aur $(0, 3)$ ke values nikaalo. Trap: sochna ki ek SV hata do toh doosra SV kaafi hai."
+  ],
+  "ml-svm-margin-11": [
+    "Har statement ko \"constraint $y_i f(x_i) \\ge 1$ active hai ya nahi\" se judge karo. Margin width ka formula bhi yaad karo.",
+    "Naya point jiska $y f > 1$ — purana $(w, b)$ feasible rehta hai. Jiska $y f < 1$ — purana $(w, b)$ constraint todta hai. Width $= 2/\\lVert w\\rVert$.",
+    "Option 1: kya $2/\\lVert w\\rVert$ mein support vectors ki ginti aati hai? Option 2: boundary dono margin lines ke beech kahan hoti hai?"
+  ],
+  "ml-svm-margin-12": [
+    "Ye trained SVM nahi hai, bas ek classifier. Geometric margin = sabse paas wale point ki signed distance, isliye min $y_i f(x_i)$ chahiye.",
+    "Har point ke liye $y_i f(x_i)$ with $f = 2x_1 + x_2 - 4$, minimum lo, phir $\\lVert w\\rVert = \\sqrt{2^2 + 1^2}$ se divide karo.",
+    "A: $y f = 2(3) + 2 - 4 = 4$. C: $y f = -(2 - 4) = 2$. Ab B aur D nikaalo aur minimum chuno. Trap: $\\lVert w\\rVert$ se divide karna bhoolna."
+  ],
+  "ml-svm-margin-13": [
+    "Teen cheezein dekho: objective min hai ya max, constraint mein label $y_i$ hai ya nahi, aur right-hand side 1 hai ya 0.",
+    "Margin width $= 2/\\lVert w\\rVert$; isse maximise karna $= \\lVert w\\rVert$ minimise karna. Scale fix karne ke liye support vectors pe $y_i f(x_i) = 1$.",
+    "RHS 0 wale option mein $w = 0$, $b = 0$ daal ke dekho — constraint satisfy hota hai? Aur $y_i$ hata do toh negative points ka kya hoga?"
+  ],
+  "ml-svm-margin-14": [
+    "Sirf do points — dono support vectors, aur margin width unke beech ki doori ke barabar hai. Poocha $\\lVert w\\rVert$ hai, width nahi.",
+    "Width $= \\lVert x_+ - x_-\\rVert = 2/\\lVert w\\rVert$. Yahan $x_+ - x_- = (3, 4)$.",
+    "$\\lVert (3, 4)\\rVert = \\sqrt{9 + 16}$. Ab $2/\\lVert w\\rVert$ ko isse equal karke $\\lVert w\\rVert$ nikaalo. Trap: width ko hi $1/\\lVert w\\rVert$ maan lena."
+  ],
+  "ml-svm-margin-15": [
+    "Har point ke liye $y\\,f(x)$ nikaalo: $= 1$ margin pe, $0$ aur $1$ ke beech andar (sahi side), negative matlab galat side.",
+    "$f(x) = x_1 + x_2 - 3$. Inside margin ⇒ $0 < y f < 1$; on margin ⇒ $y f = 1$; misclassified ⇒ $y f < 0$. Sirf $|f|$ dekhna kaafi nahi.",
+    "$(2, 2)$: $f = 1$, $y = +1$. $(1, 1)$: $f = -1$, $y = -1$, toh $y f = ?$ Ab $(2, 1.5)$ aur $(3, 3)$ ke $y f$ nikaalo."
+  ],
+  "ml-svm-margin-16": [
+    "1-D mein boundary sabse paas wale opposite points ke beech midpoint pe hoti hai. Par $(w, b)$ ka scale support vectors pe $y f = 1$ se fix hota hai.",
+    "Closest opposite pair: negative 1 aur positive 4. Equations: $w(4) + b = 1$ aur $w(1) + b = -1$.",
+    "Dono equations subtract karo: $3w = 2$. Ab $b$ nikaalo aur options se match karo. Trap: sirf boundary sahi hona kaafi nahi — $f(4) = 1$ bhi check karo."
+  ],
+  "ml-svm-soft-07": [
+    "Label $-1$ hai par score positive ($0.3$) — point galat side pe hai. Hinge loss mein label ka sign zaroori hai.",
+    "$\\xi = \\max(0, 1 - y f(x))$ with $y = -1$, $f = 0.3$.",
+    "Pehle $y f = (-1)(0.3)$ nikaalo, phir $1 - y f$. Trap: perceptron loss $\\max(0, -yf)$ lena, ya $y$ bhool ke $1 - f$ likhna."
+  ],
+  "ml-svm-soft-08": [
+    "Slack ki value se point ki position pata chalti hai: margin ke bahar, margin ke andar, ya galat side. Yahan $\\xi = 0.4$ hai.",
+    "$\\xi = 1 - y f$ jab $y f < 1$. Ranges: $\\xi = 0$ ⇒ bahar/on margin; $0 < \\xi < 1$ ⇒ andar, sahi side; $\\xi > 1$ ⇒ misclassified.",
+    "$y f = 1 - 0.4$ nikaalo — positive hai ya negative, aur 1 se chhota ya bada? Trap: koi bhi $\\xi > 0$ ko misclassified samajhna."
+  ],
+  "ml-svm-soft-09": [
+    "Do candidates: P zero-slack par bada $w$, Q chhota $w$ par kuch slack. \"Equal objective\" ka matlab $C$ ke liye ek equation.",
+    "Objective $= \\frac12 w^2 + C\\sum\\xi_i$, $\\xi_i = \\max(0, 1 - y_i f(x_i))$. Dono candidates ke liye $\\frac12 w^2$ aur $\\sum\\xi$ alag nikaalo.",
+    "P: $\\frac12(4^2) = 8$; check karo P ke saare $y f \\ge 1$ hain. Q: $f = x - 2$ se $x = 1.5$ aur $x = 2$ ke slacks nikaalo. Trap: $f = 0$ wale point ka slack 0 maan lena."
+  ],
+  "ml-svm-soft-10": [
+    "Table mein do symptoms: $C = 0.01$ pe dono errors high; $C = 1000$ pe train 0% par validation zyada. Ye bias aur variance ke classic signs hain.",
+    "Soft margin: $\\frac12\\lVert w\\rVert^2 + C\\sum\\xi_i$. Chhota $C$ ⇒ slack sasta ⇒ wide margin; bada $C$ ⇒ slack mehenga ⇒ narrow margin.",
+    "Socho: high train + high validation error kaunsi problem hai, aur 0% train par 25% validation kaunsi? Trap: $C$ ki direction ulti samajhna."
+  ],
+  "ml-svm-soft-11": [
+    "Hinge $\\max(0, 1 - yf)$ ko $yf$ ke function ki tarah draw karo: kab zero hai, aur 0–1 loss se kahan alag hai?",
+    "$yf \\ge 1$ ⇒ loss 0. $0 < yf < 1$ ⇒ point sahi side par loss $1 - yf$. 0–1 loss sirf $yf < 0$ pe 1 hota hai.",
+    "$yf = 0.5$ lo: hinge kitna, 0–1 loss kitna? Convexity ke liye: $\\max$ of two affine functions convex hota hai ya nahi?"
+  ],
+  "ml-svm-soft-12": [
+    "Polynomial kernel: pehle dot product, phir 1 jodo, phir power 3. Order galat hua toh value badal jaati hai.",
+    "$K(x, z) = (1 + x^\\top z)^3$, $x^\\top z = x_1z_1 + x_2z_2$.",
+    "$x^\\top z = 1 \\cdot 4 + 2 \\cdot (-1)$ nikaalo, phir $(1 + x^\\top z)^3$. Trap: constant 1 bhool jaana, ya power 2 lagana."
+  ],
+  "ml-svm-soft-13": [
+    "$(1 + x^\\top z)^2$ ko expand karo — har alag term ek feature banti hai. Degree 0, 1 aur 2 teeno ke terms aate hain.",
+    "$(1 + x^\\top z)^2 = 1 + 2\\sum_i x_iz_i + \\sum_i x_i^2z_i^2 + 2\\sum_{i<j}x_ix_jz_iz_j$. Har group mein kitne terms hain, $d = 3$ ke liye?",
+    "Constant: 1 term. Linear $\\sqrt2 x_i$: 3 terms. Ab squares aur cross terms ($i < j$ pairs) gino. Trap: $x_ix_j$ aur $x_jx_i$ ko alag ginna."
+  ],
+  "ml-svm-soft-14": [
+    "$\\gamma$ RBF kernel ki width control karta hai — slack penalty $C$ ka kaam hai, $\\gamma$ ka nahi.",
+    "$K = e^{-\\gamma\\lVert x - z\\rVert^2}$. Bada $\\gamma$ ⇒ thodi si distance pe bhi $K$ bahut chhota. Chhota $\\gamma$ ⇒ $K \\approx 1$ door tak.",
+    "Distance 1 ke liye $\\gamma = 100$ pe $K = e^{-100} \\approx 0$. Toh har support vector ka asar kitni door tak jaayega? Trap: $\\gamma \\to 0$ aur $\\gamma \\to \\infty$ ko ulta lena."
+  ],
+  "ml-svm-soft-15": [
+    "Valid kernel ka Gram matrix do cheezein maangta hai: symmetric, aur positive semidefinite (koi negative eigenvalue nahi).",
+    "Symmetric 2×2 ke liye PSD ⇔ diagonal $\\ge 0$ aur $\\det \\ge 0$. Pehle symmetry check karo, phir determinant.",
+    "Option 2: $\\det = 1 \\cdot 1 - 2 \\cdot 2$. Option 4: $\\det = 4 \\cdot 1 - 2 \\cdot 2$. Baaki do bhi check karo. Trap: singular ($\\det = 0$) ko invalid samajhna."
+  ],
+  "ml-svm-soft-16": [
+    "Kernel SVM ka $f(x)$ = support vectors ke kernel values ka weighted sum, label ke sign ke saath. Yahan $b = 0$ aur dono $\\alpha = 1$.",
+    "$f(x) = (+1)K(s_1, x) + (-1)K(s_2, x)$, jahan $K(s, x) = e^{-\\lVert s - x\\rVert^2}$ (squared distance).",
+    "$\\lVert x - s_1\\rVert^2 = 0.25$, toh $K(s_1, x) = e^{-0.25} \\approx 0.7788$. Ab $\\lVert x - s_2\\rVert^2$ aur $K(s_2, x)$ nikaalo. Trap: labels ignore karke dono jod dena."
+  ]
+}

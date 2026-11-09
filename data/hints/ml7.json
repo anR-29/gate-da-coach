@@ -1,0 +1,207 @@
+{
+ "ml-cluster-kmeans-07": [
+  "k-means++ ka second seed random hai par weighted: jo point chosen seed 4 se jitna door, utna zyada chance. Weight distance hai ya kuch aur?",
+  "Rule: $P(x) = D(x)^2 / \\sum D^2$, jahan $D(x)$ = seed 4 se distance. Seed 4 ka apna weight 0 hai.",
+  "Point 1 ka $D^2 = 9$, point 6 ka $D^2 = 4$. Ab 9 aur 13 ke $D^2$ nikaal kar total banao. Trap: plain $D$ se weight dena."
+ ],
+ "ml-cluster-kmeans-08": [
+  "Do seeds (0 aur 10) pehle se chune hain. Har baaki point ka weight uske **nearest** seed ki distance se banta hai, sirf pehle seed se nahi.",
+  "$P(x) = D(x)^2/\\sum D(x)^2$ with $D(x) = \\min(|x-0|, |x-10|)$; candidates 2, 5, 9.",
+  "Point 9: nearest seed 10, $D = 1$, $D^2 = 1$. Ab 2 aur 5 ke $D^2$ nikaalo. Trap: 9 ki distance 0 se (81) le lena."
+ ],
+ "ml-cluster-kmeans-09": [
+  "Update step sirf cluster ka centre nikaalta hai. Kaun sa centre — mean ya median? Aur cluster me kitne points hain?",
+  "$\\mu_1 = \\frac{1}{4}\\sum x_i$, coordinate-wise: x ka mean aur y ka mean alag-alag.",
+  "x-coordinates ka sum $0+2+1+5 = 8$. Ab 4 se divide karo, phir y ke liye same karo. Trap: $(0,0)$ ko ginti se bahar kar dena."
+ ],
+ "ml-cluster-kmeans-10": [
+  "'Until the assignments stop changing' — ek iteration par mat ruko. Har iteration: nearest centroid (1D me midpoint boundary), phir mean.",
+  "Iter 1 ki boundary $(0+3)/2 = 1.5$. Update ke baad nayi boundary = naye centroids ka midpoint; SSE final centroids se, squared.",
+  "Iter 1 ke baad $c_1 = 0$, $c_2 = 46/5 = 9.2$, boundary 4.6. Ab 3 aur 4 kidhar jaate hain, dekh kar dobara update karo. Trap: iter 1 par SSE nikaal dena."
+ ],
+ "ml-cluster-kmeans-11": [
+  "Har option alag fact check karta hai: $J$ ka minimum, do centroids ki boundary ka shape, convergence ka rule, aur distance squared hai ya nahi.",
+  "Option B: $\\lVert x-\\mu_1\\rVert^2 = \\lVert x-\\mu_2\\rVert^2$ expand karo, $x^Tx$ cancel hota hai. Option C: assignment same → mean same → phir kya?",
+  "Option A: $k = n$ pe har point khud centroid hai, $\\lVert x - x\\rVert^2$ kitna? Trap: option D me formula ka exponent dhyan se dekho."
+ ],
+ "ml-cluster-kmeans-12": [
+  "Socho: $k$ badhane se optimal SSE upar jaata hai ya neeche? $k = 200$ (har point apna centroid) pe SSE kitna hoga?",
+  "Rule: optimal SSE $k$ ke saath non-increasing hai. To 'smallest SSE' hamesha range ke kis end par milega?",
+  "$k = n = 200$ pe SSE $= 0$, aur beech me bhi girta hi rehta hai. Ab option padho jo ye trend aur iska ilaaj bataye. Trap: direction ulta padhna."
+ ],
+ "ml-cluster-kmeans-13": [
+  "SSE ke liye pehle har cluster ka centroid (mean) chahiye, phir har point ka **squared** distance apne hi centroid se.",
+  "Cluster 1 mean $= ((1+3+2)/3, (1+1+4)/3)$, cluster 2 mean $= (7, 5)$. Har point ka term $\\Delta x^2 + \\Delta y^2$.",
+  "Cluster 2: $(6,5)$ aur $(8,5)$ dono centroid se 1 door, contribution 2. Ab cluster 1 ke teen terms jodo. Trap: square root wali distance jodna."
+ ],
+ "ml-cluster-kmeans-14": [
+  "Dono runs ko alag-alag convergence tak trace karna hai. Start alag hai, to final clusters bhi alag ho sakte hain.",
+  "1D me assignment boundary = do centroids ka midpoint. Run A ki pehli boundary 15, Run B ki 0.5. Har update ke baad boundary dobara nikaalo.",
+  "Run B iter 1: {0} aur baaki sab, $c_2 = 54/5 = 10.8$. Ab nayi boundary pe 1 aur 2 kidhar jaate hain? Trap: pehli iteration par ruk jaana."
+ ],
+ "ml-cluster-kmeans-15": [
+  "Pehle step me sirf A aur B centres hain. Options A, B pehli iteration ke baare me hain; C, D doosre assignment step ke baare me.",
+  "$D(3,3)$: A se $2^2+3^2$, B se $3^2+1^2$ — chhota wala jeetega. Update = cluster ke points ka coordinate-wise mean.",
+  "Pehle step ke clusters bana kar naye means nikaalo, phir C aur D dono ke squared distances naye centroids se compare karo. Trap: pehli iteration ko hi convergence maan lena."
+ ],
+ "ml-cluster-kmeans-16": [
+  "Convergence tak trace karna hai. Notice: 100 baaki points se bahut door hai — wo jis cluster me hoga, uska mean kheench lega.",
+  "1D me boundary $= (c_1 + c_2)/2$. Iter 1 ki boundary 3.5; phir dono clusters ke means nikaalo.",
+  "Iter 1 ke baad $c_2 = (4+5+6+100)/4 = 28.75$. Nayi boundary nikaal kar dekho 4, 5, 6 kidhar jaate hain. Trap: ek iteration par ruk jaana."
+ ],
+ "ml-cluster-kmedoids-06": [
+  "Coordinates nahi hain, sirf dissimilarities. Medoid ki definition yaad karo: kis cheez ka minimum chahiye?",
+  "Medoid = wo object jiski baaki sab se total dissimilarity sabse kam ho, yaani matrix ki **poori row** ka sum.",
+  "P ki row: $1 + 4 + 6 + 7 = 18$. Baaki chaar rows bhi isi tarah jodo. Trap: sirf diagonal ke right wali entries jodna."
+ ],
+ "ml-cluster-kmedoids-07": [
+  "Medoid (ek point) aur uska total cost (ek number) alag cheezein hain. Yahan cost poochha hai.",
+  "1D + absolute distance: medoid = median data point. Phir cost $= \\sum |x - m|$ paanchon points par.",
+  "Sorted data ka beech wala point lo. 42 wala term bada hoga, use bhi jodna hai. Trap: mean 15 se distances jodna."
+ ],
+ "ml-cluster-kmedoids-08": [
+  "Sirf medoid 2 badalna hai; 16 fixed hai. Har candidate ke baad **har point** ko naye nearest medoid se jodna hai.",
+  "Cost $= \\sum_x \\min(|x - m|, |x - 16|)$ with $m \\in \\{3, 6, 7, 9, 18\\}$. Sabse chhota total chahiye.",
+  "$m = 3$: costs $1, 0, 3, 4, 6, 0, 2$, total 16. Baaki candidates bhi isi tarah. Trap: swap se pehle wala cost likh dena."
+ ],
+ "ml-cluster-kmedoids-09": [
+  "PAM har (medoid, non-medoid) swap ka naya total cost dekhta hai aur sabse kam wala chunta hai. Notice: kaun sa medoid (3 ya 30) apne points se door baitha hai?",
+  "Cost $= \\sum_x \\min(|x - m_1|, |x - m_2|)$. Swap ke baad har point ko dobara nearest medoid do.",
+  "{3, 17} try karo: $2+0+1+5+3+2+0+13 = 26$. Ab baaki options ke medoid sets bhi isi tarah. Trap: mean ke paas wala point chun lena."
+ ],
+ "ml-cluster-kmedoids-10": [
+  "Har option k-medoids ki ek property check karta hai: 1D me medoid, cost ka form, kaisa data chalega, aur optimality.",
+  "Yaad rakho: cost $= \\sum d(x, \\text{medoid})$, unsquared; centre hamesha ek data point; sirf dissimilarity chahiye.",
+  "Option A check: $\\{1, 2, 10\\}$ me $m = 2$ ka cost $1 + 0 + 8 = 9$, $m = 1$ ka 10. Baaki options isi rule se jaancho. Trap: PAM ko global optimum maan lena."
+ ],
+ "ml-cluster-kmedoids-11": [
+  "Distance Manhattan hai, Euclidean nahi. $C(5,0)$ jaise point pe dono distances alag medoid chun sakti hain — dhyan se.",
+  "Har point ka cost $= \\min(|x| + |y|,\\ |x-3| + |y-4|)$; medoids A aur D ka apna cost 0.",
+  "B: A se $1+2 = 3$, D se $2+2 = 4$, to B ka cost 3. Ab C, E, F karo. Trap: C ko aankh se D ke paas maan lena."
+ ],
+ "ml-cluster-kmedoids-12": [
+  "Ek hi value badli hai, par bahut zyada. Mean aur medoid dono naye data $\\{2,4,6,8,200\\}$ par alag-alag nikaalo.",
+  "Mean $= \\sum x/5$. Medoid = wo data point jiska $\\sum |x - m|$ sabse kam ho (1D me median point).",
+  "$m = 6$ ka total: $4 + 2 + 0 + 2 + 194 = 202$. Ab $m = 8$ ka total aur naya mean nikaalo. Trap: mean ke paas wala point medoid maan lena."
+ ],
+ "ml-cluster-kmedoids-13": [
+  "Swap ke baad medoids {A, E} hain. **Har** non-medoid ko dobara nearest medoid do — sirf D wale points ko nahi.",
+  "Cost $= \\sum_x \\min(d(x, A), d(x, E))$ over B, C, D, F; table ke A aur E columns padho.",
+  "B: $\\min(2, 4) = 2$; D: $\\min(7, 3) = 3$. Ab C aur F. Trap: C ko purane medoid A ke saath hi chhod dena."
+ ],
+ "ml-cluster-kmedoids-14": [
+  "Swap = ek current medoid ko ek current non-medoid se badalna. Kitne medoids hain aur kitne non-medoids?",
+  "Swaps $= k \\times (n - k)$; yahan $k = 4$, $n = 20$.",
+  "Non-medoids $= 20 - 4 = 16$. Ab multiply karo. Trap: saare pairs $\\binom{20}{2}$ gin lena."
+ ],
+ "ml-cluster-kmedoids-15": [
+  "PAM ek greedy local search hai: ek baar me ek swap, aur sirf tab jab total cost ghate. Har option ko isi rule se jaancho.",
+  "Swap ke baad assignment poora dobara hota hai: har point apne nearest medoid ko. Accept rule: naya total < purana total.",
+  "Option A: swap sirf cost ghatne par accept hota hai — to cost kabhi badh sakti hai? Trap: sochna ki sirf hataaye gaye medoid ke points hi hilte hain."
+ ],
+ "ml-cluster-kmedoids-16": [
+  "Medoid ek data point hi hoga, aur Manhattan distances ke **total** se chuna jaata hai — mean ke paas hona zaroori nahi.",
+  "Har point ke liye $\\sum (|\\Delta x| + |\\Delta y|)$ baaki chaar points tak. Sabse chhota total jeetega.",
+  "S ka total: P 3, Q 2, R 6, T 5, yaani 16. Ab Q aur T ke totals nikaal kar compare karo. Trap: mean ke sabse paas wala point chunna."
+ ],
+ "ml-cluster-linkage-07": [
+  "Average linkage me saare cross pairs (ek point X se, ek Y se) ka mean lena hai — centroids ki distance nahi.",
+  "$\\frac{1}{|X||Y|}\\sum_{x\\in X,\\, y \\in Y}|x-y|$; yahan $|X||Y| = 4$ pairs.",
+  "Pehle do pairs: $|1-4| = 3$, $|1-12| = 11$. Baaki do pairs 7 se nikaalo. Trap: centroids 4 aur 8 ki distance le lena."
+ ],
+ "ml-cluster-linkage-08": [
+  "Single linkage: do clusters ki distance = sabse paas wala cross pair. Har step me current table ka minimum merge hota hai.",
+  "Update: $d(X\\cup Y, Z) = \\min(d(X,Z), d(Y,Z))$. Shuru matrix ki chhoti entries D–E aur A–B se karo.",
+  "D–E (2) aur A–B (3) merge. Ab $d(C, \\{A,B\\}) = \\min(7, 4) = 4$ aur $d(C, \\{D,E\\}) = \\min(6, 5) = 5$. Aage trace karo. Trap: complete ka max lena."
+ ],
+ "ml-cluster-linkage-09": [
+  "Complete linkage: cluster distance = sabse **door** wala cross pair. Phir sab cluster-pairs me se **sabse chhoti** distance wala merge hota hai.",
+  "Teen clusters bache: {P}, {R}, {Q,S,T}. Teen distances chahiye: P–R, P–{Q,S,T}, R–{Q,S,T}.",
+  "$d(P, \\{Q,S,T\\}) = \\max(10, 9, 12) = 12$. Ab R–{Q,S,T} aur P–R nikaal kar sabse chhota chuno. Trap: R ka nearest member (single rule) dekhna."
+ ],
+ "ml-cluster-linkage-10": [
+  "Average linkage = clusters ke **saare point pairs** ka mean. Sizes alag hon to sub-cluster distances ka seedha average galat ho sakta hai.",
+  "$d(X, Y) = \\frac{1}{|X||Y|}\\sum d(x, y)$. Pehla merge matrix ki sabse chhoti entry C–D = 3.",
+  "Ab $d(B, \\{C,D\\}) = (4+7)/2 = 5.5$; ise B–E $= 6$ aur baaki se compare karo, phir aage trace. Trap: last step me do sub-cluster distances ka seedha average."
+ ],
+ "ml-cluster-linkage-11": [
+  "Har option alag linkage ka hai. Pehle matrix ki sabse chhoti entry dekho — kya pehla merge linkage par depend karta hai?",
+  "Rules: single = min, complete = max, average = saare pairs ka mean. C ke liye {A,B} aur {D,E} dono se distance nikaalo.",
+  "Complete: $d(C, \\{D,E\\}) = \\max(9, 5) = 9$. Ab $d(C, \\{A,B\\})$ nikaal kar compare karo. Trap: option D me sirf ek side (C–{A,B}) dekhna."
+ ],
+ "ml-cluster-linkage-12": [
+  "UPGMA me har **point pair** barabar gina jaata hai. B ke 3 points hain, A ka sirf 1 — to dono distances ka weight same nahi.",
+  "Update: $d(A\\cup B, C) = \\frac{|A|\\,d(A,C) + |B|\\,d(B,C)}{|A| + |B|}$ with $|A| = 1$, $|B| = 3$.",
+  "Numerator: $1\\cdot4 + 3\\cdot8$. Ab sizes ke sum se divide karo. Trap: $(4+8)/2$ wala seedha average."
+ ],
+ "ml-cluster-linkage-13": [
+  "Complete linkage = farthest cross pair. Distance Manhattan hai: $|\\Delta x| + |\\Delta y|$, Euclidean nahi.",
+  "Chaar cross pairs banao: X ka har point Y ke har point se. Inme sabse **bada** chahiye.",
+  "$(1,2)$ se $(5,2)$: $4 + 0 = 4$; $(1,2)$ se $(4,4)$: $3 + 2 = 5$. Ab $(0,0)$ wale do pairs. Trap: Euclidean distance lagana."
+ ],
+ "ml-cluster-linkage-14": [
+  "Socho kaunse clusters badle: sirf A aur B jud gaye. Baaki clusters ke points wahi ke wahi hain.",
+  "Do untouched clusters C aur D ki distance sirf unke apne points par depend karti hai. To kaunsi entries badlengi?",
+  "Example: {1}, {2}, {9}, {10} me {1} aur {2} merge hue. Kya $d(\\{9\\}, \\{10\\}) = 1$ badla? Trap: poori table dobara banana."
+ ],
+ "ml-cluster-linkage-15": [
+  "Pehle chhote gaps se do pairs banenge. Phir complete linkage me cluster distance = dono clusters ke sabse door wale do points.",
+  "Pehle merges {2,3} aur {7,9}. Ab teen distances compare karo: {2,3}–{7,9}, {7,9}–15, {2,3}–15, har ek ka farthest pair.",
+  "$d(\\{7,9\\}, 15) = 15 - 7 = 8$. Ab $d(\\{2,3\\}, \\{7,9\\})$ nikaal kar compare karo. Trap: nearest gap $7 - 3$ (single rule) lena."
+ ],
+ "ml-cluster-linkage-16": [
+  "Har option ek linkage property hai. Chhote examples se test karo: do singletons, ya 1D ke do chhote clusters.",
+  "Single = min, complete = max, average = mean — sab cross pairs $d(x, y)$ par. Max ke set me naye pairs judein to max kya kar sakta hai?",
+  "Option B test: $X = \\{0, 2\\}$, $Y = \\{1, 3\\}$ — cross pairs ka mean aur centroids 1, 2 ki distance compare karo. Trap: option D me max ko ghatta hua maan lena."
+ ],
+ "ml-cluster-dendrogram-07": [
+  "Har horizontal bar ek merge hai; uski height axis se padho. 3 clusters ke liye cut ke neeche kitne merges chahiye?",
+  "Clusters $= 6 - \\#\\{\\text{merges at height} \\le h\\}$. 3 clusters ⇒ cut ke neeche exactly 3 merges.",
+  "Heights sorted likho: sabse neeche A–B (1), phir E–F. Teesra aur chautha merge kis height par hai? Trap: range ka upper end galat lena."
+ ],
+ "ml-cluster-dendrogram-08": [
+  "Leaves ka left-right order cluster nahi batata; sirf bars ki heights batati hain. Height 2.5 par ek horizontal line socho.",
+  "Jo merges height ≤ 2.5 par hain, sirf wahi hue. Clusters $= 5 - (\\text{aise merges})$.",
+  "A–E ka bar height 1 par hai, cut ke neeche. Ab B–D aur C wale bars ki height padho. Trap: paas-paas drawn leaves ko ek cluster maan lena."
+ ],
+ "ml-cluster-dendrogram-09": [
+  "Har merge clusters ki ginti 1 se ghatata hai. Shuru me kitne clusters the aur cut ke baad kitne bache?",
+  "Clusters $= n - (\\text{merges below the cut})$, with $n = 15$ and clusters $= 4$.",
+  "Total merges $= 15 - 1 = 14$, par poochha hai sirf cut ke **neeche** wale. Trap: cut ke upar wale merges gin lena."
+ ],
+ "ml-cluster-dendrogram-10": [
+  "Single-linkage merge heights = MST ki edge weights. 1D me MST sirf padosi (sorted order me agle) points ko jodta hai.",
+  "Sorted points ke consecutive gaps nikaalo: $4-3$, $8-4$, $15-8$, … Ye hi merge heights hain, kisi bhi order me.",
+  "Gaps 1, 4, 7 mil gaye; baaki do gaps bhi nikaal kar sab jodo. Trap: complete linkage ki heights lena, ya sirf last merge height."
+ ],
+ "ml-cluster-dendrogram-11": [
+  "Figure se teen merge heights padho. Phir har linkage se ye heights khud nikaal kar match karo.",
+  "Pehla merge {2,3} har linkage me 1 par. Doosra: 0 ka {2,3} se distance — single = min(2, 3), complete = max(2, 3), average = mean.",
+  "Single me 0 height $\\min(2,3) = 2$ par judta. Baaki linkages ki doosri aur teesri heights nikaal kar figure se milao. Trap: single aur complete swap kar dena."
+ ],
+ "ml-cluster-dendrogram-12": [
+  "Har option dendrogram cut ki ek general property hai. Chhote data (jaise 0, 1, 3) par soch kar test karo.",
+  "Cut rule: clusters $= n - \\#\\{\\text{merges} \\le h\\}$. h badhao to ye count kis taraf jaata hai? Aur merges kabhi tootte nahi.",
+  "Option B: 0, 1, 3 par single ki heights 1, 2 aur complete ki 1, 3. Cut 2.5 par dono me clusters gino. Trap: option D me tied heights bhool jaana."
+ ],
+ "ml-cluster-dendrogram-13": [
+  "Pehle complete-linkage merges aur unki heights trace karo, phir cut 7.5 ke neeche wale merges gino.",
+  "Complete update: $d(X\\cup Y, Z) = \\max(d(X,Z), d(Y,Z))$. Clusters $= 5 - \\#\\{\\text{merges} \\le 7.5\\}$.",
+  "Pehla merge R–T at 3. Ab $d(Q, \\{R,T\\}) = \\max(8, 5) = 8$; ise P–S aur Q–S se compare karo. Trap: single linkage ka min lena."
+ ],
+ "ml-cluster-dendrogram-14": [
+  "Dendrogram me leaves ka left-right order sirf drawing hai. Asli information bars ki heights me hai.",
+  "Do leaves kab ek cluster me aate hain? Jab cut un dono ko jodne wale sabse neeche ke bar ke upar ya barabar ho.",
+  "Cut 5 par X–Y ka joint (6) cut ke upar hai — saath ya alag? Ab cut 7 socho. Trap: paas drawn leaves ko closest pair maan lena."
+ ],
+ "ml-cluster-dendrogram-15": [
+  "Tied height par ek hi cut do merges ek saath paar karta hai, to clusters 2 se girte hain. Kaun se k chhoot jaate hain?",
+  "Clusters $= 7 - \\#\\{\\text{merges} \\le h\\}$. h ko 0 se upar le jao aur har interval ka count likho.",
+  "$h < 1$: 7 clusters; $1 \\le h < 2$: dono height-1 merges ho gaye, to 5. Aage ke intervals bhi likho. Trap: maan lena ki 1 se 7 tak har k milta hai."
+ ],
+ "ml-cluster-dendrogram-16": [
+  "Figure se har bar ki height padho: kaun kis height par juda. Phir har option ka cut alag se check karo.",
+  "Cut h: clusters $= 7 - \\#\\{\\text{merges} \\le h\\}$; do leaves saath tab hain jab unka joint $\\le h$ ho.",
+  "Q–R ka joint 1 par, U–V ka 2 par. Option A ke liye 3.5 ke neeche kitne bars hain, gino. Trap: leaves (7) ko merges ki ginti maan lena."
+ ]
+}

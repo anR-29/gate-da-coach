@@ -1,0 +1,764 @@
+{
+  "area": "dsa",
+  "skills": {},
+  "questions": [
+    {
+      "id": "dsa-stack-trace-07",
+      "skill": "dsa.stack-trace",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An empty stack receives these operations in order. `pop()` removes the top value and prints it; `peek()` prints the top value **without** removing it.\n\n```python\npush('A'); push('B'); peek(); push('C'); pop(); pop(); push('D'); peek(); push('E'); pop()\n```\n\nWhat is printed, and what is left on the stack (bottom → top)?",
+      "figure": null,
+      "options": [
+        { "text": "Printed B C B D E; stack holds A, D", "correct": true, "why": "peek prints B and D but leaves them in place; the three pops remove C, B and E, so A and D remain with A at the bottom." },
+        { "text": "Printed B C A D E; stack is empty", "correct": false, "why": "Treated peek as pop: B left at the first peek, so the second pop took A and nothing was left.", "trap": "C9" },
+        { "text": "Printed A A B C C; stack holds D, E", "correct": false, "why": "Read and removed from the bottom each time, which is queue (FIFO) behaviour; a stack's peek and pop use the top.", "trap": "C2" },
+        { "text": "Printed B C B D E; stack holds D, A", "correct": false, "why": "The printed part is right, but the stack is written top → bottom. Bottom → top, A comes first.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. push A, B → [A, B]; peek prints B, stack unchanged.\n2. push C → [A, B, C]; pop prints C; pop prints B → [A].\n3. push D → [A, D]; peek prints D.\n4. push E → [A, D, E]; pop prints E → [A, D].\n5. Printed B C B D E; the stack holds A, D (bottom → top)."
+    },
+    {
+      "id": "dsa-stack-trace-08",
+      "skill": "dsa.stack-trace",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The postfix expression\n\n`8 2 5 * + 1 3 2 * + 4 - /`\n\nis evaluated with a stack: an operand is pushed; an operator pops two values and pushes the result. What is the **largest** number of values on the stack at any moment?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 7, "why": "Counted all 7 operands as if they were pushed before any operator ran; each operator shrinks the stack by one as soon as it is read.", "trap": "C6" },
+        { "value": 3, "why": "Stopped at the first peak (8 2 5); after the first `+` the stack holds 18, and pushing 1, 3, 2 makes a higher peak.", "trap": "C6" },
+        { "value": 1, "why": "Gave the number of values left at the end, not the largest size during the evaluation.", "trap": "C10" }
+      ],
+      "solution": "1. Track the size after each token: 8→1, 2→2, 5→3, *→2, +→1.\n2. 1→2, 3→3, 2→4, *→3, +→2.\n3. 4→3, -→2, /→1.\n4. The largest size is **4** (stack 18, 1, 3, 2 just before the second `*`)."
+    },
+    {
+      "id": "dsa-stack-trace-09",
+      "skill": "dsa.stack-trace",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An infix expression is converted to postfix with an operator stack, using the usual rules: `^` has the highest precedence and is **right-associative**; `*` and `/` come next; `+` and `-` are lowest; all operators except `^` are left-associative.\n\n`a - b + c * d ^ e ^ f`\n\nWhat is the postfix form?",
+      "figure": null,
+      "options": [
+        { "text": "`a b - c d e ^ f ^ * +`", "correct": false, "why": "Popped the first `^` when the second `^` arrived, i.e. treated `^` as left-associative; this computes (d^e)^f.", "trap": "C9" },
+        { "text": "`a b c d e f ^ ^ * + -`", "correct": false, "why": "Kept `-` on the stack when `+` arrived, which groups a − (b + …). Equal-precedence left-associative operators pop first, so `-` is output before `+` is pushed.", "trap": "C11" },
+        { "text": "`a b - c d * e f ^ ^ +`", "correct": false, "why": "Gave `*` higher precedence than `^`; this postfix computes (c·d)^(e^f).", "trap": "C2" },
+        { "text": "`a b - c d e f ^ ^ * +`", "correct": true, "why": "Grouping is ((a − b) + (c · (d^(e^f)))): `-` pops when `+` arrives, `*` and both `^` wait on the stack and pop at the end as ^ ^ * +." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. a → out; `-` → stack; b → out.\n2. `+` arrives: `-` has equal precedence and is left-associative, so pop it: out `a b -`; push `+`.\n3. c → out; `*` (higher than `+`) → push; d → out; `^` → push; e → out.\n4. Second `^`: right-associative, so do not pop the first `^`; push. f → out.\n5. End: pop `^ ^ * +`. Postfix `a b - c d e f ^ ^ * +`."
+    },
+    {
+      "id": "dsa-stack-trace-10",
+      "skill": "dsa.stack-trace",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The values 1, 2, 3, 4, 5, 6 are pushed onto an empty stack **in this order**; pops may happen at any time, every value is eventually popped, and each popped value is printed. The **first** value printed is 4. Which statements are true for **every** such printed sequence?",
+      "figure": null,
+      "options": [
+        { "text": "3 is printed before 2", "correct": true, "why": "When 4 is popped the stack is [1, 2, 3] with 3 on top, and 3 sits above 2 until it leaves." },
+        { "text": "5 is printed before 3", "correct": false, "why": "It can happen (4 5 3 2 1 6) but is not forced: 4 3 2 1 5 6 prints 3 first. 'Possible' was read as 'must'.", "trap": "C1" },
+        { "text": "2 is printed before 1", "correct": true, "why": "2 is above 1 on the stack after 4 is popped, so 2 must leave first." },
+        { "text": "3 is the second value printed", "correct": false, "why": "Pushes are still allowed after popping 4: push 5 and pop it, giving 4 5 3 2 1 6.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Printing 4 first means 1, 2, 3, 4 were pushed and 4 popped: stack [1, 2, 3], with 5 and 6 still to come.\n2. Values on the stack leave in reverse order: 3 before 2 before 1. So the first and third statements always hold.\n3. 5 or 6 can be pushed and popped between them: 4 5 3 2 1 6 makes the fourth statement false; 4 3 2 1 5 6 makes the second false."
+    },
+    {
+      "id": "dsa-stack-trace-11",
+      "skill": "dsa.stack-trace",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The values 1, 2, 3, 4, 5 are pushed onto an empty stack in this order, with pops allowed at any time; every value is eventually popped and printed. How many of the possible printed sequences **begin with 3**?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 9, "tol": 0 },
+      "traps": [
+        { "value": 24, "why": "Counted all 4! orders of the remaining values; the stack forces 2 to come out before 1.", "trap": "C9" },
+        { "value": 14, "why": "Treated the remaining four values as a fresh stack problem (Catalan number 14), but 1 and 2 are already on the stack, not still to be pushed.", "trap": "C6" },
+        { "value": 42, "why": "Gave the number of all valid sequences of 1–5, without the condition that 3 comes first.", "trap": "C6" }
+      ],
+      "solution": "1. Printing 3 first: push 1, 2, 3, pop 3. Stack [1, 2]; 4 and 5 still to be pushed.\n2. 2 must come out before 1; 4 and 5 can be pushed and popped around them.\n3. List the endings: 2145, 2154, 2415, 2451, 2541, 4215, 4251, 4521, 5421.\n4. Count = **9**."
+    },
+    {
+      "id": "dsa-stack-trace-12",
+      "skill": "dsa.stack-trace",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What does this program print?\n\n```python\ndef check(s):\n    st = []\n    pairs = {')': '(', ']': '[', '}': '{'}\n    for i, ch in enumerate(s):\n        if ch in '([{':\n            st.append(ch)\n        elif ch in pairs:\n            if not st or st.pop() != pairs[ch]:\n                return i\n    return -1 if not st else len(s)\n\nprint(check('{[()()]}([)]'))\n```",
+      "figure": null,
+      "options": [
+        { "text": "-1", "correct": false, "why": "Each bracket type has as many openers as closers, but the order is wrong: `(` is closed while `[` is on top.", "trap": "C10" },
+        { "text": "10", "correct": true, "why": "Indices 0–7 balance. Then `(` at 8 and `[` at 9 are pushed; `)` at index 10 pops `[`, a mismatch, so 10 is returned." },
+        { "text": "11", "correct": false, "why": "Counted positions from 1; `enumerate` starts at index 0, so the bad `)` is at index 10.", "trap": "C6" },
+        { "text": "12", "correct": false, "why": "Assumed the loop finished with brackets left on the stack; it returns early at the first mismatch.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. `{[()()]}` occupies indices 0–7 and leaves the stack empty.\n2. Index 8 `(` → push; index 9 `[` → push. Stack: ( [.\n3. Index 10 `)`: pop gives `[`, which is not `(`, so return 10."
+    },
+    {
+      "id": "dsa-queue-deque-06",
+      "skill": "dsa.queue-deque",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A circular queue is stored in an array of 8 slots (indices 0–7). `front` is the index of the first element and `rear` is the index of the next free slot; one slot is always kept empty. Right now `front = 6` and `rear = 3`. How many elements does the queue hold?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 5, "tol": 0 },
+      "traps": [
+        { "value": 3, "why": "Took |rear − front| = 3, ignoring that the queue wraps from index 7 back to 0.", "trap": "C11" },
+        { "value": -3, "why": "Computed rear − front without the mod 8 wrap-around.", "trap": "C11" },
+        { "value": 6, "why": "Counted slots 6 through 3 inclusive; rear is the next free slot, so slot 3 is empty.", "trap": "C6" }
+      ],
+      "solution": "1. Count = (rear − front) mod 8 = (3 − 6 + 8) mod 8.\n2. = 5: the occupied slots are 6, 7, 0, 1, 2.\n3. Slot 3 is free (rear points there)."
+    },
+    {
+      "id": "dsa-queue-deque-07",
+      "skill": "dsa.queue-deque",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A circular queue uses an array of n slots (indices 0 to n − 1). `front` is the index of the first element, `rear` is the index of the next free slot, and one slot is kept empty so that *full* and *empty* can be told apart. Which condition means the queue is **full**?",
+      "figure": null,
+      "options": [
+        { "text": "`front == rear`", "correct": false, "why": "This is the empty test: with one slot kept free, front meets rear only when nothing is stored.", "trap": "C2" },
+        { "text": "`(rear + 1) % n == front`", "correct": true, "why": "Full means one more enqueue would make rear reach front; at that point n − 1 elements are stored." },
+        { "text": "`(front + 1) % n == rear`", "correct": false, "why": "Direction reversed: rear one step after front means exactly one element is stored.", "trap": "C11" },
+        { "text": "`rear == n - 1`", "correct": false, "why": "That is the end-of-array test for a linear queue; in a circular queue rear wraps to 0 and freed slots are reused.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Empty: front == rear.\n2. Each enqueue moves rear one step: rear = (rear + 1) % n.\n3. The queue is full when one more step would make rear equal front: (rear + 1) % n == front. It then holds n − 1 elements."
+    },
+    {
+      "id": "dsa-queue-deque-08",
+      "skill": "dsa.queue-deque",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A **stack** is built from two queues Q1 and Q2. `push(x)`: enqueue x into Q2, then dequeue every element of Q1 and enqueue it into Q2, then swap the names Q1 and Q2. `pop()`: dequeue from Q1.\n\nStarting empty, run: `push(1)`, `push(2)`, `push(3)`, `pop()`, `push(4)`, `pop()`, `push(5)`, `pop()`.\n\nWhat is the total number of enqueue and dequeue operations (on both queues combined)?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 22, "tol": 0 },
+      "traps": [
+        { "value": 15, "why": "Counted moving an element from Q1 to Q2 as one operation; each move is one dequeue plus one enqueue.", "trap": "C6" },
+        { "value": 19, "why": "Left out the three dequeues done by pop().", "trap": "C6" },
+        { "value": 8, "why": "Counted only one operation per push and pop, ignoring the moves.", "trap": "C6" }
+      ],
+      "solution": "1. push(1): 1 enqueue. push(2): 1 + move 1 element (2) = 3. push(3): 1 + move 2 (4) = 5.\n2. pop(): 1 (returns 3); Q1 now holds 2, 1.\n3. push(4): 1 + move 2 (4) = 5; pop(): 1 (returns 4).\n4. push(5): 1 + move 2 (4) = 5; pop(): 1 (returns 5).\n5. Total = 1 + 3 + 5 + 1 + 5 + 1 + 5 + 1 = 22."
+    },
+    {
+      "id": "dsa-queue-deque-09",
+      "skill": "dsa.queue-deque",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What does this program print?\n\n```python\nfrom collections import deque\n\ndef f(q, k):\n    st = []\n    for _ in range(k):\n        st.append(q.popleft())\n    while st:\n        q.append(st.pop())\n    for _ in range(len(q) - k):\n        q.append(q.popleft())\n    return list(q)\n\nprint(f(deque([10, 20, 30, 40, 50, 60]), 4))\n```",
+      "figure": null,
+      "options": [
+        { "text": "[40, 30, 20, 10, 50, 60]", "correct": true, "why": "The first four go through the stack and come back reversed at the rear; the last loop then moves 50 and 60 from the front to the rear." },
+        { "text": "[50, 60, 40, 30, 20, 10]", "correct": false, "why": "Stopped after the stack loop and skipped the final rotation of len(q) − k = 2 elements.", "trap": "C6" },
+        { "text": "[10, 20, 30, 40, 50, 60]", "correct": false, "why": "Popped the stack from the bottom (FIFO), so the four values kept their order; `st.pop()` takes the last pushed value.", "trap": "C2" },
+        { "text": "[60, 50, 40, 30, 20, 10]", "correct": false, "why": "Assumed the whole queue is reversed; only the first k = 4 elements pass through the stack.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pop 10, 20, 30, 40 from the front onto st; q = [50, 60].\n2. Empty the stack to the rear: q = [50, 60, 40, 30, 20, 10].\n3. len(q) − k = 6 − 4 = 2: move 50, then 60, to the rear.\n4. q = [40, 30, 20, 10, 50, 60]."
+    },
+    {
+      "id": "dsa-queue-deque-10",
+      "skill": "dsa.queue-deque",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An **input-restricted deque** allows insertion only at the rear but deletion at both ends. The values 1, 2, 3, 4 are inserted in this order; deletions may happen at any time, and each deleted value is printed. Which printed sequence is **impossible**?",
+      "figure": null,
+      "options": [
+        { "text": "4 1 3 2", "correct": false, "why": "Possible: insert all four, delete 4 (rear), 1 (front), 3 (rear), 2. It is impossible only for an output-restricted deque; the two kinds were swapped.", "trap": "C2" },
+        { "text": "4 1 2 3", "correct": false, "why": "Possible: insert all four, delete 4 from the rear, then 1, 2, 3 from the front. It is impossible for a stack, but a deque can also delete at the front.", "trap": "C9" },
+        { "text": "4 2 1 3", "correct": true, "why": "Printing 4 first needs all four inside: 1 2 3 4. After 4 leaves from the rear, the ends are 1 and 3, so 2 (in the middle) cannot be next." },
+        { "text": "3 1 4 2", "correct": false, "why": "Possible: insert 1–3, delete 3 (rear) and 1 (front), insert 4, delete 4 (rear), then 2. Checked it as if only one end could delete.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Only the two ends can be deleted, and new values join at the rear.\n2. 4 2 1 3: to print 4 first, the deque must be 1 2 3 4. Remove 4 → 1 2 3. Next must be 1 or 3, not 2. Impossible.\n3. The other three each have a valid order of deletions (see the options)."
+    },
+    {
+      "id": "dsa-queue-deque-11",
+      "skill": "dsa.queue-deque",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A queue holds 1, 2, 3, …, 10 (front → rear). The following round is repeated until only one value remains: dequeue a value and enqueue it again at the rear, do this **twice**, then dequeue the next value and discard it.\n\nWhich value remains at the end?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 10, "why": "Gave the last value discarded instead of the one that remains.", "trap": "C6" },
+        { "value": 5, "why": "Moved only one value to the rear per round (discarding every 2nd value instead of every 3rd).", "trap": "C6" },
+        { "value": 3, "why": "Gave the first value discarded; the process continues until one value is left.", "trap": "C6" }
+      ],
+      "solution": "1. Each round discards the third value from the front: first 3, then 6, then 9.\n2. Queue after three rounds: 10, 1, 2, 4, 5, 7, 8. Continue: discard 2, 7, 1, 8, 5, 10.\n3. Discard order: 3, 6, 9, 2, 7, 1, 8, 5, 10.\n4. The value left is **4**."
+    },
+    {
+      "id": "dsa-queue-deque-12",
+      "skill": "dsa.queue-deque",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which of these designs give a FIFO queue with O(1) enqueue **and** O(1) dequeue?",
+      "figure": null,
+      "options": [
+        { "text": "Singly linked list with `head` and `tail` pointers; enqueue after the tail, dequeue at the head.", "correct": true, "why": "Adding after the tail and removing the head each change a fixed number of pointers." },
+        { "text": "Singly linked list with `head` and `tail` pointers; enqueue at the head, dequeue at the tail.", "correct": false, "why": "Removing the tail needs the node before it, which takes a Θ(n) walk from the head. The ends were used the wrong way round.", "trap": "C11" },
+        { "text": "Circular singly linked list with only a pointer `last` to the last node; enqueue after `last`, dequeue `last.next`.", "correct": true, "why": "`last.next` is the front, so both the front and the rear are one step from `last`; each operation is O(1)." },
+        { "text": "Singly linked list with only `head`; enqueue at the head, dequeue at the head.", "correct": false, "why": "Both are O(1), but the last value in is the first out: this is a stack (LIFO), not a queue.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A queue adds at one end and removes at the other, so both ends must be reachable in O(1).\n2. Head/tail list: enqueue at tail, dequeue at head is O(1); the reverse makes dequeue Θ(n).\n3. Circular list with `last`: front = `last.next`, so both ends are O(1).\n4. Same end for both is a stack."
+    },
+    {
+      "id": "dsa-linked-list-06",
+      "skill": "dsa.linked-list",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 3 → 8 → 1 → 6 → 9 → 4. What does `mid(head)` return?\n\n```python\ndef mid(head):\n    slow = fast = head\n    while fast and fast.next:\n        slow = slow.next\n        fast = fast.next.next\n    return slow.val\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 6, "tol": 0 },
+      "traps": [
+        { "value": 1, "why": "Took the first of the two middle nodes (node 3); with an even count this loop stops on the second one (node 4).", "trap": "C6" },
+        { "value": 9, "why": "Moved slow one step too many; the loop stops when fast becomes None after three rounds.", "trap": "C6" }
+      ],
+      "solution": "1. Start: slow = 3, fast = 3.\n2. Round 1: slow = 8, fast = 1. Round 2: slow = 1, fast = 9.\n3. Round 3: fast.next is 4, so continue: slow = 6, fast = None.\n4. Loop ends; return **6** (the 4th of 6 nodes)."
+    },
+    {
+      "id": "dsa-linked-list-07",
+      "skill": "dsa.linked-list",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 1 → 2 → 3 → 4 → 5 → 6 → 7. What is the list (from `head`) after this code runs?\n\n```python\np = head\nwhile p and p.next:\n    p.next = p.next.next\n    p = p.next\n```",
+      "figure": null,
+      "options": [
+        { "text": "2 → 4 → 6", "correct": false, "why": "Listed the nodes that were unlinked, not the ones that stay reachable from head.", "trap": "C2" },
+        { "text": "1 → 3 → 5", "correct": false, "why": "Thought 7 is lost when the loop stops; p reaches 7 and the loop just ends, leaving 7 linked after 5.", "trap": "C6" },
+        { "text": "1 → 3 → 5 → 7", "correct": true, "why": "Each round links p past its successor and then moves to the node that follows, so every second node is skipped." },
+        { "text": "1 → 4 → 7", "correct": false, "why": "Removed two nodes per round; the code skips only one node (`p.next.next`) and then steps once.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. p = 1: 1.next = 3; p = 3.\n2. p = 3: 3.next = 5; p = 5.\n3. p = 5: 5.next = 7; p = 7.\n4. p.next is None: stop. List: 1 → 3 → 5 → 7."
+    },
+    {
+      "id": "dsa-linked-list-08",
+      "skill": "dsa.linked-list",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 1 → 2 → 3 → 4 → 5. What does `f(head)` print?\n\n```python\ndef f(p):\n    if p is None:\n        return\n    if p.val % 2 == 0:\n        print(p.val, end=' ')\n    f(p.next)\n    if p.val % 2 == 1:\n        print(p.val, end=' ')\n```",
+      "figure": null,
+      "options": [
+        { "text": "2 4 1 3 5", "correct": false, "why": "Printed the odd values in list order; they are printed after the recursive call returns, so they come out last-first.", "trap": "C11" },
+        { "text": "1 3 5 4 2", "correct": false, "why": "Swapped the roles: here even values print before the call (forward) and odd values after it (backward).", "trap": "C2" },
+        { "text": "4 2 5 3 1", "correct": false, "why": "Reversed the even values too; they print before the recursive call, on the way down, so in list order.", "trap": "C9" },
+        { "text": "2 4 5 3 1", "correct": true, "why": "Even values print on the way down (2, 4); odd values print as the calls return, from the deepest node back (5, 3, 1)." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Going down: nodes 1, 2, 3, 4, 5 in order; the even ones print now: 2 4.\n2. At None the calls start returning, deepest first: 5, 4, 3, 2, 1.\n3. On return only odd values print: 5 3 1.\n4. Output: 2 4 5 3 1."
+    },
+    {
+      "id": "dsa-linked-list-09",
+      "skill": "dsa.linked-list",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 5 → 8 → 2 → 7 → 1 → 9 → 3. What list does `g(head)` return?\n\n```python\ndef g(head):\n    prev, cur = head, head.next\n    while cur:\n        if cur.val < head.val:\n            prev.next = cur.next\n            cur.next = head\n            head = cur\n            cur = prev.next\n        else:\n            prev, cur = cur, cur.next\n    return head\n```",
+      "figure": null,
+      "options": [
+        { "text": "3 → 1 → 2 → 5 → 8 → 7 → 9", "correct": false, "why": "Compared every node with the original head value 5. `head` changes whenever a node moves to the front, so later nodes are compared with the new head.", "trap": "C9" },
+        { "text": "2 → 1 → 5 → 8 → 7 → 9 → 3", "correct": false, "why": "Kept the moved nodes in their original order; each one is put in front of the current head, so the later one ends up first.", "trap": "C11" },
+        { "text": "1 → 2 → 5 → 8 → 7 → 9 → 3", "correct": true, "why": "2 < 5 moves to the front (head 2); 1 < 2 moves to the front (head 1); 9 and 3 are not smaller than 1 and stay." },
+        { "text": "1 → 2 → 3 → 5 → 7 → 8 → 9", "correct": false, "why": "Assumed the code sorts the list; it only moves a node to the front when it is smaller than the current head.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. head = 5. cur = 8: not < 5, prev = 8.\n2. cur = 2 < 5: unlink 2, put it in front: 2 → 5 → 8 → 7 → 1 → 9 → 3, head = 2; cur = 7.\n3. cur = 7: not < 2, prev = 7. cur = 1 < 2: move to front, head = 1; cur = 9.\n4. 9 and 3 are not < 1. Result: 1 → 2 → 5 → 8 → 7 → 9 → 3."
+    },
+    {
+      "id": "dsa-linked-list-10",
+      "skill": "dsa.linked-list",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A list holds n nodes. Which operations take O(1) time in the worst case?",
+      "figure": null,
+      "options": [
+        { "text": "Deleting the last node of a doubly linked list that keeps `head` and `tail` pointers.", "correct": true, "why": "`tail.prev` gives the new last node directly; only a fixed number of pointers change." },
+        { "text": "Deleting the last node of a singly linked list that keeps `head` and `tail` pointers.", "correct": false, "why": "The tail pointer does not give the node before the tail, which must become the new tail; finding it is a Θ(n) walk.", "trap": "C9" },
+        { "text": "Inserting a node at the front, and also at the end, of a circular singly linked list that keeps only a pointer `last` to its last node.", "correct": true, "why": "The front is `last.next`. Insert the new node after `last`; for the end, also move `last` to it. Both are O(1)." },
+        { "text": "Reversing a doubly linked list in place, so that following `next` from the new head visits the nodes in reverse order.", "correct": false, "why": "Every node's `prev` and `next` must be swapped, which touches all n nodes: Θ(n), not O(1).", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Doubly linked with tail: new tail = tail.prev; O(1).\n2. Singly linked with tail: the node before the tail needs a walk from head; Θ(n).\n3. Circular with `last`: front = last.next, so both ends are one step away; O(1).\n4. Reversal changes the pointers of all n nodes; Θ(n)."
+    },
+    {
+      "id": "dsa-linked-list-11",
+      "skill": "dsa.linked-list",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A singly linked list has nodes with values 1, 2, …, 10 in order, but the last node's `next` points back to the node with value 4 (so the list has a cycle). Two pointers start at the head: `slow` moves 1 node per step and `fast` moves 2 nodes per step, and both move in every step. After how many steps do `slow` and `fast` first point to the same node?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 7, "tol": 0 },
+      "traps": [
+        { "value": 8, "why": "Gave the value of the node where they meet, not the number of steps.", "trap": "C10" },
+        { "value": 3, "why": "Gave the number of steps to reach the start of the cycle (node 4), not the meeting point.", "trap": "C6" },
+        { "value": 14, "why": "Counted the nodes moved by fast (2 per step) instead of the steps.", "trap": "C4" }
+      ],
+      "solution": "1. The cycle is 4 → 5 → … → 10 → 4, length 7.\n2. Positions (slow, fast) after each step: (2, 3), (3, 5), (4, 7), (5, 9), (6, 4), (7, 6), (8, 8).\n3. They meet at node 8 after **7** steps."
+    },
+    {
+      "id": "dsa-linked-list-12",
+      "skill": "dsa.linked-list",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`head` points to the list 12 → 7 → 19 → 4 → 15 → 9 → 21 → 6 → 11. What does `h(head, 3)` return?\n\n```python\ndef h(head, k):\n    a = b = head\n    for _ in range(k):\n        b = b.next\n    while b:\n        a, b = a.next, b.next\n    return a.val\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 21, "tol": 0 },
+      "traps": [
+        { "value": 6, "why": "Stopped one step early (2nd node from the end); the loop runs until b is None, not until b is the last node.", "trap": "C6" },
+        { "value": 9, "why": "Moved a one step too few, landing on the 4th node from the end.", "trap": "C6" },
+        { "value": 19, "why": "Took the 3rd node from the front; the gap of k nodes makes a stop k nodes from the end.", "trap": "C11" }
+      ],
+      "solution": "1. b moves 3 nodes ahead: b = 4 (index 3).\n2. Then a and b move together until b is None: b covers indices 4–8 and then None, 6 moves.\n3. a moves from index 0 to index 6, value **21**: the 3rd node from the end."
+    },
+    {
+      "id": "dsa-search-06",
+      "skill": "dsa.search",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What does this print?\n\n```python\ndef bs(a, x):\n    lo, hi = 0, len(a) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if a[mid] == x:\n            return 'found'\n        elif a[mid] < x:\n            lo = mid + 1\n        else:\n            hi = mid - 1\n    return lo, hi\n\nprint(bs([4, 9, 13, 18, 22, 27, 35, 40], 20))\n```",
+      "figure": null,
+      "options": [
+        { "text": "(4, 4)", "correct": false, "why": "Stopped when lo == hi; `while lo <= hi` still runs one more probe at index 4.", "trap": "C6" },
+        { "text": "(5, 4)", "correct": false, "why": "At the last probe 22 > 20, so the search goes left: hi = mid − 1, not lo = mid + 1.", "trap": "C11" },
+        { "text": "(4, 3)", "correct": true, "why": "Probes at 3 (18 < 20), 5 (27 > 20), 4 (22 > 20) end with lo = 4, hi = 3; lo is where 20 would be inserted." },
+        { "text": "(3, 4)", "correct": false, "why": "Swapped lo and hi; the loop ends only when lo has passed hi, so lo > hi.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. lo = 0, hi = 7: mid = 3, 18 < 20 → lo = 4.\n2. lo = 4, hi = 7: mid = 5, 27 > 20 → hi = 4.\n3. lo = 4, hi = 4: mid = 4, 22 > 20 → hi = 3.\n4. lo > hi: return (4, 3)."
+    },
+    {
+      "id": "dsa-search-07",
+      "skill": "dsa.search",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Binary search on a sorted array of n distinct elements uses one comparison per probe (equal / less / greater counts as one). What is the **largest** n for which no search key, present or absent, ever needs more than 6 comparisons?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 63, "tol": 0 },
+      "traps": [
+        { "value": 64, "why": "Used $2^6$; with 64 elements the worst case is $\\lfloor \\log_2 64 \\rfloor + 1 = 7$ comparisons.", "trap": "C5" },
+        { "value": 32, "why": "Used $2^5$: dropped the +1 probe at the last level of the search tree.", "trap": "C6" },
+        { "value": 127, "why": "Used $2^7 - 1$, which is the limit for 7 comparisons.", "trap": "C6" }
+      ],
+      "solution": "1. Worst case = $\\lfloor \\log_2 n \\rfloor + 1 \\le 6$ ⇔ $\\lfloor \\log_2 n \\rfloor \\le 5$ ⇔ $n < 2^6$.\n2. Largest n = $2^6 - 1 = 63$ (a full search tree of 6 levels: 1 + 2 + 4 + 8 + 16 + 32)."
+    },
+    {
+      "id": "dsa-search-08",
+      "skill": "dsa.search",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Binary search with $mid = \\lfloor (lo + hi)/2 \\rfloor$ is run on a sorted array of 15 distinct elements, one comparison per probe. Each of the 15 elements is equally likely to be the key (the key is always present). What is the **expected** number of comparisons? (Give 2 decimal places.)",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 3.27, "tol": 0.01 },
+      "traps": [
+        { "value": 4, "why": "Gave the worst case; most keys, but not all, need 4 comparisons.", "trap": "C9" },
+        { "value": 2.5, "why": "Averaged the levels 1, 2, 3, 4 equally; deeper levels hold more keys (1, 2, 4, 8).", "trap": "C6" },
+        { "value": 3.06, "why": "Divided the total 49 by 16 instead of by the 15 elements.", "trap": "C6" }
+      ],
+      "solution": "1. 15 = $2^4 - 1$: the search tree is full with 1, 2, 4, 8 keys at depths 1–4.\n2. Total comparisons = 1·1 + 2·2 + 4·3 + 8·4 = 49.\n3. Expected = 49 / 15 ≈ **3.27**."
+    },
+    {
+      "id": "dsa-search-09",
+      "skill": "dsa.search",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "`a` is sorted in non-decreasing order (repeats allowed). Consider:\n\n```python\ndef lb(a, x):\n    lo, hi = 0, len(a)\n    while lo < hi:\n        mid = (lo + hi) // 2\n        if a[mid] < x:\n            lo = mid + 1\n        else:\n            hi = mid\n    return lo\n```\n\nWhich statements are correct?",
+      "figure": null,
+      "options": [
+        { "text": "It returns the smallest index i with a[i] ≥ x, or len(a) if no such index exists.", "correct": true, "why": "Everything left of lo is < x and everything from hi on is ≥ x; the loop ends with lo = hi at the first ≥ x position." },
+        { "text": "If x occurs several times, it may return any one of the occurrences.", "correct": false, "why": "An equal element sets hi = mid and the search keeps going left, so it always ends at the leftmost occurrence.", "trap": "C9" },
+        { "text": "Changing `lo = mid + 1` to `lo = mid` can make the loop run forever.", "correct": true, "why": "When hi = lo + 1, mid = lo; if a[mid] < x then lo stays the same and the range never shrinks." },
+        { "text": "Changing `hi = mid` to `hi = mid - 1` gives the same result for every array and key.", "correct": false, "why": "It can step past the answer: for a = [3, 5, 8, 12] and x = 8, probe 2 sets hi = 1 and it returns 1 instead of 2. The boundary must stay inside the range.", "trap": "C5" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Invariant: a[0..lo−1] < x and a[hi..] ≥ x, with hi starting at len(a).\n2. The loop ends with lo = hi = first index with a[i] ≥ x (len(a) if none). First statement true; equal keys push left, so the second is false.\n3. With lo = mid, lo = 0, hi = 1 and a[0] < x, mid stays 0 forever. Third true.\n4. hi = mid − 1 can skip the first ≥ x element (example in the option). Fourth false."
+    },
+    {
+      "id": "dsa-search-10",
+      "skill": "dsa.search",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Standard binary search (`lo, hi = 0, len(a) - 1`, `mid = (lo + hi) // 2`, return mid as soon as `a[mid] == x`) is run on\n\n`a = [1, 3, 5, 5, 5, 5, 9, 11, 14, 17, 20, 22, 25, 28, 31, 34]`\n\nwith x = 5. Which index is returned?",
+      "figure": null,
+      "options": [
+        { "text": "2", "correct": false, "why": "Assumed binary search returns the leftmost copy; this version stops at the first copy it probes.", "trap": "C9" },
+        { "text": "3", "correct": true, "why": "Probe 7 (11 > 5) sets hi = 6; probe 3 finds 5 and returns 3, a middle copy." },
+        { "text": "5", "correct": false, "why": "Assumed it returns the last copy; it returns whichever copy is probed first.", "trap": "C9" },
+        { "text": "4", "correct": false, "why": "Counted positions from 1; the element at index 3 is the 4th element.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. lo = 0, hi = 15: mid = 7, a[7] = 11 > 5 → hi = 6.\n2. lo = 0, hi = 6: mid = 3, a[3] = 5 → return 3.\n3. Copies of 5 are at indices 2–5; the search returns the one it hits first."
+    },
+    {
+      "id": "dsa-search-11",
+      "skill": "dsa.search",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Linear search scans an array of 10 distinct elements from position 1. The key is always present, and the probability that it is at position i is proportional to i (for i = 1, 2, …, 10). What is the expected number of comparisons?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 7, "tol": 0.01 },
+      "traps": [
+        { "value": 5.5, "why": "Used equally likely positions, (n + 1)/2; the stem makes later positions more likely.", "trap": "C7" },
+        { "value": 4, "why": "Reversed the weights (position i with weight 11 − i), making early positions more likely.", "trap": "C11" },
+        { "value": 38.5, "why": "Divided $\\sum i^2 = 385$ by 10 instead of by the normalising constant 55.", "trap": "C3" }
+      ],
+      "solution": "1. P(position i) = i / (1 + 2 + … + 10) = i / 55.\n2. Finding the key at position i costs i comparisons.\n3. E = Σ i · i/55 = 385 / 55 = **7**."
+    },
+    {
+      "id": "dsa-search-12",
+      "skill": "dsa.search",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Binary search (`lo, hi = 0, n - 1`, `mid = (lo + hi) // 2`, loop `while lo <= hi`, one comparison per probe) is run on a sorted array of n = 25 distinct elements. How many comparisons are made for a key **smaller than every element**, and for a key **larger than every element**?",
+      "figure": null,
+      "options": [
+        { "text": "Smaller: 5; larger: 5", "correct": false, "why": "Assumed every absent key costs the worst case ⌊log₂ 25⌋ + 1 = 5; the left side runs out one probe sooner.", "trap": "C8" },
+        { "text": "Smaller: 5; larger: 4", "correct": false, "why": "Direction reversed: rounding mid down leaves the right part at least as big as the left, so going right takes longer.", "trap": "C11" },
+        { "text": "Smaller: 4; larger: 5", "correct": true, "why": "Going left the probes are 12, 5, 2, 0 (4 comparisons); going right they are 12, 18, 21, 23, 24 (5 comparisons)." },
+        { "text": "Smaller: 4; larger: 4", "correct": false, "why": "Assumed the two sides are symmetric; with floor mid the right parts are sometimes one larger.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Smaller key: always hi = mid − 1. Probes 12 (hi 11), 5 (hi 4), 2 (hi 1), 0 (hi −1): 4 comparisons.\n2. Larger key: always lo = mid + 1. Probes 12 (lo 13), 18 (lo 19), 21 (lo 22), 23 (lo 24), 24 (lo 25): 5 comparisons.\n3. Floor mid makes the right part as large or one larger than the left, so the right edge is deeper."
+    },
+    {
+      "id": "dsa-loop-complexity-06",
+      "skill": "dsa.loop-complexity",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For n = 20, how many times does `c += 1` run?\n\n```python\nc = 0\nfor i in range(n):\n    j = 1\n    while j < n:\n        j *= 2\n        c += 1\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 100, "tol": 0 },
+      "traps": [
+        { "value": 80, "why": "Used ⌊log₂ 20⌋ = 4 inner rounds; j takes the values 1, 2, 4, 8, 16, which are 5 rounds before j reaches 32.", "trap": "C6" },
+        { "value": 105, "why": "Ran the outer loop 21 times; `range(20)` gives i = 0 to 19.", "trap": "C6" },
+        { "value": 25, "why": "Added the outer and inner counts (20 + 5); the inner loop runs completely for every i, so multiply.", "trap": "C3" }
+      ],
+      "solution": "1. The inner loop does not depend on i: j = 1, 2, 4, 8, 16 all satisfy j < 20, so 5 rounds (then j = 32).\n2. The outer loop runs 20 times.\n3. Total = 20 × 5 = **100**."
+    },
+    {
+      "id": "dsa-loop-complexity-07",
+      "skill": "dsa.loop-complexity",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the time complexity of this fragment as a function of n?\n\n```python\ni = 1\nwhile i * i <= n:\n    i += 1\n```",
+      "figure": null,
+      "options": [
+        { "text": "Θ(log n)", "correct": false, "why": "Log needs i to multiply each round; here i grows by 1, and only the stopping test uses i².", "trap": "C10" },
+        { "text": "Θ(√n)", "correct": true, "why": "The loop runs while i ≤ √n, and i rises by 1 each time, so about √n rounds." },
+        { "text": "Θ(n)", "correct": false, "why": "Read the condition as i ≤ n; the loop stops once i² passes n, i.e. at i ≈ √n.", "trap": "C9" },
+        { "text": "Θ(n²)", "correct": false, "why": "Squared in the wrong direction: the test i² ≤ n limits i to √n, it does not make n² rounds.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. The loop continues while $i^2 \\le n$, i.e. $i \\le \\sqrt{n}$.\n2. i goes 1, 2, 3, …, so the number of rounds is $\\lfloor \\sqrt{n} \\rfloor$.\n3. Time Θ(√n). (For n = 100: 10 rounds.)"
+    },
+    {
+      "id": "dsa-loop-complexity-08",
+      "skill": "dsa.loop-complexity",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For n = 64, how many times does `c += 1` run?\n\n```python\nc = 0\ni = n\nwhile i > 0:\n    for j in range(i, n):\n        c += 1\n    i //= 2\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 321, "tol": 0 },
+      "traps": [
+        { "value": 127, "why": "Read `range(i, n)` as `range(i)` and summed the values of i; the inner loop runs n − i times.", "trap": "C2" },
+        { "value": 448, "why": "Charged a full n = 64 to each of the 7 passes; the inner range starts at i, not 0.", "trap": "C9" },
+        { "value": 385, "why": "Added an eighth pass with i = 0; the loop stops as soon as i becomes 0.", "trap": "C5" }
+      ],
+      "solution": "1. i takes 64, 32, 16, 8, 4, 2, 1 (7 passes; then 0 stops the loop).\n2. Inner count = n − i: 0, 32, 48, 56, 60, 62, 63.\n3. Total = 321. (In general about n·log₂ n − n, so Θ(n log n).)"
+    },
+    {
+      "id": "dsa-loop-complexity-09",
+      "skill": "dsa.loop-complexity",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the time complexity of this fragment as a function of n?\n\n```python\ni = 2\nwhile i < n:\n    i = i * i\n```",
+      "figure": null,
+      "options": [
+        { "text": "Θ(log n)", "correct": false, "why": "That is the count for doubling (i = 2i). Squaring doubles the exponent: i = 2, 2², 2⁴, 2⁸, …", "trap": "C10" },
+        { "text": "Θ(√n)", "correct": false, "why": "Mixed this with a loop whose test is i·i ≤ n and i grows by 1; here i itself is squared each round.", "trap": "C9" },
+        { "text": "Θ(log log n)", "correct": true, "why": "After k rounds i = 2^(2^k); this reaches n when 2^k ≈ log₂ n, i.e. k ≈ log₂ log₂ n." },
+        { "text": "Θ(1)", "correct": false, "why": "The values grow very fast, but the number of rounds still increases with n (2 rounds for n = 10, 5 for n = 10⁸).", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. i after k rounds: $2^{2^k}$ (2, 4, 16, 256, 65536, …).\n2. The loop stops when $2^{2^k} \\ge n$ ⇔ $2^k \\ge \\log_2 n$ ⇔ $k \\ge \\log_2 \\log_2 n$.\n3. Time Θ(log log n)."
+    },
+    {
+      "id": "dsa-loop-complexity-10",
+      "skill": "dsa.loop-complexity",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which of these fragments run in Θ(n²) time? (The loop bodies are O(1).)",
+      "figure": null,
+      "options": [
+        { "text": "`for i in range(n):` / `    for j in range(i, i + 10): ...`", "correct": false, "why": "The inner loop always runs 10 times, whatever i is: 10n = Θ(n). Two nested loops are not automatically n².", "trap": "C10" },
+        { "text": "`for i in range(1, n + 1):` / `    for j in range(0, i * i, i): ...`", "correct": true, "why": "j steps by i up to i², so the inner loop runs i times; Σ i = n(n + 1)/2 = Θ(n²)." },
+        { "text": "`for i in range(n):` / `    for j in range(n // 2, n): ...`", "correct": true, "why": "The inner loop runs n − n//2 ≈ n/2 times for each i: n²/2 = Θ(n²)." },
+        { "text": "`i = 1` / `while i < n:` / `    for j in range(n): ...` / `    i *= 2`", "correct": false, "why": "The outer loop doubles i, so it runs about log₂ n times: Θ(n log n).", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Option 1: 10 per i → 10n, Θ(n).\n2. Option 2: range(0, i², i) has i values → Σ i = Θ(n²).\n3. Option 3: n/2 per i → n²/2, Θ(n²).\n4. Option 4: ⌈log₂ n⌉ passes × n → Θ(n log n)."
+    },
+    {
+      "id": "dsa-loop-complexity-11",
+      "skill": "dsa.loop-complexity",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For n = 10, how many times does `c += 1` run?\n\n```python\nc = 0\nfor i in range(0, n, 2):\n    for j in range(i):\n        c += 1\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 20, "tol": 0 },
+      "traps": [
+        { "value": 45, "why": "Ignored the step 2 and summed i over 0 to 9.", "trap": "C9" },
+        { "value": 25, "why": "Counted i + 1 inner rounds; `range(i)` runs exactly i times.", "trap": "C6" },
+        { "value": 30, "why": "Included i = 10; `range(0, 10, 2)` stops at 8.", "trap": "C5" }
+      ],
+      "solution": "1. i takes 0, 2, 4, 6, 8.\n2. The inner loop runs i times for each.\n3. Total = 0 + 2 + 4 + 6 + 8 = **20**."
+    },
+    {
+      "id": "dsa-loop-complexity-12",
+      "skill": "dsa.loop-complexity",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the order of growth of the number of times `c += 1` runs?\n\n```python\nc = 0\nj = 0\nfor i in range(n):\n    while j < i:\n        j += 1\n        c += 1\n```",
+      "figure": null,
+      "options": [
+        { "text": "Θ(n²)", "correct": false, "why": "Assumed j starts again from 0 for each i. j is set once, outside the for loop, and only ever grows.", "trap": "C9" },
+        { "text": "Θ(n log n)", "correct": false, "why": "Guessed from the nested shape; count the total rise of j instead.", "trap": "C10" },
+        { "text": "Θ(1)", "correct": false, "why": "Thought the while loop runs only in the first outer round; it runs once in every round with i ≥ 1.", "trap": "C6" },
+        { "text": "Θ(n)", "correct": true, "why": "Each inner step raises j by 1 and j never exceeds n − 1, so there are n − 1 inner steps in total." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. j is never reset; every `c += 1` comes with `j += 1`.\n2. j ends at n − 1, so `c += 1` runs n − 1 times in total (9 for n = 10).\n3. Order Θ(n): one inner step per outer round, not i steps."
+    },
+    {
+      "id": "dsa-growth-order-06",
+      "skill": "dsa.growth-order",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Arrange in increasing order of asymptotic growth: $f_1 = 2^{\\log_2 n}$, $f_2 = \\sqrt{n}\\,\\log_2 n$, $f_3 = n^2$, $f_4 = n^{1.5}$.",
+      "figure": null,
+      "options": [
+        { "text": "$f_2, f_4, f_3, f_1$", "correct": false, "why": "Took $2^{\\log_2 n}$ for an exponential; it simplifies to exactly n.", "trap": "C10" },
+        { "text": "$f_1, f_2, f_4, f_3$", "correct": false, "why": "Let the log factor outweigh a power: $\\sqrt{n}\\log_2 n / n = \\log_2 n/\\sqrt{n} \\to 0$, so $f_2$ is below n.", "trap": "C9" },
+        { "text": "$f_2, f_1, f_4, f_3$", "correct": true, "why": "With $f_1 = n$: $n^{0.5}\\log n < n < n^{1.5} < n^2$." },
+        { "text": "$f_2, f_1, f_3, f_4$", "correct": false, "why": "Put $n^2$ below $n^{1.5}$; for powers of n the larger exponent grows faster.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $2^{\\log_2 n} = n$.\n2. $\\sqrt{n}\\log_2 n$ vs n: ratio $\\log_2 n/\\sqrt{n} \\to 0$, so it is smaller.\n3. Then $n < n^{1.5} < n^2$.\n4. Order: $f_2, f_1, f_4, f_3$."
+    },
+    {
+      "id": "dsa-growth-order-07",
+      "skill": "dsa.growth-order",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Arrange in increasing order of asymptotic growth: $g_1 = n^{100}$, $g_2 = 1.01^n$, $g_3 = n!$, $g_4 = n^{\\log_2 n}$.",
+      "figure": null,
+      "options": [
+        { "text": "$g_1, g_4, g_2, g_3$", "correct": true, "why": "Compare $\\log_2$: $100\\log_2 n$ < $(\\log_2 n)^2$ < $0.014\\,n$ < $\\Theta(n\\log n)$ for large n." },
+        { "text": "$g_2, g_1, g_4, g_3$", "correct": false, "why": "Judged by small n, where $1.01^n$ is tiny; any exponential $c^n$ with c > 1 eventually beats every polynomial.", "trap": "C10" },
+        { "text": "$g_1, g_2, g_4, g_3$", "correct": false, "why": "Treated $n^{\\log_2 n}$ as exponential. It equals $2^{(\\log_2 n)^2}$, and $(\\log_2 n)^2$ grows slower than $n \\log_2 1.01$.", "trap": "C9" },
+        { "text": "$g_4, g_1, g_2, g_3$", "correct": false, "why": "Saw the exponent $\\log_2 n$ as smaller than 100; it passes 100 once n > $2^{100}$, so $n^{\\log_2 n}$ wins.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Take $\\log_2$ of each: $g_1 \\to 100\\log_2 n$, $g_4 \\to (\\log_2 n)^2$, $g_2 \\to n\\log_2 1.01 \\approx 0.0144\\,n$, $g_3 \\to \\log_2 n! = \\Theta(n\\log n)$.\n2. As n → ∞: $100L < L^2$ (once L > 100), $L^2 < 0.0144\\,n$, and $0.0144\\,n < \\Theta(n\\log n)$.\n3. Order $g_1, g_4, g_2, g_3$."
+    },
+    {
+      "id": "dsa-growth-order-08",
+      "skill": "dsa.growth-order",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "$2^n = \\Omega(n^3)$, so there is a threshold $n_0$ with $2^n \\ge n^3$ for **all** integers $n \\ge n_0$. What is the **smallest** such $n_0$?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 10, "tol": 0 },
+      "traps": [
+        { "value": 1, "why": "Stopped at the first n where it holds ($2 \\ge 1$); it fails again for n = 2 to 9, and the bound must hold for every n from $n_0$ on.", "trap": "C5" },
+        { "value": 9, "why": "At n = 9, $2^9 = 512 < 729 = 9^3$; the inequality first holds for good one step later.", "trap": "C6" }
+      ],
+      "solution": "1. Check: n = 1: 2 ≥ 1, but n = 2: 4 < 8, and it keeps failing up to n = 9 (512 < 729).\n2. n = 10: 1024 ≥ 1000.\n3. After that, $2^n$ doubles while $n^3$ grows by a factor $((n+1)/n)^3 < 1.34$, so it stays ahead. Smallest $n_0$ = **10**."
+    },
+    {
+      "id": "dsa-growth-order-09",
+      "skill": "dsa.growth-order",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$\\log_2 n = \\Theta(\\log_{10} n)$", "correct": true, "why": "$\\log_2 n = \\log_{10} n / \\log_{10} 2 \\approx 3.32\\,\\log_{10} n$: a constant factor." },
+        { "text": "$4^{\\log_2 n} = O(n^2)$", "correct": true, "why": "$4^{\\log_2 n} = (2^{\\log_2 n})^2 = n^2$ exactly." },
+        { "text": "$n! = O(2^n)$", "correct": false, "why": "$n!/2^n = \\prod_{k=1}^{n} (k/2)$, and the factors pass 1 from k = 3 on, so the ratio grows without bound.", "trap": "C8" },
+        { "text": "If $f(n) = O(g(n))$ then $2^{f(n)} = O(2^{g(n)})$.", "correct": false, "why": "Constant factors survive inside an exponent: f = 2n, g = n gives $2^{2n} = 4^n$, which is not $O(2^n)$.", "trap": "C1" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Change of base is a constant factor, so the first is true.\n2. $4^{\\log_2 n} = n^{\\log_2 4} = n^2$: true.\n3. $n! \\ge (n/2)^{n/2}$ outgrows $2^n$: false.\n4. Counter-example f = 2n, g = n: $4^n / 2^n = 2^n \\to \\infty$: false."
+    },
+    {
+      "id": "dsa-growth-order-10",
+      "skill": "dsa.growth-order",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "$f(n) = n^2 - 10n$. What is the **largest** constant c such that $f(n) \\ge c\\,n^2$ for all $n \\ge 20$?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.5, "tol": 0.001 },
+      "traps": [
+        { "value": 1, "why": "Used the limit of $f(n)/n^2$ as n → ∞; the bound must hold from n = 20 on, where the ratio is smallest.", "trap": "C5" },
+        { "value": 0, "why": "Evaluated at n = 10, where f = 0; the stem only needs n ≥ 20.", "trap": "C5" }
+      ],
+      "solution": "1. Need $c \\le f(n)/n^2 = 1 - 10/n$ for every n ≥ 20.\n2. $1 - 10/n$ increases with n, so its minimum over n ≥ 20 is at n = 20: $1 - 0.5$.\n3. Largest c = **0.5**."
+    },
+    {
+      "id": "dsa-growth-order-11",
+      "skill": "dsa.growth-order",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Let $f(n) = n \\log_2 n$ and $g(n) = n\\sqrt{n}$. Which statement is true?",
+      "figure": null,
+      "options": [
+        { "text": "$f(n) = O(g(n))$, but $g(n)$ is not $O(f(n))$.", "correct": true, "why": "$f/g = \\log_2 n / \\sqrt{n} \\to 0$: f stays below a constant times g, while g/f grows without bound." },
+        { "text": "$g(n) = O(f(n))$, but $f(n)$ is not $O(g(n))$.", "correct": false, "why": "Direction reversed: the log factor grows slower than $\\sqrt{n}$, so f is the smaller one.", "trap": "C11" },
+        { "text": "$f(n) = \\Theta(g(n))$", "correct": false, "why": "Both start with n, but the remaining factors $\\log_2 n$ and $\\sqrt{n}$ differ by an unbounded ratio.", "trap": "C10" },
+        { "text": "Neither is O of the other.", "correct": false, "why": "That happens only for functions that keep swapping places; here $\\log_2 n/\\sqrt{n}$ settles towards 0.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Cancel the common n: compare $\\log_2 n$ with $\\sqrt{n}$.\n2. $\\log_2 n / \\sqrt{n} \\to 0$ (any power of n beats log n).\n3. So f = O(g) and g is not O(f)."
+    },
+    {
+      "id": "dsa-growth-order-12",
+      "skill": "dsa.growth-order",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Algorithm A takes $64\\,n\\log_2 n$ steps and algorithm B takes $n^2$ steps. Considering only n = 2, 4, 8, 16, … (powers of 2), what is the **smallest** n for which B takes **more** steps than A?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1024, "tol": 0 },
+      "traps": [
+        { "value": 64, "why": "Dropped the $\\log_2 n$ factor and solved $n^2 > 64n$; at n = 128, A still needs 64·128·7 steps.", "trap": "C9" },
+        { "value": 512, "why": "Off by one power: at n = 512, $n = 512 < 64 \\cdot 9 = 576$, so B is still faster.", "trap": "C6" }
+      ],
+      "solution": "1. $n^2 > 64 n \\log_2 n$ ⇔ $n > 64\\log_2 n$. Put $n = 2^k$: $2^k > 64k$.\n2. k = 9: 512 vs 576, no. k = 10: 1024 vs 640, yes.\n3. Smallest n = $2^{10}$ = **1024**. (B has the larger order, so it loses for good once n is large.)"
+    }
+  ]
+}

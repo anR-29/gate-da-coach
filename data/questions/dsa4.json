@@ -1,0 +1,581 @@
+{
+  "area": "dsa",
+  "skills": {},
+  "questions": [
+    {
+      "id": "dsa-tree-traversal-07",
+      "skill": "dsa.tree-traversal",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Consider the binary tree in the figure (G is the **left** child of H, T has only a right child W, and V is the **left** child of W). What is its **inorder** traversal?",
+      "figure": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 340 195\" font-family=\"sans-serif\" font-size=\"13\" fill=\"currentColor\"><path d=\"M159 29L106 65M181 29L234 65M87 82L63 112M103 82L127 112M129 134L116 160M253 82L277 112M279 134L266 160\" fill=\"none\" stroke=\"currentColor\"/><g fill=\"none\" stroke=\"currentColor\"><circle cx=\"170\" cy=\"22\" r=\"13\"/><circle cx=\"95\" cy=\"72\" r=\"13\"/><circle cx=\"245\" cy=\"72\" r=\"13\"/><circle cx=\"55\" cy=\"122\" r=\"13\"/><circle cx=\"135\" cy=\"122\" r=\"13\"/><circle cx=\"285\" cy=\"122\" r=\"13\"/><circle cx=\"110\" cy=\"172\" r=\"13\"/><circle cx=\"260\" cy=\"172\" r=\"13\"/></g><g text-anchor=\"middle\"><text x=\"170\" y=\"26\">M</text><text x=\"95\" y=\"76\">F</text><text x=\"245\" y=\"76\">T</text><text x=\"55\" y=\"126\">B</text><text x=\"135\" y=\"126\">H</text><text x=\"285\" y=\"126\">W</text><text x=\"110\" y=\"176\">G</text><text x=\"260\" y=\"176\">V</text></g></svg>",
+      "options": [
+        { "text": "M F B H G T W V", "correct": false, "why": "This is the preorder (N L R): the root is written first. Inorder writes the root between its two subtrees.", "trap": "C2" },
+        { "text": "B F H G M T V W", "correct": false, "why": "Treated G as the right child of H, so H came before G. G is a left child, so it comes before H.", "trap": "C11" },
+        { "text": "B F G H M T V W", "correct": true, "why": "L N R at every node: left subtree of M gives B F G H, then M, then the right subtree gives T V W (T has no left child; V comes before W)." },
+        { "text": "B G H F V W T M", "correct": false, "why": "This is the postorder (L R N): every node after both its subtrees.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inorder = left subtree, node, right subtree, applied at every node.\n2. Left subtree of M (root F): B, then F, then H's subtree. H has only a left child G, so G then H → B F G H.\n3. Then M.\n4. Right subtree (root T, no left child): T, then W's subtree; V is W's left child → T V W.\n5. Inorder: B F G H M T V W."
+    },
+    {
+      "id": "dsa-tree-traversal-08",
+      "skill": "dsa.tree-traversal",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A **full** binary tree (every node has 0 or 2 children) with distinct labels has\n\n- preorder: A B D E H I C F G\n- postorder: D H I E B F G C A\n\nWhat is its **inorder** traversal?",
+      "figure": null,
+      "options": [
+        { "text": "A B C D E F G H I", "correct": false, "why": "This is the level order of the rebuilt tree, not the inorder.", "trap": "C2" },
+        { "text": "D B I E H A F C G", "correct": false, "why": "Swapped the children of E. In preorder H comes right after E, so H is E's left child and must come before E in inorder.", "trap": "C11" },
+        { "text": "D B E H I A F C G", "correct": false, "why": "Wrote E before its left child H (N L R inside that subtree). Inorder needs H E I.", "trap": "C6" },
+        { "text": "D B H E I A F C G", "correct": true, "why": "Root A; B is its left child and its subtree is D H I E B in postorder. Inside it D is B's left child and E (children H, I) its right child. C has children F and G." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Root = A (first of preorder, last of postorder). In a full tree the next preorder key B is A's left child.\n2. In postorder, B ends A's left subtree: {D, H, I, E, B}. The rest {F, G, C} is the right subtree, root C.\n3. Inside B's subtree: left child D (next in preorder); D is a single node in postorder, so the right part {H, I, E} has root E with left H and right I.\n4. C has left F and right G.\n5. Inorder: D B H E I A F C G."
+    },
+    {
+      "id": "dsa-tree-bounds-06",
+      "skill": "dsa.tree-bounds",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A **complete** binary tree (every level full except possibly the last, which is filled from the left, as in a binary heap) has 45 nodes. How many of its nodes are leaves?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 23, "tol": 0 },
+      "traps": [
+        { "value": 22, "why": "Counted the internal nodes, ⌊45/2⌋ = 22; leaves are the other ⌈45/2⌉.", "trap": "C2" },
+        { "value": 14, "why": "Counted only the leaves on the last level and forgot the childless nodes one level up.", "trap": "C6" },
+        { "value": 16, "why": "Took all 16 nodes of the last full level as leaves; 7 of them have children.", "trap": "C6" }
+      ],
+      "solution": "1. Levels 0–4 are full: 1 + 2 + 4 + 8 + 16 = 31 nodes. The last level has 45 − 31 = 14 nodes.\n2. Those 14 nodes hang from 7 nodes of level 4, so 16 − 7 = 9 level-4 nodes have no children.\n3. Leaves = 14 + 9 = 23 = ⌈45/2⌉. (Heap view: nodes with index > ⌊45/2⌋ = 22 are leaves → 45 − 22 = 23.)"
+    },
+    {
+      "id": "dsa-tree-bounds-07",
+      "skill": "dsa.tree-bounds",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "In a binary tree every node has either 0 or 2 children. The tree has height 6 (edges on the longest root-to-leaf path; a single node has height 0). What is the **minimum** possible number of nodes?",
+      "figure": null,
+      "options": [
+        { "text": "7", "correct": false, "why": "Took a single chain of 7 nodes; a chain has one-child nodes, which this tree cannot have.", "trap": "C1" },
+        { "text": "12", "correct": false, "why": "Added 2 nodes per level below the root but forgot the root itself (2h instead of 2h + 1).", "trap": "C6" },
+        { "text": "13", "correct": true, "why": "The thinnest such tree is a spine of 7 nodes where each of the 6 internal spine nodes has one extra leaf: 7 + 6 = 13 = 2h + 1." },
+        { "text": "127", "correct": false, "why": "This is the maximum, 2^(h+1) − 1 = 127 (perfect tree); the question asks for the minimum.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. To reach height 6 we need a path of 7 nodes (6 edges).\n2. Each of the 6 non-bottom nodes on the path must have 2 children, so each gets one extra child, which can be a leaf.\n3. Total = 7 + 6 = 13 = 2h + 1. Check: internal nodes 6, leaves 7 = 6 + 1."
+    },
+    {
+      "id": "dsa-tree-bounds-08",
+      "skill": "dsa.tree-bounds",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A binary tree has exactly 15 nodes. Height is counted in edges (a single node has height 0). Which of the following are **possible**?",
+      "figure": null,
+      "options": [
+        { "text": "Its height is 14.", "correct": true, "why": "A chain of 15 nodes (each node has one child) has 14 edges; h = n − 1 is the maximum and it is reachable." },
+        { "text": "It has exactly 7 leaves and exactly 2 nodes with one child.", "correct": true, "why": "Leaves = (two-child nodes) + 1 gives 6 two-child nodes; 7 + 6 + 2 = 15, so the counts are consistent and such a tree exists." },
+        { "text": "It has 9 leaves.", "correct": false, "why": "9 leaves force 8 two-child nodes, already 17 nodes > 15. With 15 nodes at most 8 leaves are possible.", "trap": "C8" },
+        { "text": "Its height is 2.", "correct": false, "why": "A tree of height 2 holds at most 2³ − 1 = 7 nodes; 15 nodes need height at least ⌊log₂ 15⌋ = 3.", "trap": "C5" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Height range for 15 nodes: from ⌊log₂ 15⌋ = 3 (perfect tree) to 15 − 1 = 14 (chain). So 14 is possible, 2 is not.\n2. Leaves: n₀ = n₂ + 1 and n₀ + n₁ + n₂ = 15.\n3. n₀ = 7 → n₂ = 6 → n₁ = 15 − 13 = 2: consistent, possible.\n4. n₀ = 9 → n₂ = 8 → already 17 nodes: impossible.\n5. Possible: height 14, and 7 leaves with 2 one-child nodes."
+    },
+    {
+      "id": "dsa-bst-06",
+      "skill": "dsa.bst",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The keys 40, 25, 60, 10, 30, 50, 70, 27, 35 are inserted in this order into an empty binary search tree. What is the key of the **parent** of 35?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 30, "tol": 0 },
+      "traps": [
+        { "value": 25, "why": "Stopped one level too early: 25's right child 30 already exists, so 35 goes further down.", "trap": "C6" },
+        { "value": 27, "why": "Attached 35 to the key inserted just before it; every insertion starts again from the root.", "trap": "C9" },
+        { "value": 40, "why": "Compared only with the root; 35 < 40 sends it into the left subtree, where it keeps moving down.", "trap": "C6" }
+      ],
+      "solution": "1. 40 root; 25 left, 60 right; 10 left of 25; 30 right of 25; 50, 70 under 60; 27 left of 30.\n2. Insert 35: 35 < 40 → left to 25; 35 > 25 → right to 30; 35 > 30 → right of 30 is empty.\n3. 35 becomes the right child of 30, so its parent is 30."
+    },
+    {
+      "id": "dsa-bst-07",
+      "skill": "dsa.bst",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The **preorder** traversal of a binary search tree with distinct keys is\n\n40, 20, 10, 30, 25, 35, 60, 50, 70.\n\nWhat is its **postorder** traversal?",
+      "figure": null,
+      "options": [
+        { "text": "10, 20, 25, 30, 35, 40, 50, 60, 70", "correct": false, "why": "This is the inorder (sorted keys). It is the same for every BST on these keys and does not depend on the shape.", "trap": "C2" },
+        { "text": "70, 50, 60, 35, 25, 30, 10, 20, 40", "correct": false, "why": "Reversed the preorder. That gives the mirror order (right subtree first), not L R N.", "trap": "C11" },
+        { "text": "10, 25, 35, 30, 20, 50, 70, 60, 40", "correct": true, "why": "Root 40; left subtree {20, 10, 30, 25, 35} has root 20 with 10 and 30 (children 25, 35); right subtree 60 with 50, 70. Writing L R N gives this sequence." },
+        { "text": "10, 25, 30, 35, 20, 50, 70, 60, 40", "correct": false, "why": "Wrote 30 before its right child 35; in postorder a node comes after both its children.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Root 40. Keys < 40 after it (20, 10, 30, 25, 35) form the left subtree; 60, 50, 70 the right.\n2. Left subtree: root 20, left 10, right subtree {30, 25, 35} with root 30, children 25 and 35.\n3. Right subtree: root 60 with children 50 and 70.\n4. Postorder: 10, 25, 35, 30, 20, 50, 70, 60, 40."
+    },
+    {
+      "id": "dsa-bst-08",
+      "skill": "dsa.bst",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The keys 45, 20, 70, 10, 35, 60, 90, 30, 40, 38 are inserted in this order into an empty BST. Then 45 is deleted: because it has two children, its key is replaced by its **inorder predecessor** (the largest key in its left subtree), and that predecessor node is removed from its old place. After the deletion, what is the key of the **parent** of 38?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 35, "tol": 0 },
+      "traps": [
+        { "value": 40, "why": "Used the inorder successor 60 (a leaf), so 38 stayed under 40. The stem asks for the predecessor.", "trap": "C2" },
+        { "value": 45, "why": "Thought 38 moves up to the root; it is the predecessor 40 that moves up, and 38 only takes 40's old place.", "trap": "C9" }
+      ],
+      "solution": "1. Before deletion: 45 root; 20 (left) with 10 and 35; 35 has 30 (left) and 40 (right); 40 has left child 38. Right side: 70 with 60 and 90.\n2. Predecessor of 45 = largest key in the left subtree: go right from 20 → 35 → 40 (no right child). So 40.\n3. Copy 40 into the root. Remove the old 40 node: it has one child (38), so 38 is linked to 40's parent 35.\n4. Now 38 is the right child of 35: parent = 35."
+    },
+    {
+      "id": "dsa-hash-probing-06",
+      "skill": "dsa.hash-probing",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A hash table has 8 slots (0–7), $h(k) = k \\bmod 8$ and linear probing. The keys 19, 27, 11, 34, 42, 3 are inserted in this order into the empty table. Then the key 50 (not in the table) is searched for. The search stops at the first empty slot. How many slots does it examine, **including** that empty slot?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 7, "tol": 0 },
+      "traps": [
+        { "value": 6, "why": "Did not count the empty slot that ends the search, or stopped at slot 7 without wrapping around to slot 0.", "trap": "C6" },
+        { "value": 8, "why": "Scanned the whole table; an unsuccessful search stops at the first empty slot (slot 0).", "trap": "C9" },
+        { "value": 1, "why": "Stopped at the home slot because 34 ≠ 50; linear probing must continue until an empty slot.", "trap": "C9" }
+      ],
+      "solution": "1. Insert: 19 → 3; 27 → 4; 11 → 5; 34 → 2; 42 → 2, 3, 4, 5 full → 6; 3 → 3…6 full → 7.\n2. Table: slots 2–7 = 34, 19, 27, 11, 42, 3; slots 0 and 1 empty.\n3. Search 50: home 50 mod 8 = 2. Examine 2, 3, 4, 5, 6, 7 (all full, none is 50), then wrap to 0, which is empty.\n4. Slots examined = 7."
+    },
+    {
+      "id": "dsa-hash-probing-07",
+      "skill": "dsa.hash-probing",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table of 11 slots (0–10) uses quadratic probing $h(k, i) = (k \\bmod 11 + i^2) \\bmod 11$, $i = 0, 1, 2, \\dots$. The keys 21, 32, 10, 43, 54, 65 are inserted in this order (each has $k \\bmod 11 = 10$). Next, 76 is inserted (also $76 \\bmod 11 = 10$). What happens?",
+      "figure": null,
+      "options": [
+        { "text": "76 is stored in slot 1 after 3 probes.", "correct": false, "why": "Used linear probing (10, 0, 1). Quadratic probing jumps by i², so slot 1 is never reached from home 10.", "trap": "C2" },
+        { "text": "76 is stored in slot 9 after 3 probes.", "correct": false, "why": "Used the alternating form h − i² (10, 0, 9). The given function only adds i².", "trap": "C11" },
+        { "text": "76 is stored after at most 11 probes, because for a prime table size the offsets i² mod 11 reach every slot.", "correct": false, "why": "For prime m, i² mod m takes only (m + 1)/2 = 6 distinct values, so only 6 slots are ever probed.", "trap": "C8" },
+        { "text": "76 cannot be stored: its probe sequence visits only slots 10, 0, 3, 8, 4, 2, which are all full, although 5 slots are empty.", "correct": true, "why": "The six earlier keys filled exactly the six slots reachable from home 10; i² mod 11 ∈ {0, 1, 4, 9, 5, 3} gives no other slot." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. i² mod 11 for i = 0…10: 0, 1, 4, 9, 5, 3, 3, 5, 9, 4, 1 — only 6 distinct offsets.\n2. From home 10 the slots are 10, 0, 3, 8, 4, 2 (repeating).\n3. Inserting 21, 32, 10, 43, 54, 65 fills 10, 0, 3, 8, 4, 2 in turn.\n4. 76 probes the same six slots forever; slots 1, 5, 6, 7, 9 stay empty but unreachable. Insertion fails (load factor 6/11 > 1/2, so the guarantee does not apply)."
+    },
+    {
+      "id": "dsa-hash-probing-08",
+      "skill": "dsa.hash-probing",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A hash table of 10 slots uses $h(k) = k \\bmod 10$ and linear probing. After the six keys 41, 22, 31, 13, 52, 26 are inserted into the empty table in some order, it looks like this:\n\n| slot | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |\n|---|---|---|---|---|---|---|---|---|---|---|\n| key | – | 41 | 22 | 31 | 13 | 52 | 26 | – | – | – |\n\nWhich insertion orders produce exactly this table?",
+      "figure": null,
+      "options": [
+        { "text": "22, 41, 31, 13, 52, 26", "correct": true, "why": "22 → 2, 41 → 1, 31 → 1, 2 full → 3, 13 → 3 full → 4, 52 → 2…4 full → 5, 26 → 6. Matches." },
+        { "text": "41, 31, 22, 13, 52, 26", "correct": false, "why": "31 arrives before 22 and takes slot 2 (home 1 is full); then 22 is pushed to slot 3. The table has 22 in slot 2.", "trap": "C9" },
+        { "text": "26, 41, 22, 31, 13, 52", "correct": true, "why": "26 → 6, 41 → 1, 22 → 2, 31 → 3, 13 → 4, 52 → 2, 3, 4 full → 5. Matches; 26 can come early because nothing else needs slot 6." },
+        { "text": "41, 22, 31, 52, 13, 26", "correct": false, "why": "52 arrives before 13 and takes slot 4 (2, 3 full); 13 then lands in slot 5. The table has 13 in slot 4.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Homes: 41 → 1, 31 → 1, 22 → 2, 52 → 2, 13 → 3, 26 → 6.\n2. Constraints from the table: 41 before 31 (41 is in its home 1); 22 in its home 2, so 22 before 31 and 52; 31 (slot 3) before 13 so that 13 is pushed to 4; 13 before 52 so that 52 is pushed to 5. 26 can come anywhere.\n3. Check each order by simulation: the first and third satisfy all constraints; the second breaks '22 before 31', the fourth breaks '13 before 52'."
+    },
+    {
+      "id": "dsa-hash-chaining-07",
+      "skill": "dsa.hash-chaining",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "1500 keys are stored with separate chaining in a table of 600 slots. Under simple uniform hashing, approximately how many key comparisons does a **successful** search make on average?",
+      "figure": null,
+      "options": [
+        { "text": "2.5", "correct": false, "why": "This is α = 1500/600, the cost of an unsuccessful search (whole chain). A successful search stops at the key.", "trap": "C3" },
+        { "text": "3.5", "correct": false, "why": "Used 1 + α; on average only about half of the other keys in the chain lie before the searched key.", "trap": "C3" },
+        { "text": "2.25", "correct": true, "why": "Successful search ≈ 1 + α/2 = 1 + 2.5/2 = 2.25: one comparison for the key itself plus about half the other keys in its chain." },
+        { "text": "1.25", "correct": false, "why": "Took α/2 and forgot the comparison with the key itself.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Load factor α = n/m = 1500/600 = 2.5.\n2. Successful search with chaining ≈ 1 + α/2 (exactly 1 + α/2 − α/(2n) ≈ 2.249).\n3. ≈ 2.25 comparisons."
+    },
+    {
+      "id": "dsa-hash-chaining-08",
+      "skill": "dsa.hash-chaining",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A table of 7 slots uses $h(k) = k \\bmod 7$ and separate chaining; each new key is inserted at the **front** (head) of its chain. The keys 10, 3, 24, 9, 17, 2, 31, 16 are inserted in this order. Then the keys 10, 9 and 31 are each searched for once; a search compares the key with chain entries from the head until it finds it. What is the **total** number of key comparisons for the three searches?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 9, "tol": 0 },
+      "traps": [
+        { "value": 7, "why": "Built the chains with insertion at the end (10 first in its chain), but the stem inserts at the head.", "trap": "C11" },
+        { "value": 6, "why": "Counted 0-based positions in the chain; finding the k-th entry costs k comparisons, not k − 1.", "trap": "C6" },
+        { "value": 3, "why": "Assumed every successful search costs one comparison; keys deep in a chain cost more.", "trap": "C9" }
+      ],
+      "solution": "1. Homes: 10, 3, 24, 17, 31 → 3; 9, 2, 16 → 2.\n2. Head insertion reverses arrival order: slot 3: 31, 17, 24, 3, 10; slot 2: 16, 2, 9.\n3. Search 10: 5th in its chain → 5. Search 9: 3rd → 3. Search 31: 1st → 1.\n4. Total = 5 + 3 + 1 = 9."
+    },
+    {
+      "id": "dsa-sort-passes-07",
+      "skill": "dsa.sort-passes",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Plain bubble sort (each pass compares `a[j]` and `a[j+1]` from left to right and swaps them if `a[j] > a[j+1]`) is run on `[15, 4, 23, 8, 16, 42, 1]`. What is the array after **2 passes**?",
+      "figure": null,
+      "options": [
+        { "text": "`[4, 15, 8, 16, 23, 1, 42]`", "correct": false, "why": "This is the array after only 1 pass (42 parked at the end).", "trap": "C6" },
+        { "text": "`[4, 8, 15, 16, 1, 23, 42]`", "correct": true, "why": "Pass 1 carries 42 to the end; pass 2 carries 23 to the second-last slot. The small 1 moves left only one slot per pass." },
+        { "text": "`[1, 4, 23, 8, 16, 42, 15]`", "correct": false, "why": "This is selection sort after 2 passes (minimum swapped to the front), not bubble sort.", "trap": "C2" },
+        { "text": "`[4, 15, 23, 8, 16, 42, 1]`", "correct": false, "why": "This is insertion sort after 2 passes (first three elements sorted, rest untouched).", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pass 1: 15>4 swap; 15<23; 23>8 swap; 23>16 swap; 23<42; 42>1 swap → [4, 15, 8, 16, 23, 1, 42].\n2. Pass 2 (up to the 6th slot): 4<15; 15>8 swap; 15<16; 16<23; 23>1 swap → [4, 8, 15, 16, 1, 23, 42]."
+    },
+    {
+      "id": "dsa-sort-passes-08",
+      "skill": "dsa.sort-passes",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Insertion sort below is run on `[21, 8, 35, 14, 2, 27, 11]`. One pass is one iteration of the outer loop. What is the array after **4 passes**?\n\n```python\ndef insertion_sort(a):\n    for i in range(1, len(a)):      # pass i inserts a[i]\n        key, j = a[i], i - 1\n        while j >= 0 and a[j] > key:\n            a[j + 1] = a[j]\n            j -= 1\n        a[j + 1] = key\n```",
+      "figure": null,
+      "options": [
+        { "text": "`[8, 14, 21, 35, 2, 27, 11]`", "correct": false, "why": "Stopped after 3 passes; pass 4 (i = 4) still has to insert 2.", "trap": "C6" },
+        { "text": "`[8, 14, 21, 2, 35, 27, 11]`", "correct": false, "why": "Shifted only 35 when inserting 2; the while loop keeps shifting while a[j] > key, so 21, 14 and 8 move too.", "trap": "C6" },
+        { "text": "`[2, 8, 11, 14, 21, 27, 35]`", "correct": false, "why": "This is selection sort after 4 passes (here it happens to be fully sorted). Insertion sort has not touched 27 and 11 yet.", "trap": "C2" },
+        { "text": "`[2, 8, 14, 21, 35, 27, 11]`", "correct": true, "why": "After 4 passes the first 5 elements (21, 8, 35, 14, 2) are sorted among themselves; 27 and 11 are untouched." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pass 1 (8): [8, 21, 35, 14, 2, 27, 11].\n2. Pass 2 (35): no shift.\n3. Pass 3 (14): [8, 14, 21, 35, 2, 27, 11].\n4. Pass 4 (2): shifts 35, 21, 14, 8 → [2, 8, 14, 21, 35, 27, 11]."
+    },
+    {
+      "id": "dsa-sort-passes-09",
+      "skill": "dsa.sort-passes",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Selection sort below is run on `a = [47, 22, 13, 58, 31, 9, 40, 26]`. After exactly **3 passes** (3 iterations of the outer loop), which value is at **1-based position 4**?\n\n```python\nfor i in range(len(a) - 1):\n    m = i\n    for j in range(i + 1, len(a)):\n        if a[j] < a[m]:\n            m = j\n    a[i], a[m] = a[m], a[i]\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 58, "tol": 0 },
+      "traps": [
+        { "value": 26, "why": "Did not count pass 3 because it is a self-swap (22 is already in place) and ran one pass too many; a self-swap is still a pass.", "trap": "C6" },
+        { "value": 31, "why": "Read 0-based index 4 instead of 1-based position 4 (or ran bubble sort for 3 passes).", "trap": "C6" }
+      ],
+      "solution": "1. Pass 1: min 9 swaps with 47 → [9, 22, 13, 58, 31, 47, 40, 26].\n2. Pass 2: min of a[1:] is 13 → swap with 22 → [9, 13, 22, 58, 31, 47, 40, 26].\n3. Pass 3: min of a[2:] is 22, already at index 2 → self-swap, array unchanged.\n4. Position 4 (index 3) holds 58."
+    },
+    {
+      "id": "dsa-sort-passes-10",
+      "skill": "dsa.sort-passes",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An ascending sort is run on **some** arrangement of the keys 1, 2, 3, 4, 5, 6. Each option claims an array that can appear after **exactly 2 passes** of the named algorithm (selection: one swap step per pass; insertion: one key inserted per pass; bubble: one full left-to-right sweep per pass). Which claims are possible for a suitable input?",
+      "figure": null,
+      "options": [
+        { "text": "Bubble sort: `[4, 1, 3, 2, 5, 6]`", "correct": true, "why": "After 2 bubble passes the two largest keys must sit at the end in order (5, 6); the rest can be anything. Input [5, 6, 4, 1, 3, 2] gives exactly this." },
+        { "text": "Selection sort: `[1, 2, 6, 5, 3, 4]`", "correct": true, "why": "After 2 selection passes only the two smallest keys (1, 2) must be in front; the rest is free. The input [1, 2, 6, 5, 3, 4] itself works (two self-swaps)." },
+        { "text": "Insertion sort: `[2, 4, 1, 6, 5, 3]`", "correct": false, "why": "After 2 insertion passes the first 3 elements must be sorted among themselves; 2, 4, 1 is not.", "trap": "C9" },
+        { "text": "Bubble sort: `[1, 2, 3, 4, 6, 5]`", "correct": false, "why": "Looks almost sorted, but every bubble pass parks the current largest at the end, so 6 must already be last.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Invariant after k passes: bubble → the k largest at the end in order; selection → the k smallest at the front in order; insertion → the first k + 1 elements sorted among themselves.\n2. [4, 1, 3, 2, 5, 6]: ends with 5, 6 → possible for bubble (e.g. input [5, 6, 4, 1, 3, 2]).\n3. [1, 2, 6, 5, 3, 4]: starts with 1, 2 → possible for selection.\n4. [2, 4, 1, …]: first three not sorted → impossible for insertion.\n5. [1, 2, 3, 4, 6, 5]: 6 not last → impossible for bubble."
+    },
+    {
+      "id": "dsa-sort-passes-11",
+      "skill": "dsa.sort-passes",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Insertion sort (pass i inserts `a[i]` into the sorted prefix `a[0..i-1]`, i = 1, 2, …) is run on `[33, 18, 40, 25, 7, 52, 14, 29]`. After **4 passes**, at which 1-based position is the element `33`?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 3, "why": "Stopped after 3 passes; pass 4 inserts 7 in front and pushes 33 one place right.", "trap": "C6" },
+        { "value": 5, "why": "Ran selection sort for 4 passes ([7, 14, 18, 25, 33, …]).", "trap": "C2" },
+        { "value": 6, "why": "Ran bubble sort for 4 passes.", "trap": "C2" }
+      ],
+      "solution": "1. Pass 1 (18): [18, 33, 40, 25, 7, 52, 14, 29].\n2. Pass 2 (40): no change.\n3. Pass 3 (25): [18, 25, 33, 40, 7, 52, 14, 29].\n4. Pass 4 (7): [7, 18, 25, 33, 40, 52, 14, 29].\n5. 33 is at position 4."
+    },
+    {
+      "id": "dsa-sort-passes-12",
+      "skill": "dsa.sort-passes",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Bubble sort is modified to sort in **descending** order: each pass goes left to right and swaps `a[j]` and `a[j+1]` when `a[j] < a[j+1]`. It is run on `[12, 37, 5, 29, 44, 18]`. What is the array after **2 passes**?",
+      "figure": null,
+      "options": [
+        { "text": "`[37, 12, 29, 44, 18, 5]`", "correct": false, "why": "This is after only 1 pass: the smallest key 5 has reached the end.", "trap": "C6" },
+        { "text": "`[37, 29, 44, 18, 12, 5]`", "correct": true, "why": "With the reversed test each pass sinks the current smallest to the end: 5 after pass 1, then 12 after pass 2." },
+        { "text": "`[37, 44, 29, 18, 12, 5]`", "correct": false, "why": "This is after 3 passes (18 is also parked).", "trap": "C6" },
+        { "text": "`[5, 12, 29, 18, 37, 44]`", "correct": false, "why": "Used the ascending test a[j] > a[j+1]; the stem swaps when a[j] < a[j+1].", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pass 1: 12<37 swap → [37, 12, 5, …]; 12>5 no; 5<29 swap; 5<44 swap; 5<18 swap → [37, 12, 29, 44, 18, 5].\n2. Pass 2 (first 5 slots): 37>12 no; 12<29 swap; 12<44 swap; 12<18 swap → [37, 29, 44, 18, 12, 5]."
+    },
+    {
+      "id": "dsa-sort-swaps-07",
+      "skill": "dsa.sort-swaps",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "What is the **minimum** number of swaps of **adjacent** elements needed to sort `[10, 3, 8, 1, 6, 12, 2]` in ascending order?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 12, "tol": 0 },
+      "traps": [
+        { "value": 21, "why": "Counted the comparisons of plain bubble sort (6 + 5 + … + 1), not the swaps.", "trap": "C2" },
+        { "value": 6, "why": "Counted selection-sort swaps; those exchange far-apart elements, not adjacent ones.", "trap": "C9" },
+        { "value": 3, "why": "Counted only adjacent out-of-order pairs (10>3, 8>1, 12>2); every inverted pair needs its own swap.", "trap": "C6" }
+      ],
+      "solution": "1. Each adjacent swap removes exactly one inversion, so the minimum = number of inversions.\n2. Pairs (i < j, a[i] > a[j]): 10 → 3, 8, 1, 6, 2 (5); 3 → 1, 2 (2); 8 → 1, 6, 2 (3); 1 → none; 6 → 2 (1); 12 → 2 (1).\n3. Total = 5 + 2 + 3 + 0 + 1 + 1 = 12 (bubble sort makes exactly these swaps)."
+    },
+    {
+      "id": "dsa-sort-swaps-08",
+      "skill": "dsa.sort-swaps",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The standard selection sort (find the minimum of `a[i:]` with `a[j] < a[m]`, then execute `a[i], a[m] = a[m], a[i]`, for i = 0 … n − 2) is run on an array of 10 distinct keys that is **already sorted**. How many comparisons `a[j] < a[m]` are made, and how many times does the swap line execute?",
+      "figure": null,
+      "options": [
+        { "text": "45 comparisons, 9 swap-line executions", "correct": true, "why": "Pass i compares with all n − 1 − i later keys regardless of order: 9 + 8 + … + 1 = 45; the swap line runs once per pass (9 times), all self-swaps here." },
+        { "text": "9 comparisons, 0 swap-line executions", "correct": false, "why": "Treated selection sort like insertion sort on sorted input; selection must scan the whole unsorted part every pass.", "trap": "C9" },
+        { "text": "45 comparisons, 0 swap-line executions", "correct": false, "why": "The swap line has no if-test, so it runs on every pass; here each run is a self-swap.", "trap": "C6" },
+        { "text": "90 comparisons, 9 swap-line executions", "correct": false, "why": "Used n(n − 1) instead of n(n − 1)/2; each pair of positions is compared once.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Comparisons do not depend on the input: sum over i = 0…8 of (9 − i) = 45 = n(n − 1)/2.\n2. The swap statement runs once per outer iteration: n − 1 = 9 times (all self-swaps for sorted input)."
+    },
+    {
+      "id": "dsa-sort-swaps-09",
+      "skill": "dsa.sort-swaps",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Insertion sort below is run on `[4, 2, 4, 1, 2, 4]` (note the repeated keys). Count one comparison each time `a[j] > key` is evaluated (the test `j >= 0` is not counted). How many comparisons are made?\n\n```python\nfor i in range(1, len(a)):\n    key, j = a[i], i - 1\n    while j >= 0 and a[j] > key:\n        a[j + 1] = a[j]\n        j -= 1\n    a[j + 1] = key\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 9, "tol": 0 },
+      "traps": [
+        { "value": 13, "why": "Let equal keys shift (as with `>=`); with strict `>` a key stops at the first equal key.", "trap": "C5" },
+        { "value": 6, "why": "Counted only the shifts; each pass whose key stops before index 0 adds one more (failed) comparison.", "trap": "C6" },
+        { "value": 11, "why": "Used shifts + (n − 1) = 6 + 5; the passes inserting 2 (i = 1) and 1 (i = 3) reach index 0 and make no failed comparison.", "trap": "C3" }
+      ],
+      "solution": "1. i = 1, key 2: 4 > 2 shift, then j = −1 → 1 comparison. [2, 4, 4, 1, 2, 4].\n2. i = 2, key 4: 4 > 4 false → 1.\n3. i = 3, key 1: 4, 4, 2 all > 1, shift to front → 3. [1, 2, 4, 4, 2, 4].\n4. i = 4, key 2: 4 > 2, 4 > 2, then 2 > 2 false → 3. [1, 2, 2, 4, 4, 4].\n5. i = 5, key 4: 4 > 4 false → 1.\n6. Total = 1 + 1 + 3 + 3 + 1 = 9."
+    },
+    {
+      "id": "dsa-sort-swaps-10",
+      "skill": "dsa.sort-swaps",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The array `[6, 2, 3, 4, 5, 1]` is sorted in ascending order (a) by plain bubble sort and (b) by standard selection sort. How many **swaps** does bubble sort make, and how many times does selection sort **actually exchange two different elements** (`m != i`)?",
+      "figure": null,
+      "options": [
+        { "text": "Bubble 9, selection 1", "correct": true, "why": "Bubble swaps = inversions = 5 (pairs with 6) + 4 (2, 3, 4, 5 before 1) = 9. Selection swaps 1 with 6 in pass 1; the array is then sorted, so every later pass is a self-swap." },
+        { "text": "Bubble 9, selection 5", "correct": false, "why": "Counted all 5 executions of the swap line; 4 of them are self-swaps with m == i.", "trap": "C6" },
+        { "text": "Bubble 5, selection 1", "correct": false, "why": "Counted only the swaps that move 6 to the end; 1 still needs 4 more swaps to reach the front.", "trap": "C6" },
+        { "text": "Bubble 4, selection 1", "correct": false, "why": "Counted only the swaps that move 1 toward the front; 6 makes its own swaps on the way to the end.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inversions: 6 > 2, 3, 4, 5, 1 (5 pairs); 2, 3, 4, 5 > 1 (4 pairs). Bubble swaps = 9.\n2. Selection, i = 0: min 1 at index 5, swap with 6 → [1, 2, 3, 4, 5, 6].\n3. i = 1…4: each minimum is already in place → self-swaps. Real exchanges = 1."
+    },
+    {
+      "id": "dsa-sort-swaps-11",
+      "skill": "dsa.sort-swaps",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "The array `[3, 7, 1, 8, 2, 6]` is sorted in ascending order. Which statements are true? (Insertion sort counts each evaluation of `a[j] > key`; selection sort uses strict `<`; the early-exit bubble sort stops after a pass with no swap.)",
+      "figure": null,
+      "options": [
+        { "text": "Plain bubble sort makes 7 swaps.", "correct": true, "why": "Bubble swaps = inversions: (3,1), (3,2), (7,1), (7,2), (7,6), (8,2), (8,6) = 7." },
+        { "text": "Insertion sort makes 11 comparisons.", "correct": true, "why": "Shifts = 7 inversions; 4 of the 5 passes stop at a smaller key (only the pass inserting 1 reaches index 0), adding 4: 7 + 4 = 11." },
+        { "text": "Selection sort exchanges two different elements 5 times.", "correct": false, "why": "5 is the number of swap-line executions; passes i = 2 and i = 4 are self-swaps, so only 3 real exchanges.", "trap": "C6" },
+        { "text": "Bubble sort with the early-exit flag runs 3 passes.", "correct": false, "why": "The array is sorted after 3 passes, but the flag needs a 4th pass with no swap to notice that.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inversions = 7, so bubble swaps = insertion shifts = 7.\n2. Insertion comparisons: passes insert 7 (1), 1 (2, reaches front), 8 (1), 2 (3 shifts + 1), 6 (2 shifts + 1) → 1 + 2 + 1 + 4 + 3 = 11.\n3. Selection: [1, 7, 3, 8, 2, 6] → [1, 2, 3, 8, 7, 6] → self → [1, 2, 3, 6, 7, 8] → self: 3 real exchanges.\n4. Early-exit bubble: passes 1–3 swap, pass 4 has no swap → 4 passes."
+    },
+    {
+      "id": "dsa-sort-swaps-12",
+      "skill": "dsa.sort-swaps",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Insertion sort (shift while `j >= 0 and a[j] > key`) is run on `[5, 4, 3, 2, 1, 6, 7, 8, 9, 10]`. Counting one comparison per evaluation of `a[j] > key`, how many comparisons are made in total?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 15, "tol": 0 },
+      "traps": [
+        { "value": 10, "why": "Counted only the shifts (= 10 inversions); passes 6–10 each make one failed comparison too.", "trap": "C6" },
+        { "value": 19, "why": "Used inversions + (n − 1) = 10 + 9; the passes inserting 4, 3, 2, 1 reach index 0 and make no failed comparison.", "trap": "C3" },
+        { "value": 45, "why": "Used the worst case n(n − 1)/2; only the first five keys are reversed.", "trap": "C1" }
+      ],
+      "solution": "1. Inserting 4, 3, 2, 1: each moves to the front, making 1, 2, 3, 4 comparisons (all successful shifts) → 10.\n2. Inserting 6, 7, 8, 9, 10: each makes one comparison with its left neighbour, which is smaller, and stops → 5.\n3. Total = 10 + 5 = 15."
+    },
+    {
+      "id": "dsa-sort-props-07",
+      "skill": "dsa.sort-props",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Element exchanges are expensive (for example, each element is a large record). In the **worst case** on n distinct keys, which of these sorts performs the fewest exchanges (swaps or shifts) of elements?",
+      "figure": null,
+      "options": [
+        { "text": "Insertion sort", "correct": false, "why": "Its shifts equal the number of inversions, up to n(n − 1)/2 = Θ(n²) on reversed input.", "trap": "C9" },
+        { "text": "Bubble sort without an early-exit flag", "correct": false, "why": "Each adjacent swap removes one inversion, so reversed input needs n(n − 1)/2 swaps.", "trap": "C9" },
+        { "text": "Bubble sort with an early-exit flag", "correct": false, "why": "The flag only saves passes on nearly sorted input; it never reduces the number of swaps, which is still the number of inversions.", "trap": "C1" },
+        { "text": "Selection sort", "correct": true, "why": "It makes exactly one swap per pass, so at most n − 1 exchanges in any case, although it always makes Θ(n²) comparisons." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Insertion shifts and bubble swaps both equal the inversion count: Θ(n²) in the worst case.\n2. Selection sort does one swap per outer iteration: ≤ n − 1 = O(n) exchanges always.\n3. So selection sort minimises exchanges (its cost is in comparisons instead)."
+    },
+    {
+      "id": "dsa-sort-props-08",
+      "skill": "dsa.sort-props",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "A bubble sort on (key, tag) records swaps neighbours when `a[j].key >= a[j+1].key` (note `>=`). Each pass goes left to right; there are n − 1 = 3 passes, the p-th pass stopping before the last p − 1 slots. It is run on `(2,a), (1,b), (2,c), (1,d)`. What is the final sequence?",
+      "figure": null,
+      "options": [
+        { "text": "`(1,b), (1,d), (2,a), (2,c)`", "correct": false, "why": "This is the stable result of the usual `>` test; with `>=` equal neighbours are swapped too.", "trap": "C9" },
+        { "text": "`(1,b), (1,d), (2,c), (2,a)`", "correct": false, "why": "Stopped after pass 2; pass 3 still compares (1,b) and (1,d), and `1 >= 1` swaps them.", "trap": "C6" },
+        { "text": "`(1,d), (1,b), (2,a), (2,c)`", "correct": false, "why": "Missed the swap of (2,a) with (2,c) in pass 1: `2 >= 2` is true, so a moves past c.", "trap": "C5" },
+        { "text": "`(1,d), (1,b), (2,c), (2,a)`", "correct": true, "why": "With `>=` every pair of equal neighbours is swapped, so both groups of equal keys end in reversed input order; the sort is unstable." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pass 1: (2,a) ≥ (1,b) swap; (2,a) ≥ (2,c) swap; (2,a) ≥ (1,d) swap → (1,b), (2,c), (1,d), (2,a).\n2. Pass 2: (1,b) vs (2,c) no; (2,c) ≥ (1,d) swap → (1,b), (1,d), (2,c), (2,a).\n3. Pass 3: (1,b) ≥ (1,d) swap → (1,d), (1,b), (2,c), (2,a).\n4. Equal keys came out in reverse order: `>=` makes bubble sort unstable."
+    },
+    {
+      "id": "dsa-sort-props-09",
+      "skill": "dsa.sort-props",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "An array of n distinct keys is **k-sorted**: every element is at most k positions away from its place in the sorted order (k ≥ 1 is a small constant compared with n). Which statements are **always** true for an ascending sort?",
+      "figure": null,
+      "options": [
+        { "text": "Insertion sort finishes in O(nk) time.", "correct": true, "why": "An inverted pair can be at most 2k − 1 positions apart, so there are at most about 2nk inversions; insertion sort runs in Θ(n + inversions) = O(nk)." },
+        { "text": "Bubble sort with an early-exit flag makes at most k + 1 passes.", "correct": true, "why": "Each pass moves an element left by at most one slot, and no element needs to move left more than k slots; one more pass with no swaps ends the loop." },
+        { "text": "Selection sort makes O(nk) comparisons.", "correct": false, "why": "Selection sort always scans the whole unsorted part: n(n − 1)/2 comparisons, whatever the input.", "trap": "C9" },
+        { "text": "Insertion sort makes at most k shifts in total.", "correct": false, "why": "The bound k holds per element, not for the whole run; e.g. [2, 1, 4, 3, 6, 5, …] is 1-sorted yet needs n/2 shifts.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. If a[i] > a[j] with i < j, then j − k ≤ pos(a[j]) < pos(a[i]) ≤ i + k, so j − i < 2k: each element is in fewer than 2k inversions → O(nk) inversions.\n2. Insertion sort = Θ(n + inversions) = O(nk).\n3. Early-exit bubble: passes = (max leftward distance) + 1 ≤ k + 1, each O(n) → O(nk).\n4. Selection sort is Θ(n²) always; total shifts can be about n·k, not k."
+    },
+    {
+      "id": "dsa-sort-props-10",
+      "skill": "dsa.sort-props",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Bubble sort with an early-exit flag (stop after the first pass that makes no swap; at most n − 1 passes) is run on `[4, 1, 6, 2, 8, 3, 9, 5]`. How many passes are executed, **including** the final pass with no swap?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 3, "why": "The array is sorted after 3 passes, but the flag needs one more pass without swaps to stop.", "trap": "C6" },
+        { "value": 7, "why": "Used the cap n − 1 = 7 passes; the flag stops the loop much earlier.", "trap": "C9" },
+        { "value": 22, "why": "Counted comparisons (7 + 6 + 5 + 4) instead of passes.", "trap": "C2" }
+      ],
+      "solution": "1. Small keys move left one slot per pass. Leftward distances: 3 (index 5 → 2) and 5 (index 7 → 4) move 3 slots; 1 and 2 move fewer.\n2. So 3 passes are needed to sort: [1, 4, 2, 6, 3, 8, 5, 9] → [1, 2, 4, 3, 6, 5, 8, 9] → [1, 2, 3, 4, 5, 6, 8, 9].\n3. Pass 4 makes no swap and stops the loop: 4 passes."
+    },
+    {
+      "id": "dsa-sort-props-11",
+      "skill": "dsa.sort-props",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "For large n, which input of the keys 1, …, n makes **bubble sort with an early-exit flag** take Θ(n²) time while **insertion sort** takes only Θ(n) time?",
+      "figure": null,
+      "options": [
+        { "text": "`[n, 1, 2, …, n − 1]` (largest first)", "correct": false, "why": "Bubble sort carries n to the end in pass 1 and stops after pass 2, so both sorts are Θ(n) here. Large keys move right fast; only small keys are slow.", "trap": "C11" },
+        { "text": "`[2, 3, …, n, 1]` (smallest last)", "correct": true, "why": "1 moves left only one slot per bubble pass, so n − 1 passes and Θ(n²) comparisons. There are only n − 1 inversions, so insertion sort is Θ(n)." },
+        { "text": "`[n, n − 1, …, 1]` (reversed)", "correct": false, "why": "Reversed input has n(n − 1)/2 inversions, so insertion sort is also Θ(n²).", "trap": "C1" },
+        { "text": "`[1, 2, …, n]` (sorted)", "correct": false, "why": "Both are Θ(n) on sorted input: bubble stops after one swap-free pass.", "trap": "C1" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Insertion sort is Θ(n + inversions); early-exit bubble needs (max leftward distance + 1) passes.\n2. [2, …, n, 1]: n − 1 inversions (insertion Θ(n)), but 1 must travel n − 1 slots left (bubble n − 1 passes, about n²/2 comparisons).\n3. [n, 1, …, n − 1]: also n − 1 inversions, but no key moves left more than one slot → bubble needs only 2 passes.\n4. Reversed: both Θ(n²). Sorted: both Θ(n)."
+    },
+    {
+      "id": "dsa-sort-props-12",
+      "skill": "dsa.sort-props",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DS style)",
+      "stem": "Bubble sort **without** an early-exit flag (n − 1 passes; pass p compares `a[j] > a[j+1]` for j = 0, …, n − 1 − p) is run on an array of 10 distinct keys that is **already sorted**. How many comparisons are made?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 45, "tol": 0 },
+      "traps": [
+        { "value": 9, "why": "Assumed the sort stops after one pass with no swap; that needs the early-exit flag, which this version does not have.", "trap": "C1" },
+        { "value": 0, "why": "Counted swaps (none on sorted input) instead of comparisons.", "trap": "C2" },
+        { "value": 90, "why": "Used n(n − 1) or compared every pair twice; the pass lengths are 9, 8, …, 1.", "trap": "C4" }
+      ],
+      "solution": "1. Without the flag every pass runs in full, whatever the input.\n2. Pass lengths: 9 + 8 + … + 1 = 45 = n(n − 1)/2.\n3. So plain bubble sort is Θ(n²) even on sorted input; only the flagged version is Θ(n) there."
+    }
+  ]
+}

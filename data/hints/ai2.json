@@ -1,0 +1,62 @@
+{
+ "ai-uninformed-order-07": [
+  "BFS = FIFO queue. Order wahi hoga jis order me nodes queue me **daale** gaye — level ke andar alphabetical sort nahi hota.",
+  "Har expansion ke baad queue likho. Neighbours alphabetical: B ke A, C, S; D ke C, F, S; A ke B, E.",
+  "S expand: queue [B, D]. B expand: queue [D, A, C]. Ab D expand karo (C pehle se queue me hai) aur aage chalao. Trap: E ko F se pehle sirf alphabet dekh kar rakhna."
+ ],
+ "ai-uninformed-order-08": [
+  "Do alag DFS hain: recursion pehla (alphabetical) neighbour leta hai, stack sabse **upar** wala — yaani last pushed. Dono ka trace alag likho.",
+  "Recursive: har node pe pehla unvisited neighbour; E ke neighbours A, F, G hain aur A visited hai. Stack: push order B, D, to D pehle pop hota hai.",
+  "Recursive shuruaat: S → B → A → E; aage khud chalao. Stack: pop S, push B, D; pop D, push C, F; aage khud karo. Trap: dono ko ek hi order maan lena."
+ ],
+ "ai-goal-test-06": [
+  "Same BFS hai, sirf goal test ki jagah badli hai. Generation pe test: jaise hi $G$ generate ho, search wahin ruk jaata hai.",
+  "Queue trace: S → [B, D]; B → [D, A, C]; D → [A, C, F]; A → [C, F, E]; C expand hone pe $G$ generate hota hai.",
+  "Generation-test me C expand hote hi ruk gaye — ab tak kitne removals hue, gino. Expansion-test me queue [F, E, G] abhi baaki hai. Trap: $G$ ka apna removal na ginna."
+ ],
+ "ai-goal-test-07": [
+  "Goal test **generation** pe hai, aur goal leftmost depth-2 node hai — wo kis node ke expand hone pe generate hoga?",
+  "Root expand: 3 children. Phir FIFO se pehla depth-1 node expand hota hai, jo apne 3 children ek saath generate karta hai.",
+  "Root expand ke baad generated $=1+3$. Ab agla expansion kitne naye nodes laata hai, jodo. Trap: expansion-test wala count $1+3+9$ le lena."
+ ],
+ "ai-ucs-trace-06": [
+  "UCS hamesha sabse kam **total** $g$ wala node pop karta hai, aur sasta path milne pe frontier ka $g$ ghatata hai. Options judge karne ke liye poora trace chahiye.",
+  "Pop S: $A=5$, $B=2$. Ab B pop hoga — uske neighbours A, C, D ke naye costs $2+\\text{edge}$ se nikalo.",
+  "B se: $A=\\min(5,4)=4$, $C=8$, $D=11$. Ab A pop karo aur aage trace khud karo. Trap: $G$ generate hote hi ruk jaana."
+ ],
+ "ai-ucs-trace-07": [
+  "$g(D)$ = S se D tak ka **sabse sasta total** cost jab D pop hota hai — sirf last edge nahi, aur pehli value bhi nahi.",
+  "Trace: pop S → $A=5$, $B=2$. Pop B → $A=4$, $C=8$, $D=11$. Ab A pop karo.",
+  "A se $C=\\min(8,4+2)=6$. Ab C pop karke D ka cost update karo. Trap: D ka pehla cost hi rakh lena."
+ ],
+ "ai-ids-06": [
+  "IDS har limit pe root se **naya** DFS chalata hai. Har iteration ke visits alag gino aur jodo — limit 0 bhi.",
+  "Limit $\\ell$ pe sirf depth $\\le\\ell$ wale nodes visit hote hain. Goal $H$ depth 2 pe hai, to limits 0, 1, 2 chalengi.",
+  "Limit 0: sirf A (1). Limit 1: A, B, C, D (4). Ab limit 2 ka DFS order likho aur H pe ruk jao. Trap: sirf last iteration ginna."
+ ],
+ "ai-ids-07": [
+  "IDS har iteration me root se dobara shuru karta hai aur purana kuch yaad nahi rakhta. Depth-1 node kin limits pe visit hoga?",
+  "Depth $i$ ka node limit $\\ell$ wali iteration me tabhi visit hota hai jab $\\ell\\ge i$. Yahan limits $0,1,2,3$ hain.",
+  "Limit 0 me sirf root visit hota hai, depth-1 node nahi. Ab baaki limits me se kitni $\\ge1$ hain, gino. Trap: root wala $d+1$ rule lagana."
+ ],
+ "ai-search-props-06": [
+  "Teen cheezein dekho: graph finite hai, cycles hain, aur costs unequal par positive hain. Har strategy ki guarantee inhi conditions pe tikti hai.",
+  "Rule: BFS optimal sirf equal step costs pe; UCS optimal jab costs $\\ge\\varepsilon>0$ aur goal test pop pe. DFS ka termination visited set pe depend karta hai.",
+  "BFS wala option: ek edge (cost 10) vs teen edges (cost 1 each) — BFS kaunsa path lega? Ab dono DFS options me cycle ka asar socho."
+ ],
+ "ai-search-props-07": [
+  "Limit $\\ell=3$ aur goal depth 5 — dono compare karo. Limit ke neeche wale nodes ka kya hota hai?",
+  "DLS depth $\\ell$ wale nodes ko leaf maanta hai: unke children kabhi generate nahi hote. Finite $b$ pe ye search space finite hai.",
+  "Shallowest goal depth 5 pe hai — to depth $\\le3$ me goal mil sakta hai kya? Isse socho search kaise khatam hoga. Trap: 'loop forever' sochna."
+ ],
+ "ai-search-complexity-06": [
+  "Formula diya hua hai — dhyan exponent pe do: usme floor function hai, aur $+1$ bhi hai.",
+  "Exponent $=1+\\lfloor 14/3\\rfloor$. $14/3\\approx4.67$; floor matlab neeche wala integer.",
+  "$\\lfloor4.67\\rfloor=4$, to exponent $1+4$. Ab $2$ ki utni power nikalo. Trap: ceiling lena ya $+1$ bhool jaana."
+ ],
+ "ai-search-complexity-07": [
+  "Sirf **memory** poochhi hai, time nahi. Teen strategies ke space formulas yaad karo — kisme exponent aata hai, kisme product?",
+  "BFS space $O(b^d)$; IDS space $O(bd)$; DFS space $O(bm)$. Yahan $b=2$, $d=10$, $m=20$.",
+  "BFS ke liye $2^{10}$ nikalo; IDS aur DFS ke liye $b\\cdot d$ aur $b\\cdot m$. Trap: DFS ka time $b^m$ space me likh dena."
+ ]
+}

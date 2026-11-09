@@ -1,0 +1,1567 @@
+{
+  "area": "ml",
+  "skills": {},
+  "questions": [
+    {
+      "id": "ml-tree-split-07",
+      "skill": "ml.tree-split",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A leaf of a decision tree holds 7 examples labelled *spam* and 3 labelled *not spam*. Its entropy, using $\\log_2$, is ______ (round to three decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.881,
+        "tol": 0.003
+      },
+      "traps": [
+        {
+          "value": 0.611,
+          "why": "Used the natural log; entropy in bits needs $\\log_2$.",
+          "trap": "C3"
+        },
+        {
+          "value": 0.42,
+          "why": "Computed the Gini index $1 - 0.7^2 - 0.3^2$ instead of entropy.",
+          "trap": "C2"
+        },
+        {
+          "value": 0.36,
+          "why": "Kept only the term $-0.7\\log_2 0.7$ and dropped the second class.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. $p = 7/10 = 0.7$ and $1 - p = 0.3$.\n2. $-0.7\\log_2 0.7 \\approx 0.360$ and $-0.3\\log_2 0.3 \\approx 0.521$.\n3. $H = 0.360 + 0.521 \\approx 0.881$ bits."
+    },
+    {
+      "id": "ml-tree-split-08",
+      "skill": "ml.tree-split",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A node of a CART tree contains 9 examples of class A and 3 of class B. Its Gini impurity is ______ (round to three decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.375,
+        "tol": 0.005
+      },
+      "traps": [
+        {
+          "value": 0.811,
+          "why": "Computed entropy in bits instead of the Gini index.",
+          "trap": "C2"
+        },
+        {
+          "value": 0.25,
+          "why": "Computed misclassification error $1 - \\max p$ instead of $1 - \\sum p_i^2$.",
+          "trap": "C3"
+        },
+        {
+          "value": 0.1875,
+          "why": "Used $p(1-p)$; for two classes Gini is $2p(1-p)$.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.625,
+          "why": "Reported $\\sum p_i^2$ and forgot to subtract it from 1.",
+          "trap": "C11"
+        }
+      ],
+      "solution": "1. $p_A = 9/12 = 0.75$, $p_B = 0.25$.\n2. $\\sum p_i^2 = 0.5625 + 0.0625 = 0.625$.\n3. Gini $= 1 - 0.625 = 0.375$."
+    },
+    {
+      "id": "ml-tree-split-09",
+      "skill": "ml.tree-split",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A node contains examples from 4 classes, all equally frequent. Its entropy (in bits) is",
+      "figure": null,
+      "options": [
+        {
+          "text": "1",
+          "correct": false,
+          "why": "1 bit is the maximum only for two classes; with $k$ classes the maximum is $\\log_2 k$.",
+          "trap": "C8"
+        },
+        {
+          "text": "2",
+          "correct": true,
+          "why": "Each $p_i = 1/4$, so $H = -4 \\cdot \\frac14 \\log_2 \\frac14 = \\log_2 4 = 2$."
+        },
+        {
+          "text": "0.75",
+          "correct": false,
+          "why": "That is the Gini index $1 - 4 \\cdot (1/4)^2$, not the entropy.",
+          "trap": "C2"
+        },
+        {
+          "text": "8",
+          "correct": false,
+          "why": "Summed $-\\log_2 p_i = 2$ over 4 classes without weighting each term by $p_i$.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $p_i = 1/4$ for all four classes.\n2. $H = -\\sum p_i \\log_2 p_i = 4 \\cdot \\frac14 \\cdot 2 = 2$ bits.\n3. In general the maximum entropy with $k$ classes is $\\log_2 k$."
+    },
+    {
+      "id": "ml-tree-split-10",
+      "skill": "ml.tree-split",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A node has 8 positive and 4 negative examples. The attribute *Colour* splits it into three children:\n\n| Colour | positive | negative |\n|---|---|---|\n| red | 3 | 3 |\n| green | 5 | 0 |\n| blue | 0 | 1 |\n\nThe information gain of splitting on *Colour*, using entropy in bits, is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.42,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.5,
+          "why": "Either took the parent entropy as 1 (it is 8:4, not 6:6), or reported the weighted child entropy $0.5$ instead of the gain.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.58,
+          "why": "Averaged the three child entropies equally ($1/3$ each); weight them by size $6/12, 5/12, 1/12$.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.92,
+          "why": "Reported the parent entropy and never subtracted the children.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Parent $8{:}4$: $H = H(2/3) \\approx 0.918$.\n2. red $3{:}3$: $H = 1$; green and blue are pure: $H = 0$.\n3. Weighted child entropy $= \\frac{6}{12}(1) + \\frac{5}{12}(0) + \\frac{1}{12}(0) = 0.5$.\n4. Gain $= 0.918 - 0.5 \\approx 0.42$."
+    },
+    {
+      "id": "ml-tree-split-11",
+      "skill": "ml.tree-split",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A node has 10 positive and 10 negative examples. Two candidate splits are\n\n- Split P: left child 1 positive, 0 negative; right child 9 positive, 10 negative.\n- Split Q: left child 8 positive, 2 negative; right child 2 positive, 8 negative.\n\nUsing the size-weighted Gini impurity of the children, which split does CART choose?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Split P",
+          "correct": false,
+          "why": "Simple average of child Ginis gives P $\\approx 0.249 < 0.32$; but the pure child has only 1 of 20 examples, so the weighted value is $\\approx 0.474$.",
+          "trap": "C6"
+        },
+        {
+          "text": "Split Q",
+          "correct": true,
+          "why": "Weighted Gini: Q $= 0.5(0.32) + 0.5(0.32) = 0.32$, P $= \\frac{19}{20}(0.499) \\approx 0.474$; Q is lower."
+        },
+        {
+          "text": "Both splits are equally good",
+          "correct": false,
+          "why": "Their weighted child Ginis are 0.474 and 0.32, not equal.",
+          "trap": "C10"
+        },
+        {
+          "text": "Neither, because no split lowers the parent Gini of 0.5",
+          "correct": false,
+          "why": "Q lowers it from 0.5 to 0.32; a split lowers impurity whenever children differ in class mix.",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Parent Gini $= 0.5$.\n2. P: left pure (0, weight $1/20$); right $9{:}10$ has Gini $1 - (0.45^2 + 0.55^2) \\approx 0.499$, weight $19/20$. Weighted $\\approx 0.474$.\n3. Q: each child $8{:}2$ or $2{:}8$ has Gini $1 - 0.64 - 0.04 = 0.32$; weighted $= 0.32$.\n4. Lower weighted impurity: Q."
+    },
+    {
+      "id": "ml-tree-split-12",
+      "skill": "ml.tree-split",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which of the following statements about impurity in decision trees are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "A split in which every child has exactly the same class proportions as the parent has information gain 0",
+          "correct": true,
+          "why": "Each child's entropy equals the parent's, so the weighted child entropy equals the parent entropy and the gain is 0."
+        },
+        {
+          "text": "For a node with three equally frequent classes, the Gini index is $2/3$",
+          "correct": true,
+          "why": "$1 - 3 \\cdot (1/3)^2 = 1 - 1/3 = 2/3$."
+        },
+        {
+          "text": "For class proportions $(0.5, 0.5, 0)$ the entropy is $\\log_2 3 \\approx 1.585$ bits",
+          "correct": false,
+          "why": "A class with $p = 0$ adds nothing ($0 \\log 0 = 0$); only two classes are present, so $H = 1$ bit.",
+          "trap": "C6"
+        },
+        {
+          "text": "For class proportions $0.7$ and $0.3$ the misclassification error is $0.42$",
+          "correct": false,
+          "why": "0.42 is the Gini index; misclassification error is $1 - \\max p = 0.3$.",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Same proportions in every child: weighted child entropy = parent entropy, gain 0. True.\n2. Three equal classes: Gini $= 1 - 3/9 = 2/3$. True.\n3. $(0.5, 0.5, 0)$: the empty class contributes 0, $H = 1$ bit. False.\n4. $0.7/0.3$: misclassification error $= 0.3$; 0.42 is Gini. False."
+    },
+    {
+      "id": "ml-tree-split-13",
+      "skill": "ml.tree-split",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A numeric feature $x$ and the class labels of 8 training examples are\n\n| $x$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |\n|---|---|---|---|---|---|---|---|---|\n| class | + | + | − | + | + | − | − | − |\n\nThe tree considers splits of the form $x \\le t$. Which threshold gives the largest information gain (entropy in bits)?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$t = 2.5$",
+          "correct": false,
+          "why": "Left is pure (2+), but the right child $2{:}4$ keeps entropy 0.918 with weight $6/8$; gain only $\\approx 0.311$.",
+          "trap": "C10"
+        },
+        {
+          "text": "$t = 3.5$",
+          "correct": false,
+          "why": "Children $2{:}1$ and $2{:}3$ are both mixed; gain $\\approx 0.049$, the smallest of the four.",
+          "trap": "C11"
+        },
+        {
+          "text": "$t = 4.5$",
+          "correct": false,
+          "why": "Equal-sized children $3{:}1$ and $1{:}3$ look neat, but each has entropy 0.811; gain $\\approx 0.189$.",
+          "trap": "C10"
+        },
+        {
+          "text": "$t = 5.5$",
+          "correct": true,
+          "why": "Left $4{:}1$ ($H \\approx 0.722$, weight $5/8$), right $0{:}3$ pure; gain $= 1 - 0.451 \\approx 0.549$, the largest."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Parent $4{:}4$, $H = 1$.\n2. $t=2.5$: $2{:}0$ and $2{:}4$ → gain $1 - \\frac68(0.918) \\approx 0.311$.\n3. $t=3.5$: $2{:}1$ and $2{:}3$ → gain $\\approx 0.049$.\n4. $t=4.5$: $3{:}1$ and $1{:}3$ → gain $1 - 0.811 \\approx 0.189$.\n5. $t=5.5$: $4{:}1$ and $0{:}3$ → gain $1 - \\frac58(0.722) \\approx 0.549$. Largest: $t = 5.5$."
+    },
+    {
+      "id": "ml-tree-split-14",
+      "skill": "ml.tree-split",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A node has three classes with counts 6, 3 and 1. Which of the following are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Its Gini index is 0.54",
+          "correct": true,
+          "why": "$1 - (0.36 + 0.09 + 0.01) = 0.54$."
+        },
+        {
+          "text": "Its entropy is more than 1 bit",
+          "correct": true,
+          "why": "$H = -0.6\\log_2 0.6 - 0.3\\log_2 0.3 - 0.1\\log_2 0.1 \\approx 1.295 > 1$; with three classes entropy can exceed 1."
+        },
+        {
+          "text": "Its misclassification error is 0.6",
+          "correct": false,
+          "why": "0.6 is the majority fraction $\\max p$; the error is $1 - 0.6 = 0.4$.",
+          "trap": "C11"
+        },
+        {
+          "text": "No node can have a Gini index above 0.5",
+          "correct": false,
+          "why": "0.5 is the two-class maximum; with $k$ classes Gini can reach $1 - 1/k$ (here up to $2/3$).",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $p = 0.6, 0.3, 0.1$.\n2. Gini $= 1 - 0.46 = 0.54$. True.\n3. Entropy $\\approx 0.442 + 0.521 + 0.332 = 1.295 > 1$. True.\n4. Misclassification error $= 1 - 0.6 = 0.4$, not 0.6. False.\n5. Three-class Gini can be up to $2/3$, and 0.54 already exceeds 0.5. False."
+    },
+    {
+      "id": "ml-tree-split-15",
+      "skill": "ml.tree-split",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Node P contains 2 positive and 2 negative examples. Node Q contains 40 positive and 40 negative examples. Which statement about their entropies (in bits) is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$H(P) = H(Q) = 1$",
+          "correct": true,
+          "why": "Entropy depends only on class proportions; both nodes are $50{:}50$, so both have the binary maximum 1."
+        },
+        {
+          "text": "$H(Q) > H(P)$ because Q has more examples",
+          "correct": false,
+          "why": "Entropy uses fractions $p_i$, not counts; more examples with the same mix give the same entropy.",
+          "trap": "C10"
+        },
+        {
+          "text": "$H(P) = 0.5$",
+          "correct": false,
+          "why": "0.5 is the Gini index of a $50{:}50$ node, not its entropy.",
+          "trap": "C2"
+        },
+        {
+          "text": "$H(Q) = \\log_2 80$",
+          "correct": false,
+          "why": "$\\log_2 n$ would be the entropy of 80 equally frequent classes; Q has only two classes.",
+          "trap": "C3"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Both nodes have $p = 1/2$ for each class.\n2. $H = -2 \\cdot \\frac12 \\log_2 \\frac12 = 1$ for each.\n3. Entropy depends on proportions, not on the number of examples (size matters only as a weight in information gain)."
+    },
+    {
+      "id": "ml-tree-split-16",
+      "skill": "ml.tree-split",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A node has 12 examples: 4 of class A, 4 of class B and 4 of class C. A split sends all A and B examples (8 in total) to the left child and the 4 C examples to the right child. The information gain of this split, using entropy in bits, is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.92,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0.33,
+          "why": "Took the parent entropy as 1 bit; three equal classes give $\\log_2 3 \\approx 1.585$.",
+          "trap": "C8"
+        },
+        {
+          "value": 0.58,
+          "why": "Subtracted the left child's entropy 1 without its weight $8/12$.",
+          "trap": "C6"
+        },
+        {
+          "value": 1.08,
+          "why": "Averaged the child entropies equally, $(1 + 0)/2$, instead of weighting by size.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.67,
+          "why": "Reported the weighted child entropy $\\frac{8}{12}(1)$ instead of the gain.",
+          "trap": "C2"
+        }
+      ],
+      "solution": "1. Parent: $H = \\log_2 3 \\approx 1.585$.\n2. Left $4{:}4{:}0$: $H = 1$ (two equal classes). Right: pure, $H = 0$.\n3. Weighted child entropy $= \\frac{8}{12}(1) = 0.667$.\n4. Gain $= 1.585 - 0.667 \\approx 0.92$."
+    },
+    {
+      "id": "ml-bias-variance-06",
+      "skill": "ml.bias-variance",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "At a test input $x_0$, a regression method has expected squared prediction error $E[(y - \\hat f(x_0))^2] = 0.50$. Its bias at $x_0$ is $0.3$, and the noise in $y = f(x_0) + \\varepsilon$ has **standard deviation** $0.4$ (independent of the training set). The variance $\\mathrm{Var}(\\hat f(x_0))$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.25,
+        "tol": 0.005
+      },
+      "traps": [
+        {
+          "value": 0.04,
+          "why": "Subtracted the bias $0.3$ itself; the decomposition uses bias$^2 = 0.09$.",
+          "trap": "C4"
+        },
+        {
+          "value": 0.01,
+          "why": "Subtracted the noise SD $0.4$; the noise term is the variance $0.4^2 = 0.16$.",
+          "trap": "C4"
+        },
+        {
+          "value": 0.41,
+          "why": "Forgot the irreducible noise term and subtracted only bias$^2$.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Error $=$ bias$^2$ + variance + noise variance.\n2. bias$^2 = 0.09$, noise variance $= 0.4^2 = 0.16$.\n3. Variance $= 0.50 - 0.09 - 0.16 = 0.25$."
+    },
+    {
+      "id": "ml-bias-variance-07",
+      "skill": "ml.bias-variance",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A fully grown decision tree has 1% training error and 30% validation error. Which change is most likely to reduce the validation error?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Prune the tree or limit its maximum depth",
+          "correct": true,
+          "why": "Low training but high validation error means high variance; a shallower tree is less flexible, so variance falls."
+        },
+        {
+          "text": "Grow the tree deeper until the training error is exactly 0",
+          "correct": false,
+          "why": "A deeper tree is even more flexible: variance rises and the gap widens.",
+          "trap": "C11"
+        },
+        {
+          "text": "Add many new interaction features",
+          "correct": false,
+          "why": "More features add flexibility, which increases variance for a model that already overfits.",
+          "trap": "C11"
+        },
+        {
+          "text": "Nothing: 1% training error shows low bias, so the model is already the best possible",
+          "correct": false,
+          "why": "Low bias alone is not enough; the 29-point gap is variance, and test error is bias$^2$ + variance + noise.",
+          "trap": "C1"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Training 1% vs validation 30%: a large gap means high variance (overfitting).\n2. Remedies cut flexibility or average out noise: pruning, depth limit, more data, bagging.\n3. Deeper trees or more features push variance up."
+    },
+    {
+      "id": "ml-bias-variance-08",
+      "skill": "ml.bias-variance",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "$X_1, \\dots, X_5$ are independent with mean $\\mu = 10$ and variance $\\sigma^2 = 20$. The mean $\\mu$ is estimated by $T = \\dfrac{X_1 + X_2 + \\dots + X_5}{6}$ (dividing by 6, not 5). The mean squared error $E[(T - \\mu)^2]$ is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5.56,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Used the MSE of the sample mean, $\\sigma^2/5$; dividing by 6 changes both the bias and the variance.",
+          "trap": "C10"
+        },
+        {
+          "value": 2.78,
+          "why": "Kept only one part: bias$^2$ and variance are each $\\approx 2.78$; MSE is their sum.",
+          "trap": "C6"
+        },
+        {
+          "value": 4.44,
+          "why": "Added the bias $|-1.67|$ instead of bias$^2$.",
+          "trap": "C4"
+        }
+      ],
+      "solution": "1. $E[T] = 5\\mu/6 = 50/6 \\approx 8.333$, so bias $= 8.333 - 10 = -1.667$ and bias$^2 \\approx 2.778$.\n2. $\\mathrm{Var}(T) = 5\\sigma^2/36 = 100/36 \\approx 2.778$.\n3. MSE $= 2.778 + 2.778 \\approx 5.56$."
+    },
+    {
+      "id": "ml-bias-variance-09",
+      "skill": "ml.bias-variance",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which of the following statements about the bias–variance decomposition are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The noise variance $\\sigma^2$ in the decomposition cannot be reduced by any choice of model",
+          "correct": true,
+          "why": "It comes from $\\varepsilon$ in $y = f(x) + \\varepsilon$; even the true $f$ suffers it, so it is irreducible."
+        },
+        {
+          "text": "Bagging many deep trees mainly reduces variance",
+          "correct": true,
+          "why": "Averaging predictions of trees grown on bootstrap samples cancels part of their fluctuation; bias stays roughly the same."
+        },
+        {
+          "text": "A 1-nearest-neighbour classifier has high bias and low variance",
+          "correct": false,
+          "why": "1-NN follows every training point: low bias, high variance. High bias / low variance fits a large $k$.",
+          "trap": "C2"
+        },
+        {
+          "text": "When a straight line is fitted to data from a quadratic function, more training data drives the bias to zero",
+          "correct": false,
+          "why": "More data cuts variance, but the best straight line still misses the curve, so bias stays.",
+          "trap": "C1"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\sigma^2$ is irreducible: true.\n2. Bagging averages high-variance trees: variance falls, true.\n3. 1-NN is low bias, high variance: false.\n4. A linear model on a quadratic truth keeps its bias however much data is added: false."
+    },
+    {
+      "id": "ml-bias-variance-10",
+      "skill": "ml.bias-variance",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "In k-NN regression on $n$ training points, $k$ is set equal to $n$. The resulting model has",
+      "figure": null,
+      "options": [
+        {
+          "text": "High bias and low variance",
+          "correct": true,
+          "why": "With $k = n$ every prediction is the mean of all training targets: a constant that ignores $x$ (high bias) and changes little across training sets (low variance)."
+        },
+        {
+          "text": "Low bias and high variance",
+          "correct": false,
+          "why": "That describes $k = 1$; increasing $k$ moves the other way.",
+          "trap": "C2"
+        },
+        {
+          "text": "Zero training error",
+          "correct": false,
+          "why": "Zero training error holds for $k = 1$ (each point is its own neighbour); $k = n$ predicts the same mean for all points.",
+          "trap": "C9"
+        },
+        {
+          "text": "Exactly the same predictions as $k = 1$",
+          "correct": false,
+          "why": "$k = 1$ copies the nearest target, $k = n$ averages all $n$; they differ unless all targets are equal.",
+          "trap": "C10"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. With $k = n$, every query averages all $n$ training targets.\n2. So $\\hat f(x) = \\bar y$ for every $x$: a constant model.\n3. A constant underfits (high bias) but barely moves between training sets (low variance)."
+    },
+    {
+      "id": "ml-bias-variance-11",
+      "skill": "ml.bias-variance",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "The true value at a test input is $f(x_0) = 4$. A method trained on 4 independent training sets predicts $6, 4, 7, 7$ at $x_0$. Treating these 4 predictions as the full distribution of $\\hat f(x_0)$ (variance with divisor 4), the value of bias$^2$ + variance is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 5.5,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 3.5,
+          "why": "Added the bias $2$ instead of bias$^2 = 4$.",
+          "trap": "C4"
+        },
+        {
+          "value": 6,
+          "why": "Used the sample variance with divisor $3$; the stem fixes divisor 4.",
+          "trap": "C6"
+        },
+        {
+          "value": 1.5,
+          "why": "Reported only the variance and dropped bias$^2$.",
+          "trap": "C6"
+        },
+        {
+          "value": 4,
+          "why": "Reported only bias$^2$ and dropped the variance.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Mean prediction $= 24/4 = 6$, so bias $= 6 - 4 = 2$ and bias$^2 = 4$.\n2. Variance $= (0 + 4 + 1 + 1)/4 = 1.5$.\n3. Sum $= 5.5$. Check: $\\frac14\\sum(\\hat f - 4)^2 = (4 + 0 + 9 + 9)/4 = 5.5$."
+    },
+    {
+      "id": "ml-bias-variance-12",
+      "skill": "ml.bias-variance",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Polynomial regression models of several degrees give\n\n| degree | 1 | 2 | 4 | 8 |\n|---|---|---|---|---|\n| training MSE | 20.1 | 8.3 | 6.9 | 1.2 |\n| validation MSE | 21.0 | 9.1 | 10.4 | 37.5 |\n\nWhich statement is correct?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Degree 8 should be chosen because its training MSE is the lowest",
+          "correct": false,
+          "why": "Training error always falls with degree; choose by validation error, where degree 8 is the worst.",
+          "trap": "C9"
+        },
+        {
+          "text": "Degree 2 should be chosen; degree 8 overfits",
+          "correct": true,
+          "why": "Degree 2 has the lowest validation MSE (9.1); degree 8 has tiny training but huge validation error, the overfitting pattern."
+        },
+        {
+          "text": "Degree 1 suffers mainly from high variance",
+          "correct": false,
+          "why": "Degree 1 has high training and validation error with a small gap: high bias (underfit).",
+          "trap": "C2"
+        },
+        {
+          "text": "Degree 4 has higher bias than degree 2",
+          "correct": false,
+          "why": "Bias falls as degree rises; degree 4 loses to degree 2 on validation because of extra variance, not bias.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Pick the model with the lowest validation MSE: degree 2 (9.1).\n2. Degree 1: both errors high, gap small → high bias.\n3. Degree 8: training 1.2 but validation 37.5 → high variance (overfit).\n4. Moving from degree 2 to 4, bias drops but variance rises more, so validation error increases."
+    },
+    {
+      "id": "ml-bias-variance-13",
+      "skill": "ml.bias-variance",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Five models are trained on independent training sets. At a test input, each model's prediction has variance $0.2$, and the five predictions are independent. The variance of their average prediction is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.04,
+        "tol": 0.001
+      },
+      "traps": [
+        {
+          "value": 0.2,
+          "why": "Assumed averaging leaves the variance unchanged.",
+          "trap": "C8"
+        },
+        {
+          "value": 0.09,
+          "why": "Divided by $\\sqrt 5$; that scaling applies to the standard deviation, while variance divides by 5.",
+          "trap": "C4"
+        },
+        {
+          "value": 1.0,
+          "why": "Computed the variance of the sum, $5 \\times 0.2$, and did not divide by $5^2$.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. For independent $Z_i$ with variance $v$: $\\mathrm{Var}\\left(\\frac15\\sum Z_i\\right) = \\frac{1}{25} \\cdot 5v = v/5$.\n2. $0.2/5 = 0.04$.\n3. This is why bagging cuts variance (real bagged models are correlated, so the cut is smaller)."
+    },
+    {
+      "id": "ml-bias-variance-14",
+      "skill": "ml.bias-variance",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "In ridge regression, the penalty $\\lambda$ is increased step by step from 0. Which of the following typically hold?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The training MSE never decreases",
+          "correct": true,
+          "why": "Larger $\\lambda$ pulls the weights away from the least-squares fit, which minimises training MSE; so training MSE is non-decreasing in $\\lambda$."
+        },
+        {
+          "text": "The variance of the fitted model decreases",
+          "correct": true,
+          "why": "Shrinking weights makes the fit less sensitive to the particular training set."
+        },
+        {
+          "text": "The bias of the fitted model decreases",
+          "correct": false,
+          "why": "Shrinkage pulls predictions toward zero, so bias grows; bias falls when $\\lambda$ is reduced.",
+          "trap": "C11"
+        },
+        {
+          "text": "The test MSE decreases with every increase in $\\lambda$",
+          "correct": false,
+          "why": "Test MSE is U-shaped in $\\lambda$: too much shrinkage underfits.",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\lambda = 0$ is ordinary least squares, the minimum training MSE; any $\\lambda > 0$ cannot do better on training data.\n2. More shrinkage: variance ↓, bias ↑.\n3. Test MSE first falls (variance cut) then rises (bias grows): U-shape, so not always decreasing."
+    },
+    {
+      "id": "ml-bias-variance-15",
+      "skill": "ml.bias-variance",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Data follow $y = f(x) + \\varepsilon$, where $\\varepsilon$ has mean 0 and **standard deviation** $0.5$, independent of $x$. A model that predicts exactly $f(x)$ at every $x$ has expected squared error on a new point equal to",
+      "figure": null,
+      "options": [
+        {
+          "text": "0",
+          "correct": false,
+          "why": "Knowing $f$ removes bias and variance, but the noise $\\varepsilon$ in the new $y$ remains.",
+          "trap": "C8"
+        },
+        {
+          "text": "0.5",
+          "correct": false,
+          "why": "0.5 is the noise SD; squared error uses the variance $0.5^2$.",
+          "trap": "C4"
+        },
+        {
+          "text": "0.25",
+          "correct": true,
+          "why": "$E[(y - f(x))^2] = E[\\varepsilon^2] = \\sigma^2 = 0.25$: the irreducible error."
+        },
+        {
+          "text": "0.0625",
+          "correct": false,
+          "why": "Squared the variance $0.25$ again; the noise term is $\\sigma^2 = 0.25$.",
+          "trap": "C4"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. With $\\hat f = f$, the error on a new point is $y - f(x) = \\varepsilon$.\n2. $E[\\varepsilon^2] = \\mathrm{Var}(\\varepsilon) = 0.5^2 = 0.25$.\n3. This floor (irreducible error) cannot be removed by any model."
+    },
+    {
+      "id": "ml-bias-variance-16",
+      "skill": "ml.bias-variance",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Learning curves for a regression model: as the training set grows from 100 to 10,000 points, the training MSE rises to about 18 and the validation MSE falls to about 19; both curves are flat at the end. A gradient-boosted model reaches about 5 on the same data. What is the best diagnosis and action?",
+      "figure": null,
+      "options": [
+        {
+          "text": "High variance; collect 10 times more data to close the gap to 5",
+          "correct": false,
+          "why": "The curves have already met and flattened; more data cannot lower a plateau set by bias.",
+          "trap": "C1"
+        },
+        {
+          "text": "High bias; use a more flexible model or add informative features",
+          "correct": true,
+          "why": "Train ≈ validation ≈ 18–19, far above 5: the model underfits, and only more flexibility lowers the plateau."
+        },
+        {
+          "text": "High variance; add stronger regularisation",
+          "correct": false,
+          "why": "A tiny train–validation gap rules out high variance; more regularisation adds bias and raises the plateau.",
+          "trap": "C2"
+        },
+        {
+          "text": "The noise variance must be about 18, so no model can do better",
+          "correct": false,
+          "why": "Another model reaches 5, so the noise variance is at most about 5; the extra 13 is bias.",
+          "trap": "C1"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Training and validation errors have converged (gap ≈ 1) at a high level.\n2. That is the high-bias signature; the 5 achieved by another model shows the error is not noise.\n3. Fix: more flexible model, more features, less regularisation. More data or more regularisation will not help."
+    },
+    {
+      "id": "ml-cv-06",
+      "skill": "ml.cv",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An SVM is tuned over 2 kernels (linear, RBF) and 5 values of $C$, every kernel–$C$ pair being a candidate, using 4-fold cross-validation. No final refit is done. The total number of SVM trainings is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 40,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 41,
+          "why": "Added a final refit; the stem says none is done.",
+          "trap": "C6"
+        },
+        {
+          "value": 28,
+          "why": "Added the grid sizes ($2 + 5 = 7$ candidates); a grid has $2 \\times 5 = 10$ pairs.",
+          "trap": "C3"
+        },
+        {
+          "value": 10,
+          "why": "Counted candidates only; each candidate is trained once per fold.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Candidates $= 2 \\times 5 = 10$.\n2. Each candidate is trained once per fold: $10 \\times 4 = 40$.\n3. No refit, so 40."
+    },
+    {
+      "id": "ml-cv-07",
+      "skill": "ml.cv",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A dataset of 200 points is split into 8 equal folds for 8-fold cross-validation. Each of the 8 models is trained on how many points?",
+      "figure": null,
+      "options": [
+        {
+          "text": "25",
+          "correct": false,
+          "why": "25 is the size of one held-out fold, not the training set.",
+          "trap": "C2"
+        },
+        {
+          "text": "175",
+          "correct": true,
+          "why": "Each model trains on $7$ of the 8 folds: $7 \\times 25 = 175$ points."
+        },
+        {
+          "text": "200",
+          "correct": false,
+          "why": "Training on all 200 would include the held-out fold; that is the final refit, not a CV model.",
+          "trap": "C6"
+        },
+        {
+          "text": "192",
+          "correct": false,
+          "why": "Subtracted the number of folds ($200 - 8$); only one fold of 25 points is held out.",
+          "trap": "C3"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Fold size $= 200/8 = 25$.\n2. Each model holds out one fold and trains on the other 7: $175$ points, i.e. $(k-1)/k$ of the data."
+    },
+    {
+      "id": "ml-cv-08",
+      "skill": "ml.cv",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 1-nearest-neighbour classifier with Manhattan distance $|x_1 - x_1'| + |x_2 - x_2'|$ is evaluated by leave-one-out cross-validation on\n\n| point | $(x_1, x_2)$ | class |\n|---|---|---|\n| P1 | (0, 0) | A |\n| P2 | (1, 0) | A |\n| P3 | (0, 3) | B |\n| P4 | (3, 1) | B |\n| P5 | (5, 1) | B |\n| P6 | (2, 3) | A |\n| P7 | (4, 4) | A |\n\nThe LOOCV error rate is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 0.29,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0,
+          "why": "Let each point be its own nearest neighbour (distance 0); that is the training error, not LOOCV.",
+          "trap": "C6"
+        },
+        {
+          "value": 0.71,
+          "why": "Reported the LOOCV accuracy $5/7$ instead of the error rate.",
+          "trap": "C11"
+        },
+        {
+          "value": 0.33,
+          "why": "Divided the 2 errors by $n - 1 = 6$; the rate is over all 7 held-out points.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Hold out each point and find its nearest other point:\n- P1 → P2 (1) A ✓; P2 → P1 (1) A ✓; P3 → P6 (2) A ✗; P4 → P5 (2) B ✓; P5 → P4 (2) B ✓; P6 → P3 (2) B ✗; P7 → P6 (3) A ✓.\n2. Errors $= 2$ of 7.\n3. LOOCV error $= 2/7 \\approx 0.29$."
+    },
+    {
+      "id": "ml-cv-09",
+      "skill": "ml.cv",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A model predicts every target by the **mean of its training targets**. It is evaluated by 2-fold cross-validation on the targets $1, 3, 5, 7$, with fold 1 $= \\{1, 3\\}$ and fold 2 $= \\{5, 7\\}$. The cross-validation mean squared error (average over all four held-out predictions) is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 17,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 5,
+          "why": "Used the mean of all four targets (4) for every prediction; that is the training MSE, not CV.",
+          "trap": "C6"
+        },
+        {
+          "value": 8.89,
+          "why": "Computed the leave-one-out MSE; the stem fixes two folds of two points.",
+          "trap": "C10"
+        },
+        {
+          "value": 34,
+          "why": "Added the two fold MSEs (17 + 17) instead of averaging them.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Hold out fold 1: train on $\\{5, 7\\}$, mean $6$. Errors: $(1-6)^2 = 25$, $(3-6)^2 = 9$.\n2. Hold out fold 2: train on $\\{1, 3\\}$, mean $2$. Errors: $(5-2)^2 = 9$, $(7-2)^2 = 25$.\n3. CV MSE $= (25 + 9 + 9 + 25)/4 = 17$."
+    },
+    {
+      "id": "ml-cv-10",
+      "skill": "ml.cv",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "In 5-fold cross-validation, how many of the 5 models include a given data point in their training set?",
+      "figure": null,
+      "options": [
+        {
+          "text": "1",
+          "correct": false,
+          "why": "Each point is in exactly one **validation** fold; the question asks about training sets.",
+          "trap": "C2"
+        },
+        {
+          "text": "4",
+          "correct": true,
+          "why": "The point is held out once (in its own fold) and used for training in the other $5 - 1 = 4$ models."
+        },
+        {
+          "text": "5",
+          "correct": false,
+          "why": "In the model that validates on its fold, the point is held out, so it cannot be in all 5 training sets.",
+          "trap": "C6"
+        },
+        {
+          "text": "It depends on how the rows were shuffled",
+          "correct": false,
+          "why": "Shuffling changes which fold a point lands in, not the count: always $k - 1$.",
+          "trap": "C8"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Folds partition the data, so every point sits in exactly one fold.\n2. That fold is the validation set once; in the remaining $k - 1 = 4$ models it is training data."
+    },
+    {
+      "id": "ml-cv-11",
+      "skill": "ml.cv",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which of the following statements about k-fold cross-validation on $n$ points are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "With $k = 2$, each model is trained on only half the data, so the CV estimate tends to overstate the error of the final model trained on all the data",
+          "correct": true,
+          "why": "Models trained on $n/2$ points are usually worse than one trained on $n$, so small $k$ gives a pessimistic (biased upward) estimate."
+        },
+        {
+          "text": "k-fold CV with $k = n$ is the same as leave-one-out CV",
+          "correct": true,
+          "why": "With $n$ folds, each fold holds exactly one point: that is LOOCV."
+        },
+        {
+          "text": "The 5-fold CV estimate does not depend on how the rows are shuffled into folds",
+          "correct": false,
+          "why": "Different shuffles give different folds and slightly different estimates; only LOOCV is deterministic.",
+          "trap": "C8"
+        },
+        {
+          "text": "Increasing $k$ reduces the total computation, since each validation fold is smaller",
+          "correct": false,
+          "why": "Larger $k$ means more fits ($k$ per candidate), each on more data: computation grows.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $k = 2$: training on $n/2$, error estimate pessimistic. True.\n2. $k = n$ is LOOCV by definition. True.\n3. Random fold assignment changes 5-fold estimates. False.\n4. More folds → more fits on larger sets → more work. False."
+    },
+    {
+      "id": "ml-cv-12",
+      "skill": "ml.cv",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 1-nearest-neighbour **regression** model (prediction = target of the nearest training point, distance $|x - x'|$) is evaluated by leave-one-out cross-validation on\n\n| $x$ | 1 | 2 | 4 | 7 |\n|---|---|---|---|---|\n| $y$ | 3 | 5 | 4 | 10 |\n\nThe LOOCV mean squared error is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 11.25,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 0,
+          "why": "Let each point predict itself; that is the training error of 1-NN.",
+          "trap": "C6"
+        },
+        {
+          "value": 2.75,
+          "why": "Averaged absolute errors $(2 + 2 + 1 + 6)/4$ instead of squared errors.",
+          "trap": "C4"
+        },
+        {
+          "value": 15,
+          "why": "Divided the total squared error 45 by $n - 1 = 3$ instead of 4.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. $x = 1$: nearest other is $x = 2$ → predict 5, error $(3-5)^2 = 4$.\n2. $x = 2$: nearest is $x = 1$ (distance 1) → predict 3, error $4$.\n3. $x = 4$: nearest is $x = 2$ (distance 2) → predict 5, error $1$.\n4. $x = 7$: nearest is $x = 4$ → predict 4, error $36$.\n5. LOOCV MSE $= 45/4 = 11.25$."
+    },
+    {
+      "id": "ml-cv-13",
+      "skill": "ml.cv",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Nested cross-validation is used to estimate the error of a tuning procedure. The outer loop is 5-fold. Inside each outer training set, 3 candidate hyperparameter values are compared by 4-fold CV, and the best one is then refitted once on that outer training set and tested on the outer fold. No model is fitted on the full dataset. The total number of model trainings is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 65,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 60,
+          "why": "Counted the inner CV fits $5 \\times 4 \\times 3$ but forgot the refit in each outer fold.",
+          "trap": "C6"
+        },
+        {
+          "value": 13,
+          "why": "Counted one outer fold only ($4 \\times 3 + 1$).",
+          "trap": "C6"
+        },
+        {
+          "value": 17,
+          "why": "Added the outer folds to the inner fits ($5 + 12$) instead of multiplying.",
+          "trap": "C3"
+        },
+        {
+          "value": 66,
+          "why": "Added a final fit on the full dataset; the stem excludes it.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. In one outer fold: inner CV $= 4 \\times 3 = 12$ fits, plus 1 refit of the winner $= 13$.\n2. Five outer folds: $5 \\times 13 = 65$."
+    },
+    {
+      "id": "ml-cv-14",
+      "skill": "ml.cv",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Three models are compared with 4-fold cross-validation. Their held-out error rates per fold are\n\n| model | fold 1 | fold 2 | fold 3 | fold 4 |\n|---|---|---|---|---|\n| P | 0.10 | 0.30 | 0.12 | 0.28 |\n| Q | 0.18 | 0.19 | 0.20 | 0.19 |\n| R | 0.05 | 0.40 | 0.15 | 0.25 |\n\nWhich model does cross-validation select?",
+      "figure": null,
+      "options": [
+        {
+          "text": "P",
+          "correct": false,
+          "why": "P's average is $0.80/4 = 0.20$, higher than Q's 0.19.",
+          "trap": "C6"
+        },
+        {
+          "text": "Q",
+          "correct": true,
+          "why": "CV error = average of fold errors: P 0.20, Q 0.19, R 0.2125; Q is lowest."
+        },
+        {
+          "text": "R",
+          "correct": false,
+          "why": "R has the best single fold (0.05), but CV compares averages; R's is 0.2125.",
+          "trap": "C10"
+        },
+        {
+          "text": "None; a model can be chosen only after testing on a separate test set",
+          "correct": false,
+          "why": "Choosing among candidates is exactly what CV is for; the test set is used afterwards to report the chosen model's error.",
+          "trap": "C1"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Average each row: P $= 0.80/4 = 0.20$; Q $= 0.76/4 = 0.19$; R $= 0.85/4 = 0.2125$.\n2. The lowest CV error is Q's 0.19."
+    },
+    {
+      "id": "ml-cv-15",
+      "skill": "ml.cv",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "The value of $k$ in a k-NN classifier (distance $|x - x'|$, majority vote) is chosen from $\\{1, 3\\}$ by leave-one-out cross-validation on\n\n| $x$ | 1 | 3 | 4 | 6 | 10 | 11 | 13 |\n|---|---|---|---|---|---|---|---|\n| class | A | B | A | A | B | B | B |\n\nWhich $k$ is chosen, and what is its LOOCV error rate?",
+      "figure": null,
+      "options": [
+        {
+          "text": "$k = 1$, error $0$",
+          "correct": false,
+          "why": "Error 0 comes from letting each point be its own neighbour (training error); held out, 1-NN misclassifies $x = 1, 3, 4$.",
+          "trap": "C6"
+        },
+        {
+          "text": "$k = 1$, error $3/7$",
+          "correct": false,
+          "why": "$3/7$ is $k = 1$'s LOOCV error, but $k = 3$ does better with $2/7$; CV picks the lower error.",
+          "trap": "C11"
+        },
+        {
+          "text": "$k = 3$, error $2/7$",
+          "correct": true,
+          "why": "Held out with 3 neighbours, only $x = 3$ and $x = 6$ are misclassified: $2/7 < 3/7$ for $k = 1$."
+        },
+        {
+          "text": "$k = 3$, error $1/7$",
+          "correct": false,
+          "why": "Counted the held-out point among its own 3 neighbours; then only $x = 6$ is wrong. LOOCV must exclude it.",
+          "trap": "C6"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $k = 1$ (held out): $1 \\to 3$ (B) ✗, $3 \\to 4$ (A) ✗, $4 \\to 3$ (B) ✗, $6 \\to 4$ ✓, $10 \\to 11$ ✓, $11 \\to 10$ ✓, $13 \\to 11$ ✓. Error $3/7$.\n2. $k = 3$: $1 \\to \\{3, 4, 6\\}$ = B, A, A → A ✓; $3 \\to \\{4, 1, 6\\}$ → A ✗; $4 \\to \\{3, 6, 1\\}$ → A ✓; $6 \\to \\{4, 3, 10\\}$ = A, B, B → B ✗; $10, 11, 13$ → B ✓. Error $2/7$.\n3. Choose $k = 3$."
+    },
+    {
+      "id": "ml-cv-16",
+      "skill": "ml.cv",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which of the following statements about k-fold cross-validation are true?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The CV estimate is the average of the $k$ held-out errors",
+          "correct": true,
+          "why": "Each fold gives one held-out error; CV reports their mean."
+        },
+        {
+          "text": "Every data point lies in exactly one validation fold",
+          "correct": true,
+          "why": "The folds partition the data, so each point is held out exactly once."
+        },
+        {
+          "text": "The final model is the average of the $k$ models trained during CV",
+          "correct": false,
+          "why": "The fold models only estimate error; the final model is refitted on all the training data.",
+          "trap": "C9"
+        },
+        {
+          "text": "The $k$ training sets are disjoint from one another",
+          "correct": false,
+          "why": "The validation folds are disjoint; the training sets overlap heavily (any two share $k - 2$ folds).",
+          "trap": "C2"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. CV error = mean of fold errors. True.\n2. Folds partition the data. True.\n3. The fold models are discarded; refit on all data. False.\n4. Training sets share most of their folds; only validation folds are disjoint. False."
+    },
+    {
+      "id": "ml-leakage-06",
+      "skill": "ml.leakage",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An analyst builds a classifier in four steps:\n\n1. Split the rows 80/20 into a training set and a test set.\n2. Fill missing values in both sets with medians computed on the training set.\n3. Fit PCA on the training and test rows together and keep 10 components.\n4. Train logistic regression on the training rows and report accuracy on the test rows.\n\nWhich step leaks test information into the model?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Step 1",
+          "correct": false,
+          "why": "Splitting first is exactly what prevents leakage; nothing is learned here.",
+          "trap": "C9"
+        },
+        {
+          "text": "Step 2",
+          "correct": false,
+          "why": "It touches the test set, but the medians come from training rows only; applying them to test rows is correct.",
+          "trap": "C10"
+        },
+        {
+          "text": "Step 3",
+          "correct": true,
+          "why": "PCA learns means and directions from the data; fitting it on test rows lets them shape the features the model trains on."
+        },
+        {
+          "text": "Step 4",
+          "correct": false,
+          "why": "Training on training rows and scoring once on test rows is the correct protocol.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Any step that **learns** from data must see only training rows.\n2. Step 2 learns medians from training rows only: fine.\n3. Step 3 fits PCA on train + test: the test rows influence the components. Leak.\n4. Fix: fit PCA on the training rows, then transform the test rows with it."
+    },
+    {
+      "id": "ml-leakage-07",
+      "skill": "ml.leakage",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hospital predicts, at the moment of discharge, whether a patient will be readmitted within 30 days. Which candidate feature causes target leakage?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Number of admissions in the previous 12 months",
+          "correct": false,
+          "why": "This is known at discharge and comes from the past, so it is a legitimate feature.",
+          "trap": "C10"
+        },
+        {
+          "text": "Length of the current stay in days",
+          "correct": false,
+          "why": "Known at discharge; it describes the current stay, not the outcome.",
+          "trap": "C10"
+        },
+        {
+          "text": "Code of the ward the patient was readmitted to",
+          "correct": true,
+          "why": "It exists only if the patient is readmitted, so it encodes the label and is unavailable at prediction time."
+        },
+        {
+          "text": "Patient's age",
+          "correct": false,
+          "why": "Known at discharge and unrelated to future events.",
+          "trap": "C10"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Prediction time is discharge; a feature is safe only if it is known then.\n2. Prior admissions, length of stay and age are known at discharge.\n3. The readmission ward is recorded after the outcome and is non-empty only for positives: target leakage."
+    },
+    {
+      "id": "ml-leakage-08",
+      "skill": "ml.leakage",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A dataset has 6 scans from each of 120 patients. To avoid leakage between scans of the same patient, 4-fold **group** cross-validation is used with equal-sized folds of patients. The number of scans in each validation fold is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 180,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 30,
+          "why": "Counted patients per fold; each patient brings 6 scans.",
+          "trap": "C2"
+        },
+        {
+          "value": 540,
+          "why": "Counted the training scans of a fold ($3 \\times 180$) instead of the validation scans.",
+          "trap": "C2"
+        },
+        {
+          "value": 120,
+          "why": "Divided 720 scans by 6 instead of by the 4 folds.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Group CV splits **patients**: $120/4 = 30$ patients per fold.\n2. Each patient has 6 scans, all in the same fold: $30 \\times 6 = 180$ scans per validation fold."
+    },
+    {
+      "id": "ml-leakage-09",
+      "skill": "ml.leakage",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which of the following procedures leak information from the evaluation data into training?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Randomly oversampling the minority class on the full dataset, then running 5-fold CV",
+          "correct": true,
+          "why": "Copies of a minority row can land in both a training fold and its validation fold, so the model is tested on rows it has seen."
+        },
+        {
+          "text": "Target-encoding a category (replacing it by the mean label of that category) using the training folds only",
+          "correct": false,
+          "why": "The encoding is learned only from training-fold labels and then applied to the held-out fold: no leak.",
+          "trap": "C10"
+        },
+        {
+          "text": "Dropping a column because it is constant in the training set",
+          "correct": false,
+          "why": "The decision uses only training data; removing a useless column leaks nothing.",
+          "trap": "C9"
+        },
+        {
+          "text": "Choosing the number of training epochs by test-set accuracy and reporting that same accuracy",
+          "correct": true,
+          "why": "The test set was used for tuning, so the reported number is optimistic; tune on a validation split instead."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Oversampling before splitting puts duplicates across folds. Leak.\n2. Target encoding fitted inside training folds: correct.\n3. A decision based only on training data: correct.\n4. Tuning on the test set and reporting it: leak (optimistic score)."
+    },
+    {
+      "id": "ml-leakage-10",
+      "skill": "ml.leakage",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A demand forecaster has 36 months of data and uses expanding-window evaluation to avoid look-ahead leakage. The first model trains on months 1–24 and is tested on months 25–27; each later step adds the 3 tested months to the training data and tests on the next 3 months, until month 36 has been tested. At every step two competing models (a linear model and a tree) are trained. The total number of model trainings is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 8,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 4,
+          "why": "Counted the windows (4) but trained only one model per window.",
+          "trap": "C6"
+        },
+        {
+          "value": 24,
+          "why": "Treated all 36 months as windows of 3 ($36/3 = 12$); testing starts only at month 25.",
+          "trap": "C6"
+        },
+        {
+          "value": 10,
+          "why": "Counted $12/3 + 1 = 5$ windows (fence-post error); the test blocks are 25–27, 28–30, 31–33, 34–36.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Months to test: 25–36, i.e. 12 months.\n2. Blocks of 3: 25–27, 28–30, 31–33, 34–36 → 4 windows.\n3. Two models per window: $4 \\times 2 = 8$."
+    },
+    {
+      "id": "ml-leakage-11",
+      "skill": "ml.leakage",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "In a dataset of 200 rows, the labels are fair coin flips, independent of all 5,000 noise features. An analyst picks the 50 features most correlated with the label using all 200 rows, then runs 10-fold CV of logistic regression on those 50 features and gets 85% accuracy. The model's expected accuracy on new data is about",
+      "figure": null,
+      "options": [
+        {
+          "text": "50%, because the feature selection had already seen every validation label",
+          "correct": true,
+          "why": "The labels are pure noise, so no model can beat chance; the 85% comes from selecting features that fit these particular labels, including the held-out ones."
+        },
+        {
+          "text": "85%, because cross-validation gives an unbiased estimate",
+          "correct": false,
+          "why": "CV is honest only if every learned step, including feature selection, is redone inside each training fold.",
+          "trap": "C1"
+        },
+        {
+          "text": "76%, because 10-fold CV overstates accuracy by about 10 points",
+          "correct": false,
+          "why": "There is no fixed correction; with leak-free selection CV would report about 50%.",
+          "trap": "C3"
+        },
+        {
+          "text": "Above 85%, because the final model is refitted on all 200 rows",
+          "correct": false,
+          "why": "Refitting on noise cannot create signal; new labels are independent coin flips.",
+          "trap": "C11"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Labels independent of features → any classifier has expected accuracy 50% on new data.\n2. Selecting features by correlation with all 200 labels uses the validation labels.\n3. Fix: select features inside each training fold; CV would then report about 50%."
+    },
+    {
+      "id": "ml-leakage-12",
+      "skill": "ml.leakage",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An online shop predicts, at the moment an order is placed, whether that order will be returned. Which features leak the label?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Product category of the order",
+          "correct": false,
+          "why": "Known when the order is placed; a legitimate feature.",
+          "trap": "C10"
+        },
+        {
+          "text": "The customer's return rate over their earlier orders",
+          "correct": false,
+          "why": "Computed only from past orders, so it is available at prediction time.",
+          "trap": "C10"
+        },
+        {
+          "text": "Refund amount paid for this order",
+          "correct": true,
+          "why": "A refund exists only after a return, so the feature encodes the label."
+        },
+        {
+          "text": "Days between delivery and the return request for this order",
+          "correct": true,
+          "why": "Recorded only if a return happens, and after the prediction time."
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Prediction time: when the order is placed.\n2. Category and the customer's past return rate are known then: safe.\n3. Refund amount and days-to-return-request exist only after a return: target leakage."
+    },
+    {
+      "id": "ml-leakage-13",
+      "skill": "ml.leakage",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A model forecasts next month's sales from 5 years of monthly data. Which evaluation avoids look-ahead leakage?",
+      "figure": null,
+      "options": [
+        {
+          "text": "Shuffle the 60 months randomly and use an 80/20 train/test split",
+          "correct": false,
+          "why": "Random splits put later months in training while earlier months are tested: the model sees the future.",
+          "trap": "C9"
+        },
+        {
+          "text": "Train on the first 4 years and test on the last year",
+          "correct": true,
+          "why": "Training uses only months before every test month, as in deployment."
+        },
+        {
+          "text": "Stratify the split so every calendar month appears equally in train and test",
+          "correct": false,
+          "why": "Stratifying by calendar month still mixes future years into training.",
+          "trap": "C10"
+        },
+        {
+          "text": "Leave-one-out CV over the 60 months",
+          "correct": false,
+          "why": "Each held-out month is predicted by a model trained on later months too.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For time series the test period must come after all training data.\n2. A chronological split (first 4 years train, last year test) does this; forward chaining is a multi-split version.\n3. Random, stratified and leave-one-out splits all let the model train on the future."
+    },
+    {
+      "id": "ml-leakage-14",
+      "skill": "ml.leakage",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A feature takes the values $2, 4, 6, 8$ on the training rows and $20$ on a single test row. It is standardised as $z = (x - \\text{mean})/\\text{SD}$, with SD computed with divisor $n$ (population SD). Using the leak-free procedure, the standardised value of the test row is ______ (round to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 6.71,
+        "tol": 0.01
+      },
+      "traps": [
+        {
+          "value": 1.9,
+          "why": "Fitted mean and SD on all five values (mean 8, SD $\\approx 6.32$); the test row must not influence the scaler.",
+          "trap": "C9"
+        },
+        {
+          "value": 5.81,
+          "why": "Used the sample SD with divisor $n - 1$; the stem fixes divisor $n$.",
+          "trap": "C6"
+        },
+        {
+          "value": 15,
+          "why": "Subtracted the training mean but did not divide by the SD.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Fit on training rows only: mean $= 20/4 = 5$.\n2. Deviations $-3, -1, 1, 3$; variance $= 20/4 = 5$, SD $= \\sqrt 5 \\approx 2.236$.\n3. $z = (20 - 5)/2.236 \\approx 6.71$."
+    },
+    {
+      "id": "ml-leakage-15",
+      "skill": "ml.leakage",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "An analyst compares 50 hyperparameter configurations by 5-fold CV on the training set and selects the one with the best CV score. Which number is an unbiased estimate of the selected model's performance on new data?",
+      "figure": null,
+      "options": [
+        {
+          "text": "The best CV score among the 50 configurations",
+          "correct": false,
+          "why": "Taking the maximum of 50 noisy scores favours lucky configurations, so it is optimistic.",
+          "trap": "C1"
+        },
+        {
+          "text": "The score on a separate test set used once, after the selection",
+          "correct": true,
+          "why": "The test set influenced neither training nor selection, so its score is unbiased for the chosen model."
+        },
+        {
+          "text": "The average CV score across all 50 configurations",
+          "correct": false,
+          "why": "That describes the average candidate, not the selected one.",
+          "trap": "C10"
+        },
+        {
+          "text": "The training accuracy of the selected configuration refitted on all training data",
+          "correct": false,
+          "why": "Training accuracy measures fit to seen data and is optimistic, especially for flexible models.",
+          "trap": "C9"
+        }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Selecting the maximum of many CV scores makes that score optimistic (selection bias).\n2. An untouched test set, used once after all choices are fixed, gives an unbiased estimate.\n3. Alternatively, nested CV estimates the whole tuning procedure."
+    },
+    {
+      "id": "ml-leakage-16",
+      "skill": "ml.leakage",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A feature has the observed values $6, 9, 15$ on the training rows (one more training row has it missing) and $40, 50$ on the test rows. Missing values are filled with the **mean**, computed in the leak-free way. The value filled into the missing training entry is ______.",
+      "figure": null,
+      "options": [],
+      "answer": {
+        "value": 10,
+        "tol": 0
+      },
+      "traps": [
+        {
+          "value": 24,
+          "why": "Averaged all five observed values, including the test rows; the imputer must be fitted on training rows only.",
+          "trap": "C9"
+        },
+        {
+          "value": 9,
+          "why": "Used the median of the training values; the stem asks for the mean.",
+          "trap": "C3"
+        },
+        {
+          "value": 7.5,
+          "why": "Divided the sum 30 by 4, counting the missing row; the mean is over the 3 observed values.",
+          "trap": "C6"
+        }
+      ],
+      "solution": "1. Fit the imputer on training rows only: observed values $6, 9, 15$.\n2. Mean $= 30/3 = 10$.\n3. The same 10 would also fill missing test entries; test values never enter the mean."
+    }
+  ]
+}
