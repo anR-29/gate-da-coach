@@ -1,0 +1,182 @@
+{
+ "db-sql-joins-06": [
+  "LEFT JOIN ke baad `WHERE o.oid IS NULL` lagaya hai. Socho: kis Customer row me o.oid NULL ho sakta hai?",
+  "LEFT JOIN rule: har Customer row bachti hai; jiska koi order match nahi hota usme Orders ke columns NULL ho jaate hain. Orders ki unmatched rows (cid 5, cid NULL) LEFT JOIN me aati hi nahi.",
+  "Match karo: cid 1 ke do orders (101, 102), cid 3 ka ek (103). Ab dekho kaun se customers ka koi match nahi. Trap: order 104/105 ko bhi gin lena."
+ ],
+ "db-sql-joins-07": [
+  "P aur Q me sirf ek farak hai: `COUNT(*)` vs `COUNT(o.oid)`. Ravi ka koi order hai ya nahi, pehle wo dekho.",
+  "LEFT JOIN me bina match wale customer ki ek row banti hai jisme Orders ke saare columns NULL hote hain. COUNT(*) rows ginta hai; COUNT(col) sirf non-NULL values.",
+  "Ravi (cid 2) ka Orders me koi match nahi, to uski kitni rows bani aur un rows me o.oid kya hai? Trap: LEFT JOIN ko inner join samajh ke Ravi ko gayab maan lena."
+ ],
+ "db-sql-joins-08": [
+  "Ye RIGHT JOIN hai: right side (Orders) ki har row bachegi. Har option me dekho kaunsi table ki row NULL ke saath aa rahi hai.",
+  "RIGHT JOIN = matches + Orders ki unmatched rows (Customer side NULL). Customer ki unmatched rows sirf LEFT/FULL join me aati hain. `NULL = x` kabhi TRUE nahi.",
+  "Order 104 ka cid 5 hai — Customer me cid 5 hai kya? Isi tarah 105 (cid NULL) aur Tom (koi order nahi) ko check karo. Trap: LEFT aur RIGHT ki direction ulat dena."
+ ],
+ "db-sql-joins-09": [
+  "Ye self-join hai: Staff ko khud se jod rahe hain, same team aur `s1.sid < s2.sid`. Matlab har team ke andar unordered pairs gin rahe ho.",
+  "Har team ke liye pairs $=\\binom{n}{2}$ jahan $n$ = us team ke members. NULL team wale kisi se match nahi karte (NULL = NULL UNKNOWN).",
+  "Team A me sids 1, 2, 4 hain → $\\binom{3}{2}$ pairs. Ab team B aur C ke pairs nikaal ke jodo. Trap: sid 6 aur 7 (dono NULL) ko pair maan lena."
+ ],
+ "db-sql-subquery-06": [
+  "Subquery ek hi number deta hai: poori table ka AVG(price). Dhyan do, pid 4 ki price NULL hai.",
+  "AVG(price) = non-NULL prices ka sum ÷ non-NULL count. Phir outer WHERE me strict `>` hai, aur NULL price wali row UNKNOWN deti hai.",
+  "Non-NULL prices: 30, 90, 60, 100, 70 — sum aur count nikaalo. Trap: 6 se divide kar dena (NULL ko 0 maan ke)."
+ ],
+ "db-sql-subquery-07": [
+  "P `IN` subquery hai, Q JOIN hai. Sale table me pid 2 teen baar aata hai — dono queries is repetition ko alag treat karti hain.",
+  "IN: har Product row ek hi baar, agar match exist kare. JOIN: har (product, matching sale) pair ki ek row. pid 9 kisi product se match nahi karta.",
+  "Har product ke matching sales gino: pid 2 → 3 sales, pid 3 → ?, pid 6 → ?. Ab P ke liye 'match hai ya nahi', Q ke liye 'kitne match' jodo. Trap: IN ko bhi duplicates wala maan lena."
+ ],
+ "db-sql-subquery-08": [
+  "Har option me ANY ya ALL ko plain English me padho: ANY = 'kam se kam ek value ke liye', ALL = 'har value ke liye'.",
+  "`x op ANY (S)`: koi ek s ho jiske liye x op s TRUE. `x op ALL (S)`: har s ke liye TRUE. IN = 'kisi ke barabar', NOT IN = 'kisi ke barabar nahi'.",
+  "Example lo S = {10, 20, 30}, x = 20. `x <> ANY (S)`: kya x kisi ek value se alag hai? Ab `x NOT IN (S)` se compare karo. Trap: > ALL ko 'MIN se bada' padhna."
+ ],
+ "db-sql-subquery-09": [
+  "Ye correlated subquery hai: har row s ke liye andar gino ki kitne students ke marks s se strictly zyada hain. Row tab bachti hai jab ye count 3 se kam ho.",
+  "Har row ke liye count = #{t : t.marks > s.marks}. Condition `3 > count`. Ties pe dhyan: barabar marks wale ek doosre ko nahi ginte.",
+  "T (95) ke liye count 0, P (90) ke liye 1. Ab Q aur R (dono 85) ka count nikaalo, phir S, U. Trap: 'top 3' sunke seedha 3 likh dena."
+ ],
+ "db-sql-groupby-06": [
+  "GROUP BY me do columns hain: dept aur city. Group ek dept nahi, balki ek (dept, city) jodi hai.",
+  "Rows = data me jitni alag (dept, city) pairs actually aati hain. Har pair ki ek output row, chahe usme kitne bhi employees hon.",
+  "CS ke employees ki cities likho: Pune, Pune, Delhi, Delhi → CS ke kitne pairs? Ab EE aur ME ke liye karo. Trap: sirf dept ke groups gin lena."
+ ],
+ "db-sql-groupby-07": [
+  "HAVING me AVG(bonus) hai, aur CS aur EE me kuch bonus NULL hain. Har dept ka average dhyan se nikaalna hai.",
+  "AVG(bonus) = non-NULL bonuses ka sum ÷ non-NULL bonuses ki ginti (COUNT(*) nahi). Phir strict `> 15` lagao.",
+  "CS: bonuses 10, NULL, 30, 20 → sum 60, non-NULL count 3. Ab EE aur ME ka nikaalo. Trap: CS ko 60/4 se divide karna."
+ ],
+ "db-sql-groupby-08": [
+  "Har query me dekho: kaunsa column ya aggregate kis clause me hai — SELECT, WHERE ya HAVING. Galti clause ke order se aati hai.",
+  "Rules: GROUP BY ke saath SELECT me sirf grouped columns ya aggregates. WHERE grouping se pehle chalta hai, to usme aggregate nahi. HAVING groups pe chalta hai.",
+  "Q1 dekho: CS group me cities Pune aur Delhi dono ho sakti hain — ek row me kaunsi dikhegi? Ab baaki teen ko isi rule se judge karo. Trap: socho ki HAVING bina GROUP BY ke nahi chal sakta."
+ ],
+ "db-sql-groupby-09": [
+  "Query me WHERE bhi hai aur HAVING bhi. Pehle rows filter hoti hain, phir groups banke unpe HAVING lagta hai.",
+  "Order: FROM → WHERE (sal > 50) → GROUP BY dept → HAVING COUNT(*) ≥ 2 → SELECT. COUNT(*) sirf WHERE ke baad bachi rows ginta hai.",
+  "sal > 50 wali rows chuno: CS me 60, 70, 65; EE me koi? ME me 80, 55. Ab har group ka count dekho. Trap: HAVING ko poore 8 rows ke groups pe lagana."
+ ],
+ "db-sql-null-07": [
+  "Table me do rows NULL hain. Sawal ye hai ki `NULL <> 2` TRUE hai ya nahi.",
+  "NULL ke saath har comparison (=, <>, <, >) UNKNOWN deta hai, aur WHERE sirf TRUE wali rows rakhta hai.",
+  "Har row pe `a <> 2` likho: 1 → TRUE, 2 → FALSE, NULL → ?. Baaki rows bhi aise hi karo. Trap: NULL ko '2 nahi hai' samajh ke gin lena."
+ ],
+ "db-sql-null-08": [
+  "P me `IS NULL` hai, Q me `NOT (...)` hai. Do NULL bonus wali rows ka result dono queries me alag ho sakta hai.",
+  "`IS NULL` NULL pe TRUE deta hai (UNKNOWN nahi). Comparison `NULL <= 10` UNKNOWN hai, aur NOT UNKNOWN = UNKNOWN. WHERE sirf TRUE rakhta hai.",
+  "P: rows 20 aur 15 `> 10` se TRUE; bonus 10 wali row FALSE (boundary). Ab NULL rows dono queries me evaluate karo. Trap: NOT lagane se pehle UNKNOWN ko FALSE maan lena."
+ ],
+ "db-sql-null-09": [
+  "Row me a NULL hai aur b = 5. Har condition me pehle dekho ki a wala hissa TRUE, FALSE ya UNKNOWN deta hai.",
+  "Comparison with NULL → UNKNOWN; `IS NULL` → TRUE/FALSE. TRUE OR UNKNOWN = TRUE, TRUE AND UNKNOWN = UNKNOWN, NOT UNKNOWN = UNKNOWN.",
+  "Pehla option: `a = 1` UNKNOWN, `b = 5` TRUE — OR table lagao. Baaki teen bhi isi tarah evaluate karo. Trap: `a = a` ko hamesha TRUE maan lena."
+ ],
+ "db-bplus-order-07": [
+  "Internal node me p child pointers aur unke beech keys hoti hain. Do pointers ke beech ek key — to keys pointers se ek kam.",
+  "Condition: $p \\cdot 8 + (p-1) \\cdot 16 \\le 4096$. Capacity hai, isliye jo p nikle uska floor lo.",
+  "Simplify karo: $24p - 16 \\le 4096$, yaani $24p \\le 4112$. Ab divide karke floor lo. Trap: p keys le lena (24p ≤ 4096)."
+ ],
+ "db-bplus-order-08": [
+  "Do alag capacities chahiye: internal node ka fanout p (child pointers) aur leaf me max keys. Phir 3 levels ke liye multiply.",
+  "Internal: $4p + 8(p-1) \\le 512$. Leaf: $n(8+6) + 4 \\le 512$. Max keys $= p^{2} \\cdot n$ (root aur ek internal level dono full).",
+  "Internal: $12p \\le 520$ → p = 43. Ab leaf ka n nikaalo (next-pointer ke 4 bytes mat bhoolo), phir $43^2 \\cdot n$. Trap: $43^3$ le lena."
+ ],
+ "db-bplus-order-09": [
+  "Sawal keys ka hai, children ka nahi, aur node root nahi hai. Pehle minimum children nikaalo.",
+  "Non-root internal node: children ≥ $\\lceil 7/2 \\rceil$. Internal node me keys = children − 1.",
+  "$\\lceil 7/2 \\rceil = \\lceil 3.5 \\rceil$ = 4 children. Ab keys me badlo. Trap: children wala number hi likh dena."
+ ],
+ "db-bplus-order-10": [
+  "Teen levels hain: root, ek internal level, leaves. Max ke liye sab full, min ke liye root 2 aur baaki half full. Statement 3 search ke baare me hai.",
+  "Max keys $= p^{h-1} \\cdot m$, min keys $= 2 \\cdot \\lceil p/2 \\rceil^{h-2} \\cdot \\lceil m/2 \\rceil$, yahan $p = 20$, $m = 19$, $h = 3$.",
+  "Max: $20 \\times 20$ leaves, har ek me 19 keys. Ab min formula me $\\lceil 19/2 \\rceil$ dhyan se nikaalo. Trap: B-tree ki 'root pe ruk jaana' wali property B+ tree pe lagana."
+ ],
+ "db-bplus-order-11": [
+  "Yahan maximum levels pooche hain, minimum nahi. Tree sabse lamba tab hota hai jab har node kam se kam bhara ho.",
+  "h levels wale tree me kam se kam $2 \\cdot 3^{h-2} \\cdot 2$ keys hoti hain (root 2 children, internal 3, leaf 2). Sabse bada h dhoondho jiske liye ye ≤ 100 ho.",
+  "h = 3 rakho: $2 \\cdot 3 \\cdot 2 = 12 \\le 100$, possible. Ab h ko badhaate jao jab tak minimum 100 se upar na chala jaaye. Trap: sab nodes full maan ke minimum height nikaal dena."
+ ],
+ "db-bplus-order-12": [
+  "Ulta sawal hai: order diya hai, block size dhoondhna hai. 50 children wale internal node me kitne pointers aur kitni keys hain?",
+  "Bytes $= p \\cdot P + (p-1) \\cdot K$ with $p = 50$, $P = 8$, $K = 12$.",
+  "Pointers: $50 \\times 8 = 400$ bytes. Ab keys ki ginti (p − 1) se bytes nikaal ke jodo. Trap: 50 keys le lena."
+ ],
+ "db-index-access-06": [
+  "Unspanned likha hai: ek record do blocks me toot nahi sakta. Pehle dekho ek block me kitne poore records aate hain.",
+  "bfr $= \\lfloor 1024/150 \\rfloor$, blocks $= \\lceil 12000/\\text{bfr} \\rceil$.",
+  "$1024/150 \\approx 6.83$, to bfr floor karke nikaalo, phir 12000 ko usse divide karo. Trap: total bytes ÷ 1024 karna (wo spanned ka formula hai)."
+ ],
+ "db-index-access-07": [
+  "Index single-level aur sparse hai, aur us pe binary search hoti hai. To pehle index ke blocks chahiye, phir data block ka ek access.",
+  "Data blocks $= \\lceil 90000/\\lfloor 2048/180 \\rfloor \\rceil$; index blocks $= \\lceil \\text{data blocks}/\\lfloor 2048/12 \\rfloor \\rceil$; accesses $= \\lceil \\log_2(\\text{index blocks}) \\rceil + 1$.",
+  "bfr = 11, to data blocks = 8182 = index entries. Index bfr = 170 se index blocks nikaalo. Trap: aakhri data block ka access bhool jaana."
+ ],
+ "db-index-access-08": [
+  "Index secondary aur dense hai, aur file heap (unsorted) hai. To entries kis cheez ke barabar hongi: records ya data blocks?",
+  "Dense: entries = records. Index blocks $= \\lceil 24000 / \\lfloor 1024/20 \\rfloor \\rceil$.",
+  "Index bfr $= \\lfloor 1024/20 \\rfloor$ = 51. Ab 24000/51 ka ceiling lo. Trap: data blocks ke barabar entries le lena (wo sparse hota)."
+ ],
+ "db-index-access-09": [
+  "Clustering index: har distinct dept value ki ek entry. Aur ek dept ke saare 40 records chahiye — wo kitne data blocks me hain?",
+  "Index blocks $= \\lceil 1500/\\lfloor 1024/16 \\rfloor \\rceil$, index search $= \\lceil \\log_2(\\text{index blocks}) \\rceil$. Data blocks per value $= \\lceil 40/\\lfloor 1024/100 \\rfloor \\rceil$.",
+  "Index bfr = 64, to $\\lceil 1500/64 \\rceil$ = 24 blocks. Ab binary search ke accesses aur us dept ke data blocks jodo. Trap: data ke liye sirf 1 block ginna."
+ ],
+ "db-index-access-10": [
+  "Do indexes hain: `id` pe primary (file isi pe sorted) aur `email` pe dense secondary. Har statement me entries ya blocks ya accesses check karne hain.",
+  "Primary = sparse: entries = data blocks. Secondary = dense: entries = records. Index bfr $= \\lfloor 4096/16 \\rfloor = 256$. Multilevel accesses = levels + 1.",
+  "Data bfr $= 4096/256 = 16$, to data blocks $= 30000/16 = 1875$. Ab dono indexes ke blocks nikaalo. Trap: multilevel search me data block ka access chhod dena."
+ ],
+ "db-index-access-11": [
+  "Sawal poore index ke blocks ka hai — sirf pehla level nahi, upar ke saare levels jodne hain.",
+  "Index bfr $= \\lfloor 4096/20 \\rfloor$. Level 1 = $\\lceil 10^6/\\text{bfr} \\rceil$ (dense: har record ki entry), har agla level = pichhle level ke blocks ÷ bfr (ceiling), jab tak 1.",
+  "Index bfr = 204, to level 1 = $\\lceil 1000000/204 \\rceil$ = 4902 blocks. Ab level 2 aur 3 nikaalo aur sab jodo. Trap: sirf level 1 likh dena."
+ ],
+ "db-index-access-12": [
+  "Har upar wala level, neeche wale level ke har block ki ek entry rakhta hai. Ruko tabhi jab ek level poora 1 block me aa jaaye.",
+  "Next level blocks $= \\lceil (\\text{current blocks})/50 \\rceil$. Level 1 = 2000 se shuru karke repeat karo.",
+  "Level 2 = $\\lceil 2000/50 \\rceil$ = 40 blocks. Kya 40 blocks ek block hai? Agar nahi to ek aur level banao. Trap: data block access ko bhi level gin lena."
+ ],
+ "db-index-types-05": [
+  "Index hash type ka hai. Chaaron queries me dekho: equality (`=`), range (`>`, BETWEEN) ya sorting (ORDER BY).",
+  "Hash index value ko hash karke seedha bucket pe jaata hai — sirf equality ke liye. Paas-paas ki values alag-alag buckets me bikhar jaati hain.",
+  "`age > 21` socho: 22, 23, 24... in sab ke bucket kahan honge — ek ke baad ek? Isi tarah baaki options judge karo. Trap: hash ko sorted maan lena."
+ ],
+ "db-index-types-06": [
+  "Do baatein dekho: file kis field pe sorted hai, aur wo field key hai ya nahi. Stem me dono likhe hain.",
+  "Ordering + key field → primary. Ordering + non-key field → ek entry per distinct value. Non-ordering field → secondary.",
+  "`dept` ordering field hai (file us pe sorted) aur unique nahi hai. Ab table se naam chuno. Trap: 'sorted field = primary' maan lena."
+ ],
+ "db-index-types-07": [
+  "File sirf `emp_id` pe sorted hai. Har statement me pucho: jis field ki baat ho rahi hai, kya file us pe sorted hai?",
+  "Sparse index sirf ordering field pe ho sakta hai. Non-ordering field pe index secondary aur dense hota hai. Clustering = ordering non-key field.",
+  "`email` lo: do paas-paas wali emails ke records kya ek hi block me honge? Isse dense/sparse ka faisla karo, phir `dept` aur 'primary' wale statements dekho. Trap: candidate key ko primary index samajhna."
+ ],
+ "db-index-types-08": [
+  "Chaar indexes hain: ek ordering key `K` pe, teen non-ordering fields pe. Har ek ki entries alag rule se aayengi.",
+  "Primary (ordering key) = sparse → entries = data blocks. Secondary (non-ordering) = dense → entries = records.",
+  "Primary index: 300 blocks → 300 entries. Ab har secondary index ki entries likho aur teeno jodo. Trap: primary ko bhi dense (6000) maan lena."
+ ],
+ "db-index-types-09": [
+  "Dense aur sparse me farak: index me kaunsi keys likhi hoti hain — saari ya sirf har block ki pehli.",
+  "Dense: har record ki key index me. Sparse: sirf har data block ki pehli key (anchor), aur ye tabhi chalta hai jab file us key pe sorted ho.",
+  "Maan lo K = 57 kisi block ke beech me hai (block ki pehli key 50). Sparse index me 57 milega? Dense me? Trap: dono indexes ko barabar jaankari wala samajhna."
+ ],
+ "db-index-types-10": [
+  "Har statement B+ tree ki structure ke baare me hai: leaves ki depth, internal keys, leaf chain, record pointers kahan hain.",
+  "B+ tree: internal nodes = sirf keys + child pointers (raasta dikhaate hain); leaves = saari keys + record pointers, aapas me linked; tree balanced.",
+  "Statement 4 lo: record pointers internal nodes me bhi hote hain — ye B-tree ki property hai ya B+ ki? Baaki teen isi picture se check karo. Trap: B-tree aur B+ tree mix karna."
+ ],
+ "db-index-types-11": [
+  "Range query hai aur matching keys 4 leaves me hain jo ek ke baad ek hain. B+ tree ki leaves linked hoti hain — ye yahan kaam aayega.",
+  "Reads = pehli leaf tak pahunchne ke nodes (root se leaf tak, levels jitne) + baaki leaves jo chain pe chal ke padhi.",
+  "Range ki shuruaat (price 100) dhoondhne me root, internal, leaf = 3 nodes. Ab bachi hui leaves gino jo chain se aayengi. Trap: har leaf ke liye root se dobara search."
+ ],
+ "db-index-types-12": [
+  "Dono paths same 500 records laate hain, par ek me records file me saath-saath hain, doosre me bikhre hue. Data block reads isi pe depend karte hain.",
+  "Clustered: blocks = $\\lceil 500/20 \\rceil$ (records contiguous). Unclustered worst case: har matching record ka alag block.",
+  "Path 1: 500 records, 20 per block, block ke shuru se — kitne blocks? Path 2 ke worst case me har record alag block me hai. Trap: dono paths ko ek jaisa maan lena."
+ ]
+}

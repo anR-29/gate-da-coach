@@ -1,0 +1,726 @@
+{
+  "area": "ml",
+  "skills": {},
+  "questions": [
+    {
+      "id": "ml-nn-perceptron-07",
+      "skill": "ml.nn-perceptron",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A perceptron currently has $w = (2, -1)$, $b = 1$ and learning rate $\\eta = 0.5$. It updates $w \\leftarrow w + \\eta y x$, $b \\leftarrow b + \\eta y$ whenever $y(w \\cdot x + b) \\le 0$. It now sees the point $x = (1, 3)$ with label $y = +1$. What are $w$ and $b$ after this point?",
+      "figure": null,
+      "options": [
+        { "text": "$w = (2, -1)$, $b = 1$ (no change)", "correct": false, "why": "The score is $2 - 3 + 1 = 0$, and a score of exactly 0 counts as a mistake ($y \\cdot 0 \\le 0$), so an update is due.", "trap": "C5" },
+        { "text": "$w = (2.5, 0.5)$, $b = 1.5$", "correct": true, "why": "Score 0 is a mistake, so $w \\leftarrow (2,-1) + 0.5(1,3) = (2.5, 0.5)$ and $b \\leftarrow 1 + 0.5 = 1.5$." },
+        { "text": "$w = (1.5, -2.5)$, $b = 0.5$", "correct": false, "why": "Subtracted $\\eta x$; for $y = +1$ the update adds $\\eta x$.", "trap": "C11" },
+        { "text": "$w = (3, 2)$, $b = 2$", "correct": false, "why": "Used $\\eta = 1$ instead of the given $\\eta = 0.5$.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Score $s = 2\\cdot1 + (-1)\\cdot3 + 1 = 0$, so $y s = 0 \\le 0$: mistake.\n2. $w \\leftarrow (2, -1) + 0.5\\cdot(+1)\\cdot(1, 3) = (2.5, 0.5)$.\n3. $b \\leftarrow 1 + 0.5 = 1.5$."
+    },
+    {
+      "id": "ml-nn-perceptron-08",
+      "skill": "ml.nn-perceptron",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Inputs $x_1, x_2 \\in \\{0, 1\\}$. A threshold unit outputs 1 when $w_1x_1 + w_2x_2 + b > 0$ and 0 otherwise. Which choice of $(w_1, w_2, b)$ makes it compute NOR (output 1 only when both inputs are 0)?",
+      "figure": null,
+      "options": [
+        { "text": "$(1, 1, -0.5)$", "correct": false, "why": "This fires whenever at least one input is 1: that is OR, the complement of NOR.", "trap": "C2" },
+        { "text": "$(-1, -1, 1.5)$", "correct": false, "why": "At $(0,1)$ the score is $0.5 > 0$, so it outputs 1; this is NAND (0 only at $(1,1)$).", "trap": "C10" },
+        { "text": "$(-1, -1, 0.5)$", "correct": true, "why": "Score is $0.5$ at $(0,0)$, $-0.5$ at $(0,1)$ and $(1,0)$, $-1.5$ at $(1,1)$: output 1 only at $(0,0)$." },
+        { "text": "$(1, 1, -1.5)$", "correct": false, "why": "This fires only at $(1,1)$: that is AND.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. NOR must output 1 at $(0,0)$ and 0 at the other three corners.\n2. With $(-1,-1,0.5)$: scores $0.5, -0.5, -0.5, -1.5$, so only $(0,0)$ is positive.\n3. The other choices give OR, NAND and AND."
+    },
+    {
+      "id": "ml-nn-perceptron-09",
+      "skill": "ml.nn-perceptron",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "The four corners of $\\{0,1\\}^2$ are labelled $+1$ or $-1$. For which labelling can a single perceptron (one linear threshold, with bias) **not** reach zero training errors?",
+      "figure": null,
+      "options": [
+        { "text": "$+1$ only at $(1,1)$, $-1$ elsewhere", "correct": false, "why": "This is AND; the line $x_1 + x_2 = 1.5$ separates it.", "trap": "C10" },
+        { "text": "$+1$ at $(0,1)$ and $(1,1)$, $-1$ at $(0,0)$ and $(1,0)$", "correct": false, "why": "The label is just $x_2$; the line $x_2 = 0.5$ separates it.", "trap": "C10" },
+        { "text": "$+1$ at $(0,0)$ and $(1,1)$, $-1$ at $(0,1)$ and $(1,0)$", "correct": true, "why": "This is XNOR: each class sits on a diagonal, so any line that has both $+1$ corners on one side also has a $-1$ corner there." },
+        { "text": "$-1$ only at $(0,0)$, $+1$ elsewhere", "correct": false, "why": "This is OR; the line $x_1 + x_2 = 0.5$ separates it.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A perceptron reaches zero errors only on linearly separable labellings.\n2. AND, OR and \"label = $x_2$\" each have a separating line.\n3. XNOR (diagonals) is the complement of XOR and, like XOR, is not linearly separable."
+    },
+    {
+      "id": "ml-nn-perceptron-10",
+      "skill": "ml.nn-perceptron",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A perceptron starts at $w = (0, 0)$, $b = 0$, $\\eta = 1$, and cycles through the points below in this order, updating $w \\leftarrow w + yx$, $b \\leftarrow b + y$ whenever $y(w\\cdot x + b) \\le 0$. It stops after a full pass with no update.\n\n| point | $x_1$ | $x_2$ | $y$ |\n|---|---|---|---|\n| 1 | 2 | 1 | +1 |\n| 2 | 0 | 0 | −1 |\n| 3 | 1 | 2 | +1 |\n| 4 | 1 | 0 | −1 |\n\nWhat is the final bias $b$?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": -2, "tol": 0 },
+      "traps": [
+        { "value": -1, "why": "Stopped after the first pass; the data need more passes before a clean one.", "trap": "C6" },
+        { "value": 0, "why": "Treated a score of 0 as correct, so the all-zero start never updates.", "trap": "C5" },
+        { "value": 6, "why": "Reported the number of updates instead of the bias.", "trap": "C10" }
+      ],
+      "solution": "1. Pass 1: P1 score 0 → $w=(2,1), b=1$; P2 score 1 → $b=0$; P3 fine; P4 score 2 → $w=(1,1), b=-1$.\n2. Pass 2: P4 score 0 → $w=(0,1), b=-2$. Pass 3: P1 score $-1$ → $w=(2,2), b=-1$; P4 score 1 → $w=(1,2), b=-2$.\n3. Pass 4: scores $2, -2, 3, -1$ all correct, so it stops with $b = -2$."
+    },
+    {
+      "id": "ml-nn-perceptron-11",
+      "skill": "ml.nn-perceptron",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A perceptron uses $w \\leftarrow w + \\eta y x$, $b \\leftarrow b + \\eta y$ on every point with $y(w\\cdot x + b) \\le 0$. Which statements are correct?",
+      "figure": null,
+      "options": [
+        { "text": "After an update on a point, that point is always classified correctly the next time it is seen.", "correct": false, "why": "One update raises its score by a fixed amount, which may not be enough; and later updates on other points can push it back.", "trap": "C8" },
+        { "text": "An update on $(x, y)$ raises $y(w\\cdot x + b)$ for that same point by exactly $\\eta(\\lVert x \\rVert^2 + 1)$.", "correct": true, "why": "New value $= y(w\\cdot x + b) + \\eta y^2(\\lVert x\\rVert^2 + 1)$, and $y^2 = 1$." },
+        { "text": "A larger $\\eta$ makes the mistake bound $(R/\\gamma)^2$ smaller.", "correct": false, "why": "The bound has no $\\eta$ in it; it depends only on the data radius $R$ and margin $\\gamma$.", "trap": "C9" },
+        { "text": "Starting from $w = 0$, $b = 0$, changing $\\eta$ from 1 to 0.1 gives the same sequence of mistakes.", "correct": true, "why": "Every update adds a multiple of $\\eta$, so $(w, b)$ is just scaled by $\\eta$ and the signs of all scores stay the same." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $y((w + \\eta y x)\\cdot x + b + \\eta y) = y(w\\cdot x + b) + \\eta(\\lVert x\\rVert^2 + 1)$: a fixed raise, not a guarantee of being correct.\n2. From zero, $(w, b)$ with step $\\eta$ equals $\\eta$ times the run with step 1, so the same points are mistakes.\n3. Novikoff's bound $(R/\\gamma)^2$ does not involve $\\eta$."
+    },
+    {
+      "id": "ml-nn-perceptron-12",
+      "skill": "ml.nn-perceptron",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A perceptron without bias is trained on the points below. The direction $u = (3, 4)$ separates them through the origin. Using the unit vector along $u$ as $w^*$, compute the convergence bound $(R/\\gamma)^2$, where $R = \\max_i \\lVert x_i \\rVert$ and $\\gamma = \\min_i y_i\\, w^{*}\\cdot x_i$.\n\n| point | $x$ | $y$ |\n|---|---|---|\n| 1 | $(1, 1)$ | +1 |\n| 2 | $(-2, 1)$ | −1 |\n| 3 | $(0, -1)$ | −1 |\n| 4 | $(3, 0)$ | +1 |",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 56.25, "tol": 0.01 },
+      "traps": [
+        { "value": 2.25, "why": "Used $u = (3,4)$ without normalising, so the margin came out 5 times too big ($\\gamma = 2$).", "trap": "C4" },
+        { "value": 7.5, "why": "Gave $R/\\gamma$ and forgot to square it.", "trap": "C4" },
+        { "value": 31.25, "why": "Took $R$ as the norm of the point with the smallest margin ($\\sqrt5$) instead of the largest norm overall.", "trap": "C10" }
+      ],
+      "solution": "1. $w^* = (0.6, 0.8)$. Margins $y_i w^*\\cdot x_i$: $1.4,\\ 0.4,\\ 0.8,\\ 1.8$, so $\\gamma = 0.4$.\n2. Norms: $\\sqrt2,\\ \\sqrt5,\\ 1,\\ 3$, so $R = 3$.\n3. $(R/\\gamma)^2 = 7.5^2 = 56.25$."
+    },
+    {
+      "id": "ml-nn-forward-07",
+      "skill": "ml.nn-forward",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A network has 3 ReLU hidden units and a linear output: $h = \\mathrm{ReLU}(W_1x + b_1)$, $\\hat y = v^\\top h + c$, with\n\n$$W_1 = \\begin{pmatrix} 1 & 2 & -1 \\\\ -1 & 0 & 3 \\\\ 2 & 1 & 1 \\end{pmatrix},\\; b_1 = \\begin{pmatrix} 0 \\\\ -2 \\\\ -3 \\end{pmatrix},\\; v = \\begin{pmatrix} 1 \\\\ -2 \\\\ 0.5 \\end{pmatrix},\\; c = -1.$$\n\nFind $\\hat y$ for $x = (2, -1, 1)^\\top$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": -0.5, "tol": 0.01 },
+      "traps": [
+        { "value": 0.5, "why": "Skipped the ReLU, so the negative pre-activations $-1, -1$ were kept.", "trap": "C9" },
+        { "value": -1, "why": "Left out the hidden biases $b_1$: then $h = \\mathrm{ReLU}(-1, 1, 4) = (0, 1, 4)$ and $\\hat y = -2 + 2 - 1$.", "trap": "C6" },
+        { "value": -2, "why": "Multiplied by $W_1^\\top$ (used columns as units) instead of the rows.", "trap": "C2" }
+      ],
+      "solution": "1. $W_1x = (2 - 2 - 1,\\; -2 + 0 + 3,\\; 4 - 1 + 1) = (-1, 1, 4)$; add $b_1$: $z = (-1, -1, 1)$.\n2. ReLU: $h = (0, 0, 1)$.\n3. $\\hat y = 0.5\\cdot1 - 1 = -0.5$."
+    },
+    {
+      "id": "ml-nn-forward-08",
+      "skill": "ml.nn-forward",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A tiny network on a scalar input has two ReLU hidden units and output weights 1, 1, no output bias: $f(x) = \\mathrm{ReLU}(x - 1) + \\mathrm{ReLU}(-x - 1)$. Which describes $f$?",
+      "figure": null,
+      "options": [
+        { "text": "$f(x) = |x| - 1$ for every $x$", "correct": false, "why": "For $|x| < 1$ both units are off, so $f = 0$, not a negative value; ReLU outputs are never negative.", "trap": "C5" },
+        { "text": "$f(x) = \\max(0, |x| - 1)$", "correct": true, "why": "For $x > 1$ only the first unit fires ($x - 1$); for $x < -1$ only the second ($-x - 1$); in between both are 0." },
+        { "text": "$f(x) = x - 1$ for every $x$", "correct": false, "why": "That would be $\\mathrm{ReLU}(x-1) - \\mathrm{ReLU}(1-x)$; here the second unit has input $-x - 1$ and is added.", "trap": "C10" },
+        { "text": "$f(x) = 0$ for every $x$", "correct": false, "why": "The units do not cancel: at $x = 3$, $f = 2 + 0 = 2$.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $x > 1$: $f = x - 1$. $x < -1$: $f = -x - 1$.\n2. $-1 \\le x \\le 1$: both pre-activations $\\le 0$, so $f = 0$.\n3. Together: $f(x) = \\max(0, |x| - 1)$, a flat zone with two ramps."
+    },
+    {
+      "id": "ml-nn-forward-09",
+      "skill": "ml.nn-forward",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A network has a sigmoid hidden layer, then a ReLU hidden layer, then a linear output:\n\n$$h = \\sigma(W x + b),\\quad a = \\mathrm{ReLU}(U h + c),\\quad \\hat y = 5a_1 + 4a_2$$\n\nwith $W = \\begin{pmatrix} 2 & -2 \\\\ 1 & -1 \\end{pmatrix}$, $b = (0, \\ln 3)^\\top$, $U = \\begin{pmatrix} 4 & -4 \\\\ 2 & 2 \\end{pmatrix}$, $c = (0, -2)^\\top$ and $\\sigma(z) = 1/(1 + e^{-z})$. Find $\\hat y$ for $x = (1, 1)^\\top$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2, "tol": 0.01 },
+      "traps": [
+        { "value": -3, "why": "Skipped the ReLU in the second layer, keeping $Uh + c = (-1, 0.5)$ as is.", "trap": "C9" },
+        { "value": 5, "why": "Took $\\sigma(\\ln 3) = 1/(1+3) = 0.25$; in fact $e^{-\\ln 3} = 1/3$, so $\\sigma(\\ln 3) = 0.75$.", "trap": "C11" },
+        { "value": 0.79, "why": "Skipped the sigmoid and passed $z = (0, \\ln 3)$ straight to the next layer.", "trap": "C6" }
+      ],
+      "solution": "1. $z = Wx + b = (0, \\ln 3)$, so $h = (\\sigma(0), \\sigma(\\ln 3)) = (0.5, 0.75)$.\n2. $Uh + c = (2 - 3,\\; 1 + 1.5 - 2) = (-1, 0.5)$; ReLU gives $a = (0, 0.5)$.\n3. $\\hat y = 5\\cdot0 + 4\\cdot0.5 = 2$."
+    },
+    {
+      "id": "ml-nn-forward-10",
+      "skill": "ml.nn-forward",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about activations and the forward pass are correct?",
+      "figure": null,
+      "options": [
+        { "text": "$\\tanh(z) = 2\\sigma(2z) - 1$ for every real $z$.", "correct": true, "why": "$2\\sigma(2z) - 1 = \\dfrac{1 - e^{-2z}}{1 + e^{-2z}} = \\tanh z$; tanh is a shifted, rescaled sigmoid." },
+        { "text": "The outputs of a layer of sigmoid units always sum to 1.", "correct": false, "why": "Each sigmoid squashes its own input to $(0,1)$ independently; summing to 1 is a property of softmax.", "trap": "C2" },
+        { "text": "If every bias is zero, a ReLU network with linear output satisfies $f(cx) = c\\,f(x)$ for every $c > 0$.", "correct": true, "why": "$\\mathrm{ReLU}(cz) = c\\,\\mathrm{ReLU}(z)$ for $c > 0$, and each layer is linear without biases, so the factor $c$ passes through every layer." },
+        { "text": "A ReLU network with a linear output layer can only output non-negative values.", "correct": false, "why": "Hidden values are $\\ge 0$, but the output weights can be negative, so $\\hat y$ can be negative.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\tanh z = (e^z - e^{-z})/(e^z + e^{-z})$; divide by $e^{z}$ to get $2\\sigma(2z) - 1$.\n2. Sigmoids are independent per unit; only softmax normalises.\n3. ReLU is positively homogeneous, so a bias-free ReLU net is too; negative output weights allow negative outputs."
+    },
+    {
+      "id": "ml-nn-forward-11",
+      "skill": "ml.nn-forward",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A ReLU layer computes $h = \\mathrm{ReLU}(Wx + b)$ (row $i$ of $W$ = unit $i$) with $W = \\begin{pmatrix} 1 & 3 \\\\ 2 & -1 \\end{pmatrix}$, $b = (-6, 1)^\\top$ and $x = (2, 1)^\\top$. What is $h$?",
+      "figure": null,
+      "options": [
+        { "text": "$(0, 4)$", "correct": true, "why": "$Wx = (5, 3)$, plus $b$ gives $(-1, 4)$, and ReLU zeroes the $-1$." },
+        { "text": "$(-1, 4)$", "correct": false, "why": "Forgot to apply ReLU to the negative pre-activation.", "trap": "C9" },
+        { "text": "$(0, 6)$", "correct": false, "why": "Used the columns of $W$ as units ($W^\\top x = (4, 5)$).", "trap": "C2" },
+        { "text": "$(5, 3)$", "correct": false, "why": "Left out the bias $b$ before the ReLU.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $Wx = (1\\cdot2 + 3\\cdot1,\\; 2\\cdot2 - 1\\cdot1) = (5, 3)$.\n2. $z = Wx + b = (-1, 4)$.\n3. $h = \\mathrm{ReLU}(z) = (0, 4)$."
+    },
+    {
+      "id": "ml-nn-forward-12",
+      "skill": "ml.nn-forward",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 3-class classifier computes $h = \\mathrm{ReLU}(W_1x + b_1)$, logits $z = Uh + c$ and probabilities $p = \\mathrm{softmax}(z)$, with\n\n$$W_1 = \\begin{pmatrix} 1 & -1 \\\\ -1 & 1 \\end{pmatrix},\\; b_1 = \\begin{pmatrix} 0 \\\\ 1 \\end{pmatrix},\\; U = \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\\\ -1 & 2 \\end{pmatrix},\\; c = \\begin{pmatrix} 0 \\\\ 0 \\\\ 2 \\end{pmatrix}.$$\n\nFind $p_1$ for $x = (1, -1)^\\top$ (to two decimals).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.787, "tol": 0.01 },
+      "traps": [
+        { "value": 0.881, "why": "Applied a sigmoid to $z_1 = 2$ alone instead of softmax over all three logits.", "trap": "C2" },
+        { "value": 0.936, "why": "Skipped the ReLU, so $h = (2, -1)$ and the logits became $(2, -1, -2)$.", "trap": "C9" },
+        { "value": 1, "why": "Divided the logits by their sum ($2/2$) instead of exponentiating first.", "trap": "C3" }
+      ],
+      "solution": "1. $W_1x + b_1 = (2, -2) + (0, 1) = (2, -1)$; ReLU gives $h = (2, 0)$.\n2. $z = Uh + c = (2, 0, -2) + (0, 0, 2) = (2, 0, 0)$.\n3. $p_1 = e^2/(e^2 + 1 + 1) = 7.389/9.389 \\approx 0.787$."
+    },
+    {
+      "id": "ml-nn-params-06",
+      "skill": "ml.nn-params",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A fully connected regression network has layer sizes 20 → 32 → 32 → 1, with a bias on every hidden and output unit. How many trainable parameters does it have?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1761, "tol": 0 },
+      "traps": [
+        { "value": 1696, "why": "Counted only the weights and left out all 65 biases.", "trap": "C6" },
+        { "value": 1760, "why": "Forgot the single bias of the output unit.", "trap": "C6" },
+        { "value": 1781, "why": "Gave the 20 input units biases too; the input layer has no parameters.", "trap": "C9" }
+      ],
+      "solution": "1. Layer 1: $20\\cdot32 + 32 = 672$.\n2. Layer 2: $32\\cdot32 + 32 = 1056$.\n3. Output: $32\\cdot1 + 1 = 33$. Total $672 + 1056 + 33 = 1761$."
+    },
+    {
+      "id": "ml-nn-params-07",
+      "skill": "ml.nn-params",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A fully connected network has 3 inputs, one hidden layer of 4 units and 2 outputs, and uses **no biases anywhere**. How many trainable parameters does it have?",
+      "figure": null,
+      "options": [
+        { "text": "26", "correct": false, "why": "Added $4 + 2$ biases, but this network has none.", "trap": "C1" },
+        { "text": "24", "correct": false, "why": "Multiplied all three layer sizes ($3\\cdot4\\cdot2$); the layers add, they do not multiply.", "trap": "C3" },
+        { "text": "20", "correct": true, "why": "Weights only: $3\\cdot4 + 4\\cdot2 = 12 + 8 = 20$." },
+        { "text": "9", "correct": false, "why": "Counted units ($3 + 4 + 2$), not connections.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Input → hidden: $3\\cdot4 = 12$ weights.\n2. Hidden → output: $4\\cdot2 = 8$ weights.\n3. No biases, so the total is 20."
+    },
+    {
+      "id": "ml-nn-params-08",
+      "skill": "ml.nn-params",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A fully connected network has $d$ inputs, one hidden layer of 16 units and 4 outputs, with biases on hidden and output units. It has 500 trainable parameters. Find $d$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 26, "tol": 0 },
+      "traps": [
+        { "value": 27, "why": "Forgot the 16 hidden biases, solving $16d + 68 = 500$.", "trap": "C6" }
+      ],
+      "solution": "1. Parameters $= (d + 1)\\cdot16 + (16 + 1)\\cdot4 = 16d + 16 + 68 = 16d + 84$.\n2. $16d + 84 = 500 \\Rightarrow 16d = 416$.\n3. $d = 26$."
+    },
+    {
+      "id": "ml-nn-params-09",
+      "skill": "ml.nn-params",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A fully connected network 12 → 8 → 6 → 3 computes $z^{(l)} = W^{(l)} a^{(l-1)} + b^{(l)}$ in each layer, with biases on every hidden and output unit. Which statements are correct?",
+      "figure": null,
+      "options": [
+        { "text": "The third layer ($6 \\to 3$) has 18 trainable parameters.", "correct": false, "why": "That counts only the $6\\cdot3$ weights; with 3 biases the layer has 21.", "trap": "C6" },
+        { "text": "$W^{(2)}$ has shape $6 \\times 8$.", "correct": true, "why": "Rows = output units (6), columns = inputs from the previous layer (8)." },
+        { "text": "The input layer contributes 12 parameters, one per input.", "correct": false, "why": "Inputs are data, not parameters; the input layer has none.", "trap": "C9" },
+        { "text": "The network has 17 biases in total.", "correct": true, "why": "One per hidden or output unit: $8 + 6 + 3 = 17$." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $W^{(l)}$ is $n_l \\times n_{l-1}$: $W^{(1)}$ $8\\times12$, $W^{(2)}$ $6\\times8$, $W^{(3)}$ $3\\times6$.\n2. Biases: $8 + 6 + 3 = 17$.\n3. Third layer: $18 + 3 = 21$; the input layer has no parameters (total 179)."
+    },
+    {
+      "id": "ml-nn-params-10",
+      "skill": "ml.nn-params",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A dense layer 100 → 50 (with biases) is replaced by two dense layers 100 → 10 → 50 (with biases on all 10 and 50 units). How many parameters does this save?",
+      "figure": null,
+      "options": [
+        { "text": "3490", "correct": true, "why": "Old: $100\\cdot50 + 50 = 5050$. New: $(100\\cdot10 + 10) + (10\\cdot50 + 50) = 1560$. Saving $5050 - 1560 = 3490$." },
+        { "text": "3500", "correct": false, "why": "Compared weights only ($5000 - 1500$) and ignored that the new design has 10 extra biases.", "trap": "C6" },
+        { "text": "1560", "correct": false, "why": "This is the parameter count of the new pair of layers, not the saving.", "trap": "C10" },
+        { "text": "4040", "correct": false, "why": "Subtracted only the first new layer ($1010$) and forgot the $10 \\to 50$ layer.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Old layer: $100\\cdot50 + 50 = 5050$.\n2. New: $100\\cdot10 + 10 = 1010$ and $10\\cdot50 + 50 = 550$, total 1560.\n3. Saving: $5050 - 1560 = 3490$."
+    },
+    {
+      "id": "ml-nn-params-11",
+      "skill": "ml.nn-params",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Binary logistic regression on 30 features, $p = \\sigma(w^\\top x + b)$, is a network with no hidden layer and one sigmoid output unit. How many trainable parameters does it have?",
+      "figure": null,
+      "options": [
+        { "text": "30", "correct": false, "why": "Counted the weights but forgot the bias $b$.", "trap": "C6" },
+        { "text": "31", "correct": true, "why": "30 weights plus 1 bias for the single output unit." },
+        { "text": "62", "correct": false, "why": "Treated it as a 2-output softmax ($30\\cdot2 + 2$); binary logistic regression has one output unit.", "trap": "C10" },
+        { "text": "1", "correct": false, "why": "Counted units, not parameters.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. One dense layer $30 \\to 1$.\n2. Weights $30\\cdot1 = 30$, bias 1.\n3. Total 31."
+    },
+    {
+      "id": "ml-nn-params-12",
+      "skill": "ml.nn-params",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A fully connected network takes 10 inputs, has $L$ hidden layers of 20 units each, and 1 output unit, with biases on every hidden and output unit. It has 1501 trainable parameters. Find the number of hidden layers $L$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 5, "why": "Counted the weight matrices ($L + 1$) instead of the hidden layers.", "trap": "C6" },
+        { "value": 3, "why": "Stopped at $L - 1 = 3$, the number of $20 \\to 20$ blocks, and forgot to add the first hidden layer.", "trap": "C6" }      ],
+      "solution": "1. First hidden layer: $10\\cdot20 + 20 = 220$. Each further hidden layer: $20\\cdot20 + 20 = 420$. Output: $20 + 1 = 21$.\n2. Total $= 220 + 420(L - 1) + 21 = 241 + 420(L - 1)$.\n3. $241 + 420(L-1) = 1501 \\Rightarrow L - 1 = 3 \\Rightarrow L = 4$."
+    },
+    {
+      "id": "ml-nn-backprop-07",
+      "skill": "ml.nn-backprop",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A scalar network computes $\\hat y = w_2\\,\\mathrm{ReLU}(w_1 x + b_1)$ with loss $L = \\tfrac12(\\hat y - y)^2$. With $w_1 = 2$, $b_1 = -1$, $w_2 = 1$, $x = 2$ and $y = 5$, find $\\partial L/\\partial w_2$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": -6, "tol": 0 },
+      "traps": [
+        { "value": 6, "why": "Used $y - \\hat y$ instead of $\\hat y - y$.", "trap": "C11" },
+        { "value": -2, "why": "Stopped at $\\partial L/\\partial \\hat y$ and forgot to multiply by $h = 3$.", "trap": "C6" },
+        { "value": -12, "why": "Put in a factor 2; with the $\\tfrac12$ in the loss, $\\partial L/\\partial \\hat y = \\hat y - y$.", "trap": "C4" }
+      ],
+      "solution": "1. $z = 2\\cdot2 - 1 = 3 > 0$, $h = 3$, $\\hat y = 3$.\n2. $\\partial L/\\partial \\hat y = 3 - 5 = -2$.\n3. $\\partial L/\\partial w_2 = (\\hat y - y)\\cdot h = -2\\cdot3 = -6$."
+    },
+    {
+      "id": "ml-nn-backprop-08",
+      "skill": "ml.nn-backprop",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A dense layer computes $z = Wa + b$ with $a \\in \\mathbb{R}^4$ (output of the previous layer) and $z \\in \\mathbb{R}^3$. Backprop gives $\\delta = \\partial L/\\partial z \\in \\mathbb{R}^3$. What is $\\partial L/\\partial W$?",
+      "figure": null,
+      "options": [
+        { "text": "$a\\,\\delta^\\top$, a $4 \\times 3$ matrix", "correct": false, "why": "Outer product in the wrong order; the gradient must have the same shape as $W$, which is $3 \\times 4$.", "trap": "C2" },
+        { "text": "$\\delta^\\top a$, a scalar", "correct": false, "why": "An inner product is not even defined here ($\\delta$ has 3 entries, $a$ has 4), and $W$ has 12 entries, so its gradient is a matrix.", "trap": "C3" },
+        { "text": "$\\delta$, a vector in $\\mathbb{R}^3$", "correct": false, "why": "That is $\\partial L/\\partial b$; the weight gradient also needs the inputs $a$.", "trap": "C3" },
+        { "text": "$\\delta\\, a^\\top$, a $3 \\times 4$ matrix", "correct": true, "why": "$\\partial L/\\partial W_{ij} = \\delta_i a_j$, the outer product, same shape as $W$." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $z_i = \\sum_j W_{ij} a_j + b_i$, so $\\partial z_i/\\partial W_{ij} = a_j$.\n2. $\\partial L/\\partial W_{ij} = \\delta_i a_j$.\n3. As a matrix: $\\delta a^\\top$, shape $3 \\times 4$ like $W$."
+    },
+    {
+      "id": "ml-nn-backprop-09",
+      "skill": "ml.nn-backprop",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For a layer $z = Wa + b$ (row $i$ of $W$ = unit $i$), backprop gives $\\delta = \\partial L/\\partial z = (0.5, -2)^\\top$ and the layer's input is $a = (3, 1, -1)^\\top$. What is $\\partial L/\\partial W_{21}$ (unit 2, input 1)?",
+      "figure": null,
+      "options": [
+        { "text": "$0.5$", "correct": false, "why": "Swapped the indices: took $\\delta_1 a_2$ instead of $\\delta_2 a_1$.", "trap": "C2" },
+        { "text": "$-2$", "correct": false, "why": "Gave $\\delta_2$ alone; the weight gradient is $\\delta_2$ times its input $a_1$.", "trap": "C6" },
+        { "text": "$-6$", "correct": true, "why": "$\\partial L/\\partial W_{21} = \\delta_2\\, a_1 = -2\\cdot3$." },
+        { "text": "$6$", "correct": false, "why": "Dropped the sign of $\\delta_2 = -2$.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\partial L/\\partial W_{ij} = \\delta_i\\, a_j$.\n2. Here $i = 2$, $j = 1$: $\\delta_2 = -2$, $a_1 = 3$.\n3. Product $= -6$."
+    },
+    {
+      "id": "ml-nn-backprop-10",
+      "skill": "ml.nn-backprop",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A network has input $x = (2, -1)^\\top$, a ReLU hidden layer $h = \\mathrm{ReLU}(W_1x + b_1)$ with 3 units, and a linear output layer $z^{(2)} = W_2h + b_2$ with 2 units. At this input the hidden pre-activations are $z^{(1)} = (1.5,\\ 0.5,\\ -2)$, and backprop has already given $\\delta^{(2)} = \\partial L/\\partial z^{(2)} = (1, -2)^\\top$. With\n\n$$W_2 = \\begin{pmatrix} 2 & 1 & -1 \\\\ 1 & 3 & 0.5 \\end{pmatrix},$$\n\nfind $\\partial L/\\partial W_{1,21}$, the gradient for the weight from input 1 to hidden unit 2.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": -10, "tol": 0 },
+      "traps": [
+        { "value": -5, "why": "Found $\\delta^{(1)}_2 = -5$ but forgot to multiply by the input $x_1 = 2$.", "trap": "C6" },
+        { "value": 10, "why": "Lost a sign: $(W_2^\\top\\delta^{(2)})_2 = 1\\cdot1 + 3\\cdot(-2) = -5$, not $+5$.", "trap": "C11" },
+        { "value": 2, "why": "Back-propagated only through output unit 1 ($1\\cdot1$) and ignored output unit 2.", "trap": "C6" }
+      ],
+      "solution": "1. $W_2^\\top\\delta^{(2)} = (2 - 2,\\; 1 - 6,\\; -1 - 1) = (0, -5, -2)$.\n2. ReLU gate from $z^{(1)} = (1.5, 0.5, -2)$ is $(1, 1, 0)$, so $\\delta^{(1)} = (0, -5, 0)$.\n3. $\\partial L/\\partial W_{1,21} = \\delta^{(1)}_2\\, x_1 = -5\\cdot2 = -10$."
+    },
+    {
+      "id": "ml-nn-backprop-11",
+      "skill": "ml.nn-backprop",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A hidden unit uses the sigmoid, $h = \\sigma(z)$. In backprop, the upstream gradient $\\partial L/\\partial h$ reaching it is multiplied by which local factor to give $\\partial L/\\partial z$?",
+      "figure": null,
+      "options": [
+        { "text": "$\\sigma(z)\\,(1 - \\sigma(z))$", "correct": true, "why": "$\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))$, the chain-rule factor through the activation." },
+        { "text": "$\\sigma(z)$", "correct": false, "why": "Used the activation value instead of its derivative.", "trap": "C3" },
+        { "text": "$1 - \\sigma(z)^2$", "correct": false, "why": "This pattern is the tanh derivative ($1 - \\tanh^2 z$), not the sigmoid's.", "trap": "C3" },
+        { "text": "1 if $z > 0$, else 0", "correct": false, "why": "That is the ReLU gate, not the sigmoid derivative.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\partial L/\\partial z = \\partial L/\\partial h \\cdot \\sigma'(z)$.\n2. $\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))$, at most 0.25 (at $z = 0$).\n3. tanh would give $1 - \\tanh^2$; ReLU gives a 0/1 gate."
+    },
+    {
+      "id": "ml-nn-backprop-12",
+      "skill": "ml.nn-backprop",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about gradients flowing back through deep networks are correct?",
+      "figure": null,
+      "options": [
+        { "text": "Backprop needs one separate backward pass for each weight in the network.", "correct": false, "why": "A single backward pass gives the gradient for every weight at once, at a cost similar to the forward pass.", "trap": "C9" },
+        { "text": "The derivative of tanh is at most 0.25, the same as the sigmoid's.", "correct": false, "why": "$\\tanh'(z) = 1 - \\tanh^2 z$ has maximum 1 at $z = 0$; 0.25 is the sigmoid's maximum.", "trap": "C4" },
+        { "text": "In a chain of 10 single sigmoid units with every weight of magnitude at most 1, $|\\partial L/\\partial z_1| \\le 0.25^{10}\\,|\\partial L/\\partial h_{10}|$ ($z_1$: first unit's pre-activation, $h_{10}$: last unit's output).", "correct": true, "why": "Each layer multiplies by $w\\,\\sigma'(z)$ with $|w| \\le 1$ and $\\sigma' \\le 0.25$; ten such factors give at most $0.25^{10}$." },
+        { "text": "On an active ReLU unit the activation's local derivative is exactly 1, so it does not shrink the gradient.", "correct": true, "why": "$\\mathrm{ReLU}'(z) = 1$ for $z > 0$; only the weights scale the gradient on such a path." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Backprop reuses $\\delta$'s layer by layer: one backward pass for all weights.\n2. $\\sigma' \\le 0.25$ but $\\tanh' \\le 1$.\n3. Sigmoid chains multiply many factors $\\le 0.25$ (vanishing gradients); active ReLUs multiply by 1."
+    },
+    {
+      "id": "ml-nn-backprop-13",
+      "skill": "ml.nn-backprop",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A scalar network has one sigmoid hidden unit and a linear output:\n\n$$h = \\sigma(w_1 x + b_1),\\quad \\hat y = w_2 h + c,\\quad L = \\tfrac12(\\hat y - y)^2.$$\n\nWith $w_1 = 1$, $b_1 = -2$, $w_2 = 4$, $c = 1$, $x = 2$ and $y = 1$, find $\\partial L/\\partial w_1$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 16, "why": "Skipped the sigmoid derivative (treated $\\sigma'$ as 1).", "trap": "C6" },
+        { "value": 8, "why": "Multiplied by $\\sigma(z) = 0.5$ instead of $\\sigma'(z) = 0.25$.", "trap": "C3" },
+        { "value": 2, "why": "Forgot the final factor $x = 2$ from $\\partial z/\\partial w_1$.", "trap": "C6" }
+      ],
+      "solution": "1. $z = 2 - 2 = 0$, $h = \\sigma(0) = 0.5$, $\\hat y = 4\\cdot0.5 + 1 = 3$.\n2. $\\partial L/\\partial \\hat y = 3 - 1 = 2$; $\\partial L/\\partial h = 2\\cdot4 = 8$; $\\partial L/\\partial z = 8\\cdot\\sigma'(0) = 8\\cdot0.25 = 2$.\n3. $\\partial L/\\partial w_1 = 2\\cdot x = 4$."
+    },
+    {
+      "id": "ml-nn-backprop-14",
+      "skill": "ml.nn-backprop",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A scalar classifier has two ReLU hidden layers and a sigmoid output trained with cross-entropy:\n\n$$h_1 = \\mathrm{ReLU}(w x + b),\\quad h_2 = \\mathrm{ReLU}(u h_1 + c_2),\\quad p = \\sigma(v h_2 + c),\\quad L = -[y\\ln p + (1-y)\\ln(1-p)].$$\n\nWith $w = 2$, $b = -1$, $u = -1$, $c_2 = 3$, $v = 1$, $c = -2$, input $x = 1$ and label $y = 1$, find $\\partial L/\\partial w$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.5, "tol": 0.001 },
+      "traps": [
+        { "value": -0.5, "why": "Lost the sign of $u = -1$ on the way back.", "trap": "C11" },
+        { "value": 0.125, "why": "Multiplied by $\\sigma'(z) = 0.25$ again; with cross-entropy $\\partial L/\\partial z = p - y$ already includes it.", "trap": "C3" }
+      ],
+      "solution": "1. Forward: $h_1 = \\mathrm{ReLU}(1) = 1$, $h_2 = \\mathrm{ReLU}(-1 + 3) = 2$, $z = 2 - 2 = 0$, $p = 0.5$.\n2. $\\partial L/\\partial z = p - y = -0.5$; both ReLUs are active (gates 1).\n3. $\\partial L/\\partial w = (p - y)\\cdot v\\cdot u\\cdot x = -0.5\\cdot1\\cdot(-1)\\cdot1 = 0.5$."
+    },
+    {
+      "id": "ml-nn-backprop-15",
+      "skill": "ml.nn-backprop",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A network has $h = \\mathrm{ReLU}(Wx + b)$ with 2 hidden units and output $\\hat y = v_1h_1 + v_2h_2 + c$, trained on squared error. On the current example, $z_1 > 0$ but $z_2 < 0$, and $\\hat y \\ne y$. Which gradients are **exactly zero** for this example?",
+      "figure": null,
+      "options": [
+        { "text": "Only the incoming weights and bias of unit 2 (row 2 of $W$ and $b_2$)", "correct": false, "why": "Missed $v_2$: $\\partial L/\\partial v_2 = (\\partial L/\\partial \\hat y)\\cdot h_2$ and $h_2 = 0$.", "trap": "C6" },
+        { "text": "Only the outgoing weight $v_2$", "correct": false, "why": "The gate is also 0 for unit 2, so $\\delta_2 = 0$ and its incoming weights and bias get zero gradient too.", "trap": "C6" },
+        { "text": "Row 2 of $W$, $b_2$, and $v_2$", "correct": true, "why": "$\\delta_2 = v_2\\cdot(\\hat y - y)\\cdot 0 = 0$ kills row 2 of $W$ and $b_2$; $h_2 = 0$ kills $v_2$'s gradient." },
+        { "text": "None, because the bias input is always 1", "correct": false, "why": "$\\partial L/\\partial b_2 = \\delta_2\\cdot 1 = 0$; a constant input of 1 does not help when $\\delta_2 = 0$.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. ReLU gate for unit 2 is 0, so $\\delta_2 = \\partial L/\\partial z_2 = 0$: row 2 of $W$ and $b_2$ get zero gradient.\n2. $\\partial L/\\partial v_2 = (\\partial L/\\partial \\hat y)\\, h_2 = 0$ since $h_2 = 0$.\n3. Unit 1 and $c$ get non-zero gradients because $\\hat y \\ne y$ and $z_1 > 0$."
+    },
+    {
+      "id": "ml-nn-backprop-16",
+      "skill": "ml.nn-backprop",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "For a layer $z = Wa + b$ (row $i$ of $W$ = unit $i$), backprop gives $\\delta = \\partial L/\\partial z = (2, -1)^\\top$ and the layer input is $a = (3, 0)^\\top$. Which statements are correct?",
+      "figure": null,
+      "options": [
+        { "text": "$\\partial L/\\partial b = (2, -1)^\\top$", "correct": true, "why": "$\\partial z_i/\\partial b_i = 1$, so the bias gradient equals $\\delta$." },
+        { "text": "$\\partial L/\\partial W_{11} = 2$", "correct": false, "why": "Forgot the input: $\\delta_1 a_1 = 2\\cdot3 = 6$.", "trap": "C6" },
+        { "text": "$\\partial L/\\partial W_{21} = 3$", "correct": false, "why": "Dropped the sign: $\\delta_2 a_1 = -1\\cdot3 = -3$.", "trap": "C11" },
+        { "text": "$\\partial L/\\partial W_{12} = 0$", "correct": true, "why": "$\\delta_1 a_2 = 2\\cdot0 = 0$: an input of 0 gives its weights no gradient." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\partial L/\\partial W = \\delta a^\\top = \\begin{pmatrix} 6 & 0 \\\\ -3 & 0 \\end{pmatrix}$.\n2. $\\partial L/\\partial b = \\delta = (2, -1)$.\n3. So $W_{11}$: 6, $W_{21}$: $-3$, $W_{12}$: 0."
+    },
+    {
+      "id": "ml-nn-sgd-07",
+      "skill": "ml.nn-sgd",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A linear unit $\\hat y = w^\\top x + b$ is trained with $L = \\tfrac12(\\hat y - y)^2$. Currently $w = (0.5, 2)^\\top$ and $b = 1$. One SGD step with $\\eta = 0.25$ is taken on $x = (2, -1)^\\top$, $y = -2$. What is the new $b$?",
+      "figure": null,
+      "options": [
+        { "text": "$1.5$", "correct": false, "why": "Moved along the gradient ($b + \\eta\\,\\partial L/\\partial b$): that is ascent, not descent.", "trap": "C11" },
+        { "text": "$0.5$", "correct": true, "why": "$\\hat y = 1 - 2 + 1 = 0$, $\\partial L/\\partial b = \\hat y - y = 2$, so $b \\leftarrow 1 - 0.25\\cdot2 = 0.5$." },
+        { "text": "$0$", "correct": false, "why": "Used $2(\\hat y - y)$; with the $\\tfrac12$ in the loss there is no factor 2.", "trap": "C4" },
+        { "text": "$0.75$", "correct": false, "why": "Left $b$ out of the forward pass ($\\hat y = -1$), so the error came out as 1 instead of 2.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\hat y = 0.5\\cdot2 + 2\\cdot(-1) + 1 = 0$.\n2. $\\partial L/\\partial b = \\hat y - y = 0 - (-2) = 2$.\n3. $b \\leftarrow 1 - 0.25\\cdot2 = 0.5$."
+    },
+    {
+      "id": "ml-nn-sgd-08",
+      "skill": "ml.nn-sgd",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "At the current weights $w = (1, 1)$ the gradient of the loss is $\\nabla_w L = (3, -2)$. What are the weights after one gradient-descent step with $\\eta = 0.1$?",
+      "figure": null,
+      "options": [
+        { "text": "$(1.3, 0.8)$", "correct": false, "why": "Added $\\eta\\nabla L$: that climbs the loss (ascent).", "trap": "C11" },
+        { "text": "$(0.7, 0.8)$", "correct": false, "why": "Subtracted $0.1\\cdot|{-2}|$ from $w_2$, ignoring the sign of that gradient component.", "trap": "C11" },
+        { "text": "$(-2, 3)$", "correct": false, "why": "Forgot the learning rate and subtracted the full gradient.", "trap": "C6" },
+        { "text": "$(0.7, 1.2)$", "correct": true, "why": "$w - \\eta\\nabla L = (1 - 0.3,\\; 1 + 0.2)$." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Descent step: $w \\leftarrow w - \\eta\\nabla_w L$.\n2. $\\eta\\nabla L = (0.3, -0.2)$.\n3. $w = (1 - 0.3,\\; 1 - (-0.2)) = (0.7, 1.2)$."
+    },
+    {
+      "id": "ml-nn-sgd-09",
+      "skill": "ml.nn-sgd",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Logistic regression $p = \\sigma(w^\\top x + b)$ is trained with cross-entropy $L = -[y\\ln p + (1-y)\\ln(1-p)]$. Currently $w = (1, -1)^\\top$ and $b = 0$. One SGD step with $\\eta = 0.5$ is taken on $x = (2, 1)^\\top$, $y = 0$. What is the new $w_1$ (to two decimals)?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.269, "tol": 0.01 },
+      "traps": [
+        { "value": 1.731, "why": "Added the gradient instead of subtracting it.", "trap": "C11" },
+        { "value": 0.856, "why": "Multiplied by $\\sigma'(z) = p(1 - p)$ as well; with cross-entropy $\\partial L/\\partial z = p - y$ already.", "trap": "C3" },
+        { "value": 0, "why": "Used the score $z = 1$ in place of the probability $p = \\sigma(1)$ in $p - y$.", "trap": "C10" }
+      ],
+      "solution": "1. $z = 1\\cdot2 + (-1)\\cdot1 + 0 = 1$, $p = \\sigma(1) \\approx 0.731$.\n2. $\\partial L/\\partial w_1 = (p - y)\\,x_1 = 0.731\\cdot2 = 1.462$.\n3. $w_1 \\leftarrow 1 - 0.5\\cdot1.462 \\approx 0.269$."
+    },
+    {
+      "id": "ml-nn-sgd-10",
+      "skill": "ml.nn-sgd",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Mini-batch SGD minimises the **mean** loss over each batch of $B$ examples drawn from a training set of $N$ examples. Which statements are correct?",
+      "figure": null,
+      "options": [
+        { "text": "The gradient of the batch's mean loss equals the mean of the per-example gradients.", "correct": true, "why": "Differentiation is linear, so the gradient of an average is the average of the gradients." },
+        { "text": "Each update uses the gradient of the loss over the full training set.", "correct": false, "why": "That is (full-)batch gradient descent; SGD uses only the current mini-batch.", "trap": "C2" },
+        { "text": "With $N = 1000$ and $B = 50$, one epoch (one pass over the data) makes 20 updates.", "correct": true, "why": "One update per batch: $1000/50 = 20$ batches." },
+        { "text": "Doubling $B$ with the same $\\eta$ doubles the size of each step.", "correct": false, "why": "The loss is a mean, so the gradient does not grow with $B$; a bigger batch only makes the estimate less noisy.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\nabla \\frac1B\\sum_i L_i = \\frac1B\\sum_i \\nabla L_i$.\n2. One update per mini-batch: $N/B = 20$ updates per epoch.\n3. Mean loss keeps the gradient scale independent of $B$; full-data gradients are batch GD, not SGD."
+    },
+    {
+      "id": "ml-nn-sgd-11",
+      "skill": "ml.nn-sgd",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 3-class softmax classifier has logits $z = (\\ln 4,\\; \\ln 3,\\; 0)$ and is trained with cross-entropy. The true class is class 1 (one-hot $y = (1, 0, 0)$). Find $\\partial L/\\partial z_2$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.375, "tol": 0.001 },
+      "traps": [
+        { "value": -0.375, "why": "Used $y_k - p_k$ instead of $p_k - y_k$.", "trap": "C11" },
+        { "value": -0.625, "why": "Treated class 2 as the true class and computed $p_2 - 1$.", "trap": "C2" },
+        { "value": 0.234, "why": "Multiplied by $p_2(1 - p_2)$; with softmax + cross-entropy the gradient is just $p_k - y_k$.", "trap": "C3" }
+      ],
+      "solution": "1. $e^z = (4, 3, 1)$, sum 8, so $p = (0.5, 0.375, 0.125)$.\n2. $\\partial L/\\partial z_k = p_k - y_k$.\n3. Class 2 is not the true class: $p_2 - 0 = 0.375$."
+    },
+    {
+      "id": "ml-nn-sgd-12",
+      "skill": "ml.nn-sgd",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A 3-class softmax output layer computes logits $z = Wh$ (no bias, row $k$ of $W$ = class $k$) from a hidden vector $h = (1, 2)^\\top$ and is trained with cross-entropy. All entries of $W$ start at 0. One SGD step with $\\eta = 0.3$ is taken on an example whose true class is class 3. What is the new $W_{32}$ (class 3, hidden input 2)?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.4, "tol": 0.001 },
+      "traps": [
+        { "value": -0.4, "why": "Sign error: used $y - p$ as the gradient, or added $\\eta\\nabla L$ to $W$.", "trap": "C11" },
+        { "value": 0.2, "why": "Multiplied by $h_1 = 1$ instead of $h_2 = 2$.", "trap": "C2" },
+        { "value": 0.6, "why": "Took $\\partial L/\\partial z_3 = -1$, forgetting the $p_3 = 1/3$ term in $p_3 - y_3$.", "trap": "C6" }
+      ],
+      "solution": "1. $W = 0$ gives $z = (0, 0, 0)$ and $p = (1/3, 1/3, 1/3)$.\n2. $\\partial L/\\partial z_3 = p_3 - 1 = -2/3$, so $\\partial L/\\partial W_{32} = -\\tfrac23\\cdot h_2 = -\\tfrac43$.\n3. $W_{32} \\leftarrow 0 - 0.3\\cdot(-\\tfrac43) = 0.4$."
+    },
+    {
+      "id": "ml-nn-sgd-13",
+      "skill": "ml.nn-sgd",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A sigmoid output $p = \\sigma(z)$ is trained with binary cross-entropy. On an example with label $y = 0$, the logit is very large and positive ($z = 12$). What is $\\partial L/\\partial z$, approximately?",
+      "figure": null,
+      "options": [
+        { "text": "About 0, because the sigmoid is saturated", "correct": false, "why": "Saturation kills the gradient for squared error, not for cross-entropy, where the $\\sigma'$ factor cancels.", "trap": "C9" },
+        { "text": "About 1", "correct": true, "why": "$\\partial L/\\partial z = p - y \\approx 1 - 0$: a confidently wrong prediction gets the largest gradient." },
+        { "text": "About $-1$", "correct": false, "why": "Used $y - p$; the gradient is $p - y$, positive here, so descent lowers $z$.", "trap": "C11" },
+        { "text": "About 0.25", "correct": false, "why": "0.25 is the maximum of $\\sigma'(z)$, reached at $z = 0$, not a cross-entropy gradient.", "trap": "C3" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For sigmoid + cross-entropy, $\\partial L/\\partial z = p - y$.\n2. $p = \\sigma(12) \\approx 1$ and $y = 0$.\n3. So $\\partial L/\\partial z \\approx 1$: a big push to lower $z$."
+    },
+    {
+      "id": "ml-nn-sgd-14",
+      "skill": "ml.nn-sgd",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A one-weight model $\\hat y = wx$ is trained with $L = \\tfrac12(\\hat y - y)^2$, starting at $w = 0$ with $\\eta = 0.1$. Plain SGD processes two examples one after the other, updating after each: first $(x, y) = (1, 2)$, then $(x, y) = (2, 1)$. What is $w$ after both updates?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.32, "tol": 0.001 },
+      "traps": [
+        { "value": 0.4, "why": "Computed both gradients at $w = 0$ and applied their sum, without updating in between.", "trap": "C2" },
+        { "value": 0.2, "why": "Stopped after the first update (or averaged both gradients at $w = 0$ as in batch GD).", "trap": "C6" },
+        { "value": 0.48, "why": "Used $2(\\hat y - y)x$; the $\\tfrac12$ in the loss removes the factor 2.", "trap": "C4" }
+      ],
+      "solution": "1. Example 1: $\\hat y = 0$, gradient $(0 - 2)\\cdot1 = -2$, so $w = 0 + 0.2 = 0.2$.\n2. Example 2 at $w = 0.2$: $\\hat y = 0.4$, gradient $(0.4 - 1)\\cdot2 = -1.2$.\n3. $w = 0.2 + 0.12 = 0.32$."
+    },
+    {
+      "id": "ml-nn-sgd-15",
+      "skill": "ml.nn-sgd",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "A one-weight model $p = \\sigma(wx)$ is trained with squared error $L = (p - y)^2$ (no factor ½). Starting at $w = 0$, one gradient-descent step with $\\eta = 1$ is taken on $(x, y) = (2, 1)$. What is the new $w$?",
+      "figure": null,
+      "options": [
+        { "text": "$1$", "correct": false, "why": "Used the cross-entropy shortcut $\\partial L/\\partial z = p - y$; squared error keeps the factors $2$ and $p(1-p)$.", "trap": "C3" },
+        { "text": "$0.25$", "correct": false, "why": "Dropped the factor 2 from differentiating $(p - y)^2$.", "trap": "C4" },
+        { "text": "$0.5$", "correct": true, "why": "$p = 0.5$; $\\partial L/\\partial w = 2(p - y)\\,p(1-p)\\,x = 2(-0.5)(0.25)(2) = -0.5$, so $w = 0 + 0.5$." },
+        { "text": "$-0.5$", "correct": false, "why": "Added the gradient instead of subtracting it.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $z = 0$, $p = 0.5$, $\\sigma'(0) = 0.25$.\n2. $\\partial L/\\partial w = 2(p - y)\\cdot p(1-p)\\cdot x = 2(-0.5)(0.25)(2) = -0.5$.\n3. $w \\leftarrow 0 - 1\\cdot(-0.5) = 0.5$."
+    },
+    {
+      "id": "ml-nn-sgd-16",
+      "skill": "ml.nn-sgd",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE DA style)",
+      "stem": "Which statements about a single gradient-descent step $w \\leftarrow w - \\eta\\nabla_w L$ are correct?",
+      "figure": null,
+      "options": [
+        { "text": "If $\\eta$ is too large, the step can overshoot the minimum and the loss can go up.", "correct": true, "why": "The gradient is only a local guide; a long step can land on the far side of the valley at a higher loss." },
+        { "text": "For a linear model with $L = \\tfrac12(w^\\top x - y)^2$, the per-example gradient is $(w^\\top x - y)\\,x$.", "correct": true, "why": "Chain rule: $(\\hat y - y)\\cdot\\partial\\hat y/\\partial w = (\\hat y - y)x$; the ½ cancels the 2." },
+        { "text": "The update adds $\\eta\\nabla_w L$ so that the loss increases toward its target.", "correct": false, "why": "Descent moves against the gradient; adding it is gradient ascent and raises the loss.", "trap": "C11" },
+        { "text": "For a fixed $\\eta$, a larger gradient gives a smaller step.", "correct": false, "why": "The step is $\\eta\\nabla L$, so its length grows with the gradient.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Step $= -\\eta\\nabla L$: opposite to the gradient, length $\\eta\\lVert\\nabla L\\rVert$.\n2. Too large an $\\eta$ can overshoot and diverge.\n3. For $\\tfrac12(w^\\top x - y)^2$, $\\nabla_w L = (w^\\top x - y)x$."
+    }
+  ]
+}

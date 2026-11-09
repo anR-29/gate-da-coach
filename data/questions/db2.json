@@ -1,0 +1,1275 @@
+{
+ "area": "db",
+ "skills": {},
+ "questions": [
+  {
+   "id": "db-er-tables-06",
+   "skill": "db.er-tables",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A hospital ER diagram has four strong entity sets: Doctor (key `did`), Patient (key `pid`), Medicine (key `mid`) and Ward (key `wid`).\n\n- Prescribes is a **ternary** relationship among Doctor, Patient and Medicine (many-to-many-to-many).\n- AdmittedTo links Patient and Ward: one ward holds many patients, and each patient is in at most one ward.\n\nWhat is the minimum number of tables in the relational schema?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Made a separate table for the 1:N relationship AdmittedTo; it folds into Patient as a foreign key `wid`.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Counted only the four entity tables; a ternary relationship always needs its own table.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Broke the ternary relationship into three binary tables instead of one table with key {did, pid, mid}.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Four strong entities: 4 tables.\n2. Ternary Prescribes: 1 table, key {did, pid, mid}.\n3. AdmittedTo is 1:N: put `wid` as a foreign key in Patient, no table.\n4. Total = 4 + 1 = 5."
+  },
+  {
+   "id": "db-er-tables-07",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An ER diagram has two strong entity sets, each with a **recursive** relationship:\n\n- Employee (key `eid`) with Supervises: each employee has at most one supervisor, and a supervisor can supervise many employees.\n- Course (key `cid`) with PrereqOf: a course can have many prerequisites and be a prerequisite of many courses.\n\nWhat is the minimum number of tables?",
+   "figure": null,
+   "options": [
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Assumed a recursive relationship never needs a table; PrereqOf is M:N, so it needs its own table (cid, prereq_cid).",
+     "trap": "C8"
+    },
+    {
+     "text": "3",
+     "correct": true,
+     "why": "Employee (with a self-referencing FK `sup_eid`), Course, and one table for the M:N PrereqOf."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Made a table for Supervises too; it is 1:N, so a column `sup_eid` inside Employee is enough.",
+     "trap": "C9"
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Drew each entity twice (once per role) and gave every copy and every relationship a table; a recursive relationship uses one entity set in two roles.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Employee and Course: 2 tables.\n2. Supervises is 1:N on the same entity: add `sup_eid` (FK to Employee) in Employee.\n3. PrereqOf is M:N: table PrereqOf(cid, prereq_cid), both FKs to Course.\n4. Total = 3."
+  },
+  {
+   "id": "db-er-tables-08",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Course (key `cid`) owns the **weak** entity set Section, whose partial key is `sec_no`. Section has a **multivalued** attribute `room` (one section can meet in several rooms).\n\nIn a 1NF design, `room` gets its own table. What is the primary key of that table?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{sec_no, room}",
+     "correct": false,
+     "why": "Used the partial key alone; `sec_no` repeats across courses (section 1 of every course), so the owner key `cid` is needed too.",
+     "trap": "C6"
+    },
+    {
+     "text": "{cid, sec_no}",
+     "correct": false,
+     "why": "This is the key of Section itself; with it, a section could store only one room, which defeats the multivalued attribute.",
+     "trap": "C6"
+    },
+    {
+     "text": "{cid, sec_no, room}",
+     "correct": true,
+     "why": "The table holds (owner's full key, value); Section's full key is {cid, sec_no}, so the key is {cid, sec_no, room}."
+    },
+    {
+     "text": "{room}",
+     "correct": false,
+     "why": "Used the value alone; the same room serves many sections, so `room` repeats.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Section is weak: its key = owner key + partial key = {cid, sec_no}.\n2. A multivalued attribute table = (full key of its entity, value).\n3. One row per (section, room) pair, so the key is {cid, sec_no, room}."
+  },
+  {
+   "id": "db-er-tables-09",
+   "skill": "db.er-tables",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An ER diagram has these parts:\n\n- Person (key `pid`) and Passport (key `pno`) are linked by HasPassport, one-to-one, with **total** participation on **both** sides.\n- Writes is many-to-many between Person and Book (key `isbn`).\n- Publisher (key `pubid`) publishes many books; each book has exactly one publisher.\n- Edition is a **weak** entity set owned by Book (partial key `ed_no`).\n- Edition has a **multivalued** attribute `format`.\n\nWhat is the minimum number of tables?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 7,
+     "why": "Kept Person and Passport as two tables; 1:1 with total participation on both sides lets them merge into one.",
+     "trap": "C1"
+    },
+    {
+     "value": 8,
+     "why": "Also made tables for the 1:N Publishes and for the identifying relationship of Edition; both fold in as foreign keys.",
+     "trap": "C9"
+    },
+    {
+     "value": 5,
+     "why": "Forgot that the multivalued attribute of the weak entity Edition still needs its own table.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Person + Passport (1:1, total both sides): merge into 1 table.\n2. Book, Publisher: 2 tables. Publishes is 1:N: `pubid` FK in Book.\n3. Writes (M:N): 1 table.\n4. Edition (weak): 1 table, key {isbn, ed_no}; identifying relationship needs no table.\n5. `format` (multivalued): 1 table (isbn, ed_no, format).\n6. Total = 1 + 2 + 1 + 1 + 1 = 6."
+  },
+  {
+   "id": "db-er-tables-10",
+   "skill": "db.er-tables",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Employee (key `eid`) and Car (key `car_id`) are linked by Assigned, a **one-to-one** relationship. Every car is assigned to exactly one employee (total participation of Car); many employees have no car. Which statements about a minimal relational design are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Storing `eid` as a foreign key in Car lets that column be declared NOT NULL.",
+     "correct": true,
+     "why": "Every car has an employee (total participation of Car), so the FK in Car is never empty."
+    },
+    {
+     "text": "The `eid` column in Car must also be UNIQUE, otherwise one employee could get two cars.",
+     "correct": true,
+     "why": "A plain FK only gives 1:N; UNIQUE on `eid` makes each employee appear at most once, which is 1:1."
+    },
+    {
+     "text": "Because the relationship is one-to-one, Employee and Car must be merged into one table.",
+     "correct": false,
+     "why": "Merging is safe only with total participation on both sides; here Employee is partial, so merging would create rows full of NULL car columns.",
+     "trap": "C1"
+    },
+    {
+     "text": "Putting `car_id` in Employee instead is not allowed, because it would break 1NF.",
+     "correct": false,
+     "why": "Each employee has at most one car, so `car_id` is a single value; that side is allowed, it just leaves NULLs for employees without a car.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 1:1: the FK may go on either side.\n2. Best side: Car, because Car's participation is total, so `eid` NOT NULL.\n3. Add UNIQUE(`eid`) to keep it one-to-one.\n4. No merge: Employee's participation is partial."
+  },
+  {
+   "id": "db-er-tables-11",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Entity set Customer has key `cid`, a **composite** attribute `name(first, last)`, an attribute `dob`, a **derived** attribute `age` (computed from `dob`) and a **multivalued** attribute `phone`.\n\nIn the minimal 1NF design, how many columns does the Customer table itself have?",
+   "figure": null,
+   "options": [
+    {
+     "text": "4",
+     "correct": true,
+     "why": "`cid`, `first`, `last`, `dob`: composite is flattened, derived is not stored, multivalued goes to its own table."
+    },
+    {
+     "text": "5",
+     "correct": false,
+     "why": "Stored the derived attribute `age`; it is computed from `dob` and is not kept as a column.",
+     "trap": "C9"
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Stored both `age` and `phone`; a multivalued `phone` inline breaks 1NF and needs its own table.",
+     "trap": "C9"
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Kept `name` as one column; a composite attribute is stored as its component columns `first` and `last`.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Key `cid`: 1 column.\n2. Composite `name`: flatten into `first`, `last`: 2 columns.\n3. `dob`: 1 column. Derived `age`: not stored.\n4. Multivalued `phone`: separate table (cid, phone).\n5. Customer has 4 columns."
+  },
+  {
+   "id": "db-er-tables-12",
+   "skill": "db.er-tables",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A university ER diagram has strong entity sets Student, Course, Instructor and Department.\n\n- Enrolls: many-to-many between Student and Course.\n- Teaches: many-to-many between Instructor and Course.\n- BelongsTo: each instructor belongs to exactly one department; a department has many instructors.\n- Heads: one-to-one between Instructor and Department, partial participation on both sides.\n\nWhat is the minimum number of tables?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Made a table for every relationship; 1:N and 1:1 fold into an entity table as a foreign key.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Counted only the entity tables; the two M:N relationships each need a table.",
+     "trap": "C6"
+    },
+    {
+     "value": 7,
+     "why": "Gave the 1:1 Heads its own table; a foreign key (for example `head_iid` in Department) is enough.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Four strong entities: 4 tables.\n2. Enrolls and Teaches are M:N: 2 tables.\n3. BelongsTo (1:N): `dept_id` FK in Instructor.\n4. Heads (1:1, partial): `head_iid` FK in Department.\n5. Total = 6."
+  },
+  {
+   "id": "db-er-tables-13",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The ternary relationship Supplies(Supplier, Part, Project) currently holds three facts: (s1, p1, j2), (s1, p2, j1) and (s2, p1, j1).\n\nA designer drops the Supplies table and keeps only three binary tables SP(sid, pno), PJ(pno, jno) and SJ(sid, jno), each the projection of Supplies on two keys. Which triple appears in $SP \\bowtie PJ \\bowtie SJ$ but was never a fact?",
+   "figure": null,
+   "options": [
+    {
+     "text": "(s1, p1, j1)",
+     "correct": true,
+     "why": "(s1, p1) ∈ SP, (p1, j1) ∈ PJ and (s1, j1) ∈ SJ all hold, so the join produces it, yet it is not in Supplies."
+    },
+    {
+     "text": "(s2, p2, j1)",
+     "correct": false,
+     "why": "Needs (s2, p2) in SP, but s2 never supplies p2, so the join cannot produce it.",
+     "trap": "C10"
+    },
+    {
+     "text": "(s2, p1, j2)",
+     "correct": false,
+     "why": "Needs (s2, j2) in SJ, but s2 only works with j1, so the join drops it.",
+     "trap": "C10"
+    },
+    {
+     "text": "None; the three binary tables rebuild Supplies exactly.",
+     "correct": false,
+     "why": "Pairwise projections lose which pairs belong together; a ternary relationship needs its own table.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. SP = {(s1,p1), (s1,p2), (s2,p1)}, PJ = {(p1,j2), (p2,j1), (p1,j1)}, SJ = {(s1,j2), (s1,j1), (s2,j1)}.\n2. The join gives 4 triples: the 3 facts plus (s1, p1, j1).\n3. So a ternary relationship cannot be replaced by three binary tables; it needs one table with key {sid, pno, jno}."
+  },
+  {
+   "id": "db-er-tables-14",
+   "skill": "db.er-tables",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Loan (key `loan_no`) owns the **weak** entity set Payment, with partial key `pay_no` (payments are numbered 1, 2, 3, ... within each loan) and attribute `amount`. What is the primary key of the Payment table?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{pay_no}",
+     "correct": false,
+     "why": "Used the partial key alone; payment 1 exists for every loan, so `pay_no` repeats.",
+     "trap": "C6"
+    },
+    {
+     "text": "{loan_no}",
+     "correct": false,
+     "why": "Used only the owner key; one loan has many payments, so `loan_no` repeats.",
+     "trap": "C6"
+    },
+    {
+     "text": "{loan_no, pay_no}",
+     "correct": true,
+     "why": "Weak entity key = owner key + partial key."
+    },
+    {
+     "text": "{loan_no, pay_no, amount}",
+     "correct": false,
+     "why": "Added a non-key attribute; {loan_no, pay_no} is already unique, so this is a superkey, not the minimal key.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A weak entity cannot be identified by its own attributes.\n2. Its table borrows the owner key `loan_no` as a FK.\n3. Key = owner key + partial key = {loan_no, pay_no}."
+  },
+  {
+   "id": "db-er-tables-15",
+   "skill": "db.er-tables",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "An ER diagram has these parts:\n\n- Strong entity sets: Hotel (key `hid`), Guest (key `gid`), Service (key `sid`).\n- Room is a **weak** entity set owned by Hotel (partial key `room_no`).\n- Stays is many-to-many between Guest and Room, with attribute `nights`.\n- Uses is many-to-many between Guest and Service.\n- Guest has two **multivalued** attributes, `phone` and `email`.\n\nWhat is the minimum number of tables in a 1NF design?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 8,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 9,
+     "why": "Made a table for Room's identifying relationship; it folds into Room through the owner key `hid`.",
+     "trap": "C9"
+    },
+    {
+     "value": 7,
+     "why": "Put `phone` and `email` in one table; each multivalued attribute needs its own table, or every phone pairs with every email.",
+     "trap": "C6"
+    },
+    {
+     "value": 6,
+     "why": "Kept `phone` and `email` inside Guest; multivalued attributes inline break 1NF.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Strong: Hotel, Guest, Service = 3.\n2. Weak Room = 1 (key {hid, room_no}); identifying relationship: no table.\n3. Stays and Uses (M:N) = 2. Stays key {gid, hid, room_no}; `nights` is a plain column.\n4. `phone`, `email` = 2 tables.\n5. Total = 3 + 1 + 2 + 2 = 8."
+  },
+  {
+   "id": "db-er-tables-16",
+   "skill": "db.er-tables",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "When an ER diagram is converted to the minimum number of tables (in 1NF), which constructs **always** get a table of their own?",
+   "figure": null,
+   "options": [
+    {
+     "text": "A many-to-many relationship",
+     "correct": true,
+     "why": "Neither side can hold a single FK value, so the pairs need their own table."
+    },
+    {
+     "text": "A multivalued attribute",
+     "correct": true,
+     "why": "Several values per entity cannot sit in one cell under 1NF, so they go to a table (key, value)."
+    },
+    {
+     "text": "A one-to-many relationship",
+     "correct": false,
+     "why": "It folds into the many-side table as a foreign key.",
+     "trap": "C8"
+    },
+    {
+     "text": "A derived attribute",
+     "correct": false,
+     "why": "A derived attribute is computed from other attributes and is not stored at all.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. M:N relationship: own table.\n2. Multivalued attribute: own table.\n3. 1:N: FK on the many side, no table.\n4. Derived attribute: not stored."
+  },
+  {
+   "id": "db-keys-08",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Relation R(A, B, C, D) has exactly three candidate keys: {A}, {B} and {C, D}. How many superkeys does R have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 13,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 20,
+     "why": "Added 8 + 8 + 4 without removing the sets that contain two or more keys.",
+     "trap": "C6"
+    },
+    {
+     "value": 12,
+     "why": "Subtracted the pairwise overlaps (4 + 2 + 2) but forgot to add back {A, B, C, D}, which contains all three keys.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Counted candidate keys instead of superkeys.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Supersets of {A}: $2^3 = 8$; of {B}: 8; of {C, D}: $2^2 = 4$.\n2. Pairs: {A,B}: 4, {A,C,D}: 2, {B,C,D}: 2.\n3. All three: {A,B,C,D}: 1.\n4. Inclusion-exclusion: 20 − 8 + 1 = 13."
+  },
+  {
+   "id": "db-keys-09",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Relation R(A, B, C, D, E) has exactly two candidate keys: {A, B} and {B, C}. How many superkeys does R have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 12,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 16,
+     "why": "Added 8 + 8 without subtracting the 4 supersets of {A, B, C}, which contain both keys.",
+     "trap": "C6"
+    },
+    {
+     "value": 2,
+     "why": "Counted candidate keys instead of superkeys.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. Supersets of {A, B}: $2^3 = 8$.\n2. Supersets of {B, C}: $2^3 = 8$.\n3. Both: supersets of {A, B} ∪ {B, C} = {A, B, C}: $2^2 = 4$.\n4. 8 + 8 − 4 = 12."
+  },
+  {
+   "id": "db-keys-10",
+   "skill": "db.keys",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Consider this instance of Member.\n\n**Member**\n\n| sid | name | city | phone |\n|---|---|---|---|\n| 1 | Asha | Pune | 98 |\n| 2 | Ravi | Pune | 97 |\n| 3 | Asha | Agra | 96 |\n| 4 | Meena | Agra | 98 |\n\nUsing **only** this instance, which attribute set is **not** ruled out as a candidate key?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{name}",
+     "correct": false,
+     "why": "Asha appears in rows 1 and 3, so `name` is not unique here.",
+     "trap": "C10"
+    },
+    {
+     "text": "{phone}",
+     "correct": false,
+     "why": "98 appears in rows 1 and 4; a key column cannot repeat.",
+     "trap": "C10"
+    },
+    {
+     "text": "{city}",
+     "correct": false,
+     "why": "Pune and Agra each appear twice.",
+     "trap": "C10"
+    },
+    {
+     "text": "{name, city}",
+     "correct": true,
+     "why": "The pairs (Asha, Pune), (Ravi, Pune), (Asha, Agra), (Meena, Agra) are all different, and neither part alone is unique, so the instance cannot rule it out."
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. An instance can only rule a set out (by showing a repeat); it cannot prove a key.\n2. `name`, `phone` and `city` each repeat.\n3. {name, city} has 4 distinct pairs and both single parts repeat, so it stays possible."
+  },
+  {
+   "id": "db-keys-11",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Table Emp has a **self-referencing** foreign key:\n\n```sql\nCREATE TABLE Emp (\n  eid TEXT PRIMARY KEY,\n  mgr TEXT REFERENCES Emp(eid) ON DELETE CASCADE\n);\n```\n\n**Emp**\n\n| eid | mgr |\n|---|---|\n| e1 | NULL |\n| e2 | e1 |\n| e3 | e2 |\n| e4 | e1 |\n| e5 | NULL |\n| e6 | e5 |\n| e7 | e3 |\n\nAfter `DELETE FROM Emp WHERE eid = 'e1';`, how many rows remain in Emp?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Deleted only e1; ON DELETE CASCADE also removes every row whose `mgr` pointed to a deleted row.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Removed only e1's direct reports (e2, e4); the cascade continues to e3 (managed by e2) and then e7.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Stopped the cascade after e3 and missed e7, whose manager e3 was deleted.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Delete e1.\n2. Cascade: rows with mgr = e1 → e2, e4 deleted.\n3. Rows with mgr = e2 → e3 deleted; mgr = e4 → none.\n4. Rows with mgr = e3 → e7 deleted.\n5. Left: e5, e6 → 2 rows (checked in sqlite with foreign keys on)."
+  },
+  {
+   "id": "db-keys-12",
+   "skill": "db.keys",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The tables are created and filled as follows.\n\n```sql\nCREATE TABLE Student (sid TEXT PRIMARY KEY);\nCREATE TABLE Course  (cid TEXT PRIMARY KEY);\nCREATE TABLE Enroll (\n  sid TEXT NOT NULL REFERENCES Student(sid),\n  cid TEXT NOT NULL REFERENCES Course(cid),\n  PRIMARY KEY (sid, cid)\n);\nINSERT INTO Student VALUES ('s1'), ('s2'), ('s3');\nINSERT INTO Course  VALUES ('c1'), ('c2');\nINSERT INTO Enroll  VALUES ('s1','c1'), ('s2','c1'), ('s3','c2');\n```\n\nEach insertion below is tried separately on these tables. Which are **rejected**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "INSERT INTO Enroll VALUES ('s1', 'c2');",
+     "correct": false,
+     "why": "s1 and c2 both exist and the pair (s1, c2) is new, so it is accepted."
+    },
+    {
+     "text": "INSERT INTO Enroll VALUES ('s2', 'c1');",
+     "correct": true,
+     "why": "(s2, c1) is already in Enroll, so the primary key would repeat."
+    },
+    {
+     "text": "INSERT INTO Enroll VALUES ('s4', 'c2');",
+     "correct": true,
+     "why": "s4 is not in Student, so the foreign key on `sid` fails."
+    },
+    {
+     "text": "INSERT INTO Enroll VALUES ('s3', 'c1');",
+     "correct": false,
+     "why": "Both values exist and (s3, c1) is a new pair; s3 already taking c2 does not matter.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Check the PK: the pair (sid, cid) must be new.\n2. Check each FK: `sid` must be in Student, `cid` in Course.\n3. (s2, c1) breaks the PK; (s4, c2) breaks the FK on `sid`.\n4. (s1, c2) and (s3, c1) pass both checks (verified in sqlite)."
+  },
+  {
+   "id": "db-keys-13",
+   "skill": "db.keys",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A relation R has 4 attributes. What is the **maximum** possible number of candidate keys R can have?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Took only single attributes as keys; keys of size 2 give more sets that are not subsets of each other.",
+     "trap": "C6"
+    },
+    {
+     "value": 15,
+     "why": "Counted all non-empty attribute subsets; candidate keys must be minimal, so no key may contain another.",
+     "trap": "C10"
+    },
+    {
+     "value": 1,
+     "why": "Confused candidate keys with the one primary key.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. No candidate key can contain another (minimality), so the keys form a family where no set is a subset of another.\n2. Keys of the same size never contain each other.\n3. The size with the most subsets of a 4-set is 2: $\\binom{4}{2} = 6$.\n4. No larger such family exists (Sperner's theorem; checked by brute force)."
+  },
+  {
+   "id": "db-keys-14",
+   "skill": "db.keys",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Relation R(A, B, C, D) has exactly two candidate keys: {A} and {B, C}. Which attribute set is a superkey but **not** a candidate key?",
+   "figure": null,
+   "options": [
+    {
+     "text": "{A, D}",
+     "correct": true,
+     "why": "It contains the key {A}, so it is a superkey, but dropping D still leaves a key, so it is not minimal."
+    },
+    {
+     "text": "{B, C}",
+     "correct": false,
+     "why": "This is itself a candidate key (minimal), not a non-minimal superkey.",
+     "trap": "C10"
+    },
+    {
+     "text": "{C, D}",
+     "correct": false,
+     "why": "It contains neither {A} nor {B, C}, so it is not even a superkey.",
+     "trap": "C6"
+    },
+    {
+     "text": "{B}",
+     "correct": false,
+     "why": "{B} is only part of the key {B, C}, so it does not determine the tuple.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Superkey = contains at least one candidate key.\n2. Candidate key = minimal superkey.\n3. {A, D} ⊇ {A}: superkey; remove D and {A} is still a key, so not minimal.\n4. {B, C} is minimal; {C, D} and {B} contain no key."
+  },
+  {
+   "id": "db-keys-15",
+   "skill": "db.keys",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The tables are created as follows (the DBMS enforces all constraints).\n\n```sql\nCREATE TABLE Dept (did TEXT PRIMARY KEY);\nCREATE TABLE Emp (\n  eid TEXT PRIMARY KEY,\n  did TEXT NOT NULL REFERENCES Dept(did) ON DELETE SET NULL\n);\n```\n\nDept holds d1, d2. Emp holds (e1, d1), (e2, d2), (e3, d1). What happens on `DELETE FROM Dept WHERE did = 'd1';`?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The DELETE fails with a NOT NULL error, and both tables stay unchanged.",
+     "correct": true,
+     "why": "SET NULL would write NULL into `did` of e1 and e3, which NOT NULL forbids, so the whole statement is rolled back."
+    },
+    {
+     "text": "The DELETE succeeds and e1, e3 now have `did` = NULL.",
+     "correct": false,
+     "why": "Applied SET NULL but ignored the NOT NULL constraint on the same column.",
+     "trap": "C1"
+    },
+    {
+     "text": "The DELETE succeeds and e1, e3 are deleted as well.",
+     "correct": false,
+     "why": "Confused ON DELETE SET NULL with ON DELETE CASCADE.",
+     "trap": "C2"
+    },
+    {
+     "text": "The DELETE succeeds and e1, e3 keep `did` = 'd1'.",
+     "correct": false,
+     "why": "That would leave dangling references; an enforced FK never allows a value that matches no Dept row.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Deleting d1 triggers the action on rows e1, e3: set `did` to NULL.\n2. `did` is NOT NULL, so that update violates a constraint.\n3. The statement fails and nothing changes (sqlite: \"NOT NULL constraint failed: Emp.did\")."
+  },
+  {
+   "id": "db-keys-16",
+   "skill": "db.keys",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statements about keys are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Every candidate key is a superkey.",
+     "correct": true,
+     "why": "A candidate key is a minimal superkey, so it is a superkey."
+    },
+    {
+     "text": "If {A} is a candidate key, then {A, B} cannot be a candidate key.",
+     "correct": true,
+     "why": "{A, B} contains the smaller key {A}, so it is not minimal."
+    },
+    {
+     "text": "A relation can have two primary keys.",
+     "correct": false,
+     "why": "A relation can have several candidate keys, but exactly one of them is chosen as the primary key.",
+     "trap": "C9"
+    },
+    {
+     "text": "A superkey with 3 attributes always contains a candidate key with fewer than 3 attributes.",
+     "correct": false,
+     "why": "The 3-attribute superkey may itself be minimal, i.e. a candidate key.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Candidate key = minimal superkey, so every candidate key is a superkey.\n2. A proper superset of a key is never minimal.\n3. Many candidate keys, one primary key.\n4. A superkey can be minimal itself, so no smaller key need exist."
+  },
+  {
+   "id": "db-ra-eval-07",
+   "skill": "db.ra-eval",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Consider R(A, B, C) and S(B, C, D).\n\n**R**\n\n| A | B | C |\n|---|---|---|\n| 1 | x | p |\n| 2 | x | q |\n| 3 | y | p |\n| 4 | y | p |\n| 5 | z | q |\n\n**S**\n\n| B | C | D |\n|---|---|---|\n| x | p | 10 |\n| x | p | 20 |\n| x | q | 30 |\n| y | q | 40 |\n| y | p | 50 |\n| w | p | 60 |\n\nHow many tuples are in $R \\bowtie S$ (natural join)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 10,
+     "why": "Joined on B only; a natural join matches on **all** common attributes, here both B and C.",
+     "trap": "C6"
+    },
+    {
+     "value": 30,
+     "why": "Counted the Cartesian product 5 × 6 instead of only matching pairs.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Common attributes: B and C, so match on the pair (B, C).\n2. (x, p): 1 R row × 2 S rows = 2.\n3. (x, q): 1 × 1 = 1. (y, p): 2 × 1 = 2. (y, q): 0 × 1 = 0. (z, q): no S row.\n4. Total = 2 + 1 + 2 = 5."
+  },
+  {
+   "id": "db-ra-eval-08",
+   "skill": "db.ra-eval",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B) = {(1, a), (1, b), (2, a), (3, c)} and S(C) = {10, 20, 30, 40, 50}. How many tuples are in $\\pi_A(R \\times S)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3",
+     "correct": true,
+     "why": "R × S pairs every R row with every C value, but projecting on A leaves only the distinct A values 1, 2, 3 (S is non-empty)."
+    },
+    {
+     "text": "20",
+     "correct": false,
+     "why": "Counted the rows of R × S (4 × 5) and forgot that π removes duplicate tuples.",
+     "trap": "C6"
+    },
+    {
+     "text": "15",
+     "correct": false,
+     "why": "Multiplied the 3 distinct A values by 5; after π only the A column remains, so each value appears once.",
+     "trap": "C6"
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Counted R's rows; the two rows with A = 1 collapse into one tuple after projection.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. $|R \\times S| = 4 \\times 5 = 20$ tuples (A, B, C).\n2. π_A keeps only A and removes duplicates (set semantics).\n3. Distinct A values: 1, 2, 3, so 3 tuples."
+  },
+  {
+   "id": "db-ra-eval-09",
+   "skill": "db.ra-eval",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Consider R(A, B) and S(B, C).\n\n**R**\n\n| A | B |\n|---|---|\n| 1 | a |\n| 2 | b |\n| 3 | c |\n| 4 | a |\n| 5 | d |\n\n**S**\n\n| B | C |\n|---|---|\n| a | x |\n| a | y |\n| c | z |\n| e | w |\n\nWhich statements are correct? (Outer joins are on B; missing values are NULL.)",
+   "figure": null,
+   "options": [
+    {
+     "text": "The left outer join of R and S has 7 tuples.",
+     "correct": true,
+     "why": "Inner join gives 5 (a: 2 × 2, c: 1 × 1); R rows with b and d have no match and are added with C = NULL, giving 7."
+    },
+    {
+     "text": "Exactly 2 tuples of the left outer join have C = NULL.",
+     "correct": true,
+     "why": "Only the unmatched R rows (2, b) and (5, d) are padded with NULL."
+    },
+    {
+     "text": "The right outer join of R and S has 5 tuples.",
+     "correct": false,
+     "why": "Forgot the unmatched S row (e, w), which is added with A = NULL; the count is 6.",
+     "trap": "C6"
+    },
+    {
+     "text": "$R \\bowtie S$ has 7 tuples.",
+     "correct": false,
+     "why": "Counted the left outer join; an inner (natural) join drops the unmatched R rows, leaving 5.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Inner: B = a: 2 R rows × 2 S rows = 4; B = c: 1 × 1 = 1. Total 5.\n2. Unmatched R: b, d → left outer = 5 + 2 = 7, with 2 NULL-C rows.\n3. Unmatched S: e → right outer = 5 + 1 = 6.\n4. Full outer = 5 + 2 + 1 = 8."
+  },
+  {
+   "id": "db-ra-division-05",
+   "skill": "db.ra-division",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Cert(pilot, plane) lists which pilot is certified on which plane, and Fleet(plane) lists the planes an airline owns.\n\n**Cert**\n\n| pilot | plane |\n|---|---|\n| p1 | A320 |\n| p1 | B737 |\n| p1 | ATR |\n| p2 | A320 |\n| p2 | ATR |\n| p3 | A320 |\n| p3 | B737 |\n| p3 | ATR |\n| p3 | Q400 |\n| p4 | B737 |\n\n**Fleet**\n\n| plane |\n|---|\n| A320 |\n| B737 |\n| ATR |\n\nHow many tuples are in $\\text{Cert} \\div \\text{Fleet}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Dropped p3 because it also flies Q400; division only needs every Fleet plane, extra planes are fine.",
+     "trap": "C1"
+    },
+    {
+     "value": 4,
+     "why": "Kept pilots certified on at least one Fleet plane; division needs all of them.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Fleet = {A320, B737, ATR}.\n2. p1: all three, yes. p2: no B737. p3: all three (plus Q400), yes. p4: only B737.\n3. Result {p1, p3}: 2 tuples."
+  },
+  {
+   "id": "db-ra-division-06",
+   "skill": "db.ra-division",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Using the same Cert(pilot, plane) table:\n\n**Cert**\n\n| pilot | plane |\n|---|---|\n| p1 | A320 |\n| p1 | B737 |\n| p1 | ATR |\n| p2 | A320 |\n| p2 | ATR |\n| p3 | A320 |\n| p3 | B737 |\n| p3 | ATR |\n| p3 | Q400 |\n| p4 | B737 |\n\nNow NewFleet(plane) = {A320, E190}. What is $\\text{Cert} \\div \\text{NewFleet}$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The empty relation",
+     "correct": true,
+     "why": "No pilot is certified on E190, so no pilot covers every NewFleet plane."
+    },
+    {
+     "text": "{p1, p2, p3}",
+     "correct": false,
+     "why": "Skipped E190 because no pilot flies it and divided by {A320} alone; every divisor value must be covered.",
+     "trap": "C6"
+    },
+    {
+     "text": "{p1, p2, p3, p4}",
+     "correct": false,
+     "why": "Returned all pilots, which is the rule for an empty divisor; NewFleet is not empty.",
+     "trap": "C5"
+    },
+    {
+     "text": "Error, because E190 does not appear in Cert",
+     "correct": false,
+     "why": "Division is defined for any divisor over the same domain; a value missing from Cert just means nobody qualifies.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A pilot qualifies only if (pilot, A320) and (pilot, E190) are both in Cert.\n2. No row of Cert has plane E190.\n3. So $(\\pi_{pilot}(\\text{Cert}) \\times \\text{NewFleet}) - \\text{Cert}$ contains (p, E190) for every pilot p, and every pilot is removed: the result is empty."
+  },
+  {
+   "id": "db-ra-division-07",
+   "skill": "db.ra-division",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B) is any relation, and S, $S_1$, $S_2$ are non-empty relations on B with $S_1 \\subseteq S_2$. Which statements **always** hold?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$(R \\div S) \\times S \\subseteq R$",
+     "correct": true,
+     "why": "Every a in R ÷ S is paired in R with every b in S, so each (a, b) of the product is in R."
+    },
+    {
+     "text": "$R \\div S_2 \\subseteq R \\div S_1$",
+     "correct": true,
+     "why": "Covering every value of the larger set $S_2$ means covering every value of its subset $S_1$ too."
+    },
+    {
+     "text": "$R \\div S = \\pi_A(R \\bowtie S)$",
+     "correct": false,
+     "why": "The join keeps a values matched with at least one b of S; division needs all of them.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\lvert R \\div S \\rvert \\le \\lvert S \\rvert$",
+     "correct": false,
+     "why": "No such bound: with S = {b1} and R = {(a1, b1), (a2, b1)}, R ÷ S = {a1, a2} has 2 tuples.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Definition: a ∈ R ÷ S ⇔ (a, b) ∈ R for every b ∈ S. This gives the first statement directly.\n2. A bigger divisor is a harder test, so the result can only shrink (second statement).\n3. π_A(R ⋈ S) means 'at least one b', a different query.\n4. Counterexample S = {b1}, R = {(a1,b1), (a2,b1)} breaks the size bound.\n(All four checked on 20,000 random instances.)"
+  },
+  {
+   "id": "db-ra-division-08",
+   "skill": "db.ra-division",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Enrolled(sid, cid) and Course(cid, dept). Which expression gives the sid of students who have taken **every course offered by the CS department**?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\text{Enrolled} \\div \\pi_{cid}\\big(\\sigma_{dept = 'CS'}(\\text{Course})\\big)$",
+     "correct": true,
+     "why": "The divisor is exactly the set of CS courses, and ÷ keeps students paired with all of them."
+    },
+    {
+     "text": "$\\pi_{sid}\\big(\\text{Enrolled} \\bowtie \\sigma_{dept = 'CS'}(\\text{Course})\\big)$",
+     "correct": false,
+     "why": "A join returns students with at least one CS course, not all of them.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\text{Enrolled} \\div \\pi_{cid}(\\text{Course})$",
+     "correct": false,
+     "why": "Divides by every course of every department; the CS selection is missing.",
+     "trap": "C1"
+    },
+    {
+     "text": "$\\pi_{cid}\\big(\\sigma_{dept = 'CS'}(\\text{Course})\\big) \\div \\text{Enrolled}$",
+     "correct": false,
+     "why": "Reversed the operands; the dividend must be the (sid, cid) pairs and the divisor the required cids.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 'Every' → division.\n2. Dividend: Enrolled(sid, cid). Divisor: the required cids = $\\pi_{cid}(\\sigma_{dept='CS'}(\\text{Course}))$.\n3. Result: sids paired with every CS cid."
+  },
+  {
+   "id": "db-ra-division-09",
+   "skill": "db.ra-division",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Works(eid, skill) and Need(skill):\n\n**Works**\n\n| eid | skill |\n|---|---|\n| e1 | java |\n| e1 | sql |\n| e2 | sql |\n| e3 | java |\n| e3 | sql |\n| e3 | py |\n| e4 | py |\n\n**Need**\n\n| skill |\n|---|\n| java |\n| sql |\n| py |\n\nDivision is computed as $\\pi_{eid}(\\text{Works}) - \\pi_{eid}\\big((\\pi_{eid}(\\text{Works}) \\times \\text{Need}) - \\text{Works}\\big)$. How many tuples are in the intermediate relation $(\\pi_{eid}(\\text{Works}) \\times \\text{Need}) - \\text{Works}$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 5,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Counted the product 4 × 3 and forgot to subtract Works.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Counted the distinct eids in it (e1, e2, e4); the question asks for the (eid, skill) pairs themselves.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Gave the size of the final division result instead of the intermediate relation.",
+     "trap": "C10"
+    }
+   ],
+   "solution": "1. $\\pi_{eid}(\\text{Works})$ = {e1, e2, e3, e4}; product with Need: 4 × 3 = 12 pairs.\n2. All 7 Works rows are in the product; remove them: 12 − 7 = 5.\n3. The 5 missing pairs: (e1, py), (e2, java), (e2, py), (e4, java), (e4, sql)."
+  },
+  {
+   "id": "db-ra-equiv-06",
+   "skill": "db.ra-equiv",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B) and S(B, C). Which expression is always equal to $\\sigma_{A = 5 \\,\\land\\, C = 7}(R \\bowtie S)$?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\sigma_{A = 5}(R) \\bowtie \\sigma_{C = 7}(S)$",
+     "correct": true,
+     "why": "A belongs only to R and C only to S, so each half of the AND is pushed to its own table before the join."
+    },
+    {
+     "text": "$\\sigma_{A = 5}(R) \\times \\sigma_{C = 7}(S)$",
+     "correct": false,
+     "why": "Replaced the join by a product, so the R.B = S.B match is lost.",
+     "trap": "C6"
+    },
+    {
+     "text": "$\\big(\\sigma_{A = 5}(R) \\bowtie S\\big) \\cup \\big(R \\bowtie \\sigma_{C = 7}(S)\\big)$",
+     "correct": false,
+     "why": "A union of the two selections gives A = 5 OR C = 7, not AND.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\sigma_{A = 5 \\,\\land\\, C = 7}(R) \\bowtie S$",
+     "correct": false,
+     "why": "C is not an attribute of R, so the condition C = 7 cannot be tested on R alone.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Split the AND: $\\sigma_{A=5}(\\sigma_{C=7}(R \\bowtie S))$.\n2. A appears only in R: push $\\sigma_{A=5}$ onto R.\n3. C appears only in S: push $\\sigma_{C=7}$ onto S.\n4. Result: $\\sigma_{A=5}(R) \\bowtie \\sigma_{C=7}(S)$ (checked on random instances)."
+  },
+  {
+   "id": "db-ra-equiv-07",
+   "skill": "db.ra-equiv",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R, S and T are union-compatible relations with attributes (A, B), and p is a condition on A and B. Which equivalences **always** hold?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\pi_A(R \\cup S) = \\pi_A(R) \\cup \\pi_A(S)$",
+     "correct": true,
+     "why": "An A value appears on the left iff it comes from some tuple of R or of S, which is exactly the right side."
+    },
+    {
+     "text": "$\\pi_A(R \\cap S) = \\pi_A(R) \\cap \\pi_A(S)$",
+     "correct": false,
+     "why": "Fails for R = {(1, x)}, S = {(1, y)}: the left side is empty, the right side is {1}. π does not distribute over ∩.",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\sigma_p(R - S) = \\sigma_p(R) - S$",
+     "correct": true,
+     "why": "A tuple is on either side iff it is in R, satisfies p and is not in S."
+    },
+    {
+     "text": "$(R - S) - T = R - (S - T)$",
+     "correct": false,
+     "why": "Set difference is not associative; a tuple of R ∩ T that is not in S stays on the right but is removed on the left.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. π distributes over ∪ (checked).\n2. π over ∩: counterexample R = {(1,x)}, S = {(1,y)}.\n3. σ over −: t ∈ σ_p(R) − S ⇔ t ∈ R, p(t), t ∉ S ⇔ t ∈ σ_p(R − S).\n4. − is not associative: R = T = {(1,x)}, S = ∅ gives ∅ on the left and {(1,x)} on the right.\n(All four tested on 20,000 random instances.)"
+  },
+  {
+   "id": "db-ra-equiv-08",
+   "skill": "db.ra-equiv",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Enrolled(sid, cid). Which expression returns the sid of students enrolled in **both** course c1 and course c2?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\pi_{sid}\\big(\\sigma_{cid = 'c1'}(\\text{Enrolled})\\big) \\cap \\pi_{sid}\\big(\\sigma_{cid = 'c2'}(\\text{Enrolled})\\big)$",
+     "correct": true,
+     "why": "The first set has c1-takers, the second c2-takers; ∩ keeps sids in both."
+    },
+    {
+     "text": "$\\pi_{sid}\\big(\\sigma_{cid = 'c1' \\,\\land\\, cid = 'c2'}(\\text{Enrolled})\\big)$",
+     "correct": false,
+     "why": "One σ tests one tuple, and a single tuple cannot have cid = c1 and cid = c2 at once, so this is always empty.",
+     "trap": "C9"
+    },
+    {
+     "text": "$\\pi_{sid}\\big(\\sigma_{cid = 'c1' \\,\\lor\\, cid = 'c2'}(\\text{Enrolled})\\big)$",
+     "correct": false,
+     "why": "OR keeps students with at least one of the two courses.",
+     "trap": "C2"
+    },
+    {
+     "text": "$\\pi_{sid}\\big(\\sigma_{cid = 'c1'}(\\text{Enrolled})\\big) - \\pi_{sid}\\big(\\sigma_{cid = 'c2'}(\\text{Enrolled})\\big)$",
+     "correct": false,
+     "why": "Difference gives students in c1 but **not** c2.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. 'Both' talks about two different Enrolled tuples of the same student.\n2. A single σ looks at one tuple, so σ with AND on cid is always empty.\n3. Take the two sid sets separately and intersect them (or self-join Enrolled with a rename).\n(On a sample instance {(1,c1),(1,c2),(2,c1),(3,c2)}: the ∩ gives {1}, the AND gives ∅.)"
+  },
+  {
+   "id": "db-ra-equiv-09",
+   "skill": "db.ra-equiv",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "R(A, B) and S(A, B) are union-compatible.\n\n**R**\n\n| A | B |\n|---|---|\n| 1 | x |\n| 1 | y |\n| 2 | x |\n| 3 | z |\n\n**S**\n\n| A | B |\n|---|---|\n| 1 | x |\n| 2 | y |\n| 4 | z |\n\nHow many tuples are in $\\pi_A(R - S)$?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1,
+     "why": "Computed $\\pi_A(R) - \\pi_A(S)$ = {3}; π does not distribute over −, so project after the difference.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Counted R's rows; R − S removes (1, x), and π then merges duplicate A values.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. R − S compares whole tuples: only (1, x) is in both, so R − S = {(1, y), (2, x), (3, z)}.\n2. π_A: {1, 2, 3}, 3 tuples.\n3. By contrast $\\pi_A(R) - \\pi_A(S)$ = {1, 2, 3} − {1, 2, 4} = {3}."
+  },
+  {
+   "id": "db-trc-06",
+   "skill": "db.trc",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Student(sid, name, dept), Enrolled(sid, cid, grade). What does this query return?\n\n$$\\{\\, t.name \\mid t \\in \\text{Student} \\land \\exists e \\in \\text{Enrolled}\\,(e.sid = t.sid \\land e.grade = 'A') \\,\\}$$",
+   "figure": null,
+   "options": [
+    {
+     "text": "Names of students who have at least one A grade",
+     "correct": true,
+     "why": "∃e: there is some enrolment of this student (e.sid = t.sid) with grade A."
+    },
+    {
+     "text": "Names of students whose every grade is A",
+     "correct": false,
+     "why": "Read ∃ as ∀; 'every grade' needs ∀e (e.sid = t.sid ⇒ e.grade = 'A').",
+     "trap": "C2"
+    },
+    {
+     "text": "Names of students who have no A grade",
+     "correct": false,
+     "why": "That needs ¬∃; the query has a plain ∃.",
+     "trap": "C11"
+    },
+    {
+     "text": "Names of all students, provided some enrolment anywhere has grade A",
+     "correct": false,
+     "why": "Ignored e.sid = t.sid, which ties the enrolment to this student t.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. t ranges over Student; output t.name.\n2. ∃e ∈ Enrolled with e.sid = t.sid: an enrolment of this student.\n3. ... and e.grade = 'A': that enrolment has grade A.\n4. So: students with at least one A."
+  },
+  {
+   "id": "db-trc-07",
+   "skill": "db.trc",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Supplier(sid, sname), Supplies(sid, pid), Parts(pid, color). What does this query return?\n\n$$\\{\\, t \\mid t \\in \\text{Supplier} \\land \\forall u \\in \\text{Supplies}\\,\\big(u.sid = t.sid \\Rightarrow \\exists p \\in \\text{Parts}\\,(p.pid = u.pid \\land p.color = 'red')\\big) \\,\\}$$",
+   "figure": null,
+   "options": [
+    {
+     "text": "Suppliers all of whose supplied parts are red, including suppliers who supply no part at all",
+     "correct": true,
+     "why": "∀u (u.sid = t.sid ⇒ red) says every Supplies row of t is red; if t has no row, the implication is vacuously true."
+    },
+    {
+     "text": "Suppliers who supply only red parts and supply at least one part",
+     "correct": false,
+     "why": "Missed vacuous truth: a supplier with no Supplies row makes every implication true, so it is also returned.",
+     "trap": "C5"
+    },
+    {
+     "text": "Suppliers who supply every red part",
+     "correct": false,
+     "why": "Swapped the direction; 'every red part' needs ∀p (red(p) ⇒ supplies(t, p)).",
+     "trap": "C2"
+    },
+    {
+     "text": "Suppliers who supply at least one red part",
+     "correct": false,
+     "why": "Read ∀ ... ⇒ as ∃ ... ∧; the query checks all of t's rows, not one.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. ∀u ∈ Supplies (u.sid = t.sid ⇒ ...): look at every Supplies row of supplier t.\n2. Each such row's part must be red.\n3. If t has no Supplies row, 'u.sid = t.sid' is always false and the implication is true for every u.\n4. So: 'only red parts', including suppliers with no parts."
+  },
+  {
+   "id": "db-trc-08",
+   "skill": "db.trc",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | sal |\n|---|---|---|\n| e1 | D1 | 50 |\n| e2 | D2 | 60 |\n| e3 | D1 | 70 |\n| e4 | D2 | 40 |\n| e5 | D3 | 60 |\n| e6 | D3 | 80 |\n\nHow many tuples does this query return?\n\n$$\\{\\, t \\mid t \\in \\text{Emp} \\land \\neg \\exists s \\in \\text{Emp}\\,(s.dept = 'D2' \\land s.sal \\ge t.sal) \\,\\}$$",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4,
+     "why": "Treated ≥ as >, so employees tied with the top D2 salary 60 (e2, e5) were kept; a tie means some D2 salary is ≥ t.sal.",
+     "trap": "C5"
+    },
+    {
+     "value": 5,
+     "why": "Returned employees earning more than **some** D2 employee (above 40); ¬∃(s.sal ≥ t.sal) means more than **every** D2 salary.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. ¬∃ s in D2 with s.sal ≥ t.sal ⇔ t.sal > every D2 salary.\n2. D2 salaries: 60, 40, so t.sal > 60.\n3. e3 (70) and e6 (80) qualify: 2 tuples."
+  },
+  {
+   "id": "db-trc-09",
+   "skill": "db.trc",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Student(sid, name), Enrolled(sid, cid, grade). Which queries return exactly the students who have **no** grade 'C' in any enrolment (students with no enrolment included)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "$\\{\\, t \\mid t \\in \\text{Student} \\land \\neg \\exists e \\in \\text{Enrolled}\\,(e.sid = t.sid \\land e.grade = 'C') \\,\\}$",
+     "correct": true,
+     "why": "Directly says: there is no enrolment of t with grade C."
+    },
+    {
+     "text": "$\\{\\, t \\mid t \\in \\text{Student} \\land \\forall e \\in \\text{Enrolled}\\,(e.sid = t.sid \\Rightarrow e.grade \\ne 'C') \\,\\}$",
+     "correct": true,
+     "why": "¬∃e (P ∧ Q) ≡ ∀e (P ⇒ ¬Q): every enrolment of t has a grade other than C."
+    },
+    {
+     "text": "$\\{\\, t \\mid t \\in \\text{Student} \\land \\forall e \\in \\text{Enrolled}\\,(e.sid = t.sid \\land e.grade \\ne 'C') \\,\\}$",
+     "correct": false,
+     "why": "∀ with ∧ demands that every Enrolled row belongs to t, which fails as soon as another student has an enrolment.",
+     "trap": "C3"
+    },
+    {
+     "text": "$\\{\\, t \\mid t \\in \\text{Student} \\land \\exists e \\in \\text{Enrolled}\\,(e.sid = t.sid \\land e.grade \\ne 'C') \\,\\}$",
+     "correct": false,
+     "why": "Only needs one non-C enrolment; a student with grades A and C would pass, and a student with no enrolment would fail.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Target: ¬∃e (e.sid = t.sid ∧ e.grade = 'C').\n2. Push ¬ inside: ∀e ¬(P ∧ Q) = ∀e (¬P ∨ ¬Q) = ∀e (P ⇒ ¬Q). So the first two are equal.\n3. ∀e (P ∧ ¬Q) forces every row of Enrolled to be t's.\n4. ∃e (P ∧ ¬Q) only needs one non-C row.\n(Checked on 5,000 random instances.)"
+  }
+ ]
+}

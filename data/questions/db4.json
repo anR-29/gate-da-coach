@@ -1,0 +1,435 @@
+{
+  "area": "db",
+  "skills": {},
+  "questions": [
+    {
+      "id": "db-fd-closure-08",
+      "skill": "db.fd-closure",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "For R(A, B, C, D, E, F, G) with $F = \\{AB \\to C,\\; C \\to D,\\; BD \\to E,\\; E \\to A,\\; G \\to F\\}$, how many attributes are in $\\{B, C\\}^+$?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 5, "tol": 0 },
+      "traps": [
+        { "value": 7, "why": "Assumed the closure reaches every attribute; F and G need G, which BC never produces.", "trap": "C8" },
+        { "value": 3, "why": "Stopped after C → D; BD → E can fire because both B and D are now in the set.", "trap": "C6" },
+        { "value": 4, "why": "Stopped at {B, C, D, E} and did not fire E → A.", "trap": "C6" }
+      ],
+      "solution": "1. Start {B, C}. C → D gives {B, C, D}.\n2. BD → E: B and D present, add E. E → A: add A.\n3. AB → C adds nothing new; G → F never fires (no G).\n4. $\\{B,C\\}^+ = \\{A, B, C, D, E\\}$: 5 attributes."
+    },
+    {
+      "id": "db-fd-closure-09",
+      "skill": "db.fd-closure",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Let $F = \\{A \\to B,\\; B \\to C,\\; A \\to C,\\; C \\to D,\\; AC \\to D,\\; D \\to E\\}$. Which FDs can **each on its own** be removed from F without changing $F^+$?",
+      "figure": null,
+      "options": [
+        { "text": "$A \\to C$", "correct": true, "why": "Without it, $A^+$ still uses A → B and B → C, so A → C still follows." },
+        { "text": "$AC \\to D$", "correct": true, "why": "Without it, C → D alone gives D from AC, so AC → D still follows." },
+        { "text": "$C \\to D$", "correct": false, "why": "AC → D does not cover it: without C → D, $C^+ = \\{C\\}$, because AC → D needs A as well.", "trap": "C6" },
+        { "text": "$B \\to C$", "correct": false, "why": "A → C gives C only from A; without B → C, $B^+ = \\{B\\}$, so B → C is lost.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Test each FD X → Y: drop it, compute $X^+$ with the rest; it is redundant iff Y ⊆ $X^+$.\n2. A → C: $A^+$ = {A, B, C, D, E} without it, redundant.\n3. AC → D: $(AC)^+$ ∋ D via C → D, redundant.\n4. C → D: $C^+$ = {C}, needed. B → C: $B^+$ = {B}, needed."
+    },
+    {
+      "id": "db-fd-keys-07",
+      "skill": "db.fd-keys",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "What is the only candidate key of R(A, B, C, D, E) under $F = \\{A \\to B,\\; BC \\to D,\\; D \\to E\\}$?",
+      "figure": null,
+      "options": [
+        { "text": "{A}", "correct": false, "why": "$A^+ = \\{A, B\\}$; BC → D needs C, which no FD produces.", "trap": "C6" },
+        { "text": "{A, C}", "correct": true, "why": "A and C are on no right side, so both are in every key; $(AC)^+$ = ABCDE." },
+        { "text": "{A, B, C}", "correct": false, "why": "A superkey but not minimal: B already follows from A.", "trap": "C1" },
+        { "text": "{C, D}", "correct": false, "why": "$(CD)^+ = \\{C, D, E\\}$; nothing gives A or B, and A is on no right side.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Right sides: B, D, E. So A and C appear on no right side and belong to every key.\n2. $(AC)^+$: A → B, BC → D, D → E gives ABCDE.\n3. AC is a key; any other key would also contain A and C, so AC is the only one."
+    },
+    {
+      "id": "db-fd-keys-08",
+      "skill": "db.fd-keys",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "For R(A, B, C, D, E) with $F = \\{AB \\to C,\\; C \\to D,\\; D \\to B,\\; E \\to A\\}$, which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "E belongs to every candidate key.", "correct": true, "why": "E is on no right side, so no other attributes can produce it." },
+        { "text": "R has exactly 2 candidate keys.", "correct": false, "why": "Stopped too early: E plus any one of B, C, D completes the cycle, so there are three keys BE, CE and DE.", "trap": "C6" },
+        { "text": "A is a prime attribute.", "correct": false, "why": "A appears on the left of AB → C, but E → A means every key with A also has E and is not minimal; no key contains A.", "trap": "C10" },
+        { "text": "{C, E} is a candidate key.", "correct": true, "why": "C → D → B and E → A give ABCDE; $C^+ = \\{B, C, D\\}$ and $E^+ = \\{A, E\\}$, so it is minimal." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. E is on no RHS; $E^+ = \\{A, E\\}$, so E needs one more attribute.\n2. Adding B: AB → C, C → D gives ABCDE. Adding C or D also completes the cycle.\n3. Keys: BE, CE, DE. Prime attributes: B, C, D, E; A is non-prime."
+    },
+    {
+      "id": "db-fd-keys-09",
+      "skill": "db.fd-keys",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "R(A, B, C, D, E) has $F = \\{A \\to BCDE,\\; BC \\to A\\}$. How many superkeys does R have (count every attribute set whose closure is all of R)?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 20, "tol": 0 },
+      "traps": [
+        { "value": 24, "why": "Added 16 sets with A and 8 sets with B, C, but counted the 4 sets containing A, B and C twice.", "trap": "C6" },
+        { "value": 16, "why": "Counted only supersets of A and missed the second key BC.", "trap": "C6" },
+        { "value": 2, "why": "Counted candidate keys (A and BC), not superkeys.", "trap": "C2" }
+      ],
+      "solution": "1. Keys: A and BC (A → BCDE; BC → A → DE).\n2. Supersets of A: $2^4 = 16$.\n3. Supersets of BC: $2^3 = 8$; of these, $2^2 = 4$ also contain A.\n4. Inclusion–exclusion: 16 + 8 − 4 = 20."
+    },
+    {
+      "id": "db-nf-test-07",
+      "skill": "db.nf-test",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "What is the highest normal form of R(A, B, C, D) under $F = \\{AB \\to C,\\; B \\to D\\}$?",
+      "figure": null,
+      "options": [
+        { "text": "1NF (not 2NF)", "correct": true, "why": "The key is AB; non-prime D depends on B, a proper subset of the key: a partial dependency." },
+        { "text": "2NF (not 3NF)", "correct": false, "why": "Read B → D as a transitive dependency; B is part of the key AB, so it is partial and breaks 2NF.", "trap": "C2" },
+        { "text": "3NF (not BCNF)", "correct": false, "why": "3NF would need D to be prime; D is in no candidate key.", "trap": "C1" },
+        { "text": "BCNF", "correct": false, "why": "B is not a superkey ($B^+ = \\{B, D\\}$), so B → D violates BCNF.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. A and B are on no RHS; $(AB)^+$ = ABCD, so AB is the only key.\n2. Prime: A, B. Non-prime: C, D.\n3. B → D: non-prime D depends on part of the key, so R is not in 2NF. Highest: 1NF."
+    },
+    {
+      "id": "db-nf-test-08",
+      "skill": "db.nf-test",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Each relation below has three attributes A, B, C and the FDs shown. Which relations are in **BCNF**?",
+      "figure": null,
+      "options": [
+        { "text": "R1(A, B, C) with $\\{A \\to B,\\; B \\to A,\\; A \\to C\\}$", "correct": true, "why": "A and B are both keys ($B^+$ = ABC via B → A), so every left side is a superkey." },
+        { "text": "R2(A, B, C) with $\\{AB \\to C,\\; C \\to A\\}$", "correct": false, "why": "All attributes are prime (keys AB, BC), which gives 3NF only; C → A has C not a superkey.", "trap": "C1" },
+        { "text": "R3(A, B, C) with $\\{AB \\to C,\\; BC \\to A\\}$", "correct": true, "why": "Both left sides AB and BC are candidate keys, so no FD violates BCNF." },
+        { "text": "R4(A, B, C) with $\\{A \\to B,\\; B \\to C\\}$", "correct": false, "why": "B → C has B not a superkey and C non-prime: a transitive dependency, so not even 3NF.", "trap": "C9" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For each relation find the keys, then check every left side is a superkey.\n2. R1: keys A, B, BCNF. R3: keys AB, BC, both FDs have key left sides, BCNF.\n3. R2: C → A, C not a superkey (3NF only). R4: B → C, key is A (2NF only)."
+    },
+    {
+      "id": "db-nf-test-09",
+      "skill": "db.nf-test",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "R(A, B, C, D, E) has $F = \\{AB \\to C,\\; C \\to B,\\; A \\to D,\\; D \\to E\\}$. How many of these four FDs **violate 3NF**?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2, "tol": 0 },
+      "traps": [
+        { "value": 3, "why": "Counted C → B; B is prime (AC is a second key), so C → B is allowed in 3NF.", "trap": "C1" },
+        { "value": 1, "why": "Counted only the partial dependency A → D and missed the transitive D → E.", "trap": "C6" },
+        { "value": 4, "why": "Applied the BCNF test to AB → C as well; AB is a key, so it violates nothing.", "trap": "C2" }
+      ],
+      "solution": "1. A is on no RHS. $(AB)^+$ = ABCDE and $(AC)^+$ = ABCDE (C → B): keys AB, AC. Prime: A, B, C.\n2. AB → C: left side is a key, fine. C → B: B prime, fine for 3NF.\n3. A → D: A not a superkey, D non-prime, violates. D → E: same, violates.\n4. Count = 2."
+    },
+    {
+      "id": "db-decomp-07",
+      "skill": "db.decomp",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "R(A, B, C, D) has $F = \\{B \\to CD\\}$. Which split of R into two relations is **lossless-join**?",
+      "figure": null,
+      "options": [
+        { "text": "R1(A, B), R2(B, C, D)", "correct": true, "why": "Common attribute B, and B → BCD = R2, so the common part is a key of R2." },
+        { "text": "R1(A, B, C), R2(C, D)", "correct": false, "why": "They share C, but C determines nothing, so C is a key of neither side; sharing an attribute is not enough.", "trap": "C1" },
+        { "text": "R1(A, B), R2(C, D)", "correct": false, "why": "No common attribute: the join is a Cartesian product and creates spurious tuples.", "trap": "C8" },
+        { "text": "R1(A, C), R2(B, C, D)", "correct": false, "why": "B → CD covers R2, but the common attribute is C, not B; C is a key of neither side.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Lossless test: R1 ∩ R2 must determine R1 or R2.\n2. {AB, BCD}: ∩ = B, $B^+$ = BCD ⊇ R2. Lossless.\n3. The others have ∩ = C, ∅, C; $C^+$ = {C}, so all three are lossy."
+    },
+    {
+      "id": "db-decomp-08",
+      "skill": "db.decomp",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "R(A, B, C, D, E) has $F = \\{A \\to B,\\; B \\to C,\\; C \\to A,\\; C \\to D,\\; AD \\to E\\}$. It is decomposed into R1(A, B), R2(B, C), R3(C, D), R4(D, E). How many of the five FDs in F are **preserved** by this decomposition?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 4, "tol": 0 },
+      "traps": [
+        { "value": 3, "why": "Marked C → A lost because no part holds both C and A; it follows from C → B (in R2) and B → A (in R1).", "trap": "C6" },
+        { "value": 5, "why": "Assumed AD → E survives; from A the parts give B, C, D, but R4 holds no FD D → E, because $D^+ = \\{D\\}$.", "trap": "C1" }
+      ],
+      "solution": "1. A → B (R1), B → C (R2), C → D (R3) lie inside one part each.\n2. C → A: $C^+$ = ABCDE, so R2 holds C → B and R1 holds B → A: preserved.\n3. AD → E: start Z = {A, D}; R1, R2, R3 add B, C. In R4, $D^+ ∩ \\{D, E\\} = \\{D\\}$. E never enters Z: lost.\n4. Preserved: 4."
+    },
+    {
+      "id": "db-decomp-09",
+      "skill": "db.decomp",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Which statements about decompositions are correct?",
+      "figure": null,
+      "options": [
+        { "text": "The 3NF synthesis algorithm (minimal cover plus a key relation) gives a decomposition that is lossless and dependency preserving.", "correct": true, "why": "One relation per FD of the minimal cover keeps every FD; adding a relation with a key makes the join lossless." },
+        { "text": "A BCNF decomposition always preserves every FD.", "correct": false, "why": "BCNF splitting is always lossless, but it can lose FDs, for example AB → C with C → B.", "trap": "C1" },
+        { "text": "If R1 ∩ R2 is a superkey of R1, then the split into R1 and R2 is lossless.", "correct": true, "why": "A superkey of R1 determines all of R1, which is exactly the binary lossless condition." },
+        { "text": "Every dependency-preserving decomposition is also lossless.", "correct": false, "why": "The two properties are independent: R(A, B, C, D) split into {AB, CD} under {A → B, C → D} preserves both FDs but is lossy.", "trap": "C1" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. 3NF synthesis: preserving by construction, lossless thanks to the key relation.\n2. BCNF: lossless, may lose FDs.\n3. Lossless binary test: (R1 ∩ R2) → R1 or → R2; a superkey of R1 satisfies it.\n4. Preservation does not imply lossless (and vice versa)."
+    },
+    {
+      "id": "db-dw-schema-09",
+      "skill": "db.dw-schema",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "A sales cube has dimensions time, product and region. An analyst fixes region = 'North' and looks at the resulting time × product table. Which OLAP operation is this?",
+      "figure": null,
+      "options": [
+        { "text": "Dice", "correct": false, "why": "Dice restricts several dimensions to value sets and keeps a sub-cube; here only one dimension is fixed to one value.", "trap": "C2" },
+        { "text": "Slice", "correct": true, "why": "Fixing one dimension at a single value cuts a lower-dimensional sub-cube (3-D to 2-D)." },
+        { "text": "Roll-up", "correct": false, "why": "Roll-up climbs a hierarchy (city → region); it does not pick one value.", "trap": "C10" },
+        { "text": "Pivot", "correct": false, "why": "Pivot only rotates the axes of the view; no data is filtered.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. One dimension (region) is set to a single value.\n2. The cube loses that dimension: time × product remains.\n3. That is a slice; dice would restrict two or more dimensions."
+    },
+    {
+      "id": "db-olap-cube-06",
+      "skill": "db.olap-cube",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Which clause produces exactly the grouping sets (year, month), (year) and () ?",
+      "figure": null,
+      "options": [
+        { "text": "`GROUP BY ROLLUP (year, month)`", "correct": true, "why": "ROLLUP drops columns from the right one at a time: (year, month), (year), ()." },
+        { "text": "`GROUP BY CUBE (year, month)`", "correct": false, "why": "CUBE gives all $2^2 = 4$ subsets, including (month) on its own.", "trap": "C2" },
+        { "text": "`GROUP BY ROLLUP (month, year)`", "correct": false, "why": "Column order matters: this gives (month, year), (month), (), so (year) alone is missing.", "trap": "C11" },
+        { "text": "`GROUP BY year, month`", "correct": false, "why": "A plain GROUP BY gives only the (year, month) grouping, with no subtotals or grand total.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. ROLLUP(a, b) = grouping sets (a, b), (a), ().\n2. With a = year, b = month that is exactly the list.\n3. CUBE adds (month); reversing the order gives (month) instead of (year)."
+    },
+    {
+      "id": "db-olap-cube-07",
+      "skill": "db.olap-cube",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "**Orders**\n\n| city | item | qty |\n|---|---|---|\n| Jaipur | Fan | 4 |\n| Jaipur | AC | 1 |\n| Jaipur | Fan | 2 |\n| Surat | Cooler | 3 |\n| Surat | Fan | 5 |\n| Kochi | AC | 2 |\n\nHow many rows does this query return?\n\n```sql\nSELECT city, item, SUM(qty)\nFROM Orders\nGROUP BY ROLLUP (city, item);\n```",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 9, "tol": 0 },
+      "traps": [
+        { "value": 12, "why": "Used CUBE: added the 3 item-only subtotals, which ROLLUP (city, item) does not produce.", "trap": "C2" },
+        { "value": 13, "why": "Assumed all 3 × 3 city–item pairs exist (9 + 3 + 1); only 5 distinct pairs occur.", "trap": "C1" },
+        { "value": 8, "why": "Forgot the grand-total row for the () grouping set.", "trap": "C6" },
+        { "value": 10, "why": "Counted the 6 table rows as (city, item) groups; (Jaipur, Fan) appears twice but is one group.", "trap": "C6" }
+      ],
+      "solution": "1. (city, item): distinct pairs Jaipur-Fan, Jaipur-AC, Surat-Cooler, Surat-Fan, Kochi-AC = 5.\n2. (city): Jaipur, Surat, Kochi = 3.\n3. (): 1 grand total.\n4. Total 5 + 3 + 1 = 9."
+    },
+    {
+      "id": "db-olap-cube-08",
+      "skill": "db.olap-cube",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "`SELECT region, product, SUM(amount) FROM Sales GROUP BY CUBE (region, product);` returns 40 rows. Every (region, product) combination occurs in Sales, and there are 4 distinct regions. How many distinct products are there?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 7, "tol": 0 },
+      "traps": [
+        { "value": 9, "why": "Solved 4 · (p + 1) = 40: forgot the +1 for the region 'all' level.", "trap": "C6" },
+        { "value": 8, "why": "Solved 5 · p = 40: forgot the +1 for the product 'all' level.", "trap": "C6" },
+        { "value": 10, "why": "Divided 40 by 4 regions as if the query returned only the (region, product) rows.", "trap": "C3" }
+      ],
+      "solution": "1. CUBE rows with all combinations present: $(n_r + 1)(n_p + 1)$.\n2. $(4 + 1)(p + 1) = 40$ gives $p + 1 = 8$.\n3. p = 7. Check: 28 + 4 + 7 + 1 = 40."
+    },
+    {
+      "id": "db-olap-cube-09",
+      "skill": "db.olap-cube",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "A data cube has 5 dimensions and no concept hierarchies. How many of its cuboids group by **exactly two** dimensions?",
+      "figure": null,
+      "options": [
+        { "text": "32", "correct": false, "why": "$2^5 = 32$ is the total number of cuboids at all levels, not just the 2-D ones.", "trap": "C6" },
+        { "text": "20", "correct": false, "why": "Counted ordered pairs 5 · 4; (time, item) and (item, time) are the same cuboid.", "trap": "C6" },
+        { "text": "10", "correct": true, "why": "A 2-D cuboid is a choice of 2 dimensions out of 5: $\\binom{5}{2} = 10$." },
+        { "text": "25", "correct": false, "why": "Used $5^2$, which counts ordered pairs with repetition.", "trap": "C3" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Each cuboid is a subset of the 5 dimensions.\n2. Exactly two dimensions: $\\binom{5}{2} = 10$.\n3. Over all sizes, $\\sum_k \\binom{5}{k} = 2^5 = 32$."
+    },
+    {
+      "id": "db-transform-07",
+      "skill": "db.transform",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "An attribute ranges from 50 to 650. Using min-max normalization to the range **[−1, 1]**, what does the value 410 become?",
+      "figure": null,
+      "options": [
+        { "text": "0.6", "correct": false, "why": "This is the [0, 1] value (410 − 50)/600; it was not stretched to the new range.", "trap": "C3" },
+        { "text": "1.2", "correct": false, "why": "Multiplied by the new width 2 but forgot to add new_min = −1.", "trap": "C6" },
+        { "text": "−0.4", "correct": false, "why": "Subtracted 1 but forgot to multiply by the new width 2.", "trap": "C6" },
+        { "text": "0.2", "correct": true, "why": "(410 − 50)/(650 − 50) = 0.6; 0.6 · (1 − (−1)) + (−1) = 0.2." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\frac{v - \\min}{\\max - \\min} = \\frac{360}{600} = 0.6$.\n2. Scale to the new range: $0.6 \\cdot (1 - (-1)) = 1.2$.\n3. Add new_min: $1.2 - 1 = 0.2$."
+    },
+    {
+      "id": "db-transform-08",
+      "skill": "db.transform",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Sorted values: 5, 10, 11, 13, 15, 24, 49, 55, 60, 62, 70, 90. They are split into 3 **equal-frequency** bins of 4 values each and smoothed by **bin boundaries** (each value is replaced by the nearer of its bin's min and max). What does the second bin become?",
+      "figure": null,
+      "options": [
+        { "text": "15, 15, 55, 55", "correct": true, "why": "Bin 2 is 15, 24, 49, 55: 24 is nearer 15 (9 vs 31) and 49 is nearer 55 (6 vs 34)." },
+        { "text": "35.75, 35.75, 35.75, 35.75", "correct": false, "why": "Smoothed by bin means (143/4), not by bin boundaries.", "trap": "C2" },
+        { "text": "36.5, 36.5, 36.5, 36.5", "correct": false, "why": "Smoothed by the bin median (24 + 49)/2, not by bin boundaries.", "trap": "C2" },
+        { "text": "49, 60, 60", "correct": false, "why": "Used equal-width bins of width 85/3 (second bin 49, 55, 60) instead of equal-frequency bins.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Equal frequency, 4 per bin: [5, 10, 11, 13], [15, 24, 49, 55], [60, 62, 70, 90].\n2. Bin 2 boundaries: 15 and 55.\n3. 24: |24 − 15| = 9 < 31, becomes 15. 49: |55 − 49| = 6 < 34, becomes 55.\n4. Result: 15, 15, 55, 55."
+    },
+    {
+      "id": "db-transform-09",
+      "skill": "db.transform",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Min-max normalization to [0, 1] was set up on training data whose attribute ranged from 20 to 80. A new test value 95 arrives and is normalized with the **same** min and max (no clipping). What is its normalized value?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1.25, "tol": 0.005 },
+      "traps": [
+        { "value": 1, "why": "Assumed min-max output must stay inside [0, 1]; without clipping, values outside the training range map outside [0, 1].", "trap": "C5" },
+        { "value": 0.25, "why": "Measured from the max, (95 − 80)/60, instead of from the min.", "trap": "C3" },
+        { "value": 1.583, "why": "Forgot to subtract the min: 95/60.", "trap": "C6" }
+      ],
+      "solution": "1. $v' = \\frac{v - 20}{80 - 20}$.\n2. $v' = \\frac{95 - 20}{60} = \\frac{75}{60} = 1.25$.\n3. The value lies above the training max, so it maps above 1: this is the out-of-range problem of min-max normalization."
+    },
+    {
+      "id": "db-sampling-06",
+      "skill": "db.sampling",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "A simple random sample **without replacement** (SRSWOR) of 40 tuples is drawn from a table of 800 tuples. What is the probability that a particular tuple is in the sample?",
+      "figure": null,
+      "options": [
+        { "text": "0.00125", "correct": false, "why": "This is 1/800, the chance of being picked on one particular draw, not over the whole sample.", "trap": "C6" },
+        { "text": "0.0488", "correct": false, "why": "Used the with-replacement formula $1 - (1 - 1/800)^{40}$.", "trap": "C2" },
+        { "text": "0.05", "correct": true, "why": "In SRSWOR every tuple is equally likely to be among the s chosen: s/N = 40/800." },
+        { "text": "0.95", "correct": false, "why": "This is the probability that the tuple is **not** chosen, 1 − 40/800.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. SRSWOR: each of the $\\binom{800}{40}$ samples is equally likely.\n2. Samples containing a given tuple: $\\binom{799}{39}$; ratio = 40/800.\n3. P = 0.05."
+    },
+    {
+      "id": "db-sampling-07",
+      "skill": "db.sampling",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "A table has 12 tuples: 8 from region North and 4 from region South. A **proportional stratified** sample of 6 tuples is drawn, using SRSWOR inside each stratum. How many different samples are possible?",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 420, "tol": 0 },
+      "traps": [
+        { "value": 924, "why": "Used $\\binom{12}{6}$, a simple random sample that ignores the strata.", "trap": "C2" },
+        { "value": 76, "why": "Added $\\binom{8}{4} + \\binom{4}{2}$; the two choices are made together, so multiply.", "trap": "C3" },
+        { "value": 224, "why": "Took 3 from each region ($\\binom{8}{3}\\binom{4}{3}$) instead of proportional shares 4 and 2.", "trap": "C6" }
+      ],
+      "solution": "1. Shares: North 6 · 8/12 = 4, South 6 · 4/12 = 2.\n2. Ways: $\\binom{8}{4} = 70$ and $\\binom{4}{2} = 6$.\n3. Multiply: 70 · 6 = 420."
+    },
+    {
+      "id": "db-sampling-08",
+      "skill": "db.sampling",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "A table of 10,000 tuples is stored in 200 disk pages of 50 tuples each. A **cluster sample** picks 4 pages by SRSWOR and keeps every tuple on them. What are the sample size and the probability that a particular tuple is in the sample?",
+      "figure": null,
+      "options": [
+        { "text": "200 tuples; 0.02", "correct": true, "why": "4 pages · 50 = 200 tuples. A tuple is in the sample iff its page is picked: 4/200." },
+        { "text": "4 tuples; 0.02", "correct": false, "why": "Counted the pages picked as the sample size; every tuple on a chosen page is kept.", "trap": "C6" },
+        { "text": "200 tuples; 0.0004", "correct": false, "why": "Divided 4 pages by 10,000 tuples; the unit that is sampled is the page, so divide by 200 pages.", "trap": "C3" },
+        { "text": "200 tuples; 0.0199", "correct": false, "why": "Used the with-replacement formula $1 - (1 - 1/200)^4$; pages are drawn without replacement.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Sample size: 4 pages × 50 tuples = 200.\n2. A tuple is chosen exactly when its page is one of the 4 picked out of 200.\n3. P = 4/200 = 0.02 (the same as 200/10,000)."
+    },
+    {
+      "id": "db-sampling-09",
+      "skill": "db.sampling",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+      "stem": "Which statements about sampling a table of N tuples are correct?",
+      "figure": null,
+      "options": [
+        { "text": "In an SRSWOR of s tuples, every tuple has inclusion probability s/N.", "correct": true, "why": "All $\\binom{N}{s}$ samples are equally likely and a given tuple is in a fraction s/N of them." },
+        { "text": "In an SRSWR of s draws, a given tuple's inclusion probability is greater than s/N.", "correct": false, "why": "Repeats waste draws: $1 - (1 - 1/N)^s \\le s/N$, so it is smaller (equal only when s = 1).", "trap": "C11" },
+        { "text": "Cluster sampling takes a few tuples from every cluster.", "correct": false, "why": "That describes stratified sampling; cluster sampling picks some whole clusters and skips the others.", "trap": "C2" },
+        { "text": "For N = 5 and s = 2 there are 10 possible SRSWOR samples (unordered) and 25 possible SRSWR draw sequences (ordered).", "correct": true, "why": "$\\binom{5}{2} = 10$; with replacement each of the 2 ordered draws has 5 choices, $5^2 = 25$." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. SRSWOR inclusion = s/N.\n2. SRSWR inclusion = $1 - (1 - 1/N)^s$, which is at most s/N.\n3. Cluster = whole groups; stratified = some from every group.\n4. Counts: $\\binom{5}{2} = 10$, $5^2 = 25$."
+    }
+  ]
+}

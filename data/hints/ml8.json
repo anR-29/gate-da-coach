@@ -1,0 +1,202 @@
+{
+  "ml-pca-variance-07": [
+    "$C$ diagonal hai, to PCs seedhe axes hain. Par PC1 wo axis hai jiska variance sabse bada hai — jo pehle likha hai wo nahi.",
+    "Explained ratio $= \\lambda_1 / \\operatorname{trace}(C)$. Yahan eigenvalues diagonal entries 7, 2, 11 hi hain.",
+    "Sabse bada $\\lambda$ chuno aur trace $7 + 2 + 11 = 20$ nikalo. Trap: fraction lost $1 - \\text{ratio}$ de dena, ya ratio ki jagah variance likh dena."
+  ],
+  "ml-pca-variance-08": [
+    "Do cheezein match karni hain: PC2 ka direction aur uska variance. Off-diagonal 4 hai, to PCs axes nahi honge.",
+    "Eigenvalues: $\\lambda = 5 \\pm \\sqrt{25 - 9}$. PC2 = chhote eigenvalue ka eigenvector.",
+    "$C(1,1)^\\top = (9, 9)^\\top$ check karo; ab $C(1,-1)^\\top$ khud nikalo. Trap: sahi direction ke saath bada eigenvalue jod dena."
+  ],
+  "ml-pca-variance-09": [
+    "Raw points diye hain aur divisor $n - 1$ fixed hai. Pehle center, phir covariance, phir bada eigenvalue.",
+    "Mean nikalo, $C = \\frac{1}{4}\\sum_i \\tilde x_i \\tilde x_i^\\top$. 2×2 ke liye $\\lambda = T/2 \\pm \\sqrt{T^2/4 - D}$.",
+    "Mean $= (3, 3)$; centered points $(-2,-1), (-1,-2), (0,1), (1,0), (2,2)$. Ab $\\sum \\tilde x_1^2$, $\\sum \\tilde x_2^2$, $\\sum \\tilde x_1 \\tilde x_2$ nikalo. Trap: divisor 5 lena."
+  ],
+  "ml-pca-variance-10": [
+    "Kisi diye hue direction par variance poocha hai, PC1 par nahi. Aur $(3, 4)$ unit vector nahi hai.",
+    "Unit $u$ ke liye variance $= u^\\top C u = 4u_1^2 + 2\\cdot 1\\cdot u_1 u_2 + 2u_2^2$.",
+    "$\\lVert(3,4)\\rVert = 5$, to $u = (0.6, 0.8)$. Ab teen terms plug karo. Trap: cross term ka factor 2 bhool jaana, ya normalise na karna."
+  ],
+  "ml-pca-variance-11": [
+    "MSQ — har statement ko eigenvalues 6, 3, 1 se alag check karo: total, retained ratio, reconstruction error, aur PC2 ka variance.",
+    "Total $= \\sum \\lambda$. Retained ratio $= \\sum_{\\text{kept}} \\lambda / \\sum \\lambda$. Reconstruction MSE $= \\sum_{\\text{dropped}} \\lambda$. Variance along PC $k = \\lambda_k$.",
+    "Sirf PC1 rakhne par dropped eigenvalues 3 aur 1 hain — inka sum kitna? Trap: kept variance ko error samajh lena, ya ratio ko variance."
+  ],
+  "ml-pca-variance-12": [
+    "Off-diagonal 2 features 2 aur 3 ke beech hai, to diagonal entries eigenvalues nahi hain. $C$ block-diagonal hai.",
+    "Eigenvalues: feature 1 se 2, aur block $\\begin{pmatrix} 5 & 2 \\\\ 2 & 2 \\end{pmatrix}$ ke do eigenvalues ($T = 7$, $D = 6$). Total $= 9$.",
+    "Block ke eigenvalues nikalo, sab ko descending sort karo, phir cumulative ratio 0.85 se compare karo. Trap: diagonal 5, 2, 2 se count karna."
+  ],
+  "ml-pca-variance-13": [
+    "Top 2 rakhe, baaki 2 drop hue. Poocha hai fraction **lost**, retained nahi.",
+    "Fraction lost $= (\\text{dropped eigenvalues ka sum}) / (\\text{sab eigenvalues ka sum})$.",
+    "Total $= 9 + 4 + 2 + 1 = 16$. Dropped kaun se hain? Trap: sirf aakhri eigenvalue drop maanna, ya ratio ki jagah MSE likhna."
+  ],
+  "ml-pca-variance-14": [
+    "Sirf feature 1 scale hua hai, to poora $C$ ek number se multiply nahi hota. Naya $C$ banana padega.",
+    "$x_1 \\to 2x_1$: $\\operatorname{Var}(x_1) \\times 4$, $\\operatorname{Cov}(x_1, x_2) \\times 2$, $\\operatorname{Var}(x_2)$ same. Phir $\\lambda_{\\max} = T/2 + \\sqrt{T^2/4 - D}$.",
+    "Naya $C = \\begin{pmatrix} 16 & 2 \\\\ 2 & 1 \\end{pmatrix}$, $T = 17$, $D = 12$. Ab root nikalo. Trap: purane $\\lambda_{\\max}$ ko 2 ya 4 se multiply karna."
+  ],
+  "ml-pca-variance-15": [
+    "MSQ — pehle eigenvalues nikalo; phir har statement ko unit-direction variance ki range se judge karo.",
+    "$T = 9$, $D = 14$, $\\lambda = 4.5 \\pm \\sqrt{20.25 - 14}$. Unit $u$ ke liye $\\lambda_{\\min} \\le u^\\top C u \\le \\lambda_{\\max}$; axis $e_1$ par variance $= C_{11}$.",
+    "Eigenvalues ke baad: 1.5 range ke andar hai ya bahar? PC1 ka ratio diagonal se nahi, $\\lambda_{\\max}/9$ se. Trap: diagonal 6 ko PC1 variance maanna."
+  ],
+  "ml-pca-variance-16": [
+    "$C$ block-diagonal hai: features 1–2 ek block, feature 3 alag. Off-diagonal 2 ki wajah se diagonal entries eigenvalues nahi.",
+    "Block $\\begin{pmatrix} 2 & 2 \\\\ 2 & 2 \\end{pmatrix}$: $T = 4$, $D = 0$. Feature 3 ka eigenvalue 3. Sab sort karke doosra lo.",
+    "Block ke eigenvalues $\\lambda^2 - 4\\lambda = 0$ se aate hain. Inhe 3 ke saath descending order me rakho. Trap: diagonal 3, 2, 2 sort karke doosra lena."
+  ],
+  "ml-pca-lda-07": [
+    "LDA directions par do limit lagti hain: classes ki aur features ki. Yahan features (4) classes (6) se kam hain.",
+    "Max directions $= \\min(C - 1, d)$: between-class scatter ka rank $\\le C - 1$, aur $d$-dim space me $d$ se zyada independent directions nahi.",
+    "$C - 1 = 6 - 1$ aur $d = 4$ — dono compare karo. Trap: sirf $C - 1$ likh dena aur feature limit bhool jaana."
+  ],
+  "ml-pca-lda-08": [
+    "Singular values diye hain, eigenvalues nahi. Total variance $= $ sab eigenvalues ka sum.",
+    "$\\lambda_k = \\sigma_k^2 / n$ with $n = 10$. Total $= (\\sigma_1^2 + \\sigma_2^2 + \\sigma_3^2)/10$.",
+    "Squares: $8^2 = 64$, $4^2 = 16$, $2^2 = 4$. Ab jodo aur $n$ se divide karo. Trap: $\\sigma$ ko square kiye bina divide karna."
+  ],
+  "ml-pca-lda-09": [
+    "Principal directions feature space ke vectors hain — har vector me ek entry per feature. Dekho SVD ke kis factor ka size feature-wise hai.",
+    "$X^\\top X = V\\Sigma U^\\top U \\Sigma V^\\top$. $U^\\top U = I$ use karo.",
+    "Simplify karke $X^\\top X = V\\Sigma^2 V^\\top$ — ye eigen-decomposition hai. Ab socho eigenvectors kahan hain. Trap: $U$ aur $V$ swap karna."
+  ],
+  "ml-pca-lda-10": [
+    "MSQ — har statement ke liye socho: centering se mean, covariance aur uncentered matrix $\\frac1n X^\\top X$ par kya asar hota hai.",
+    "$\\frac1n X^\\top X = C + \\bar x\\bar x^\\top$. Sab points ko ek hi vector se shift karne par covariance $C$ same rehta hai.",
+    "Units wala statement: centering (mean ghatana) aur standardizing (SD se divide) alag steps hain — kaun sa units ki wajah se hai? Trap: dono ko ek samajhna."
+  ],
+  "ml-pca-lda-11": [
+    "Formula $J(u)$ stem me diya hai. Bas $u = e_1$ aur $u = e_2$ ke liye numerator aur denominator dono nikalne hain.",
+    "$J(e_1) = (\\text{mean gap along } x_1)^2 / S_{W,11}$, $J(e_2) = (\\text{mean gap along } x_2)^2 / S_{W,22}$.",
+    "$J(e_1) = 4^2 / 8$. Ab $J(e_2)$ nikalo aur compare karo. Trap: sirf mean gap dekhna aur within-class spread ignore karna."
+  ],
+  "ml-pca-lda-12": [
+    "Labels hain aur goal hai classes ko **separate** karna — sirf variance rakhna nahi. Ye supervised projection ka kaam hai.",
+    "PCA: max variance, labels ignore. LDA: max $\\frac{\\text{between-class}}{\\text{within-class}}$ scatter, at most $C - 1$ directions. k-means: clustering, projection nahi.",
+    "Yahan $C = 2$, to supervised method kitni directions de sakta hai? Kya utni chahiye? Trap: PC1 ko class-separating maan lena."
+  ],
+  "ml-pca-lda-13": [
+    "$M$ uncentered hai. Sahi PCA ke liye pehle centered covariance banana hai — $M$ ka eigenvalue seedha mat lo.",
+    "$C = M - \\bar x\\bar x^\\top$, aur $\\bar x\\bar x^\\top = \\begin{pmatrix} 4 & 2 \\\\ 2 & 1 \\end{pmatrix}$. Phir $\\lambda_{\\max} = T/2 + \\sqrt{T^2/4 - D}$.",
+    "$C = \\begin{pmatrix} 6 & 4 \\\\ 4 & 4 \\end{pmatrix}$, $T = 10$, $D = 8$. Ab root nikalo. Trap: $M$ ka hi bada eigenvalue de dena."
+  ],
+  "ml-pca-lda-14": [
+    "MSQ — har statement ko PCA/LDA ke basic facts se check karo: labels chahiye?, kitni directions?, projection linear?, Fisher ratio me kya hai?",
+    "PCA: covariance ke eigenvectors, labels nahi. LDA: $J = \\frac{\\text{between-class}}{\\text{within-class}}$, at most $C - 1$ directions. Dono $x \\mapsto w^\\top x$.",
+    "Fisher ratio ka numerator class means se banta hai ya nahi? Aur $C - 1$ wali limit todi ja sakti hai? Trap: LDA ko sirf within-class spread se jodna."
+  ],
+  "ml-pca-lda-15": [
+    "Ulta direction: variance diya hai, singular value poochi hai. Link formula ulta chalana hai.",
+    "$\\lambda_1 = \\sigma_1^2 / n$, to $\\sigma_1^2 = n \\lambda_1$ with $n = 8$.",
+    "$\\sigma_1^2 = 8 \\times 4.5$ nikalo; phir ek step aur baaki hai. Trap: $\\sigma_1^2$ par ruk jaana, ya $n$ se divide kar dena."
+  ],
+  "ml-pca-lda-16": [
+    "Standardize karne ke baad covariance matrix correlation matrix ban jaati hai — diagonal 1, off-diagonal $= r$.",
+    "$r = \\frac{\\operatorname{Cov}}{\\sigma_1 \\sigma_2} = \\frac{6}{\\sqrt{100}\\sqrt{1}}$. Matrix $\\begin{pmatrix} 1 & r \\\\ r & 1 \\end{pmatrix}$ ke eigenvalues $1 \\pm r$.",
+    "Pehle $r$ nikalo, phir bada eigenvalue $1 + r$ ko trace 2 se divide karo. Trap: raw covariance pe hi PCA karna."
+  ],
+  "ml-select-framing-07": [
+    "Target dekho: listing ki category. Codes 1–12 sirf naam hain ya sach me quantity?",
+    "Rule: real-valued quantity → regression; finite set ka label (numbers me likha ho tab bhi) → classification; label hi nahi → unsupervised.",
+    "'4.6 test' lagao: category 6.5 ka kuch matlab hai? Aur past listings ki category pata hai ya nahi? Trap: codes dekh ke regression bol dena."
+  ],
+  "ml-select-framing-08": [
+    "Target ek amount hai — rupaye me bill. Socho ye label hai ya quantity.",
+    "Real-valued target + past labelled data → supervised regression. Rounding se quantity label nahi banti.",
+    "'4.6 test': ₹1,234.6 ka bill meaningful hai? Agar haan, to target quantity hai. Trap: whole rupees dekh ke classification bolna."
+  ],
+  "ml-select-framing-09": [
+    "MSQ — har task me dekho: training data me target/label hai ya sirf $x$?",
+    "Unsupervised = koi target nahi (clustering, PCA). Labels (left/stayed, fraud/not fraud) ho to supervised classification.",
+    "News articles aur gene data me koi label diya hai? Churn aur fraud wale records me kya mark kiya hai? Trap: 'fraud detection' sun ke anomaly/unsupervised bolna."
+  ],
+  "ml-select-framing-10": [
+    "Paanch tasks hain; har ek ka target dekho — quantity hai ya finite set ka label?",
+    "'4.6 test': agar beech ki value (jaise 40.5) ka matlab bane to regression; warna classification. Numbers me likha label phir bhi label hai.",
+    "(i) blood pressure 120.5 mmHg meaningful hai; (ii) blood group finite set hai. Ab (iii)–(v) khud check karo. Trap: PIN code ko number samajhna."
+  ],
+  "ml-select-framing-11": [
+    "Digit 0–9 image ki **class** hai. Squared loss us code ko quantity maan ke chalta hai — kya ye sahi hai?",
+    "Squared loss me 1 aur 2 ki galti $1^2$, 1 aur 7 ki galti $6^2$. Images ke liye ye order/distance real hai?",
+    "'4.6 test' lagao: output 4.6 ka kya matlab? Phir socho target kis type ka hai. Trap: digits numbers hain to regression theek maan lena."
+  ],
+  "ml-select-framing-12": [
+    "Images unlabelled hain, aur goal 4,096 numbers ko 50 me compress karna hai, variation bacha ke. Koi target predict nahi karna.",
+    "Target nahi → unsupervised. Max variance rakhte hue kam dimensions → dimensionality reduction. LDA ko labels chahiye.",
+    "Har option ke liye poochho: kya isko labels chahiye? Images ke paas labels hain? Trap: pixel values numeric hain to regression bolna."
+  ],
+  "ml-select-framing-13": [
+    "MSQ — har task me dekho: target do values wala label hai, quantity hai, ya target hi nahi?",
+    "Binary classification = training data me 2-valued label. Probability output wala yes/no event bhi classification hai. k-means me labels nahi hote.",
+    "Bought = 1/0 wale task me training target kya hai — probability ya yes/no? Trap: '2 segments' ko binary classification maan lena."
+  ],
+  "ml-select-framing-14": [
+    "Output whole number hai, par sawal ye hai: arrivals ki count quantity hai ya label?",
+    "'4.6 test': average 87.4 arrivals meaningful hai to regression. Integer output akele classification nahi banata.",
+    "Socho 120 aur 121 'paas' hain ya alag classes? Aur kya past hourly counts (labels) diye hain? Trap: integer dekh ke classification bolna."
+  ],
+  "ml-select-framing-15": [
+    "Supervised aur unsupervised ka farak training data ke ek hi ingredient se aata hai.",
+    "Supervised: pairs $(x_i, y_i)$. Unsupervised: sirf $x_i$ (k-means, PCA).",
+    "Har option ke liye poochho: kya k-means/PCA ko bhi ye chahiye? Agar haan, to wo farak nahi hai. Trap: distance measure ko farak samajhna."
+  ],
+  "ml-select-framing-16": [
+    "Paanch tasks; har ek ka target dekho: quantity ya finite labels? Probability wale task me training label par dhyan do.",
+    "Real quantity → regression; finite set (3 candidates, S/M/L/XL, yes/no) → classification. Yes/no event ki probability = classification.",
+    "(i) rent quantity hai, (ii) 3 me se ek label hai. Ab (iii)–(v) khud decide karo. Trap: probability output ko regression maan lena."
+  ],
+  "ml-select-algo-07": [
+    "Har model ke liye poochho: ye $P(x \\mid y)$ model karta hai ya seedha $P(y \\mid x)$? Naam pe mat jaao.",
+    "Generative: $P(x \\mid y)P(y)$ + Bayes rule (Naive Bayes, LDA, QDA). Discriminative: $P(y \\mid x)$ ya boundary seedha (logistic, SVM, perceptron).",
+    "LDA aur QDA dono har class ko Gaussian se model karte hain — to wo kis group me gaye? Trap: 'discriminant' naam dekh ke LDA chun lena."
+  ],
+  "ml-select-algo-08": [
+    "Naive Bayes ka matlab: features class ke given independent. To har (class, feature) ke liye ek alag probability, plus priors.",
+    "Count $= (K - 1) + K \\cdot d$, kyunki $K$ priors ka sum 1 hai aur binary feature ke liye ek hi number $P(x_j = 1 \\mid y)$ kaafi hai.",
+    "Yahan $K = 3$, $d = 8$: feature part $3 \\times 8 = 24$. Ab priors jodo. Trap: priors bhoolna, ya 3 independent priors ginna."
+  ],
+  "ml-select-algo-09": [
+    "Variance dono classes ki same hai, par priors unequal (0.75 vs 0.25) — to boundary means ke midpoint se khiskegi.",
+    "$x^* = \\frac{\\mu_0 + \\mu_1}{2} + \\frac{\\sigma^2 \\ln(\\pi_0/\\pi_1)}{\\mu_1 - \\mu_0}$, with $\\mu_0 = 2$, $\\mu_1 = 6$, $\\sigma^2 = 4$.",
+    "Midpoint $= 4$, aur $\\pi_0/\\pi_1 = 3$. Ab shift term nikalo — wo kis taraf jaayega? Trap: priors ignore karna, ya $\\sigma^2$ ki jagah $\\sigma = 2$ lena."
+  ],
+  "ml-select-algo-10": [
+    "Ek feature ×1000 hua. Socho har model ki prediction kis cheez par depend karti hai — threshold, per-class mean/SD, weight, ya raw distance?",
+    "Tree: threshold bhi ×1000. Gaussian NB: us feature ka mean aur SD dono ×1000. OLS: weight ÷1000. k-NN: Euclidean distance me raw values jaati hain.",
+    "k-NN me $(\\Delta x_1)^2$ ab $10^6$ guna — kya neighbours wahi rahenge? Baaki models me scaling absorb hoti hai ya nahi, check karo. Trap: tree ko scale-sensitive maanna."
+  ],
+  "ml-select-algo-11": [
+    "Naya $x$ banane (sample karne) ke liye model ke paas $P(x \\mid y)$ hona chahiye. Har option me dekho ye hai ya nahi.",
+    "Generative models $P(x \\mid y)P(y)$ store karte hain (Gaussian NB, LDA). Discriminative sirf $P(y \\mid x)$; k-NN sirf data store karta hai.",
+    "LDA me har class $\\mathcal N(\\mu_k, \\Sigma)$ hai — kya isse sample ho sakta hai? Logistic regression me $x$ ka koi model hai? Trap: LDA ko discriminative samajhna."
+  ],
+  "ml-select-algo-12": [
+    "Boundary ek circle hai — raw $(x_1, x_2)$ me ye linear nahi hai. Extra features ($x_1^2 + x_2^2$) allowed nahi.",
+    "Logistic regression aur perceptron raw features par straight line dete hain. Shared-covariance Gaussians bhi linear boundary dete hain. Kernel methods nonlinear.",
+    "Har option ke liye poochho: raw features par iski boundary line hai ya curve? Trap: generative Gaussian ko automatically nonlinear maan lena."
+  ],
+  "ml-select-algo-13": [
+    "Teen demands: labels se probability, linear boundary, aur har feature ka ek weight jo log-odds effect bataaye.",
+    "Logistic regression: $\\log\\frac{P(y=1 \\mid x)}{P(y=0 \\mid x)} = w^\\top x + b$. k-means/PCA labels use nahi karte; k-NN me weights nahi.",
+    "Har option ko teeno demands pe tick karo — kaun sa ek bhi miss karta hai? Trap: k-NN ko probability deta dekh ke chun lena."
+  ],
+  "ml-select-algo-14": [
+    "MSQ — chaar alag facts: Gaussian covariances aur boundary shape, logistic regression ke assumptions, k-NN ki training, aur tree ko scaling.",
+    "Same $\\Sigma$ → $x^\\top\\Sigma^{-1}x$ cancel → linear; alag $\\Sigma_k$ → quadratic. Logistic sirf linear log-odds maanta hai. Tree split: ek feature vs threshold.",
+    "Tree me feature ×10 karo to threshold bhi ×10 — prediction badlegi? Aur k-NN training me kya compute hota hai? Trap: logistic ko Gaussian assumption dena."
+  ],
+  "ml-select-algo-15": [
+    "Same variance aur **equal** priors — to prior wala shift term zero ho jaata hai.",
+    "$x^* = \\frac{\\mu_0 + \\mu_1}{2} + \\frac{\\sigma^2 \\ln(\\pi_0/\\pi_1)}{\\mu_1 - \\mu_0}$; yahan $\\ln(1) = 0$.",
+    "Ab sirf $\\mu_0 = -1$ aur $\\mu_1 = 5$ ka midpoint chahiye. Trap: $(\\mu_1 - \\mu_0)/2$ lena, ya 2 se divide karna bhoolna."
+  ],
+  "ml-select-algo-16": [
+    "Generative vs discriminative ka trade-off data size aur assumptions se judta hai. Har option me dekho kaun sa side favour hota hai.",
+    "Naive Bayes: strong assumptions, kam parameters → kam data me jaldi seekhta hai. Logistic: kam assumptions → zyada data me aage nikalta hai.",
+    "Correlated features Naive Bayes ke kis assumption ko todte hain? Aur bina labels ke kya koi classifier train hoga? Trap: data-size wali baat ulta padhna."
+  ]
+}

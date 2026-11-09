@@ -1,0 +1,197 @@
+{
+  "ml-nn-perceptron-07": [
+    "Pehle check karo ye point mistake hai ya nahi: $y(w\\cdot x + b)$ nikaalo. Dhyan do $\\eta = 0.5$ hai, 1 nahi.",
+    "Mistake ki condition $y\\,s \\le 0$ hai (zero bhi mistake). Update: $w \\leftarrow w + 0.5\\cdot y\\cdot(1, 3)$, $b \\leftarrow b + 0.5\\,y$.",
+    "Score $s = 2\\cdot1 + (-1)\\cdot3 + 1$ — ye exactly kitna aata hai? Trap: score 0 ko 'sahi' maan kar update skip kar dena."
+  ],
+  "ml-nn-perceptron-08": [
+    "NOR ka matlab: sirf $(0,0)$ par output 1, baaki teen corners par 0. Har option ko chaaron corners par test karo.",
+    "Output 1 tab jab $w_1x_1 + w_2x_2 + b > 0$. Har option ke liye scores nikaalo: $(0,0) \\to b$, $(0,1) \\to w_2 + b$, $(1,0) \\to w_1 + b$, $(1,1) \\to w_1 + w_2 + b$.",
+    "$(-1,-1,1.5)$ ke liye $(0,1)$ par score $-1 + 1.5 = 0.5 > 0$ — to wo NOR nahi ho sakta. Baaki options isi tarah check karo; trap: NAND aur NOR mix karna."
+  ],
+  "ml-nn-perceptron-09": [
+    "Sawaal ye hai: kaunsa labelling **linearly separable nahi** hai. Perceptron sirf ek seedhi line khinch sakta hai.",
+    "Har option ke $+1$ corners ko ek line se baaki se alag karne ki koshish karo, jaise $x_1 + x_2 = 1.5$, $x_2 = 0.5$, $x_1 + x_2 = 0.5$.",
+    "Jis option me same label wale corners diagonal par baithe hain ($(0,0)$ ke saath $(1,1)$), wahan koi line kaam karti hai kya? XOR yaad karo."
+  ],
+  "ml-nn-perceptron-10": [
+    "Ek pass kaafi nahi — tab tak chalao jab tak poora pass bina update ke na ho. Point 2 $x = (0,0)$ hai: uska update sirf $b$ badalta hai.",
+    "Har point par $s = w\\cdot x + b$, mistake agar $y s \\le 0$. Phir $w \\leftarrow w + yx$, $b \\leftarrow b + y$. Har pass ke baad $(w, b)$ likhte jao.",
+    "Pass 1: P1 score 0 → $w = (2,1), b = 1$; P2 score $1$, $y = -1$ → mistake, $b = 0$. Aage P3, P4 aur agle passes khud chalao. Trap: pehle pass ke baad ruk jaana."
+  ],
+  "ml-nn-perceptron-11": [
+    "MSQ: har statement ko update rule $w + \\eta y x$, $b + \\eta y$ se seedha check karo. Ek statement $\\eta$ scaling ke baare me hai, ek bound ke.",
+    "Same point ka naya score: $y((w + \\eta y x)\\cdot x + b + \\eta y)$ expand karo, $y^2 = 1$ use karo. Bound $(R/\\gamma)^2$ me kaunse variables hain?",
+    "Zero se shuru karke har update $\\eta$ ka multiple jodta hai — to $(w, b)$ ka sign pattern $\\eta$ par depend karta hai kya? Trap: 'ek update = point hamesha sahi' maan lena."
+  ],
+  "ml-nn-perceptron-12": [
+    "Bound $(R/\\gamma)^2$ me $w^*$ **unit vector** hona chahiye. $u = (3,4)$ unit nahi hai — pehle normalise karo.",
+    "$w^* = u/\\lVert u\\rVert = (0.6, 0.8)$. $\\gamma = \\min_i y_i\\,w^*\\cdot x_i$ aur $R = \\max_i \\lVert x_i\\rVert$ (saare points me se).",
+    "Point 2: $y\\,w^*\\cdot x = -(0.6\\cdot(-2) + 0.8\\cdot1) = 0.4$. Baaki teen margins aur chaaron norms nikaalo, phir ratio square karo. Trap: square bhool jaana."
+  ],
+  "ml-nn-forward-07": [
+    "Layer by layer chalo: pehle $z = W_1x + b_1$ (rows of $W_1$ = units), phir ReLU, phir $v^\\top h + c$.",
+    "$z_i = (\\text{row } i \\text{ of } W_1)\\cdot(2, -1, 1) + b_{1,i}$. ReLU har negative $z_i$ ko 0 kar deta hai.",
+    "Row 1: $2 - 2 - 1 = -1$, plus $b = 0$ → $z_1 = -1$, to $h_1 = 0$. Rows 2, 3 khud karo. Trap: ReLU bhool kar negatives rakh lena."
+  ],
+  "ml-nn-forward-08": [
+    "Do ReLU units ko alag-alag socho: kab $x - 1 > 0$ aur kab $-x - 1 > 0$? Teen regions banenge.",
+    "Regions: $x > 1$, $-1 \\le x \\le 1$, $x < -1$. Har region me sirf active unit ka value jodo; ReLU output kabhi negative nahi.",
+    "$x = 0$ par dono pre-activations $-1$ hain, to $f(0) = 0$. Ab $x = 3$ aur $x = -3$ try karke options match karo. Trap: $|x| - 1$ jo beech me negative ho jaata hai."
+  ],
+  "ml-nn-forward-09": [
+    "Teen stages: sigmoid layer, phir ReLU layer, phir linear output. $\\ln 3$ wala bias dekh kar $\\sigma(\\ln 3)$ ki value carefully nikaalni hai.",
+    "$z = Wx + b$, $h = \\sigma(z)$ jahan $\\sigma(\\ln 3) = 1/(1 + e^{-\\ln 3}) = 1/(1 + 1/3)$. Phir $a = \\mathrm{ReLU}(Uh + c)$.",
+    "$Wx = (2 - 2, 1 - 1) = (0, 0)$, to $z = (0, \\ln 3)$ aur $h_1 = 0.5$. Ab $h_2$, phir $Uh + c$ nikaalo. Trap: $e^{-\\ln 3}$ ko 3 lena."
+  ],
+  "ml-nn-forward-10": [
+    "MSQ: har statement alag property hai — tanh–sigmoid relation, softmax vs sigmoid, ReLU scaling, aur output ka sign.",
+    "$\\sigma(2z) = 1/(1 + e^{-2z})$ se $2\\sigma(2z) - 1$ simplify karo. ReLU ke liye: $c > 0$ par $\\mathrm{ReLU}(cz) = c\\,\\mathrm{ReLU}(z)$.",
+    "Sigmoid units ek doosre ko dekhte hi nahi — to sum 1 kaise force hoga? Output weight negative ho to $\\hat y$ ka sign kya ho sakta hai?"
+  ],
+  "ml-nn-forward-11": [
+    "Row $i$ of $W$ = unit $i$. Order: $Wx$, phir $+b$, phir ReLU — teeno steps chahiye.",
+    "$z_1 = (1, 3)\\cdot(2, 1) + b_1$, $z_2 = (2, -1)\\cdot(2, 1) + b_2$. Phir har negative ko 0.",
+    "$Wx$ ka pehla entry $2 + 3 = 5$; $b_1 = -6$ jodo. Ab doosra unit khud karo. Trap: columns ko units maan lena ($W^\\top x$)."
+  ],
+  "ml-nn-forward-12": [
+    "Teen stages: ReLU hidden, linear logits, phir **softmax** (teeno logits par ek saath), sigmoid nahi.",
+    "$h = \\mathrm{ReLU}(W_1x + b_1)$, $z = Uh + c$, $p_1 = e^{z_1}/(e^{z_1} + e^{z_2} + e^{z_3})$.",
+    "$W_1x = (1 + 1, -1 - 1) = (2, -2)$; $b_1$ jodo aur ReLU lagao, phir $Uh + c$. Trap: hidden ReLU skip karna, ya sirf $\\sigma(z_1)$ lena."
+  ],
+  "ml-nn-params-06": [
+    "Teen dense layers hain: $20\\to32$, $32\\to32$, $32\\to1$. Input layer ke koi parameters nahi; har hidden aur output unit ka ek bias.",
+    "Har layer: $n_{in}\\cdot n_{out} + n_{out}$. Teeno layers ka alag-alag nikaal ke jodo.",
+    "Layer 1: $20\\cdot32 + 32 = 672$. Ab $32\\to32$ aur $32\\to1$ khud karo. Trap: output unit ka akela bias bhool jaana."
+  ],
+  "ml-nn-params-07": [
+    "Dhyan: **no biases anywhere**. Sirf connections (weights) ginne hain, units nahi.",
+    "Weights $= \\sum n_{in}\\cdot n_{out}$ over layers: $3\\cdot4$ plus $4\\cdot2$.",
+    "Pehli layer $3\\cdot4 = 12$ weights. Doosri layer jodo. Trap: teeno sizes multiply kar dena ($3\\cdot4\\cdot2$) ya biases jod dena."
+  ],
+  "ml-nn-params-08": [
+    "Ulta sawaal: total diya hai, input size $d$ dhoondhna hai. Pehle total ko $d$ ke formula me likho.",
+    "Total $= (d + 1)\\cdot16 + (16 + 1)\\cdot4$. Ise 500 ke barabar rakho.",
+    "Output layer $17\\cdot4 = 68$, hidden layer $16d + 16$. To $16d + 84 = 500$ — ab solve karo. Trap: 16 hidden biases bhool jaana."
+  ],
+  "ml-nn-params-09": [
+    "MSQ: har statement ko shape rule se check karo — $W^{(l)}$ ka shape $n_l \\times n_{l-1}$, aur har hidden/output unit ka ek bias.",
+    "Layers: $12\\to8$, $8\\to6$, $6\\to3$. Teesri layer: weights $6\\cdot3$ plus biases 3. Biases total: har non-input unit ka ek.",
+    "$W^{(2)}$: output 6 units, input 8 — rows kaun, columns kaun? Input layer ke 12 numbers data hain ya parameters? Trap: layer count me biases chhodna."
+  ],
+  "ml-nn-params-10": [
+    "Do designs ke parameter count compare karne hain: purani ek layer vs nayi do layers (bottleneck 10). Biases dono me hain.",
+    "Purani: $100\\cdot50 + 50$. Nayi: $(100\\cdot10 + 10) + (10\\cdot50 + 50)$. Saving = purani minus nayi.",
+    "Purani layer $5050$. Nayi pehli layer $1010$ — ab doosri layer jodo, phir subtract karo. Trap: sirf weights compare karna, ya doosri nayi layer bhool jaana."
+  ],
+  "ml-nn-params-11": [
+    "Logistic regression = ek dense layer $30 \\to 1$ with sigmoid. Binary hai, to output unit sirf ek.",
+    "Parameters $= n_{in}\\cdot n_{out} + n_{out}$ with $n_{in} = 30$, $n_{out} = 1$.",
+    "Weights $30\\cdot1$; ab output unit ka bias jodo. Trap: bias $b$ bhool jaana, ya ise 2-output softmax samajhna."
+  ],
+  "ml-nn-params-12": [
+    "Network $10 \\to 20 \\to \\dots \\to 20 \\to 1$, jisme $L$ hidden layers. Pehli hidden layer baaki hidden layers se alag count deti hai.",
+    "Pehli hidden: $10\\cdot20 + 20$. Har agli hidden: $20\\cdot20 + 20$. Output: $20 + 1$. Total $= 220 + 420(L - 1) + 21$.",
+    "$220 + 21 = 241$, to $420(L - 1) = 1501 - 241 = 1260$. Ab $L - 1$ nikaalo aur $L$ tak jao. Trap: $L - 1$ ko hi answer likh dena."
+  ],
+  "ml-nn-backprop-07": [
+    "$w_2$ output layer ka weight hai — iska gradient bas output error times hidden value hai. Loss me $\\tfrac12$ hai.",
+    "$\\partial L/\\partial w_2 = (\\hat y - y)\\cdot h$, jahan $h = \\mathrm{ReLU}(w_1x + b_1)$.",
+    "$z = 2\\cdot2 - 1 = 3$, to $h = 3$ aur $\\hat y = w_2 h = 3$. Ab $(\\hat y - y)$ aur $h$ multiply karo. Trap: $y - \\hat y$ lena (sign ulta)."
+  ],
+  "ml-nn-backprop-08": [
+    "Gradient ka shape hamesha parameter jaisa hota hai. $W$ ka shape kya hai jab $a \\in \\mathbb{R}^4$ aur $z \\in \\mathbb{R}^3$?",
+    "$z_i = \\sum_j W_{ij}a_j + b_i$, to $\\partial L/\\partial W_{ij} = \\delta_i\\,a_j$. Ise matrix form me likho.",
+    "$W$ $3\\times4$ hai, to gradient bhi $3\\times4$. $\\delta a^\\top$ aur $a\\delta^\\top$ ke shapes compare karo. Trap: $\\partial L/\\partial b = \\delta$ ko weight gradient maan lena."
+  ],
+  "ml-nn-backprop-09": [
+    "$W_{21}$ = unit 2, input 1. Index order dhyan se padho: pehla index unit ($\\delta$), doosra input ($a$).",
+    "Rule: $\\partial L/\\partial W_{ij} = \\delta_i\\,a_j$. Yahan $i = 2$, $j = 1$.",
+    "$\\delta_2 = -2$, $a_1 = 3$ — ab multiply karo, sign ke saath. Trap: $\\delta_1 a_2$ le lena (indices swap)."
+  ],
+  "ml-nn-backprop-10": [
+    "Hidden layer ka $\\delta$ chahiye: output $\\delta^{(2)}$ ko $W_2^\\top$ se peeche bhejo, phir ReLU gate lagao. $z^{(1)}$ ke signs se gate milta hai.",
+    "$\\delta^{(1)} = (W_2^\\top\\delta^{(2)}) \\odot \\mathrm{ReLU}'(z^{(1)})$, aur $\\partial L/\\partial W_{1,21} = \\delta^{(1)}_2\\,x_1$.",
+    "$W_2^\\top\\delta^{(2)}$ ka entry 2 = column 2 of $W_2$ dot $(1, -2)$ = $1\\cdot1 + 3\\cdot(-2)$. Unit 2 active hai ($z = 0.5$); ab $x_1$ se multiply karo. Trap: $x_1$ bhool jaana."
+  ],
+  "ml-nn-backprop-11": [
+    "Chain rule: $\\partial L/\\partial z = \\partial L/\\partial h \\cdot \\dfrac{dh}{dz}$. Sawaal sirf $\\sigma$ ke derivative ka hai.",
+    "$\\sigma(z) = 1/(1 + e^{-z})$ ko differentiate karo aur result ko $\\sigma$ ke terms me likho.",
+    "$\\dfrac{d}{dz}(1 + e^{-z})^{-1} = e^{-z}/(1 + e^{-z})^2$. Ise $\\sigma\\cdot(\\dots)$ ke form me todo. Trap: tanh ka $1 - \\tanh^2$ ya ReLU ka 0/1 gate le lena."
+  ],
+  "ml-nn-backprop-12": [
+    "MSQ: chaaron statements gradient flow ke baare me — backprop ki cost, tanh vs sigmoid derivative, sigmoid chain, aur active ReLU.",
+    "$\\sigma'(z) \\le 0.25$, $\\tanh'(z) = 1 - \\tanh^2 z \\le 1$, $\\mathrm{ReLU}'(z) = 1$ for $z > 0$. Har layer gradient ko $w\\cdot\\phi'(z)$ se multiply karti hai.",
+    "Chain me 10 units: kitne $\\sigma'$ factors aate hain, aur har ek kitna bada ho sakta hai? Backprop ek hi backward pass me saare $\\delta$ reuse karta hai ya nahi — socho."
+  ],
+  "ml-nn-backprop-13": [
+    "Scalar chain: $L \\to \\hat y \\to h \\to z \\to w_1$. Hidden unit sigmoid hai, to beech me $\\sigma'(z)$ aayega.",
+    "$\\partial L/\\partial w_1 = (\\hat y - y)\\cdot w_2\\cdot \\sigma'(z)\\cdot x$, jahan $\\sigma'(z) = \\sigma(z)(1 - \\sigma(z))$.",
+    "$z = 1\\cdot2 - 2 = 0$, to $\\sigma(0) = 0.5$ aur $\\hat y = 4\\cdot0.5 + 1 = 3$. Ab $\\sigma'(0)$ nikaal ke chain multiply karo. Trap: $\\sigma'$ ki jagah $\\sigma$ lena."
+  ],
+  "ml-nn-backprop-14": [
+    "Do ReLU layers aur sigmoid + cross-entropy output. Pehle forward chalao taaki dono ReLU gates aur $p$ pata chalein.",
+    "Sigmoid + CE: $\\partial L/\\partial z = p - y$. Phir $\\partial L/\\partial w = (p - y)\\cdot v\\cdot \\mathrm{gate}_2\\cdot u\\cdot \\mathrm{gate}_1\\cdot x$.",
+    "$h_1 = \\mathrm{ReLU}(2 - 1) = 1$, $h_2 = \\mathrm{ReLU}(-1 + 3) = 2$, output $z = 2 - 2 = 0$, to $p = \\sigma(0)$. Ab chain multiply karo. Trap: $\\sigma'$ dobara multiply karna, ya $u = -1$ ka sign khona."
+  ],
+  "ml-nn-backprop-15": [
+    "Unit 2 ka $z_2 < 0$, to $h_2 = 0$ aur ReLU gate 0. Socho kaunse parameters is unit se **ho kar** guzarte hain — andar aane wale bhi, bahar jaane wala bhi.",
+    "Incoming: $\\partial L/\\partial W_{2j} = \\delta_2 x_j$, $\\partial L/\\partial b_2 = \\delta_2$, jahan $\\delta_2 = v_2(\\hat y - y)\\cdot\\mathrm{ReLU}'(z_2)$. Outgoing: $\\partial L/\\partial v_2 = (\\hat y - y)\\,h_2$.",
+    "$\\mathrm{ReLU}'(z_2) = 0$, to $\\delta_2$ kya hoga? Aur $h_2 = 0$ hone se $v_2$ ka gradient? Trap: sirf ek side (incoming ya outgoing) dekhna."
+  ],
+  "ml-nn-backprop-16": [
+    "MSQ: har option ek single entry hai. Rule yaad karo: weight gradient $= \\delta_i\\,a_j$, bias gradient $= \\delta_i$.",
+    "$\\partial L/\\partial W = \\delta a^\\top$ with $\\delta = (2, -1)$, $a = (3, 0)$. Bias ke liye $\\partial z_i/\\partial b_i = 1$.",
+    "$W_{11}$: $\\delta_1 a_1 = 2\\cdot3$ — option se compare karo. Baaki entries isi tarah, sign ke saath. Trap: input $a_j$ se multiply bhool jaana."
+  ],
+  "ml-nn-sgd-07": [
+    "Sirf bias ka update chahiye. Pehle forward pass me $\\hat y$ nikaalo — bias $b = 1$ ko bhi jodna hai.",
+    "$\\tfrac12$ wale loss me $\\partial L/\\partial b = \\hat y - y$. Update: $b \\leftarrow b - 0.25\\,(\\hat y - y)$.",
+    "$\\hat y = 0.5\\cdot2 + 2\\cdot(-1) + 1$ nikaalo, phir $\\hat y - (-2)$. Trap: minus ki jagah plus (ascent) ya factor 2 lagana."
+  ],
+  "ml-nn-sgd-08": [
+    "Gradient descent: gradient ki **ulti** direction me chalna hai, har component apne sign ke saath.",
+    "$w \\leftarrow w - \\eta\\nabla L = (1, 1) - 0.1\\cdot(3, -2)$.",
+    "$0.1\\cdot(3, -2) = (0.3, -0.2)$. Ab $(1,1)$ me se subtract karo — negative ko subtract karna = add. Trap: $\\eta$ bhool jaana."
+  ],
+  "ml-nn-sgd-09": [
+    "Logistic + cross-entropy ka shortcut: $\\partial L/\\partial z = p - y$. Yahan $w \\ne 0$, to pehle $z$ aur $p$ nikaalne padenge.",
+    "$\\partial L/\\partial w_1 = (p - y)\\,x_1$ aur $w_1 \\leftarrow w_1 - 0.5\\,(p - y)\\,x_1$, jahan $p = \\sigma(w^\\top x + b)$.",
+    "$z = 1\\cdot2 + (-1)\\cdot1 = 1$, to $p = \\sigma(1) = 1/(1 + e^{-1})$. Ab $p - 0$ ko $x_1 = 2$ se multiply karke step lo. Trap: $\\sigma'$ dobara multiply karna."
+  ],
+  "ml-nn-sgd-10": [
+    "MSQ: mini-batch SGD ke chaar facts — gradient of mean, kis data par update, epoch me updates, aur batch size ka step par asar.",
+    "Mean loss $\\frac1B\\sum L_i$ ka gradient linear hota hai. Ek epoch me har batch par ek update hota hai: updates $= N/B$.",
+    "$N/B = 1000/50$ khud check karo. Mean loss me $B$ double karne se gradient ka scale badalta hai kya? Trap: SGD ko full-batch GD samajhna."
+  ],
+  "ml-nn-sgd-11": [
+    "Softmax + cross-entropy: $\\partial L/\\partial z_k = p_k - y_k$. Class 2 true class nahi hai, to $y_2 = 0$.",
+    "$p_k = e^{z_k}/\\sum_j e^{z_j}$, aur $e^{\\ln 4} = 4$, $e^{\\ln 3} = 3$, $e^0 = 1$.",
+    "Denominator $4 + 3 + 1 = 8$. Ab $p_2$ nikaalo aur $y_2$ subtract karo. Trap: class 2 ko true class maan kar $p_2 - 1$ lena."
+  ],
+  "ml-nn-sgd-12": [
+    "Softmax output layer ka ek weight update. $W = 0$ se shuru hai, to saare logits barabar — probabilities easy hain.",
+    "$\\partial L/\\partial W_{kj} = (p_k - y_k)\\,h_j$, aur $W_{32} \\leftarrow W_{32} - 0.3\\,(p_3 - y_3)\\,h_2$.",
+    "Logits $(0, 0, 0)$, to har $p_k = 1/3$. True class 3, to $p_3 - y_3 = 1/3 - 1$. Ab $h_2$ aur $\\eta$ lagao. Trap: $h_1$ le lena."
+  ],
+  "ml-nn-sgd-13": [
+    "Label $y = 0$ hai lekin $z = 12$ bahut bada — model confident aur galat hai. Loss cross-entropy hai, squared error nahi.",
+    "Sigmoid + CE: $\\partial L/\\partial z = p - y$, jahan $p = \\sigma(12)$.",
+    "$\\sigma(12) = 1/(1 + e^{-12})$ — ye 0 ke paas hai ya 1 ke? Trap: saturation ki wajah se gradient zero maan lena (wo SE me hota hai)."
+  ],
+  "ml-nn-sgd-14": [
+    "Plain SGD: har example ke **baad** $w$ update hota hai, to doosre example ka gradient naye $w$ par nikalta hai.",
+    "Har step: gradient $= (wx - y)\\,x$ (½ wala loss), phir $w \\leftarrow w - 0.1\\cdot\\text{gradient}$.",
+    "Step 1 at $w = 0$: gradient $(0 - 2)\\cdot1 = -2$, to $w = 0.2$. Ab $w = 0.2$ par example $(2, 1)$ karo. Trap: dono gradients $w = 0$ par hi nikaalna."
+  ],
+  "ml-nn-sgd-15": [
+    "Dhyan: sigmoid output ke saath **squared error**, aur ½ nahi hai. CE wala shortcut $p - y$ yahan nahi chalega.",
+    "$\\partial L/\\partial w = 2(p - y)\\cdot p(1 - p)\\cdot x$, aur $w \\leftarrow w - \\eta\\,\\partial L/\\partial w$.",
+    "$w = 0$ par $z = 0$, $p = \\sigma(0)$ aur $\\sigma'(0) = 0.25$. Ab chaaron factors multiply karke step lo. Trap: factor 2 chhodna, ya plus karna."
+  ],
+  "ml-nn-sgd-16": [
+    "MSQ: har statement ko update $w - \\eta\\nabla L$ se seedha check karo — sign, step ka size, aur linear model ka gradient.",
+    "Step vector $= -\\eta\\nabla L$, length $= \\eta\\lVert\\nabla L\\rVert$. Linear model: $\\partial/\\partial w$ of $\\tfrac12(w^\\top x - y)^2$ chain rule se nikaalo.",
+    "Gradient double ho jaaye aur $\\eta$ same rahe to step chhota hoga ya bada? Aur 'loss increase' kya descent ka goal hai? Trap: ascent vs descent mix karna."
+  ]
+}

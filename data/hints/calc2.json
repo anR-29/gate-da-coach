@@ -1,0 +1,207 @@
+{
+  "calc-limits-06": [
+    "$x=0$ daalo: upar $1-\\cos 0=0$, neeche $0$ — $0/0$ form. Neeche $x^2$ hai, to upar ka $x^2$ wala term dhoondhna hai.",
+    "Standard approximation: $1-\\cos u\\approx\\frac{u^2}{2}$, yahan $u=4x$.",
+    "$u^2=(4x)^2=16x^2$ — square poore $4x$ ka hoga, sirf $x$ ka nahi. Aur $\\frac{1}{2}$ mat chhodo; ab $x^2$ se divide karo."
+  ],
+  "calc-limits-07": [
+    "$x\\to\\infty$ par upar $(\\ln x)^2$ aur neeche $x$ dono $\\infty$ — $\\infty/\\infty$ form. Sawaal hai: kaun tez badhta hai?",
+    "L'Hôpital: upar ka derivative chain rule se $2\\ln x\\cdot\\frac{1}{x}$, neeche ka $1$.",
+    "Pehle step ke baad $\\frac{2\\ln x}{x}$ — abhi bhi $\\infty/\\infty$, ek baar aur L'Hôpital lagao. Dhyan: $\\infty/\\infty$ ko 1 mat samjho."
+  ],
+  "calc-limits-08": [
+    "$\\tan 3x$ aur $\\sin 3x$ dono $\\approx 3x$ — first-order terms cancel ho jaate hain. Neeche $x^3$ hai, to dono ka $u^3$ term chahiye.",
+    "$u=3x$ lo: $\\tan u=u+\\frac{u^3}{3}+\\dots$ aur $\\sin u=u-\\frac{u^3}{6}+\\dots$",
+    "Difference: $\\frac{u^3}{3}-\\left(-\\frac{u^3}{6}\\right)$ — minus ke baad sign plus ho jaata hai. Phir $u^3=(3x)^3$ daalo, sirf $3x^3$ nahi."
+  ],
+  "calc-limits-09": [
+    "Base $\\frac{1+x}{1-x}\\to1$ aur exponent $\\frac1x\\to\\infty$ — ye $1^\\infty$ form hai, seedha 1 nahi.",
+    "Rule: $\\lim f^g=e^{\\lim (f-1)g}$. Yahan $f-1=\\frac{1+x}{1-x}-1$ simplify karo.",
+    "$f-1=\\frac{2x}{1-x}$. Ab ise $g=\\frac1x$ se multiply karke $x\\to0$ lo. Trap: sirf $(1+x)^{1/x}\\to e$ lekar neeche wala part bhool jaana."
+  ],
+  "calc-limits-10": [
+    "Har option alag check karo. Pehle dekho kaun sa sach me $0/0$ hai — ek option me $x=0$ daalne par $0/0$ nahi aata.",
+    "Standard limits: $\\frac{e^{ax}-1}{x}\\to a$, $\\frac{\\ln(1+u)}{u}\\to1$, $\\frac{a^x-1}{x}\\to\\ln a$.",
+    "$\\frac{x+2}{2x+1}$ me $x=0$ seedha daalo — L'Hôpital tabhi lagta hai jab form $0/0$ ho. $\\frac{\\ln(1+2x)}{2x}$ me upar-neeche dono me $2x$ hai, cancel socho."
+  ],
+  "calc-one-sided-06": [
+    "Sirf left-hand limit ($x\\to4^-$) poocha hai. $|x-4|$ ka sign $x<4$ par kya hai, wahi decide karega.",
+    "$x<4$ par $x-4<0$, isliye $|x-4|=-(x-4)=4-x$. Upar $x^2-16=(x-4)(x+4)$.",
+    "$\\frac{(x-4)(x+4)}{-(x-4)}$ me $(x-4)$ cancel karo, minus sign bacha rahega. Trap: $|x-4|$ ko $x-4$ likh dena — wo right side ka form hai."
+  ],
+  "calc-one-sided-07": [
+    "$x\\to2^-$ matlab $x$ thoda sa 2 se kam, jaise $1.999$. Floor ki value wahan kya hai, ye pehle socho.",
+    "$1\\le x<2$ par $\\lfloor x\\rfloor=1$. $x^2$ continuous hai, to wo seedha $2^2$ ki taraf jaata hai.",
+    "Do alag cheezein: $x^2\\to4$ aur $\\lfloor x\\rfloor\\to1$. Trap: $\\lfloor 2\\rfloor=2$ use karna — left se aate waqt floor abhi 2 nahi hua."
+  ],
+  "calc-one-sided-08": [
+    "Poora function $e^{1/x}$ par tika hai. $x\\to0^-$ aur $x\\to0^+$ par $1/x$ alag-alag direction me jaata hai.",
+    "$x\\to0^-$: $1/x\\to-\\infty$, $e^{1/x}\\to0$. $x\\to0^+$: $e^{1/x}\\to\\infty$, to upar-neeche $e^{1/x}$ se divide karo.",
+    "Left side: $e^{1/x}=0$ daalo, $\\frac{5+0}{1+0}$. Right side: $\\frac{5e^{-1/x}+3}{e^{-1/x}+1}$ banao. Trap: sides swap mat karna — left wala pehle likhna hai."
+  ],
+  "calc-one-sided-09": [
+    "Do floor ek saath: $\\lfloor x\\rfloor$ aur $\\lfloor -x\\rfloor$. Teen cheezein alag nikalo — left limit, right limit, aur $f(2)$.",
+    "Left ($x=1.99$): $\\lfloor x\\rfloor=1$, $-x=-1.99$. Right ($x=2.01$): $\\lfloor x\\rfloor=2$, $-x=-2.01$. Floor of negative number: neeche wala integer.",
+    "$\\lfloor -1.99\\rfloor=-2$ aur $\\lfloor -2.01\\rfloor=-3$ (minus side par neeche). Ab dono sums aur $f(2)=\\lfloor2\\rfloor+\\lfloor-2\\rfloor$ compare karo."
+  ],
+  "calc-one-sided-10": [
+    "Teen pieces: $x<1$, $x=1$, $x>1$. Limit sirf paas ke pieces se aata hai; beech ka $f(1)=5$ continuity ke liye dekhna hai.",
+    "Left limit $=\\lim_{x\\to1^-}(x^2+1)$, right limit $=\\lim_{x\\to1^+}(3-x)$. Equal hon to limit exists.",
+    "Dono me $x=1$ daalo aur compare karo; phir us limit ko $f(1)=5$ se milao. Trap: $f(1)$ alag hai isliye limit nahi — ye galat logic hai."
+  ],
+  "calc-continuity-const-05": [
+    "Continuity ke liye $k$ ko $x\\to0$ wale limit ke barabar hona chahiye. $x=0$ par upar $\\sqrt{16}-4=0$, neeche 0 — $0/0$.",
+    "Square root wala $0/0$: conjugate $\\sqrt{x+16}+4$ se upar-neeche multiply karo. Upar $(x+16)-16$ banega.",
+    "Upar $x$ bachta hai jo neeche ke $x$ se cancel hota hai; neeche $\\sqrt{x+16}+4$ rehta hai. Ab $x=0$ daalo — trap: $+4$ bhool jaana."
+  ],
+  "calc-continuity-const-06": [
+    "Break point $x=2$ hai. Left piece $ax+1$ aur right piece $x^2-a$ dono me $a$ hai — dono side ka value barabar karna hai.",
+    "Left limit $=2a+1$. Right limit $=f(2)=2^2-a$. Equation: $2a+1=4-a$.",
+    "$a$ wale terms ek side, numbers doosri side — sign badalna mat bhoolo: $-a$ left me aakar $+a$ banega, $+1$ right me jaakar $-1$."
+  ],
+  "calc-continuity-const-07": [
+    "Teen cheezein barabar: left limit, $f(0)=8$, right limit. Left piece $0/0$ hai, right piece seedha.",
+    "$1-\\cos u\\approx\\frac{u^2}{2}$ with $u=ax$: left limit $=\\frac{a^2}{2}$. Right limit $=b$.",
+    "$\\frac{a^2}{2}=8$ se $a^2$ nikalo, phir root — condition $a>0$ dekho. Trap: $\\frac12$ chhod dena ya $a$ ki jagah $a^2$ add kar dena."
+  ],
+  "calc-continuity-const-08": [
+    "$x=2$ par neeche $x-2=0$. Agar upar 0 nahi hua to limit infinite hoga — isliye pehle $a$ isi condition se nikalta hai.",
+    "Condition: numerator at $x=2$: $4+2a+6=0$. Phir quadratic factor karo, $(x-2)$ cancel hoga, aur $b$ = bacha hua factor at $x=2$.",
+    "$a$ milne ke baad $x^2+ax+6$ ko $(x-2)(x-c)$ ke roop me likho, $c$ ka sign dhyan se. Trap: $b$ nikalna bhool jaana."
+  ],
+  "calc-continuity-const-09": [
+    "$x=1$ par left piece $k^2x+2$ aur right piece $3kx$ — $k$ ki equation quadratic banegi, to ek se zyada $k$ ho sakte hain.",
+    "Left limit $=k^2+2$, right $=f(1)=3k$. Equation: $k^2-3k+2=0$.",
+    "Quadratic factor karte waqt signs dhyan se — $(k+\\cdot)$ vs $(k-\\cdot)$. Shak ho to har option ko $k^2+2$ aur $3k$ dono me daal ke compare karo."
+  ],
+  "calc-continuity-const-10": [
+    "$\\sin\\frac1x$ akela 0 ke paas oscillate karta hai, lekin yahan wo $x$ se multiply hai. Ye squeeze wala case hai.",
+    "$|\\sin\\frac1x|\\le1$, isliye $|x\\sin\\frac1x|\\le|x|$. Continuity: $k=\\lim_{x\\to0}x\\sin\\frac1x$.",
+    "Bound $|x|$ ka $x\\to0$ par kya hota hai? Wahi product ka limit hai. Trap: $\\frac{\\sin x}{x}\\to1$ se confuse karna — yahan sine ke andar $\\frac1x$ hai."
+  ],
+  "calc-composition-06": [
+    "$(g\\circ f)(1)=g(f(1))$ — pehle andar wala $f$ lagta hai. Aur $(f\\circ g)(1)=f(g(1))$ — pehle $g$.",
+    "$f(1)=2\\cdot1+1$, phir use $g(u)=u^2-3$ me daalo. Doosre ke liye $g(1)=1-3$, phir $f$ me.",
+    "$f(1)=3$, $g(3)=9-3$. $g(1)=-2$, $f(-2)=2(-2)+1$. Trap: order ulta lena — andar wala function pehle chalta hai."
+  ],
+  "calc-composition-07": [
+    "Bahar $e^{u}$ hai jo har jagah continuous hai, to limit andar le ja sakte ho. Asli kaam andar ka $\\frac{1-\\cos x}{x^2}$ hai.",
+    "$1-\\cos x\\approx\\frac{x^2}{2}$, to andar ka limit $\\frac{x^2/2}{x^2}$.",
+    "Andar ka limit nikalke $e^{(\\cdot)}$ me daalo. Trap: $1-\\cos x\\approx x^2$ likh dena (half bhool gaye) ya andar $x=0$ daal ke 0 maan lena."
+  ],
+  "calc-composition-08": [
+    "$f$ me $u=0$ par jump hai. Isliye dekhna padega $g(x)=-x^2$ zero ki taraf kis side se aata hai.",
+    "$x\\ne0$ ke liye $-x^2<0$, matlab $u$ hamesha negative side se 0 ke paas. To $f$ ka piece $u+1$ lagega. $h(0)=f(g(0))=f(0)$ alag se nikalo.",
+    "Limit ke liye $f(-x^2)=-x^2+1$ ka $x\\to0$ lo; value ke liye $f(0)=0^2+3$. Trap: $f(\\lim g)$ seedha lagana — $f$ wahan continuous nahi."
+  ],
+  "calc-composition-09": [
+    "2027 baar compose karna haath se nahi hoga — pattern dhoondho. $f(2)$, $f(f(2))$, ... kuch steps nikalo.",
+    "$f(2)=\\frac{1}{1-2}=-1$. Ab $f(-1)$ aur uske baad wala value nikalo — dekho kitne steps baad 2 wapas aata hai (cycle length).",
+    "Cycle 3 ka hai, to 2027 ko 3 se divide karke remainder lo; utne steps hi effectively bachte hain. Trap: remainder galat lena ($3\\cdot675=2025$)."
+  ],
+  "calc-composition-10": [
+    "Floor tabhi jump karta hai jab andar wala $x^2$ kisi integer ko cross kare. Har option me dekho $x^2$ wahan cross karta hai ya sirf touch.",
+    "$x$ near 0: $x^2\\in[0,1)$. $x$ near 1: left $x^2<1$, right $x^2>1$. $x=\\sqrt2$ par $x^2=2$.",
+    "$x\\to0^-$ par bhi $x^2$ positive hai — $\\lfloor x\\rfloor$ jaisa behaviour mat lo. $\\sqrt2$ ke left-right $x^2$ ki floor value compare karo."
+  ],
+  "calc-differentiability-06": [
+    "$|\\sin x|$: andar $\\sin x$ zero par sign badalta hai ($x<0$ par negative). Absolute value aise point par corner bana sakta hai.",
+    "Pehle continuity check karo, phir left aur right derivative alag: $f'(0^\\pm)=\\lim_{h\\to0^\\pm}\\frac{|\\sin h|}{h}$.",
+    "$h>0$: $|\\sin h|=\\sin h$, ratio $\\to1$. $h<0$: $|\\sin h|=-\\sin h$ — ab ratio ka limit nikalo aur compare karo. Trap: sirf right side dekhna."
+  ],
+  "calc-differentiability-07": [
+    "Corner sirf $|x-2|$ se aa sakta hai. Dono sides par absolute value hata ke alag formula likho.",
+    "$x>2$: $f=(x-2)(x+1)=x^2-x-2$. $x<2$: $f=-(x^2-x-2)$. Dono ka derivative $x=2$ par chahiye.",
+    "Right: $f'=2x-1$ at 2 $=3$. Left wala bhi isi tarah nikalo (minus sign ke saath), phir right minus left. Trap: order ulta karna."
+  ],
+  "calc-differentiability-08": [
+    "$f(0)$ alag se 0 define kiya hai. Har option me teen alag cheezein hain: continuity, $f'(0)$ (definition se), aur $x\\to0$ par $f'(x)$ ka behaviour.",
+    "$f'(0)=\\lim_{h\\to0}\\frac{h^2\\sin(1/h)-0}{h}=\\lim h\\sin\\frac1h$. Aur $x\\ne0$ par product + chain rule se $f'(x)$ nikalo.",
+    "$x\\ne0$: $f'(x)=2x\\sin\\frac1x+x^2\\cos\\frac1x\\cdot(-\\frac1{x^2})$. Dekho kaunsa term 0 ki taraf nahi jaata. Trap: $f'(0)$ exist karna = $f'$ continuous maan lena."
+  ],
+  "calc-differentiability-09": [
+    "Differentiable hone ke liye do conditions: values match (continuity) aur slopes match. Do unknowns $a,b$, do equations.",
+    "Continuity at 0: $ae^0+b=\\sin0+3$. Slope: left $ae^x$ at 0, right $\\frac{d}{dx}(\\sin2x)$ at 0.",
+    "Slope equation se $a$ nikalo — $\\sin 2x$ ka derivative chain rule se $2\\cos2x$ hai, 2 mat bhoolo. Phir continuity equation me daalo."
+  ],
+  "calc-differentiability-10": [
+    "$\\max(x,x^2)$ ka graph jahan dono curves cross karte hain wahan switch karta hai. Wahan slopes alag hon to corner banega.",
+    "Crossing points: $x^2=x$ solve karo. Har point par left aur right wale piece ka slope ($1$ ya $2x$) compare karo.",
+    "$x^2=x\\Rightarrow x(x-1)=0$. Pehle point par slopes $2x$ aur $1$ compare karo, phir doosre par. Trap: sirf ek crossing check karna."
+  ],
+  "calc-derivative-rules-06": [
+    "Bahar power 5, andar $2x+1$ — ye chain rule ka case hai.",
+    "$f'(x)=5(2x+1)^4\\cdot\\frac{d}{dx}(2x+1)$.",
+    "Andar ka derivative 2 hai — use multiply karna mat bhoolo. Phir $x=0$ daalo, $(2\\cdot0+1)^4=1$."
+  ],
+  "calc-derivative-rules-07": [
+    "$\\frac{x}{e^x}$ ko $xe^{-x}$ likh sakte ho — quotient ki jagah product rule easy padega.",
+    "Product rule: $(uv)'=u'v+uv'$ with $u=x$, $v=e^{-x}$, aur $v'=-e^{-x}$ (chain rule se minus).",
+    "$u'v=e^{-x}$, $uv'=x\\cdot(-e^{-x})$. Ab $e^{-x}$ common nikalo. Trap: $e^{-x}$ ka derivative $+e^{-x}$ likhna."
+  ],
+  "calc-derivative-rules-08": [
+    "$x^x$ me base aur exponent dono variable — na power rule chalega na exponential rule akela. Log le lo.",
+    "$\\ln f=x\\ln x$. Dono side differentiate: $\\frac{f'}{f}=\\ln x+x\\cdot\\frac1x$.",
+    "$f'(x)=x^x(\\ln x+1)$. Ab $x=2$ daalo: $2^2=4$ aur $\\ln2\\approx0.693$. Trap: sirf $x\\cdot x^{x-1}$ ya sirf $x^x\\ln x$ lena."
+  ],
+  "calc-derivative-rules-09": [
+    "Dasvaan derivative haath se nahi — pehle 2–3 derivatives nikal ke pattern dekho.",
+    "$f'=e^x+xe^x=(x+1)e^x$. Ab $f''$ nikalo — wo bhi $(x+c)e^x$ form me aayega; $c$ ka pattern dekho.",
+    "$f''=e^x+(x+1)e^x$. Pattern ko $n=10$ tak le jao aur $x=0$ daalo. Trap: off-by-one ya $10!$ se multiply karke coefficient bhool jaana."
+  ],
+  "calc-derivative-rules-10": [
+    "Char alag derivatives — har ek ko chain/power rule se khud nikal ke given answer se milao.",
+    "$\\sin^2x$: $2\\sin x\\cdot\\cos x$. $\\ln(\\cos x)$: $\\frac{1}{\\cos x}\\cdot(\\cos x)'$. $\\frac1{x^2}=x^{-2}$.",
+    "$(\\cos x)'=-\\sin x$ — sign dhyan se. $x^{-2}$ ka derivative: power aage aati hai aur exponent 1 kam hota hai, $-2-1$."
+  ],
+  "calc-taylor-06": [
+    "$\\frac{1}{1+2x}$ geometric series jaisa dikhta hai: $\\frac{1}{1-u}$. Bas $u$ kya hai, sign ke saath, wo pehchano.",
+    "$1+2x=1-(-2x)$, to $u=-2x$ aur $\\frac{1}{1-u}=1+u+u^2+u^3+\\dots$",
+    "$x^3$ wala term $u^3=(-2x)^3$ hai — minus aur 2 dono ka cube hoga. Trap: $e^x$ ki tarah $3!$ se divide karna; geometric me factorial nahi hota."
+  ],
+  "calc-taylor-07": [
+    "$\\sin 2x$ ka series $\\sin u$ me $u=2x$ rakh ke milta hai. $x^5$ wala term $u^5$ se aayega.",
+    "$\\sin u=u-\\frac{u^3}{3!}+\\frac{u^5}{5!}-\\dots$ — $u^5$ term ka sign aur $5!=120$ note karo.",
+    "$u^5=(2x)^5=2^5x^5$, to coefficient $\\frac{2^5}{120}$. Trap: $2^5$ bhool jaana, ya $u^5$ term ko negative le lena."
+  ],
+  "calc-taylor-08": [
+    "Ye do series ka product hai: $e^x$ aur $\\frac{1}{1-x}$. $x^3$ ka coefficient har pair se aata hai jinki powers ka sum 3 ho.",
+    "$e^x=\\sum\\frac{x^k}{k!}$, $\\frac{1}{1-x}=\\sum x^m$ (har coefficient 1). Coefficient $=\\sum_{k=0}^{3}\\frac{1}{k!}\\cdot1$.",
+    "Pairs: $(k,m)=(0,3),(1,2),(2,1),(3,0)$ — chaaron add karo. Trap: sirf ek pair lena ya $k=3$ wala chhod dena."
+  ],
+  "calc-taylor-09": [
+    "Expansion point $a=2$ hai, 0 nahi. Coefficient $(x-2)^3$ ka chahiye.",
+    "Rule: coefficient of $(x-a)^n=\\frac{f^{(n)}(a)}{n!}$. Yahan $f=e^x$, $n=3$, $a=2$.",
+    "$e^x$ ka har derivative $e^x$ hi hai, to $f'''(2)$ seedha likh lo; phir $3!$ se divide karo. Trap: Maclaurin wala $\\frac1{3!}$ hi likh dena."
+  ],
+  "calc-taylor-10": [
+    "$\\cos x$ ka Maclaurin series likho, phir har option alag check karo — kuch coefficient ke baare me hain, kuch derivative ke.",
+    "$\\cos x=1-\\frac{x^2}{2!}+\\frac{x^4}{4!}-\\dots$ Relation: $f^{(n)}(0)=n!\\cdot c_n$.",
+    "Derivative wale options me $n!$ se multiply karo, coefficient se confuse mat karo. $\\cos 2x$ me $u=2x$ — $u^4=(2x)^4$, 2 ka bhi power lagega."
+  ],
+  "calc-series-sums-06": [
+    "Har term pichhle ka $\\frac13$ — geometric series. Dhyan do sum $n=1$ se shuru hai.",
+    "Formula: sum $=\\frac{\\text{pehla term}}{1-r}$. Yahan $r=\\frac13$ aur pehla term $n=1$ par $\\frac{5}{3}$.",
+    "$1-r=\\frac23$. Ab pehle term ko isse divide karo. Trap: pehla term 5 lena — wo $n=0$ ka term hai, jo yahan nahi hai."
+  ],
+  "calc-series-sums-07": [
+    "Ratio $r=-\\frac12$ — negative hai, lekin $|r|<1$. Sum $n=0$ se shuru hai.",
+    "$n=0$ se: $\\sum r^n=\\frac{1}{1-r}$. Yahan $1-r=1-(-\\frac12)$.",
+    "$1-(-\\frac12)=1+\\frac12$ — minus-minus plus. Ab 1 ko isse divide karo. Trap: minus sign ignore karke $r=\\frac12$ le lena."
+  ],
+  "calc-series-sums-08": [
+    "Denominator do factors ka product hai jo 2 se differ karte hain — telescoping ke liye partial fractions banao.",
+    "$\\frac{1}{(2n-1)(2n+1)}=\\frac{1}{2}\\left(\\frac{1}{2n-1}-\\frac{1}{2n+1}\\right)$ — factor $\\frac12$ isliye ki dono denominators ka difference 2 hai.",
+    "Terms likho: $(1-\\frac13)+(\\frac13-\\frac15)+\\dots$ — beech wale cancel. Bacha hua pehla term aur $\\frac12$ factor yaad rakho."
+  ],
+  "calc-series-sums-09": [
+    "Terms $\\frac{n^2}{2^n}$ — $n^2$ badhta hai par $2^n$ bahut tez, to converge. Ye $\\sum n^2x^n$ ka case hai, $x=\\frac12$.",
+    "Formula: $\\sum_{n\\ge1}n^2x^n=\\frac{x(1+x)}{(1-x)^3}$ (yeh $\\sum nx^n$ ko differentiate karke $x$ se multiply karne se aata hai).",
+    "$x=\\frac12$: upar $\\frac12\\cdot\\frac32$, neeche $(\\frac12)^3$. Trap: $\\sum nx^n$ wala formula laga dena ya $(1+x)$ factor chhodna."
+  ],
+  "calc-series-sums-10": [
+    "Har series ke liye ek test chuno: p-series, n-th term test, ya comparison. Terms $\\to0$ hona akela kaafi nahi.",
+    "p-series $\\sum\\frac1{n^p}$ converge iff $p>1$. $(-1)^n$ ke terms 0 ki taraf jaate hain? $\\frac{n}{n^3+1}$ bade $n$ par kis $\\frac{1}{n^p}$ jaisa hai?",
+    "$\\frac1{\\sqrt n}$ me $p=\\frac12$; $\\frac{n}{n^3+1}\\approx\\frac{n}{n^3}$. Trap: $(-1)^n$ ke partial sums bounded hain, isliye converge maan lena."
+  ]
+}

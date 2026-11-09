@@ -1,13 +1,15 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611092302';
+import { addEvent, allEvents, cfg } from './store.js?v=202611092317';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
 export const REVIEW_CAP = 10;
 export const REPAIRS_PER_SKILL = 2;
 // Question files; a file's "area" field (not its name) decides the subject, so an area can span files.
-const AREAS = ['ps', 'la', 'calc', 'py', 'dsa', 'dsa2', 'db', 'ml', 'ml2', 'ai', 'ga'];
+// Extension files (calc2, py2, ...) add questions to skills defined in the base files.
+const AREAS = ['ps', 'la', 'calc', 'calc2', 'calc3', 'py', 'py2', 'dsa', 'dsa2', 'dsa3', 'dsa4', 'dsa5',
+  'db', 'db2', 'db3', 'db4', 'ml', 'ml2', 'ml3', 'ml4', 'ml5', 'ml6', 'ml7', 'ml8', 'ai', 'ai2', 'ga'];
 
 export const content = { plan: null, skills: {}, questions: {}, bySkill: {}, theory: new Set() };
 

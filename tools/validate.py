@@ -15,15 +15,20 @@ def main():
     errors, ids, total = [], set(), 0
     plan_days = {d["day"] for d in json.load(open(os.path.join(ROOT, "data", "plan.json"), encoding="utf-8"))["days"]}
     plan_days |= set(range(1, 113))
+    # skills may be defined in one file and extended with questions from another (e.g. calc2.json)
+    all_skills, files = {}, []
     for name in sorted(os.listdir(QDIR)):
         if not name.endswith(".json"):
             continue
-        path = os.path.join(QDIR, name)
         try:
-            data = json.load(open(path, encoding="utf-8"))
+            data = json.load(open(os.path.join(QDIR, name), encoding="utf-8"))
         except Exception as e:  # noqa: BLE001
             errors.append(f"{name}: JSON error {e}")
             continue
+        files.append((name, data))
+        all_skills.update(data.get("skills", {}))
+    grand = {k: 0 for k in all_skills}
+    for name, data in files:
         skills = data.get("skills", {})
         per_skill = {k: 0 for k in skills}
         for sid, s in skills.items():
@@ -39,10 +44,12 @@ def main():
             if qid in ids:
                 errors.append(f"{where}: duplicate id")
             ids.add(qid)
-            if q.get("skill") not in skills:
+            if q.get("skill") not in all_skills:
                 errors.append(f"{where}: unknown skill {q.get('skill')}")
             else:
-                per_skill[q["skill"]] += 1
+                grand[q["skill"]] += 1
+                if q["skill"] in per_skill:
+                    per_skill[q["skill"]] += 1
             t = q.get("type")
             if q.get("marks") not in (1, 2):
                 errors.append(f"{where}: marks must be 1 or 2")
@@ -69,11 +76,11 @@ def main():
                         errors.append(f"{where}: bad trap {tr}")
             else:
                 errors.append(f"{where}: bad type {t}")
-        for sid, n in per_skill.items():
-            need = 10 if sid.startswith("ga.") else 4
-            if n < need:
-                errors.append(f"{name}: skill {sid} has {n} questions (< {need})")
-        print(f"{name}: {len(skills)} skills, {sum(per_skill.values())} questions")
+        print(f"{name}: {len(skills)} skills, {len(data.get('questions', []))} questions")
+    for sid, n in grand.items():
+        need = 10 if sid.startswith("ga.") else 4
+        if n < need:
+            errors.append(f"skill {sid} has {n} questions (< {need})")
     print(f"TOTAL {total} questions")
     if errors:
         print(f"{len(errors)} problem(s):")

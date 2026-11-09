@@ -1,0 +1,758 @@
+{
+  "area": "calc",
+  "skills": {},
+  "questions": [
+    {
+      "id": "calc-limits-06",
+      "skill": "calc.limits",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Evaluate $$\\lim_{x\\to 0}\\frac{1-\\cos 4x}{x^2}.$$",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 8, "tol": 0 },
+      "traps": [
+        { "value": 16, "why": "Used $1-\\cos u\\approx u^2$ and dropped the $\\frac{1}{2}$ in $\\frac{u^2}{2}$.", "trap": "C4" },
+        { "value": 2, "why": "Wrote $\\frac{4x^2}{2}$ instead of $\\frac{(4x)^2}{2}=8x^2$; the 4 must be squared too.", "trap": "C4" }
+      ],
+      "solution": "1. Form is $0/0$.\n2. $1-\\cos u\\approx\\frac{u^2}{2}$ with $u=4x$: numerator $\\approx\\frac{16x^2}{2}=8x^2$.\n3. Limit $=8$."
+    },
+    {
+      "id": "calc-limits-07",
+      "skill": "calc.limits",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\lim_{x\\to\\infty}\\frac{(\\ln x)^2}{x}$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$0$", "correct": true, "why": "Form $\\infty/\\infty$. L'Hôpital gives $\\frac{2\\ln x}{x}$, again $\\infty/\\infty$; once more gives $\\frac{2}{x}\\to0$. Any power of $\\ln x$ grows slower than $x$." },
+        { "text": "$\\infty$", "correct": false, "why": "Assumed that squaring the logarithm makes the top win. $\\ln x$ grows slower than every positive power of $x$, squared or not.", "trap": "C8" },
+        { "text": "$1$", "correct": false, "why": "Read $\\infty/\\infty$ as 1. That form is indeterminate; the growth rates decide it.", "trap": "C10" },
+        { "text": "$2$", "correct": false, "why": "After the second L'Hôpital step kept only the numerator 2 of $\\frac{2}{x}$ and forgot the $x$ in the denominator.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Form $\\infty/\\infty$.\n2. L'Hôpital: $\\frac{2\\ln x\\cdot\\frac1x}{1}=\\frac{2\\ln x}{x}$, still $\\infty/\\infty$.\n3. Again: $\\frac{2/x}{1}=\\frac{2}{x}\\to0$."
+    },
+    {
+      "id": "calc-limits-08",
+      "skill": "calc.limits",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Evaluate $$\\lim_{x\\to 0}\\frac{\\tan 3x-\\sin 3x}{x^3}.$$",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 13.5, "tol": 0.01 },
+      "traps": [
+        { "value": 0, "why": "Replaced both $\\tan 3x$ and $\\sin 3x$ by $3x$, so the numerator vanished. First-order terms cancel; the $u^3$ terms decide the limit.", "trap": "C6" },
+        { "value": 1.5, "why": "Used $\\tan u-\\sin u\\approx\\frac{u^3}{2}$ but wrote $\\frac{3x^3}{2}$ instead of $\\frac{(3x)^3}{2}$.", "trap": "C4" },
+        { "value": 9, "why": "Kept only the $\\frac{u^3}{3}$ term of $\\tan u$ and forgot the $-\\frac{u^3}{6}$ of $\\sin u$ (which adds $+\\frac{u^3}{6}$ after the minus).", "trap": "C6" }
+      ],
+      "solution": "1. Let $u=3x$. $\\tan u=u+\\frac{u^3}{3}+\\dots$, $\\sin u=u-\\frac{u^3}{6}+\\dots$\n2. $\\tan u-\\sin u=\\frac{u^3}{3}+\\frac{u^3}{6}=\\frac{u^3}{2}=\\frac{27x^3}{2}$.\n3. Limit $=\\frac{27}{2}=13.5$."
+    },
+    {
+      "id": "calc-limits-09",
+      "skill": "calc.limits",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\lim_{x\\to 0}\\left(\\frac{1+x}{1-x}\\right)^{1/x}$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$e^2$", "correct": true, "why": "Form $1^\\infty$: $(f-1)g=\\frac{2x}{1-x}\\cdot\\frac1x=\\frac{2}{1-x}\\to2$, so the limit is $e^2$." },
+        { "text": "$e$", "correct": false, "why": "Used only $(1+x)^{1/x}\\to e$ and treated the denominator $(1-x)^{1/x}$ as 1. It tends to $e^{-1}$, and dividing by it gives another factor $e$.", "trap": "C6" },
+        { "text": "$1$", "correct": false, "why": "Took the base to be exactly 1. The base only tends to 1 while the exponent grows, so $1^\\infty$ is indeterminate.", "trap": "C10" },
+        { "text": "$\\infty$", "correct": false, "why": "Assumed a base above 1 raised to a huge power blows up. The base approaches 1 as fast as the exponent grows, giving a finite limit.", "trap": "C8" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f=\\frac{1+x}{1-x}\\to1$, $g=\\frac1x\\to\\infty$: form $1^\\infty$.\n2. $f-1=\\frac{2x}{1-x}$, so $(f-1)g=\\frac{2}{1-x}\\to2$.\n3. Limit $=e^{2}\\approx7.39$."
+    },
+    {
+      "id": "calc-limits-10",
+      "skill": "calc.limits",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which of the following limits equal $2$?",
+      "figure": null,
+      "options": [
+        { "text": "$\\displaystyle\\lim_{x\\to0}\\frac{e^{2x}-1}{x}$", "correct": true, "why": "$e^{2x}-1\\approx2x$, so the ratio tends to 2." },
+        { "text": "$\\displaystyle\\lim_{x\\to0}\\frac{x+2}{2x+1}$", "correct": true, "why": "Not $0/0$: substitute $x=0$ to get $\\frac{2}{1}=2$. Applying L'Hôpital here would wrongly give $\\frac12$." },
+        { "text": "$\\displaystyle\\lim_{x\\to0}\\frac{\\ln(1+2x)}{2x}$", "correct": false, "why": "Saw the 2 and expected 2, but $\\ln(1+2x)\\approx2x$ cancels the $2x$ below; the limit is 1.", "trap": "C10" },
+        { "text": "$\\displaystyle\\lim_{x\\to0}\\frac{2^x-1}{x}$", "correct": false, "why": "Took the base 2 as the answer. $\\frac{a^x-1}{x}\\to\\ln a$, so this is $\\ln2\\approx0.693$.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\frac{e^{2x}-1}{x}\\to2$. True.\n2. $\\frac{x+2}{2x+1}$ is not indeterminate: value at 0 is 2. True.\n3. $\\frac{\\ln(1+2x)}{2x}\\to1$. False.\n4. $\\frac{2^x-1}{x}\\to\\ln2$. False."
+    },
+    {
+      "id": "calc-one-sided-06",
+      "skill": "calc.one-sided",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\lim_{x\\to4^-}\\frac{x^2-16}{|x-4|}$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$-8$", "correct": true, "why": "For $x<4$, $|x-4|=4-x$, so the expression is $\\frac{(x-4)(x+4)}{-(x-4)}=-(x+4)\\to-8$." },
+        { "text": "$8$", "correct": false, "why": "Replaced $|x-4|$ by $x-4$, which is the right-hand ($x>4$) form; on the left it is $4-x$.", "trap": "C11" },
+        { "text": "Does not exist", "correct": false, "why": "Answered for the two-sided limit (left $-8$, right $8$). Only the left-hand limit is asked, and it exists.", "trap": "C5" },
+        { "text": "$0$", "correct": false, "why": "Substituted $x=4$ in the numerator only and ignored that the denominator is also 0.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For $x<4$: $|x-4|=-(x-4)$.\n2. $\\frac{(x-4)(x+4)}{-(x-4)}=-(x+4)$.\n3. As $x\\to4^-$: $-8$."
+    },
+    {
+      "id": "calc-one-sided-07",
+      "skill": "calc.one-sided",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $\\lfloor x\\rfloor$ be the floor function. Find $\\displaystyle\\lim_{x\\to2^-}\\left(x^2-\\lfloor x\\rfloor\\right)$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 3, "tol": 0 },
+      "traps": [
+        { "value": 2, "why": "Used $\\lfloor 2\\rfloor=2$. Just left of 2, $x$ lies in $[1,2)$, so $\\lfloor x\\rfloor=1$.", "trap": "C5" },
+        { "value": 0, "why": "Used $x=1$ inside $x^2$ as well. Only the floor drops to 1; $x^2$ is continuous and tends to 4.", "trap": "C6" }
+      ],
+      "solution": "1. For $1\\le x<2$: $\\lfloor x\\rfloor=1$.\n2. $x^2\\to4$ (continuous).\n3. Limit $=4-1=3$."
+    },
+    {
+      "id": "calc-one-sided-08",
+      "skill": "calc.one-sided",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $$f(x)=\\frac{5+3e^{1/x}}{1+e^{1/x}},\\quad x\\ne0.$$ Find $\\displaystyle\\lim_{x\\to0^-}f(x)-\\lim_{x\\to0^+}f(x)$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2, "tol": 0 },
+      "traps": [
+        { "value": -2, "why": "Swapped the sides: $e^{1/x}\\to0$ from the left (giving 5) and $\\to\\infty$ from the right (giving 3).", "trap": "C2" },
+        { "value": 0, "why": "Assumed $e^{1/x}\\to\\infty$ from both sides. For $x\\to0^-$, $1/x\\to-\\infty$ and $e^{1/x}\\to0$.", "trap": "C5" }
+      ],
+      "solution": "1. $x\\to0^-$: $1/x\\to-\\infty$, $e^{1/x}\\to0$, so $f\\to\\frac{5}{1}=5$.\n2. $x\\to0^+$: $e^{1/x}\\to\\infty$; divide top and bottom by $e^{1/x}$: $f\\to3$.\n3. Difference $=5-3=2$."
+    },
+    {
+      "id": "calc-one-sided-09",
+      "skill": "calc.one-sided",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=\\lfloor x\\rfloor+\\lfloor -x\\rfloor$. Which statement about $f$ at $x=2$ is correct?",
+      "figure": null,
+      "options": [
+        { "text": "$\\lim_{x\\to2}f(x)=-1$, but $f(2)=0$", "correct": true, "why": "Left: $\\lfloor x\\rfloor=1$, $-x\\in(-2,-1]$ gives $-2$: sum $-1$. Right: $\\lfloor x\\rfloor=2$, $-x$ just below $-2$ gives $-3$: sum $-1$. At 2: $2+(-2)=0$." },
+        { "text": "Left limit $-1$, right limit $0$, so the limit does not exist", "correct": false, "why": "On the right took $\\lfloor -x\\rfloor=-2$. For $x$ slightly above 2, $-x$ is slightly below $-2$, so its floor is $-3$.", "trap": "C5" },
+        { "text": "$\\lim_{x\\to2}f(x)=0=f(2)$", "correct": false, "why": "Evaluated $f(2)$ and took it as the limit. The limit depends only on nearby $x$, where the sum is $-1$.", "trap": "C10" },
+        { "text": "$\\lim_{x\\to2}f(x)=-1$ and $f$ is continuous at 2", "correct": false, "why": "Found the limit correctly but did not compare it with $f(2)=0$; they differ, so $f$ is not continuous there.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $x\\to2^-$: $\\lfloor x\\rfloor=1$, $\\lfloor -x\\rfloor=-2$; sum $-1$.\n2. $x\\to2^+$: $\\lfloor x\\rfloor=2$, $\\lfloor -x\\rfloor=-3$; sum $-1$.\n3. Limit $-1$, but $f(2)=2-2=0$: a removable break."
+    },
+    {
+      "id": "calc-one-sided-10",
+      "skill": "calc.one-sided",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let\n$$f(x)=\\begin{cases}x^2+1, & x<1\\\\ 5, & x=1\\\\ 3-x, & x>1\\end{cases}$$\nWhich statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$\\lim_{x\\to1}f(x)=2$", "correct": true, "why": "Left limit $1+1=2$, right limit $3-1=2$; equal, so the limit is 2." },
+        { "text": "$f$ is not continuous at $x=1$", "correct": true, "why": "The limit 2 differs from the value $f(1)=5$." },
+        { "text": "$\\lim_{x\\to1}f(x)$ does not exist because $f(1)$ differs from both pieces", "correct": false, "why": "The value at the point plays no role in the limit; only the left and right limits matter, and they agree.", "trap": "C1" },
+        { "text": "$\\lim_{x\\to1^+}f(x)=5$", "correct": false, "why": "Read off the value $f(1)$ instead of following the piece $3-x$ used for $x>1$.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Left: $x^2+1\\to2$. Right: $3-x\\to2$.\n2. Equal, so $\\lim_{x\\to1}f=2$.\n3. $f(1)=5\\ne2$, so $f$ is discontinuous at 1 (removable)."
+    },
+    {
+      "id": "calc-continuity-const-05",
+      "skill": "calc.continuity-const",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For which value of $k$ is\n$$f(x)=\\begin{cases}\\dfrac{\\sqrt{x+16}-4}{x}, & x\\ne0\\\\ k, & x=0\\end{cases}$$\ncontinuous at $x=0$? (Answer to three decimal places.)",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.125, "tol": 0.001 },
+      "traps": [
+        { "value": 8, "why": "After rationalising got $\\sqrt{x+16}+4\\to8$ and forgot it sits in the denominator; the limit is $\\frac18$.", "trap": "C4" },
+        { "value": 0.25, "why": "Rationalised to $\\frac{1}{\\sqrt{x+16}+4}$ but dropped the $+4$, getting $\\frac{1}{\\sqrt{16}}$.", "trap": "C6" },
+        { "value": 0, "why": "Set $k=f(0)$ by substituting into the top only; the expression is $0/0$ at $x=0$, so its limit must be found.", "trap": "C6" }
+      ],
+      "solution": "1. Need $k=\\lim_{x\\to0}\\frac{\\sqrt{x+16}-4}{x}$.\n2. Multiply by $\\sqrt{x+16}+4$: $\\frac{x}{x(\\sqrt{x+16}+4)}=\\frac{1}{\\sqrt{x+16}+4}$.\n3. At $x=0$: $\\frac{1}{8}=0.125$."
+    },
+    {
+      "id": "calc-continuity-const-06",
+      "skill": "calc.continuity-const",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For which value of $a$ is\n$$f(x)=\\begin{cases}ax+1, & x<2\\\\ x^2-a, & x\\ge2\\end{cases}$$\ncontinuous at $x=2$?",
+      "figure": null,
+      "options": [
+        { "text": "$a=1$", "correct": true, "why": "Left limit $2a+1$, right limit and $f(2)$ equal $4-a$. $2a+1=4-a$ gives $3a=3$, $a=1$." },
+        { "text": "$a=\\frac32$", "correct": false, "why": "Dropped the $-a$ on the right piece and solved $2a+1=4$.", "trap": "C6" },
+        { "text": "$a=3$", "correct": false, "why": "Moved $-a$ across without changing its sign: wrote $2a-a=4-1$ instead of $2a+a=4-1$.", "trap": "C11" },
+        { "text": "$a=\\frac53$", "correct": false, "why": "Moved the $+1$ to the right as $+1$: $3a=4+1$. It should become $3a=4-1$.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Left limit at 2: $2a+1$.\n2. Right limit and value: $4-a$.\n3. $2a+1=4-a\\Rightarrow a=1$."
+    },
+    {
+      "id": "calc-continuity-const-07",
+      "skill": "calc.continuity-const",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $a>0$. The function\n$$f(x)=\\begin{cases}\\dfrac{1-\\cos ax}{x^2}, & x<0\\\\[4pt] 8, & x=0\\\\[2pt] b+x, & x>0\\end{cases}$$\nis continuous at $x=0$. Find $a+b$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 12, "tol": 0 },
+      "traps": [
+        { "value": 10.83, "why": "Used $1-\\cos ax\\approx a^2x^2$ without the $\\frac12$, so $a^2=8$ and $a\\approx2.83$.", "trap": "C4" },
+        { "value": 4, "why": "Took the root $a=-4$ of $a^2=16$, ignoring the condition $a>0$.", "trap": "C5" },
+        { "value": 24, "why": "Added $a^2=16$ instead of $a$ itself.", "trap": "C4" }
+      ],
+      "solution": "1. Left limit: $\\frac{1-\\cos ax}{x^2}\\to\\frac{a^2}{2}$. Set $\\frac{a^2}{2}=8$: $a^2=16$, $a=4$ (since $a>0$).\n2. Right limit: $b+x\\to b$. Set $b=8$.\n3. $a+b=12$."
+    },
+    {
+      "id": "calc-continuity-const-08",
+      "skill": "calc.continuity-const",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "The function\n$$f(x)=\\begin{cases}\\dfrac{x^2+ax+6}{x-2}, & x\\ne2\\\\[4pt] b, & x=2\\end{cases}$$\nis continuous at $x=2$. Find $a+b$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": -6, "tol": 0 },
+      "traps": [
+        { "value": -5, "why": "Found $a=-5$ from the numerator but forgot to work out $b$ (treated it as 0).", "trap": "C6" },
+        { "value": -4, "why": "Factored $x^2-5x+6$ correctly but evaluated $x-3$ at 2 as $+1$.", "trap": "C11" },
+        { "value": 0, "why": "Factored as $(x-2)(x+3)$, so took $b=5$; the factors of $x^2-5x+6$ are $(x-2)(x-3)$.", "trap": "C11" }
+      ],
+      "solution": "1. The denominator is 0 at $x=2$, so a finite limit needs the numerator 0 there: $4+2a+6=0$, $a=-5$.\n2. $x^2-5x+6=(x-2)(x-3)$, so for $x\\ne2$, $f(x)=x-3\\to-1$.\n3. $b=-1$, so $a+b=-6$."
+    },
+    {
+      "id": "calc-continuity-const-09",
+      "skill": "calc.continuity-const",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For which values of $k$ is\n$$f(x)=\\begin{cases}k^2x+2, & x<1\\\\ 3kx, & x\\ge1\\end{cases}$$\ncontinuous at $x=1$?",
+      "figure": null,
+      "options": [
+        { "text": "$k=1$", "correct": true, "why": "Left limit $k^2+2=3$, right value $3k=3$: equal." },
+        { "text": "$k=2$", "correct": true, "why": "Left limit $4+2=6$, right value $6$: equal." },
+        { "text": "$k=-1$", "correct": false, "why": "Factored $k^2-3k+2$ as $(k+1)(k+2)$. At $k=-1$: left $3$, right $-3$.", "trap": "C11" },
+        { "text": "$k=-2$", "correct": false, "why": "Same sign slip in the roots. At $k=-2$: left $6$, right $-6$.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Left limit at 1: $k^2+2$. Right limit and $f(1)$: $3k$.\n2. $k^2-3k+2=0\\Rightarrow(k-1)(k-2)=0$.\n3. $k=1$ or $k=2$."
+    },
+    {
+      "id": "calc-continuity-const-10",
+      "skill": "calc.continuity-const",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For\n$$f(x)=\\begin{cases}x\\sin\\dfrac1x, & x\\ne0\\\\ k, & x=0\\end{cases}$$\nwhich choice of $k$ makes $f$ continuous at $x=0$?",
+      "figure": null,
+      "options": [
+        { "text": "$k=0$", "correct": true, "why": "$|x\\sin\\frac1x|\\le|x|\\to0$, so by squeeze the limit is 0 and $k$ must be 0." },
+        { "text": "$k=1$", "correct": false, "why": "Mixed this up with $\\frac{\\sin x}{x}\\to1$ (or with $x\\sin\\frac1x$ as $x\\to\\infty$). Here $x\\to0$ and the factor $x$ kills the bounded sine.", "trap": "C10" },
+        { "text": "No value of $k$ works, since $\\sin\\frac1x$ has no limit at 0", "correct": false, "why": "True that $\\sin\\frac1x$ oscillates, but it stays in $[-1,1]$ and is multiplied by $x\\to0$; the product does have a limit.", "trap": "C1" },
+        { "text": "Any $k\\in[-1,1]$", "correct": false, "why": "Took the range of $\\sin\\frac1x$ as allowed values. Continuity needs $k$ equal to the single limit value.", "trap": "C5" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $-|x|\\le x\\sin\\frac1x\\le|x|$.\n2. Both bounds $\\to0$, so the limit is 0 (squeeze).\n3. Continuity needs $k=0$."
+    },
+    {
+      "id": "calc-composition-06",
+      "skill": "calc.composition",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=2x+1$ and $g(x)=x^2-3$. Find $(g\\circ f)(1)-(f\\circ g)(1)$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 9, "tol": 0 },
+      "traps": [
+        { "value": -9, "why": "Read $g\\circ f$ as \"apply $g$ first\". In $(g\\circ f)(1)=g(f(1))$, $f$ acts first.", "trap": "C2" },
+        { "value": 0, "why": "Assumed composition is commutative, so the two terms cancel. In general $g\\circ f\\ne f\\circ g$.", "trap": "C8" },
+        { "value": 5, "why": "Built $(g\\circ f)(x)=(2x+1)^2-3$ but expanded $(2x+1)^2$ as $4x^2+1$, dropping $4x$, so got $(g\\circ f)(1)=2$.", "trap": "C6" }
+      ],
+      "solution": "1. $f(1)=3$, so $(g\\circ f)(1)=g(3)=9-3=6$.\n2. $g(1)=-2$, so $(f\\circ g)(1)=f(-2)=-3$.\n3. Difference $=6-(-3)=9$."
+    },
+    {
+      "id": "calc-composition-07",
+      "skill": "calc.composition",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\lim_{x\\to0}\\exp\\!\\left(\\frac{1-\\cos x}{x^2}\\right)$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$\\sqrt e$", "correct": true, "why": "The inner limit is $\\frac12$ and $e^u$ is continuous, so the limit is $e^{1/2}$." },
+        { "text": "$e$", "correct": false, "why": "Took $1-\\cos x\\approx x^2$, making the inner limit 1; the correct approximation is $\\frac{x^2}{2}$.", "trap": "C4" },
+        { "text": "$1$", "correct": false, "why": "Substituted $x=0$ in the numerator only, getting inner value 0 and $e^0=1$. The inner part is $0/0$ and tends to $\\frac12$.", "trap": "C6" },
+        { "text": "$e^2$", "correct": false, "why": "Inverted the inner ratio ($x^2$ over $\\frac{x^2}{2}$).", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Inner: $\\frac{1-\\cos x}{x^2}\\to\\frac12$.\n2. $e^u$ is continuous at $u=\\frac12$, so the limit passes inside.\n3. Limit $=e^{1/2}=\\sqrt e\\approx1.649$."
+    },
+    {
+      "id": "calc-composition-08",
+      "skill": "calc.composition",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $$f(u)=\\begin{cases}u+1, & u<0\\\\ u^2+3, & u\\ge0\\end{cases}\\qquad g(x)=-x^2,$$ and $h=f\\circ g$. Which statement is correct?",
+      "figure": null,
+      "options": [
+        { "text": "$\\lim_{x\\to0}h(x)=1$ and $h(0)=3$", "correct": true, "why": "For $x\\ne0$, $g(x)=-x^2<0$, so $h(x)=-x^2+1\\to1$. At $x=0$, $g(0)=0$ and $h(0)=f(0)=3$." },
+        { "text": "$\\lim_{x\\to0}h(x)=3$", "correct": false, "why": "Used $f(\\lim g)=f(0)=3$. $f$ jumps at 0, and $g$ approaches 0 only from below, so the left piece of $f$ applies.", "trap": "C10" },
+        { "text": "$\\lim_{x\\to0}h(x)$ does not exist because $f$ jumps at $u=0$", "correct": false, "why": "The jump would matter only if $g$ reached 0 from both sides. Here $g(x)<0$ for every $x\\ne0$, so only one piece is used.", "trap": "C5" },
+        { "text": "$\\lim_{x\\to0}h(x)=1$ and $h$ is continuous at 0", "correct": false, "why": "Found the limit but did not compare with $h(0)=f(0)=3$; they differ.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. For $x\\ne0$: $g(x)=-x^2<0$, so $h(x)=f(-x^2)=1-x^2\\to1$.\n2. $h(0)=f(0)=0+3=3$.\n3. Limit 1, value 3: $h$ is discontinuous at 0."
+    },
+    {
+      "id": "calc-composition-09",
+      "skill": "calc.composition",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=\\dfrac{1}{1-x}$ and let $f^{[n]}$ denote $f$ composed with itself $n$ times ($f^{[1]}=f$, $f^{[2]}=f\\circ f$, ...). Find $f^{[2027]}(2)$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.5, "tol": 0.001 },
+      "traps": [
+        { "value": 2, "why": "Treated 2027 as a multiple of 3 (so the cycle returns to the start). $2027=3\\cdot675+2$, so two more steps remain.", "trap": "C6" },
+        { "value": -1, "why": "Took the remainder of 2027 by 3 as 1, so stopped after one step.", "trap": "C6" }
+      ],
+      "solution": "1. $f(2)=-1$, $f(-1)=\\frac12$, $f(\\frac12)=2$: the values repeat every 3 steps ($f\\circ f\\circ f=$ identity).\n2. $2027=3\\cdot675+2$, so $f^{[2027]}(2)=f^{[2]}(2)$.\n3. $f^{[2]}(2)=f(-1)=\\frac12=0.5$."
+    },
+    {
+      "id": "calc-composition-10",
+      "skill": "calc.composition",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $h(x)=\\lfloor x^2\\rfloor$ (floor of $x^2$). Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$h$ is continuous at $x=0$", "correct": true, "why": "Near 0 (both sides), $0\\le x^2<1$, so $h=0$ on a neighbourhood and $h(0)=0$." },
+        { "text": "$\\lim_{x\\to1}h(x)$ does not exist", "correct": true, "why": "For $x\\to1^-$, $x^2<1$ gives $h=0$; for $x\\to1^+$, $x^2>1$ gives $h=1$." },
+        { "text": "$\\lim_{x\\to0^-}h(x)=-1$", "correct": false, "why": "Copied the behaviour of $\\lfloor x\\rfloor$ from the left. Here the inside is $x^2\\ge0$, which approaches 0 from above on both sides.", "trap": "C5" },
+        { "text": "$h$ is continuous at $x=\\sqrt2$ because $x^2$ is smooth there", "correct": false, "why": "$x^2$ is smooth, but it crosses the integer 2 at $x=\\sqrt2$, where the floor jumps from 1 to 2.", "trap": "C1" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Ask where $x^2$ crosses an integer: $x^2=1,2,\\dots$ i.e. $x=\\pm1,\\pm\\sqrt2,\\dots$; $h$ jumps there.\n2. At $x=0$, $x^2$ touches 0 from above and never crosses it: $h$ is continuous.\n3. At $x=1$: left 0, right 1, limit does not exist. At $\\sqrt2$: jump from 1 to 2."
+    },
+    {
+      "id": "calc-differentiability-06",
+      "skill": "calc.differentiability",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=|\\sin x|$, which statement about $x=0$ is correct?",
+      "figure": null,
+      "options": [
+        { "text": "$f$ is continuous but not differentiable at 0", "correct": true, "why": "$f(0)=0$ and $f$ is continuous. Right derivative $\\lim\\frac{\\sin h}{h}=1$, left derivative $\\lim\\frac{-\\sin h}{h}=-1$: a corner." },
+        { "text": "$f$ is differentiable at 0 with $f'(0)=0$", "correct": false, "why": "Assumed a minimum of a smooth-looking curve has slope 0. The absolute value folds $\\sin x$ up into a V-shaped corner.", "trap": "C1" },
+        { "text": "$f$ is not continuous at 0", "correct": false, "why": "Confused \"has a corner\" with \"has a break\". $|\\sin x|\\to0=f(0)$ from both sides.", "trap": "C2" },
+        { "text": "$f$ is differentiable at 0 with $f'(0)=1$", "correct": false, "why": "Computed only the right derivative. The left derivative is $-1$, so they do not match.", "trap": "C5" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f(0)=0$, and $|\\sin x|\\to0$: continuous.\n2. $f'(0^+)=\\lim_{h\\to0^+}\\frac{\\sin h}{h}=1$; $f'(0^-)=\\lim_{h\\to0^-}\\frac{|\\sin h|}{h}=-1$.\n3. Unequal, so not differentiable."
+    },
+    {
+      "id": "calc-differentiability-07",
+      "skill": "calc.differentiability",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=|x-2|\\,(x+1)$. Find $f'(2^+)-f'(2^-)$, the right-hand derivative minus the left-hand derivative at $x=2$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 6, "tol": 0 },
+      "traps": [
+        { "value": 0, "why": "Assumed the product is smooth because $x+1$ is smooth. The factor $x+1$ is $3\\ne0$ at $x=2$, so the corner of $|x-2|$ survives.", "trap": "C1" },
+        { "value": 3, "why": "Found only the right derivative $3$ and treated the left one as 0.", "trap": "C6" },
+        { "value": -6, "why": "Subtracted in the wrong order (left minus right).", "trap": "C11" }
+      ],
+      "solution": "1. $x>2$: $f=(x-2)(x+1)$, $f'=2x-1$, so $f'(2^+)=3$.\n2. $x<2$: $f=-(x-2)(x+1)$, $f'=-(2x-1)$, so $f'(2^-)=-3$.\n3. Difference $=3-(-3)=6$."
+    },
+    {
+      "id": "calc-differentiability-08",
+      "skill": "calc.differentiability",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $$f(x)=\\begin{cases}x^2\\sin\\dfrac1x, & x\\ne0\\\\ 0, & x=0.\\end{cases}$$ Which statements are true?",
+      "figure": null,
+      "options": [
+        { "text": "$f$ is continuous at 0", "correct": true, "why": "$|x^2\\sin\\frac1x|\\le x^2\\to0=f(0)$." },
+        { "text": "$f$ is differentiable at 0 and $f'(0)=0$", "correct": true, "why": "$\\frac{f(h)-f(0)}{h}=h\\sin\\frac1h$, which tends to 0 by squeeze." },
+        { "text": "$\\lim_{x\\to0}f'(x)=0$", "correct": false, "why": "Assumed $f'$ is continuous because $f'(0)$ exists. For $x\\ne0$, $f'(x)=2x\\sin\\frac1x-\\cos\\frac1x$, and the $\\cos\\frac1x$ part keeps oscillating.", "trap": "C1" },
+        { "text": "$f$ is not differentiable at 0 because $\\sin\\frac1x$ is undefined at 0", "correct": false, "why": "Judged by the formula's look. $f(0)$ is defined separately, and the difference quotient has a limit.", "trap": "C10" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Squeeze: $|f(x)|\\le x^2$, so continuous at 0.\n2. $f'(0)=\\lim_{h\\to0}h\\sin\\frac1h=0$.\n3. For $x\\ne0$: $f'(x)=2x\\sin\\frac1x-\\cos\\frac1x$; no limit at 0, so $f'$ is not continuous at 0."
+    },
+    {
+      "id": "calc-differentiability-09",
+      "skill": "calc.differentiability",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "The function\n$$f(x)=\\begin{cases}ae^{x}+b, & x\\le0\\\\ \\sin 2x+3, & x>0\\end{cases}$$\nis differentiable at $x=0$. Find $b$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 1, "tol": 0 },
+      "traps": [
+        { "value": 2, "why": "Took the derivative of $\\sin 2x$ as $\\cos 2x$ (missed the chain factor 2), so $a=1$ and $b=2$.", "trap": "C6" },
+        { "value": 3, "why": "Wrote the continuity condition as $b=3$, forgetting that $ae^0=a$ also appears on the left.", "trap": "C6" }
+      ],
+      "solution": "1. Continuity at 0: $a+b=0+3=3$.\n2. Slopes: left $ae^0=a$, right $2\\cos0=2$, so $a=2$.\n3. $b=3-2=1$."
+    },
+    {
+      "id": "calc-differentiability-10",
+      "skill": "calc.differentiability",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "At how many points of $\\mathbb{R}$ is $f(x)=\\max(x,\\,x^2)$ **not** differentiable?",
+      "figure": null,
+      "options": [
+        { "text": "$0$", "correct": false, "why": "Assumed the max of two smooth functions is smooth. Where the two graphs cross with different slopes, the max has a corner.", "trap": "C8" },
+        { "text": "$1$", "correct": false, "why": "Checked only the crossing at $x=0$ (slopes 0 and 1) and missed the crossing at $x=1$.", "trap": "C6" },
+        { "text": "$2$", "correct": true, "why": "$x^2=x$ at $x=0$ and $x=1$. At 0 the slopes are 0 (left) and 1 (right); at 1 they are 1 (left) and 2 (right). Both are corners." },
+        { "text": "$3$", "correct": false, "why": "Also counted $x=-1$, but there $x^2=1\\ne-1$, so the graphs do not meet and $f=x^2$ is smooth.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $x^2\\ge x$ iff $x\\le0$ or $x\\ge1$; so $f=x^2$ there and $f=x$ on $(0,1)$.\n2. At $x=0$: left slope $2x=0$, right slope 1. Corner.\n3. At $x=1$: left slope 1, right slope $2x=2$. Corner. Total 2."
+    },
+    {
+      "id": "calc-derivative-rules-06",
+      "skill": "calc.derivative-rules",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=(2x+1)^5$, find $f'(0)$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 10, "tol": 0 },
+      "traps": [
+        { "value": 5, "why": "Used the power rule $5(2x+1)^4$ but forgot the chain factor $\\frac{d}{dx}(2x+1)=2$.", "trap": "C6" },
+        { "value": 1, "why": "Evaluated $f(0)=1$ instead of the derivative.", "trap": "C10" }
+      ],
+      "solution": "1. Chain rule: $f'(x)=5(2x+1)^4\\cdot2=10(2x+1)^4$.\n2. $f'(0)=10\\cdot1=10$."
+    },
+    {
+      "id": "calc-derivative-rules-07",
+      "skill": "calc.derivative-rules",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\dfrac{d}{dx}\\left(\\dfrac{x}{e^{x}}\\right)$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$(1-x)e^{-x}$", "correct": true, "why": "Write it as $xe^{-x}$. Product rule: $e^{-x}+x\\cdot(-e^{-x})=(1-x)e^{-x}$." },
+        { "text": "$(x-1)e^{-x}$", "correct": false, "why": "Quotient rule with the top terms in the wrong order: $\\frac{x\\,e^x-e^x\\cdot1}{e^{2x}}$ instead of $\\frac{e^x\\cdot1-x\\,e^x}{e^{2x}}$.", "trap": "C11" },
+        { "text": "$e^{-x}$", "correct": false, "why": "Differentiated only the $x$ and treated $e^{-x}$ as a constant; the product rule needs both terms.", "trap": "C6" },
+        { "text": "$(1+x)e^{-x}$", "correct": false, "why": "Took $\\frac{d}{dx}e^{-x}=+e^{-x}$, missing the minus from the chain rule.", "trap": "C11" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\frac{x}{e^x}=xe^{-x}$.\n2. $(xe^{-x})'=1\\cdot e^{-x}+x\\cdot(-e^{-x})$.\n3. $=(1-x)e^{-x}$."
+    },
+    {
+      "id": "calc-derivative-rules-08",
+      "skill": "calc.derivative-rules",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=x^{x}$ ($x>0$), find $f'(2)$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 6.77, "tol": 0.01 },
+      "traps": [
+        { "value": 4, "why": "Used the power rule $x\\cdot x^{x-1}$ as if the exponent were constant.", "trap": "C3" },
+        { "value": 2.77, "why": "Used the exponential rule $x^x\\ln x$ as if the base were constant; the correct answer adds both parts.", "trap": "C3" }
+      ],
+      "solution": "1. $\\ln f=x\\ln x$, so $\\frac{f'}{f}=\\ln x+1$.\n2. $f'(x)=x^x(1+\\ln x)$.\n3. $f'(2)=4(1+\\ln2)\\approx4(1.6931)=6.77$."
+    },
+    {
+      "id": "calc-derivative-rules-09",
+      "skill": "calc.derivative-rules",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "For $f(x)=xe^{x}$, the value of $f^{(10)}(0)$ (the tenth derivative at 0) is",
+      "figure": null,
+      "options": [
+        { "text": "$10$", "correct": true, "why": "By induction $f^{(n)}(x)=(x+n)e^x$, so $f^{(10)}(0)=10$. Check: coefficient of $x^{10}$ in $xe^x$ is $\\frac{1}{9!}$, and $10!\\cdot\\frac{1}{9!}=10$." },
+        { "text": "$9$", "correct": false, "why": "Off by one: used $(x+n-1)e^x$, or matched $x^{10}$ to the $\\frac{x^{10}}{10!}$ term of $e^x$ instead of $x\\cdot\\frac{x^9}{9!}$.", "trap": "C6" },
+        { "text": "$1$", "correct": false, "why": "Reused $f'=(x+1)e^x$ for every order, giving 1. Each further product-rule step adds one more $e^x$, so the constant grows to $n$.", "trap": "C6" },
+        { "text": "$10!$", "correct": false, "why": "Multiplied by $10!$ but forgot the Taylor coefficient $\\frac{1}{9!}$.", "trap": "C4" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $f'=(x+1)e^x$, $f''=(x+2)e^x$; in general $f^{(n)}=(x+n)e^x$.\n2. $f^{(10)}(0)=10$.\n3. Cross-check: $xe^x=\\sum\\frac{x^{k+1}}{k!}$, coefficient of $x^{10}$ is $\\frac1{9!}$, times $10!$ is 10."
+    },
+    {
+      "id": "calc-derivative-rules-10",
+      "skill": "calc.derivative-rules",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which of the following derivatives are correct?",
+      "figure": null,
+      "options": [
+        { "text": "$\\dfrac{d}{dx}\\sin^2x=\\sin 2x$", "correct": true, "why": "Chain rule: $2\\sin x\\cos x=\\sin 2x$." },
+        { "text": "$\\dfrac{d}{dx}\\ln(\\cos x)=\\tan x$", "correct": false, "why": "Lost the sign: $\\frac{1}{\\cos x}\\cdot(-\\sin x)=-\\tan x$.", "trap": "C11" },
+        { "text": "$\\dfrac{d}{dx}e^{3x}=3e^{3x}$", "correct": true, "why": "Chain rule: $e^{3x}\\cdot3$." },
+        { "text": "$\\dfrac{d}{dx}\\dfrac{1}{x^2}=-\\dfrac{2}{x}$", "correct": false, "why": "Misapplied the power rule: $(x^{-2})'=-2x^{-3}=-\\frac{2}{x^3}$; the exponent drops by 1 to $-3$.", "trap": "C3" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $(\\sin^2x)'=2\\sin x\\cos x=\\sin2x$. Correct.\n2. $(\\ln\\cos x)'=-\\tan x$. Wrong.\n3. $(e^{3x})'=3e^{3x}$. Correct.\n4. $(x^{-2})'=-2x^{-3}$. Wrong."
+    },
+    {
+      "id": "calc-taylor-06",
+      "skill": "calc.taylor",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "The coefficient of $x^3$ in the Maclaurin series of $\\dfrac{1}{1+2x}$ is",
+      "figure": null,
+      "options": [
+        { "text": "$-8$", "correct": true, "why": "$\\frac{1}{1-u}=\\sum u^n$ with $u=-2x$, so the $x^3$ term is $(-2x)^3=-8x^3$." },
+        { "text": "$8$", "correct": false, "why": "Substituted $u=2x$ instead of $u=-2x$; the plus sign in $1+2x$ makes the series alternate.", "trap": "C11" },
+        { "text": "$-2$", "correct": false, "why": "Wrote $-2x^3$ instead of $(-2x)^3$; the 2 must be cubed as well.", "trap": "C4" },
+        { "text": "$-\\frac43$", "correct": false, "why": "Divided by $3!$ as in the $e^x$ series. The geometric series has no factorials.", "trap": "C3" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\frac{1}{1+2x}=\\frac{1}{1-(-2x)}=\\sum_{n\\ge0}(-2x)^n$.\n2. $n=3$: $(-2)^3x^3=-8x^3$.\n3. Coefficient $-8$."
+    },
+    {
+      "id": "calc-taylor-07",
+      "skill": "calc.taylor",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find the coefficient of $x^5$ in the Maclaurin series of $\\sin 2x$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.27, "tol": 0.01 },
+      "traps": [
+        { "value": 0.01, "why": "Used $\\frac{x^5}{5!}$ and forgot that $u=2x$ gives $\\frac{(2x)^5}{5!}=\\frac{32x^5}{120}$.", "trap": "C4" },
+        { "value": -0.27, "why": "Gave the $x^5$ term a minus sign. In $\\sin u=u-\\frac{u^3}{6}+\\frac{u^5}{120}-\\dots$ the $u^5$ term is positive.", "trap": "C11" }
+      ],
+      "solution": "1. $\\sin u=u-\\frac{u^3}{3!}+\\frac{u^5}{5!}-\\dots$ with $u=2x$.\n2. $x^5$ term: $\\frac{(2x)^5}{120}=\\frac{32}{120}x^5$.\n3. Coefficient $=\\frac{4}{15}\\approx0.27$."
+    },
+    {
+      "id": "calc-taylor-08",
+      "skill": "calc.taylor",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find the coefficient of $x^3$ in the Maclaurin series of $\\dfrac{e^{x}}{1-x}$ (rounded to two decimal places).",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2.67, "tol": 0.01 },
+      "traps": [
+        { "value": 0.17, "why": "Took only the $\\frac{x^3}{3!}$ term of $e^x$ times the 1 of $\\frac{1}{1-x}$, missing the other pairs with power-sum 3.", "trap": "C6" },
+        { "value": 2.5, "why": "Added $\\frac{1}{0!}+\\frac{1}{1!}+\\frac{1}{2!}$ and stopped one pair short (missed $\\frac{1}{3!}$).", "trap": "C6" },
+        { "value": 1, "why": "Took only the $x^3$ of $\\frac{1}{1-x}$ times the 1 of $e^x$.", "trap": "C6" }
+      ],
+      "solution": "1. $e^x=\\sum\\frac{x^k}{k!}$ and $\\frac{1}{1-x}=\\sum x^m$, all coefficients 1.\n2. Coefficient of $x^3$ $=\\sum_{k=0}^{3}\\frac{1}{k!}\\cdot1=1+1+\\frac12+\\frac16$.\n3. $=\\frac83\\approx2.67$."
+    },
+    {
+      "id": "calc-taylor-09",
+      "skill": "calc.taylor",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "In the Taylor series of $e^{x}$ about $x=2$, the coefficient of $(x-2)^3$ is",
+      "figure": null,
+      "options": [
+        { "text": "$\\dfrac{e^2}{6}$", "correct": true, "why": "Every derivative of $e^x$ is $e^x$, so $f'''(2)=e^2$ and the coefficient is $\\frac{e^2}{3!}$." },
+        { "text": "$\\dfrac16$", "correct": false, "why": "Used the Maclaurin coefficient (expansion about 0). About $x=2$ the derivatives are $e^2$, not 1.", "trap": "C5" },
+        { "text": "$\\dfrac{8e^2}{6}$", "correct": false, "why": "Mixed in $2^3$ as if expanding $e^{2x}$; the point $a=2$ enters through $f'''(2)$, not as a power.", "trap": "C10" },
+        { "text": "$\\dfrac{e^2}{3}$", "correct": false, "why": "Divided by 3 instead of $3!=6$.", "trap": "C6" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Coefficient of $(x-a)^n$ is $\\frac{f^{(n)}(a)}{n!}$.\n2. $f'''(x)=e^x$, so $f'''(2)=e^2$.\n3. Coefficient $=\\frac{e^2}{6}\\approx1.23$. (Equivalently $e^x=e^2\\cdot e^{x-2}$.)"
+    },
+    {
+      "id": "calc-taylor-10",
+      "skill": "calc.taylor",
+      "type": "MSQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Let $f(x)=\\cos x$. Which statements about its Maclaurin series are true?",
+      "figure": null,
+      "options": [
+        { "text": "$f^{(4)}(0)=1$", "correct": true, "why": "The $x^4$ coefficient is $\\frac{1}{24}$, and $f^{(4)}(0)=4!\\cdot\\frac{1}{24}=1$ (also $f^{(4)}=\\cos x$)." },
+        { "text": "The series contains only even powers of $x$", "correct": true, "why": "$\\cos x$ is an even function, so all odd-power coefficients are 0." },
+        { "text": "The coefficient of $x^4$ in $\\cos 2x$ is $\\frac{1}{24}$", "correct": false, "why": "Forgot to raise the 2 to the 4th power: $\\frac{(2x)^4}{24}=\\frac{16}{24}x^4$, so the coefficient is $\\frac23$.", "trap": "C4" },
+        { "text": "$f''(0)=-\\frac12$", "correct": false, "why": "Confused the coefficient $-\\frac12$ of $x^2$ with the derivative. $f''(0)=2!\\cdot(-\\frac12)=-1$.", "trap": "C2" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $\\cos x=1-\\frac{x^2}{2}+\\frac{x^4}{24}-\\dots$\n2. $f^{(4)}(0)=24\\cdot\\frac1{24}=1$; only even powers appear.\n3. $\\cos2x$: $x^4$ coefficient $\\frac{16}{24}=\\frac23$. $f''(0)=-1$."
+    },
+    {
+      "id": "calc-series-sums-06",
+      "skill": "calc.series-sums",
+      "type": "NAT",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find $\\displaystyle\\sum_{n=1}^{\\infty}\\frac{5}{3^n}$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 2.5, "tol": 0.01 },
+      "traps": [
+        { "value": 7.5, "why": "Used $\\frac{a}{1-r}$ with first term 5, i.e. started at $n=0$. At $n=1$ the first term is $\\frac53$.", "trap": "C6" },
+        { "value": 1.67, "why": "Wrote down only the first term $\\frac53$.", "trap": "C6" }
+      ],
+      "solution": "1. Geometric with first term $\\frac53$ (at $n=1$) and ratio $\\frac13$.\n2. Sum $=\\frac{5/3}{1-1/3}=\\frac{5/3}{2/3}$.\n3. $=2.5$."
+    },
+    {
+      "id": "calc-series-sums-07",
+      "skill": "calc.series-sums",
+      "type": "MCQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\sum_{n=0}^{\\infty}\\left(-\\frac12\\right)^n$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$\\frac23$", "correct": true, "why": "Geometric from $n=0$ with $r=-\\frac12$: $\\frac{1}{1-(-1/2)}=\\frac{1}{3/2}=\\frac23$." },
+        { "text": "$2$", "correct": false, "why": "Ignored the minus sign and used $r=\\frac12$.", "trap": "C11" },
+        { "text": "$-\\frac13$", "correct": false, "why": "Used the $n\\ge1$ formula $\\frac{r}{1-r}$; the sum starts at $n=0$, which adds the first term 1.", "trap": "C6" },
+        { "text": "The series diverges", "correct": false, "why": "Thought alternating signs prevent convergence. Any geometric series with $|r|<1$ converges.", "trap": "C1" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $r=-\\frac12$, $|r|<1$: converges.\n2. From $n=0$: $\\frac{1}{1-r}=\\frac{1}{3/2}=\\frac23$."
+    },
+    {
+      "id": "calc-series-sums-08",
+      "skill": "calc.series-sums",
+      "type": "NAT",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "Find $\\displaystyle\\sum_{n=1}^{\\infty}\\frac{1}{(2n-1)(2n+1)}$.",
+      "figure": null,
+      "options": [],
+      "answer": { "value": 0.5, "tol": 0.001 },
+      "traps": [
+        { "value": 1, "why": "Split as $\\frac{1}{2n-1}-\\frac{1}{2n+1}$ without the factor $\\frac12$; the two denominators differ by 2.", "trap": "C6" },
+        { "value": 0.33, "why": "Kept only the first term $\\frac{1}{1\\cdot3}$.", "trap": "C6" }
+      ],
+      "solution": "1. $\\frac{1}{(2n-1)(2n+1)}=\\frac12\\left(\\frac{1}{2n-1}-\\frac{1}{2n+1}\\right)$.\n2. Partial sum $=\\frac12\\left(1-\\frac{1}{2N+1}\\right)$ after cancelling.\n3. As $N\\to\\infty$: $\\frac12=0.5$."
+    },
+    {
+      "id": "calc-series-sums-09",
+      "skill": "calc.series-sums",
+      "type": "MCQ",
+      "marks": 2,
+      "level": 2,
+      "source": "Drill · GATE-pattern",
+      "stem": "$\\displaystyle\\sum_{n=1}^{\\infty}\\frac{n^2}{2^n}$ equals",
+      "figure": null,
+      "options": [
+        { "text": "$6$", "correct": true, "why": "$\\sum_{n\\ge1}n^2x^n=\\frac{x(1+x)}{(1-x)^3}$; at $x=\\frac12$: $\\frac{\\frac12\\cdot\\frac32}{\\frac18}=6$." },
+        { "text": "$2$", "correct": false, "why": "Used the formula for $\\sum nx^n=\\frac{x}{(1-x)^2}$, which ignores the extra factor $n$.", "trap": "C3" },
+        { "text": "$4$", "correct": false, "why": "Used $\\frac{x}{(1-x)^3}$, dropping the factor $(1+x)$ that appears when differentiating $\\frac{x}{(1-x)^2}$.", "trap": "C3" },
+        { "text": "The series diverges", "correct": false, "why": "Saw $n^2$ growing. $2^n$ grows much faster, and the ratio test gives $\\frac12<1$.", "trap": "C1" }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. Start from $\\sum_{n\\ge1}nx^n=\\frac{x}{(1-x)^2}$; differentiate and multiply by $x$: $\\sum n^2x^n=\\frac{x(1+x)}{(1-x)^3}$.\n2. $x=\\frac12$: numerator $\\frac34$, denominator $\\frac18$.\n3. Sum $=6$."
+    },
+    {
+      "id": "calc-series-sums-10",
+      "skill": "calc.series-sums",
+      "type": "MSQ",
+      "marks": 1,
+      "level": 1,
+      "source": "Drill · GATE-pattern",
+      "stem": "Which of the following series converge?",
+      "figure": null,
+      "options": [
+        { "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac{1}{n^{1.5}}$", "correct": true, "why": "p-series with $p=1.5>1$." },
+        { "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac{1}{\\sqrt n}$", "correct": false, "why": "p-series with $p=\\frac12\\le1$ diverges; terms going to 0 is not enough.", "trap": "C5" },
+        { "text": "$\\displaystyle\\sum_{n=1}^\\infty(-1)^n$", "correct": false, "why": "Partial sums stay bounded ($-1,0,-1,0,\\dots$) but never settle; the terms do not tend to 0, so it diverges.", "trap": "C1" },
+        { "text": "$\\displaystyle\\sum_{n=1}^\\infty\\frac{n}{n^3+1}$", "correct": true, "why": "Terms behave like $\\frac{1}{n^2}$ for large $n$ (and are smaller than it), so it converges by comparison." }
+      ],
+      "answer": null,
+      "traps": [],
+      "solution": "1. $p=1.5>1$: converges.\n2. $p=\\frac12$: diverges.\n3. $(-1)^n\\not\\to0$: diverges.\n4. $\\frac{n}{n^3+1}<\\frac{1}{n^2}$: converges."
+    }
+  ]
+}

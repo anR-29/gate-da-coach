@@ -1,0 +1,182 @@
+{
+ "db-er-tables-06": [
+  "Do cheezein gino: kitni strong entities hain, aur kaun se relationships ko apni table chahiye. **Ternary** aur 1:N ka rule alag hai.",
+  "Rule: strong entity = 1 table, M:N ya ternary = 1 table, 1:N = sirf FK on the many side (koi table nahi).",
+  "AdmittedTo me 'many' side Patient hai, to `wid` Patient table me FK ban jaata hai. Ab entities aur Prescribes jodo. Trap: ternary ko teen binary tables me todna."
+ ],
+ "db-er-tables-07": [
+  "Dono relationships **recursive** hain (entity apne aap se juda), par cardinality alag hai: Supervises 1:N, PrereqOf M:N.",
+  "Recursive me bhi same rule: 1:N → FK same table me (jaise `sup_eid`), M:N → alag table jisme do role columns hon.",
+  "Employee table me `sup_eid` column daal do, to Supervises ki table nahi chahiye. Ab PrereqOf ke liye socho. Trap: har role ke liye entity ki copy bana dena."
+ ],
+ "db-er-tables-08": [
+  "Do rules ek saath lag rahe hain: Section **weak** hai (apni poori key nahi), aur `room` **multivalued** hai.",
+  "Weak entity ki key = owner key + partial key. Multivalued attribute ki table = (us entity ki poori key, value), aur key me dono aate hain.",
+  "Pehle Section ki poori key likho: `cid` + `sec_no`. Ab socho ek section ke do rooms ke liye do rows kaise alag hongi. Trap: `sec_no` ko akela key maan lena."
+ ],
+ "db-er-tables-09": [
+  "List banao: kaun si entities merge ho sakti hain (1:1 + total **dono** sides), kaun se relationships FK me ghus jaate hain, aur kya alag table maangta hai.",
+  "Rules: 1:1 total both → 1 merged table; 1:N aur identifying relationship → FK; M:N, weak entity, multivalued attribute → har ek ki apni table.",
+  "Person aur Passport ek table ban gaye. Publishes 1:N hai, to `pubid` Book me jaata hai. Ab Book, Publisher, Writes, Edition, `format` gino. Trap: weak entity ka multivalued attribute bhool jaana."
+ ],
+ "db-er-tables-10": [
+  "Cardinality 1:1 hai, par participation alag: Car **total**, Employee partial. Har statement ko is fark se judge karo.",
+  "1:1 me FK kisi bhi side ja sakta hai. Total side pe FK NOT NULL ho sakta hai; FK pe UNIQUE na ho to wo 1:N ban jaata hai. Merge sirf total-total pe.",
+  "Car me `eid` rakho: kya koi car bina employee ke hai? Phir socho kya ek employee do cars le sakta hai agar UNIQUE na ho. Trap: 1:1 dekhte hi merge kar dena."
+ ],
+ "db-er-tables-11": [
+  "Paanch tarah ke attributes hain: key, **composite**, simple, **derived**, **multivalued**. Har ek ka mapping rule alag hai.",
+  "Composite → uske parts alag columns; derived → store nahi hota; multivalued → apni alag table (cid, phone).",
+  "`cid` aur `dob` seedhe columns hain. Ab `name` todo aur `age`, `phone` ka faisla karo. Trap: derived `age` ko bhi column bana dena."
+ ],
+ "db-er-tables-12": [
+  "Chaar relationships hain; pehle har ek ki cardinality pehchano: kaun M:N hai, kaun 1:N, kaun 1:1.",
+  "Minimum tables = strong entities + M:N relationships (+ weak entities, multivalued attributes, agar hon). 1:N aur partial 1:1 sirf FK hote hain.",
+  "BelongsTo ke liye Instructor me `dept_id` aur Heads ke liye Department me `head_iid` daal do. Ab bachi tables gino. Trap: 1:1 ko alag table dena."
+ ],
+ "db-er-tables-13": [
+  "Sawaal ye hai ki teen binary tables ternary fact ko wapas bana sakti hain ya nahi. Pehle SP, PJ, SJ ki rows likh lo.",
+  "Har fact (s, p, j) se teen pairs bante hain: (s,p), (p,j), (s,j). Join me koi triple tabhi aata hai jab uske teeno pairs apni-apni table me hon.",
+  "SP = {(s1,p1), (s1,p2), (s2,p1)}. Ab har option ke teeno pairs check karo. Trap: maan lena ki projections se original hamesha wapas mil jaata hai."
+ ],
+ "db-er-tables-14": [
+  "Payment **weak** entity hai: `pay_no` sirf ek loan ke andar unique hai, poori table me nahi.",
+  "Weak entity ki table ki key = owner ki key + partial key.",
+  "Socho: loan L1 aur loan L2 dono ka payment 1 hai, to `pay_no` akela kaafi hai? Owner Loan ki key kya hai? Trap: extra non-key attribute key me daal dena."
+ ],
+ "db-er-tables-15": [
+  "Har construct ko alag gino: strong entities, weak entity, do M:N relationships, aur Guest ke **do** multivalued attributes.",
+  "Tables = strong + weak + M:N + (har multivalued attribute ki ek table). Identifying relationship ki table nahi banti.",
+  "Strong entities 3 aur weak Room 1. Ab Stays, Uses aur dono multivalued attributes jodo. Trap: `phone` aur `email` ko ek hi table me daal dena."
+ ],
+ "db-er-tables-16": [
+  "Har option ke liye poochho: kya ise kisi existing entity table ke ek column me rakha ja sakta hai, bina 1NF tode?",
+  "Rule: ek cell me ek hi value. Jahan ek entity ke liye kai values ya kai partners hon aur dono taraf 'many' ho, wahan alag table chahiye.",
+  "1:N lo: 'many' side ki har row ka sirf ek partner hai, to FK column kaafi. Isi tarah baaki teen judge karo. Trap: derived attribute ko stored maan lena."
+ ],
+ "db-keys-08": [
+  "Teen candidate keys hain, to superkeys ke teen overlapping groups banenge. Do keys ke formula se kaam nahi chalega; teen sets ka inclusion-exclusion chahiye.",
+  "$|K_1 \\cup K_2 \\cup K_3| = \\sum |K_i| - \\sum |K_i \\cap K_j| + |K_1 \\cap K_2 \\cap K_3|$, jahan har term = $2^{4-(\\text{fixed attributes})}$.",
+  "Singles: {A} → $2^3=8$, {B} → 8, {C, D} → $2^2=4$. Ab pairs ke union sets {A,B}, {A,C,D}, {B,C,D} gino. Trap: teeno wala term add back karna bhool jaana."
+ ],
+ "db-keys-09": [
+  "Do keys B share karti hain. Overlap wo sets hain jo **dono** keys ko contain karte hain, yani {A, B} ∪ {B, C} ke supersets.",
+  "Superkeys $= 2^{n-|K_1|} + 2^{n-|K_2|} - 2^{n-|K_1 \\cup K_2|}$, yahan $n = 5$.",
+  "{A, B} ke supersets: baaki 3 attributes free, $2^3 = 8$. {B, C} ke bhi utne. Ab overlap {A, B, C} ke liye nikalo. Trap: overlap ke liye $K_1 \\cap K_2$ = {B} le lena."
+ ],
+ "db-keys-10": [
+  "Ek instance kisi set ko key **prove** nahi kar sakta, sirf rule out kar sakta hai: agar do rows me us set ki values same hon.",
+  "Rule: set X rule out hota hai jab do alag rows X pe same hon. Har option ke liye X ki values ki list bana kar repeat dhundo.",
+  "`name` column: Asha, Ravi, Asha, Meena — repeat hai. Ab `phone`, `city` aur pair wale option ke liye same check karo. Trap: sirf pehli do rows dekh kar faisla karna."
+ ],
+ "db-keys-11": [
+  "FK apni hi table ko point karti hai aur action CASCADE hai, to ek delete ek chain shuru kar sakta hai: manager gaya to uske reports bhi jaayenge, phir unke reports bhi.",
+  "Levels me socho: level 0 = e1; agla level = jinka `mgr` pichhle level me hai. Chain tab rukti hai jab naya koi row na mile.",
+  "e1 delete hua; `mgr = e1` wale rows e2 aur e4 hain, wo bhi gaye. Ab e2 aur e4 ke reports dhundo, aur aage badho. Trap: chain ko ek level ke baad rok dena."
+ ],
+ "db-keys-12": [
+  "Har insert pe do checks lagte hain: composite **primary key** (sid, cid) ka pair naya hai ya nahi, aur dono **foreign keys** existing rows ko point karti hain ya nahi.",
+  "PK (sid, cid): poora pair repeat nahi ho sakta, akela `sid` repeat ho sakta hai. FK: `sid` ∈ Student = {s1, s2, s3}, `cid` ∈ Course = {c1, c2}.",
+  "('s1', 'c2') lo: s1 Student me hai, c2 Course me, aur pair Enroll me pehle se nahi. Isi tarah baaki teen jaancho. Trap: `sid` repeat dekh kar PK violation maan lena."
+ ],
+ "db-keys-13": [
+  "Candidate key **minimal** hoti hai, to koi key kisi doosri key ka subset nahi ho sakti. Sawaal hai: aise kitne sets ek saath ho sakte hain?",
+  "Ek hi size ke alag sets kabhi ek doosre ke subset nahi hote. To size k chuno jahan $\\binom{4}{k}$ sabse bada ho.",
+  "Size 1 lo: {A}, {B}, {C}, {D} → $\\binom{4}{1}=4$ keys. Ab size 2 aur 3 ke liye $\\binom{4}{k}$ nikal kar compare karo. Trap: saare subsets gin lena."
+ ],
+ "db-keys-14": [
+  "Do test lagao: (1) kya set kisi candidate key ko contain karta hai? (2) kya usme se koi attribute hata kar bhi key bachi rehti hai?",
+  "Superkey ⇔ set ⊇ {A} ya set ⊇ {B, C}. Candidate key ⇔ superkey + minimal (koi proper subset superkey nahi).",
+  "{B} lo: kya ye {A} ya {B, C} ko contain karta hai? Phir har option pe pehle superkey test, phir minimality. Trap: candidate key ko hi 'non-minimal superkey' maan lena."
+ ],
+ "db-keys-15": [
+  "Ek hi column `did` pe do constraints hain: FK action **SET NULL** aur **NOT NULL**. Dekho delete ke baad dono ek saath satisfy ho sakte hain ya nahi.",
+  "ON DELETE SET NULL: matching child rows me FK = NULL likha jaata hai. Agar wo likhna kisi constraint ko todta hai to poora statement fail hota hai.",
+  "d1 delete karne pe e1 aur e3 ke `did` ko NULL banana padega. Ab NOT NULL se compare karo. Trap: SET NULL ko CASCADE samajh lena."
+ ],
+ "db-keys-16": [
+  "Teen definitions yaad karo: superkey, candidate key (minimal superkey), primary key (chuni hui candidate key). Har statement ko definition se check karo.",
+  "Minimal ka matlab: koi bhi attribute hatao to superkey nahi rehta. 'Always' wale statement ke liye ek counterexample kaafi hai.",
+  "Statement 4 ke liye socho: R(A, B, C) jisme sirf {A, B, C} hi key ho — kya isme chhoti key hai? Baaki teen bhi isi tarah judge karo. Trap: candidate keys aur primary key ki ginti mix karna."
+ ],
+ "db-ra-eval-07": [
+  "R aur S me **do** common columns hain: B aur C. Natural join dono pe ek saath equality maangta hai.",
+  "Size $= \\sum_{(b,c)}$ (R me (b,c) ki count) × (S me (b,c) ki count), sirf un pairs pe jo dono me hon.",
+  "Pair (x, p): R me 1 row (A = 1), S me 2 rows (D = 10, 20) → 2 tuples. Ab (x, q), (y, p), (y, q), (z, q) karo. Trap: sirf B pe join kar dena."
+ ],
+ "db-ra-eval-08": [
+  "Do operations hain: pehle Cartesian product, phir sirf A pe **projection**. Relational algebra set semantics follow karta hai.",
+  "$\\pi_A$ duplicate tuples hata deta hai. Agar S khaali nahi hai to $\\pi_A(R \\times S)$ me har A value jo R me hai, ek baar aati hai.",
+  "Product me 4 × 5 = 20 rows bani, columns (A, B, C). Ab sirf A column rakho aur repeats hatao. Trap: 20 hi likh dena."
+ ],
+ "db-ra-eval-09": [
+  "Teen joins ki baat ho rahi hai: inner, left outer, right outer. Sabse pehle inner join ka size nikalo, baaki uspe add hote hain.",
+  "Left outer = inner + R ke unmatched rows (C = NULL). Right outer = inner + S ke unmatched rows (A = NULL).",
+  "B = a: R me 2 rows, S me 2 rows → 4 tuples. Ab B = c add karo, phir dekho R ke kaun se B values S me nahi hain. Trap: right join me S ka unmatched row bhool jaana."
+ ],
+ "db-ra-division-05": [
+  "Division ka matlab 'har ek': wo pilots chahiye jo Fleet ke **saare** planes pe certified hain.",
+  "Har pilot ka plane-set banao aur check karo: kya {A320, B737, ATR} ⊆ us pilot ka set?",
+  "p1 ka set {A320, B737, ATR} hai, to p1 pass. Ab p2, p3, p4 ke sets likh kar check karo. Trap: extra plane (Q400) wale pilot ko fail kar dena."
+ ],
+ "db-ra-division-06": [
+  "NewFleet me ek plane E190 hai jo Cert me kahin nahi dikhta. Division me divisor ki **har** value cover honi chahiye.",
+  "Formula: $\\pi_{pilot}(\\text{Cert}) - \\pi_{pilot}\\big((\\pi_{pilot}(\\text{Cert}) \\times \\text{NewFleet}) - \\text{Cert}\\big)$.",
+  "Product me (p1, E190), (p2, E190), ... sab aayenge. Inme se kaun se Cert me hain? Usse decide karo kaun bachta hai. Trap: E190 ko ignore kar dena."
+ ],
+ "db-ra-division-07": [
+  "Division ki definition yaad karo: a result me hai agar R me (a, b) har b ∈ S ke liye ho. Har statement ko isi definition se test karo.",
+  "'Always' ke liye: sahi ho to definition se proof, galat ho to ek chhota counterexample (1–2 rows) kaafi hai.",
+  "Statement 2 lo: $S_2$ bada hai, to $S_2$ ki har value cover karna mushkil hai ya aasaan? Statement 4 ke liye S me ek value aur R me do a values try karo. Trap: join ko division samajhna."
+ ],
+ "db-ra-division-08": [
+  "Keyword **'every'** hai, to division ya ∀ chahiye. Join sirf 'kam se kam ek' deta hai.",
+  "$R(A, B) \\div S(B)$: R me (sid, cid) pairs, S me sirf wo cids jo **har** student ko lene hain.",
+  "Divisor banao: Course se pehle CS wale rows chuno, phir sirf `cid` rakho. Ab dekho kaun sa option ise sahi side pe use karta hai. Trap: CS selection chhod dena."
+ ],
+ "db-ra-division-09": [
+  "Ye relation 'missing pairs' hai: har employee × har needed skill, minus jo pairs Works me sach me hain.",
+  "Size = $|\\pi_{eid}(\\text{Works})| \\times |\\text{Need}|$ − (Works ke wo rows jo product me hain).",
+  "Distinct eids 4 hain aur Need me 3 skills, to product me 12 pairs. Ab gino Works ke kitne rows inme aate hain. Trap: final division ka size bata dena."
+ ],
+ "db-ra-equiv-06": [
+  "Ye **selection pushdown** ka sawaal hai: join se pehle condition ko us table pe lagana jisme uske attributes hain.",
+  "Rules: $\\sigma_{p \\land q} = \\sigma_p(\\sigma_q(\\cdot))$, aur $\\sigma_p$ join ke andar sirf us side jaa sakta hai jisme p ke saare attributes hon.",
+  "A sirf R me hai, C sirf S me. To AND ke do hisse alag-alag kahan jaayenge? Ab har option me join condition aur AND/OR dekho. Trap: ⋈ ki jagah × likh dena."
+ ],
+ "db-ra-equiv-07": [
+  "'Always' ka matlab: har instance pe. Har equivalence ke liye ya to element-wise argument do, ya ek chhota counterexample banao.",
+  "π ∪ pe distribute karta hai, par ∩ ya − pe nahi. σ ek row-by-row filter hai. Difference ke liye associativity alag se check karo.",
+  "∩ wala test karo: R = {(1, x)}, S = {(1, y)} lo aur dono sides nikalo. Last option ke liye S = ∅ aur R = T try karo. Trap: π ko ∩ pe bhi distribute maan lena."
+ ],
+ "db-ra-equiv-08": [
+  "'Both c1 and c2' ek student ke **do alag rows** ki baat hai. Socho ek single tuple me `cid` ki kitni values ho sakti hain.",
+  "Ek σ har tuple ko akela test karta hai. Do alag rows ko jodne ke liye do sets bana kar ∩ karo, ya rename karke self-join.",
+  "Option B lo: kya koi ek row hai jisme cid = 'c1' bhi ho aur cid = 'c2' bhi? Ab baaki options me ∩, ∪, − ka matlab socho. Trap: AND ko 'dono courses' padh lena."
+ ],
+ "db-ra-equiv-09": [
+  "Order dhyan se padho: pehle **R − S** (poore tuples pe), phir projection. Ulta order alag answer deta hai.",
+  "R − S me wo tuples bachte hain jo S me **exactly** (A aur B dono same) nahi hain. Phir $\\pi_A$ duplicates hata deta hai.",
+  "R ke rows ek-ek karke S me dhundo: (1, x) S me hai, to hatega. Ab (1, y), (2, x), (3, z) check karo. Trap: pehle π lagakar phir minus karna."
+ ],
+ "db-trc-06": [
+  "Quantifier **∃** hai aur condition me `e.sid = t.sid` hai. Dono ka matlab alag-alag padho.",
+  "∃e (P ∧ Q) = kam se kam ek e jo P aur Q dono satisfy kare. Yahan P = 'e isi student ka enrolment hai', Q = 'grade A hai'.",
+  "Pehle `e.sid = t.sid` ka role socho: ye e ko kis student se jodta hai? Phir grade wali condition jodo. Trap: ∃ ko 'har' padh lena."
+ ],
+ "db-trc-07": [
+  "∀ yahan Supplies ke rows pe chal raha hai, Parts pe nahi. Socho kis cheez ke baare me 'har ek' bola ja raha hai.",
+  "∀u (P(u) ⇒ Q(u)): har u jo P satisfy kare wo Q bhi kare. Agar koi u P satisfy hi na kare, to statement khud-ba-khud true (vacuous truth).",
+  "Ek supplier lo jiska Supplies me koi row nahi: `u.sid = t.sid` har u ke liye false hai, to implication kya banega? Trap: ise 'every red part' padh lena."
+ ],
+ "db-trc-08": [
+  "¬∃ ka matlab 'aisa koi nahi': koi D2 employee nahi hona chahiye jiski salary t ke barabar ya zyada ho.",
+  "¬∃s (D2(s) ∧ s.sal ≥ t.sal) ⇔ t.sal > har D2 salary ⇔ t.sal > max(D2 salaries).",
+  "D2 ke rows: e2 (60) aur e4 (40). Ab har employee ki salary is max se strictly compare karo. Trap: tie (60) wale ko bhi ginna."
+ ],
+ "db-trc-09": [
+  "Target 'koi C nahi' hai. Har option ko is target se compare karo, khaaskar ∀ ke saath ⇒ hai ya ∧.",
+  "Duality: $\\neg\\exists e\\,(P \\land Q) \\equiv \\forall e\\,(P \\Rightarrow \\neg Q)$. Aur ∀ ke saath ∧ ka matlab 'Enrolled ki har row' pe condition.",
+  "Option C test karo: Enrolled me kisi doosre student ka row ho to `e.sid = t.sid` false — tab ∧ wala ∀ kya dega? Option D ke liye A aur C dono grades wala student lo. Trap: ∀ ke saath ∧ likhna."
+ ]
+}

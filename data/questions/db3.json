@@ -1,0 +1,1275 @@
+{
+ "area": "db",
+ "skills": {},
+ "questions": [
+  {
+   "id": "db-sql-joins-06",
+   "skill": "db.sql-joins",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Customer**\n\n| cid | name | city |\n|---|---|---|\n| 1 | Anu | Pune |\n| 2 | Ravi | Delhi |\n| 3 | Sara | Pune |\n| 4 | Tom | Agra |\n\n**Orders**\n\n| oid | cid | amount |\n|---|---|---|\n| 101 | 1 | 250 |\n| 102 | 1 | 400 |\n| 103 | 3 | 150 |\n| 104 | 5 | 300 |\n| 105 | NULL | 80 |\n\n```sql\nSELECT COUNT(*)\nFROM Customer c LEFT JOIN Orders o ON c.cid = o.cid\nWHERE o.oid IS NULL;\n```\n\nWhat does this query return?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Counted every row of the LEFT JOIN; the WHERE keeps only the NULL-padded rows.",
+     "trap": "C6"
+    },
+    {
+     "value": 4,
+     "why": "Also counted orders 104 and 105, which have no customer; a LEFT JOIN from Customer never keeps unmatched Orders rows.",
+     "trap": "C2"
+    },
+    {
+     "value": 0,
+     "why": "Assumed a LEFT JOIN never produces NULL in o.oid; customers without orders are padded with NULL.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. LEFT JOIN rows: Anu–101, Anu–102, Sara–103, and Ravi, Tom padded with NULL (5 rows).\n2. Orders 104 (cid 5) and 105 (cid NULL) match no customer, so they do not appear.\n3. `o.oid IS NULL` keeps only the padded rows: Ravi and Tom → **2**."
+  },
+  {
+   "id": "db-sql-joins-07",
+   "skill": "db.sql-joins",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Customer**\n\n| cid | name | city |\n|---|---|---|\n| 1 | Anu | Pune |\n| 2 | Ravi | Delhi |\n| 3 | Sara | Pune |\n| 4 | Tom | Agra |\n\n**Orders**\n\n| oid | cid | amount |\n|---|---|---|\n| 101 | 1 | 250 |\n| 102 | 1 | 400 |\n| 103 | 3 | 150 |\n| 104 | 5 | 300 |\n| 105 | NULL | 80 |\n\nQuery P:\n\n```sql\nSELECT c.name, COUNT(*)\nFROM Customer c LEFT JOIN Orders o ON c.cid = o.cid\nGROUP BY c.cid, c.name;\n```\n\nQuery Q:\n\n```sql\nSELECT c.name, COUNT(o.oid)\nFROM Customer c LEFT JOIN Orders o ON c.cid = o.cid\nGROUP BY c.cid, c.name;\n```\n\nWhat values do P and Q show for the customer **Ravi**, in that order?",
+   "figure": null,
+   "options": [
+    {
+     "text": "1 and 0",
+     "correct": true,
+     "why": "Ravi has no order, so the LEFT JOIN gives him one NULL-padded row: COUNT(*) counts that row (1), COUNT(o.oid) skips its NULL (0)."
+    },
+    {
+     "text": "0 and 0",
+     "correct": false,
+     "why": "Assumed COUNT(*) skips the NULL-padded row; COUNT(*) counts rows, whatever they contain.",
+     "trap": "C9"
+    },
+    {
+     "text": "1 and 1",
+     "correct": false,
+     "why": "Assumed COUNT(o.oid) counts the padded row; COUNT(column) ignores NULL values.",
+     "trap": "C2"
+    },
+    {
+     "text": "Ravi does not appear in either result",
+     "correct": false,
+     "why": "Treated the LEFT JOIN as an inner join; a LEFT JOIN keeps every Customer row.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Ravi (cid 2) matches no order → one row (Ravi, NULL, NULL, NULL).\n2. P: COUNT(*) counts rows → 1.\n3. Q: COUNT(o.oid) counts non-NULL oids → 0.\n4. So use COUNT(o.oid), not COUNT(*), to get 'orders per customer' with zeros."
+  },
+  {
+   "id": "db-sql-joins-08",
+   "skill": "db.sql-joins",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Customer**\n\n| cid | name | city |\n|---|---|---|\n| 1 | Anu | Pune |\n| 2 | Ravi | Delhi |\n| 3 | Sara | Pune |\n| 4 | Tom | Agra |\n\n**Orders**\n\n| oid | cid | amount |\n|---|---|---|\n| 101 | 1 | 250 |\n| 102 | 1 | 400 |\n| 103 | 3 | 150 |\n| 104 | 5 | 300 |\n| 105 | NULL | 80 |\n\n```sql\nSELECT o.oid, c.name\nFROM Customer c RIGHT JOIN Orders o ON c.cid = o.cid;\n```\n\nWhich rows appear in the result?",
+   "figure": null,
+   "options": [
+    {
+     "text": "(104, NULL)",
+     "correct": true,
+     "why": "Order 104 has cid 5, which no customer has; a RIGHT JOIN keeps every Orders row and pads the Customer side with NULL."
+    },
+    {
+     "text": "(NULL, Tom)",
+     "correct": false,
+     "why": "This is what a LEFT JOIN (keep all customers) would add; the RIGHT JOIN keeps unmatched Orders rows, not unmatched customers.",
+     "trap": "C2"
+    },
+    {
+     "text": "(105, NULL)",
+     "correct": true,
+     "why": "Order 105 has cid NULL; NULL = anything is not TRUE, so it matches nothing but is still kept by the RIGHT JOIN."
+    },
+    {
+     "text": "(105, Anu)",
+     "correct": false,
+     "why": "Matched a NULL cid to some customer; NULL never satisfies the ON equality.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. RIGHT JOIN keeps all 5 Orders rows.\n2. 101, 102 → Anu; 103 → Sara.\n3. 104 (cid 5) and 105 (cid NULL) match nothing → c.name NULL.\n4. Ravi and Tom (no orders) do not appear."
+  },
+  {
+   "id": "db-sql-joins-09",
+   "skill": "db.sql-joins",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Staff**\n\n| sid | team |\n|---|---|\n| 1 | A |\n| 2 | A |\n| 3 | B |\n| 4 | A |\n| 5 | B |\n| 6 | NULL |\n| 7 | NULL |\n| 8 | C |\n\n```sql\nSELECT COUNT(*)\nFROM Staff s1 JOIN Staff s2\n  ON s1.team = s2.team AND s1.sid < s2.sid;\n```\n\nWhat does this query return?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 8,
+     "why": "Counted ordered pairs (as with s1.sid <> s2.sid); `<` keeps each unordered pair once.",
+     "trap": "C6"
+    },
+    {
+     "value": 14,
+     "why": "Ignored the s1.sid < s2.sid condition and counted every same-team pair including (x, x): 9 + 4 + 1.",
+     "trap": "C6"
+    },
+    {
+     "value": 5,
+     "why": "Paired staff 6 and 7 because both teams are NULL; NULL = NULL is UNKNOWN, so they never match.",
+     "trap": "C9"
+    }
+   ],
+   "solution": "1. Teams: A has sids 1, 2, 4; B has 3, 5; C has 8; sids 6 and 7 have NULL.\n2. Pairs with s1.sid < s2.sid: team A → C(3,2) = 3; team B → 1; team C → 0.\n3. NULL teams match nothing. Total = 3 + 1 = **4**."
+  },
+  {
+   "id": "db-sql-subquery-06",
+   "skill": "db.sql-subquery",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Product**\n\n| pid | cat | price |\n|---|---|---|\n| 1 | X | 30 |\n| 2 | X | 90 |\n| 3 | Y | 60 |\n| 4 | Y | NULL |\n| 5 | Z | 100 |\n| 6 | Z | 70 |\n\n```sql\nSELECT COUNT(*) FROM Product\nWHERE price > (SELECT AVG(price) FROM Product);\n```\n\nWhat does this query return?",
+   "figure": null,
+   "options": [
+    {
+     "text": "2",
+     "correct": true,
+     "why": "AVG skips the NULL: 350 / 5 = 70. Only 90 and 100 are strictly greater than 70."
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Used ≥ instead of >; the product priced exactly 70 fails `price > 70`.",
+     "trap": "C5"
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Divided by all 6 rows (average 58.3); AVG ignores the NULL price and divides by 5.",
+     "trap": "C6"
+    },
+    {
+     "text": "0",
+     "correct": false,
+     "why": "Assumed AVG returns NULL when any value is NULL; aggregates simply skip NULL values.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Non-NULL prices: 30, 90, 60, 100, 70 → sum 350, count 5 → AVG = 70.\n2. `price > 70`: 90 and 100 → TRUE; 70 is not > 70; the NULL row gives UNKNOWN.\n3. Count = **2**."
+  },
+  {
+   "id": "db-sql-subquery-07",
+   "skill": "db.sql-subquery",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Product**\n\n| pid | cat | price |\n|---|---|---|\n| 1 | X | 30 |\n| 2 | X | 90 |\n| 3 | Y | 60 |\n| 4 | Y | NULL |\n| 5 | Z | 100 |\n| 6 | Z | 70 |\n\n**Sale**\n\n| sid | pid | qty |\n|---|---|---|\n| 1 | 2 | 5 |\n| 2 | 2 | 1 |\n| 3 | 3 | 2 |\n| 4 | 6 | 1 |\n| 5 | 2 | 3 |\n| 6 | 9 | 4 |\n\nQuery P:\n\n```sql\nSELECT COUNT(*) FROM Product\nWHERE pid IN (SELECT pid FROM Sale);\n```\n\nQuery Q:\n\n```sql\nSELECT COUNT(*)\nFROM Product p JOIN Sale s ON p.pid = s.pid;\n```\n\nWhat do P and Q return, in that order?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3 and 5",
+     "correct": true,
+     "why": "IN tests membership, so products 2, 3, 6 are each counted once; the join makes one row per matching sale (3 + 1 + 1)."
+    },
+    {
+     "text": "3 and 3",
+     "correct": false,
+     "why": "Assumed the join also counts each product once; product 2 has three sales, so it appears three times.",
+     "trap": "C9"
+    },
+    {
+     "text": "5 and 5",
+     "correct": false,
+     "why": "Assumed IN repeats a product once per matching sale; IN only checks whether a match exists.",
+     "trap": "C9"
+    },
+    {
+     "text": "4 and 6",
+     "correct": false,
+     "why": "Counted sale 6 (pid 9), which has no product; neither IN nor an inner join keeps it.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Sale pids: {2, 2, 3, 6, 2, 9}. Products present in it: 2, 3, 6 → P = 3.\n2. Join: product 2 matches 3 sales, product 3 one, product 6 one; pid 9 matches no product → Q = 5."
+  },
+  {
+   "id": "db-sql-subquery-08",
+   "skill": "db.sql-subquery",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Let `S` be a subquery that returns a column of numbers with **no NULLs**. Which pairs of conditions are always equivalent?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`x = ANY (S)` and `x IN (S)`",
+     "correct": true,
+     "why": "Equal to at least one value of S is exactly membership in S."
+    },
+    {
+     "text": "`x <> ALL (S)` and `x NOT IN (S)`",
+     "correct": true,
+     "why": "Different from every value of S means x is not in S."
+    },
+    {
+     "text": "`x > ALL (S)` and \"x is greater than the minimum of S\"",
+     "correct": false,
+     "why": "Swapped ALL and ANY: > ALL means greater than the maximum; > ANY means greater than the minimum.",
+     "trap": "C2"
+    },
+    {
+     "text": "`x <> ANY (S)` and `x NOT IN (S)`",
+     "correct": false,
+     "why": "`<> ANY` is TRUE if x differs from at least one value; for S = {10, 20, 30} and x = 20 it is TRUE while NOT IN is FALSE.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. `= ANY` → equals some value → IN.\n2. `<> ALL` → differs from every value → NOT IN.\n3. `> ALL` → > MAX, not > MIN.\n4. `<> ANY` → differs from some value; true for x = 20 and S = {10, 20, 30}, so it is not NOT IN."
+  },
+  {
+   "id": "db-sql-subquery-09",
+   "skill": "db.sql-subquery",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Score**\n\n| name | marks |\n|---|---|\n| P | 90 |\n| Q | 85 |\n| R | 85 |\n| S | 70 |\n| T | 95 |\n| U | 70 |\n\n```sql\nSELECT COUNT(*) FROM Score s\nWHERE 3 > (SELECT COUNT(*) FROM Score t\n           WHERE t.marks > s.marks);\n```\n\nWhat does this query return?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Assumed the query keeps exactly the top 3 rows; Q and R tie at 85 and each has only 2 higher scores, so both stay.",
+     "trap": "C1"
+    },
+    {
+     "value": 2,
+     "why": "Counted the row itself inside the subquery (as with ≥); `t.marks > s.marks` counts only strictly higher scores.",
+     "trap": "C5"
+    },
+    {
+     "value": 6,
+     "why": "Read the inner COUNT as the outer row's own rank from the bottom; it counts how many scores are strictly higher.",
+     "trap": "C11"
+    }
+   ],
+   "solution": "1. For each row count strictly higher marks: T 95 → 0, P 90 → 1, Q 85 → 2, R 85 → 2, S 70 → 4, U 70 → 4.\n2. Keep rows with count < 3: T, P, Q, R → **4**.\n3. The ties at 85 are why the answer is 4, not 3."
+  },
+  {
+   "id": "db-sql-groupby-06",
+   "skill": "db.sql-groupby",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | city | sal | bonus |\n|---|---|---|---|---|\n| 1 | CS | Pune | 50 | 10 |\n| 2 | CS | Pune | 60 | NULL |\n| 3 | CS | Delhi | 70 | 30 |\n| 4 | EE | Pune | 40 | NULL |\n| 5 | EE | Pune | 45 | 40 |\n| 6 | ME | Delhi | 80 | 12 |\n| 7 | ME | Agra | 55 | 14 |\n| 8 | CS | Delhi | 65 | 20 |\n\n```sql\nSELECT dept, city, COUNT(*)\nFROM Emp\nGROUP BY dept, city;\n```\n\nHow many rows does this query return?",
+   "figure": null,
+   "options": [
+    {
+     "text": "5",
+     "correct": true,
+     "why": "One row per distinct (dept, city) pair: (CS, Pune), (CS, Delhi), (EE, Pune), (ME, Delhi), (ME, Agra)."
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Grouped by dept alone; GROUP BY dept, city makes a group for every distinct pair.",
+     "trap": "C6"
+    },
+    {
+     "text": "8",
+     "correct": false,
+     "why": "Gave one row per employee; employees with the same (dept, city) fall into one group.",
+     "trap": "C9"
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Added the 3 distinct depts and 3 distinct cities; groups are distinct pairs that actually occur.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Pairs in the data: (CS, Pune) ×2, (CS, Delhi) ×2, (EE, Pune) ×2, (ME, Delhi), (ME, Agra).\n2. Each distinct pair is one group → **5** rows."
+  },
+  {
+   "id": "db-sql-groupby-07",
+   "skill": "db.sql-groupby",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | city | sal | bonus |\n|---|---|---|---|---|\n| 1 | CS | Pune | 50 | 10 |\n| 2 | CS | Pune | 60 | NULL |\n| 3 | CS | Delhi | 70 | 30 |\n| 4 | EE | Pune | 40 | NULL |\n| 5 | EE | Pune | 45 | 40 |\n| 6 | ME | Delhi | 80 | 12 |\n| 7 | ME | Agra | 55 | 14 |\n| 8 | CS | Delhi | 65 | 20 |\n\n```sql\nSELECT dept\nFROM Emp\nGROUP BY dept\nHAVING AVG(bonus) > 15;\n```\n\nWhich departments does this query return?",
+   "figure": null,
+   "options": [
+    {
+     "text": "CS and EE",
+     "correct": true,
+     "why": "AVG skips NULL: CS (10 + 30 + 20) / 3 = 20, EE 40 / 1 = 40, ME (12 + 14) / 2 = 13. Only CS and EE exceed 15."
+    },
+    {
+     "text": "EE only",
+     "correct": false,
+     "why": "Treated NULL bonuses as 0 (divided by COUNT(*)): CS 60 / 4 = 15 is then not > 15. AVG divides by the non-NULL count.",
+     "trap": "C6"
+    },
+    {
+     "text": "CS, EE and ME",
+     "correct": false,
+     "why": "Tested SUM(bonus) instead of AVG; ME's sum is 26 but its average is 13.",
+     "trap": "C3"
+    },
+    {
+     "text": "No department: AVG over a column with NULLs is NULL",
+     "correct": false,
+     "why": "An aggregate is NULL only if every value in the group is NULL; otherwise the NULLs are skipped.",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. CS bonuses 10, NULL, 30, 20 → AVG = 60 / 3 = 20.\n2. EE: NULL, 40 → AVG = 40.\n3. ME: 12, 14 → AVG = 13.\n4. HAVING AVG > 15 keeps **CS and EE**."
+  },
+  {
+   "id": "db-sql-groupby-08",
+   "skill": "db.sql-groupby",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Consider a table `Emp(eid, dept, city, sal)`. Which of these queries are **rejected with an error** in standard SQL?\n\nQ1:\n\n```sql\nSELECT dept, city FROM Emp\nGROUP BY dept;\n```\n\nQ2:\n\n```sql\nSELECT dept, COUNT(*) FROM Emp\nWHERE COUNT(*) > 1\nGROUP BY dept;\n```\n\nQ3:\n\n```sql\nSELECT dept, MAX(sal) FROM Emp\nGROUP BY dept\nHAVING MIN(sal) > 40;\n```\n\nQ4:\n\n```sql\nSELECT COUNT(*) FROM Emp\nHAVING COUNT(*) > 5;\n```",
+   "figure": null,
+   "options": [
+    {
+     "text": "Q1",
+     "correct": true,
+     "why": "`city` is neither in GROUP BY nor inside an aggregate, so one group (dept) could have several cities; standard SQL rejects it."
+    },
+    {
+     "text": "Q2",
+     "correct": true,
+     "why": "WHERE runs before grouping, so it cannot use an aggregate; the condition belongs in HAVING."
+    },
+    {
+     "text": "Q3",
+     "correct": false,
+     "why": "Thought HAVING may only use aggregates that appear in SELECT; any aggregate of the group is allowed.",
+     "trap": "C1"
+    },
+    {
+     "text": "Q4",
+     "correct": false,
+     "why": "Thought HAVING needs GROUP BY; without it the whole table is one group, so the query is valid.",
+     "trap": "C8"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Q1: every SELECT column must be grouped or aggregated → error.\n2. Q2: aggregates are not allowed in WHERE → error.\n3. Q3: HAVING can test MIN(sal) even if SELECT shows MAX(sal) → valid.\n4. Q4: no GROUP BY → whole table is one group; HAVING filters it → valid."
+  },
+  {
+   "id": "db-sql-groupby-09",
+   "skill": "db.sql-groupby",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Emp**\n\n| eid | dept | city | sal | bonus |\n|---|---|---|---|---|\n| 1 | CS | Pune | 50 | 10 |\n| 2 | CS | Pune | 60 | NULL |\n| 3 | CS | Delhi | 70 | 30 |\n| 4 | EE | Pune | 40 | NULL |\n| 5 | EE | Pune | 45 | 40 |\n| 6 | ME | Delhi | 80 | 12 |\n| 7 | ME | Agra | 55 | 14 |\n| 8 | CS | Delhi | 65 | 20 |\n\n```sql\nSELECT dept, MAX(sal)\nFROM Emp\nWHERE sal > 50\nGROUP BY dept\nHAVING COUNT(*) >= 2;\n```\n\nHow many rows does this query return?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Applied HAVING to the full groups (CS 4, EE 2, ME 2) before WHERE; WHERE removes rows first, so EE has none left.",
+     "trap": "C6"
+    },
+    {
+     "value": 1,
+     "why": "Read `>= 2` as `> 2`; ME keeps exactly 2 rows, which passes.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. WHERE sal > 50 keeps eids 2, 3, 8 (CS) and 6, 7 (ME); both EE salaries are ≤ 50.\n2. Groups: CS 3 rows, ME 2 rows.\n3. HAVING COUNT(*) ≥ 2 keeps both → **2** rows."
+  },
+  {
+   "id": "db-sql-null-07",
+   "skill": "db.sql-null",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**T**\n\n| a |\n|---|\n| 1 |\n| 2 |\n| NULL |\n| 3 |\n| 2 |\n| NULL |\n| 4 |\n\n```sql\nSELECT COUNT(*) FROM T\nWHERE a <> 2;\n```\n\nWhat does this query return?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 3,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 5,
+     "why": "Counted the two NULL rows as 'not 2'; NULL <> 2 is UNKNOWN and WHERE drops it.",
+     "trap": "C9"
+    },
+    {
+     "value": 4,
+     "why": "Removed only one of the two rows with a = 2; every row equal to 2 fails the condition.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. a = 1, 3, 4 → `a <> 2` is TRUE.\n2. a = 2 (twice) → FALSE.\n3. a = NULL (twice) → UNKNOWN, dropped.\n4. Count = **3**."
+  },
+  {
+   "id": "db-sql-null-08",
+   "skill": "db.sql-null",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**Acct**\n\n| id | bonus |\n|---|---|\n| 1 | 5 |\n| 2 | NULL |\n| 3 | 20 |\n| 4 | 10 |\n| 5 | NULL |\n| 6 | 15 |\n\nQuery P:\n\n```sql\nSELECT COUNT(*) FROM Acct\nWHERE bonus > 10 OR bonus IS NULL;\n```\n\nQuery Q:\n\n```sql\nSELECT COUNT(*) FROM Acct\nWHERE NOT (bonus <= 10);\n```\n\nWhat do P and Q return, in that order?",
+   "figure": null,
+   "options": [
+    {
+     "text": "4 and 2",
+     "correct": true,
+     "why": "P: 20 and 15 pass `> 10`, and the two NULL rows pass `IS NULL` (TRUE). Q: for NULL rows `bonus <= 10` is UNKNOWN and NOT UNKNOWN is still UNKNOWN, so only 20 and 15 remain."
+    },
+    {
+     "text": "4 and 4",
+     "correct": false,
+     "why": "Turned UNKNOWN into FALSE before applying NOT; NOT UNKNOWN stays UNKNOWN, so the NULL rows are dropped in Q.",
+     "trap": "C9"
+    },
+    {
+     "text": "2 and 2",
+     "correct": false,
+     "why": "Treated `bonus IS NULL` like `bonus = NULL`; IS NULL is TRUE for NULL rows.",
+     "trap": "C10"
+    },
+    {
+     "text": "5 and 2",
+     "correct": false,
+     "why": "Counted bonus = 10 as greater than 10 in P; the boundary value fails `> 10`.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. P: 20, 15 → TRUE by `> 10`; ids 2, 5 → TRUE by `IS NULL`; 5 and 10 → FALSE. P = 4.\n2. Q: `bonus <= 10` is TRUE for 5, 10, FALSE for 20, 15, UNKNOWN for NULL. NOT flips TRUE/FALSE, keeps UNKNOWN. Q = 2."
+  },
+  {
+   "id": "db-sql-null-09",
+   "skill": "db.sql-null",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "**R**\n\n| a | b |\n|---|---|\n| NULL | 5 |\n\nFor the only row of `R`, which conditions evaluate to **TRUE** (so `SELECT * FROM R WHERE <condition>` returns the row)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`b = 5 OR a = 1`",
+     "correct": true,
+     "why": "b = 5 is TRUE and TRUE OR UNKNOWN = TRUE."
+    },
+    {
+     "text": "`a IS NULL AND b > 3`",
+     "correct": true,
+     "why": "`a IS NULL` is TRUE (IS NULL never gives UNKNOWN) and b > 3 is TRUE."
+    },
+    {
+     "text": "`NOT (a > 1)`",
+     "correct": false,
+     "why": "Took NULL > 1 as FALSE and flipped it; it is UNKNOWN, and NOT UNKNOWN is UNKNOWN.",
+     "trap": "C9"
+    },
+    {
+     "text": "`a = a`",
+     "correct": false,
+     "why": "Assumed a value always equals itself; NULL = NULL is UNKNOWN in SQL.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. `a = 1` is UNKNOWN, `b = 5` TRUE → OR gives TRUE.\n2. `a IS NULL` TRUE, `b > 3` TRUE → AND gives TRUE.\n3. `a > 1` UNKNOWN → NOT keeps UNKNOWN.\n4. `a = a` → NULL = NULL → UNKNOWN."
+  },
+  {
+   "id": "db-bplus-order-07",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree is built on 4096-byte disk blocks. A search key needs 16 bytes and a child (block) pointer 8 bytes. What is the maximum number of child pointers (the order p) of an internal node?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 171,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 170,
+     "why": "Stored p keys with p pointers (24p ≤ 4096); an internal node has only p − 1 keys.",
+     "trap": "C6"
+    },
+    {
+     "value": 256,
+     "why": "Divided the block by the key size only and ignored the child pointers.",
+     "trap": "C3"
+    }
+   ],
+   "solution": "1. Internal node: $8p + 16(p-1) \\le 4096$.\n2. $24p \\le 4112$ → $p \\le 171.33$.\n3. Floor (capacity) → $p = 171$."
+  },
+  {
+   "id": "db-bplus-order-08",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree uses 512-byte nodes. A key takes 8 bytes, a child (block) pointer 4 bytes and a record pointer 6 bytes. An internal node holds child pointers and keys; a leaf holds (key, record pointer) pairs plus one 4-byte pointer to the next leaf. What is the maximum number of keys the leaves can hold when the tree has exactly 3 levels (root, one internal level, leaves)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 66564,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 79507,
+     "why": "Multiplied three fanouts (43³); the bottom level is leaves, which hold 36 keys each, not 43.",
+     "trap": "C3"
+    },
+    {
+     "value": 63504,
+     "why": "Used 42 (keys per internal node) as the fanout; a node with 42 keys has 43 children.",
+     "trap": "C6"
+    },
+    {
+     "value": 1548,
+     "why": "Counted only 2 levels (root directly above leaves); with 3 levels there are 43 × 43 leaves.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Internal: $4p + 8(p-1) \\le 512$ → $12p \\le 520$ → $p = 43$.\n2. Leaf: $14n + 4 \\le 512$ → $n \\le 36.3$ → $n = 36$.\n3. Max leaves with 3 levels: $43 \\times 43 = 1849$; keys $= 1849 \\times 36 = 66564$."
+  },
+  {
+   "id": "db-bplus-order-09",
+   "skill": "db.bplus-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "In a B+ tree an internal node has at most 7 children. Every node other than the root must have at least ⌈7/2⌉ children. What is the minimum number of **keys** in a non-root internal node?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3",
+     "correct": true,
+     "why": "At least ⌈7/2⌉ = 4 children, and an internal node always has one key fewer than its children: 4 − 1 = 3."
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Gave the minimum number of children; keys = children − 1.",
+     "trap": "C6"
+    },
+    {
+     "text": "1",
+     "correct": false,
+     "why": "Used the root's minimum (2 children, 1 key); the question is about a non-root node.",
+     "trap": "C5"
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Gave the maximum number of keys (7 − 1), not the minimum.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Minimum children = ⌈7/2⌉ = 4.\n2. Keys = children − 1 = 3."
+  },
+  {
+   "id": "db-bplus-order-10",
+   "skill": "db.bplus-order",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree has internal nodes with at most 20 children and leaves with at most 19 keys. Every non-root node is at least half full (internal ≥ ⌈20/2⌉ children, leaf ≥ ⌈19/2⌉ keys) and the root has at least 2 children. The tree has exactly 3 levels. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The tree can hold at most 7600 keys.",
+     "correct": true,
+     "why": "Max = 20 × 20 leaves × 19 keys = 7600."
+    },
+    {
+     "text": "The tree holds at least 200 keys.",
+     "correct": true,
+     "why": "Min = root 2 children × 10 children each × ⌈19/2⌉ = 10 keys per leaf = 2 × 10 × 10 = 200."
+    },
+    {
+     "text": "An equality search may stop at the root when the key is stored there.",
+     "correct": false,
+     "why": "That is a B-tree property; in a B+ tree records are reached only from leaves, so every search reads 3 nodes.",
+     "trap": "C2"
+    },
+    {
+     "text": "The tree can hold at most 8000 keys.",
+     "correct": false,
+     "why": "Used 20³, treating leaves as having 20 keys; a leaf holds at most 19.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Max: $20^{2} \\cdot 19 = 7600$.\n2. Min: $2 \\cdot \\lceil 20/2 \\rceil \\cdot \\lceil 19/2 \\rceil = 2 \\cdot 10 \\cdot 10 = 200$.\n3. B+ tree: every lookup goes root → internal → leaf (3 nodes).\n4. 8000 wrongly uses 20 keys per leaf."
+  },
+  {
+   "id": "db-bplus-order-11",
+   "skill": "db.bplus-order",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree stores 100 keys. An internal node has at most 5 children and a leaf at most 4 keys. Every non-root internal node has at least 3 children, every leaf at least 2 keys, and the root (if internal) at least 2 children. What is the **maximum** possible number of levels (including the leaf level)?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 3,
+     "why": "Found the minimum number of levels (all nodes full: 25 leaves → 5 → 1); the maximum comes from the least-filled nodes.",
+     "trap": "C2"
+    },
+    {
+     "value": 5,
+     "why": "Let a leaf hold just 1 key; with leaves of ≥ 2 keys, 5 levels need at least 2 · 3³ · 2 = 108 keys.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. Fewest keys a tree with h levels can hold: $2 \\cdot 3^{h-2} \\cdot 2$.\n2. h = 4 → 36 ≤ 100, so 4 levels are possible.\n3. h = 5 → 108 > 100, impossible.\n4. Maximum height = **4** levels."
+  },
+  {
+   "id": "db-bplus-order-12",
+   "skill": "db.bplus-order",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree internal node must have up to 50 children. A key takes 12 bytes and a child pointer 8 bytes. What is the smallest block size, in bytes, that fits such a node?",
+   "figure": null,
+   "options": [
+    {
+     "text": "988",
+     "correct": true,
+     "why": "50 child pointers and 49 keys: 50 · 8 + 49 · 12 = 400 + 588 = 988."
+    },
+    {
+     "text": "1000",
+     "correct": false,
+     "why": "Stored 50 keys with 50 pointers; between 50 pointers there are only 49 keys.",
+     "trap": "C6"
+    },
+    {
+     "text": "980",
+     "correct": false,
+     "why": "Used 49 pointers as well as 49 keys; 50 children need 50 pointers.",
+     "trap": "C6"
+    },
+    {
+     "text": "1024",
+     "correct": false,
+     "why": "Rounded up to a power of two; the question asks for the smallest size that fits, which need not be a power of two.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Node with p children: p pointers, p − 1 keys.\n2. Size = 50 · 8 + 49 · 12 = 988 bytes."
+  },
+  {
+   "id": "db-index-access-06",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file has 12,000 records of 150 bytes each, stored **unspanned** in 1024-byte blocks. How many blocks does the file occupy?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 2000,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 1758,
+     "why": "Treated the records as spanned (12,000 · 150 / 1024 rounded up); unspanned blocks hold only ⌊1024/150⌋ = 6 whole records.",
+     "trap": "C5"
+    },
+    {
+     "value": 1715,
+     "why": "Rounded the blocking factor up to 7; a block cannot hold part of an unspanned record, so bfr is a floor.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. bfr = ⌊1024 / 150⌋ = ⌊6.83⌋ = 6.\n2. Blocks = ⌈12000 / 6⌉ = **2000**."
+  },
+  {
+   "id": "db-index-access-07",
+   "skill": "db.index-access",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file of 90,000 records (180 bytes each, unspanned) is sorted on its key and stored in 2048-byte blocks. A **single-level** sparse primary index with 12-byte entries is kept, and it is searched by binary search. How many block accesses does finding one record need?",
+   "figure": null,
+   "options": [
+    {
+     "text": "7",
+     "correct": true,
+     "why": "Data: bfr 11, 8182 blocks → 8182 index entries; index bfr 170 → 49 index blocks. Binary search ⌈log₂ 49⌉ = 6, plus 1 data block = 7."
+    },
+    {
+     "text": "6",
+     "correct": false,
+     "why": "Stopped after the index search; one more access reads the data block.",
+     "trap": "C6"
+    },
+    {
+     "text": "13",
+     "correct": false,
+     "why": "Binary-searched the 8182 data blocks directly (⌈log₂ 8182⌉); the index is much smaller.",
+     "trap": "C3"
+    },
+    {
+     "text": "3",
+     "correct": false,
+     "why": "Treated the index as multilevel (49 → 1); a single-level index is binary-searched.",
+     "trap": "C3"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. bfr = ⌊2048/180⌋ = 11; data blocks = ⌈90000/11⌉ = 8182.\n2. Sparse index: 8182 entries; index bfr = ⌊2048/12⌋ = 170 → ⌈8182/170⌉ = 49 blocks.\n3. Accesses = ⌈log₂ 49⌉ + 1 = 6 + 1 = **7**."
+  },
+  {
+   "id": "db-index-access-08",
+   "skill": "db.index-access",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A heap file has 24,000 records of 200 bytes in 1024-byte blocks. A single-level **dense secondary** index is built on a non-ordering key, with 20-byte entries. How many blocks does the index occupy?",
+   "figure": null,
+   "options": [
+    {
+     "text": "471",
+     "correct": true,
+     "why": "Dense → 24,000 entries; ⌊1024/20⌋ = 51 entries per block → ⌈24000/51⌉ = 471."
+    },
+    {
+     "text": "95",
+     "correct": false,
+     "why": "Made one entry per data block (4800 blocks); a secondary index needs one entry per record.",
+     "trap": "C2"
+    },
+    {
+     "text": "470",
+     "correct": false,
+     "why": "Took the floor of 24000/51 = 470.6; the last partly filled block still counts.",
+     "trap": "C5"
+    },
+    {
+     "text": "469",
+     "correct": false,
+     "why": "Split entries across blocks (24000 · 20 / 1024); index entries are unspanned, 51 per block.",
+     "trap": "C5"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Dense secondary → entries = records = 24,000.\n2. Index bfr = ⌊1024/20⌋ = 51.\n3. Blocks = ⌈24000/51⌉ = ⌈470.6⌉ = **471**."
+  },
+  {
+   "id": "db-index-access-09",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file of 60,000 records (100 bytes each, unspanned, 1024-byte blocks) is physically sorted on `dept`, a non-key field with 1500 distinct values, each value having exactly 40 records. The records of each `dept` value start at the beginning of a new block. A single-level clustering index on `dept` has 16-byte entries and is searched by binary search. How many block accesses are needed to retrieve **all** records of one given `dept`?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 9,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 6,
+     "why": "Read only one data block after the index; the 40 records of the value fill ⌈40/10⌉ = 4 blocks.",
+     "trap": "C6"
+    },
+    {
+     "value": 45,
+     "why": "Read one block per record (5 + 40); the file is clustered, so the 40 records sit in 4 consecutive blocks.",
+     "trap": "C9"
+    },
+    {
+     "value": 11,
+     "why": "Built the index with one entry per data block (6000 blocks → 94 index blocks, 7 accesses); a clustering index has one entry per distinct value.",
+     "trap": "C2"
+    }
+   ],
+   "solution": "1. Index: 1500 entries, ⌊1024/16⌋ = 64 per block → ⌈1500/64⌉ = 24 blocks → binary search ⌈log₂ 24⌉ = 5.\n2. Data: bfr = 10, one dept = 40 records → 4 blocks.\n3. Total = 5 + 4 = **9**."
+  },
+  {
+   "id": "db-index-access-10",
+   "skill": "db.index-access",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file has 30,000 records of 256 bytes, unspanned, in 4096-byte blocks, sorted on key `id`. Every index entry is 16 bytes. A primary index is built on `id`, and a dense secondary index on the non-ordering key `email`. Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "The single-level primary index occupies 8 blocks.",
+     "correct": true,
+     "why": "bfr 16 → 1875 data blocks = 1875 entries; 256 entries per block → ⌈1875/256⌉ = 8."
+    },
+    {
+     "text": "The single-level secondary index occupies 118 blocks.",
+     "correct": true,
+     "why": "30,000 entries / 256 per block = 117.2 → 118 blocks."
+    },
+    {
+     "text": "The primary index has 30,000 entries.",
+     "correct": false,
+     "why": "Made the primary index dense; it is sparse, with one entry per data block (1875).",
+     "trap": "C2"
+    },
+    {
+     "text": "With the secondary index made multilevel, a lookup by email needs 2 block accesses.",
+     "correct": false,
+     "why": "118 blocks → 1 gives 2 index levels, but the data block is one more access: 3.",
+     "trap": "C6"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Data: bfr = 16, blocks = 1875.\n2. Primary (sparse): 1875 entries → ⌈1875/256⌉ = 8 blocks.\n3. Secondary (dense): 30,000 entries → ⌈30000/256⌉ = 118 blocks.\n4. Multilevel secondary: 118 → 1 → 2 levels + 1 data = 3 accesses."
+  },
+  {
+   "id": "db-index-access-11",
+   "skill": "db.index-access",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A multilevel **dense** secondary index is built on a non-ordering key of a file with 1,000,000 records. Index blocks are 4096 bytes and each entry takes 20 bytes. Levels are added until the top level fits in one block. How many blocks does the whole index (all levels together) occupy?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 4928,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 4902,
+     "why": "Counted only the first level; the upper levels (25 blocks and 1 block) are part of the index too.",
+     "trap": "C6"
+    },
+    {
+     "value": 4927,
+     "why": "Left out the single top-level block.",
+     "trap": "C6"
+    },
+    {
+     "value": 4908,
+     "why": "Took 4096/20 = 204.8 entries per block (spanned); unspanned index blocks hold ⌊204.8⌋ = 204 entries.",
+     "trap": "C5"
+    }
+   ],
+   "solution": "1. Index bfr = ⌊4096/20⌋ = 204.\n2. Level 1: ⌈1,000,000/204⌉ = 4902 blocks.\n3. Level 2: ⌈4902/204⌉ = 25. Level 3: ⌈25/204⌉ = 1.\n4. Total = 4902 + 25 + 1 = **4928**."
+  },
+  {
+   "id": "db-index-access-12",
+   "skill": "db.index-access",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "The first level of a multilevel index occupies 2000 blocks. Each index block holds 50 entries (fan-out 50). Levels are added until the top level is a single block. How many levels does the index have?",
+   "figure": null,
+   "options": [
+    {
+     "text": "3",
+     "correct": true,
+     "why": "2000 → ⌈2000/50⌉ = 40 → ⌈40/50⌉ = 1: three levels (2000, 40, 1 blocks)."
+    },
+    {
+     "text": "2",
+     "correct": false,
+     "why": "Took log₅₀ 2000 ≈ 1.94 and rounded to 2, or stopped at the 40-block level; 40 blocks still need one more level above them.",
+     "trap": "C6"
+    },
+    {
+     "text": "4",
+     "correct": false,
+     "why": "Counted the data-block access as an index level; the index has 3 levels and a search makes 4 accesses.",
+     "trap": "C6"
+    },
+    {
+     "text": "40",
+     "correct": false,
+     "why": "Gave the number of blocks in the second level, not the number of levels.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Level 1: 2000 blocks.\n2. Level 2: ⌈2000/50⌉ = 40 blocks.\n3. Level 3: ⌈40/50⌉ = 1 block → stop.\n4. Levels = **3** (a search would read 3 index blocks + 1 data block)."
+  },
+  {
+   "id": "db-index-types-05",
+   "skill": "db.index-types",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Table `Student` has a hash index on `age` and no other index. Which query can use this index to avoid scanning the whole file?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`SELECT * FROM Student WHERE age = 21;`",
+     "correct": true,
+     "why": "Hashing 21 gives the bucket that holds every record with age 21: an equality lookup."
+    },
+    {
+     "text": "`SELECT * FROM Student WHERE age > 21;`",
+     "correct": false,
+     "why": "Assumed hash buckets keep ages in order; hashing scatters nearby values, so a range needs a full scan.",
+     "trap": "C9"
+    },
+    {
+     "text": "`SELECT * FROM Student ORDER BY age;`",
+     "correct": false,
+     "why": "A hash index stores no sorted order, so it cannot produce rows sorted by age.",
+     "trap": "C9"
+    },
+    {
+     "text": "`SELECT * FROM Student WHERE age BETWEEN 20 AND 22;`",
+     "correct": false,
+     "why": "A BETWEEN is a range; a hash index answers only equality (unless each value is looked up separately).",
+     "trap": "C9"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. A hash index maps a value to its bucket: good for `=`.\n2. Ranges and ORDER BY need sorted keys (a B+ tree), not a hash."
+  },
+  {
+   "id": "db-index-types-06",
+   "skill": "db.index-types",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file of employee records is physically sorted on `dept`, which is **not** a key (many employees share a department). An index on `dept` keeps one entry per distinct `dept` value, pointing to the first block holding that value. What kind of index is it?",
+   "figure": null,
+   "options": [
+    {
+     "text": "Clustering index",
+     "correct": true,
+     "why": "Built on the ordering field of the file, which is a non-key, with one entry per distinct value."
+    },
+    {
+     "text": "Primary index",
+     "correct": false,
+     "why": "A primary index needs the ordering field to be a key (unique values); `dept` repeats.",
+     "trap": "C1"
+    },
+    {
+     "text": "Secondary index",
+     "correct": false,
+     "why": "A secondary index is on a non-ordering field; this file is sorted on `dept`.",
+     "trap": "C2"
+    },
+    {
+     "text": "Dense index",
+     "correct": false,
+     "why": "Dense means one entry per record; here there is one entry per distinct value.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Ordering field + key → primary.\n2. Ordering field + non-key → **clustering** (one entry per distinct value).\n3. Non-ordering field → secondary (dense)."
+  },
+  {
+   "id": "db-index-types-07",
+   "skill": "db.index-types",
+   "type": "MSQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file is physically sorted on `emp_id` (a key). It also has `email` (unique, not ordered) and `dept` (non-key, not ordered). Which statements are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "An index on `emp_id` can be sparse.",
+     "correct": true,
+     "why": "The file is in `emp_id` order, so one entry per block (the block's first key) is enough."
+    },
+    {
+     "text": "A single-level index on `email` must be dense.",
+     "correct": true,
+     "why": "`email` is not the ordering field, so records with nearby emails sit in random blocks; each record needs its own entry."
+    },
+    {
+     "text": "A clustering index can be built on `dept`.",
+     "correct": false,
+     "why": "A clustering index needs the file to be sorted on `dept`; it is sorted on `emp_id`, and a file has only one physical order.",
+     "trap": "C1"
+    },
+    {
+     "text": "The index on `email` is a primary index because `email` is a candidate key.",
+     "correct": false,
+     "why": "Primary index means the ordering key of the file, not any candidate key; the `email` index is secondary.",
+     "trap": "C10"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. `emp_id` is the ordering key → primary index, sparse.\n2. `email`, `dept` are non-ordering → only secondary (dense) indexes.\n3. Clustering needs the file sorted on that non-key field → not possible for `dept`.\n4. 'Primary' refers to file order, not to being a key."
+  },
+  {
+   "id": "db-index-types-08",
+   "skill": "db.index-types",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file holds 6000 records in 300 blocks and is sorted on its key `K`. It has a primary index on `K` and secondary indexes on three other unique fields (`email`, `phone`, `pan`). All indexes are single-level. How many index entries are there in total, over all four indexes?",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 18300,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 24000,
+     "why": "Made the primary index dense too; on the ordering key it is sparse, one entry per block (300).",
+     "trap": "C2"
+    },
+    {
+     "value": 1200,
+     "why": "Made the secondary indexes sparse (300 each); a non-ordering field needs one entry per record.",
+     "trap": "C2"
+    },
+    {
+     "value": 6300,
+     "why": "Counted only one secondary index; there are three, each with 6000 entries.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Primary on ordering key → sparse → 300 entries.\n2. Each secondary on a unique non-ordering field → dense → 6000 entries.\n3. Total = 300 + 3 × 6000 = **18300**."
+  },
+  {
+   "id": "db-index-types-09",
+   "skill": "db.index-types",
+   "type": "MCQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file sorted on key `K` has two indexes on `K`: a dense index `D` and a sparse index `S`. Which statement is correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "`D` alone can tell whether a record with K = 57 exists, without reading any data block.",
+     "correct": true,
+     "why": "A dense index lists every key value, so a missing entry means no such record."
+    },
+    {
+     "text": "`S` alone can tell whether a record with K = 57 exists, without reading any data block.",
+     "correct": false,
+     "why": "A sparse index lists only each block's first key; 57 may be inside a block, so the data block must be read.",
+     "trap": "C2"
+    },
+    {
+     "text": "`S` always needs more blocks than `D`.",
+     "correct": false,
+     "why": "Reversed sizes: the sparse index has one entry per block, so it is smaller.",
+     "trap": "C11"
+    },
+    {
+     "text": "`S` would still work if the file were not sorted on `K`.",
+     "correct": false,
+     "why": "A sparse index relies on the file order; without it, a block's first key says nothing about the other keys.",
+     "trap": "C1"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Dense index: every key present → existence test inside the index.\n2. Sparse index: only block anchors → must read the block.\n3. Sparse is smaller and needs the file sorted on the key."
+  },
+  {
+   "id": "db-index-types-10",
+   "skill": "db.index-types",
+   "type": "MSQ",
+   "marks": 1,
+   "level": 1,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "Which statements about a B+ tree index are correct?",
+   "figure": null,
+   "options": [
+    {
+     "text": "All leaves are at the same depth.",
+     "correct": true,
+     "why": "B+ trees grow and shrink at the root, so the tree stays balanced."
+    },
+    {
+     "text": "A key value used as a separator in an internal node also appears in a leaf.",
+     "correct": true,
+     "why": "Internal keys only guide the search; every key with its record pointer is stored in a leaf."
+    },
+    {
+     "text": "Following the leaf chain from the leftmost leaf gives the keys in sorted order.",
+     "correct": true,
+     "why": "Leaves are linked left to right in key order, which is what makes range scans cheap."
+    },
+    {
+     "text": "Record pointers are stored in internal nodes as well as leaves.",
+     "correct": false,
+     "why": "That describes a B-tree; B+ tree internal nodes hold only keys and child pointers.",
+     "trap": "C2"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Balanced: all leaves same depth.\n2. Every key is in a leaf; internal copies are separators.\n3. Linked leaves → sorted scan.\n4. Record pointers only in leaves (unlike a B-tree)."
+  },
+  {
+   "id": "db-index-types-11",
+   "skill": "db.index-types",
+   "type": "NAT",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A B+ tree index on `price` has 3 levels (root, one internal level, leaves). The query `WHERE price BETWEEN 100 AND 200` finds its matching keys spread over 4 consecutive leaves. How many **index nodes** (B+ tree blocks) are read? Do not count data blocks.",
+   "figure": null,
+   "options": [],
+   "answer": {
+    "value": 6,
+    "tol": 0
+   },
+   "traps": [
+    {
+     "value": 12,
+     "why": "Did a fresh root-to-leaf search for every leaf (4 × 3); the leaves are linked, so the next leaf is reached directly.",
+     "trap": "C9"
+    },
+    {
+     "value": 7,
+     "why": "Counted all 4 leaves on top of the 3-node search; the first leaf is already the third node of the search.",
+     "trap": "C6"
+    },
+    {
+     "value": 3,
+     "why": "Stopped at the first leaf; the matches continue in 3 more leaves along the chain.",
+     "trap": "C6"
+    }
+   ],
+   "solution": "1. Search for 100: root → internal → first leaf = 3 nodes.\n2. Follow the leaf chain for 3 more leaves.\n3. Total = 3 + 3 = **6**."
+  },
+  {
+   "id": "db-index-types-12",
+   "skill": "db.index-types",
+   "type": "MCQ",
+   "marks": 2,
+   "level": 2,
+   "source": "Drill · GATE-pattern (GATE CSE DBMS style)",
+   "stem": "A file has 20 records per block. A range query matches 500 records. Path 1 uses the primary index on the file's ordering key, where the 500 matching records are contiguous and start at the beginning of a block. Path 2 uses a secondary index on a non-ordering field, and in the worst case each matching record lies in a different block. How many **data** blocks does each path read in the worst case (Path 1, Path 2)?",
+   "figure": null,
+   "options": [
+    {
+     "text": "25 and 500",
+     "correct": true,
+     "why": "Path 1 reads 500/20 = 25 consecutive blocks; Path 2 may need one block per record, 500."
+    },
+    {
+     "text": "25 and 25",
+     "correct": false,
+     "why": "Assumed the secondary index also finds the records packed together; the file is not ordered on that field.",
+     "trap": "C9"
+    },
+    {
+     "text": "500 and 500",
+     "correct": false,
+     "why": "Counted one block per record on the primary path too; contiguous records share blocks, 20 per block.",
+     "trap": "C6"
+    },
+    {
+     "text": "500 and 25",
+     "correct": false,
+     "why": "Swapped the two paths: the clustered (primary) path is the cheap one.",
+     "trap": "C11"
+    }
+   ],
+   "answer": null,
+   "traps": [],
+   "solution": "1. Primary (clustered): records are stored in key order → ⌈500/20⌉ = 25 blocks.\n2. Secondary (unclustered): matching records are scattered → up to 500 blocks.\n3. This is why range queries on a secondary index can be slower than a full scan for large ranges."
+  }
+ ]
+}

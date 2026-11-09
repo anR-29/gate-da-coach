@@ -1,0 +1,117 @@
+{
+  "db-fd-closure-08": [
+    "Sirf $\\{B, C\\}$ se shuru karke closure banana hai. Har FD tabhi fire hoga jab uska poora LHS set mein ho.",
+    "Repeat karo: set mein jo FD ka poora LHS ho, uska RHS jodo. Yahan BD → E ke liye B aur D dono chahiye, aur G → F ke liye G.",
+    "C → D se set $\\{B, C, D\\}$ bana. Ab dekho BD → E fire hota hai ya nahi, phir E se aage. Trap: maan lena ki closure saare 7 attributes tak pahunchega."
+  ],
+  "db-fd-closure-09": [
+    "Ek FD redundant tab hai jab use hata kar bhi baaki FDs se wahi nikal aaye. Har option alag se, akela hata kar test karo.",
+    "Rule: X → Y hatao, baaki F se $X^+$ nikaalo. Agar Y ⊆ $X^+$, to wo FD redundant hai.",
+    "A → C hata kar $A^+$: A → B, B → C, ... chalao. C → D hata kar $C^+$ nikaalo — AC → D tab fire hoga kya? Trap: AC → D ke liye A bhi chahiye."
+  ],
+  "db-fd-keys-07": [
+    "Pehle dekho kaun se attributes kisi FD ke right side pe kabhi nahi aate — wo har key mein hone chahiye.",
+    "RHS par B, D, E aate hain, to A aur C kahin RHS pe nahi. Ab $(AC)^+$ nikaalo aur check karo ki ABCDE banta hai.",
+    "$(AC)^+$: A → B se B mila, ab BC → D ka poora LHS hai. Aage chalao. Trap: {A, B, C} superkey hai par minimal nahi."
+  ],
+  "db-fd-keys-08": [
+    "E kisi RHS pe nahi hai — ye har key ka hissa hoga. Phir dekho E ke saath kya-kya jodna padta hai.",
+    "$E^+ = \\{A, E\\}$. Ab B, C ya D me se ek-ek jod kar closure nikaalo; cycle C → D → B dhyan se dekho.",
+    "$(BE)^+$: E → A, phir AB → C, C → D. Ab CE aur DE bhi try karo aur gino kitni keys bani. Trap: A ko prime maan lena sirf isliye ki wo LHS pe hai."
+  ],
+  "db-fd-keys-09": [
+    "Superkey = koi bhi set jiska closure poora R ho. Pehle saari candidate keys nikaalo, phir unke supersets gino.",
+    "Keys: A, aur BC (BC → A → DE). Supersets of A $= 2^4$, supersets of BC $= 2^3$; jo dono me hain unhe ek baar hi gino.",
+    "Dono me common sets = jinme A, B, C teeno hon: baaki D, E free, to $2^2$. Ab inclusion–exclusion lagao. Trap: common sets ko do baar gin lena."
+  ],
+  "db-nf-test-07": [
+    "Highest normal form ke liye pehle candidate key nikaalo, phir dekho B → D ka LHS key ka poora hissa hai ya sirf ek part.",
+    "A, B kisi RHS pe nahi, $(AB)^+$ = ABCD, to key AB. 2NF: koi non-prime attribute key ke proper subset pe depend na kare.",
+    "D non-prime hai aur B key AB ka proper subset hai. Ab socho ye kaunsa NF todta hai. Trap: B → D ko transitive samajhna."
+  ],
+  "db-nf-test-08": [
+    "BCNF test: har nontrivial FD ka LHS superkey ho. Har relation ke liye pehle uski keys nikaalo.",
+    "Har option me har FD ka LHS lo, uska closure ABC hai ya nahi dekho. Sirf 'saare attributes prime hain' se BCNF nahi milta.",
+    "R1: $B^+$ = B → A → C, to B bhi key hai. Isi tarah R2 me $C^+$ aur R4 me $B^+$ nikaalo. Trap: all-prime ko BCNF maan lena."
+  ],
+  "db-nf-test-09": [
+    "3NF violation: X → A jahan X superkey nahi AUR A prime bhi nahi. Iske liye saari keys aur prime attributes chahiye.",
+    "A kisi RHS pe nahi. $(AB)^+$ aur $(AC)^+$ dono nikaalo (C → B dhyan do). Prime attributes = keys ke union me.",
+    "Keys AB aur AC hain, to prime = A, B, C. Ab har FD par do sawal: LHS superkey? RHS prime? Trap: C → B ko gin lena — B prime hai."
+  ],
+  "db-decomp-07": [
+    "Lossless binary test: dono parts ka common attribute set kisi ek part ki key hona chahiye. Har option ka intersection dekho.",
+    "Rule: $(R_1 \\cap R_2)^+ \\supseteq R_1$ ya $\\supseteq R_2$. F me sirf B → CD hai, to $C^+ = \\{C\\}$.",
+    "Pehla option: common = B, $B^+$ = BCD. Baaki options ka common attribute kya hai aur uska closure kya hai, dekho. Trap: common attribute hona hi kaafi maan lena."
+  ],
+  "db-decomp-08": [
+    "Preservation = har FD parts ke projected FDs se nikalna chahiye, join kiye bina. Jo FD ek part me poora nahi baitha, use test karo.",
+    "Test X → Y: Z = X; har part $R_i$ ke liye Z ∪= ($(Z \\cap R_i)^+ \\cap R_i$); repeat. Y ⊆ Z to preserved.",
+    "C → A: Z = {C}; R2 se B mila, phir R1 se A. Ab AD → E ke liye Z = {A, D} se shuru karo aur R4 pe dhyan do. Trap: C → A ko lost maan lena."
+  ],
+  "db-decomp-09": [
+    "Chaar general statements hain — har ek ko 3NF synthesis, BCNF splitting aur lossless test ke rules se milao.",
+    "Yaad: 3NF synthesis = lossless + preserving. BCNF = hamesha lossless, preserving zaroori nahi. Lossless binary: $(R_1 \\cap R_2) \\to R_1$ ya $R_2$.",
+    "Last statement ke liye counterexample socho: R(A, B, C, D), F = {A → B, C → D}, split {AB, CD} — preserving hai, par common attribute kya hai? Trap: dono properties ko linked maan lena."
+  ],
+  "db-dw-schema-09": [
+    "Analyst ne sirf EK dimension (region) ko EK value ('North') pe fix kiya. Cube 3-D se kitne-D bacha, ye dekho.",
+    "Rule: ek dimension ek value pe fix = lower-dimensional cut. Kai dimensions par value-sets ka restriction = sub-cube. Hierarchy pe chadhna = roll-up.",
+    "Region hat gaya, time × product bacha — matlab ek cut, koi aggregation nahi. Ab options ko is rule se milao. Trap: har filter ko dice bol dena."
+  ],
+  "db-olap-cube-06": [
+    "Teen grouping sets chahiye: (year, month), (year), (). (month) akela nahi chahiye — isse CUBE aur ROLLUP alag hote hain.",
+    "ROLLUP(a, b) = (a, b), (a), () — right se ek-ek column hatta hai. CUBE(a, b) = saare $2^2$ subsets.",
+    "Har option ke grouping sets likho. ROLLUP(month, year) me right se year hatega to kya bachega? Trap: column order ko ignore karna."
+  ],
+  "db-olap-cube-07": [
+    "ROLLUP (city, item) hai, CUBE nahi — aur table me saare city–item pairs present nahi hain. To formula nahi, distinct groups gino.",
+    "Grouping sets: (city, item), (city), (). Har set ke liye table me distinct groups gino aur jodo.",
+    "(city, item) ke distinct pairs gino — (Jaipur, Fan) do baar hai par ek hi group. Phir distinct cities aur grand total. Trap: CUBE ki tarah item-only subtotals jodna."
+  ],
+  "db-olap-cube-08": [
+    "Ulta sawaal: rows di hain, products ki ginti nikaalni hai. Saare combinations present hain, to CUBE ka full formula lagega.",
+    "CUBE rows $= (n_r + 1)(n_p + 1)$. Yahan $n_r = 4$, rows = 40, $n_p = p$.",
+    "$(4 + 1)(p + 1) = 40$ likho aur $p + 1$ nikaalo, phir 1 ghatao. Trap: region ka +1 bhool kar $4(p + 1) = 40$ solve karna."
+  ],
+  "db-olap-cube-09": [
+    "Har cuboid dimensions ka ek subset hai. Sawaal sirf un cuboids ka hai jinme exactly 2 dimensions hain.",
+    "5 me se 2 dimensions chunne ke tareeke $= \\binom{5}{2}$. Order matter nahi karta: (time, item) = (item, time).",
+    "$\\binom{5}{2} = \\frac{5 \\cdot 4}{2}$ — ab calculate karo. Trap: $2^5$ lena, jo saare levels ke cuboids ka total hai."
+  ],
+  "db-transform-07": [
+    "Naya range [−1, 1] hai, [0, 1] nahi. To pehle 0–1 wala fraction nikaalo, phir use naye range me stretch aur shift karo.",
+    "$v' = \\frac{v - 50}{650 - 50}(1 - (-1)) + (-1)$.",
+    "Fraction $= 360/600 = 0.6$. Ab ise naye width 2 se multiply karo aur new_min jodo. Trap: sirf 0.6 likh dena ya −1 jodna bhool jaana."
+  ],
+  "db-transform-08": [
+    "Teen kaam: equal-FREQUENCY bins (4–4 values), phir second bin, phir smoothing by BOUNDARIES (mean/median nahi).",
+    "Bins: pehli 4 values, agli 4, aakhri 4. Boundary smoothing: har value bin ke min ya max me se jo paas ho, wo ban jaati hai.",
+    "Second bin = 15, 24, 49, 55; boundaries 15 aur 55. Ab 24 aur 49 ki dono boundaries se doori nikaalo. Trap: bin mean se replace kar dena."
+  ],
+  "db-transform-09": [
+    "Test value 95 training range [20, 80] ke bahar hai. Clipping nahi karni — formula seedha lagao, chahe result 1 se bada aaye.",
+    "$v' = \\frac{v - \\min}{\\max - \\min}$ jahan min = 20, max = 80 training waale hi rahenge.",
+    "Numerator $95 - 20 = 75$, denominator $80 - 20 = 60$. Ab divide karo. Trap: answer ko 1 pe rok dena — no clipping kaha gaya hai."
+  ],
+  "db-sampling-06": [
+    "Without replacement, 40 tuples chune gaye 800 me se. Sawaal poore sample me tuple ke hone ki probability ka hai, ek draw ka nahi.",
+    "SRSWOR me har tuple ki inclusion probability $= s/N$; yahan s = 40, N = 800.",
+    "Counting se: tuple wale samples $\\binom{799}{39}$, kul samples $\\binom{800}{40}$; inka ratio simplify karke formula se milao. Trap: $1/800$ (ek draw) ya SRSWR formula lagana."
+  ],
+  "db-sampling-07": [
+    "Proportional stratified: pehle har region ka share nikaalo, phir har region ke andar alag-alag SRSWOR ke tareeke gino.",
+    "Share = 6 · (stratum size/12). Total samples = $\\binom{8}{n_N} \\cdot \\binom{4}{n_S}$ — dono choices saath hoti hain, to multiply.",
+    "North share = 6 · 8/12 = 4, South = 2. $\\binom{8}{4} = 70$ — ab $\\binom{4}{2}$ nikaal kar multiply karo. Trap: dono ko jod dena."
+  ],
+  "db-sampling-08": [
+    "Cluster sample me unit page hai, tuple nahi: 4 pages chune jaate hain aur unke saare tuples sample me aate hain.",
+    "Sample size = pages × tuples per page. Ek tuple tabhi aata hai jab uska page chuna jaaye: P = chosen pages / total pages.",
+    "Sample size $4 \\times 50$ nikaalo. Probability ke liye socho: chuni jaane wali unit page hai, to 4 ko kis total se divide karna chahiye? Trap: tuples ki ginti se divide karna."
+  ],
+  "db-sampling-09": [
+    "Chaar statements: SRSWOR inclusion, SRSWR inclusion, cluster vs stratified, aur samples ki ginti. Ek-ek ko formula se check karo.",
+    "SRSWOR: $P = s/N$. SRSWR: $P = 1 - (1 - 1/N)^s$. Cluster = kuch poore groups; stratified = har group se kuch.",
+    "N = 5, s = 2 ke liye $\\binom{5}{2}$ aur $5^2$ nikaalo. SRSWR ke liye N = 5, s = 2 pe $1 - 0.8^2$ ko $2/5$ se compare karo. Trap: repeats ko extra chance samajhna."
+  ]
+}
