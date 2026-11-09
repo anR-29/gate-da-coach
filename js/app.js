@@ -1,11 +1,11 @@
-import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611092028';
+import { cfg, setCfg, onChange, sync, syncState, testConnection, exportJson, importJson } from './store.js?v=202611092302';
 import {
   content, loadContent, derive, dueCards, planStatus, newSession, loadSession, saveSession, nextItem, submit,
   endSession, sessionCounts, targets, timeUp, skillStats, today, addDays, INTERVALS, MASTERED_AFTER, TRAP_CLASSES,
   TARGET, target72, focusSkills, dayStatus, PARTS, getOrder, setOrder, sessionAttempts, natHint, topicShort, dayCarry, grade, dataUrl, partHasItem,
-} from './engine.js?v=202611092028';
-import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611092028';
-import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611092028';
+} from './engine.js?v=202611092302';
+import { md, typeset, esc, fmtDate, pct } from './render.js?v=202611092302';
+import { loadMock, startMock, showExam, viewMockResult, mockShare, MOCK_MIN } from './mock.js?v=202611092302';
 
 const main = document.getElementById('main');
 const IDLE_MS = 5 * 60000;
@@ -1343,9 +1343,7 @@ function viewSteps(id, text, days) {
         }
         const wrongPick = q.type !== 'NAT' && !g.correct ? q.options[(g.chosen || []).find((i) => !q.options[i].correct)] : null;
         res = { correct: g.correct, why: q.type === 'NAT' ? (g.trap ? g.trap.why : '') : wrongPick?.why || '' };
-        // a learning try: marks the question seen (practice prefers fresh ones); no accuracy, no cards
-        window.__store.addEvent('attempt', { qid: q.id, skill: q.skill, subject: content.skills[q.skill]?.subject || '', day: 0,
-          date: today(), mode: 'learn', resp, correct: g.correct, conf: null, repeated: false, ms: 0, sid: 'theory' });
+        // a learning try is not recorded: it must not use up the day's practice questions
         phase = 'learn';
         render();
       };
@@ -1870,7 +1868,7 @@ setInterval(() => {
 // ---------- boot ----------
 
 async function boot() {
-  const store = await import('./store.js?v=202611092028');
+  const store = await import('./store.js?v=202611092302');
   window.__store = store;
   main.innerHTML = '<section class="card"><p class="muted">Loading…</p></section>';
   await loadContent();

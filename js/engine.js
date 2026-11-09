@@ -1,6 +1,6 @@
 // Content loading, derived progress state, spaced revision and the adaptive daily session.
 
-import { addEvent, allEvents, cfg } from './store.js?v=202611092028';
+import { addEvent, allEvents, cfg } from './store.js?v=202611092302';
 
 export const INTERVALS = [1, 3, 7, 14, 30];
 export const MASTERED_AFTER = 5; // passes in a row
@@ -92,6 +92,8 @@ export function derive() {
   const stuck = {}; // latest "Kahan atke?" answer per question
   for (const e of events) {
     if (e.type === 'stuck') { stuck[e.qid] = e; continue; }
+    // theory-player tries (older builds recorded them) do not use up practice questions
+    if (e.type === 'attempt' && e.sid === 'theory') continue;
     if (e.type === 'attempt') {
       attempts.push(e);
       const s = (seen[e.qid] ||= { n: 0, last: 0 });
@@ -496,6 +498,17 @@ function pickQuestion(skill, session, state, level) {
   return old.length ? { q: old[0], repeated: true } : null;
 }
 
+// Last resort when a skill has no fresh question left today: an already-seen one (even from
+// this session), wrong ones first, then the longest ago; never one of the last 6 shown.
+// It is flagged as a repeat, so it does not count as fresh evidence.
+function pickRepeat(skill, session, state) {
+  const recent = new Set(session.served.slice(-6));
+  const wrong = new Set(state.attempts.filter((a) => a.skill === skill && !a.correct).map((a) => a.qid));
+  const pool = (content.bySkill[skill] || []).filter((q) => !recent.has(q.id));
+  pool.sort((a, b) => Number(wrong.has(b.id)) - Number(wrong.has(a.id)) || (state.seen[a.id]?.last || 0) - (state.seen[b.id]?.last || 0));
+  return pool.length ? { q: pool[0], repeated: true } : null;
+}
+
 function rotate(list, n) {
   return list.length ? list[n % list.length] : null;
 }
@@ -569,6 +582,12 @@ function makeParts(session, state, counts, t) {
         const picked = pickQuestion(skill, session, state, level);
         if (ok(picked)) return { ...picked, skill, mode, label: mode === 'diag' ? 'Closed-book brush-up' : 'Today’s topic' };
       }
+      // today's bank is used up: practise again on seen questions (wrong ones first)
+      for (let i = 0; i < topic.length; i++) {
+        const skill = rotate(topic, counts.topic + i);
+        const picked = pickRepeat(skill, session, state);
+        if (picked) return { ...picked, skill, mode: 'topic', label: 'Today’s topic · dobara (naye sawaal khatam)' };
+      }
       return null;
     },
     mixed() {
@@ -578,6 +597,11 @@ function makeParts(session, state, counts, t) {
         const skill = rotate(pool, counts.mixed + i);
         const picked = pickQuestion(skill, session, state, 2);
         if (ok(picked)) return { ...picked, skill, mode: 'mixed', label: 'Mixed · older topic' };
+      }
+      for (let i = 0; i < pool.length; i++) {
+        const skill = rotate(pool, counts.mixed + i);
+        const picked = pickRepeat(skill, session, state);
+        if (picked) return { ...picked, skill, mode: 'mixed', label: 'Mixed · older topic · dobara' };
       }
       return null;
     },
